@@ -22,7 +22,9 @@ def data_dir(root: Path | None = None) -> Path:
     return Path(__file__).resolve().parent / "data"
 
 
-def load_dataset(root: Path | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
+def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
+    if version not in (None, "libsvm"):
+        raise ValueError(f"unknown USPS version {version!r}")
     parts_x = []
     parts_y = []
     paths = []

@@ -1,0 +1,232 @@
+{
+  "ablation": "A0_union_knn",
+  "acc_mean": 0.6381300638130064,
+  "acc_std": 0.017171777495981165,
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "cluster_on": "G",
+  "combinatorial_laplacian_eigenvalues_W": {
+    "note": "combinatorial Laplacian eigenpairs are a post-solve diagnostic, not the SSC embedding",
+    "reason": "ArpackNoConvergence: ARPACK error -1: No convergence (92981 iterations, 0/6 eigenvectors converged)",
+    "status": "FAILED"
+  },
+  "dataset_checksum": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "dataset_identity_status": "verified_libsvm_9298",
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "dataset_version": "libsvm",
+  "embedding_info": {
+    "eigen_solver": "scipy.sparse.linalg.eigsh",
+    "eigenvalues_summary": {
+      "gap_1_2": 0.0010964556402458237,
+      "gap_2_3": 0.0007478234543472689,
+      "listed": [
+        -1.6204660645523001e-16,
+        0.0010964556402456617,
+        0.0018442790945929306,
+        0.003267058921102885,
+        0.005434049628060715,
+        0.00709694863933298,
+        0.0073420668148956765,
+        0.009764709073463747
+      ],
+      "max": 0.014332728887837445,
+      "mean": 0.0062967773147124175,
+      "min": -1.6204660645523001e-16,
+      "n": 10
+    },
+    "graph": {
+      "bandwidth_rule": "median_positive_knn_squared_distance",
+      "delta": 3.7357891404747243,
+      "delta2": 13.95612050208888,
+      "delta2_source": "median_positive_knn_squared_distance",
+      "k": 5,
+      "knn_method": "block",
+      "symmetrization": "union_maximum"
+    },
+    "row_normalize": false
+  },
+  "eps": 1e-08,
+  "eq13_graph_coefficient": "gamma",
+  "eq8_graph_term_correspondence": "gamma_over_2",
+  "equation8_objective": 14.845803888899516,
+  "factor": "D12_KMEANS_G_E13",
+  "fixed_point_residual": 0.4685674027252699,
+  "g0": "F",
+  "g_init_scale": 0.001,
+  "g_init_seed": 0,
+  "g_minus_f_frobenius": 0.03818426909693978,
+  "gamma": 1.0,
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "initial_zero_residual_floor": 0.042307633333107574,
+  "irls_converged": true,
+  "irls_quadratic_surrogate": 4.291846135684915,
+  "kmeans_init": "random",
+  "laplacian_coefficient": 1.0,
+  "linear_residual_last": 3.475121721082621e-08,
+  "linear_update": "equation_13",
+  "max_iter": 300,
+  "n_clusters": 10,
+  "n_features": 256,
+  "n_irls_iterations": 171,
+  "n_samples": 9298,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "nmi_mean": 0.7750504764326696,
+  "nmi_std": 0.03986954006493934,
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "params": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "cluster_on": "G",
+    "eps": 1e-08,
+    "g_init": "F",
+    "g_init_scale": 0.001,
+    "g_init_seed": 0,
+    "gamma": 1.0,
+    "k": 5,
+    "kmeans_init": "random",
+    "max_iter": 300,
+    "row_normalize": false,
+    "tol": 1e-06,
+    "variant": "E13",
+    "zero_residual_floor": "median_pairwise"
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "protocol": "R1_solve_FG_once",
+  "relative_iterate_change_last": 4.159232589182843e-06,
+  "relative_obj_change_last": 1.756166072147548e-06,
+  "row_normalize": false,
+  "runtime_embedding_seconds": 1.5334122921340168,
+  "runtime_irls_seconds": 7.8334718332625926,
+  "runtime_seconds_mean": 0.03526272221157948,
+  "shrinkage_graph": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": 0.0012237388447056922,
+    "delta2": 1.4975367600416224e-06,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "block",
+    "symmetrization": "union_maximum"
+  },
+  "shrinkage_graph_stats": {
+    "degree_max": 9.110368870277549,
+    "degree_mean": 2.227690645574036,
+    "degree_min": 3.5783231670447645e-21,
+    "n_connected_components": 1,
+    "n_stored_nnz": 60874,
+    "n_undirected_edges": 30437,
+    "symmetric_stored": true
+  },
+  "sqrt_smoothed_equation8_objective": 14.845861939918237,
+  "step_frobenius_last": 4.159232589182843e-06,
+  "tol": 1e-06,
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.6214239621423963,
+      "aligned_agreement_F_G": 0.997311249731125,
+      "kmeans_inertia": 2.249190989202408,
+      "kmeans_inertia_F": 2.252289135057102,
+      "kmeans_inertia_G": 2.2491909892024085,
+      "kmeans_init": "random",
+      "label_disagreement_F_G": 0.002688750268875051,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.7327009206903549,
+      "runtime_seconds": 0.06280174991115928,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.6557324155732416,
+      "aligned_agreement_F_G": 0.99870939987094,
+      "kmeans_inertia": 1.6444409246480198,
+      "kmeans_inertia_F": 1.6486770557997579,
+      "kmeans_inertia_G": 1.6444409246480198,
+      "kmeans_init": "random",
+      "label_disagreement_F_G": 0.0012906001290600155,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.8118606811068035,
+      "runtime_seconds": 0.028198791667819023,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.6372338137233814,
+      "aligned_agreement_F_G": 0.998816949881695,
+      "kmeans_inertia": 2.296036247521103,
+      "kmeans_inertia_F": 2.3003762394050384,
+      "kmeans_inertia_G": 2.296036247521103,
+      "kmeans_init": "random",
+      "label_disagreement_F_G": 0.0011830501183049957,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.78058982750085,
+      "runtime_seconds": 0.014787625055760145,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ],
+  "variant": "E13",
+  "w_vs_x_overlap": {
+    "edge_intersection": 3057,
+    "edge_jaccard": 0.04920724346076459,
+    "f_graph_n_undirected_edges": 30437,
+    "identical_to_x_graph": false,
+    "w_built_on": "F",
+    "x_graph_n_undirected_edges": 34745
+  },
+  "weights_frozen_before_irls": true,
+  "x_graph_info": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": 3.7357891404747243,
+    "delta2": 13.95612050208888,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "block",
+    "symmetrization": "union_maximum"
+  },
+  "x_graph_stats": {
+    "degree_max": 17.589608665957414,
+    "degree_mean": 2.930811101037774,
+    "degree_min": 0.006869529286294406,
+    "n_connected_components": 1,
+    "n_stored_nnz": 69490,
+    "n_undirected_edges": 34745,
+    "symmetric_stored": true
+  },
+  "zero_residual_floor": "median_pairwise"
+}

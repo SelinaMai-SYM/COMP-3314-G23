@@ -5,7 +5,7 @@
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The abstract and Section~1 state a course-project reimplementation, two typesetting corrections, four obtained datasets, four unavailable datasets, and a mutual-$k$NN adaptation without a new theorem. They report the negative ORL finding, the actual trial counts (YaleB $n=10$, USPS SSC $n=1$), and that the extension is mixed or negligible. This PDF is not a NeurIPS submission.
+    \item[] Justification: The abstract and Section~1 state a course-project reimplementation, the E8/E13 split, recovered extra ORL/YaleB files with unchanged default loaders, and a mutual-$k$NN adaptation without a new theorem. They report that shrinkage did not help, that the ORL 76\% accuracy was not reproduced, the actual trial counts (YaleB $n=10$, USPS $n=3$), and that the extension is negative or neutral. This PDF is not a NeurIPS submission.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the abstract and introduction do not include the claims made in the paper.
@@ -17,7 +17,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~9 lists missing datasets, unimplemented SPLS, the LDA--spectral approximation, unspecified $\delta$ and $G_0$, the $\gamma/2$ coefficient, the $50$-run/best-objective ambiguity, the absence of original code, incomplete YaleB/USPS baselines, IRLS non-convergence at $\gamma=1$ on ORL and YaleB, and that YaleB used 10 trials and USPS SSC used 1 trial.
+    \item[] Justification: Section~5 lists missing datasets at paper counts, unimplemented SPLS, unspecified $\delta$ and $G_0$, the Eq.~(8)/Eq.~(13) coefficient, the $50$-run/best-objective ambiguity, the absence of original code, IRLS non-convergence on ORL/YaleB, Olivetti and Deng Cai defaults, and that YaleB used 10 trials and USPS used 3.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper has no limitation while the answer \answerNo{} means that the paper has limitations, but those are not discussed in the paper.
@@ -47,7 +47,7 @@
 \item {\bf Experimental result reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Sections~3--4 and Appendix~\ref{app:protocol} specify the solver, tracks, metrics, manifests, and assumptions. Tables~\ref{tab:track-a-acc}--\ref{tab:robustness} report mean$\pm$sample standard deviation with the actual trial count $n$. Code, configs, and \texttt{runs/} records are in the course repository \url{https://github.com/SelinaMai-SYM/COMP-3314-G23.git} on branch \texttt{v1}. We do not claim that a third party can recover unpublished author binaries.
+    \item[] Justification: Sections~2--4 and Appendix~\ref{app:audit} specify the solver variants, protocol R1, metrics, manifests, and assumptions. Table~\ref{tab:main} reports mean$\pm$sample standard deviation with the actual trial count $n$. Code, configs, and \texttt{runs/} records are in the course repository \url{https://github.com/SelinaMai-SYM/COMP-3314-G23.git} on branch \texttt{v1}. We do not claim that a third party can recover unpublished author binaries.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -82,7 +82,7 @@
 \item {\bf Experimental setting/details}
     \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer) necessary to understand the results?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~4 and Appendix~\ref{app:protocol} specify $k$, the $\gamma$ grid, Track~A versus Track~B selection, IRLS, metrics, and recorded assumptions for $\delta$ and $G_0$. Actual trial counts appear in every results table.
+    \item[] Justification: Sections~3--4 specify $k=5$, frozen $\gamma=1$, IRLS, metrics, and recorded assumptions for $\delta$ and $G_0$. Actual trial counts appear in Table~\ref{tab:main}. YaleB is $n=10$ and USPS is $n=3$, not 50.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -93,7 +93,7 @@
 \item {\bf Experiment statistical significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Reported intervals are sample standard deviations over completed $K$-means trials of the selected setting, with $n$ in every cell. We do not claim 50 runs on YaleB ($n=10$) or USPS SSC ($n=1$). Robustness Table~\ref{tab:robustness} uses the standard deviation of per-seed means and states that explicitly. No hypothesis test is claimed.
+    \item[] Justification: Reported intervals are sample standard deviations over completed $K$-means trials, with $n$ in every cell of Table~\ref{tab:main}. We do not claim 50 runs on YaleB ($n=10$) or USPS ($n=3$). No hypothesis test is claimed.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -110,7 +110,7 @@
 \item {\bf Experiments compute resources}
     \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~4 records Python~3.13.3, 8~CPU cores, 16\,GB RAM, and no GPU. Table~\ref{tab:convergence} lists per-solve IRLS wall times (ORL $\gamma=1$ about $0.72$\,s; YaleB about $6.7$\,s; USPS $n=1$ about $7.9$\,s). We did not sum wall-clock time across all 191 run directories into a single cluster-hour figure.
+    \item[] Justification: Section~3 records Python~3.13.3, 8~CPU cores, 16\,GB RAM, and no GPU. Repair-round IRLS wall times at $\gamma=1$ are about $0.63$\,s (ORL E13), $0.20$\,s (JAFFE), $7.2$\,s (YaleB), and about $205$\,s for the USPS $n=3$ pilot. We did not sum wall-clock time across all run directories into a single cluster-hour figure.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -133,7 +133,7 @@
 \item {\bf Broader impacts}
     \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~9 notes that several datasets are identity-labelled faces collected by others and that this project neither collects new biometric data nor redistributes those images; the work is a clustering reimplementation, not a deployed recognizer.
+    \item[] Justification: Section~5 notes that several datasets are identity-labelled faces collected by others and that this project neither collects new biometric data nor redistributes those images; the work is a clustering reimplementation, not a deployed recognizer.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that there is no societal impact of the work performed.
@@ -159,7 +159,7 @@
 \item {\bf Licenses for existing assets}
     \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Appendix~\ref{app:data} credits AT\&T/ORL, JAFFE (non-commercial, no redistribution), Yale~B research use, and LIBSVM USPS; unknown licences for some sources are stated as unknown rather than invented.
+    \item[] Justification: Appendix~\ref{app:data} credits AT\&T/ORL, JAFFE (non-commercial, no redistribution), Yale~B research use, and LIBSVM USPS; UMIST files that are not 564 images are not treated as the paper set. Unknown licences are stated as unknown rather than invented.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not use existing assets.

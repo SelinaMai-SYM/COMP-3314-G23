@@ -19,7 +19,9 @@ pdflatex main.tex
 pdflatex main.tex
 ```
 
-The expected PDF is `main.pdf`.
+The expected PDFs are `main.pdf` and an identical copy `Group_23.pdf`.
+
+Main text (title through conclusion, including the abstract) must fit in **four pages**. References, appendix, and the NeurIPS checklist are excluded from that cap. Do not edit `neurips_2026.sty` fonts, margins, or spacing to squeeze. After `latexmk`, check with `pdfinfo`, `pdftotext -layout`, and `rg Overfull main.log`.
 
 ## Layout
 

@@ -6,4 +6,4 @@ Source: Deng Cai's `YaleB_32x32.mat` (Georghiades, Belhumeur, and Kriegman, TPAM
 
 Raw archive: `data/YaleB_32x32.mat` (gitignored). SHA-256 `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99`.
 
-The UCSD cropped PGM zip returned HTTP 404 on 2026-10-20, so this matrix is already 32×32 and the resize kernel is unknown. See `manifest.yaml`.
+The live UCSD cropped PGM zip returned HTTP 404 on 2026-10-20. A Wayback capture of that zip is a separate version: `load_dataset("YaleB", version="cropped2414")`. `load_dataset("YaleB")` still returns this mat. See `manifest_cropped.yaml` and `docs/repair_round1_dataset_recovery.md`.

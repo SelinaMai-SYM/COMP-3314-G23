@@ -68,22 +68,33 @@ def spectral_embedding(
     delta2: float | None = None,
     dense_threshold: int = 512,
     knn_method: str = "auto",
+    bandwidth_rule: str | None = None,
+    row_normalize: bool = False,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """c smallest eigenvectors of the symmetric normalized Laplacian.
 
     ``k`` defaults to 5, the neighborhood size stated for the spectral
     algorithms in the paper. The Gaussian bandwidth is not taken from a
-    library default; see ``knn_affinity``.
+    library default; see ``knn_affinity``. Raw eigenvectors are the default.
+    Row normalization is a diagnostic, not the paper's stated embedding.
     """
-    affinity, graph_info = knn_affinity(X, k=k, delta2=delta2, knn_method=knn_method)
+    affinity, graph_info = knn_affinity(
+        X, k=k, delta2=delta2, knn_method=knn_method, bandwidth_rule=bandwidth_rule
+    )
     laplacian = symmetric_normalized_laplacian(affinity)
     eigenvalues, embedding, solver = smallest_eigenpairs(
         laplacian, n_components, dense_threshold=dense_threshold
     )
+    row_normalized = bool(row_normalize)
+    if row_normalized:
+        norms = np.linalg.norm(embedding, axis=1, keepdims=True)
+        embedding = embedding / np.maximum(norms, 1e-12)
     info = {
         "eigenvalues": eigenvalues,
         "eigen_solver": solver,
         "graph": graph_info,
         "laplacian": "symmetric_normalized_eq4",
+        "row_normalize": row_normalized,
+        "n_undirected_edges": int(sparse.csr_matrix(affinity).nnz // 2),
     }
     return embedding, info

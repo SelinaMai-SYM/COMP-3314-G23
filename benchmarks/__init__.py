@@ -44,10 +44,13 @@ _PACKAGES = {
 }
 
 
-def load_dataset(name: str, root: Path | None = None):
+def load_dataset(name: str, root: Path | None = None, version: str | None = None):
     """Return ``X`` of shape ``(n, d)``, integer ``y``, and a metadata dict.
 
     ``root`` overrides that dataset package's ``data/`` directory.
+    ``version`` is optional. ``load_dataset("ORL")`` still returns the
+    Olivetti 64x64 pipeline. Pass ``version="att92"`` for the AT&T 92x112
+    release resized to 32x32.
     """
     key = _ALIASES.get(name.strip().lower())
     if key is None:
@@ -55,7 +58,9 @@ def load_dataset(name: str, root: Path | None = None):
         raise KeyError(f"unknown dataset {name!r}; known datasets: {known}")
     module_name = _PACKAGES[key]
     module = __import__(module_name, fromlist=["load_dataset"])
-    return module.load_dataset(root)
+    if version is None:
+        return module.load_dataset(root)
+    return module.load_dataset(root, version=version)
 
 
 __all__ = [

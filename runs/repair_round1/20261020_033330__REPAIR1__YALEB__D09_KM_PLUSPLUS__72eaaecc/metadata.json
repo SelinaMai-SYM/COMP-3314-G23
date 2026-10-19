@@ -1,0 +1,16 @@
+{
+  "config_hash": "72eaaecc",
+  "created_at": "2026-10-20T03:33:30+08:00",
+  "dataset": "YaleB",
+  "dataset_identity_status": "approximate_dengcai32_not_claimed_sample_identity_with_paper",
+  "dataset_version": "dengcai32",
+  "factor": "D09_KM_PLUSPLUS",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "ssc",
+  "notes": "YaleB Deng Cai 32x32 n=2414 c=38, k=5, gamma=1, G0=F, union kNN, median bandwidth, raw eigenvectors, max_iter=300. n_trials=10 (not 50). dataset_identity_status does not claim sample identity with the paper. E13 with k-means++. B_AMBIGUITY.",
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "run_id": "20261020_033330__REPAIR1__YALEB__D09_KM_PLUSPLUS__72eaaecc",
+  "selection_uses_labels": false,
+  "track": "REPAIR1",
+  "variant": "E13"
+}

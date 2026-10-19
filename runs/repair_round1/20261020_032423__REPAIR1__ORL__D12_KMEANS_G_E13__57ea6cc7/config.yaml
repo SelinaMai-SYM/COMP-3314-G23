@@ -1,0 +1,38 @@
+track: REPAIR1
+method: ssc
+dataset: ORL
+factor: D12_KMEANS_G_E13
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+notes: Olivetti ORL, k=5, gamma=1, E13, union kNN, median positive kNN squared bandwidth,
+  raw eigenvectors, G0=F, median_pairwise floor, max_iter=300, K-means random. Canonical
+  reconstruction. Also covers D03-median, D04-union, D05-raw, D07-G0=F, D08-iter300,
+  D09-random, D01-Olivetti.
+label_informed_selection: false
+protocol: R1_solve_FG_once_then_kmeans_seeds
+covers_factors:
+- D12
+- D03
+- D04
+- D05
+- D07
+- D08
+- D09
+- D01

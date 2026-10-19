@@ -1,6 +1,6 @@
 # 第一轮修复问题清单
 
-日期：2026-10-20。数学变体这一阶段的记录。ORL 诊断、数据集下载、报告压缩和推送不在本阶段。
+日期：2026-10-20。数学变体、ORL 诊断、数据回收、转移实验和四页报告都已做完。数字来自 `runs/repair_round1/` 与 `results/repair_round1/`。**没有把 ORL 76% 标成已复现。**
 
 ## Git 检查点
 
@@ -8,13 +8,13 @@
 
 `d73a6d1fe5cd514d1448e7c4e01d322e42bf1f9f`
 
-分支 `v1`，与 `origin/v1` 一致。此前三条提交：
+数学变体检查点：`a29efda`（Add E13 and E8 shrinkage variants as a math checkpoint）。报告与数据回收的收尾提交另记。
+
+此前提交：
 
 - `d73a6d1` Keep validation_report.json in sync with the markdown report.
 - `6bd1373` Record post-commit validation and the origin/v1 403 push denial.
 - `5d2d467` COMP3314 GP v1: faithful SSC reproduction, benchmark evaluation, method extension and report
-
-本阶段之后若有新提交，那是数学变体检查点，不是最终修复，也不取代上面的哈希。
 
 ## 字段
 
@@ -26,15 +26,15 @@
 
 | Issue ID | Severity | Final status |
 | --- | --- | --- |
-| P0-EQ8-EQ13 | P0 | 小凸核对已验证；聚类差距未跑 |
+| P0-EQ8-EQ13 | P0 | 小凸核对已验证。聚类上 E8 未填上 ORL/YaleB 差距（ORL E8 53.3±3.2 n=50；YaleB E8 19.5±1.5 n=10） |
 | P0-EQ10-DIM | P0 | 已确认；仍用按行 \(n\times n\)，印出的嵌入维对角未实现 |
 | P0-ALG1-L10 | P0 | 已确认；第 10 行仍不执行 |
-| P0-ORL-ACC | P0 | 未修复；本阶段未重跑 |
-| P0-YALEB-ACC | P0 | 未修复；本阶段未重跑 |
-| P0-DATA-MISSING | P0 | 未修复；本阶段未下载 |
+| P0-ORL-ACC | P0 | **未修复。** 忠实 E8 53.3±3.2（n=50）对论文 76.0±1.6。att92 n=5 最高约 58.8。禁止写成已复现 76% |
+| P0-YALEB-ACC | P0 | **未修复。** E8 19.5±1.5（n=10，不是 50）对论文 49.8±1.6。cropped2414 E13 18.0±0.7 |
+| P0-DATA-MISSING | P0 | 部分回收。att92 与 cropped2414 已取得，默认加载器未改。AR / BinAlpha / MSRA50 仍无。UMIST 是 1012/575，不是 564 |
 | P0-SPLS | P0 | 未修复；仍是 `NOT_IMPLEMENTED` |
-| P0-REPORT-PAGES | P0 | 未修复；本阶段未改报告 |
-| P1-STEP-VS-FP | P1 | 已在块例子上观察到；停止规则未改 |
+| P0-REPORT-PAGES | P0 | 已压正文。`pdfinfo` 13 页；结论与致谢在第 4 页结束；References 起于第 4 页；附录起于第 5 页。无 Overfull |
+| P1-STEP-VS-FP | P1 | 已在块例子上观察到；停止规则未改。ORL/YaleB \(\gamma=1\) IRLS 常未达 \(10^{-6}\) |
 | P1-E8-EPS-FLOOR | P1 | 已观察到；默认地板未改 |
 
 ## P0-EQ8-EQ13
@@ -46,9 +46,9 @@
 - Confirmed discrepancy: 有序对、式 (11) 的 \(1/2\) 和组合拉普拉斯下，式 (8) 的驻点系数是 2。式 (13) 的系数是 1，因为它来自少了一个 2 的式 (12)。\(n=6\) 的链和块上，CVXPY 1.9.3 / CLARABEL 0.11.1（`tol_gap_abs=tol_gap_rel=tol_feas=1e-10`）状态 `optimal`。E8 与式 (8) 的目标差约 \(10^{-10}\)，矩阵最大绝对差约 \(10^{-6}\)。E13 与图系数 \(\gamma/2\) 的问题达到同样的一致，而式 (8) 在 E13 的解上更大（链上约 \(4.537\) 对 \(4.021\)，块上约 \(3.656\) 对 \(3.652\)）
 - Suspected cause: \(\sum_{ij}\widetilde W_{ij}\lVert g_i-g_j\rVert_2^2=2\operatorname{Tr}(G^\top\widetilde L G)\)，式 (12) 写成了 \(\gamma\operatorname{Tr}\)，没有这个 2
 - Proposed repair: 两个变体都保留。E13 是印出的线性步。E8 是按推导得到的式 (8) 驻点。后续诊断要分别报告，不能把其中一个叫成另一个
-- Experiments required: 小凸核对已完成。ORL / YaleB 的单因子诊断未做，不能用这里的目标差解释 \(53.9\) 或 \(19.7\)
+- Experiments required: 小凸核对已完成。ORL / YaleB / JAFFE 短名单已跑：E8 并不比 E13 或 \(K\)-means(\(F\)) 更好
 - Verification criteria: `tests/test_repair_round1_math.py` 中梯度有限差分、两种变体的维度和交叉残差、CLARABEL 的目标和矩阵、以及二次代理的 L-BFGS-B。式 (8)、平滑目标、IRLS 代理、不动点残差四项不相等
-- Final status: 小凸核对已验证。聚类差距未验证，不标为已修复
+- Final status: 小凸核对已验证。E8 是忠实驻点，但不是 ORL 76% 的修复。不标为聚类差距已修复
 
 ## P0-EQ10-DIM
 
@@ -82,38 +82,38 @@
 - Affected component: ORL 上的 SSC 聚类结果；`report/main.tex` 所引的 Track A
 - Original paper reference: Chang et al. 表中的 ORL SSC，\(76.0\pm 1.6\)（报告对表 1–2 的引用）
 - Current implementation: 报告中的复现是 \(53.9\pm 3.0\)，\(n=50\)，\(\gamma=10^{-6}\)，且 \(\gamma\) 按标签选择。数据是 Olivetti \(64\times 64\) 双线性缩到 \(32\times 32\)，不是论文的 \(92\times 112\) 再缩到 \(32\times 32\)
-- Confirmed discrepancy: \(53.9\) 与 \(76.0\) 的差距记在现有报告里。本阶段没有重新测量
-- Suspected cause: 尚未分离。候选包括式 (8)/(13) 的系数、带宽、嵌入、初始化、图像尺寸和插值。本阶段只实现了系数变体，没有检验哪一个造成差距
-- Proposed repair: 后续单因子诊断再决定。E8 不能事先写成 ORL 的修复
-- Experiments required: ORL 单因子矩阵，同一数据和同一 K-means 种子下比较 \(F\)、\(G_{E13}\)、\(G_{E8}\)。本阶段明确不做
-- Verification criteria: 新的 run 目录、实际试验次数，以及与 \(76.0\pm 1.6\) 的差距。现有 \(53.9\) 不能被改写
-- Final status: 未修复
+- Confirmed discrepancy: 忠实 E8 ACC \(53.3\pm 3.2\)（n=50，`20261020_032508__REPAIR1__ORL__D12_KMEANS_G_E8__d484f3c9`）对论文 \(76.0\pm 1.6\)。E13 \(53.7\pm 2.8\)。\(K\)-means(\(F\)) \(53.9\pm 3.0\)。收缩没有帮助。k-means++（B）\(62.1\pm 1.6\) 仍差约 14 点。行归一化（C）\(60.2\pm 2.9\) 不是论文方法。att92 双线性 E13 \(53.9\pm 3.8\)（n=5）；最近邻 \(58.8\pm 5.3\)（n=5）
+- Suspected cause: 单因子矩阵未找到能接近 76% 的 A/B 设定。剩余候选包括未公开的 2015 预处理、未公开的 \(K\)-means 细节，以及图像身份
+- Proposed repair: 不把任何 C 类结果写成复现。作者问题见 `docs/repair_round1_author_questions.md`
+- Experiments required: 已做 ORL 单因子 + n=50 短名单。无效变体没有扩到 50
+- Verification criteria: 新的 run 目录、实际试验次数，以及与 \(76.0\pm 1.6\) 的差距。现有 \(53.9\) / \(53.3\) 不能被改写成 76
+- Final status: **未修复。禁止声称 ORL 76% 已复现**
 
 ## P0-YALEB-ACC
 
 - Severity: P0
 - Affected component: YaleB 上的 SSC 聚类结果
 - Original paper reference: Chang et al. 表中的 YaleB SSC，\(49.8\pm 1.6\)
-- Current implementation: 报告中的复现是 \(19.7\pm 1.1\)，\(n=10\)，不是 50。数据是 Deng Cai 的 `YaleB_32x32.mat`
-- Confirmed discrepancy: \(19.7\) 与 \(49.8\) 的差距记在现有报告里。本阶段没有重新测量
-- Suspected cause: 与 ORL 相同，尚未分离。试验次数和图像来源本身就和论文协议不同
-- Proposed repair: 在 ORL 上验证过的设定再移到 YaleB。不满 50 次就写实际次数
-- Experiments required: 本阶段不做
+- Current implementation: 邓蔡 mat 上 E8 \(19.5\pm 1.5\)（n=10），E13 \(19.7\pm 1.1\)（n=10）。不是 50 次
+- Confirmed discrepancy: 与论文 \(49.8\pm 1.6\) 仍差约 30 点。cropped2414 双线性 E13 \(18.0\pm 0.7\)（n=10）没有提升。k-means++（B）\(25.2\pm 0.6\)；行归一化（C）\(26.7\pm 1.8\)
+- Suspected cause: 与 ORL 相同，尚未分离。试验次数和图像来源本身就和论文协议不同。不声称与论文逐样本同一
+- Proposed repair: 不满 50 次就写实际次数。不把 C 写成忠实
+- Experiments required: 已转移 E8/E13/\(F\)/++/row-norm/cropped2414；n=10
 - Verification criteria: 实际 \(n\)、数据来源，以及与 \(49.8\pm 1.6\) 的差距
-- Final status: 未修复
+- Final status: **未修复**
 
 ## P0-DATA-MISSING
 
 - Severity: P0
 - Affected component: `benchmarks/ar`、`benchmarks/umist`、`benchmarks/binalpha`、`benchmarks/msra50`
 - Original paper reference: AR、UMIST、BinAlpha、MSRA50 的样本数和图像尺寸，见论文实验节
-- Current implementation: 这四个数据集没有可用的本地文件。ORL 与 YaleB 是近似来源，不是逐像素同一文件
-- Confirmed discrepancy: 报告已写明四个数据集未取得。本阶段没有下载，也没有把别的集合顶名
-- Suspected cause: 公开链接失效或许可不允许再分发。另一阶段在做回收
-- Proposed repair: 只接入能核对样本数的文件。找不到就记 URL、日期和 HTTP 状态
-- Experiments required: 数据回收不在本提交里。本提交不加入 `benchmarks/` 下的新数据
-- Verification criteria: 清单中的样本数、尺寸和校验和。没有这些之前，对应单元格保持未复现
-- Final status: 未修复
+- Current implementation: 默认 `load_dataset("AR"|"UMIST"|"BinAlpha"|"MSRA50")` 仍抛 `DatasetUnavailable`。额外版本：ORL `att92`（400 张 92×112）、YaleB `cropped2414`（2414 张）、UMIST 1012/575。默认 ORL/YaleB 加载器未改
+- Confirmed discrepancy: AR、BinAlpha、MSRA50 仍无文件。UMIST 读到的不是 564。没有用 Binary Alphadigits 或其它 MSRA 集合顶名
+- Suspected cause: 公开链接失效、WAF、许可，或论文子集无法从现有档案重建
+- Proposed repair: 只接入能核对样本数的文件。找不到就记 URL、日期和 HTTP 状态。见 `docs/repair_round1_dataset_recovery.md`
+- Experiments required: 回收已做。att92 / cropped2414 的聚类没有填上论文 ACC
+- Verification criteria: 清单中的样本数、尺寸和校验和。没有 564 / 26×30 / 1799×12 之前，对应单元格保持未复现
+- Final status: 部分回收；论文计数下的四个名字仍未对齐。不标成数据问题已关闭
 
 ## P0-SPLS
 
@@ -124,22 +124,22 @@
 - Confirmed discrepancy: 论文比较表含 SPLS。仓库里没有 SPLS 的数字
 - Suspected cause: 开放摘要没有第 3 节的更新公式，也没有官方代码
 - Proposed repair: 只有目标函数和算法写清楚才实现。否则保持 `NOT_IMPLEMENTED`
-- Experiments required: 全文检索不在本阶段
+- Experiments required: 2026-10-20 全文检索见 `docs/repair_round1_baseline_audit.md`。Unpaywall/OpenAlex 非 OA，arXiv 0 hits，作者页 PDF 链到 Elsevier DOI
 - Verification criteria: 实现必须能对着写出的更新式做小例子。在此之前结果单元格是未复现
-- Final status: 未修复
+- Final status: 未修复。仍是 `NOT_IMPLEMENTED`
 
 ## P0-REPORT-PAGES
 
 - Severity: P0
 - Affected component: `report/main.tex` 的正文（标题到结论，含摘要）
 - Original paper reference: 课程要求正文最多 4 页。参考文献和附录不计入。不改 `neurips_2026.sty` 的字号、页边距和行距
-- Current implementation: `docs/validation_report.md` 记录编译后的 PDF 为 22 页。本阶段没有改 `report/`
-- Confirmed discrepancy: 现有 PDF 不是 4 页正文的成品。正文结束页、参考文献起始页和附录起始页这一阶段没有重测
-- Suspected cause: 复现说明、偏差和实验叙述都写在正文里
-- Proposed repair: 实验完成后再压正文。长推导放附录
-- Experiments required: 无数学实验。需要 `pdfinfo` 和分页核对，本阶段不做
+- Current implementation: 重写后的 `report/main.tex` 使用 `\usepackage[preprint]{neurips_2026}`，未改 `neurips_2026.sty`。`latexmk -pdf` 成功。`pdfinfo`：13 页，letter。`pdftotext -layout`：第 4 页含 `6 Conclusion`、`Acknowledgments` 和 `References` 标题；第 5 页参考文献续页后进入附录 A；第 6 页附录 B；第 7 页清单。`rg Overfull main.log` 无匹配。`Group_23.pdf` 与 `main.pdf` 字节相同
+- Confirmed discrepancy: 旧 22 页叙述已删除。正文（标题到结论，含摘要与致谢）结束于第 4 页
+- Suspected cause: 已压缩
+- Proposed repair: 已执行
+- Experiments required: 无。检查命令见 `docs/repair_round1_validation.md`
 - Verification criteria: 正文结束页到第 4 页或之前，且正文能独立读完。编译失败不能写成成功
-- Final status: 未修复
+- Final status: 正文 4 页目标已满足（检查时间 2026-10-20 03:49 CST）
 
 ## P1-STEP-VS-FP
 

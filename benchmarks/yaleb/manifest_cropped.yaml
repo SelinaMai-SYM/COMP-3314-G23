@@ -1,0 +1,51 @@
+dataset_name: YaleB_cropped
+source_url: "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip"
+source_publication: >
+  A.S. Georghiades, P.N. Belhumeur, and D.J. Kriegman, From Few to Many,
+  IEEE TPAMI 2001. Cropped images: K.C. Lee, J. Ho, and D.J. Kriegman,
+  Acquiring Linear Subspaces for Face Recognition under Variable Lighting,
+  IEEE TPAMI 2005. The 2015-01-10 Wayback copy of
+  http://vision.ucsd.edu/~iskwak/ExtYaleDatabase/ExtYaleB.html links to
+  http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip as
+  "Cropped Images".
+download_date: "2026-10-20"
+archive_filename: CroppedYale_wayback_20220127.zip
+SHA256_checksum: "8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573"
+license_information: >
+  The 2015 ExtYaleB page says the extended database may be used for research
+  and asks publications to acknowledge it and cite Georghiades, Belhumeur,
+  and Kriegman, PAMI 2001. Publications that use the cropped images are also
+  asked to cite Lee, Ho, and Kriegman, PAMI 2005. The Yale Face Database B
+  page says images cannot be incorporated into another publicly distributed
+  database without permission from Yale University. The zip is gitignored
+  under benchmarks/yaleb/data/.
+original_sample_count: 2452
+selected_sample_count: 2414
+number_of_classes: 38
+original_feature_dimension: 32256
+processed_feature_dimension: 1024
+preprocessing_operations: >
+  The zip contains 2452 PGM files in 38 subject folders (yaleB01-yaleB13 and
+  yaleB15-yaleB39; yaleB14 is absent) plus 18 files ending in .pgm.bad.
+  38 filenames contain Ambient: 10 of those are 192x168 and 28 are 480x640.
+  The other 2414 PGM files are all uint8 with shape (192, 168), width 168
+  and height 192 in the PGM header, pixel range 0..255. Those 2414 images
+  are resized to 32x32 with PIL nearest, bilinear, and bicubic, divided by
+  255, and vectorized in C order. cropped2414 uses bilinear.
+sample_selection_method: >
+  Non-ambient PGM only, sorted by subject number then filename. Per-class
+  counts in that order are 64 ten times, then 60, 59, 60, 63, 62, 63, 63,
+  then 64 for the remaining classes. That histogram matches the counts
+  already recorded for Deng Cai gnd 1..38. Pixel identity with
+  YaleB_32x32.mat was not established.
+random_seed: unknown
+known_deviations: >
+  Live UCSD CroppedYale.zip URLs returned HTTP 404 on 2026-10-20. This file
+  is an Internet Archive capture of the official zip, not a fresh UCSD
+  response. The zip itself is not 2414 images; 2414 is the non-ambient PGM
+  count. load_dataset("YaleB") still returns YaleB_32x32.mat.
+verification_status: obtained
+processed_arrays:
+  nearest_uint8_sha256: "5ef5f18f3f2ff12b259dd73eb3183773cb3699deb83253cfbd6f27d1e14370a8"
+  bilinear_uint8_sha256: "3948285c86b7ba4545e9a7df536e029072a8f5ef9e29cd99495d624688fb4c65"
+  bicubic_uint8_sha256: "242b5539d1eaf29fa3ffa008c8ccb37a01e2b253808262be819002fa68efef1f"

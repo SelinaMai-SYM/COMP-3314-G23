@@ -26,7 +26,9 @@ def data_dir(root: Path | None = None) -> Path:
     return Path(__file__).resolve().parent / "data"
 
 
-def load_dataset(root: Path | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
+def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
+    if version not in (None, "zenodo"):
+        raise ValueError(f"unknown JAFFE version {version!r}")
     path = data_dir(root) / _ARCHIVE
     if not path.is_file():
         raise FileNotFoundError(

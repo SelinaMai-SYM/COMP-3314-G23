@@ -17,16 +17,18 @@ X, y, metadata = load_dataset("ORL")
 
 `X` 是 `float64`、形状 `(n, d)`，`y` 是 `int64` 标签。拿不到的数据集会抛出 `DatasetUnavailable`，不返回数组。预处理只有灰度、双线性缩放、拉直和除以 255，没有增强，也没有神经网络嵌入。
 
+2026-10-20 的补回收记在 `docs/repair_round1_dataset_recovery.md`。`load_dataset("ORL")` 和 `load_dataset("YaleB")` 仍分别返回 Olivetti 64×64 流程和邓蔡 `YaleB_32x32.mat`。新版本要用显式 `version`。
+
 ## 状态
 
 | 数据集 | 状态 | n | 类 | 处理后维度 | 来源 | SHA-256 | 许可 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ORL | approximate | 400 | 40 | 1024（32×32） | figshare 5976027 | `b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794` | 注明 AT&T Cambridge；原图常见 92×112，此文件是 64×64 |
+| ORL | approximate（默认） | 400 | 40 | 1024（32×32） | figshare 5976027 | `b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794` | 默认仍是 Olivetti 64×64→32×32。额外 `version="att92"` 为剑桥 92×112，见 `manifest_att92.yaml` |
 | JAFFE | verified | 213 | 10 | 676（26×26） | Zenodo 14974867 | `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b` | 禁止再分发，仅非商业研究 |
-| YaleB | approximate | 2414 | 38 | 1024（已是 32×32） | 邓蔡页面的 `YaleB_32x32.mat` | `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99` | 研究使用；官方裁剪 zip 为 404 |
+| YaleB | approximate（默认） | 2414 | 38 | 1024（已是 32×32） | 邓蔡页面的 `YaleB_32x32.mat` | `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99` | 默认仍是邓蔡 mat。额外 `version="cropped2414"` 见 `manifest_cropped.yaml`，不声称与 mat 逐像素同一 |
 | USPS | verified | 9298 | 10 | 256（已是 16×16） | LIBSVM `usps.bz2` 与 `usps.t.bz2` | `usps.bz2` `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f`；`usps.t.bz2` `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e` | 公开研究发布，压缩包内无许可证文件 |
 | AR | unavailable | 未测到 | 未测到 | 未测到 | 见 `ar/manifest.yaml` 中的失败 URL | unknown | 需要大学邮箱申请和密码 |
-| UMIST | unavailable | 未测到 | 未测到 | 未测到 | Lincoln eprints 被 WAF 拦住 | unknown | 未读到许可证 |
+| UMIST | unavailable（默认；564 未取得） | 默认未测到。磁盘上有 1012 / 575，不是 564 | 20（额外档案） | 见 `manifest_wayback.yaml` | Wayback / Figshare 额外版本 | 见额外 manifest | 默认 `load_dataset("UMIST")` 仍抛 `DatasetUnavailable`。额外 `precropped575` / `figshare575` 不是论文的 564 |
 | BinAlpha | unavailable | 未测到 | 未测到 | 未测到 | 未找到可追溯文件 | unknown | unknown |
 | MSRA50 | unavailable | 未测到 | 未测到 | 未测到 | 未找到 1799 张、12 类的文件 | unknown | unknown |
 

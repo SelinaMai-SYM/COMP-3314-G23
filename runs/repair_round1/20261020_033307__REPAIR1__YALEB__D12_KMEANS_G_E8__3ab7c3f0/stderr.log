@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/scripts/run_experiment.py", line 175, in run_config
+    prepared = prepare_method(method, X_used, n_clusters, params, perturbation=graph_spec)
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/experiments/methods.py", line 389, in prepare_method
+    return prepare_ssc_family(
+        X,
+    ...<18 lines>...
+        eps=float(params.get("eps", 1e-8)),
+    )
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/experiments/methods.py", line 159, in prepare_ssc_family
+    comb_evals, _vecs, _solver = smallest_eigenpairs(
+                                 ~~~~~~~~~~~~~~~~~~~^
+        combinatorial_laplacian(affinity), min(6, affinity.shape[0])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/SSC_method/spectral_embedding.py", line 56, in smallest_eigenpairs
+    evals, evecs = eigsh(sparse.csr_matrix(matrix), k=n_components, which="SA")
+                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/scipy/sparse/linalg/_eigen/arpack/arpack.py", line 1779, in eigsh
+    params.iterate()
+    ~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/scipy/sparse/linalg/_eigen/arpack/arpack.py", line 625, in iterate
+    self._raise_no_convergence()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/scipy/sparse/linalg/_eigen/arpack/arpack.py", line 422, in _raise_no_convergence
+    raise ArpackNoConvergence(f"No convergence ({num_iter} iterations, "
+                              f"{k_ok}/{self.k} eigenvectors converged)",
+                              ev, vec)
+scipy.sparse.linalg._eigen.arpack.arpack.ArpackNoConvergence: ARPACK error -1: No convergence (24141 iterations, 0/6 eigenvectors converged)

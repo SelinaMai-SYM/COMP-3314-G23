@@ -1,0 +1,20 @@
+{
+  "n_runs": 31,
+  "n_completed": 31,
+  "paper_orl_acc_pct": 76.0,
+  "paper_orl_nmi_pct": 88.6,
+  "v1_previous_acc": "53.9 \u00b1 3.0",
+  "v1_previous_run_id": "20261020_015209__TRACKA__SSC__ORL__5f95ad90",
+  "v1_gamma1_acc": "53.7 \u00b1 2.8",
+  "v1_gamma1_run_id": "20261020_015212__TRACKA__SSC__ORL__0fe4a166",
+  "registry": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/results/repair_round1/experiment_registry.csv",
+  "gap_table": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/results/repair_round1/paper_gap_analysis.csv",
+  "note": "Paper numbers are reported, not copied as ours. All ACC/NMI are from actual runs.",
+  "n_runs_repair_round1": 52,
+  "n_completed_repair_round1": 46,
+  "n_timeout_repair_round1": 0,
+  "registry_appended_rows": 0,
+  "gap_appended_rows": 0,
+  "hardware": "8 CPU / 16 GB",
+  "transfer_note": "JAFFE/YaleB/USPS and extension rows were appended. ORL 31-run matrix was not re-run. C is never labeled faithful."
+}

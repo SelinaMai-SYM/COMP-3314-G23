@@ -19,7 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from benchmarks import DatasetUnavailable, load_dataset
-from experiments.io import RunWriter, config_hash, make_run_id
+from experiments.io import RunWriter, config_hash, make_run_id, _token
 from experiments.methods import (
     CACHEABLE,
     STATELESS,
@@ -30,6 +30,16 @@ from experiments.methods import (
 )
 from experiments.perturbations import apply_perturbation
 from experiments.protocol import METHOD_STATUS, SHORT_METHOD
+
+
+VALID_FIDELITY = {"A_PAPER_FAITHFUL", "B_AMBIGUITY", "C_DIAGNOSTIC"}
+
+
+def _repair1_run_id(dataset: str, factor: str, hashed: str, when: datetime) -> str:
+    stamp = when.strftime("%Y%m%d_%H%M%S")
+    dataset_s = _token(dataset)
+    factor_s = _token(factor)
+    return f"{stamp}__REPAIR1__{dataset_s}__{factor_s}__{hashed}"
 
 
 class TimeoutError_(Exception):
@@ -69,9 +79,19 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
     params = dict(config.get("params") or {})
     perturbation_spec = config.get("perturbation")
     seed_start = int(config.get("trial_seed_start", 0))
+    dataset_version = config.get("dataset_version")
+    fidelity = config.get("paper_fidelity_category")
+    if fidelity is not None and fidelity not in VALID_FIDELITY:
+        raise ValueError(
+            f"paper_fidelity_category must be one of {sorted(VALID_FIDELITY)}; got {fidelity!r}"
+        )
     hashed = config_hash(config)
     started = datetime.now().astimezone()
-    run_id = make_run_id(track, SHORT_METHOD.get(method, method), dataset_name, hashed, when=started)
+    if track.upper() == "REPAIR1":
+        factor = str(config.get("factor") or params.get("variant") or method)
+        run_id = _repair1_run_id(dataset_name, factor, hashed, started)
+    else:
+        run_id = make_run_id(track, SHORT_METHOD.get(method, method), dataset_name, hashed, when=started)
     run_dir = _unique_run_dir(Path(runs_root), run_id)
     writer = RunWriter(run_dir)
     writer.write_config(config)
@@ -83,6 +103,11 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
             "track": track,
             "method": method,
             "dataset": dataset_name,
+            "dataset_version": dataset_version,
+            "dataset_identity_status": config.get("dataset_identity_status"),
+            "factor": config.get("factor"),
+            "variant": params.get("variant"),
+            "paper_fidelity_category": fidelity,
             "implementation_status": METHOD_STATUS.get(method, "UNKNOWN"),
             "created_at": started.isoformat(timespec="seconds"),
             "selection_uses_labels": bool(config.get("label_informed_selection", track.upper().startswith("TRACKA") or track.upper() == "TRACK_A" or "TRACKA" in track.upper())),
@@ -111,9 +136,12 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
             status_written = True
             return run_dir
 
-        print(f"[{run_id}] loading {dataset_name}", flush=True)
+        print(f"[{run_id}] loading {dataset_name} version={dataset_version}", flush=True)
         try:
-            X, y, data_meta = load_dataset(dataset_name)
+            if dataset_version in (None, ""):
+                X, y, data_meta = load_dataset(dataset_name)
+            else:
+                X, y, data_meta = load_dataset(dataset_name, version=str(dataset_version))
         except DatasetUnavailable as exc:
             writer.write_status("SKIPPED", reason=str(exc))
             writer.write_metrics({"n_trials_requested": n_trials, "n_trials_completed": 0, "reason": str(exc)})
@@ -135,7 +163,13 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
             raise TimeoutError_("timeout before any trial")
 
         prepared = None
-        extra_global: dict[str, Any] = {"perturbation": perturb_info, "dataset_metadata": {k: data_meta[k] for k in data_meta if k != "archive_path"}}
+        extra_global: dict[str, Any] = {
+            "perturbation": perturb_info,
+            "dataset_metadata": {k: data_meta[k] for k in data_meta if k != "archive_path"},
+            "dataset_identity_status": config.get("dataset_identity_status"),
+            "paper_fidelity_category": fidelity,
+            "hardware_note": "8 CPU / 16 GB target; see environment.json",
+        }
         if method in CACHEABLE:
             graph_spec = perturbation_spec if perturbation_spec and perturbation_spec.get("type") == "graph_drop" else None
             prepared = prepare_method(method, X_used, n_clusters, params, perturbation=graph_spec)
@@ -170,6 +204,14 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
                 "runtime_seconds_mean": float(np.mean([t["runtime_seconds"] for t in trials])) if trials else None,
                 "trials": trials,
                 "params": params,
+                "paper_fidelity_category": fidelity,
+                "dataset_version": dataset_version,
+                "dataset_checksum": extra_global.get("dataset_metadata", {}).get("SHA256_checksum")
+                if isinstance(extra_global.get("dataset_metadata"), dict)
+                else None,
+                "factor": config.get("factor"),
+                "variant": params.get("variant") or extra_global.get("variant"),
+                "gamma": params.get("gamma"),
                 **extra_global,
             }
             writer.write_metrics(metrics)

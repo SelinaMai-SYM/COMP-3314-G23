@@ -1,0 +1,47 @@
+dataset_name: UMIST_wayback
+source_url: "https://web.archive.org/web/20050403232828id_/http://images.ee.umist.ac.uk/danny/face.tar.gz"
+source_publication: >
+  D.B. Graham and N.M. Allinson, Characterising virtual eigensignatures for
+  general purpose face recognition, in Face Recognition: From Theory to
+  Applications, NATO ASI Series F, 1998. The 2001-04-05 Wayback copy of
+  http://images.ee.umist.ac.uk/danny/database.html calls this the UMIST Face
+  Database and says it consists of 564 images of 20 people.
+download_date: "2026-10-20"
+archive_filename: face_wayback_20050403.tar.gz
+SHA256_checksum: "df58ad9a38573624ab75be66d7d47243f674214cc0cb68d8a619247e1fd0c8fb"
+license_information: >
+  The 2001 UMIST page says only images of subject 1a may be published, and
+  only with written permission; users should cite Graham and Allinson 1998
+  and notify Daniel Graham or Nigel Allinson. The archives are gitignored
+  under benchmarks/umist/data/.
+original_sample_count: 1012
+selected_sample_count: 0
+number_of_classes: 20
+original_feature_dimension: unknown
+processed_feature_dimension: unknown
+preprocessing_operations: >
+  Not stacked. 1013 tar members end in .pgm, 1012 unique names (1t/1t052.pgm
+  is stored twice), 20 directories 1a..1t, 122 distinct shapes. The most
+  common shape is (196, 170) with 71 images. Pixel range across images is
+  0..238. A rectangular feature matrix was not built.
+sample_selection_method: "not selected; the file is not the 564-image set"
+random_seed: unknown
+known_deviations: >
+  The page text says 564 images. The gzip linked from that page, as captured
+  by the Internet Archive on 2005-04-03, contains 1012 unique PGM files.
+  This archive is not accepted as the exact paper set. The live host
+  returned HTTP 502. Lincoln eprints returned HTTP 202 with an AWS WAF
+  challenge. load_dataset("UMIST") still raises DatasetUnavailable.
+  version='uncropped1012' also raises, because the shapes are not uniform.
+verification_status: approximate
+companion_cropped_archive:
+  url: "https://web.archive.org/web/20070805190146id_/http://images.ee.umist.ac.uk/danny/cropped.tar.gz"
+  filename: cropped_wayback_20070805.tar.gz
+  SHA256_checksum: "c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4"
+  pgm_count: 575
+  unique_pixel_arrays: 565
+  classes: 20
+  spatial_size: [112, 92]
+  pixel_range: [0, 238]
+  loader_version: precropped575
+  note: "Pre-cropped file linked from the same 2001 page as a 4.5Mb tar. Not 564 images."

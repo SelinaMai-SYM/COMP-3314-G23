@@ -102,6 +102,7 @@ def knn_affinity(
     k: int = 5,
     delta2: float | None = None,
     knn_method: str = "auto",
+    bandwidth_rule: str | None = None,
 ) -> tuple[sparse.csr_matrix, dict[str, Any]]:
     """Symmetric kNN Gaussian affinity.
 
@@ -113,32 +114,76 @@ def knn_affinity(
     kNN squared distances when ``delta2`` is omitted. The diagonal is 0.
     ``k`` is an explicit argument; the scikit-learn default neighbor count
     and the scikit-learn RBF bandwidth are not used.
+
+    ``bandwidth_rule`` is optional and does not change that default. None
+    with ``delta2 is None`` is still the median of positive kNN squared
+    distances. ``mean_knn_distance_scale`` uses (mean positive kNN Euclidean
+    distance)^2. ``fixed`` requires a positive ``delta2``. 
+    ``self_tuning_zelnik_manor`` is a local-scale diagnostic, not the
+    paper's stated affinity.
     """
     dist2, idx = knn_neighbor_squared_distances(X, k, method=knn_method)
     n_samples = X.shape[0]
-    if delta2 is None:
-        delta2_used = median_positive(dist2, fallback=1.0)
-        delta2_source = "median_positive_knn_squared_distance"
-    else:
-        delta2_used = float(delta2)
-        delta2_source = "provided"
-        if not np.isfinite(delta2_used) or delta2_used <= 0.0:
-            raise ValueError("delta2 must be finite and positive")
     rows = np.repeat(np.arange(n_samples), k)
     cols = idx.ravel()
-    weights = np.exp(-dist2.ravel() / delta2_used)
+    rule = bandwidth_rule
+    if rule is None:
+        rule = "provided" if delta2 is not None else "median_positive_knn_squared_distance"
+    extra_info: dict[str, Any] = {}
+    if rule == "self_tuning_zelnik_manor":
+        if delta2 is not None:
+            raise ValueError("self-tuning bandwidth does not take a global delta2")
+        sigma = np.sqrt(np.maximum(dist2[:, -1], 0.0))
+        sigma = np.maximum(sigma, 1e-12)
+        weights = np.exp(-dist2.ravel() / (sigma[rows] * sigma[cols]))
+        delta2_used = None
+        delta2_source = "self_tuning_zelnik_manor"
+        extra_info["local_scale_min"] = float(sigma.min())
+        extra_info["local_scale_median"] = float(np.median(sigma))
+        extra_info["local_scale_max"] = float(sigma.max())
+    elif rule == "mean_knn_distance_scale":
+        if delta2 is not None:
+            raise ValueError("mean_knn_distance_scale does not take a provided delta2")
+        distances = np.sqrt(np.maximum(dist2, 0.0))
+        positive = distances[dist2 > 0.0]
+        mean_distance = float(np.mean(positive)) if positive.size else 1.0
+        delta2_used = mean_distance * mean_distance
+        if not np.isfinite(delta2_used) or delta2_used <= 0.0:
+            delta2_used = 1.0
+        delta2_source = "mean_knn_distance_scale"
+        extra_info["mean_knn_euclidean"] = mean_distance
+        weights = np.exp(-dist2.ravel() / delta2_used)
+    elif rule in {"median_positive_knn_squared_distance", "provided", "fixed"}:
+        if delta2 is None:
+            if rule == "fixed":
+                raise ValueError("fixed bandwidth requires a positive delta2")
+            delta2_used = median_positive(dist2, fallback=1.0)
+            delta2_source = "median_positive_knn_squared_distance"
+        else:
+            delta2_used = float(delta2)
+            if not np.isfinite(delta2_used) or delta2_used <= 0.0:
+                raise ValueError("delta2 must be finite and positive")
+            delta2_source = "fixed_global" if rule == "fixed" else "provided"
+        weights = np.exp(-dist2.ravel() / delta2_used)
+    else:
+        raise ValueError(
+            f"unknown bandwidth_rule {bandwidth_rule!r}; expected median, "
+            "mean_knn_distance_scale, fixed, or self_tuning_zelnik_manor"
+        )
     directed = sparse.coo_matrix((weights, (rows, cols)), shape=(n_samples, n_samples))
     affinity = directed.maximum(directed.T).tocsr()
     affinity.setdiag(0.0)
     affinity.eliminate_zeros()
     info = {
         "k": int(k),
-        "delta2": float(delta2_used),
-        "delta": float(np.sqrt(delta2_used)),
+        "delta2": None if delta2_used is None else float(delta2_used),
+        "delta": None if delta2_used is None else float(np.sqrt(delta2_used)),
         "delta2_source": delta2_source,
+        "bandwidth_rule": rule,
         "symmetrization": "union_maximum",
         "knn_method": knn_method if knn_method != "auto" else ("dense" if n_samples <= 1500 else "block"),
     }
+    info.update(extra_info)
     return affinity, info
 
 

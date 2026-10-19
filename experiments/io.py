@@ -198,11 +198,17 @@ def collect_environment() -> dict[str, Any]:
             versions[name] = getattr(mod, "__version__", "unknown")
         except Exception as exc:  # noqa: BLE001
             versions[name] = f"unavailable: {type(exc).__name__}"
+    memory_bytes = None
+    try:
+        memory_bytes = int(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES"))
+    except (ValueError, OSError, AttributeError):
+        memory_bytes = None
     return {
         "python_executable": sys.executable,
         "platform": platform.platform(),
         "processor": platform.processor(),
         "cpu_count_os": os.cpu_count(),
+        "physical_memory_bytes": memory_bytes,
         "hostname": platform.node(),
         "pid": os.getpid(),
         "cwd": str(Path.cwd()),

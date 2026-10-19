@@ -1,0 +1,28 @@
+% Compact repair-round-1 table. Every clustering number is from
+% results/repair_round1/ (or the cited previous-v1 run). Paper cells are
+% Chang et al.\ 2015, reported only. Category C is diagnostic, not SSC.
+% USPS E8 / $k$-means++ / row-norm were not run; the USPS B cell is E13.
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{llcccc}
+\toprule
+Set ($n$) & Metric & Paper (reported) & E8 (A) & $k$-means++ (B) & Row-norm (C) \\
+\midrule
+ORL (50) & ACC & $76.0{\pm}1.6$ & $53.3{\pm}3.2$ & $62.1{\pm}1.6$ & $60.2{\pm}2.9$ \\
+         & NMI & $88.6{\pm}1.5$ & $76.2{\pm}1.8$ & $80.3{\pm}0.7$ & $80.1{\pm}1.2$ \\
+JAFFE (50) & ACC & $81.2{\pm}1.6$ & $68.4{\pm}11.1$ & $95.3{\pm}0.0$ & $85.0{\pm}9.4$ \\
+           & NMI & $84.3{\pm}1.6$ & $83.0{\pm}5.7$ & $94.1{\pm}0.0$ & $91.8{\pm}4.1$ \\
+YaleB (10) & ACC & $49.8{\pm}1.6$ & $19.5{\pm}1.5$ & $25.2{\pm}0.6$ & $26.7{\pm}1.8$ \\
+           & NMI & $46.8{\pm}1.3$ & $29.3{\pm}1.2$ & $30.9{\pm}0.8$ & $37.4{\pm}0.7$ \\
+USPS (3) & ACC & $75.5{\pm}1.9$ & N/A & $63.8{\pm}1.7^{\dagger}$ & N/A \\
+         & NMI & $79.8{\pm}1.6$ & N/A & $77.5{\pm}4.0^{\dagger}$ & N/A \\
+\bottomrule
+\end{tabular}\\[2pt]
+{\raggedright\scriptsize
+Mean$\pm$sample std over completed $K$-means trials; $n$ is the actual count, not padded to 50.
+Paper cells are \emph{not} Our Reproduction.
+E8 is the faithful stationary point of printed Eq.~(8) ($A=S+2\gamma\widetilde L$), union $k$NN, $k{=}5$, $\gamma{=}1$, raw eigenvectors, $G_0{=}F$, random $K$-means.
+$k$-means++ is a B reconstruction (paper unspecified; historical protocol is random).
+Row-norm is C (Ng--Jordan--Weiss), diagnostic only, never called the paper method.
+$^{\dagger}$USPS B cell is E13 (printed Eq.~13), not $k$-means++; E8 and row-norm were not run.
+AR, UMIST (no 564-image file), BinAlpha, MSRA50, and SPLS are N/A --- not reproduced.
+\par}

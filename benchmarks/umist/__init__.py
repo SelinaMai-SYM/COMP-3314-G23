@@ -1,4 +1,4 @@
-"""Sheffield/UMIST faces (unavailable)."""
+"""Sheffield/UMIST faces. The default loader stays unavailable."""
 
 from .loader import load_dataset
 

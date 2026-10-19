@@ -1,0 +1,3 @@
+[20261020_033307__REPAIR1__YALEB__D12_KMEANS_G_E8__3ab7c3f0] loading YaleB version=dengcai32
+[20261020_033307__REPAIR1__YALEB__D12_KMEANS_G_E8__3ab7c3f0] n=2414 d=1024 c=38 method=ssc trials=10
+[20261020_033307__REPAIR1__YALEB__D12_KMEANS_G_E8__3ab7c3f0] FAILED: ArpackNoConvergence: ARPACK error -1: No convergence (24141 iterations, 0/6 eigenvectors converged)

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/scripts/run_experiment.py", line 189, in run_config
+    labels, trial_extra = run_stateless_method(method, X_used, n_clusters, seed, params)
+                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/experiments/methods.py", line 233, in run_stateless_method
+    labels = lda_kmeans_fit_predict(
+             ^^^^^^^^^^^^^^^
+NameError: name 'lda_km_baseline' is not defined

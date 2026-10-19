@@ -1,0 +1,29 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.DS_Store
+.env
+*.pem
+credentials.json
+data/raw/
+# Per-dataset raw archives. JAFFE forbids redistribution; Extended Yale B
+# and AT&T/ORL restrict republication of the images.
+benchmarks/*/data/**
+!benchmarks/*/data/.gitignore
+report/*.aux
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz
+report/*.blg
+report/*.bbl
+*.zip

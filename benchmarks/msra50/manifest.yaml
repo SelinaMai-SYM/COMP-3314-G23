@@ -1,0 +1,29 @@
+dataset_name: MSRA50
+source_url: unknown
+source_publication: >
+  Chang et al. (AAAI 2015) name MSRA50 but cite no source. He, Yan, Hu,
+  Niyogi, and Zhang, Face Recognition Using Laplacianfaces, IEEE TPAMI 2005,
+  describe a face collection made at Microsoft Research Asia with 12 people,
+  64 to 80 frontal images per person in each of two sessions, cropped to
+  32x32. That paper does not state a total of 1799 and does not give a
+  download URL. The name MSRA50 and the count 1799 are not established as
+  that file.
+download_date: "2026-10-20"
+archive_filename: unknown
+SHA256_checksum: unknown
+license_information: unknown
+original_sample_count: unknown
+selected_sample_count: unknown
+number_of_classes: unknown
+original_feature_dimension: unknown
+processed_feature_dimension: unknown
+preprocessing_operations: "not applied; no archive was obtained"
+sample_selection_method: unknown
+random_seed: unknown
+known_deviations: >
+  Chang et al. state 1799 images, 12 classes, resized to 32x32, with pixel
+  features. No archive with those measured counts was downloaded. Unofficial
+  .mat bundles posted on CSDN were not used. MSRA-B, MSRA10K, MSRA-CFW, and
+  MSRA-TD500 are different datasets and were not substituted. The official
+  cropped Extended Yale B and other face sets were not renamed to MSRA50.
+verification_status: unavailable

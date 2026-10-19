@@ -1,0 +1,18 @@
+# Gamma sensitivity (Track A SSC)
+
+Track A SSC completed trials on the gamma grid. YaleB and USPS have only gamma=1.
+
+| Dataset | gamma | ACC% | NMI% | n trials | run_id |
+| --- | --- | --- | --- | --- | --- |
+| ORL | 1e-06 | 53.9 ± 3.0 (n=50) | 76.5 ± 1.7 (n=50) | 50 | 20261020_015209__TRACKA__SSC__ORL__5f95ad90 |
+| ORL | 0.001 | 53.9 ± 3.0 (n=50) | 76.5 ± 1.7 (n=50) | 50 | 20261020_015210__TRACKA__SSC__ORL__c8acf58b |
+| ORL | 1.0 | 53.7 ± 2.8 (n=50) | 76.7 ± 1.5 (n=50) | 50 | 20261020_015212__TRACKA__SSC__ORL__0fe4a166 |
+| ORL | 1000.0 | 43.1 ± 2.6 (n=50) | 66.0 ± 1.3 (n=50) | 50 | 20261020_015214__TRACKA__SSC__ORL__461ff905 |
+| ORL | 1000000.0 | 36.1 ± 2.9 (n=50) | 57.0 ± 1.3 (n=50) | 50 | 20261020_015216__TRACKA__SSC__ORL__36a25236 |
+| JAFFE | 1e-06 | 68.5 ± 11.2 (n=50) | 83.0 ± 5.7 (n=50) | 50 | 20261020_015449__TRACKA__SSC__JAFFE__91a9af4a |
+| JAFFE | 0.001 | 68.5 ± 11.2 (n=50) | 83.0 ± 5.7 (n=50) | 50 | 20261020_015450__TRACKA__SSC__JAFFE__dad6adc3 |
+| JAFFE | 1.0 | 68.6 ± 11.3 (n=50) | 83.0 ± 5.8 (n=50) | 50 | 20261020_015452__TRACKA__SSC__JAFFE__536c9eb1 |
+| JAFFE | 1000.0 | 70.6 ± 9.7 (n=50) | 83.6 ± 5.1 (n=50) | 50 | 20261020_015454__TRACKA__SSC__JAFFE__c2b04f4e |
+| JAFFE | 1000000.0 | 74.8 ± 8.4 (n=50) | 85.6 ± 4.3 (n=50) | 50 | 20261020_015456__TRACKA__SSC__JAFFE__4d8acd1f |
+| YaleB | 1.0 | 19.7 ± 1.1 (n=10) | 29.5 ± 1.0 (n=10) | 10 | 20261020_015611__TRACKA__SSC__YALEB__cff9a04e |
+| USPS | 1.0 | 62.1 (n=1) | 73.3 (n=1) | 1 | 20261020_020231__TRACKA__SSC__USPS__829559a2 |

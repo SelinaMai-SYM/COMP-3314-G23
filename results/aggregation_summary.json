@@ -1,0 +1,11 @@
+{
+  "n_run_directories": 191,
+  "status_counts": {
+    "COMPLETED": 184,
+    "SKIPPED": 6,
+    "FAILED": 1
+  },
+  "selection_rule": "label-informed: among completed settings of this method and dataset, select the setting with the highest mean ACC over its completed trials; then report mean\u00b1std over ALL completed trials of that selected setting. The paper is ambiguous between 50 random restarts, best-objective, and mean\u00b1std. Every trial is kept. No trial is dropped by an invented best-objective filter.",
+  "lda_sc": "APPROXIMATE; omitted from the main faithful tables",
+  "spls": "NOT_IMPLEMENTED; N/A \u2014 not reproduced"
+}

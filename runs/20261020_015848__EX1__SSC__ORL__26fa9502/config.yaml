@@ -1,0 +1,12 @@
+track: EX1
+method: ssc
+dataset: ORL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: EX1 original SSC A0
+label_informed_selection: false

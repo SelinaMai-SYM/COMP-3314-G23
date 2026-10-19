@@ -1,0 +1,12 @@
+track: EX6
+method: rssc
+dataset: ORL
+n_trials: 20
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 9
+  gamma: 1.0
+  max_iter: 300
+notes: EX6 k=9
+label_informed_selection: false

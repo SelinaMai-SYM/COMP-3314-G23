@@ -1,0 +1,95 @@
+{
+  "ablation": "A0_union_knn",
+  "acc_mean": 0.6214239621423963,
+  "acc_std": 0.0,
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "embedding_info": {
+    "eigen_solver": "scipy.sparse.linalg.eigsh",
+    "graph": {
+      "delta": 3.7357891404747243,
+      "delta2": 13.95612050208888,
+      "delta2_source": "median_positive_knn_squared_distance",
+      "k": 5,
+      "knn_method": "block",
+      "symmetrization": "union_maximum"
+    }
+  },
+  "eq13_graph_coefficient": "gamma",
+  "eq8_graph_term_correspondence": "gamma_over_2",
+  "fixed_point_residual": 0.46856740335302455,
+  "g0": "F",
+  "initial_zero_residual_floor": 0.042307633333107234,
+  "irls_converged": true,
+  "linear_update": "equation_13",
+  "max_iter": 300,
+  "n_clusters": 10,
+  "n_features": 256,
+  "n_irls_iterations": 171,
+  "n_samples": 9298,
+  "n_trials_completed": 1,
+  "n_trials_requested": 1,
+  "nmi_mean": 0.7327009206903549,
+  "nmi_std": 0.0,
+  "params": {
+    "gamma": 1.0,
+    "k": 5,
+    "max_iter": 300
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_embedding_seconds": 1.5859672911465168,
+  "runtime_irls_seconds": 7.89081308292225,
+  "runtime_seconds_mean": 0.05596583383157849,
+  "shrinkage_graph": {
+    "delta": 0.0012237388447058695,
+    "delta2": 1.497536760042056e-06,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "block",
+    "symmetrization": "union_maximum"
+  },
+  "tol": 1e-06,
+  "trial_seeds": [
+    0
+  ],
+  "trials": [
+    {
+      "acc": 0.6214239621423963,
+      "kmeans_inertia": 2.249190989202606,
+      "kmeans_init": "random",
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.7327009206903549,
+      "runtime_seconds": 0.05596583383157849,
+      "seed": 0,
+      "trial_index": 0
+    }
+  ],
+  "weights_frozen_before_irls": true
+}

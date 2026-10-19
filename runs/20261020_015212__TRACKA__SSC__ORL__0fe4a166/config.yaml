@@ -1,0 +1,12 @@
+track: TRACKA
+method: ssc
+dataset: ORL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: 'Track A SSC: IRLS once per gamma, 50 K-means on G'
+label_informed_selection: true

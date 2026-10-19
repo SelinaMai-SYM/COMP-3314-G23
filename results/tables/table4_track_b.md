@@ -1,0 +1,20 @@
+# Table 4. Track B fair comparison
+
+Track B: same data and preprocessing; gamma=1 a priori; DR dimension min(50, n_clusters, n-1, d), and K-1 for LDA. No labels for training or tuning. Separate from Track A. LDA-SC is APPROXIMATE and is omitted. SPLS is N/A — not reproduced.
+
+| Method | Metric | ORL | JAFFE | YaleB | USPS |
+| --- | --- | --- | --- | --- | --- |
+| K-means | ACC% | 51.8 ± 3.3 (n=50; 20261020_015620__TRACKB__KMEANS__ORL__4276d994) | 73.2 ± 5.7 (n=50; 20261020_015758__TRACKB__KMEANS__JAFFE__d794cf45) | 9.3 ± 0.6 (n=10; 20261020_015827__TRACKB__KMEANS__YALEB__f0337c3c) | N/A — not reproduced |
+| K-means | NMI% | 74.4 ± 1.5 (n=50; 20261020_015620__TRACKB__KMEANS__ORL__4276d994) | 83.1 ± 3.5 (n=50; 20261020_015758__TRACKB__KMEANS__JAFFE__d794cf45) | 13.0 ± 0.9 (n=10; 20261020_015827__TRACKB__KMEANS__YALEB__f0337c3c) | N/A — not reproduced |
+| SC | ACC% | 54.2 ± 3.1 (n=50; 20261020_015621__TRACKB__SC__ORL__263aa38a) | 67.7 ± 11.3 (n=50; 20261020_015800__TRACKB__SC__JAFFE__ec930f08) | 20.1 ± 1.2 (n=10; 20261020_015830__TRACKB__SC__YALEB__7509c691) | N/A — not reproduced |
+| SC | NMI% | 76.5 ± 1.6 (n=50; 20261020_015621__TRACKB__SC__ORL__263aa38a) | 82.8 ± 5.7 (n=50; 20261020_015800__TRACKB__SC__JAFFE__ec930f08) | 29.9 ± 0.9 (n=10; 20261020_015830__TRACKB__SC__YALEB__7509c691) | N/A — not reproduced |
+| PCA-KM | ACC% | 52.6 ± 2.9 (n=50; 20261020_015626__TRACKB__PCAKM__ORL__3aa11ff9) | 74.8 ± 7.7 (n=50; 20261020_015803__TRACKB__PCAKM__JAFFE__e2b28f48) | 9.1 ± 0.6 (n=10; 20261020_015840__TRACKB__PCAKM__YALEB__c60160aa) | N/A — not reproduced |
+| PCA-KM | NMI% | 75.0 ± 1.5 (n=50; 20261020_015626__TRACKB__PCAKM__ORL__3aa11ff9) | 83.1 ± 4.5 (n=50; 20261020_015803__TRACKB__PCAKM__JAFFE__e2b28f48) | 12.7 ± 0.9 (n=10; 20261020_015840__TRACKB__PCAKM__YALEB__c60160aa) | N/A — not reproduced |
+| PCA-SC | ACC% | 53.0 ± 3.1 (n=50; 20261020_015630__TRACKB__PCASC__ORL__afa6d100) | 60.0 ± 7.4 (n=50; 20261020_015805__TRACKB__PCASC__JAFFE__ebef5506) | N/A — not reproduced | N/A — not reproduced |
+| PCA-SC | NMI% | 76.1 ± 1.8 (n=50; 20261020_015630__TRACKB__PCASC__ORL__afa6d100) | 73.2 ± 4.0 (n=50; 20261020_015805__TRACKB__PCASC__JAFFE__ebef5506) | N/A — not reproduced | N/A — not reproduced |
+| LDA-KM | ACC% | 48.5 ± 3.0 (n=50; 20261020_015636__TRACKB__LDAKM__ORL__f5aa3bcc) | 64.4 ± 9.2 (n=50; 20261020_015808__TRACKB__LDAKM__JAFFE__05066b21) | N/A — not reproduced | N/A — not reproduced |
+| LDA-KM | NMI% | 72.9 ± 1.7 (n=50; 20261020_015636__TRACKB__LDAKM__ORL__f5aa3bcc) | 78.6 ± 5.1 (n=50; 20261020_015808__TRACKB__LDAKM__JAFFE__05066b21) | N/A — not reproduced | N/A — not reproduced |
+| LLC | ACC% | 62.1 ± 2.0 (n=50; 20261020_015755__TRACKB__LLC__ORL__07af2c07) | 88.4 ± 6.9 (n=50; 20261020_015824__TRACKB__LLC__JAFFE__3badacab) | N/A — not reproduced | N/A — not reproduced |
+| LLC | NMI% | 78.7 ± 1.3 (n=50; 20261020_015755__TRACKB__LLC__ORL__07af2c07) | 91.2 ± 2.7 (n=50; 20261020_015824__TRACKB__LLC__JAFFE__3badacab) | N/A — not reproduced | N/A — not reproduced |
+| SSC | ACC% | 53.7 ± 2.8 (n=50; 20261020_015623__TRACKB__SSC__ORL__2f250011) | 68.6 ± 11.3 (n=50; 20261020_015801__TRACKB__SSC__JAFFE__28be359a) | 19.7 ± 1.1 (n=10; 20261020_015831__TRACKB__SSC__YALEB__a3f768d6) | 62.1 ± 0.0 (n=1; 20261020_020231__TRACKA__SSC__USPS__829559a2) |
+| SSC | NMI% | 76.7 ± 1.5 (n=50; 20261020_015623__TRACKB__SSC__ORL__2f250011) | 83.0 ± 5.8 (n=50; 20261020_015801__TRACKB__SSC__JAFFE__28be359a) | 29.5 ± 1.0 (n=10; 20261020_015831__TRACKB__SSC__YALEB__a3f768d6) | 73.3 ± 0.0 (n=1; 20261020_020231__TRACKA__SSC__USPS__829559a2) |

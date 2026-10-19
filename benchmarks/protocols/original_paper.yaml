@@ -1,0 +1,88 @@
+# Protocol for Chang, Nie, Ma, Yang, and Zhou, AAAI 2015,
+# "A Convex Formulation for Spectral Shrunk Clustering".
+# Statements under "explicit" are taken from the paper.
+# Statements under "assumptions" are this reproduction's choices.
+# Unspecified items are not given a paper-backed value.
+
+paper:
+  citation: "Xiaojun Chang, Feiping Nie, Zhigang Ma, Yi Yang, and Xiaofang Zhou. A Convex Formulation for Spectral Shrunk Clustering. AAAI 2015."
+  dataset_paragraph_claims:
+    AR: "840 faces, 120 people, pixel features; resize not stated"
+    JAFFE: "213 images, 10 subjects, resized to 26x26, pixel features"
+    ORL: "40 subjects, 10 images each, resized to 32x32, pixel features"
+    UMIST: "564 images, 20 individuals, pixel features; resize not stated"
+    BinAlpha: "26 binary handwritten alphabets; 30 images randomly selected per alphabet"
+    MSRA50: "1799 images, 12 classes, resized to 32x32, pixel features"
+    YaleB: "2414 near-frontal images, 38 people, resized to 32x32, pixel features"
+    USPS: "9298 grayscale handwritten digit images, resized to 16x16, pixel features"
+
+explicit:
+  datasets: [AR, JAFFE, ORL, UMIST, BinAlpha, MSRA50, YaleB, USPS]
+  neighborhood_k: 5
+  applies_to: "all spectral clustering algorithms"
+  parameter_grid: ["1e-6", "1e-3", "1e0", "1e3", "1e6"]
+  parameter_grid_note: "The paper writes {10^{-6}, 10^{-3}, 10^{0}, 10^{3}, 10^{6}} and says to report the best results."
+  clustering_repetitions: 50
+  initialization: "random initialization"
+  metrics: [ACC, NMI]
+  acc_note: "ACC uses the Kuhn-Munkres mapping. Defined in the paper as equation (19)."
+  nmi_note: "NMI is the Strehl and Ghosh form in equations (20) and (21), with the geometric-mean normalization."
+  gamma_sensitivity: "Figure 1 varies gamma. The text says that, except on MSRA50 and USPS, gamma = 1 attains the best or a respectable result."
+  convergence: "Figure 2. The text says gamma is fixed at 1, called the median of the tuned range."
+  dimensionality_reduction: "For dimensionality-reduction-based K-means and spectral clustering, project into a subspace of 10 to 150 and report the best results."
+  report_best_results: true
+
+ambiguity:
+  unresolved: true
+  paper_sentence: "To reduce the influence of statistical variation, we repeat each clustering 50 times with random initialization and report the results corresponding to the best objective function values."
+  table_presentation: "Tables 1 and 2 report mean ± standard deviation for ACC and NMI."
+  not_resolved_here: >
+    The paper both selects results by the best objective and prints mean ±
+    standard deviation. This file does not invent a rule that turns one of
+    those statements into the other.
+
+track_a:
+  name: "historical, label-informed selection"
+  data_and_preprocessing: "same obtained datasets and the operations in the manifests"
+  k: 5
+  gamma_grid: ["1e-6", "1e-3", "1e0", "1e3", "1e6"]
+  model_selection: >
+    Choose the reported setting with labels. The paper says to report the
+    best results. This track records that the selection uses ground-truth
+    labels and is not a fair unsupervised tune.
+  repetitions: >
+    Keep every completed trial. Summaries are mean ± standard deviation over
+    the finished trials of the selected setting. The best-objective sentence
+    remains ambiguous; do not drop trials by an invented rule.
+  dimensionality_reduction: "search the assumed dimension grid below and report the best label-informed result"
+
+track_b:
+  name: "no labels for training or tuning"
+  data_and_preprocessing: "same as Track A"
+  labels_used_for_training_or_tuning: false
+  gamma: 1
+  gamma_note: >
+    Fixed at 1 before seeing results. The paper's remark that MSRA50 and USPS
+    prefer another gamma is not used to change this value, because that remark
+    comes from label-informed accuracy.
+  dimensionality_reduction_rule: >
+    Assumption, not a paper rule: use the largest value in
+    {10, 20, ..., 150} that is <= min(n - 1, d). If that set is empty, use
+    min(n - 1, d) when it is positive. Do not pick the dimension by accuracy.
+
+unspecified:
+  - name: bandwidth_delta
+    paper: "not stated"
+  - name: G_initialization
+    paper: "Algorithm 1 sets G0 in R^{n x c} and does not give the matrix"
+  - name: kmeans_n_init
+    paper: "not stated"
+  - name: dimensionality_grid_step
+    paper: "says a subspace of 10 to 150 and does not give the step"
+
+assumptions:
+  bandwidth_delta: "median of the positive k-nearest-neighbor squared distances"
+  G0: "F, the spectral embedding"
+  dimensionality_grid: "{10, 20, ..., 150}, clipped by n and d"
+  kmeans_n_init: "unspecified; no numeric assumption is adopted in this protocol"
+  note: "These three numerical assumptions are not claimed to be the paper's missing values."

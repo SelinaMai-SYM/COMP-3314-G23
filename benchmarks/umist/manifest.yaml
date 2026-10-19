@@ -1,0 +1,33 @@
+dataset_name: UMIST
+source_url: >
+  Attempted on 2026-10-20 and no archive was saved:
+  http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz returned HTTP 202;
+  https://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz returned HTTP 202
+  with x-amzn-waf-action challenge and content-type text/html;
+  http://eprints.lincoln.ac.uk/16081/1/face.tar.gz returned HTTP 202;
+  https://www.sheffield.ac.uk/eee/research/iel/research/face returned HTTP 404;
+  http://images.ee.umist.ac.uk/danny/database.html returned HTTP 502.
+  A browser fetch of the Lincoln URLs failed. The record page is
+  https://eprints.lincoln.ac.uk/id/eprint/16081/.
+source_publication: "D.B. Graham and N.M. Allinson, Characterising virtual eigensignatures for general purpose face recognition, in Face Recognition: From Theory to Applications, NATO ASI Series F, 1998. Chang et al. cite this as Graham and M 1998."
+download_date: "2026-10-20"
+archive_filename: unknown
+SHA256_checksum: unknown
+license_information: >
+  No local file was obtained, so no license text from the archive was read.
+  Secondary descriptions call this the Sheffield Face Database, formerly
+  UMIST, and do not record a license in the sources consulted. License: unknown.
+original_sample_count: unknown
+selected_sample_count: unknown
+number_of_classes: unknown
+original_feature_dimension: unknown
+processed_feature_dimension: unknown
+preprocessing_operations: "not applied; no archive was obtained. The paper does not specify a resize."
+sample_selection_method: unknown
+random_seed: unknown
+known_deviations: >
+  Chang et al. state 564 images of 20 individuals and say only that pixel
+  values are the features. Those counts were not measured here. A different
+  cropped UMIST matrix was not downloaded and was not substituted. Resize
+  remains unspecified.
+verification_status: unavailable

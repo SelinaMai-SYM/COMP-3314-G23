@@ -1,0 +1,77 @@
+{
+  "acc_mean": 0.5116666666666666,
+  "acc_std": 0.028099525500145606,
+  "dataset_metadata": {
+    "SHA256_checksum": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794",
+    "dataset_name": "ORL",
+    "n": 400,
+    "number_of_classes": 40,
+    "original_feature_dimension": 4096,
+    "original_spatial_size": [
+      64,
+      64
+    ],
+    "preprocessing_operations": [
+      "interpret olivettifaces.mat columns as 64x64 images using the scikit-learn axis order",
+      "resize each uint8 image to 32x32 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 1024,
+    "processed_spatial_size": [
+      32,
+      32
+    ],
+    "random_seed": "unknown",
+    "sample_selection_method": "all 400 images; label = column_index // 10",
+    "source_url": "https://ndownloader.figshare.com/files/5976027",
+    "verification_status": "approximate"
+  },
+  "n_clusters": 40,
+  "n_features": 1024,
+  "n_samples": 400,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "nmi_mean": 0.735865392512402,
+  "nmi_std": 0.021858564566635458,
+  "params": {},
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.011861166451126337,
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.5425,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7581998607874416,
+      "runtime_seconds": 0.021680583246052265,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.505,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7145160421868195,
+      "runtime_seconds": 0.005967000033706427,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.4875,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7348802745629448,
+      "runtime_seconds": 0.00793591607362032,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ]
+}

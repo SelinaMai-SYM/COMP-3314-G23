@@ -1,0 +1,12 @@
+track: TRACKB
+method: ssc
+dataset: JAFFE
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: Track B SSC gamma=1 a priori
+label_informed_selection: false

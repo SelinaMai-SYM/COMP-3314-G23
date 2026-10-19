@@ -1,0 +1,11 @@
+{
+  "config_hash": "e93f453f",
+  "created_at": "2026-10-20T02:00:32+08:00",
+  "dataset": "ORL",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "ssc",
+  "notes": "EX4 5% samples -> N(0,10) seed=2",
+  "run_id": "20261020_020032__EX4__SSC__ORL__e93f453f",
+  "selection_uses_labels": false,
+  "track": "EX4"
+}

@@ -1,0 +1,16 @@
+track: EX5
+method: ssc
+dataset: JAFFE
+n_trials: 20
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: EX5 drop 10% of W edges seed=1
+label_informed_selection: false
+perturbation:
+  type: graph_drop
+  level: 0.1
+  seed: 1

@@ -1,0 +1,146 @@
+{
+  "acc_mean": 0.6634329963432997,
+  "acc_std": 0.016612614699522483,
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "n_clusters": 10,
+  "n_features": 256,
+  "n_samples": 9298,
+  "n_trials_completed": 10,
+  "n_trials_requested": 10,
+  "nmi_mean": 0.6115509855453529,
+  "nmi_std": 0.004221450545866276,
+  "params": {},
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.13325332896783948,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "trials": [
+    {
+      "acc": 0.6732630673263067,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6146429463104816,
+      "runtime_seconds": 0.18295437516644597,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.6608948160894816,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6073566760369616,
+      "runtime_seconds": 0.1428547496907413,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.6608948160894816,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6073566760369615,
+      "runtime_seconds": 0.16506341565400362,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.6612174661217466,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6075540810601255,
+      "runtime_seconds": 0.08260279195383191,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.6616476661647667,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6075484213133667,
+      "runtime_seconds": 0.11997937504202127,
+      "seed": 4,
+      "trial_index": 4
+    },
+    {
+      "acc": 0.6732630673263067,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6148179414835095,
+      "runtime_seconds": 0.17868750030174851,
+      "seed": 5,
+      "trial_index": 5
+    },
+    {
+      "acc": 0.6744461174446117,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.615987407913144,
+      "runtime_seconds": 0.09406791673973203,
+      "seed": 6,
+      "trial_index": 6
+    },
+    {
+      "acc": 0.6198107119810712,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6082466204927487,
+      "runtime_seconds": 0.12933008326217532,
+      "seed": 7,
+      "trial_index": 7
+    },
+    {
+      "acc": 0.6732630673263067,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6148179414835095,
+      "runtime_seconds": 0.1325905411504209,
+      "seed": 8,
+      "trial_index": 8
+    },
+    {
+      "acc": 0.6756291675629168,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6171811433227216,
+      "runtime_seconds": 0.10440254071727395,
+      "seed": 9,
+      "trial_index": 9
+    }
+  ]
+}

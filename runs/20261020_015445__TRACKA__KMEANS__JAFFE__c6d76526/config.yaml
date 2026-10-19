@@ -1,0 +1,9 @@
+track: TRACKA
+method: kmeans
+dataset: JAFFE
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1200
+params: {}
+notes: Track A K-means 50 random inits
+label_informed_selection: true

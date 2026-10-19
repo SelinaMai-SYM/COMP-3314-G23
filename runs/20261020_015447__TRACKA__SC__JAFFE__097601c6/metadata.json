@@ -1,0 +1,11 @@
+{
+  "config_hash": "097601c6",
+  "created_at": "2026-10-20T01:54:47+08:00",
+  "dataset": "JAFFE",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "sc",
+  "notes": "Track A SC; embedding once then 50 K-means",
+  "run_id": "20261020_015447__TRACKA__SC__JAFFE__097601c6",
+  "selection_uses_labels": true,
+  "track": "TRACKA"
+}

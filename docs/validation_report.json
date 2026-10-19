@@ -1,0 +1,127 @@
+{
+  "when": "2026-10-20T02:11:57+08:00",
+  "root": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+  "checks": [
+    {
+      "name": "syntax",
+      "status": "PASS",
+      "n_files": 87,
+      "failures": []
+    },
+    {
+      "name": "pytest",
+      "status": "PASS",
+      "cmd": [
+        "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "returncode": 0,
+      "stdout_tail": "......................................................                   [100%]\n54 passed in 2.42s\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "manifests",
+      "status": "PASS",
+      "present": [
+        "orl",
+        "jaffe",
+        "yaleb",
+        "usps",
+        "ar",
+        "umist",
+        "binalpha",
+        "msra50"
+      ],
+      "missing": []
+    },
+    {
+      "name": "checksums",
+      "status": "PASS",
+      "files": [
+        {
+          "file": "benchmarks/orl/data/olivettifaces.mat",
+          "status": "PASS",
+          "expected": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794",
+          "got": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794"
+        },
+        {
+          "file": "benchmarks/usps/data/usps.bz2",
+          "status": "PASS",
+          "expected": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+          "got": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f"
+        },
+        {
+          "file": "benchmarks/usps/data/usps.t.bz2",
+          "status": "PASS",
+          "expected": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e",
+          "got": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+        },
+        {
+          "file": "benchmarks/yaleb/data/YaleB_32x32.mat",
+          "status": "PASS",
+          "expected": "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99",
+          "got": "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99"
+        },
+        {
+          "file": "benchmarks/jaffe/data/jaffe.zip",
+          "status": "PASS",
+          "expected": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+          "got": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b"
+        }
+      ]
+    },
+    {
+      "name": "runs",
+      "status": "PASS",
+      "n_directories": 191,
+      "counts": {
+        "COMPLETED": 184,
+        "SKIPPED": 6,
+        "FAILED": 1,
+        "OTHER": 0,
+        "missing_status": 0
+      },
+      "completed_missing_metrics": []
+    },
+    {
+      "name": "traceability",
+      "status": "PASS",
+      "n_index_rows": 191,
+      "missing_run_dirs": [],
+      "completed_without_metrics": []
+    },
+    {
+      "name": "tables_figures_tex",
+      "status": "PASS",
+      "missing": [],
+      "main_tex_filler_tokens": []
+    },
+    {
+      "name": "pdf",
+      "status": "PASS",
+      "path": "report/main.pdf",
+      "bytes": 404493,
+      "pages": 22,
+      "pdfinfo": {
+        "cmd": [
+          "pdfinfo",
+          "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/report/main.pdf"
+        ],
+        "returncode": 0,
+        "stdout_tail": "Title:           \nSubject:         \nKeywords:        \nAuthor:          \nCreator:         LaTeX with hyperref\nProducer:        pdfTeX-1.40.27\nCreationDate:    Tue Oct 20 02:11:29 2026 CST\nModDate:         Tue Oct 20 02:11:29 2026 CST\nCustom Metadata: yes\nMetadata Stream: no\nTagged:          no\nUserProperties:  no\nSuspects:        no\nForm:            none\nJavaScript:      no\nPages:           22\nEncrypted:       no\nPage size:       612 x 792 pts (letter)\nPage rot:        0\nFile size:       404493 bytes\nOptimized:       no\nPDF version:     1.7\n",
+        "stderr_tail": ""
+      }
+    },
+    {
+      "name": "git",
+      "status": "SKIPPED",
+      "branch": "HEAD",
+      "head": "no commits yet",
+      "jaffe_tracked": [],
+      "jaffe_images_absent": true,
+      "note": "Full remote verification is recorded after push; this check is local."
+    }
+  ]
+}

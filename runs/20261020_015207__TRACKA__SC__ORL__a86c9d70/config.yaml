@@ -1,0 +1,10 @@
+track: TRACKA
+method: sc
+dataset: ORL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1200
+params:
+  k: 5
+notes: Track A SC; embedding once then 50 K-means
+label_informed_selection: true

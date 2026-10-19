@@ -1,0 +1,12 @@
+track: TRACKA
+method: ssc
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: 'Track A YaleB reduced: SSC gamma=1, 10 K-means on G'
+label_informed_selection: true

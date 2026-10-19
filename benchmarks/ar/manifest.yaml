@@ -1,0 +1,33 @@
+dataset_name: AR
+source_url: >
+  Attempted on 2026-10-20 and no image archive was saved:
+  http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html returned HTTP 503;
+  https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html produced no origin
+  status through the proxy; https://engineering.purdue.edu/~aleix/ARdatabase.html
+  returned HTTP 404. The NIST catalog page
+  https://tsapps.nist.gov/BDbC/Search/Details/301 returned HTTP 200 and points
+  at the Ohio State URL. It is a catalog entry, not the images.
+source_publication: "A.M. Martinez and R. Benavente, The AR Face Database, CVC Technical Report 24, June 1998."
+download_date: "2026-10-20"
+archive_filename: unknown
+SHA256_checksum: unknown
+license_information: >
+  The AR Face Database is free for academic research and forbids commercial
+  use and redistribution. The publisher's terms require an email request from
+  a university account and a password before download. Those credentials were
+  not obtained. No file was saved.
+original_sample_count: unknown
+selected_sample_count: unknown
+number_of_classes: unknown
+original_feature_dimension: unknown
+processed_feature_dimension: unknown
+preprocessing_operations: "not applied; no archive was obtained"
+sample_selection_method: unknown
+random_seed: unknown
+known_deviations: >
+  Chang et al. (AAAI 2015) state that AR contains 840 faces of 120 people and
+  that pixel values are the features. They do not state image size or which
+  840 images were kept. The full database is a different collection (more than
+  4,000 images of 126 people). A 100-person or other common subset was not
+  substituted. Counts above are unknown because no file was measured.
+verification_status: unavailable

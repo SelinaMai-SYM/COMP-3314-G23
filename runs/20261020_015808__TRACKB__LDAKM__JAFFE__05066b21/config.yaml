@@ -1,0 +1,10 @@
+track: TRACKB
+method: lda_kmeans
+dataset: JAFFE
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 9
+notes: Track B LDA-KM prespecified dimension clipped to K-1
+label_informed_selection: false

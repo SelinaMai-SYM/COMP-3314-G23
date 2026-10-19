@@ -1,0 +1,10 @@
+track: TRACKA
+method: sc
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params:
+  k: 5
+notes: 'Track A YaleB reduced: 10 SC trials'
+label_informed_selection: true

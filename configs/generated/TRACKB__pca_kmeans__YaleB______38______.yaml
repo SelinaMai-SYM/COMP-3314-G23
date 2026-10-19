@@ -1,0 +1,10 @@
+track: TRACKB
+method: pca_kmeans
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params:
+  n_components: 38
+notes: Track B PCA-KM prespecified dimension, no labels
+label_informed_selection: false

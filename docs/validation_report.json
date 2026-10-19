@@ -1,5 +1,5 @@
 {
-  "when": "2026-10-20T02:11:57+08:00",
+  "when": "2026-10-20T02:12:32+08:00",
   "root": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
   "checks": [
     {
@@ -18,7 +18,7 @@
         "-q"
       ],
       "returncode": 0,
-      "stdout_tail": "......................................................                   [100%]\n54 passed in 2.42s\n",
+      "stdout_tail": "......................................................                   [100%]\n54 passed in 2.18s\n",
       "stderr_tail": ""
     },
     {
@@ -116,10 +116,12 @@
     },
     {
       "name": "git",
-      "status": "SKIPPED",
-      "branch": "HEAD",
-      "head": "no commits yet",
-      "jaffe_tracked": [],
+      "status": "PASS",
+      "branch": "v1",
+      "head": "5d2d4674e15e544ade56dad0d41a0945a633f1a7",
+      "jaffe_tracked": [
+        "benchmarks/jaffe/data/.gitignore"
+      ],
       "jaffe_images_absent": true,
       "note": "Full remote verification is recorded after push; this check is local."
     }

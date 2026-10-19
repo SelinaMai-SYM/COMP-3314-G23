@@ -1,6 +1,9 @@
-"""IRLS shrinkage. The linear step is Equation (13), not Algorithm 1 line 10.
+"""IRLS shrinkage. The default linear step is Equation (13), not Algorithm 1 line 10.
 
 The solve uses scipy.sparse.linalg.spsolve. It does not form an explicit inverse.
+``variant="E13"`` keeps A = S + gamma * Ltilde. ``variant="E8"`` uses
+A = S + 2 * gamma * Ltilde, the stationary system of the printed Equation (8)
+under the ordered-pair sum. The two variants are not the same problem.
 """
 
 from __future__ import annotations
@@ -18,12 +21,28 @@ from SSC_method.objective import (
     row_l2_norms,
     shrinkage_laplacian,
     sqrt_smoothed_equation8_objective,
+    trace_surrogate,
 )
+
+# Multiplier on gamma * Ltilde inside A = S + c * gamma * Ltilde.
+# E13 is the printed Equation (13). E8 is the ordered-pair stationary
+# system of the printed Equation (8); the 2 is derived, not tuned.
+LINEAR_SYSTEM_VARIANTS: dict[str, float] = {
+    "E13": 1.0,
+    "E8": 2.0,
+}
 
 
 @dataclass
 class ShrinkResult:
-    """Shrunk patterns and the diagnostics recorded while solving Equation (13)."""
+    """Shrunk patterns and diagnostics for one linear-system variant.
+
+    ``equation8_objective`` in the history is the nonsmooth printed Equation (8).
+    ``sqrt_smoothed_equation8_objective`` is a different function.
+    ``irls_quadratic_surrogate`` is the frozen-weight quadratic the linear step
+    minimized. ``fixed_point_residual`` is a matrix residual of that variant's
+    linear system. These four numbers are not interchangeable.
+    """
 
     patterns: np.ndarray
     n_iterations: int
@@ -31,10 +50,24 @@ class ShrinkResult:
     history: list[dict[str, float]] = field(default_factory=list)
     initial_zero_residual_floor: float | None = None
     fixed_point_residual: float = np.nan
+    variant: str = "E13"
+    laplacian_coefficient: float = 1.0
 
     @property
     def G(self) -> np.ndarray:
         return self.patterns
+
+
+def variant_laplacian_coefficient(variant: str) -> float:
+    """Return c in A = S + c * gamma * Ltilde.
+
+    ``E13`` returns 1 (printed Equation 13). ``E8`` returns 2 (ordered-pair
+    stationary system of printed Equation 8).
+    """
+    if variant not in LINEAR_SYSTEM_VARIANTS:
+        known = ", ".join(LINEAR_SYSTEM_VARIANTS)
+        raise ValueError(f"unknown linear-system variant {variant!r}; expected one of {known}")
+    return float(LINEAR_SYSTEM_VARIANTS[variant])
 
 
 def _median_pairwise_row_distance(patterns: np.ndarray) -> float:
@@ -110,13 +143,22 @@ def shrink_embedding(
     max_iter: int = 100,
     G_init: np.ndarray | None = None,
     zero_residual_floor: str | float = "median_pairwise",
+    variant: str = "E13",
 ) -> ShrinkResult:
-    """Iterate Equation (13): G = (S + gamma Ltilde)^{-1} S F.
+    """Iterate A G = S F, with A = S + c * gamma * Ltilde.
+
+    ``variant="E13"`` (the default) uses c = 1, which is the printed
+    Equation (13): G = (S + gamma Ltilde)^{-1} S F. ``variant="E8"`` uses
+    c = 2, the stationary system of the printed Equation (8) when the graph
+    sum runs over ordered pairs of a symmetric W. Omitting ``variant`` keeps
+    the historical Equation (13) solve.
 
     ``affinity`` is the fixed kNN weight W built on the spectral embedding.
     Wtilde and Ltilde are recomputed from the current G on every iteration,
     because Equation (11) depends on G. Algorithm 1 line 10, which multiplies
-    by X and uses Wtilde in place of Ltilde, is not implemented.
+    by X and uses Wtilde in place of Ltilde, is not implemented. S stays the
+    n by n row-wise diagonal; Equation (10)'s embedding-dimension diagonal is
+    not used.
 
     The default start is G_0 = F. The paper does not specify an initialization;
     G_0 = F is an assumption. Equation (10) is undefined at that point because
@@ -124,11 +166,15 @@ def shrink_embedding(
     scale by ``zero_residual_floor`` (default: median pairwise row distance).
     Later iterations floor individual zero rows with ``eps``. Using the large
     scale on every later visit to F makes the iteration cycle.
+    ``zero_residual_floor="eps"`` is retained and still stays at F.
 
-    The history records the literal Equation (8) objective and, separately,
-    the square-root smoothed objective. Convergence is the relative Frobenius
-    step of G. The paper does not state a stopping rule; ``tol`` and
-    ``max_iter`` are reproduction assumptions.
+    Each history row records, as separate fields, the nonsmooth Equation (8),
+    the square-root smoothed objective, and the frozen IRLS quadratic
+    surrogate. The returned ``fixed_point_residual`` is a fourth quantity:
+    the linear residual after rebuilding S and Ltilde at the returned G.
+    Convergence is the relative Frobenius step of G. The paper does not
+    state a stopping rule; ``tol`` and ``max_iter`` are reproduction
+    assumptions.
     """
     embedding = np.asarray(embedding, dtype=np.float64)
     if embedding.ndim != 2:
@@ -146,6 +192,7 @@ def shrink_embedding(
         raise ValueError("tol must be finite and nonnegative")
     if max_iter < 1:
         raise ValueError("max_iter must be >= 1")
+    laplacian_coefficient = variant_laplacian_coefficient(variant)
     weights = sparse.csr_matrix(affinity, dtype=np.float64)
     if weights.shape != (n_samples, n_samples):
         raise ValueError("affinity must be square with one row per embedding row")
@@ -175,26 +222,39 @@ def shrink_embedding(
             floor = eps
         s_diagonal = 1.0 / (2.0 * np.maximum(residual_norms, floor))
         _, laplacian = shrinkage_laplacian(weights, patterns, eps=eps)
-        coefficient = sparse.diags(s_diagonal) + gamma * laplacian
+        coefficient = sparse.diags(s_diagonal) + (laplacian_coefficient * gamma) * laplacian
         rhs = s_diagonal[:, None] * embedding
         updated = solve_spd_system(coefficient, rhs)
         if not np.isfinite(updated).all():
-            raise RuntimeError("Equation (13) produced a non-finite G")
+            raise RuntimeError(f"variant {variant} produced a non-finite G")
         residual_matrix = coefficient @ updated - rhs
         linear_residual = float(np.linalg.norm(residual_matrix))
         step = float(np.linalg.norm(updated - patterns))
+        # Printed nonsmooth Equation (8), independent of which linear system
+        # was solved. E13 does not minimize this function.
         exact = equation8_objective(updated, embedding, weights, gamma)
         smoothed = sqrt_smoothed_equation8_objective(updated, embedding, weights, gamma, eps)
+        # Quadratic actually minimized with S and Ltilde frozen. The graph
+        # multiplier is c * gamma, so E8's surrogate is not printed Equation (12).
+        surrogate = trace_surrogate(
+            updated,
+            embedding,
+            s_diagonal,
+            laplacian,
+            laplacian_coefficient * gamma,
+        )
         history.append(
             {
                 "iteration": float(iteration),
                 "equation8_objective": exact,
                 "sqrt_smoothed_equation8_objective": smoothed,
+                "irls_quadratic_surrogate": surrogate,
                 "linear_residual": linear_residual,
                 "step_frobenius": step,
                 "denominator_floor": float(floor),
                 "s_min": float(np.min(s_diagonal)),
                 "s_max": float(np.max(s_diagonal)),
+                "laplacian_coefficient": laplacian_coefficient,
             }
         )
         scale = 1.0 + float(np.linalg.norm(patterns))
@@ -208,10 +268,12 @@ def shrink_embedding(
     final_floor = eps
     # The fixed-point residual rebuilds S and Ltilde at the returned G.
     # A small linear residual inside the loop only says that one frozen
-    # system was solved; this residual says Equation (13) holds at G.
+    # system was solved. This residual says that variant's system
+    # A G = S F holds at G. For E13, A is Equation (13). For E8, A carries
+    # the extra factor 2. It is not the Equation (8) objective.
     s_final = 1.0 / (2.0 * np.maximum(final_norms, final_floor))
     _, laplacian_final = shrinkage_laplacian(weights, patterns, eps=eps)
-    coefficient_final = sparse.diags(s_final) + gamma * laplacian_final
+    coefficient_final = sparse.diags(s_final) + (laplacian_coefficient * gamma) * laplacian_final
     rhs_final = s_final[:, None] * embedding
     fixed_point_residual = float(np.linalg.norm(coefficient_final @ patterns - rhs_final))
     return ShrinkResult(
@@ -221,6 +283,8 @@ def shrink_embedding(
         history=history,
         initial_zero_residual_floor=initial_floor,
         fixed_point_residual=fixed_point_residual,
+        variant=variant,
+        laplacian_coefficient=laplacian_coefficient,
     )
 
 
@@ -232,8 +296,11 @@ def iteration_diagnostics(result: ShrinkResult) -> dict[str, Any]:
     return {
         "n_iterations": result.n_iterations,
         "converged": result.converged,
+        "variant": result.variant,
+        "laplacian_coefficient": result.laplacian_coefficient,
         "equation8_objective": last["equation8_objective"],
         "sqrt_smoothed_equation8_objective": last["sqrt_smoothed_equation8_objective"],
+        "irls_quadratic_surrogate": last["irls_quadratic_surrogate"],
         "linear_residual": last["linear_residual"],
         "fixed_point_residual": result.fixed_point_residual,
         "initial_zero_residual_floor": result.initial_zero_residual_floor,

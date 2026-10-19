@@ -12,7 +12,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 
 from SSC_method.graph_construction import knn_affinity
-from SSC_method.optimizer import shrink_embedding
+from SSC_method.optimizer import shrink_embedding, variant_laplacian_coefficient
 from SSC_method.spectral_embedding import spectral_embedding
 
 
@@ -49,6 +49,11 @@ class SpectralShrunkClustering:
         ``'median_pairwise'`` is the numerical correction documented in
         ``docs/reproduction_deviations.md``. ``'eps'`` is the literal floor
         and stays at F.
+    variant:
+        Linear system. ``'E13'`` (default) is the printed Equation (13),
+        A = S + gamma Ltilde. ``'E8'`` is A = S + 2 gamma Ltilde, the
+        ordered-pair stationary system of the printed Equation (8). The
+        default preserves the historical Equation (13) solve.
     """
 
     def __init__(
@@ -65,6 +70,7 @@ class SpectralShrunkClustering:
         kmeans_random_state: int = 0,
         zero_residual_floor: str | float = "median_pairwise",
         eigen_dense_threshold: int = 512,
+        variant: str = "E13",
     ) -> None:
         self.n_clusters = int(n_clusters)
         self.gamma = float(gamma)
@@ -78,6 +84,8 @@ class SpectralShrunkClustering:
         self.kmeans_random_state = kmeans_random_state
         self.zero_residual_floor = zero_residual_floor
         self.eigen_dense_threshold = int(eigen_dense_threshold)
+        self.variant = str(variant)
+        self.laplacian_coefficient = variant_laplacian_coefficient(self.variant)
         if self.n_clusters < 1:
             raise ValueError("n_clusters must be >= 1")
         if self.kmeans_n_init < 1:
@@ -116,6 +124,7 @@ class SpectralShrunkClustering:
             max_iter=self.max_iter,
             G_init=embedding,
             zero_residual_floor=self.zero_residual_floor,
+            variant=self.variant,
         )
         kmeans = KMeans(
             n_clusters=self.n_clusters,
@@ -142,7 +151,9 @@ class SpectralShrunkClustering:
             "shrinkage_graph": affinity_info,
             "initial_zero_residual_floor": shrinkage.initial_zero_residual_floor,
             "g0": "F",
-            "linear_update": "equation_13",
+            "variant": shrinkage.variant,
+            "laplacian_coefficient": shrinkage.laplacian_coefficient,
+            "linear_update": "equation_13" if shrinkage.variant == "E13" else "equation_8_stationary",
             "objective_monitored": "equation_8",
             "sqrt_smoothed_objective_key": "sqrt_smoothed_equation8_objective",
         }

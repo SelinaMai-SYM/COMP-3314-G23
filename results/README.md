@@ -7,5 +7,7 @@ Paper percentages appear only with the label "Reported in Chang et al. (2015)". 
 | `tables/` | Phase 1 tables generated from `runs/` |
 | `repair_round1/` | Repair-round 1 registry and comparison TeX |
 | `round2/` | Round 2 registry, shared-`F` check, K-means-on-saved-`F` JSON |
+| `strict_repro/` | Task 2 strict campaign registry (new runs only; does not overwrite round2) |
+| `reproduction_full_matrix.csv` / `.md` | Task 2 72-cell matrix from `runs/strict_repro/` |
 
 Round 2 index: `round2/experiment_registry.csv`. Causal write-up: `docs/round2_reproduction_matrix.md` and `docs/round2_root_cause_analysis.md`.

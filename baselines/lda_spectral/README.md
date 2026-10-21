@@ -103,3 +103,7 @@ Phase 1 `run_all_stages.py` did not schedule LDA-SC. Cells stay **N/A — not re
 ```text
 python -m pytest baselines/lda_spectral -q
 ```
+
+## Task 1（2026-10-21）
+
+无新文件。Chang 仍只给名称。作者代码 `CODE_NOT_FOUND`。矩阵状态：`BLOCKED_MISSING_METHOD`（忠实主表）；实现仍为 `APPROXIMATE`。

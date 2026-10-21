@@ -74,3 +74,7 @@ from benchmarks.exceptions import DatasetUnavailable
 X, y, m = load_dataset("UMIST", version="precropped575")
 assert m["n"] == 575 and m["unique_pixel_arrays"] == 565
 ```
+
+## Task 1（2026-10-21）哈希复核
+
+未重下三份档案（SHA 与上表相同）。新保存 2001 页：`resources/database_wayback_20010405.html` 3878 字节 SHA-256 `a8a91fbea393f524e3275acad9356512145547217c18f446eb08eae849cb263a`（GET Wayback `id_` **200**）。该页写 564 张并链 4.5Mb `cropped.tar.gz`；本机对应 tar 是 **575** PGM。现网 UMIST 502、Sheffield 404、Lincoln 202。矩阵状态：论文 564 为 `CANDIDATE_ONLY`。未删图。

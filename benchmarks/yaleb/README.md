@@ -55,3 +55,7 @@ python3 -m pytest benchmarks/yaleb/test_yaleb_versions.py -q
 - Phase 1 与 repair_round1 多数 YaleB：`dengcai32`（6 COMPLETED，另有 FAILED 记录保留）。
 - repair_round1 D01：`cropped2414` 1 条 COMPLETED、1 条 FAILED。
 - Round 2（n=10，不是 50）：`dengcai32` SC `20261021_161602__ROUND2__YALEB__D01_DENGCAI32_SC__6411988e` ACC 20.1±1.2；E8 `20261021_161603__ROUND2__YALEB__D08_DENGCAI32_E8__27f746d1` ACC 19.5±1.5。`cropped2414` SC `20261021_161625__ROUND2__YALEB__D01_CROPPED2414_SC__d1a360fb` ACC 18.1±1.3；E8 `20261021_161626__ROUND2__YALEB__D08_CROPPED2414_E8__5fb5af8b` ACC 17.4±1.1。cropped 没有提升。
+
+## Task 1（2026-10-21）哈希复核
+
+未重下。`data/YaleB_32x32.mat` 2214688 字节 SHA-256 `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99`。`data/cropped_wayback/CroppedYale_wayback_20220127.zip` 58493820 字节 SHA-256 `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573`（2452 PGM，2414 非 Ambient）。处理阵列哈希见 `manifest_cropped.yaml`。`cropped2414` 矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

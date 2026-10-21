@@ -17,7 +17,7 @@ X, y, metadata = load_dataset("ORL")
 
 `X` 是 `float64`、形状 `(n, d)`，`y` 是 `int64` 标签。拿不到的数据集会抛出 `DatasetUnavailable`，不返回数组。预处理只有灰度、双线性缩放、拉直和除以 255，没有增强，也没有神经网络嵌入。
 
-2026-10-20 的补回收记在 `docs/repair_round1_dataset_recovery.md`。2026-10-21 Round 2 的 source-of-truth 索引在 `docs/round2_source_of_truth.md`，HTTP 日志在 `docs/round2_missing_resources.md`。每个数据集的完整说明在各自包的 `README.md`（`orl/`、`jaffe/`、`yaleb/`、`usps/`、`ar/`、`umist/`、`binalpha/`、`msra50/`），不要只看本页摘要。`load_dataset("ORL")` 和 `load_dataset("YaleB")` 仍分别返回 Olivetti 64×64 流程和邓蔡 `YaleB_32x32.mat`。新版本要用显式 `version`。BinAlpha 的 26×30 重建是 `version="letters26x30_seed0"`，默认名仍不可用。
+2026-10-20 的补回收记在 `docs/repair_round1_dataset_recovery.md`。2026-10-21 Round 2 的 source-of-truth 索引在 `docs/round2_source_of_truth.md`，HTTP 日志在 `docs/round2_missing_resources.md`。Task 1 矩阵与仍缺清单：[docs/resource_acquisition_matrix.md](../docs/resource_acquisition_matrix.md)、[docs/task1_resource_completion.md](../docs/task1_resource_completion.md)。每个数据集的完整说明在各自包的 `README.md`（`orl/`、`jaffe/`、`yaleb/`、`usps/`、`ar/`、`umist/`、`binalpha/`、`msra50/`），不要只看本页摘要。`load_dataset("ORL")` 和 `load_dataset("YaleB")` 仍分别返回 Olivetti 64×64 流程和邓蔡 `YaleB_32x32.mat`。新版本要用显式 `version`。BinAlpha 的 26×30 重建是 `version="letters26x30_seed0"`，默认名仍不可用。
 
 ## 状态
 

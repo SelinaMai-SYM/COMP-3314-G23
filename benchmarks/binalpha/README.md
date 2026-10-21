@@ -68,3 +68,7 @@ except DatasetUnavailable:
 X, y, m = load_dataset("BinAlpha", version="letters26x30_seed0")
 assert X.shape == (780, 320) and m["not_paper_binalpha"] is True
 ```
+
+## Task 1（2026-10-21）哈希复核
+
+未重下。`data/binaryalphadigs.mat` 532304 字节 SHA-256 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`。论文 26×30 仍 `NOT_FOUND`；`letters26x30_seed0` 仍 `CANDIDATE_ONLY` / UNVERIFIED。

@@ -101,6 +101,23 @@ Access: `curl -L --max-time 15` unless noted. No paywall bypass. Section 3 PDF =
 
 Round 1 log: `docs/repair_round1_baseline_audit.md`. Decision unchanged.
 
+## Task 1 URL log (2026-10-21, later the same day)
+
+No paywall bypass. Section 3 PDF = no. Details: [`resources/README.md`](resources/README.md).
+
+| URL | HTTP | Section 3 / PDF? |
+| --- | --- | --- |
+| Unpaywall v2 `?email=ssc.recovery@hku.hk` | 200 | `is_oa=false`, `oa_status=closed`, `oa_locations=[]` |
+| OpenAlex same DOI | 200 | `oa_url=null`, `any_repository_has_fulltext=false` |
+| Semantic Scholar same DOI | 200 | `CLOSED` |
+| arXiv export exact title | 200 | `totalResults=0` |
+| chenpinghou.github.io / years.html / code.html | 200 | `[PDF]` is Elsevier DOI; no SLPS on code page |
+| `api.github.com/users/ChenpingHou/repos` | 200 | no SLPS; `PublicationCode` empty |
+| Find@HKUL | 200 catalog | no authenticated PDF |
+| hub.hku.hk | 403 | no |
+
+`fit_predict` still raises `NotImplementedError`. Matrix status: `BLOCKED_MISSING_METHOD`. Code: `CODE_NOT_FOUND`.
+
 ## Reproduction commands
 
 ```text

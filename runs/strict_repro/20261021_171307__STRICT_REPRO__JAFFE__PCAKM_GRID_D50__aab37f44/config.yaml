@@ -1,0 +1,18 @@
+track: STRICT_REPRO
+method: pca_kmeans
+dataset: JAFFE
+dataset_version: zenodo
+dataset_identity_status: verified_zenodo_213_not_paper_unpublished_copy
+factor: PCAKM_GRID_D50
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 3
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 50
+  init: random
+  n_init: 1
+notes: PCA dim grid subset; recorded, not selected by ACC
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

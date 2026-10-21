@@ -1,0 +1,5 @@
+{
+  "n_trials_completed": 0,
+  "n_trials_requested": 1,
+  "reason": "AR is unavailable: The AR Face Database is distributed by request with a password and forbids redistribution. Official Ohio State HTTP returned 503 on 2026-10-21; HTTPS had an untrusted certificate. Zenodo record 19683234 (ARDB_Full.zip, HTTP 200, 120587997 bytes, uploader Manu shree, claimed CC-BY-4.0) is a third-party dump, not the Martinez\u2013Benavente distributor. It was not downloaded and is not used. The paper 840/120 subset was not invented. See benchmarks/ar/README.md."
+}

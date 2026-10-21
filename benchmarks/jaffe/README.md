@@ -45,3 +45,7 @@ python3 -c "from benchmarks import load_dataset; X,y,m=load_dataset('JAFFE'); as
 ## 哪些实验用了这个版本
 
 Phase 1 JAFFE 与 repair_round1 全部 6 条 COMPLETED 均为 `zenodo`。Round 2 D12（n=50）同版本：SC `20261021_161557__ROUND2__JAFFE__D12_JAFFE_SC__2983a645` ACC 68.5±11.2；E8 `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7` ACC 68.4±11.1；E13 `20261021_161559__ROUND2__JAFFE__D12_JAFFE_E13__50a3c90d` ACC 68.6±11.3。没有其它版本。
+
+## Task 1（2026-10-21）哈希复核
+
+未重下。`data/jaffe.zip` 12290558 字节 SHA-256 `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`；加载 `(213, 676)`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

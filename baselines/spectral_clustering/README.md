@@ -69,3 +69,7 @@ The earliest verified stage of the ORL SC gap is **K-means on \(F\)**, not the s
 Confidence: **high** that the gap is present before IRLS and that source/bandwidth/E8–E13 are small relative to 16–19 pp; **high** that k-means++ and row-norm move ACC a lot and must stay labeled B/C; **unresolved** which unpublished choice produced 72.7.
 
 Full matrix: `docs/round2_reproduction_matrix.md`. Causal labels: `docs/round2_root_cause_analysis.md`.
+
+## Task 1（2026-10-21）
+
+无新文件。GitHub 仓库搜索 `spectral shrunk clustering` HTTP 200、`total_count=0`。作者代码 `CODE_NOT_FOUND`。实现仍是 `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

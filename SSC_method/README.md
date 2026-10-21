@@ -103,3 +103,12 @@ The library does not read data files, so it has no filesystem paths. Experiment 
 2. Build a second \(k\)-NN Gaussian graph \(W\) on that embedding \(F\).
 3. Iterate Equation (13) by default, \(G=(S+\gamma\widetilde L)^{-1}SF\), with a sparse symmetric solve (`scipy.sparse.linalg.spsolve`). No explicit inverse. \(\widetilde W\) and \(\widetilde L\) are recomputed from the current \(G\). Algorithm 1 line 10 is not implemented. Pass `variant="E8"` for the printed Equation (8) stationary system.
 4. Run K-means on \(G\). Those labels are an output. They are not used to build \(W\), \(F\), or \(G\).
+
+## Task 1（2026-10-21）OA PDFs
+
+| File | Bytes | SHA-256 |
+| --- | --- | --- |
+| `resources/Chang_et_al_2015_SSC_AAAI.pdf` | 851255 | `970ee4e65fd73aca46b3f983098f87105fb7e45726b767ec7925c9188646dfaf` |
+| `resources/Chang_et_al_2014_SSC_arxiv_1411.6308.pdf` | 233802 | `b4bb9f8984db89ee5c17a2c2200a6764085d81d3da5fc26b2c144e2202262e39` |
+
+AAAI GET **200**；哈希与仓库外 `9736-45063-1-PB.pdf` 相同。GitHub 仓库搜索 `spectral shrunk clustering` `total_count=0`。xiaojun.ai HTTP **200**，无 2015 代码。作者代码 `CODE_NOT_FOUND`。实现 `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

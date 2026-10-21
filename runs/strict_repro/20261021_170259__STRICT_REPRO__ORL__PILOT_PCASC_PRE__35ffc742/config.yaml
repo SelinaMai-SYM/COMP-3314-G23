@@ -1,0 +1,23 @@
+track: STRICT_REPRO
+method: pca_spectral
+dataset: ORL
+dataset_version: att92
+dataset_identity_status: original_source_att92_92x112_bilinear_32x32
+factor: PILOT_PCASC_PRE
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 3
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  bandwidth_rule: median_positive_knn_squared_distance
+  symmetrization: union
+  row_normalize: false
+  laplacian: symmetric_normalized_eq4
+  kmeans_init: random
+  n_init: 1
+  n_components: 40
+notes: ORL att92 pilot n=3. PCA-SC prespecified dim, not ACC
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

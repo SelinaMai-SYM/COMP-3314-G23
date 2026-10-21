@@ -1,0 +1,17 @@
+track: STRICT_REPRO
+method: kmeans
+dataset: USPS
+dataset_version: libsvm
+dataset_identity_status: verified_libsvm_9298
+factor: KMEANS
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  init: random
+  n_init: 1
+notes: K-means random n_init=1; all trials kept
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

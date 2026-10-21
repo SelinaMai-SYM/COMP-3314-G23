@@ -58,3 +58,7 @@ LDA-SC stays **off** any faithful main table. SPLS cells stay **N/A — not repr
 ## Ground truth
 
 `lda_kmeans` and `lda_spectral` compute scatter matrices from the labels just produced by K-means or spectral clustering. Their signatures have no label argument. Passing `y=...` raises `TypeError`.
+
+## Task 1（2026-10-21）
+
+Acquisition matrix: [`docs/resource_acquisition_matrix.md`](../docs/resource_acquisition_matrix.md). Still missing: Hou et al. Section 3 (`BLOCKED_MISSING_METHOD`); all author binaries (`CODE_NOT_FOUND`). New OA PDFs live in `llc/resources/`, `lda_kmeans/resources/`, and `SSC_method/resources/`. No `vendor/` clones this round.

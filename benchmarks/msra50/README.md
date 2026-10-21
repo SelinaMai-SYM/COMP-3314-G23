@@ -65,3 +65,7 @@ try:
 except DatasetUnavailable as exc:
     assert "1799" in str(exc)
 ```
+
+## Task 1（2026-10-21）
+
+仍无 1799/12 文件。邓蔡三页 HTTP **200**，无 MSRA50。GitHub 仓库搜索 `MSRA50 mat` `total_count=0`。新保存同组 OA：`resources/Chang_Nie_Yang_Huang_2014_arxiv_1411.6241v1.pdf` 463461 字节 SHA-256 `d3d00b0fa2eeff938d65800a3a7e4d1b08987de73932e9bd04de801e708badb2`（`arxiv.org/pdf/1411.6241v1.pdf` **200**；无版本路径 **404**）。未下 MSRA-B/10K/TD500。矩阵状态：`NOT_FOUND`。

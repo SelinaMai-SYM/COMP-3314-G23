@@ -47,3 +47,7 @@ assert m["SHA256_checksum"]["usps.bz2"].startswith("3771e9dd")
 ## 哪些实验用了这个版本
 
 Phase 1 USPS 与 repair_round1 均为 `libsvm`。Round 2 pilot n=3（不是 50）：SC `20261021_161647__ROUND2__USPS__D12_USPS_SC__6324d037` ACC 63.8±1.7；E8 `20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b` ACC 60.7±4.0。
+
+## Task 1（2026-10-21）哈希复核
+
+未重下。`data/usps.bz2` 6579383 字节 SHA-256 `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f`；`data/usps.t.bz2` 1831726 字节 SHA-256 `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e`。加载 `(9298, 256)`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

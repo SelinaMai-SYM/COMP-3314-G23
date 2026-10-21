@@ -110,3 +110,7 @@ For USPS (\(K=10\)) classical LDA has at most 9 directions. The fitter does not 
 ```text
 python -m pytest baselines/lda_kmeans -q
 ```
+
+## Task 1（2026-10-21）
+
+新文件：`resources/Ding_Li_2007_ICML_LDA_Kmeans.pdf` 219382 字节 SHA-256 `6b643ed6605daca3aaeaf1423572836a783f90df0ee0f4a5aec32c13784b342a`（作者页 GET **200**）。ACM `dl.acm.org/doi/pdf/10.1145/1273496.1273562` **403**，未绕过。作者代码 `CODE_NOT_FOUND`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

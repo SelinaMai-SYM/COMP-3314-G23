@@ -27,3 +27,5 @@ report/*.synctex.gz
 report/*.blg
 report/*.bbl
 *.zip
+# Strict-repro embedding arrays are large; keep configs/metrics/status only.
+runs/strict_repro/**/*.npy

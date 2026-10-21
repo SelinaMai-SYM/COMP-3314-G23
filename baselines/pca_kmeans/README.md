@@ -85,3 +85,7 @@ Selected Track A dimensions are label-informed (`experiments/protocol.py` `SELEC
 ```text
 python -m pytest baselines/pca_kmeans -q
 ```
+
+## Task 1（2026-10-21）
+
+无新文件。作者代码 `CODE_NOT_FOUND`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。

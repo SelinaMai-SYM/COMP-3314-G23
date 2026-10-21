@@ -1,0 +1,32 @@
+{
+  "collected_at": "2026-10-21T17:03:24+08:00",
+  "cpu_count_os": 8,
+  "cwd": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+  "env_thread_limits": {
+    "MKL_NUM_THREADS": "8",
+    "NUMEXPR_NUM_THREADS": "8",
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "8"
+  },
+  "git_branch": "v1",
+  "git_head": "e678400b5586b9181ccdf19bc123f4ba6422d594",
+  "git_status_porcelain": "M results/README.md\n M scripts/run_experiment.py\n?? SSC_method/resources/\n?? baselines/lda_kmeans/resources/\n?? baselines/llc/resources/\n?? benchmarks/ar/resources/\n?? benchmarks/msra50/resources/\n?? benchmarks/umist/resources/\n?? configs/strict_repro/\n?? docs/task1_http_log.json\n?? docs/task1_http_log.jsonl\n?? docs/task2_experiment_completion.md\n?? results/reproduction_full_matrix.csv\n?? results/reproduction_full_matrix.md\n?? results/strict_repro/\n?? runs/strict_repro/\n?? scripts/run_strict_repro.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hostname": "GrantdeMacBook-Air.local",
+  "physical_memory_bytes": 17179869184,
+  "pid": 75680,
+  "platform": "macOS-14.5-arm64-arm-64bit-Mach-O",
+  "processor": "arm",
+  "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+  "run_id": "20261021_170324__STRICT_REPRO__JAFFE__SSC_E13_G1__08a8ad77",
+  "versions": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.2",
+    "pandas": "2.3.3",
+    "python": "3.13.3 (v3.13.3:6280bb54784, Apr  8 2025, 10:47:54) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "scipy": "1.17.1",
+    "sklearn": "1.8.0",
+    "yaml": "6.0.3"
+  }
+}

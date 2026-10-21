@@ -64,3 +64,7 @@ try:
 except DatasetUnavailable as exc:
     assert "Zenodo" in str(exc)
 ```
+
+## Task 1（2026-10-21）
+
+仍无图像。官方页 HTTP **503**；HTTPS curl **60**；普渡 404；RVL 502。Wayback CDX 有 OSU 页捕获；GET `resources/ARdatabase_wayback_20120501.html`（19396 字节，SHA-256 `fea9bd20c825f94f9abd8862be63f7261cd533c43085149af0179d784a4344d8`）：126 人、需密码、禁止再分发、**无 840**。CVC TR 24：`resources/Martinez_Benavente_1998_CVC_TR24.pdf` 306151 字节 SHA-256 `9dfb1d979781d48f5a2de1b7c277a59dc71ffcb768da60f20e562d689418951b`。Zenodo 19683234 **未下载**。矩阵状态：官方图像 `BLOCKED_ACCESS`；840/120 `NOT_FOUND`。

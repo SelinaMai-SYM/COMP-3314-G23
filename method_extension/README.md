@@ -31,3 +31,10 @@ nonnegative and held fixed.
 Bandwidth: if omitted, `delta^2` is the median of positive *directed* kNN
 squared distances, computed before the mutual filter, so the scale matches
 original SSC and the only change is which edges remain.
+
+## Round 2 result (JAFFE, n=50, Category C)
+
+Same \(F\) as union E8. Mutual E8 ACC **68.4±11.2** vs union E8 **68.4±11.1**
+(410 vs 655 edges; 20 vs 9 components). Negative: no ACC gain.
+Run: `20261021_161924__ROUND2__JAFFE__EXT_JAFFE_MUTUAL_KNN__45fd1c1f`.
+Union control: `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7`.

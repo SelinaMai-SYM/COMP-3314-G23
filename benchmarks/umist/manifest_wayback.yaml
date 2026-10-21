@@ -39,9 +39,14 @@ companion_cropped_archive:
   filename: cropped_wayback_20070805.tar.gz
   SHA256_checksum: "c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4"
   pgm_count: 575
+  unique_filenames: 575
   unique_pixel_arrays: 565
   classes: 20
   spatial_size: [112, 92]
   pixel_range: [0, 238]
   loader_version: precropped575
-  note: "Pre-cropped file linked from the same 2001 page as a 4.5Mb tar. Not 564 images."
+  note: >
+    Pre-cropped file linked from the same 2001 page as a 4.5Mb tar. Not 564
+    images. 2026-10-21 inspection: no duplicate filenames. Ten pixel-identical
+    pairs in 1b/face (1b0xx.pgm vs final0N.pgm). Dropping those copies yields
+    565, not 564.

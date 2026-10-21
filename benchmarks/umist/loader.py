@@ -83,6 +83,19 @@ def _load_precropped(root: Path | None):
         "original_spatial_size": [112, 92],
         "pixel_range_native_uint8": [0, 238],
         "unique_pixel_arrays": 565,
+        "duplicate_filenames": 0,
+        "pixel_duplicate_pairs": [
+            ["1b/face/1b014.pgm", "1b/face/final00.pgm"],
+            ["1b/face/1b016.pgm", "1b/face/final01.pgm"],
+            ["1b/face/1b024.pgm", "1b/face/final02.pgm"],
+            ["1b/face/1b032.pgm", "1b/face/final03.pgm"],
+            ["1b/face/1b038.pgm", "1b/face/final04.pgm"],
+            ["1b/face/1b040.pgm", "1b/face/final05.pgm"],
+            ["1b/face/1b048.pgm", "1b/face/final06.pgm"],
+            ["1b/face/1b056.pgm", "1b/face/final07.pgm"],
+            ["1b/face/1b064.pgm", "1b/face/final08.pgm"],
+            ["1b/face/1b072.pgm", "1b/face/final09.pgm"],
+        ],
         "preprocessing_operations": [
             "read every PGM in the pre-cropped tar",
             "sort by archive member name",
@@ -92,7 +105,9 @@ def _load_precropped(root: Path | None):
         ],
         "sample_selection_method": (
             "all 575 cropped PGM files; this is not the 564-image count "
-            "stated by Chang et al. and by the 2001 UMIST web page"
+            "stated by Chang et al. and by the 2001 UMIST web page. "
+            "Dropping the 10 pixel-identical final*.pgm copies yields 565, "
+            "not 564. Eleven images were not dropped to force the paper count."
         ),
         "random_seed": "unknown",
         "not_exact_564": True,

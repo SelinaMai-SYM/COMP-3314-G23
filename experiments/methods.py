@@ -15,7 +15,6 @@ from baselines.lda_spectral import fit_predict as lda_spectral_fit_predict
 from baselines.llc import local_regression_matrix, yu_shi_discretize
 from baselines.pca_kmeans import fit_predict as pca_kmeans_fit_predict
 from baselines.pca_spectral import fit_predict as pca_spectral_fit_predict
-from baselines.spectral_clustering import spectral_embedding as sc_spectral_embedding
 from baselines.spls import fit_predict as spls_fit_predict
 from benchmarks.metrics import clustering_accuracy, normalized_mutual_information
 from experiments.perturbations import drop_affinity_edges
@@ -23,6 +22,7 @@ from method_extension.mutual_knn import mutual_knn_affinity
 from SSC_method.graph_construction import combinatorial_laplacian, knn_affinity
 from SSC_method.objective import equation8_objective
 from SSC_method.optimizer import shrink_embedding, variant_laplacian_coefficient
+from SSC_method.spectral_config import SpectralGraphConfig
 from SSC_method.spectral_embedding import smallest_eigenpairs, spectral_embedding
 from experiments.repair_diagnostics import (
     augment_objective_history,
@@ -87,37 +87,60 @@ def prepare_ssc_family(
     embedding_delta2: float | None = None,
     delta2: float | None = None,
     eps: float = 1e-8,
+    symmetrization: str = "union",
+    laplacian: str = "symmetric_normalized_eq4",
+    knn_method: str = "auto",
+    dense_threshold: int = 512,
+    graph_config: SpectralGraphConfig | None = None,
 ) -> PreparedRepresentation:
     variant_name = str(variant)
     laplacian_coefficient = variant_laplacian_coefficient(variant_name)
     cluster_target = str(cluster_on).upper()
     if cluster_target not in {"F", "G"}:
         raise ValueError("cluster_on must be F or G")
+    if graph_config is None:
+        graph_config = SpectralGraphConfig(
+            k=k,
+            delta2=embedding_delta2,
+            bandwidth_rule=bandwidth_rule,
+            symmetrization=symmetrization,
+            laplacian=laplacian,
+            row_normalize=bool(row_normalize),
+            knn_method=knn_method,
+            dense_threshold=int(dense_threshold),
+            variant=variant_name,
+            g_init=str(g_init),
+            g_init_seed=int(g_init_seed),
+            g_init_scale=float(g_init_scale),
+            zero_residual_floor=zero_residual_floor,
+            tol=float(tol),
+            max_iter=int(max_iter),
+            eps=float(eps),
+            kmeans_init=str(kmeans_init),
+        )
     t0 = time.perf_counter()
     embedding, embed_info = spectral_embedding(
         X,
         n_components=n_clusters,
-        k=k,
-        delta2=embedding_delta2,
-        bandwidth_rule=bandwidth_rule,
-        row_normalize=bool(row_normalize),
+        config=graph_config,
     )
     t_embed = time.perf_counter() - t0
     if mutual:
         affinity, graph_info = mutual_knn_affinity(embedding, k=k)
         ablation = "A1_mutual_knn"
         # Mutual kNN stays in the extension package, not in SSC_method.
-        x_affinity, x_graph = knn_affinity(
-            X, k=k, delta2=embedding_delta2, bandwidth_rule=bandwidth_rule
-        )
+        x_affinity, x_graph = knn_affinity(X, config=graph_config)
     else:
         affinity, graph_info = knn_affinity(
-            embedding, k=k, delta2=delta2, bandwidth_rule=bandwidth_rule
+            embedding,
+            k=graph_config.k,
+            delta2=delta2,
+            bandwidth_rule=bandwidth_rule,
+            knn_method=graph_config.knn_method,
+            symmetrization=graph_config.symmetrization,
         )
         ablation = "A0_union_knn"
-        x_affinity, x_graph = knn_affinity(
-            X, k=k, delta2=embedding_delta2, bandwidth_rule=bandwidth_rule
-        )
+        x_affinity, x_graph = knn_affinity(X, config=graph_config)
     if graph_drop:
         affinity = drop_affinity_edges(
             affinity, float(graph_drop["level"]), int(graph_drop.get("seed", 0))
@@ -177,8 +200,12 @@ def prepare_ssc_family(
             "eigen_solver": embed_info["eigen_solver"],
             "graph": embed_info["graph"],
             "row_normalize": bool(embed_info.get("row_normalize", False)),
+            "sign_convention": embed_info.get("sign_convention"),
+            "laplacian": embed_info.get("laplacian"),
+            "shared_eq4_path": True,
             "eigenvalues_summary": eigenvalue_summary(embed_info["eigenvalues"]),
         },
+        "spectral_graph_config": graph_config.to_dict(),
         "shrinkage_graph": graph_info,
         "shrinkage_graph_stats": shrinkage_graph_stats,
         "x_graph_stats": x_graph_stats,
@@ -231,30 +258,91 @@ def prepare_ssc_family(
     )
 
 
-def prepare_spectral(X: np.ndarray, n_clusters: int, k: int) -> PreparedRepresentation:
-    t0 = time.perf_counter()
-    n_samples = int(X.shape[0])
-    if n_samples > 1500:
-        embedding, info = spectral_embedding(X, n_components=n_clusters, k=k)
-        extra = {
-            "spectral_backend": "ssc_method_sparse",
-            "reason": "n>1500; dense eigh of the baseline module is not used",
-            "eigen_solver": info["eigen_solver"],
-            "runtime_embedding_seconds": time.perf_counter() - t0,
-        }
-    else:
-        embedding = sc_spectral_embedding(
-            X, n_clusters=n_clusters, n_neighbors=k, knn_mode="union"
+def prepare_spectral(
+    X: np.ndarray,
+    n_clusters: int,
+    k: int,
+    *,
+    graph_config: SpectralGraphConfig | None = None,
+    bandwidth_rule: str | None = None,
+    row_normalize: bool = False,
+    embedding_delta2: float | None = None,
+    symmetrization: str = "union",
+    laplacian: str = "symmetric_normalized_eq4",
+    knn_method: str = "auto",
+    dense_threshold: int = 512,
+    kmeans_init: str = "random",
+) -> PreparedRepresentation:
+    """Eq. (4) embedding on the shared SC/SSC path.
+
+    There is no ``n > 1500`` backend switch. Spectral clustering and SSC
+    must use this same F before shrinkage is evaluated.
+    """
+    if graph_config is None:
+        graph_config = SpectralGraphConfig(
+            k=k,
+            delta2=embedding_delta2,
+            bandwidth_rule=bandwidth_rule,
+            symmetrization=symmetrization,
+            laplacian=laplacian,
+            row_normalize=bool(row_normalize),
+            knn_method=knn_method,
+            dense_threshold=int(dense_threshold),
+            kmeans_init=str(kmeans_init),
         )
-        extra = {
-            "spectral_backend": "baselines.spectral_clustering",
-            "runtime_embedding_seconds": time.perf_counter() - t0,
+    t0 = time.perf_counter()
+    embedding, info = spectral_embedding(
+        X, n_components=n_clusters, config=graph_config
+    )
+    graph_stats = {
+        "n_connected_components": info.get("n_connected_components"),
+        "n_undirected_edges": info.get("n_undirected_edges"),
+        "degree_min": info.get("degree_min"),
+        "degree_mean": info.get("degree_mean"),
+        "degree_max": info.get("degree_max"),
+    }
+    extra = {
+        "spectral_backend": "shared_eq4",
+        "eigen_solver": info["eigen_solver"],
+        "graph": info["graph"],
+        "graph_stats": graph_stats,
+        "eigenvalues_summary": eigenvalue_summary(info["eigenvalues"]),
+        "n_undirected_edges": info.get("n_undirected_edges"),
+        "n_connected_components": info.get("n_connected_components"),
+        "row_normalize": bool(info.get("row_normalize", False)),
+        "sign_convention": info.get("sign_convention"),
+        "laplacian": info.get("laplacian"),
+        "shared_eq4_path": True,
+        "spectral_graph_config": graph_config.to_dict(),
+        "runtime_embedding_seconds": time.perf_counter() - t0,
+    }
+    if X.shape[0] <= 1500:
+        affinity, _graph = knn_affinity(X, config=graph_config)
+        try:
+            comb_evals, _vecs, _solver = smallest_eigenpairs(
+                combinatorial_laplacian(affinity), min(8, affinity.shape[0])
+            )
+            comb = eigenvalue_summary(comb_evals)
+            comb["solver"] = _solver
+            extra["combinatorial_laplacian_eigenvalues_A"] = comb
+        except Exception as exc:  # noqa: BLE001 - diagnostic must not abort F
+            extra["combinatorial_laplacian_eigenvalues_A"] = {
+                "status": "FAILED",
+                "reason": f"{type(exc).__name__}: {exc}",
+                "note": "combinatorial Laplacian eigenpairs are a post-embedding diagnostic, not the SC embedding",
+            }
+    else:
+        extra["combinatorial_laplacian_eigenvalues_A"] = {
+            "status": "SKIPPED",
+            "reason": "n>1500; combinatorial eigenpairs recorded only on small-n D5 diagnostics",
         }
     return PreparedRepresentation(
         name="sc",
         features=np.asarray(embedding, dtype=np.float64),
         extra=extra,
         cluster_fn="kmeans_on_features",
+        embedding=np.asarray(embedding, dtype=np.float64),
+        kmeans_init=str(graph_config.kmeans_init),
     )
 
 
@@ -389,10 +477,11 @@ def prepare_method(
     if method not in CACHEABLE:
         return None
     k = int(params.get("k", 5))
-    if method == "sc":
-        return prepare_spectral(X, n_clusters, k)
     if method == "llc":
         return prepare_llc_embedding(X, n_clusters, k)
+    graph_config = SpectralGraphConfig.from_params(params, k=k, for_embedding=True)
+    if method == "sc":
+        return prepare_spectral(X, n_clusters, k, graph_config=graph_config)
     gamma = float(params.get("gamma", 1.0))
     graph_drop = perturbation if perturbation and perturbation.get("type") == "graph_drop" else None
     return prepare_ssc_family(
@@ -402,20 +491,21 @@ def prepare_method(
         k=k,
         mutual=(method == "rssc"),
         graph_drop=graph_drop,
-        max_iter=int(params.get("max_iter", 300)),
-        tol=float(params.get("tol", 1e-6)),
-        variant=str(params.get("variant", "E13")),
+        max_iter=int(params.get("max_iter", graph_config.max_iter)),
+        tol=float(params.get("tol", graph_config.tol)),
+        variant=str(params.get("variant", graph_config.variant)),
         cluster_on=str(params.get("cluster_on", "G")),
         bandwidth_rule=params.get("bandwidth_rule"),
         row_normalize=bool(params.get("row_normalize", False)),
-        g_init=str(params.get("g_init", "F")),
-        g_init_seed=int(params.get("g_init_seed", 0)),
-        g_init_scale=float(params.get("g_init_scale", 1e-3)),
-        zero_residual_floor=params.get("zero_residual_floor", "median_pairwise"),
-        kmeans_init=str(params.get("kmeans_init", "random")),
+        g_init=str(params.get("g_init", graph_config.g_init)),
+        g_init_seed=int(params.get("g_init_seed", graph_config.g_init_seed)),
+        g_init_scale=float(params.get("g_init_scale", graph_config.g_init_scale)),
+        zero_residual_floor=params.get("zero_residual_floor", graph_config.zero_residual_floor),
+        kmeans_init=str(params.get("kmeans_init", graph_config.kmeans_init)),
         embedding_delta2=params.get("embedding_delta2"),
         delta2=params.get("delta2"),
-        eps=float(params.get("eps", 1e-8)),
+        eps=float(params.get("eps", graph_config.eps)),
+        graph_config=graph_config,
     )
 
 

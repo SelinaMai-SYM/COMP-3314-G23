@@ -1,14 +1,18 @@
 dataset_name: MSRA50
 source_url: unknown
 source_publication: >
-  Chang et al. (AAAI 2015) name MSRA50 but cite no source. He, Yan, Hu,
-  Niyogi, and Zhang, Face Recognition Using Laplacianfaces, IEEE TPAMI 2005,
-  describe a face collection made at Microsoft Research Asia with 12 people,
-  64 to 80 frontal images per person in each of two sessions, cropped to
-  32x32. That paper does not state a total of 1799 and does not give a
-  download URL. The name MSRA50 and the count 1799 are not established as
-  that file.
-download_date: "2026-10-20"
+  Chang et al. (AAAI 2015) name MSRA50, state 1799 images and 12 classes
+  resized to 32x32, and cite no source. Chang, Nie, Yang et al.,
+  "Improved Spectral Clustering via Embedded Label Propagation"
+  (arXiv:1411.6241, 2014) write "The MSRA50 dataset (He et al. 2004)
+  consists of 1799 images and 12 classes" and list matrix size 1024.
+  Their bibliography entry "He et al. 2004" is Face Recognition Using
+  Laplacianfaces, IEEE TPAMI 27(3):328-340, which is the 2005 journal
+  paper. He, Yan, Hu, and Zhang, ICCV 2003, and He, Yan, Hu, Niyogi, and
+  Zhang, TPAMI 2005, describe an MSRA collection of 12 people, 64 to 80
+  frontal images per person in each of two sessions, cropped to 32x32.
+  Those papers do not print 1799 and do not give a download URL.
+download_date: "2026-10-21"
 archive_filename: unknown
 SHA256_checksum: unknown
 license_information: unknown
@@ -21,9 +25,8 @@ preprocessing_operations: "not applied; no archive was obtained"
 sample_selection_method: unknown
 random_seed: unknown
 known_deviations: >
-  Chang et al. state 1799 images, 12 classes, resized to 32x32, with pixel
-  features. No archive with those measured counts was downloaded. Unofficial
-  .mat bundles posted on CSDN were not used. MSRA-B, MSRA10K, MSRA-CFW, and
-  MSRA-TD500 are different datasets and were not substituted. The official
-  cropped Extended Yale B and other face sets were not renamed to MSRA50.
+  12 people times two sessions times 64-80 images is 1536-1920, so 1799
+  is arithmetically possible. Matching that range is not identity.
+  Deng Cai's data.html (HTTP 200 on 2026-10-21) has no MSRA50 file.
+  MSRA-B, MSRA10K, MSRA-CFW, and MSRA-TD500 were not downloaded.
 verification_status: unavailable

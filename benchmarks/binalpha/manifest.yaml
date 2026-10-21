@@ -1,25 +1,37 @@
 dataset_name: BinAlpha
-source_url: unknown
-source_publication: unknown
-download_date: "2026-10-20"
-archive_filename: unknown
-SHA256_checksum: unknown
-license_information: unknown
-original_sample_count: unknown
-selected_sample_count: unknown
-number_of_classes: unknown
-original_feature_dimension: unknown
-processed_feature_dimension: unknown
-preprocessing_operations: "not applied; no archive was obtained"
-sample_selection_method: unknown
-random_seed: unknown
+source_url: >
+  Parent archive obtained 2026-10-21:
+  https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat
+  (HTTP 200 GET, 532304 bytes). Live
+  https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat returned HTTP 403.
+source_publication: >
+  Chang et al. (AAAI 2015) name BinAlpha and cite no source. The obtained
+  parent is Binary Alphadigits (Simon Lucas / Algoval; MATLAB dump on
+  Sam Roweis' page). No document was found that says Chang used this file.
+download_date: "2026-10-21"
+archive_filename: binaryalphadigs.mat
+SHA256_checksum: "3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7"
+license_information: >
+  The mat contains no license file. The Wayback Roweis page does not state
+  a license. Identity as Chang's BinAlpha: UNVERIFIED. The archive is
+  gitignored.
+original_sample_count: 1404
+selected_sample_count: >
+  paper default: unavailable. binaryalphadigs36: 1404.
+  letters26x30_seed0: 780 (reconstruction).
+number_of_classes: >
+  parent 36 (0-9 and A-Z). reconstruction 26 (A-Z). paper claim 26.
+original_feature_dimension: 320
+processed_feature_dimension: 320
+preprocessing_operations: >
+  Cells are uint8 20x16 with values in {0,1}. No resize. No divide-by-255.
+  C-order vectorize.
+sample_selection_method: >
+  Paper seed unknown. Reconstruction uses numpy RandomState(0), 30 of 39
+  per letter, indices in reconstructions/letters26x30_seed0.json.
+random_seed: "0 for letters26x30_seed0 only; unknown for the paper"
 known_deviations: >
-  Chang et al. state that BinAlpha contains 26 binary handwritten alphabets
-  and that they randomly select 30 images for every alphabet. They cite no
-  source, give no image size, and give no random seed. No public file with
-  that exact selection was found on 2026-10-20. Binary Alphadigits (Sam
-  Roweis / Simon Lucas; 36 classes of digits and capital letters, 39 images
-  each, 20x16) was identified and was not substituted. Because the parent
-  pool and seed are unknown, the paper's 780-image subset cannot be
-  reconstructed from a larger alphabet set.
-verification_status: unavailable
+  The 36-class parent is not called the paper BinAlpha. The 26x30 draw is
+  a reconstruction whose identity is UNVERIFIED. Default load_dataset
+  still raises DatasetUnavailable.
+verification_status: parent obtained; paper sample set unmatched

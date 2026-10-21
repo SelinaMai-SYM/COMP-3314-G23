@@ -1,4 +1,4 @@
-"""BinAlpha (unavailable)."""
+"""BinAlpha. The default loader stays unavailable."""
 
 from .loader import load_dataset
 

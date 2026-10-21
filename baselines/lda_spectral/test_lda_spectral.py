@@ -8,6 +8,7 @@ from scipy.optimize import linear_sum_assignment
 from sklearn.metrics import confusion_matrix
 
 from baselines.lda_spectral import fit_predict as lda_spectral_fit_predict
+from baselines.lda_spectral import fit_predict_oneshot as lda_spectral_oneshot
 
 
 def _accuracy(truth: np.ndarray, labels: np.ndarray) -> float:
@@ -48,6 +49,32 @@ def test_lda_spectral_is_deterministic_without_ground_truth() -> None:
         random_state=0,
         n_components=1,
         max_iter=5,
+        delta=1.0,
+        n_neighbors=5,
+    )
+    assert np.array_equal(labels, repeat)
+    assert _accuracy(truth, labels) == 1.0
+
+
+def test_lda_spectral_oneshot_is_named_and_rejects_iteration_and_y() -> None:
+    features, truth = _two_blobs()
+    with pytest.raises(TypeError, match="unexpected"):
+        lda_spectral_oneshot(features, 2, 0, n_components=1, y=truth)
+    with pytest.raises(TypeError, match="does not iterate"):
+        lda_spectral_oneshot(features, 2, 0, n_components=1, max_iter=5)
+    labels = lda_spectral_oneshot(
+        features,
+        2,
+        random_state=0,
+        n_components=1,
+        delta=1.0,
+        n_neighbors=5,
+    )
+    repeat = lda_spectral_oneshot(
+        features,
+        2,
+        random_state=0,
+        n_components=1,
         delta=1.0,
         n_neighbors=5,
     )

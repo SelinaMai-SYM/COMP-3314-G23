@@ -1,0 +1,181 @@
+{
+  "acc_mean": 0.6379149637914964,
+  "acc_std": 0.016734426856056542,
+  "combinatorial_laplacian_eigenvalues_A": {
+    "reason": "n>1500; combinatorial eigenpairs recorded only on small-n D5 diagnostics",
+    "status": "SKIPPED"
+  },
+  "dataset_checksum": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "dataset_identity_status": "verified_libsvm_9298",
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "dataset_version": "libsvm",
+  "eigen_solver": "scipy.sparse.linalg.eigsh",
+  "eigenvalues_summary": {
+    "gap_1_2": 0.0010964556402459247,
+    "gap_2_3": 0.0007478234543473296,
+    "listed": [
+      -1.7369478556338296e-16,
+      0.001096455640245751,
+      0.0018442790945930806,
+      0.0032670589211030087,
+      0.005434049628060922,
+      0.0070969486393330315,
+      0.007342066814895827,
+      0.009764709073463797
+    ],
+    "max": 0.014332728887837235,
+    "mean": 0.006296777314712497,
+    "min": -1.7369478556338296e-16,
+    "n": 10
+  },
+  "factor": "D12_USPS_SC",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "f9c381487d8a4915f35c2eadb638b5f28d830b11",
+  "git_status_porcelain": "M SSC_method/README.md\n M SSC_method/graph_construction.py\n M SSC_method/spectral_embedding.py\n M SSC_method/ssc.py\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/kmeans/test_kmeans.py\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/lda_spectral/__init__.py\n M baselines/lda_spectral/lda_spectral.py\n M baselines/lda_spectral/test_lda_spectral.py\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spectral_clustering/spectral_clustering.py\n M baselines/spls/README.md\n M baselines/spls/spls.py\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/data/.gitignore\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/manifest.yaml\n M benchmarks/binalpha/preprocessing.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/msra50/manifest.yaml\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/umist/loader.py\n M benchmarks/umist/manifest.yaml\n M benchmarks/umist/manifest_wayback.yaml\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/download_datasets.py\n M scripts/run_experiment.py\n?? SSC_method/spectral_config.py\n?? benchmarks/binalpha/reconstructions/\n?? configs/round2/\n?? docs/round2_baseline_audit.md\n?? docs/round2_http_log.json\n?? docs/round2_missing_resources.md\n?? docs/round2_source_of_truth.md\n?? results/round2/\n?? runs/round2/\n?? scripts/round2_dataset_recovery.py\n?? scripts/run_round2_diagnostics.py\n?? tests/test_shared_spectral_embedding.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "graph": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": 3.7357891404747243,
+    "delta2": 13.95612050208888,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "block",
+    "symmetrization": "union_maximum"
+  },
+  "graph_stats": {
+    "degree_max": 17.589608665957414,
+    "degree_mean": 2.930811101037774,
+    "degree_min": 0.006869529286294406,
+    "n_connected_components": 1,
+    "n_undirected_edges": 34745
+  },
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "laplacian": "symmetric_normalized_eq4",
+  "n_clusters": 10,
+  "n_connected_components": 1,
+  "n_features": 256,
+  "n_samples": 9298,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "n_undirected_edges": 34745,
+  "nmi_mean": 0.7744362214067159,
+  "nmi_std": 0.03925942240778165,
+  "paper_fidelity_category": "A_PAPER_FAITHFUL",
+  "params": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "k": 5,
+    "kmeans_init": "random",
+    "laplacian": "symmetric_normalized_eq4",
+    "n_init": 1,
+    "row_normalize": false,
+    "symmetrization": "union"
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "row_normalize": false,
+  "runtime_embedding_seconds": 1.0022408333607018,
+  "runtime_seconds_mean": 0.010168374826510748,
+  "shared_eq4_path": true,
+  "sign_convention": "largest_magnitude_positive",
+  "spectral_backend": "shared_eq4",
+  "spectral_graph_config": {
+    "affects_F": true,
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": null,
+    "delta2": null,
+    "dense_threshold": 512,
+    "eigenvector_selection": "smallest",
+    "eps": 1e-08,
+    "g_init": "F",
+    "g_init_scale": 0.001,
+    "g_init_seed": 0,
+    "k": 5,
+    "kmeans_init": "random",
+    "kmeans_n_init": 1,
+    "knn_method": "auto",
+    "laplacian": "symmetric_normalized_eq4",
+    "max_iter": 300,
+    "resolved_bandwidth_rule": "median_positive_knn_squared_distance",
+    "resolved_delta2": null,
+    "resolved_symmetrization": "union_maximum",
+    "row_normalize": false,
+    "seed": null,
+    "sign_convention": "largest_magnitude_positive",
+    "symmetrization": "union",
+    "tol": 1e-06,
+    "variant": "E13",
+    "zero_residual_floor": "median_pairwise"
+  },
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.6215315121531512,
+      "kmeans_inertia": 2.2522891350571017,
+      "kmeans_init": "random",
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.7323109687073744,
+      "runtime_seconds": 0.015792583115398884,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.6549795654979566,
+      "kmeans_inertia": 1.6486770557997568,
+      "kmeans_init": "random",
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.8100040041345542,
+      "runtime_seconds": 0.012415416073054075,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.6372338137233814,
+      "kmeans_inertia": 2.3003762394050407,
+      "kmeans_init": "random",
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.7809936913782193,
+      "runtime_seconds": 0.0022971252910792828,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ],
+  "variant": null
+}

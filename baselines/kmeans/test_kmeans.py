@@ -39,6 +39,19 @@ def test_kmeans_is_deterministic_and_separates_blobs() -> None:
     assert _accuracy(truth, first) == 1.0
 
 
+def test_kmeans_default_init_is_random_not_kmeanspp() -> None:
+    from baselines.kmeans.kmeans import _DEFAULTS
+
+    assert _DEFAULTS["init"] == "random"
+    features, _truth = _two_blobs(n_per_class=8)
+    implicit = kmeans_fit_predict(features, 2, random_state=0)
+    explicit_random = kmeans_fit_predict(features, 2, random_state=0, init="random")
+    assert np.array_equal(implicit, explicit_random)
+    plus_plus = kmeans_fit_predict(features, 2, random_state=0, init="k-means++")
+    assert plus_plus.shape == implicit.shape
+    assert plus_plus.dtype == np.int64
+
+
 def test_kmeans_rejects_hidden_and_noninteger_controls() -> None:
     features, _truth = _two_blobs(n_per_class=8)
     with pytest.raises(TypeError, match="random_state"):

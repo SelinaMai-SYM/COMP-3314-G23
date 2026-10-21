@@ -11,6 +11,8 @@ from typing import Any
 import numpy as np
 from scipy import sparse
 
+from SSC_method.spectral_config import SpectralGraphConfig, normalize_symmetrization
+
 
 def squared_euclidean(X: np.ndarray) -> np.ndarray:
     """Pairwise squared Euclidean distances. The diagonal is zero."""
@@ -97,12 +99,66 @@ def median_positive(values: np.ndarray, fallback: float = 1.0) -> float:
     return float(np.median(positive))
 
 
+def _undirected_knn_squared_distances(
+    dist2: np.ndarray,
+    idx: np.ndarray,
+    symmetrization: str,
+) -> np.ndarray:
+    """Squared lengths of the undirected edges kept after symmetrization."""
+    n_samples, k = idx.shape
+    rows = np.repeat(np.arange(n_samples, dtype=np.int64), k)
+    cols = np.asarray(idx, dtype=np.int64).ravel()
+    values = np.asarray(dist2, dtype=np.float64).ravel()
+    directed = sparse.coo_matrix((values, (rows, cols)), shape=(n_samples, n_samples)).tocsr()
+    directed.setdiag(0.0)
+    directed.eliminate_zeros()
+    if symmetrization == "union_maximum":
+        undirected = directed.maximum(directed.T).tocsr()
+    else:
+        binary = directed.copy()
+        binary.data = np.ones(binary.data.shape[0], dtype=np.float64)
+        mask = binary.multiply(binary.T).tocsr()
+        undirected = directed.multiply(mask).tocsr()
+        undirected = undirected.maximum(undirected.T).tocsr()
+    undirected.setdiag(0.0)
+    undirected.eliminate_zeros()
+    coo = sparse.triu(undirected, k=1).tocoo()
+    return np.asarray(coo.data, dtype=np.float64)
+
+
+def _symmetrize_directed_affinity(
+    directed: sparse.spmatrix,
+    symmetrization: str,
+) -> tuple[sparse.csr_matrix, str]:
+    """Turn a directed kNN Gaussian into an undirected affinity."""
+    directed = sparse.csr_matrix(directed, dtype=np.float64)
+    directed.setdiag(0.0)
+    directed.eliminate_zeros()
+    if symmetrization == "union_maximum":
+        affinity = directed.maximum(directed.T).tocsr()
+        name = "union_maximum"
+    elif symmetrization == "mutual_and":
+        binary = directed.copy()
+        binary.data = np.ones(binary.data.shape[0], dtype=np.float64)
+        mask = binary.multiply(binary.T).tocsr()
+        affinity = directed.multiply(mask)
+        affinity = affinity.maximum(affinity.T).tocsr()
+        name = "mutual_and"
+    else:
+        raise ValueError("symmetrization must be 'union' or 'mutual'")
+    affinity.setdiag(0.0)
+    affinity.eliminate_zeros()
+    return affinity, name
+
+
 def knn_affinity(
     X: np.ndarray,
     k: int = 5,
     delta2: float | None = None,
     knn_method: str = "auto",
     bandwidth_rule: str | None = None,
+    symmetrization: str = "union",
+    config: SpectralGraphConfig | None = None,
 ) -> tuple[sparse.csr_matrix, dict[str, Any]]:
     """Symmetric kNN Gaussian affinity.
 
@@ -118,10 +174,24 @@ def knn_affinity(
     ``bandwidth_rule`` is optional and does not change that default. None
     with ``delta2 is None`` is still the median of positive kNN squared
     distances. ``mean_knn_distance_scale`` uses (mean positive kNN Euclidean
-    distance)^2. ``fixed`` requires a positive ``delta2``. 
+    distance)^2. ``fixed`` requires a positive ``delta2``.
+    ``median_undirected_edge_squared_distance`` is the historical dense SC
+    median over remaining undirected edges; it is not the silent default.
     ``self_tuning_zelnik_manor`` is a local-scale diagnostic, not the
     paper's stated affinity.
+
+    ``symmetrization="union"`` is the shared SC/SSC default. ``"mutual"``
+    keeps an edge only when each point lists the other. Mutual kNN as an
+    SSC *method* still lives in ``method_extension``; this argument only
+    makes the same graph rule selectable for the shared Eq. (4) path.
     """
+    if config is not None:
+        k = config.k
+        delta2 = config.resolved_delta2()
+        knn_method = config.knn_method
+        bandwidth_rule = config.bandwidth_rule
+        symmetrization = config.symmetrization
+    sym_name = normalize_symmetrization(symmetrization)
     dist2, idx = knn_neighbor_squared_distances(X, k, method=knn_method)
     n_samples = X.shape[0]
     rows = np.repeat(np.arange(n_samples), k)
@@ -153,6 +223,24 @@ def knn_affinity(
         delta2_source = "mean_knn_distance_scale"
         extra_info["mean_knn_euclidean"] = mean_distance
         weights = np.exp(-dist2.ravel() / delta2_used)
+    elif rule == "median_undirected_edge_squared_distance":
+        if delta2 is not None:
+            raise ValueError(
+                "median_undirected_edge_squared_distance does not take a provided delta2"
+            )
+        edge_squared = _undirected_knn_squared_distances(dist2, idx, sym_name)
+        if edge_squared.size == 0:
+            delta2_used = 1.0
+            weights = np.ones(rows.size, dtype=np.float64)
+        else:
+            scale = float(np.median(edge_squared))
+            delta2_used = scale if scale > 0.0 else None
+            weights = (
+                np.ones(rows.size, dtype=np.float64)
+                if scale <= 0.0
+                else np.exp(-dist2.ravel() / scale)
+            )
+        delta2_source = "median_undirected_edge_squared_distance"
     elif rule in {"median_positive_knn_squared_distance", "provided", "fixed"}:
         if delta2 is None:
             if rule == "fixed":
@@ -168,19 +256,20 @@ def knn_affinity(
     else:
         raise ValueError(
             f"unknown bandwidth_rule {bandwidth_rule!r}; expected median, "
-            "mean_knn_distance_scale, fixed, or self_tuning_zelnik_manor"
+            "median_undirected_edge_squared_distance, mean_knn_distance_scale, "
+            "fixed, or self_tuning_zelnik_manor"
         )
     directed = sparse.coo_matrix((weights, (rows, cols)), shape=(n_samples, n_samples))
-    affinity = directed.maximum(directed.T).tocsr()
-    affinity.setdiag(0.0)
-    affinity.eliminate_zeros()
+    affinity, stored_sym = _symmetrize_directed_affinity(directed, sym_name)
+    if affinity.nnz and np.any(affinity.data < 0.0):
+        raise RuntimeError("kNN affinity produced a negative weight")
     info = {
         "k": int(k),
         "delta2": None if delta2_used is None else float(delta2_used),
         "delta": None if delta2_used is None else float(np.sqrt(delta2_used)),
         "delta2_source": delta2_source,
         "bandwidth_rule": rule,
-        "symmetrization": "union_maximum",
+        "symmetrization": stored_sym,
         "knn_method": knn_method if knn_method != "auto" else ("dense" if n_samples <= 1500 else "block"),
     }
     info.update(extra_info)

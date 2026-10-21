@@ -1,0 +1,32 @@
+{
+  "collected_at": "2026-10-21T16:15:39+08:00",
+  "cpu_count_os": 8,
+  "cwd": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+  "env_thread_limits": {
+    "MKL_NUM_THREADS": "8",
+    "NUMEXPR_NUM_THREADS": "8",
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "8"
+  },
+  "git_branch": "v1",
+  "git_head": "f9c381487d8a4915f35c2eadb638b5f28d830b11",
+  "git_status_porcelain": "M SSC_method/README.md\n M SSC_method/graph_construction.py\n M SSC_method/spectral_embedding.py\n M SSC_method/ssc.py\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/kmeans/test_kmeans.py\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/lda_spectral/__init__.py\n M baselines/lda_spectral/lda_spectral.py\n M baselines/lda_spectral/test_lda_spectral.py\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spectral_clustering/spectral_clustering.py\n M baselines/spls/README.md\n M baselines/spls/spls.py\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/data/.gitignore\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/manifest.yaml\n M benchmarks/binalpha/preprocessing.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/msra50/manifest.yaml\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/umist/loader.py\n M benchmarks/umist/manifest.yaml\n M benchmarks/umist/manifest_wayback.yaml\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/download_datasets.py\n M scripts/run_experiment.py\n?? SSC_method/spectral_config.py\n?? benchmarks/binalpha/reconstructions/\n?? configs/round2/\n?? docs/round2_baseline_audit.md\n?? docs/round2_http_log.json\n?? docs/round2_missing_resources.md\n?? docs/round2_source_of_truth.md\n?? runs/round2/\n?? scripts/round2_dataset_recovery.py\n?? scripts/run_round2_diagnostics.py\n?? tests/test_shared_spectral_embedding.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hostname": "GrantdeMacBook-Air.local",
+  "physical_memory_bytes": 17179869184,
+  "pid": 72235,
+  "platform": "macOS-14.5-arm64-arm-64bit-Mach-O",
+  "processor": "arm",
+  "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+  "run_id": "20261021_161539__ROUND2__ORL__D01_ATT92_BICUBIC_SC__5d93088d",
+  "versions": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.2",
+    "pandas": "2.3.3",
+    "python": "3.13.3 (v3.13.3:6280bb54784, Apr  8 2025, 10:47:54) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "scipy": "1.17.1",
+    "sklearn": "1.8.0",
+    "yaml": "6.0.3"
+  }
+}

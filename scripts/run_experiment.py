@@ -35,11 +35,50 @@ from experiments.protocol import METHOD_STATUS, SHORT_METHOD
 VALID_FIDELITY = {"A_PAPER_FAITHFUL", "B_AMBIGUITY", "C_DIAGNOSTIC"}
 
 
-def _repair1_run_id(dataset: str, factor: str, hashed: str, when: datetime) -> str:
+def _git_state(root: Path) -> dict[str, Any]:
+    import subprocess
+
+    try:
+        head = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=root, text=True, stderr=subprocess.DEVNULL
+        ).strip()
+        branch = subprocess.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            cwd=root,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        porcelain = subprocess.check_output(
+            ["git", "status", "--porcelain"],
+            cwd=root,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+    except Exception as exc:  # noqa: BLE001 - environment note must not abort a run
+        return {
+            "git_head": None,
+            "git_branch": None,
+            "git_uncommitted": None,
+            "git_uncommitted_note": f"unavailable: {type(exc).__name__}: {exc}",
+            "git_status_porcelain": "",
+        }
+    dirty = bool(porcelain.strip())
+    return {
+        "git_head": head,
+        "git_branch": branch,
+        "git_uncommitted": dirty,
+        "git_uncommitted_note": (
+            "working tree has uncommitted changes; numbers are from this dirty tree"
+            if dirty
+            else "clean"
+        ),
+        "git_status_porcelain": porcelain.strip()[:8000],
+    }
+
+
+def _tagged_run_id(track: str, dataset: str, factor: str, hashed: str, when: datetime) -> str:
     stamp = when.strftime("%Y%m%d_%H%M%S")
-    dataset_s = _token(dataset)
-    factor_s = _token(factor)
-    return f"{stamp}__REPAIR1__{dataset_s}__{factor_s}__{hashed}"
+    return f"{stamp}__{_token(track)}__{_token(dataset)}__{_token(factor)}__{hashed}"
 
 
 class TimeoutError_(Exception):
@@ -87,15 +126,16 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
         )
     hashed = config_hash(config)
     started = datetime.now().astimezone()
-    if track.upper() == "REPAIR1":
+    if track.upper() in {"REPAIR1", "ROUND2"}:
         factor = str(config.get("factor") or params.get("variant") or method)
-        run_id = _repair1_run_id(dataset_name, factor, hashed, started)
+        run_id = _tagged_run_id(track, dataset_name, factor, hashed, started)
     else:
         run_id = make_run_id(track, SHORT_METHOD.get(method, method), dataset_name, hashed, when=started)
+    git_state = _git_state(ROOT)
     run_dir = _unique_run_dir(Path(runs_root), run_id)
     writer = RunWriter(run_dir)
     writer.write_config(config)
-    writer.write_environment({"run_id": run_id})
+    writer.write_environment({"run_id": run_id, **git_state})
     writer.write_metadata(
         {
             "run_id": run_id,
@@ -112,6 +152,7 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
             "created_at": started.isoformat(timespec="seconds"),
             "selection_uses_labels": bool(config.get("label_informed_selection", track.upper().startswith("TRACKA") or track.upper() == "TRACK_A" or "TRACKA" in track.upper())),
             "notes": config.get("notes", ""),
+            **git_state,
         }
     )
     writer.write_status("PLANNED", run_id=run_id)
@@ -169,11 +210,16 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
             "dataset_identity_status": config.get("dataset_identity_status"),
             "paper_fidelity_category": fidelity,
             "hardware_note": "8 CPU / 16 GB target; see environment.json",
+            **git_state,
         }
         if method in CACHEABLE:
             graph_spec = perturbation_spec if perturbation_spec and perturbation_spec.get("type") == "graph_drop" else None
             prepared = prepare_method(method, X_used, n_clusters, params, perturbation=graph_spec)
             extra_global.update(prepared.extra)
+            if prepared.embedding is not None:
+                np.save(run_dir / "embedding_F.npy", prepared.embedding)
+            if prepared.shrunk is not None:
+                np.save(run_dir / "embedding_G.npy", prepared.shrunk)
             if prepared.history:
                 writer.write_objective_history(prepared.history)
             print(

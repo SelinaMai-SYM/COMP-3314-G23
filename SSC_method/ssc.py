@@ -13,6 +13,7 @@ from sklearn.cluster import KMeans
 
 from SSC_method.graph_construction import knn_affinity
 from SSC_method.optimizer import shrink_embedding, variant_laplacian_coefficient
+from SSC_method.spectral_config import SpectralGraphConfig
 from SSC_method.spectral_embedding import spectral_embedding
 
 
@@ -41,9 +42,12 @@ class SpectralShrunkClustering:
         Squared bandwidth for the kNN graph on the original features, used
         only to form the normalized Laplacian. ``None`` uses the same median
         rule on that graph. The two graphs are not forced to share one delta.
-    kmeans_n_init, kmeans_random_state:
-        Explicit K-means settings. The paper's experimental count of 50
-        restarts is a protocol choice and is not hard-wired here.
+    kmeans_init, kmeans_n_init, kmeans_random_state:
+        Explicit K-means settings. The library default remains
+        ``k-means++`` with ``kmeans_n_init=10`` so old call sites do not
+        change. Experiment runners pass ``init="random"`` and ``n_init=1``.
+        The paper's experimental count of 50 restarts is a protocol choice
+        and is not hard-wired here.
     zero_residual_floor:
         How to define Equation (10) when G - F is entirely zero. The default
         ``'median_pairwise'`` is the numerical correction documented in
@@ -66,6 +70,7 @@ class SpectralShrunkClustering:
         max_iter: int = 100,
         delta2: float | None = None,
         embedding_delta2: float | None = None,
+        kmeans_init: str = "k-means++",
         kmeans_n_init: int = 10,
         kmeans_random_state: int = 0,
         zero_residual_floor: str | float = "median_pairwise",
@@ -80,6 +85,7 @@ class SpectralShrunkClustering:
         self.max_iter = int(max_iter)
         self.delta2 = delta2
         self.embedding_delta2 = embedding_delta2
+        self.kmeans_init = str(kmeans_init)
         self.kmeans_n_init = int(kmeans_n_init)
         self.kmeans_random_state = kmeans_random_state
         self.zero_residual_floor = zero_residual_floor
@@ -107,14 +113,28 @@ class SpectralShrunkClustering:
         if not np.isfinite(features).all():
             raise ValueError("X contains non-finite values")
 
-        embedding, embed_info = spectral_embedding(
-            features,
-            n_components=self.n_clusters,
+        graph_config = SpectralGraphConfig(
             k=self.k,
             delta2=self.embedding_delta2,
             dense_threshold=self.eigen_dense_threshold,
+            variant=self.variant,
+            g_init="F",
+            zero_residual_floor=self.zero_residual_floor,
+            tol=self.tol,
+            max_iter=self.max_iter,
+            eps=self.eps,
+            kmeans_init=self.kmeans_init,
+            kmeans_n_init=self.kmeans_n_init,
+            seed=self.kmeans_random_state,
         )
-        affinity, affinity_info = knn_affinity(embedding, k=self.k, delta2=self.delta2)
+        embedding, embed_info = spectral_embedding(
+            features,
+            n_components=self.n_clusters,
+            config=graph_config,
+        )
+        affinity, affinity_info = knn_affinity(
+            embedding, k=self.k, delta2=self.delta2, knn_method=graph_config.knn_method
+        )
         shrinkage = shrink_embedding(
             embedding,
             affinity,
@@ -128,7 +148,7 @@ class SpectralShrunkClustering:
         )
         kmeans = KMeans(
             n_clusters=self.n_clusters,
-            init="k-means++",
+            init=self.kmeans_init,
             n_init=self.kmeans_n_init,
             random_state=self.kmeans_random_state,
             algorithm="lloyd",
@@ -148,6 +168,10 @@ class SpectralShrunkClustering:
             "embedding_graph": embed_info["graph"],
             "embedding_eigenvalues": embed_info["eigenvalues"],
             "eigen_solver": embed_info["eigen_solver"],
+            "sign_convention": embed_info.get("sign_convention"),
+            "row_normalize": bool(embed_info.get("row_normalize", False)),
+            "shared_eq4_path": True,
+            "spectral_graph_config": graph_config.to_dict(),
             "shrinkage_graph": affinity_info,
             "initial_zero_residual_floor": shrinkage.initial_zero_residual_floor,
             "g0": "F",
@@ -156,6 +180,8 @@ class SpectralShrunkClustering:
             "linear_update": "equation_13" if shrinkage.variant == "E13" else "equation_8_stationary",
             "objective_monitored": "equation_8",
             "sqrt_smoothed_objective_key": "sqrt_smoothed_equation8_objective",
+            "kmeans_init": self.kmeans_init,
+            "kmeans_n_init": self.kmeans_n_init,
         }
         return self
 

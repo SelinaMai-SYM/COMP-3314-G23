@@ -48,10 +48,10 @@ DOWNLOADS = [
 ]
 
 UNAVAILABLE = {
-    "AR": "license request and password required; no public archive was retrieved",
-    "UMIST": "Lincoln eprints returned an AWS WAF challenge; no tar was saved",
-    "BinAlpha": "exact 26-by-30 set was not found; Binary Alphadigits was not substituted",
-    "MSRA50": "no 1799-image, 12-class archive was found; other MSRA sets were not substituted",
+    "AR": "official request/password required; Zenodo 19683234 was not used",
+    "UMIST": "564-image file not obtained; extra 1012/575 archives are not that set",
+    "BinAlpha": "paper 26x30 identity unverified; Binary Alphadigits is an explicit extra version",
+    "MSRA50": "no 1799-image, 12-class archive; other MSRA sets were not substituted",
 }
 
 

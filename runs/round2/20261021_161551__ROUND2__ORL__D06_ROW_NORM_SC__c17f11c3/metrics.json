@@ -1,0 +1,227 @@
+{
+  "acc_mean": 0.6769999999999999,
+  "acc_std": 0.03089296036316364,
+  "combinatorial_laplacian_eigenvalues_A": {
+    "gap_1_2": 0.0,
+    "gap_2_3": 0.0,
+    "listed": [
+      1.4720386190812654e-20,
+      1.4720386190812654e-20,
+      1.4720386190812654e-20,
+      0.0051212445651643065,
+      0.008041627688066332,
+      0.010153447092775676,
+      0.012406796216024373,
+      0.014580355109835103
+    ],
+    "max": 0.014580355109835103,
+    "mean": 0.006287933833983224,
+    "min": 1.4720386190812654e-20,
+    "n": 8,
+    "solver": "scipy.linalg.eigh"
+  },
+  "dataset_checksum": "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec",
+  "dataset_identity_status": "original_source_att92_92x112_bilinear_32x32",
+  "dataset_metadata": {
+    "SHA256_checksum": "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec",
+    "dataset_name": "ORL",
+    "interpolation": "bilinear",
+    "n": 400,
+    "not_olivetti": "This release is 92x112 PGM. It is not the Olivetti 64x64 matrix used by load_dataset('ORL').",
+    "number_of_classes": 40,
+    "orientation": "PGM header width 92, height 112. Saved native array is (400, 112, 92): axis 1 is file row (height), axis 2 is file column (width). No transpose was applied.",
+    "original_feature_dimension": 10304,
+    "original_spatial_size": [
+      112,
+      92
+    ],
+    "pixel_range_native_uint8": [
+      0,
+      251
+    ],
+    "preprocessing_operations": [
+      "read AT&T PGM files in subject directory s1..s40 and image name 1.pgm..10.pgm",
+      "resize each uint8 image to 32x32 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_array_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/orl/data/att92/processed/orl_att92_32x32_bilinear_uint8.npy",
+    "processed_feature_dimension": 1024,
+    "processed_spatial_size": [
+      32,
+      32
+    ],
+    "random_seed": "unknown",
+    "sample_selection_method": "all 400 PGM images; label = subject number minus 1",
+    "source_url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+    "verification_status": "obtained",
+    "version": "att92"
+  },
+  "dataset_version": "att92",
+  "eigen_solver": "scipy.linalg.eigh",
+  "eigenvalues_summary": {
+    "gap_1_2": 2.449369677366237e-16,
+    "gap_2_3": 0.0,
+    "listed": [
+      -2.4526751918660413e-17,
+      2.204102158179633e-16,
+      2.204102158179633e-16,
+      0.0019984309334329315,
+      0.0037137852823413203,
+      0.00446342186614578,
+      0.005645082320717774,
+      0.006423344850677244
+    ],
+    "max": 0.22320735244897583,
+    "mean": 0.05695992698805931,
+    "min": -2.4526751918660413e-17,
+    "n": 40
+  },
+  "factor": "D06_ROW_NORM_SC",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "f9c381487d8a4915f35c2eadb638b5f28d830b11",
+  "git_status_porcelain": "M SSC_method/README.md\n M SSC_method/graph_construction.py\n M SSC_method/spectral_embedding.py\n M SSC_method/ssc.py\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/kmeans/test_kmeans.py\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/lda_spectral/__init__.py\n M baselines/lda_spectral/lda_spectral.py\n M baselines/lda_spectral/test_lda_spectral.py\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spectral_clustering/spectral_clustering.py\n M baselines/spls/README.md\n M baselines/spls/spls.py\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/data/.gitignore\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/manifest.yaml\n M benchmarks/binalpha/preprocessing.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/msra50/manifest.yaml\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/umist/loader.py\n M benchmarks/umist/manifest.yaml\n M benchmarks/umist/manifest_wayback.yaml\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/download_datasets.py\n M scripts/run_experiment.py\n?? SSC_method/spectral_config.py\n?? benchmarks/binalpha/reconstructions/\n?? configs/round2/\n?? docs/round2_baseline_audit.md\n?? docs/round2_http_log.json\n?? docs/round2_missing_resources.md\n?? docs/round2_source_of_truth.md\n?? results/round2/\n?? runs/round2/\n?? scripts/round2_dataset_recovery.py\n?? scripts/run_round2_diagnostics.py\n?? tests/test_shared_spectral_embedding.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "graph": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": 3.0556456594313497,
+    "delta2": 9.336970396001647,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "dense",
+    "symmetrization": "union_maximum"
+  },
+  "graph_stats": {
+    "degree_max": 5.51249377929615,
+    "degree_mean": 2.290149321895843,
+    "degree_min": 0.3200478280305946,
+    "n_connected_components": 3,
+    "n_undirected_edges": 1273
+  },
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "laplacian": "symmetric_normalized_eq4",
+  "n_clusters": 40,
+  "n_connected_components": 3,
+  "n_features": 1024,
+  "n_samples": 400,
+  "n_trials_completed": 5,
+  "n_trials_requested": 5,
+  "n_undirected_edges": 1273,
+  "nmi_mean": 0.8711699061245586,
+  "nmi_std": 0.007989516029881573,
+  "paper_fidelity_category": "C_DIAGNOSTIC",
+  "params": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "k": 5,
+    "kmeans_init": "random",
+    "laplacian": "symmetric_normalized_eq4",
+    "n_init": 1,
+    "row_normalize": true,
+    "symmetrization": "union"
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "row_normalize": true,
+  "runtime_embedding_seconds": 0.016304875258356333,
+  "runtime_seconds_mean": 0.0021608835086226463,
+  "shared_eq4_path": true,
+  "sign_convention": "largest_magnitude_positive",
+  "spectral_backend": "shared_eq4",
+  "spectral_graph_config": {
+    "affects_F": true,
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": null,
+    "delta2": null,
+    "dense_threshold": 512,
+    "eigenvector_selection": "smallest",
+    "eps": 1e-08,
+    "g_init": "F",
+    "g_init_scale": 0.001,
+    "g_init_seed": 0,
+    "k": 5,
+    "kmeans_init": "random",
+    "kmeans_n_init": 1,
+    "knn_method": "auto",
+    "laplacian": "symmetric_normalized_eq4",
+    "max_iter": 300,
+    "resolved_bandwidth_rule": "median_positive_knn_squared_distance",
+    "resolved_delta2": null,
+    "resolved_symmetrization": "union_maximum",
+    "row_normalize": true,
+    "seed": null,
+    "sign_convention": "largest_magnitude_positive",
+    "symmetrization": "union",
+    "tol": 1e-06,
+    "variant": "E13",
+    "zero_residual_floor": "median_pairwise"
+  },
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "trials": [
+    {
+      "acc": 0.6525,
+      "kmeans_inertia": 96.07945922118357,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.864386173566923,
+      "runtime_seconds": 0.007340667303651571,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.6525,
+      "kmeans_inertia": 95.46126793292439,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.8676417388956229,
+      "runtime_seconds": 0.000798041932284832,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.69,
+      "kmeans_inertia": 70.13744229494984,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.8715076878171182,
+      "runtime_seconds": 0.0008528749458491802,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.725,
+      "kmeans_inertia": 66.39373607911473,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.884730379363402,
+      "runtime_seconds": 0.0009282086975872517,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.665,
+      "kmeans_inertia": 89.35014365544865,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.867583550979727,
+      "runtime_seconds": 0.0008846246637403965,
+      "seed": 4,
+      "trial_index": 4
+    }
+  ],
+  "variant": null
+}

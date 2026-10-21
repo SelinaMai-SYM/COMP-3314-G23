@@ -1,0 +1,29 @@
+{
+  "historical_sc_orl_olivetti_n50": {
+    "acc_mean": 0.54215,
+    "acc_std": 0.031432670187275545,
+    "backend": "baselines.spectral",
+    "dataset": "olivetti 64->32",
+    "n": 50,
+    "run_id": "20261020_015207__TRACKA__SC__ORL__a86c9d70"
+  },
+  "n_completed": 25,
+  "n_runs": 25,
+  "paper_sc_orl_acc": [
+    72.7,
+    2.3
+  ],
+  "paper_sc_orl_nmi": [
+    85.8,
+    1.9
+  ],
+  "paper_ssc_orl_acc": [
+    76.0,
+    1.6
+  ],
+  "paper_ssc_orl_nmi": [
+    88.6,
+    1.5
+  ],
+  "registry": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/results/round2/experiment_registry.csv"
+}

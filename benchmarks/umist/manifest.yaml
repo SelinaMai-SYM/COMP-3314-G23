@@ -26,8 +26,10 @@ preprocessing_operations: "not applied; no archive was obtained. The paper does 
 sample_selection_method: unknown
 random_seed: unknown
 known_deviations: >
-  Chang et al. state 564 images of 20 individuals and say only that pixel
-  values are the features. Those counts were not measured here. A different
-  cropped UMIST matrix was not downloaded and was not substituted. Resize
-  remains unspecified.
-verification_status: unavailable
+  Chang et al. state 564 images of 20 individuals. Extra archives on disk
+  are 1012 unique uncropped PGM or 575 cropped 112x92 PGM. The cropped tar
+  has 575 unique filenames and 10 pixel-identical pairs (1b0xx.pgm vs
+  final0N.pgm). Dropping those 10 copies yields 565, not 564. Eleven images
+  were not dropped to force the paper count. Figshare 575 is not
+  pixel-identical to the cropped tar.
+verification_status: unavailable at 564; extra 1012/575 archives are approximate

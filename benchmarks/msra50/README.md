@@ -1,6 +1,6 @@
 # MSRA50
 
-论文身份状态：**CANDIDATE_FOUND**（文献指针）后仍 **NOT_FOUND**（无文件）。计数相符不等于身份。不是 **DOWNLOADED_UNVERIFIED**。
+论文身份状态：**CANDIDATE_FOUND**（文献指针）后仍 **NOT_FOUND**（无文件）。Strict URL 轮：`BLOCKED_DATA_NOT_OBTAINED`。计数相符不等于身份。不是 **DOWNLOADED_UNVERIFIED**。
 
 索引：[docs/round2_source_of_truth.md](../../docs/round2_source_of_truth.md)。清单：`manifest.yaml`。
 
@@ -69,3 +69,7 @@ except DatasetUnavailable as exc:
 ## Task 1（2026-10-21）
 
 仍无 1799/12 文件。邓蔡三页 HTTP **200**，无 MSRA50。GitHub 仓库搜索 `MSRA50 mat` `total_count=0`。新保存同组 OA：`resources/Chang_Nie_Yang_Huang_2014_arxiv_1411.6241v1.pdf` 463461 字节 SHA-256 `d3d00b0fa2eeff938d65800a3a7e4d1b08987de73932e9bd04de801e708badb2`（`arxiv.org/pdf/1411.6241v1.pdf` **200**；无版本路径 **404**）。未下 MSRA-B/10K/TD500。矩阵状态：`NOT_FOUND`。
+
+## Strict URL Task 1（2026-10-21 晚）
+
+无下载 URL。本地 `data/` 仍空。UTS 署名 AAAI PDF 与同组 1411.6241v1 只有 1799/12/1024 文献计数。状态：`BLOCKED_DATA_NOT_OBTAINED`。

@@ -1,0 +1,32 @@
+{
+  "collected_at": "2026-10-21T22:26:42+08:00",
+  "cpu_count_os": 8,
+  "cwd": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+  "env_thread_limits": {
+    "MKL_NUM_THREADS": "8",
+    "NUMEXPR_NUM_THREADS": "8",
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "8"
+  },
+  "git_branch": "v1",
+  "git_head": "47c0f835ef69afa560b891524da894ab4b39bad2",
+  "git_status_porcelain": "M baselines/spls/README.md\n M baselines/spls/resources/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/__init__.py\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/ar/resources/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/run_experiment.py\n?? benchmarks/binalpha/reconstructions/CANDIDATE_BIN_ALPHA.json\n?? configs/strict_paper/\n?? configs/strict_paper_reproduction.yaml\n?? docs/strict_experiment_protocol.md\n?? docs/strict_http_logs/\n?? docs/strict_resource_acquisition.md\n?? results/strict_paper/\n?? results/strict_reproduction_matrix.csv\n?? runs/strict_paper/\n?? scripts/run_strict_paper.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hostname": "GrantdeMacBook-Air.local",
+  "physical_memory_bytes": 17179869184,
+  "pid": 83078,
+  "platform": "macOS-14.5-arm64-arm-64bit-Mach-O",
+  "processor": "arm",
+  "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+  "run_id": "20261021_222642__STRICT_PAPER__BINALPHA__LDAKM_GRID_D10__cd180c45",
+  "versions": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.2",
+    "pandas": "2.3.3",
+    "python": "3.13.3 (v3.13.3:6280bb54784, Apr  8 2025, 10:47:54) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "scipy": "1.17.1",
+    "sklearn": "1.8.0",
+    "yaml": "6.0.3"
+  }
+}

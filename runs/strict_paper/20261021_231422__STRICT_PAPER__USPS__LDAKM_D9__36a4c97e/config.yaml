@@ -1,0 +1,20 @@
+track: STRICT_PAPER
+method: lda_kmeans
+dataset: USPS
+dataset_version: libsvm
+dataset_identity_status: verified_libsvm_9298
+factor: LDAKM_D9
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 7200
+params:
+  n_components: 9
+  init: random
+  n_init: 1
+notes: LDA-KM dim=9=K-1; cannot search 150
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'main cell: n_components=K-1 (Ding–Li); grid clipped by rank<=K-1;
+  never ACC'
+hardware_note: 8 CPU / 16 GB

@@ -59,3 +59,7 @@ python3 -m pytest benchmarks/yaleb/test_yaleb_versions.py -q
 ## Task 1（2026-10-21）哈希复核
 
 未重下。`data/YaleB_32x32.mat` 2214688 字节 SHA-256 `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99`。`data/cropped_wayback/CroppedYale_wayback_20220127.zip` 58493820 字节 SHA-256 `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573`（2452 PGM，2414 非 Ambient）。处理阵列哈希见 `manifest_cropped.yaml`。`cropped2414` 矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+
+## Strict URL Task 1（2026-10-21 晚）
+
+未重下。CroppedYale zip SHA-256 仍为 `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573`。

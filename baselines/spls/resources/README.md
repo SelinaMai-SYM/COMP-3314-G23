@@ -18,3 +18,5 @@ Task 1, 2026-10-21. Hou, Nie, Jiao, Zhang, and Wu, *Information Processing & Man
 | ScienceDirect HTML | curl 403 (bot) | abstract only; paywall not bypassed |
 
 `baselines/spls/spls.py` remains `NotImplementedError`. LSDA arXiv:1705.01206 and PSLSR/SLSR were not substituted.
+
+Strict URL Task 1 (later 2026-10-21): still no local PDF. ScienceDirect 403 Cloudflare challenge. Status `BLOCKED_MISSING_FULL_METHOD`.

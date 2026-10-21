@@ -72,3 +72,7 @@ assert m2["original_spatial_size"] == [112, 92]
 ## Task 1（2026-10-21）哈希复核
 
 未重下。`data/att92/att_faces.zip` 3769022 字节 SHA-256 `509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec`（400 PGM）。`data/olivettifaces.mat` 4260520 字节 SHA-256 `b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794`。处理阵列在 `data/att92/processed/`，哈希与上表相同。矩阵状态：`att92` 为 `COMPLETE_WITH_UNSPECIFIED_SETTINGS`（插值未写）。
+
+## Strict URL Task 1（2026-10-21 晚）
+
+未重下。`att_faces.zip` SHA-256 仍为 `509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec`。

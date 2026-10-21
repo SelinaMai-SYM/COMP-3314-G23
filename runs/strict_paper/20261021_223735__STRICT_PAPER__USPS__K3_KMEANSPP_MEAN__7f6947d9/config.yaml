@@ -1,0 +1,19 @@
+track: STRICT_PAPER
+method: kmeans
+dataset: USPS
+dataset_version: libsvm
+dataset_identity_status: verified_libsvm_9298
+factor: K3_KMEANSPP_MEAN
+paper_fidelity_category: C_DIAGNOSTIC
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 7200
+params:
+  init: k-means++
+  n_init: 1
+notes: K3 k-means++ diagnostic; not the faithful default; never ACC
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'K3 diagnostic: k-means++ init, n_init=1, mean±std over ALL completed
+  trials; never selected by ACC'
+hardware_note: 8 CPU / 16 GB

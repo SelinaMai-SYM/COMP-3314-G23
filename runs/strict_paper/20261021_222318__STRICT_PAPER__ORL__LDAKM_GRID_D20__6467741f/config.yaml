@@ -1,0 +1,20 @@
+track: STRICT_PAPER
+method: lda_kmeans
+dataset: ORL
+dataset_version: att92
+dataset_identity_status: original_source_att92_92x112_bilinear_32x32
+factor: LDAKM_GRID_D20
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 20
+  init: random
+  n_init: 1
+notes: LDA dim grid clipped by K-1; recorded; primary cell is K-1
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'main cell: n_components=K-1 (Ding–Li); grid clipped by rank<=K-1;
+  never ACC'
+hardware_note: 8 CPU / 16 GB

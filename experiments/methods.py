@@ -9,12 +9,9 @@ from typing import Any
 import numpy as np
 from scipy import sparse
 
-from baselines.kmeans import fit_predict as kmeans_fit_predict
 from baselines.lda_kmeans import fit_predict as lda_kmeans_fit_predict
 from baselines.lda_spectral import fit_predict as lda_spectral_fit_predict
 from baselines.llc import local_regression_matrix, yu_shi_discretize
-from baselines.pca_kmeans import fit_predict as pca_kmeans_fit_predict
-from baselines.pca_spectral import fit_predict as pca_spectral_fit_predict
 from baselines.spls import fit_predict as spls_fit_predict
 from benchmarks.metrics import clustering_accuracy, normalized_mutual_information
 from experiments.perturbations import drop_affinity_edges
@@ -419,26 +416,9 @@ def run_stateless_method(
     """Methods whose representation is not cached across trials."""
     k = int(params.get("k", 5))
     if method == "kmeans":
-        labels = kmeans_fit_predict(X, n_clusters, seed, n_init=1, init="random")
-        return labels, {}
-    if method == "pca_kmeans":
-        n_components = int(params["n_components"])
-        labels = pca_kmeans_fit_predict(
-            X, n_clusters, seed, n_components=n_components, n_init=1, init="random"
-        )
-        return labels, {"n_components": n_components}
-    if method == "pca_spectral":
-        n_components = int(params["n_components"])
-        labels = pca_spectral_fit_predict(
-            X,
-            n_clusters,
-            seed,
-            n_components=n_components,
-            n_neighbors=k,
-            n_init=1,
-            init="random",
-        )
-        return labels, {"n_components": n_components}
+        init = str(params.get("init", params.get("kmeans_init", "random")))
+        labels, inertia = _kmeans_labels(X, n_clusters, seed, init=init)
+        return labels, {"kmeans_inertia": inertia, "kmeans_init": init}
     if method == "lda_kmeans":
         n_components = int(params["n_components"])
         labels = lda_kmeans_fit_predict(
@@ -463,8 +443,8 @@ def run_stateless_method(
     raise KeyError(method)
 
 
-CACHEABLE = {"ssc", "rssc", "sc", "llc"}
-STATELESS = {"kmeans", "pca_kmeans", "pca_spectral", "lda_kmeans", "lda_spectral", "spls"}
+CACHEABLE = {"ssc", "rssc", "sc", "llc", "pca_kmeans", "pca_spectral"}
+STATELESS = {"kmeans", "lda_kmeans", "lda_spectral", "spls"}
 
 
 def prepare_method(
@@ -479,7 +459,33 @@ def prepare_method(
     k = int(params.get("k", 5))
     if method == "llc":
         return prepare_llc_embedding(X, n_clusters, k)
+    if method == "pca_kmeans":
+        n_components = int(params["n_components"])
+        init = str(params.get("init", params.get("kmeans_init", "random")))
+        features = prepare_pca(X, n_components)
+        return PreparedRepresentation(
+            name="pca_kmeans",
+            features=np.asarray(features, dtype=np.float64),
+            extra={
+                "n_components": n_components,
+                "pca_solver": "full",
+                "kmeans_init": init,
+                "protocol": "pca_once_then_kmeans_trials",
+            },
+            cluster_fn="kmeans_on_features",
+            kmeans_init=init,
+        )
     graph_config = SpectralGraphConfig.from_params(params, k=k, for_embedding=True)
+    if method == "pca_spectral":
+        n_components = int(params["n_components"])
+        projected = prepare_pca(X, n_components)
+        prepared = prepare_spectral(X=projected, n_clusters=n_clusters, k=k, graph_config=graph_config)
+        prepared.name = "pca_spectral"
+        prepared.extra = dict(prepared.extra)
+        prepared.extra["n_components"] = n_components
+        prepared.extra["pca_solver"] = "full"
+        prepared.extra["protocol"] = "pca_once_then_shared_eq4_F_then_kmeans"
+        return prepared
     if method == "sc":
         return prepare_spectral(X, n_clusters, k, graph_config=graph_config)
     gamma = float(params.get("gamma", 1.0))

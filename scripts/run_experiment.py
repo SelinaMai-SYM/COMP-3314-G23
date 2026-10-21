@@ -126,7 +126,7 @@ def run_config(config: dict[str, Any], runs_root: Path) -> Path:
         )
     hashed = config_hash(config)
     started = datetime.now().astimezone()
-    if track.upper() in {"REPAIR1", "ROUND2", "STRICT_REPRO"}:
+    if track.upper() in {"REPAIR1", "ROUND2", "STRICT_REPRO", "STRICT_PAPER"}:
         factor = str(config.get("factor") or params.get("variant") or method)
         run_id = _tagged_run_id(track, dataset_name, factor, hashed, started)
     else:

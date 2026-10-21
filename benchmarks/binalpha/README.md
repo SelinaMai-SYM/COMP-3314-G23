@@ -28,9 +28,9 @@ Chang et al. 只写“26 个二进制手写字母，每类随机 30 张”，无
 
 | version | n | 类 | 是否论文 BinAlpha |
 | --- | --- | --- | --- |
-| 默认 / `paper` | — | — | 否；`DatasetUnavailable` |
+| 默认 / `paper` | — | — | 否；`DatasetUnavailable`（不称 EXACT） |
 | `binaryalphadigs36` | 1404 | 36 | **否** |
-| `letters26x30_seed0` | 780 | 26 | **否**（reconstruction，UNVERIFIED） |
+| `CANDIDATE_BIN_ALPHA` / `letters26x30_seed0` | 780 | 26 | **否**（候选 reconstruction，seed 0） |
 
 ## 样本选择
 
@@ -50,7 +50,7 @@ Chang et al. 只写“26 个二进制手写字母，每类随机 30 张”，无
 python3 -m pytest benchmarks/binalpha/test_binalpha.py -q
 ```
 
-默认必须不可用；36 类必须是 `(1404, 320)`；26×30 必须是 `(780, 320)` 且 `identity == "UNVERIFIED"`。
+默认必须不可用；36 类必须是 `(1404, 320)`；26×30 / `CANDIDATE_BIN_ALPHA` 必须是 `(780, 320)` 且 `identity == "CANDIDATE_BIN_ALPHA"`，不称 EXACT。
 
 ## 哪些实验用了这个版本
 
@@ -65,10 +65,14 @@ try:
     load_dataset("BinAlpha")
 except DatasetUnavailable:
     pass
-X, y, m = load_dataset("BinAlpha", version="letters26x30_seed0")
-assert X.shape == (780, 320) and m["not_paper_binalpha"] is True
+X, y, m = load_dataset("BinAlpha", version="CANDIDATE_BIN_ALPHA")
+assert X.shape == (780, 320) and m["identity"] == "CANDIDATE_BIN_ALPHA"
 ```
 
 ## Task 1（2026-10-21）哈希复核
 
 未重下。`data/binaryalphadigs.mat` 532304 字节 SHA-256 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`。论文 26×30 仍 `NOT_FOUND`；`letters26x30_seed0` 仍 `CANDIDATE_ONLY` / UNVERIFIED。
+
+## Strict URL Task 1（2026-10-21 晚）哈希复核
+
+未重下。父集 SHA-256 仍为 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`（MD5 `194c4c91d95f1457bbd5829e75373b96`）。计划 URL HEAD **200**、532304 字节。候选版本 `CANDIDATE_BIN_ALPHA`，种子 **0**，索引 `reconstructions/letters26x30_seed0.json`，形状 780×320。默认 `load_dataset("BinAlpha")` 仍不可用，不称 EXACT。

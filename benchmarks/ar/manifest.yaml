@@ -3,31 +3,32 @@ source_url: >
   Official pages probed 2026-10-21: http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html
   HTTP 503; https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html no HTTP
   status (expired/untrusted TLS); Purdue URLs 404 or TLS failure.
-  Third-party: https://zenodo.org/records/19683234 ARDB_Full.zip HEAD HTTP 200,
-  Content-Length 120587997, content-disposition attachment; filename=ARDB_Full.zip.
-  That zip was not downloaded.
+  Third-party: https://zenodo.org/records/19683234 ARDB_Full.zip GET HTTP 200
+  from https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content
+  on 2026-10-21. THIS IS NOT THE OFFICIAL MARTINEZ ARCHIVE.
 source_publication: "A.M. Martinez and R. Benavente, The AR Face Database, CVC Technical Report 24, June 1998."
 download_date: "2026-10-21"
-archive_filename: none saved
-SHA256_checksum: unknown
+archive_filename: ARDB_Full.zip
+SHA256_checksum: "32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438"
+MD5_checksum: "bb97bd9237680744c0c7268624696263"
 license_information: >
   Official AR terms: academic research, no commercial use, no redistribution,
   university-email request and password. Zenodo 19683234 is uploaded by
   Manu shree for a 2026 work titled MAS Machine, and the uploader claimed
   CC-BY-4.0. That claimed license is not the official AR license and is
   not treated as permission to bypass the request process.
-original_sample_count: unknown
+original_sample_count: "100 subject folders s1-s100; 2599 files named 1.bmp-26.bmp plus s7/22 - Copy.bmp; not 840/120"
 selected_sample_count: unknown
-number_of_classes: unknown
+number_of_classes: 100
 original_feature_dimension: unknown
 processed_feature_dimension: unknown
-preprocessing_operations: "not applied; no archive was obtained"
+preprocessing_operations: "not applied; third-party zip verified only; paper 840/120 subset not built"
 sample_selection_method: >
   Chang et al. state 840 faces of 120 people and do not say which 840.
   No subset was invented.
 random_seed: unknown
 known_deviations: >
-  Full AR is a different collection (more than 4,000 images of 126 people
-  in the usual description). A 100-person or other common subset was not
-  substituted. Zenodo bytes were not saved, so no SHA-256 was computed.
-verification_status: unavailable
+  Third-party zip is 100 people, 120x165 BMP, names sN/k.bmp not official
+  M-xx-yy.raw / F-xx-yy.raw. No archive document gives 840/120. Seven
+  images per person were not invented. Status SOURCE_RECOVERED_SUBSET_UNVERIFIED.
+verification_status: SOURCE_RECOVERED_SUBSET_UNVERIFIED

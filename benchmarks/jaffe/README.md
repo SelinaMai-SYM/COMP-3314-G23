@@ -49,3 +49,7 @@ Phase 1 JAFFE 与 repair_round1 全部 6 条 COMPLETED 均为 `zenodo`。Round 2
 ## Task 1（2026-10-21）哈希复核
 
 未重下。`data/jaffe.zip` 12290558 字节 SHA-256 `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`；加载 `(213, 676)`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+
+## Strict URL Task 1（2026-10-21 晚）
+
+未重下。SHA-256 仍为 `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`。

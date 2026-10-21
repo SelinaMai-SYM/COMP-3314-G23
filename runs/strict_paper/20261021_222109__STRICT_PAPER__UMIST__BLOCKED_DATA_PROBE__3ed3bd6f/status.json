@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-10-21T22:21:09+08:00",
+  "created_at_utc": "2026-10-21T14:21:09+00:00",
+  "finished_at": "2026-10-21T22:21:09+08:00",
+  "reason": "UMIST is unavailable: No 564-image UMIST/Sheffield archive was obtained on 2026-10-20. The Wayback copy of http://images.ee.umist.ac.uk/danny/face.tar.gz has 1012 unique PGM files of 20 people with 122 different shapes. The pre-cropped cropped.tar.gz has 575 PGM files, 20 people, all 112x92, of which 565 pixel arrays are unique. Figshare 67153214 is also 575 slices and is not pixel-identical to that tar. Use version='precropped575' or version='figshare575' to load those non-exact files. See docs/repair_round1_dataset_recovery.md.",
+  "run_id": "20261021_222109__STRICT_PAPER__UMIST__BLOCKED_DATA_PROBE__3ed3bd6f",
+  "status": "SKIPPED",
+  "transitions": [
+    {
+      "at": "2026-10-21T22:21:09+08:00",
+      "at_utc": "2026-10-21T14:21:09+00:00",
+      "run_id": "20261021_222109__STRICT_PAPER__UMIST__BLOCKED_DATA_PROBE__3ed3bd6f",
+      "status": "PLANNED"
+    },
+    {
+      "at": "2026-10-21T22:21:09+08:00",
+      "at_utc": "2026-10-21T14:21:09+00:00",
+      "reason": "UMIST is unavailable: No 564-image UMIST/Sheffield archive was obtained on 2026-10-20. The Wayback copy of http://images.ee.umist.ac.uk/danny/face.tar.gz has 1012 unique PGM files of 20 people with 122 different shapes. The pre-cropped cropped.tar.gz has 575 PGM files, 20 people, all 112x92, of which 565 pixel arrays are unique. Figshare 67153214 is also 575 slices and is not pixel-identical to that tar. Use version='precropped575' or version='figshare575' to load those non-exact files. See docs/repair_round1_dataset_recovery.md.",
+      "status": "SKIPPED"
+    }
+  ],
+  "updated_at": "2026-10-21T22:21:09+08:00",
+  "updated_at_utc": "2026-10-21T14:21:09+00:00"
+}

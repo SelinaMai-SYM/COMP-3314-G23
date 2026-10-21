@@ -1,0 +1,19 @@
+track: STRICT_PAPER
+method: kmeans
+dataset: BinAlpha
+dataset_version: letters26x30_seed0
+dataset_identity_status: CANDIDATE_BIN_ALPHA
+factor: K1_RANDOM_MEAN
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  init: random
+  n_init: 1
+notes: K1 random n_init=1; mean over all trials; inertia recorded for K2
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'K1 faithful default: random init, n_init=1, mean±std over ALL completed
+  trials; never selected by ACC'
+hardware_note: 8 CPU / 16 GB

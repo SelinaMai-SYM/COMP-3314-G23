@@ -1,0 +1,66 @@
+{
+  "note": "SC F must equal SSC F under the same SpectralGraphConfig.",
+  "pairs": {
+    "ORL:att92": {
+      "sc_run": "20261021_222136__STRICT_PAPER__ORL__SC_EQ4__45db39ce",
+      "e8_run": "20261021_222143__STRICT_PAPER__ORL__SSC_E8_G1P0__4be5ba41",
+      "status": "compared",
+      "equal_exact": true,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 0.0,
+      "shape": [
+        400,
+        40
+      ]
+    },
+    "JAFFE:zenodo": {
+      "sc_run": "20261021_222427__STRICT_PAPER__JAFFE__SC_EQ4__2a69392b",
+      "e8_run": "20261021_222434__STRICT_PAPER__JAFFE__SSC_E8_G1P0__8a4a026d",
+      "status": "compared",
+      "equal_exact": true,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 0.0,
+      "shape": [
+        213,
+        10
+      ]
+    },
+    "YaleB:cropped2414": {
+      "sc_run": "20261021_222721__STRICT_PAPER__YALEB__SC_EQ4__c049ed51",
+      "e8_run": "20261021_222857__STRICT_PAPER__YALEB__SSC_E8_G1P0__2ba528ff",
+      "status": "compared",
+      "equal_exact": false,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 4.2212761064419624e-14,
+      "shape": [
+        2414,
+        38
+      ]
+    },
+    "USPS:libsvm": {
+      "sc_run": "20261021_223747__STRICT_PAPER__USPS__SC_EQ4__adec7055",
+      "e8_run": "20261021_225145__STRICT_PAPER__USPS__SSC_E8_G1P0__0a34012b",
+      "status": "compared",
+      "equal_exact": false,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 1.0443035325380379e-14,
+      "shape": [
+        9298,
+        10
+      ]
+    },
+    "BinAlpha:CANDIDATE_BIN_ALPHA": {
+      "sc_run": "20261021_222540__STRICT_PAPER__BINALPHA__SC_EQ4__3ee1fb96",
+      "e8_run": "20261021_222551__STRICT_PAPER__BINALPHA__SSC_E8_G1P0__bb112504",
+      "status": "compared",
+      "equal_exact": false,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 1.534883331544279e-14,
+      "shape": [
+        780,
+        26
+      ]
+    }
+  },
+  "all_equal_atol_1e-12": true
+}

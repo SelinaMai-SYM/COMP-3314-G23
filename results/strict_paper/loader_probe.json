@@ -1,0 +1,105 @@
+{
+  "ORL": {
+    "dataset": "ORL",
+    "dataset_version": "att92",
+    "status": "AVAILABLE",
+    "n": 400,
+    "d": 1024,
+    "n_clusters": 40,
+    "checksum": "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec",
+    "identity": "obtained",
+    "verification_status": "obtained",
+    "wall_seconds": 0.1104108327999711
+  },
+  "JAFFE": {
+    "dataset": "JAFFE",
+    "dataset_version": "zenodo",
+    "status": "AVAILABLE",
+    "n": 213,
+    "d": 676,
+    "n_clusters": 10,
+    "checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+    "identity": "verified",
+    "verification_status": "verified",
+    "wall_seconds": 0.21262016566470265
+  },
+  "YaleB": {
+    "dataset": "YaleB",
+    "dataset_version": "cropped2414",
+    "status": "AVAILABLE",
+    "n": 2414,
+    "d": 1024,
+    "n_clusters": 38,
+    "checksum": "8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573",
+    "identity": "obtained",
+    "verification_status": "obtained",
+    "wall_seconds": 0.004609375260770321
+  },
+  "USPS": {
+    "dataset": "USPS",
+    "dataset_version": "libsvm",
+    "status": "AVAILABLE",
+    "n": 9298,
+    "d": 256,
+    "n_clusters": 10,
+    "checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "identity": "verified",
+    "verification_status": "verified",
+    "wall_seconds": 1.2601168337278068
+  },
+  "BinAlpha": {
+    "dataset": "BinAlpha",
+    "dataset_version": "CANDIDATE_BIN_ALPHA",
+    "status": "AVAILABLE",
+    "n": 780,
+    "d": 320,
+    "n_clusters": 26,
+    "checksum": "3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7",
+    "identity": "CANDIDATE_BIN_ALPHA",
+    "verification_status": "CANDIDATE_ONLY",
+    "wall_seconds": 0.0046892911195755005
+  },
+  "BinAlpha_default": {
+    "dataset": "BinAlpha",
+    "dataset_version": null,
+    "status": "BLOCKED_DATA",
+    "reason": "BinAlpha is unavailable: Chang et al. name BinAlpha as 26 binary handwritten alphabets with 30 randomly selected images per alphabet, without a URL, image size, or seed. Binary Alphadigits (36 classes x 39 images, 20x16) is on disk (SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7). No evidence was found that Chang et al. used that file. Default load_dataset('BinAlpha') does not claim EXACT. Use version='CANDIDATE_BIN_ALPHA' (seed 0, 780x320) or version='binaryalphadigs36' for explicit non-paper versions. See benchmarks/binalpha/README.md.",
+    "wall_seconds": 7.2908587753772736e-06
+  },
+  "AR": {
+    "dataset": "AR",
+    "dataset_version": null,
+    "status": "BLOCKED_DATA",
+    "reason": "AR is unavailable: Chang et al. name AR as 840 faces of 120 people and do not say which 840. Official Martinez distribution was not obtained. A THIRD-PARTY zip ARDB_Full.zip from Zenodo 19683234 (uploader Manu shree, not Martinez/OSU) was downloaded on 2026-10-21: 120587997 bytes, MD5 bb97bd9237680744c0c7268624696263 (matches the published Zenodo checksum), SHA-256 32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438. The zip is PKZIP, not HTML. It contains 100 folders s1-s100 with 120x165 BMP files named 1.bmp..26.bmp, not official M-xx-yy.raw / F-xx-yy.raw names. No archive document states an 840/120 or 7-image rule, so that subset was not invented. Status: SOURCE_RECOVERED_SUBSET_UNVERIFIED. Default load_dataset('AR') does not claim EXACT. See benchmarks/ar/README.md.",
+    "wall_seconds": 0.00046516722068190575
+  },
+  "AR_zenodo": {
+    "dataset": "AR",
+    "dataset_version": "zenodo_third_party_full",
+    "status": "BLOCKED_DATA",
+    "reason": "AR is unavailable: version=zenodo_third_party_full is the third-party Zenodo dump, not the paper 840/120 set. The zip is on disk at /Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/ar/data/ARDB_Full.zip (SHA-256 32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438, MD5 bb97bd9237680744c0c7268624696263) with 100 identities. Status SOURCE_RECOVERED_SUBSET_UNVERIFIED. Arrays are not returned under a paper-AR name.",
+    "wall_seconds": 3.816699609160423e-05
+  },
+  "UMIST": {
+    "dataset": "UMIST",
+    "dataset_version": null,
+    "status": "BLOCKED_DATA",
+    "reason": "UMIST is unavailable: No 564-image UMIST/Sheffield archive was obtained on 2026-10-20. The Wayback copy of http://images.ee.umist.ac.uk/danny/face.tar.gz has 1012 unique PGM files of 20 people with 122 different shapes. The pre-cropped cropped.tar.gz has 575 PGM files, 20 people, all 112x92, of which 565 pixel arrays are unique. Figshare 67153214 is also 575 slices and is not pixel-identical to that tar. Use version='precropped575' or version='figshare575' to load those non-exact files. See docs/repair_round1_dataset_recovery.md.",
+    "wall_seconds": 0.00046070897951722145
+  },
+  "MSRA50": {
+    "dataset": "MSRA50",
+    "dataset_version": null,
+    "status": "BLOCKED_DATA",
+    "reason": "MSRA50 is unavailable: MSRA50 is BLOCKED_DATA_NOT_OBTAINED. Chang et al. state 1799 images and 12 classes resized to 32x32, with no URL. Local inspection plus the UTS-affiliation AAAI 2015 PDF and the local arXiv:1411.6241v1 sister PDF give only literature counts (1799/12/1024), not a file. No 1799x12x1024 archive is in benchmarks/msra50/data/. Other MSRA corpora were not substituted. See benchmarks/msra50/README.md.",
+    "wall_seconds": 0.00040404172614216805
+  },
+  "SPLS": {
+    "dataset": "SPLS",
+    "status": "BLOCKED_MISSING_FULL_METHOD",
+    "reason": "Section 3 not obtained; baselines.spls.fit_predict raises NotImplementedError"
+  }
+}

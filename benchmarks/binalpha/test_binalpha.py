@@ -26,7 +26,18 @@ def test_letters26x30_seed0_is_reconstruction() -> None:
     assert x.shape == (780, 320)
     assert list(y[:30]) == [0] * 30
     assert int(y.max()) == 25
-    assert meta["identity"] == "UNVERIFIED"
+    assert meta["identity"] == "CANDIDATE_BIN_ALPHA"
     assert meta["not_paper_binalpha"] is True
+    assert meta["not_exact"] is True
     assert meta["random_seed"] == 0
     assert meta["n"] == 780
+
+
+def test_candidate_bin_alpha_is_not_exact() -> None:
+    x, y, meta = load_dataset(version="CANDIDATE_BIN_ALPHA")
+    assert x.shape == (780, 320)
+    assert meta["identity"] == "CANDIDATE_BIN_ALPHA"
+    assert meta["version"] == "CANDIDATE_BIN_ALPHA"
+    assert meta["not_paper_binalpha"] is True
+    assert meta["not_historical_identity"] is True
+    assert meta["random_seed"] == 0

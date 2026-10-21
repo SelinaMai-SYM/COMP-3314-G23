@@ -1,0 +1,1446 @@
+[
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__spls__SPLS_NOT_IMPLEMENTED__NA__NA__NA__att92__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.3342095827683806,
+    "factor": "SPLS_NOT_IMPLEMENTED",
+    "phase": "P0_probes",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/AR__kmeans__BLOCKED_DATA_PROBE__NA__NA__NA__default__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.0859872088767588,
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/UMIST__kmeans__BLOCKED_DATA_PROBE__NA__NA__NA__default__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.098807250149548,
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/MSRA50__kmeans__BLOCKED_DATA_PROBE__NA__NA__NA__default__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.038890291005373,
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__kmeans__SMOKE_K1__NA__NA__NA__att92__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.0900479997508228,
+    "factor": "SMOKE_K1",
+    "phase": "P1_smoke",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__sc__SMOKE_SC__NA__NA__NA__att92__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.141557415947318,
+    "factor": "SMOKE_SC",
+    "phase": "P1_smoke",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SMOKE_SSC_E8_G1__E8__1p0__NA__att92__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6795541672036052,
+    "factor": "SMOKE_SSC_E8_G1",
+    "phase": "P1_smoke",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__SMOKE_PCAKM__NA__NA__40__att92__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.097726291976869,
+    "factor": "SMOKE_PCAKM",
+    "phase": "P1_smoke",
+    "status": "launched"
+  },
+  {
+    "config_path": "reused",
+    "returncode": 0,
+    "wall_seconds": 0.0,
+    "reused_run_id": "20261021_222107__STRICT_PAPER__ORL__SPLS_NOT_IMPLEMENTED__979925c6",
+    "factor": "SPLS_NOT_IMPLEMENTED",
+    "phase": "P0_probes",
+    "status": "reused"
+  },
+  {
+    "config_path": "reused",
+    "returncode": 0,
+    "wall_seconds": 0.0,
+    "reused_run_id": "20261021_222108__STRICT_PAPER__AR__BLOCKED_DATA_PROBE__360a0c4d",
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "reused"
+  },
+  {
+    "config_path": "reused",
+    "returncode": 0,
+    "wall_seconds": 0.0,
+    "reused_run_id": "20261021_222109__STRICT_PAPER__UMIST__BLOCKED_DATA_PROBE__3ed3bd6f",
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "reused"
+  },
+  {
+    "config_path": "reused",
+    "returncode": 0,
+    "wall_seconds": 0.0,
+    "reused_run_id": "20261021_222110__STRICT_PAPER__MSRA50__BLOCKED_DATA_PROBE__33b7aa33",
+    "factor": "BLOCKED_DATA_PROBE",
+    "phase": "P0_probes",
+    "status": "reused"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__kmeans__K1_RANDOM_MEAN__NA__NA__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.0543488753028214,
+    "factor": "K1_RANDOM_MEAN",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__kmeans__K3_KMEANSPP_MEAN__NA__NA__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.050420249812305,
+    "factor": "K3_KMEANSPP_MEAN",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__sc__SC_EQ4__NA__NA__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2016163747757673,
+    "factor": "SC_EQ4",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E8_G1em6__E8__1em6__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3590477076359093,
+    "factor": "SSC_E8_G1em6",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E13_G1em6__E13__1em6__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3147787088528275,
+    "factor": "SSC_E13_G1em6",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E8_G1em3__E8__1em3__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4448411674238741,
+    "factor": "SSC_E8_G1em3",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E13_G1em3__E13__1em3__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.355456749908626,
+    "factor": "SSC_E13_G1em3",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E8_G1p0__E8__1p0__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.8450883328914642,
+    "factor": "SSC_E8_G1p0",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E13_G1p0__E13__1p0__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.8503696252591908,
+    "factor": "SSC_E13_G1p0",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E8_G1e3__E8__1e3__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7600168329663575,
+    "factor": "SSC_E8_G1e3",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E13_G1e3__E13__1e3__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9265381670556962,
+    "factor": "SSC_E13_G1e3",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E8_G1e6__E8__1e6__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.896891166921705,
+    "factor": "SSC_E8_G1e6",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__ssc__SSC_E13_G1e6__E13__1e6__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9734354577958584,
+    "factor": "SSC_E13_G1e6",
+    "phase": "P2_orl_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_D40__NA__NA__40__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1897831670939922,
+    "factor": "PCAKM_D40",
+    "phase": "P3_orl_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_spectral__PCASC_D40__NA__NA__40__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1983382077887654,
+    "factor": "PCASC_D40",
+    "phase": "P3_orl_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__lda_kmeans__LDAKM_D39__NA__NA__39__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 53.688999665901065,
+    "factor": "LDAKM_D39",
+    "phase": "P3_orl_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__llc__LLC__NA__NA__NA__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7815339998342097,
+    "factor": "LLC",
+    "phase": "P3_orl_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D10__NA__NA__10__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1686012502759695,
+    "factor": "PCAKM_GRID_D10",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D20__NA__NA__20__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1089594173245132,
+    "factor": "PCAKM_GRID_D20",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D30__NA__NA__30__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1381960422731936,
+    "factor": "PCAKM_GRID_D30",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D50__NA__NA__50__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1539926254190505,
+    "factor": "PCAKM_GRID_D50",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D60__NA__NA__60__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.206943332683295,
+    "factor": "PCAKM_GRID_D60",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D70__NA__NA__70__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2140324171632528,
+    "factor": "PCAKM_GRID_D70",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D80__NA__NA__80__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3008352504111826,
+    "factor": "PCAKM_GRID_D80",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D90__NA__NA__90__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1389114172197878,
+    "factor": "PCAKM_GRID_D90",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D100__NA__NA__100__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2126220408827066,
+    "factor": "PCAKM_GRID_D100",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D110__NA__NA__110__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1461481247097254,
+    "factor": "PCAKM_GRID_D110",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D120__NA__NA__120__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1521642501465976,
+    "factor": "PCAKM_GRID_D120",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D130__NA__NA__130__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1318559171631932,
+    "factor": "PCAKM_GRID_D130",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D140__NA__NA__140__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1314093340188265,
+    "factor": "PCAKM_GRID_D140",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__pca_kmeans__PCAKM_GRID_D150__NA__NA__150__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.5392195829190314,
+    "factor": "PCAKM_GRID_D150",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__lda_kmeans__LDAKM_GRID_D10__NA__NA__10__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 8.267210291698575,
+    "factor": "LDAKM_GRID_D10",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__lda_kmeans__LDAKM_GRID_D20__NA__NA__20__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 19.13121195882559,
+    "factor": "LDAKM_GRID_D20",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__lda_kmeans__LDAKM_GRID_D30__NA__NA__30__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 6.722121957689524,
+    "factor": "LDAKM_GRID_D30",
+    "phase": "P3_orl_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/ORL__lda_spectral__LDASC_D39__NA__NA__39__att92__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 38.771409207955,
+    "factor": "LDASC_D39",
+    "phase": "P4_ldasc",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__kmeans__K1_RANDOM_MEAN__NA__NA__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.59826529212296,
+    "factor": "K1_RANDOM_MEAN",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__kmeans__K3_KMEANSPP_MEAN__NA__NA__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3341561248525977,
+    "factor": "K3_KMEANSPP_MEAN",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__sc__SC_EQ4__NA__NA__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2461287090554833,
+    "factor": "SC_EQ4",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E8_G1em6__E8__1em6__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3276764592155814,
+    "factor": "SSC_E8_G1em6",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E13_G1em6__E13__1em6__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2673221668228507,
+    "factor": "SSC_E13_G1em6",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E8_G1em3__E8__1em3__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4010866251774132,
+    "factor": "SSC_E8_G1em3",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E13_G1em3__E13__1em3__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3612183327786624,
+    "factor": "SSC_E13_G1em3",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E8_G1p0__E8__1p0__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7025124579668045,
+    "factor": "SSC_E8_G1p0",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E13_G1p0__E13__1p0__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6896234164014459,
+    "factor": "SSC_E13_G1p0",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E8_G1e3__E8__1e3__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.5470140422694385,
+    "factor": "SSC_E8_G1e3",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E13_G1e3__E13__1e3__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4769297088496387,
+    "factor": "SSC_E13_G1e3",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E8_G1e6__E8__1e6__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.499798582866788,
+    "factor": "SSC_E8_G1e6",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__ssc__SSC_E13_G1e6__E13__1e6__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.5343447080813348,
+    "factor": "SSC_E13_G1e6",
+    "phase": "P2_jaffe_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_D10__NA__NA__10__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2533703749068081,
+    "factor": "PCAKM_D10",
+    "phase": "P3_jaffe_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_spectral__PCASC_D10__NA__NA__10__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.256065458059311,
+    "factor": "PCASC_D10",
+    "phase": "P3_jaffe_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__lda_kmeans__LDAKM_D9__NA__NA__9__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 12.305963499937207,
+    "factor": "LDAKM_D9",
+    "phase": "P3_jaffe_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__llc__LLC__NA__NA__NA__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6485490002669394,
+    "factor": "LLC",
+    "phase": "P3_jaffe_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D20__NA__NA__20__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2462991252541542,
+    "factor": "PCAKM_GRID_D20",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D30__NA__NA__30__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2577979159541428,
+    "factor": "PCAKM_GRID_D30",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D40__NA__NA__40__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.463524999562651,
+    "factor": "PCAKM_GRID_D40",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D50__NA__NA__50__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4355114581994712,
+    "factor": "PCAKM_GRID_D50",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D60__NA__NA__60__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2205929579213262,
+    "factor": "PCAKM_GRID_D60",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D70__NA__NA__70__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3495025420561433,
+    "factor": "PCAKM_GRID_D70",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D80__NA__NA__80__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6466422080993652,
+    "factor": "PCAKM_GRID_D80",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D90__NA__NA__90__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.310789457987994,
+    "factor": "PCAKM_GRID_D90",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D100__NA__NA__100__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2974638328887522,
+    "factor": "PCAKM_GRID_D100",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D110__NA__NA__110__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3630550000816584,
+    "factor": "PCAKM_GRID_D110",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D120__NA__NA__120__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2629030831158161,
+    "factor": "PCAKM_GRID_D120",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D130__NA__NA__130__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2728393748402596,
+    "factor": "PCAKM_GRID_D130",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D140__NA__NA__140__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.5039658332243562,
+    "factor": "PCAKM_GRID_D140",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__pca_kmeans__PCAKM_GRID_D150__NA__NA__150__zenodo__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3259170423261821,
+    "factor": "PCAKM_GRID_D150",
+    "phase": "P3_jaffe_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/JAFFE__lda_spectral__LDASC_D9__NA__NA__9__zenodo__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 13.960896000266075,
+    "factor": "LDASC_D9",
+    "phase": "P4_ldasc",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__kmeans__K1_RANDOM_MEAN__NA__NA__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.0742445420473814,
+    "factor": "K1_RANDOM_MEAN",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__kmeans__K3_KMEANSPP_MEAN__NA__NA__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.0451084999367595,
+    "factor": "K3_KMEANSPP_MEAN",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__sc__SC_EQ4__NA__NA__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4726538327522576,
+    "factor": "SC_EQ4",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E8_G1em6__E8__1em6__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.041376458015293,
+    "factor": "SSC_E8_G1em6",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E13_G1em6__E13__1em6__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.3259601248428226,
+    "factor": "SSC_E13_G1em6",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E8_G1em3__E8__1em3__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.1381503748707473,
+    "factor": "SSC_E8_G1em3",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E13_G1em3__E13__1em3__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.110082416795194,
+    "factor": "SSC_E13_G1em3",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E8_G1p0__E8__1p0__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.2947190422564745,
+    "factor": "SSC_E8_G1p0",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E13_G1p0__E13__1p0__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.060214374680072,
+    "factor": "SSC_E13_G1p0",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E8_G1e3__E8__1e3__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.012614249717444,
+    "factor": "SSC_E8_G1e3",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E13_G1e3__E13__1e3__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.545972750056535,
+    "factor": "SSC_E13_G1e3",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E8_G1e6__E8__1e6__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.957210292108357,
+    "factor": "SSC_E8_G1e6",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__ssc__SSC_E13_G1e6__E13__1e6__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9066942501813173,
+    "factor": "SSC_E13_G1e6",
+    "phase": "P2_binalpha_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_D26__NA__NA__26__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4998253746889532,
+    "factor": "PCAKM_D26",
+    "phase": "P3_binalpha_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_spectral__PCASC_D26__NA__NA__26__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.484727333765477,
+    "factor": "PCASC_D26",
+    "phase": "P3_binalpha_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__lda_kmeans__LDAKM_D25__NA__NA__25__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 5.838311500381678,
+    "factor": "LDAKM_D25",
+    "phase": "P3_binalpha_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__llc__LLC__NA__NA__NA__letters26x30_seed0__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6085794591344893,
+    "factor": "LLC",
+    "phase": "P3_binalpha_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D10__NA__NA__10__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2654071249999106,
+    "factor": "PCAKM_GRID_D10",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D20__NA__NA__20__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3606116250157356,
+    "factor": "PCAKM_GRID_D20",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D30__NA__NA__30__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3048956249840558,
+    "factor": "PCAKM_GRID_D30",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D40__NA__NA__40__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.3362471661530435,
+    "factor": "PCAKM_GRID_D40",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D50__NA__NA__50__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2691193339414895,
+    "factor": "PCAKM_GRID_D50",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D60__NA__NA__60__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.346374790649861,
+    "factor": "PCAKM_GRID_D60",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D70__NA__NA__70__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2701963749714196,
+    "factor": "PCAKM_GRID_D70",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D80__NA__NA__80__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.266776958014816,
+    "factor": "PCAKM_GRID_D80",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D90__NA__NA__90__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4132547499611974,
+    "factor": "PCAKM_GRID_D90",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D100__NA__NA__100__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2959285830147564,
+    "factor": "PCAKM_GRID_D100",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D110__NA__NA__110__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4176691249012947,
+    "factor": "PCAKM_GRID_D110",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D120__NA__NA__120__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.6536610829643905,
+    "factor": "PCAKM_GRID_D120",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D130__NA__NA__130__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.276491958182305,
+    "factor": "PCAKM_GRID_D130",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D140__NA__NA__140__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.2334325825795531,
+    "factor": "PCAKM_GRID_D140",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__pca_kmeans__PCAKM_GRID_D150__NA__NA__150__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.235664707608521,
+    "factor": "PCAKM_GRID_D150",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__lda_kmeans__LDAKM_GRID_D10__NA__NA__10__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.8456720001995564,
+    "factor": "LDAKM_GRID_D10",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__lda_kmeans__LDAKM_GRID_D20__NA__NA__20__letters26x30_seed0__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7649192502722144,
+    "factor": "LDAKM_GRID_D20",
+    "phase": "P3_binalpha_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/BinAlpha__lda_spectral__LDASC_D25__NA__NA__25__letters26x30_seed0__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 16.71370983403176,
+    "factor": "LDASC_D25",
+    "phase": "P4_ldasc",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__kmeans__K1_RANDOM_MEAN__NA__NA__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 7.620344165712595,
+    "factor": "K1_RANDOM_MEAN",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__kmeans__K3_KMEANSPP_MEAN__NA__NA__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 8.94684133399278,
+    "factor": "K3_KMEANSPP_MEAN",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__sc__SC_EQ4__NA__NA__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.2981487093493342,
+    "factor": "SC_EQ4",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E8_G1em6__E8__1em6__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 22.959442917257547,
+    "factor": "SSC_E8_G1em6",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E13_G1em6__E13__1em6__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 22.590493333060294,
+    "factor": "SSC_E13_G1em6",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E8_G1em3__E8__1em3__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 23.917645249981433,
+    "factor": "SSC_E8_G1em3",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E13_G1em3__E13__1em3__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 23.22624925011769,
+    "factor": "SSC_E13_G1em3",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E8_G1p0__E8__1p0__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 28.700691166799515,
+    "factor": "SSC_E8_G1p0",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E13_G1p0__E13__1p0__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 28.692147749941796,
+    "factor": "SSC_E13_G1p0",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E8_G1e3__E8__1e3__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 24.665796708781272,
+    "factor": "SSC_E8_G1e3",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E13_G1e3__E13__1e3__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 26.58436708431691,
+    "factor": "SSC_E13_G1e3",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E8_G1e6__E8__1e6__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 28.41688883304596,
+    "factor": "SSC_E8_G1e6",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__ssc__SSC_E13_G1e6__E13__1e6__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 29.011392833665013,
+    "factor": "SSC_E13_G1e6",
+    "phase": "P5_yaleb_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_D38__NA__NA__38__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.0130555001087487,
+    "factor": "PCAKM_D38",
+    "phase": "P6_yaleb_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_spectral__PCASC_D38__NA__NA__38__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.471968791913241,
+    "factor": "PCASC_D38",
+    "phase": "P6_yaleb_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__lda_kmeans__LDAKM_D37__NA__NA__37__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 267.35975945787504,
+    "factor": "LDAKM_D37",
+    "phase": "P6_yaleb_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__llc__LLC__NA__NA__NA__cropped2414__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 4.334081833250821,
+    "factor": "LLC",
+    "phase": "P6_yaleb_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D10__NA__NA__10__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7286416669376194,
+    "factor": "PCAKM_GRID_D10",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D20__NA__NA__20__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7463802923448384,
+    "factor": "PCAKM_GRID_D20",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D30__NA__NA__30__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9900022502988577,
+    "factor": "PCAKM_GRID_D30",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D40__NA__NA__40__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.938336166087538,
+    "factor": "PCAKM_GRID_D40",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D50__NA__NA__50__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7432991666719317,
+    "factor": "PCAKM_GRID_D50",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D60__NA__NA__60__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7843647501431406,
+    "factor": "PCAKM_GRID_D60",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D70__NA__NA__70__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.7841763328760862,
+    "factor": "PCAKM_GRID_D70",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D80__NA__NA__80__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9038918749429286,
+    "factor": "PCAKM_GRID_D80",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D90__NA__NA__90__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.3542028749361634,
+    "factor": "PCAKM_GRID_D90",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D100__NA__NA__100__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.844449665863067,
+    "factor": "PCAKM_GRID_D100",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D110__NA__NA__110__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.8965773335658014,
+    "factor": "PCAKM_GRID_D110",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D120__NA__NA__120__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9607714172452688,
+    "factor": "PCAKM_GRID_D120",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D130__NA__NA__130__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.9400580003857613,
+    "factor": "PCAKM_GRID_D130",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D140__NA__NA__140__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.0756520410068333,
+    "factor": "PCAKM_GRID_D140",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__pca_kmeans__PCAKM_GRID_D150__NA__NA__150__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.1150212911888957,
+    "factor": "PCAKM_GRID_D150",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__lda_kmeans__LDAKM_GRID_D10__NA__NA__10__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 6.564465458039194,
+    "factor": "LDAKM_GRID_D10",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__lda_kmeans__LDAKM_GRID_D20__NA__NA__20__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 9.075873041991144,
+    "factor": "LDAKM_GRID_D20",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/YaleB__lda_kmeans__LDAKM_GRID_D30__NA__NA__30__cropped2414__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 5.919151207897812,
+    "factor": "LDAKM_GRID_D30",
+    "phase": "P6_yaleb_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__kmeans__K1_RANDOM_MEAN__NA__NA__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 13.273293833248317,
+    "factor": "K1_RANDOM_MEAN",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__kmeans__K3_KMEANSPP_MEAN__NA__NA__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 11.219853958114982,
+    "factor": "K3_KMEANSPP_MEAN",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__sc__SC_EQ4__NA__NA__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 6.660658250097185,
+    "factor": "SC_EQ4",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E8_G1em6__E8__1em6__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 215.46164274960756,
+    "factor": "SSC_E8_G1em6",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E13_G1em6__E13__1em6__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 211.29927266668528,
+    "factor": "SSC_E13_G1em6",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E8_G1em3__E8__1em3__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 201.80835191719234,
+    "factor": "SSC_E8_G1em3",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E13_G1em3__E13__1em3__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 200.8848628331907,
+    "factor": "SSC_E13_G1em3",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E8_G1p0__E8__1p0__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 274.91566650010645,
+    "factor": "SSC_E8_G1p0",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E13_G1p0__E13__1p0__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 209.62725829193369,
+    "factor": "SSC_E13_G1p0",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E8_G1e3__E8__1e3__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 216.9001017077826,
+    "factor": "SSC_E8_G1e3",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E13_G1e3__E13__1e3__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 212.6600691252388,
+    "factor": "SSC_E13_G1e3",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E8_G1e6__E8__1e6__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 218.77035833289847,
+    "factor": "SSC_E8_G1e6",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__ssc__SSC_E13_G1e6__E13__1e6__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 211.40541416639462,
+    "factor": "SSC_E13_G1e6",
+    "phase": "P5_usps_core",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_D10__NA__NA__10__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 4.436923750210553,
+    "factor": "PCAKM_D10",
+    "phase": "P6_usps_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_spectral__PCASC_D10__NA__NA__10__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 4.916333666071296,
+    "factor": "PCASC_D10",
+    "phase": "P6_usps_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__lda_kmeans__LDAKM_D9__NA__NA__9__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 68.45813841698691,
+    "factor": "LDAKM_D9",
+    "phase": "P6_usps_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__llc__LLC__NA__NA__NA__libsvm__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 128.4290260411799,
+    "factor": "LLC",
+    "phase": "P6_usps_dr",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D20__NA__NA__20__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.439110334031284,
+    "factor": "PCAKM_GRID_D20",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D30__NA__NA__30__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.933687790762633,
+    "factor": "PCAKM_GRID_D30",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D40__NA__NA__40__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.9660226670093834,
+    "factor": "PCAKM_GRID_D40",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D50__NA__NA__50__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.208618708420545,
+    "factor": "PCAKM_GRID_D50",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D60__NA__NA__60__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.215579042211175,
+    "factor": "PCAKM_GRID_D60",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D70__NA__NA__70__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.905732249841094,
+    "factor": "PCAKM_GRID_D70",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D80__NA__NA__80__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.522480667103082,
+    "factor": "PCAKM_GRID_D80",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D90__NA__NA__90__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.958026290871203,
+    "factor": "PCAKM_GRID_D90",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D100__NA__NA__100__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.1844903328455985,
+    "factor": "PCAKM_GRID_D100",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D110__NA__NA__110__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.6135063329711556,
+    "factor": "PCAKM_GRID_D110",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D120__NA__NA__120__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.9702298752963543,
+    "factor": "PCAKM_GRID_D120",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D130__NA__NA__130__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.121787833981216,
+    "factor": "PCAKM_GRID_D130",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D140__NA__NA__140__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.3990229591727257,
+    "factor": "PCAKM_GRID_D140",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/strict_paper/USPS__pca_kmeans__PCAKM_GRID_D150__NA__NA__150__libsvm__n1.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.0902333753183484,
+    "factor": "PCAKM_GRID_D150",
+    "phase": "P6_usps_dr_grid",
+    "status": "launched"
+  }
+]

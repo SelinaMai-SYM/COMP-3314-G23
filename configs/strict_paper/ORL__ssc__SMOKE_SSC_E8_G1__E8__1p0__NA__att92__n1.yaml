@@ -1,0 +1,34 @@
+track: STRICT_PAPER
+method: ssc
+dataset: ORL
+dataset_version: att92
+dataset_identity_status: original_source_att92_92x112_bilinear_32x32
+factor: SMOKE_SSC_E8_G1
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 1
+trial_seed_start: 0
+timeout_seconds: 300
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E8
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  n_init: 1
+  eps: 1.0e-08
+  symmetrization: union
+  laplacian: symmetric_normalized_eq4
+notes: ORL att92 smoke n=1 before the 50-trial campaign
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: every gamma in {1e-6,1e-3,1,1e3,1e6} reported separately; raw SSC
+  Eq.8 objectives are NOT compared across gamma; never ACC
+hardware_note: 8 CPU / 16 GB

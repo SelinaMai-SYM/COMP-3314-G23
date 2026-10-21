@@ -1,0 +1,21 @@
+{
+  "config_hash": "6de416db",
+  "created_at": "2026-10-21T22:25:11+08:00",
+  "dataset": "JAFFE",
+  "dataset_identity_status": "verified_zenodo_213_not_paper_unpublished_copy",
+  "dataset_version": "zenodo",
+  "factor": "PCAKM_GRID_D90",
+  "git_branch": "v1",
+  "git_head": "47c0f835ef69afa560b891524da894ab4b39bad2",
+  "git_status_porcelain": "M baselines/spls/README.md\n M baselines/spls/resources/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/__init__.py\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/ar/resources/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/run_experiment.py\n?? benchmarks/binalpha/reconstructions/CANDIDATE_BIN_ALPHA.json\n?? configs/strict_paper/\n?? configs/strict_paper_reproduction.yaml\n?? docs/strict_experiment_protocol.md\n?? docs/strict_http_logs/\n?? docs/strict_resource_acquisition.md\n?? results/strict_paper/\n?? results/strict_reproduction_matrix.csv\n?? runs/strict_paper/\n?? scripts/run_strict_paper.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "pca_kmeans",
+  "notes": "PCA dim grid ASSUMPTION {10..150} clipped; inertia recorded; not ACC",
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "run_id": "20261021_222511__STRICT_PAPER__JAFFE__PCAKM_GRID_D90__6de416db",
+  "selection_uses_labels": false,
+  "track": "STRICT_PAPER",
+  "variant": null
+}

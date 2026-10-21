@@ -1,0 +1,16 @@
+{
+  "version": "CANDIDATE_BIN_ALPHA",
+  "identity": "CANDIDATE_BIN_ALPHA",
+  "not_paper_binalpha": true,
+  "not_historical_identity": true,
+  "parent_archive": "binaryalphadigs.mat",
+  "parent_sha256": "3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7",
+  "random_seed": 0,
+  "n_classes": 26,
+  "n_per_class": 30,
+  "n_total": 780,
+  "shape": [780, 320],
+  "index_file": "letters26x30_seed0.json",
+  "rng": "numpy.random.RandomState(0).choice(39, size=30, replace=False) per letter class A-Z, then sorted; digits 0-9 dropped",
+  "note": "Candidate reconstruction only. Default load_dataset('BinAlpha') must not claim this is the exact Chang et al. sample set."
+}

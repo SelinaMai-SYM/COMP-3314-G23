@@ -118,6 +118,10 @@ No paywall bypass. Section 3 PDF = no. Details: [`resources/README.md`](resource
 
 `fit_predict` still raises `NotImplementedError`. Matrix status: `BLOCKED_MISSING_METHOD`. Code: `CODE_NOT_FOUND`.
 
+## Strict URL Task 1 (later 2026-10-21)
+
+Local `resources/` still has no PDF. ScienceDirect abstract and full PII HEAD **403** (`cf-mitigated: challenge`; interactive login). Paywall not bypassed. Status: `BLOCKED_MISSING_FULL_METHOD`.
+
 ## Reproduction commands
 
 ```text

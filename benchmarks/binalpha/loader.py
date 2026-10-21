@@ -2,8 +2,10 @@
 
 The default name is still the paper set, which was not identified.
 ``version="binaryalphadigs36"`` is the 36-class Binary Alphadigits parent.
-``version="letters26x30_seed0"`` is a documented reconstruction. Neither
-version is the Chang et al. BinAlpha sample set.
+``version="CANDIDATE_BIN_ALPHA"`` (alias ``letters26x30_seed0``) is a
+documented 26×30 reconstruction with seed 0. Neither version is the
+Chang et al. BinAlpha sample set. Default ``load_dataset("BinAlpha")``
+must not claim EXACT.
 """
 
 from __future__ import annotations
@@ -26,16 +28,20 @@ _SOURCE_URL = (
 )
 _EXPECTED_LABELS = tuple("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 _RECONSTRUCTION = Path(__file__).resolve().parent / "reconstructions" / "letters26x30_seed0.json"
+_CANDIDATE_POINTER = Path(__file__).resolve().parent / "reconstructions" / "CANDIDATE_BIN_ALPHA.json"
+_LIVE_ROWEIS_URL = (
+    "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/binaryalphadigs.mat"
+)
 
 _UNAVAILABLE = (
     "Chang et al. name BinAlpha as 26 binary handwritten alphabets with "
     "30 randomly selected images per alphabet, without a URL, image size, "
-    "or seed. Binary Alphadigits (36 classes x 39 images, 20x16) was "
-    "downloaded on 2026-10-21 from a Wayback capture of the Roweis page. "
+    "or seed. Binary Alphadigits (36 classes x 39 images, 20x16) is on "
+    "disk (SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7). "
     "No evidence was found that Chang et al. used that file. "
-    "The 36-class archive is therefore not called the paper BinAlpha. "
-    "Use version='binaryalphadigs36' or version='letters26x30_seed0' for "
-    "the parent and the UNVERIFIED reconstruction. "
+    "Default load_dataset('BinAlpha') does not claim EXACT. "
+    "Use version='CANDIDATE_BIN_ALPHA' (seed 0, 780x320) or "
+    "version='binaryalphadigs36' for explicit non-paper versions. "
     "See benchmarks/binalpha/README.md."
 )
 
@@ -51,11 +57,16 @@ def load_dataset(root: Path | None = None, version: str | None = None):
         raise DatasetUnavailable("BinAlpha", _UNAVAILABLE)
     if version == "binaryalphadigs36":
         return _load_parent(root)
-    if version in ("letters26x30_seed0", "letters26x30"):
-        return _load_reconstruction(root)
+    if version in (
+        "CANDIDATE_BIN_ALPHA",
+        "candidate",
+        "letters26x30_seed0",
+        "letters26x30",
+    ):
+        return _load_reconstruction(root, requested_version=version)
     raise ValueError(
         f"unknown BinAlpha version {version!r}; known versions: "
-        "paper, binaryalphadigs36, letters26x30_seed0"
+        "paper, binaryalphadigs36, CANDIDATE_BIN_ALPHA, letters26x30_seed0"
     )
 
 
@@ -101,6 +112,7 @@ def _load_parent(root: Path | None):
         "identity": "UNVERIFIED as Chang et al. BinAlpha",
         "not_paper_binalpha": True,
         "source_url": _SOURCE_URL,
+        "live_roweis_url_verified_head_200": _LIVE_ROWEIS_URL,
         "archive_path": str(path),
         "SHA256_checksum": _SHA256,
         "n": 1404,
@@ -121,11 +133,14 @@ def _load_parent(root: Path | None):
     return x, y, metadata
 
 
-def _load_reconstruction(root: Path | None):
+def _load_reconstruction(root: Path | None, requested_version: str = "CANDIDATE_BIN_ALPHA"):
     path, stack, labels = _read_parent(root)
     spec = json.loads(_RECONSTRUCTION.read_text())
     if spec["n_total"] != 780 or spec["random_seed"] != 0:
         raise ValueError("reconstruction spec is not letters26x30_seed0")
+    pointer = json.loads(_CANDIDATE_POINTER.read_text())
+    if pointer["identity"] != "CANDIDATE_BIN_ALPHA" or pointer["random_seed"] != 0:
+        raise ValueError("CANDIDATE_BIN_ALPHA pointer is malformed")
     rows = []
     class_ids = []
     for class_id, item in enumerate(spec["selection"]):
@@ -144,15 +159,24 @@ def _load_reconstruction(root: Path | None):
         raise ValueError(f"reconstructed subset shape {x.shape}")
     if not np.all(np.bincount(y) == 30):
         raise ValueError("reconstruction is not 30 images per letter")
+    version_name = (
+        "CANDIDATE_BIN_ALPHA"
+        if requested_version in ("CANDIDATE_BIN_ALPHA", "candidate")
+        else "letters26x30_seed0"
+    )
     metadata = {
-        "dataset_name": "BinaryAlphadigits_letters26x30_seed0",
-        "version": "letters26x30_seed0",
-        "verification_status": "reconstruction_unverified_identity",
-        "identity": "UNVERIFIED",
+        "dataset_name": "CANDIDATE_BIN_ALPHA",
+        "version": version_name,
+        "verification_status": "CANDIDATE_ONLY",
+        "identity": "CANDIDATE_BIN_ALPHA",
         "not_paper_binalpha": True,
+        "not_historical_identity": True,
+        "not_exact": True,
         "source_url": _SOURCE_URL,
+        "live_roweis_url_verified_head_200": _LIVE_ROWEIS_URL,
         "archive_path": str(path),
         "index_path": str(_RECONSTRUCTION),
+        "candidate_pointer_path": str(_CANDIDATE_POINTER),
         "SHA256_checksum": _SHA256,
         "n": 780,
         "number_of_classes": 26,
@@ -169,5 +193,6 @@ def _load_reconstruction(root: Path | None):
         "sample_selection_method": spec["rng"],
         "random_seed": 0,
         "reconstruction_note": spec["note"],
+        "candidate_note": pointer["note"],
     }
     return x, y, metadata

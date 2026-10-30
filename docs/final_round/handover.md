@@ -10,7 +10,7 @@ Written after the E1–E6 report rewrite. Hashes below are filled after the repo
 
 4. **Main-text page count.** Four pages. `pdfinfo` reports 5 pages total: title through Section 7 Conclusion on pages 1–4; acknowledgments start on page 4; references continue on page 5. No appendix.
 
-5. **HEAD vs origin/v1 hashes.** Pre-experiment HEAD = origin/v1 = `cb870acd47f9a62726c0cdab9b3b03395cc5e1cc`. New local HEAD and `origin/v1` after this push: see the git commit recorded with this file (filled at push time). Never reset, never force-pushed, never pushed `main`.
+5. **HEAD vs origin/v1 hashes.** Pre-experiment HEAD = origin/v1 = `cb870acd47f9a62726c0cdab9b3b03395cc5e1cc` (not reset). Report rewrite commit: `08fb118640bc97ff38bde5dc3b4e0275168e0763`. After `git push -u origin HEAD`, local `HEAD` must equal `origin/v1`. Never force-pushed, never pushed `main`.
 
 6. **What is NOT reproduced.** AR (not downloaded); UMIST-564 (565 unique cropped files, not 564); MSRA50 (not found); BinAlpha as a paper identity (`CANDIDATE_BIN_ALPHA` only); SPLS (`NOT_IMPLEMENTED`); LDA-SC (`APPROXIMATE`, not on the faithful table). Published Table 1 SC/SSC on ORL, JAFFE, YaleB, and USPS is not matched by E8 γ = 1. Figure 1 / Figure 2 were not curve-matched. The project is not marked fully reproduced.
 
@@ -24,7 +24,7 @@ Written after the E1–E6 report rewrite. Hashes below are filled after the repo
 
 11. **Group_23.pdf path.** `report/Group_23.pdf` (229264 bytes, SHA-256 `c33304078bc4a8144d4630406e6fd0f420b9b34790910247973f905b5ae99853`), byte-identical to `report/main.pdf`.
 
-12. **Commit hash.** Filled after `git commit` on branch `v1`. Parent is `cb870ac`. Not an amend of that parent.
+12. **Commit hash.** Report rewrite: `08fb118640bc97ff38bde5dc3b4e0275168e0763` (parent `cb870acd47f9a62726c0cdab9b3b03395cc5e1cc`). Not an amend of that parent. A follow-up commit on `v1` may only fill this handover.
 
 13. **Convexity vs clustering.** CONFIRMED on the n = 6 CVXPY check: E8 matches Eq. (8) at printed γ; E13 matches γ/2. Cite existing test, not a new proof. Convexity is only G given fixed F, W. E8 is not claimed to be the authors’ historical code.
 

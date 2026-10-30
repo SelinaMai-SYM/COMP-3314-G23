@@ -1,0 +1,22 @@
+% Faithful main table. Clustering numbers: results/strict_reproduction_matrix.csv, n=50.
+% Paper cells are Chang et al.\ 2015, historical only. E8 gamma=1. B/C stay out.
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{llcccc}
+\toprule
+Set ($n{=}50$) & Metric & Paper SC & Our SC & Paper SSC & Our E8 $\gamma{=}1$ \\
+\midrule
+ORL att92 & ACC & $72.7{\pm}2.3$ & $56.2{\pm}4.2$ & $76.0{\pm}1.6$ & $57.3{\pm}3.8$ \\
+          & NMI & $85.8{\pm}1.9$ & $80.5{\pm}2.3$ & $88.6{\pm}1.5$ & $81.1{\pm}2.2$ \\
+JAFFE zenodo & ACC & $76.1{\pm}1.6$ & $68.5{\pm}11.2$ & $81.2{\pm}1.6$ & $68.4{\pm}11.1$ \\
+             & NMI & $80.2{\pm}0.9$ & $83.0{\pm}5.7$ & $84.3{\pm}1.6$ & $83.0{\pm}5.7$ \\
+YaleB cropped & ACC & $34.8{\pm}1.4$ & $18.3{\pm}1.3$ & $49.8{\pm}1.6$ & $17.6{\pm}1.2$ \\
+              & NMI & $55.6{\pm}1.6$ & $26.9{\pm}0.7$ & $46.8{\pm}1.3$ & $26.2{\pm}0.9$ \\
+USPS libsvm & ACC & $64.3{\pm}1.4$ & $61.7{\pm}8.1$ & $75.5{\pm}1.9$ & $61.7{\pm}8.1$ \\
+            & NMI & $69.5{\pm}1.6$ & $74.9{\pm}4.5$ & $79.8{\pm}1.6$ & $75.2{\pm}4.6$ \\
+\bottomrule
+\end{tabular}\\[2pt]
+{\raggedright\scriptsize
+Mean$\pm$sample SD ($\mathrm{ddof}{=}1$) over $n{=}50$ random $K$-means trials (seeds $0{\ldots}49$, $n_{\mathrm{init}}{=}1$) on one embedding. Paper columns are \emph{Reported in Chang et al.\ (2015)}, historical only, not Our Reproduction.
+Protocol: Equation~(4), $k{=}5$, union $k$NN, median directed bandwidth, raw eigenvectors, E8 $\gamma{=}1$, $G_0{=}F$. ORL is AT\&T $92{\times}112$ bilinear $32{\times}32$ (\texttt{att92}). JAFFE is verified Zenodo (213). YaleB is CroppedYale 2414 bilinear $32{\times}32$ (\texttt{cropped2414}), not Deng Cai. USPS is LIBSVM 9298.
+$k$-means++, row-norm, LDA-SC (\texttt{APPROXIMATE}), and SPLS (\texttt{NOT\_IMPLEMENTED}) are omitted. AR, UMIST-564, and MSRA50 are blocked, not filled as \texttt{EXACT}.
+\par}

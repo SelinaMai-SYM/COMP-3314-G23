@@ -30,3 +30,4 @@ report/*.bbl
 # Strict-repro embedding arrays are large; keep configs/metrics/status only.
 runs/strict_repro/**/*.npy
 runs/strict_paper/**/*.npy
+runs/final_round/**/*.npy

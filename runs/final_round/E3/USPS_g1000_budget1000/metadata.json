@@ -1,0 +1,9 @@
+{
+  "source_run_id": "20261021_225950__STRICT_PAPER__USPS__SSC_E8_G1E3__e8aad5e1",
+  "budget": 1000,
+  "variant": "E8",
+  "gamma": 1000.0,
+  "git_head": "cb870acd47f9a62726c0cdab9b3b03395cc5e1cc",
+  "W_edges": 30437,
+  "max_abs_vs_saved_G_at_300": NaN
+}

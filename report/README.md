@@ -28,7 +28,7 @@ Main text (title through conclusion, including the abstract) must fit in **four 
 - `main.tex` — body and appendix (no checklist)
 - `references.bib` — verified BibTeX entries
 - `neurips_2026.sty` — copied from the official NeurIPS 2026 bundle
-- `tables/round2_main.tex` — Round 2 faithful comparison from `results/round2/`
-- `figures/` — PDF/PNG copied from `results/figures/` by `scripts/generate_report_figures.py`
+- `tables/final_main.tex` — n=50 SC vs E8 γ=1 comparison from `results/strict_reproduction_matrix.csv`
+- `tables/round2_main.tex` — Round 2 table (superseded; not used by `main.tex`)
 
-Paper ACC/NMI stay in a column labelled as Chang et al. Our cells come from `results/round2/`.
+Paper ACC/NMI stay in a column labelled as Chang et al. (2015), historical only. Our cells come from `results/strict_reproduction_matrix.csv` (n=50). Number sources: `docs/final_round/report_evidence_map.md`.

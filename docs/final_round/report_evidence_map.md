@@ -1,12 +1,12 @@
 # Report evidence map
 
-Every numeric claim in `report/main.tex` (including `report/tables/final_main.tex`) is listed here with source, run ID, checksum when recorded, and aggregation. Paper table entries are historical quotations from Chang et al. (2015), not our measurements. Round 2 report numbers are not reused when they disagree with these files.
+Every numeric claim in `report/main.tex` (including `report/tables/final_main.tex`) is listed here with source, run ID, checksum when recorded, and aggregation. Paper table entries and paper dataset counts are historical quotations from Chang et al. (2015), not our measurements. Round 2 report numbers are not reused when they disagree with these files.
 
 Primary protocol: E8, γ = 1, random Lloyd, n_init = 1, seeds 0..49, one F and one G. ACC = Hungarian (`benchmarks.metrics.clustering_accuracy`). NMI = Strehl–Ghosh geometric mean. Sample SD uses ddof = 1.
 
-Percent cells in Table 1 match `results/strict_reproduction_matrix.csv` display strings (one decimal). Fraction cells match `docs/final_round/E1_analysis.md`, `E2_analysis.md`, `E3_analysis.md`, `E4_analysis.md`, and `scientific_findings.md`, which round the CSVs without extra invented digits.
+Section numbers below match the six-section rewrite (problem → methods → paper experiments → critique → extension → reproduction). Percent cells in Table 1 match `results/strict_reproduction_matrix.csv` display strings (one decimal). Fraction cells match `docs/final_round/E1_analysis.md`, `E3_analysis.md`, `E4_analysis.md`, and `scientific_findings.md`, which round the CSVs without extra invented digits.
 
-## Main table (Table 1): paper SC/SSC vs our SC and E8 γ = 1
+## Main table (Table 1, Section 6): paper SC/SSC vs our SC and E8 γ = 1
 
 Aggregation for Our cells: mean ± sample SD over n = 50 random K-means trials on one embedding. Seeds exactly `[0, 1, …, 49]` (`docs/final_round/E6_analysis.md`; `results/final_round/E6_validation.json`, 52 cells, 0 problems).
 
@@ -47,71 +47,60 @@ Aggregation for Our cells: mean ± sample SD over n = 50 random K-means trials o
 
 Table footnote dataset sizes: JAFFE 213, YaleB 2414/38, USPS 9298 — paper counts matched in `docs/final_round/scientific_findings.md` Q2 and the matrix identity columns. ORL is 400 AT&T images (att92), not claimed pixel-matched to 2015.
 
-## CVXPY small-graph (Section 2)
+The same four paper ACC pairs are also quoted in Section 3 as *Reported in Chang et al. (2015)* (ORL 76.0±1.6 vs 72.7±2.3; JAFFE 81.2±1.6 vs 76.1±1.6; YaleB 49.8±1.6 vs 34.8±1.4; USPS 75.5±1.9 vs 64.3±1.4).
+
+## Paper-only dataset counts and protocol (Section 3)
+
+All of the following are *Reported in Chang et al. (2015)* (experimental section), not our measurements.
+
+| Claim | Source |
+| --- | --- |
+| AR 840 faces, 120 people | Chang et al. 2015, Datasets |
+| JAFFE 213 images, 10 subjects, 26×26 | Chang et al. 2015, Datasets; count also matched in matrix / scientific_findings Q2 |
+| ORL 40 subjects, 10 images, 32×32 | Chang et al. 2015, Datasets |
+| UMIST 564 images, 20 people | Chang et al. 2015, Datasets |
+| BinAlpha 26 letters, 30 images each | Chang et al. 2015, Datasets |
+| MSRA50 1799 images, 12 classes, 32×32 | Chang et al. 2015, Datasets |
+| YaleB 2414 images, 38 people, 32×32 | Chang et al. 2015, Datasets; `E4_data_comparison.csv` both versions `n_images=2414`, `n_identities=38` |
+| USPS 9298 digits, 16×16 | Chang et al. 2015, Datasets; matrix identity `verified_libsvm_9298` |
+| Spectral k = 5; γ grid {1e-6, 1e-3, 1, 1e3, 1e6}; 50 random inits, best objective; Tables 1–2 print mean±std | Chang et al. 2015, Setup; grid also in `E2_shrinkage.csv` / preflight |
+| Fig. 1 prefers γ = 1 except MSRA50/USPS; Fig. 2 objective decreases quickly | Chang et al. 2015, Parameter Sensitivity / Convergence Study; `docs/final_round/E5_figure_audit.md` |
+
+## CVXPY small-graph (Section 4)
 
 | Report number | Source | Run / test | Aggregation |
 | --- | --- | --- | --- |
-| n = 6 chain, γ = 0.8, seed 1 | `results/final_round/E3_optimization.csv` rows `small_graph_cvxpy`; `E3_analysis.md` | `tests/test_ssc.py::test_equation13_fixed_point_matches_cvxpy_halved_graph_term` (re-run; pytest return code 0 in `E3_pytest_cvxpy.txt`) | one synthetic instance; CLARABEL status optimal |
+| n = 6 chain, printed γ | `results/final_round/E3_optimization.csv` rows `small_graph_cvxpy`; `E3_analysis.md` | `tests/test_ssc.py::test_equation13_fixed_point_matches_cvxpy_halved_graph_term` (re-run; pytest return code 0 in `E3_pytest_cvxpy.txt`) | one synthetic instance; CLARABEL status optimal |
 | E8 max \|G\| gap 1.17e-5 | E3 CSV `max_abs_G_gap=1.172106445274101e-05` | same test | max absolute entrywise gap vs CVXPY at printed γ |
 | E13 max \|G\| gap 2.33e-5 | E3 CSV `2.326988690209975e-05` | same test | vs CVXPY with graph coefficient γ/2 |
 | Relative step stop 1e-6; IRLS cap 300 | `docs/final_round_preflight.md` protocol; run configs | all strict_paper SSC cells | solver setting, not a metric |
 
-## Dataset counts in Section 3
+## Mutual-kNN extension (Section 5)
 
-| Claim | Source |
-| --- | --- |
-| JAFFE 213 | matrix / JAFFE manifest; scientific_findings Q2 |
-| YaleB 2414 / 38 | `E4_data_comparison.csv` both versions `n_images=2414`, `n_identities=38` |
-| USPS 9298 | matrix identity `verified_libsvm_9298`; scientific_findings Q2 |
-| UMIST 565 unique cropped, not 564 | prior dataset audit in `report/main.tex` Round 2 and `docs/final_round_preflight.md` (blocked; not re-counted this round) |
-| γ grid {1e-6, 1e-3, 1, 1e3, 1e6} | `E2_shrinkage.csv`; preflight |
+Existing Round 2 runs. Algorithm in `method_extension/` was not changed. Category C.
 
-## E3 optimization vs ACC (Section 5)
+| Report string | Source | Run ID |
+| --- | --- | --- |
+| mutual E8 ACC 68.4 ± 11.2 | `runs/round2/…EXT_JAFFE_MUTUAL_KNN…/metrics.json` `acc_mean=0.683662`, `acc_std=0.111576`; README | `20261021_161924__ROUND2__JAFFE__EXT_JAFFE_MUTUAL_KNN__45fd1c1f` |
+| union E8 ACC 68.4 ± 11.1 | `runs/round2/…D12_JAFFE_E8…/metrics.json` `acc_mean=0.684319`, `acc_std=0.110806` (same mean as strict JAFFE E8) | `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7` |
+| 410 vs 655 edges; 20 vs 9 components | mutual `n_undirected_edges=410`, `n_connected_components=20`; union `655`, `9` | same two runs; E2 JAFFE W also 655 / 9 |
 
-Source: `results/final_round/E3_optimization.csv` and `docs/final_round/E3_analysis.md`. F from the listed strict_paper run; W rebuilt and checked as in E2. ACC: same random Lloyd, seeds 0..49, n = 50. Budgets 1000 and 2000 return identical G (same SHA-256).
+JAFFE checksum on the extension run: `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`. n = 50.
 
-| Case | Source F run | Iters (300 / stop) | Eq. (8) 300 → stop | Residual after stop | ACC 300 → stop | G SHA-256 at stop |
-| --- | --- | --- | --- | --- | --- | --- |
-| ORL γ = 1 | `…ORL__SSC_E8_G1P0__4be5ba41` | 300 / 825 | 14.58274942 → 14.58272412 (Δ 2.5e-5) | 0.00213 | 0.57265 → 0.57135 | `24175275e491a4a331ee2e39f1990ea2a37ccdd6a40c0426e8b9825b9cd2e3a7` |
-| YaleB γ = 1 | `…YALEB__SSC_E8_G1P0__2ba528ff` | 300 / 359 | 50.67685228 → 50.67683885 (Δ 1.3e-5) | 0.17098 | 0.17622 → 0.17614 | `d88fb4d18833c145390c8fc6bd669b6057addf9f9b5399ae28cc6aaec1b4a275` |
-| USPS γ = 1000 | `…USPS__SSC_E8_G1E3__e8aad5e1` | 300 / 355 | 179.83482261 → 179.83481634 (Δ 6e-6) | 0.05776 | 0.73687 → 0.73861 | `d14bda1c513861f3c350b349b1b0bab995309a7dc878032ca29c86906ed8f4be` |
-
-Report prose residual 0.002 / 0.171 / 0.058 is the analysis rounding of 0.00213 / 0.17098 / 0.05776. Residual is `||(S + 2γ L̃) G − S F||`, not a dual certificate.
-
-## E1 paired ΔACC (Section 5)
+## E1 paired ΔACC (Section 6)
 
 Source: `results/final_round/E1_paired.csv` aggregate rows; `docs/final_round/E1_analysis.md`. Cache embeddings: the four E8 γ = 1 runs in the main-table SSC column. Same seeds 0..49. Δ = ACC(G) − ACC(F). 95% percentile bootstrap, 10,000 resamples, CI scope = K-means noise on this fixed (F, G) only.
 
-| Dataset | Init | Report ΔACC | Report 95% CI | CSV mean / CI | CI excludes 0 | ARI mean | Cache run |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| ORL | random | +0.0109 | [+0.0030, +0.0187] | 0.01085 / [0.003, 0.01865] | yes | 0.846 | `…ORL__SSC_E8_G1P0__4be5ba41` |
-| ORL | k-means++ | +0.0006 | contains 0; CSV [−0.00475, 0.00605] | 0.00065 | no | 0.840 | same |
-| JAFFE | random | −0.0009 | contains 0; CSV [−0.01070, 0.00892] | −0.000939 | no | 0.964 | `…JAFFE__SSC_E8_G1P0__8a4a026d` |
-| JAFFE | k-means++ | −0.0021 | contains 0; CSV [−0.00620, 0] | −0.002066 | no | 0.993 | same |
-| YaleB | random | −0.0072 | [−0.0097, −0.0048] | −0.007175 / [−0.009652, −0.004789] | yes (negative) | 0.685 | `…YALEB__SSC_E8_G1P0__2ba528ff` |
-| YaleB | k-means++ | −0.0023 | CI below 0; CSV [−0.00404, −0.00054] | −0.002336 | yes (negative) | 0.667 | same |
-| USPS | random | −0.0004 | contains 0; CSV [−0.00684, 0.00578] | −0.000407 | no | 0.950 | `…USPS__SSC_E8_G1P0__0a34012b` |
-| USPS | k-means++ | (not printed as a headline; analysis +0.0020, CI contains 0) | CSV [−0.00344, 0.00717] | 0.001977 | no | 0.916 | same |
+| Dataset | Init | Report ΔACC | Report 95% CI | CSV mean / CI | CI excludes 0 | Cache run |
+| --- | --- | --- | --- | --- | --- | --- |
+| ORL | random | +0.0109 | [+0.0030, +0.0187] | 0.01085 / [0.003, 0.01865] | yes | `…ORL__SSC_E8_G1P0__4be5ba41` |
+| JAFFE | random | −0.0009 | contains 0; CSV [−0.01070, 0.00892] | −0.000939 | no | `…JAFFE__SSC_E8_G1P0__8a4a026d` |
+| YaleB | random | −0.0072 | [−0.0097, −0.0048] | −0.007175 / [−0.009652, −0.004789] | yes (negative) | `…YALEB__SSC_E8_G1P0__2ba528ff` |
+| USPS | random | −0.0004 | contains 0; CSV [−0.00684, 0.00578] | −0.000407 | no | `…USPS__SSC_E8_G1P0__0a34012b` |
 
-k-means++ means from `E1_summary.csv` (Level C, n = 50): ORL F 0.7833 ± 0.0131, G 0.7839 ± 0.0154; JAFFE F 0.9531 ± 0.0000, G 0.9510 ± 0.0146; YaleB F 0.2178 ± 0.0045, G 0.2155 ± 0.0047; USPS F 0.6560 ± 0.0187, G 0.6579 ± 0.0190. Report prose 0.562 → 0.783 (ORL F), 0.685 → 0.953 (JAFFE F), 0.218 (YaleB ++) rounds those means. Published SSC JAFFE 81.2% and SC YaleB 34.8% are historical Table 1 quotations as in the main table.
+Prose “about one percentage point” is the rounding of ORL +0.0109.
 
-## E2 shrinkage grid (Section 5)
-
-Source: `results/final_round/E2_shrinkage.csv` (`acc_mean_stored`, `n_trials_stored=50`). G/F from the listed E8 runs. TV uses the ordered-pair sum (both triangles stored, not multiplied by an extra 2).
-
-| Dataset | γ | Report ACC | CSV `acc_mean_stored` | Run ID |
-| --- | --- | --- | --- | --- |
-| YaleB | ≤ 1e-3 | 0.1834 | 0.18339685 | `…YALEB__SSC_E8_G1EM6__da885cd6` (same ACC at 1e-3) |
-| YaleB | 1 | 0.1762 | 0.17622204 | `…YALEB__SSC_E8_G1P0__2ba528ff` |
-| YaleB | 1e3 | 0.1705 | 0.17048053 | `…YALEB__SSC_E8_G1E3__9a7861d8` |
-| YaleB | 1e6 | 0.1289 | 0.12893952 | `…YALEB__SSC_E8_G1E6__96e89a23` |
-| USPS | 1 | 0.6170 | 0.61698215 | `…USPS__SSC_E8_G1P0__0a34012b` |
-| USPS | 1e3 | 0.7369 | 0.73686814 | `…USPS__SSC_E8_G1E3__e8aad5e1` |
-| USPS | 1e6 | 0.3881 | 0.38806410 | `…USPS__SSC_E8_G1E6__bf47b88e` |
-
-USPS γ = 1e3 is one preset grid point. It was not selected by ACC (`E2_analysis.md`).
-
-## E4 YaleB versions (Section 5)
+## E4 YaleB versions (Section 6)
 
 Source: `results/final_round/E4_data_comparison.csv`, `E4_graph_diagnostics.csv`, `docs/final_round/E4_analysis.md`.
 
@@ -124,27 +113,17 @@ Source: `results/final_round/E4_data_comparison.csv`, `E4_graph_diagnostics.csv`
 | K-means(F) cropped 0.1834 | `E4_graph_diagnostics.csv` controlled cropped2414 `acc_mean=0.18339685 ± 0.012841`, n = 50 | matches strict SC F (max abs 4.2e-14) |
 | K-means(F) Deng Cai 0.2016 | controlled dengcai32 `acc_mean=0.20159072 ± 0.012388`, n = 50, same graph rule and seeds | not selected by ACC |
 | Published SC 34.8% | Chang et al. Table 1, historical only | n/a |
-| B/C diagnostics not adopted | mean bandwidth / mutual / row-norm / nearest / bicubic in `E4_graph_diagnostics.csv`; `selected_as_paper_method=false` | — |
 
-## Mutual-kNN extension (Section 6)
-
-Existing Round 2 runs. Algorithm in `method_extension/` was not changed. Category C.
-
-| Report string | Source | Run ID |
-| --- | --- | --- |
-| mutual E8 ACC 68.4 ± 11.2 | `runs/round2/…EXT_JAFFE_MUTUAL_KNN…/metrics.json` `acc_mean=0.683662`, `acc_std=0.111576`; README | `20261021_161924__ROUND2__JAFFE__EXT_JAFFE_MUTUAL_KNN__45fd1c1f` |
-| union E8 ACC 68.4 ± 11.1 | `runs/round2/…D12_JAFFE_E8…/metrics.json` `acc_mean=0.684319`, `acc_std=0.110806` (same mean as strict JAFFE E8) | `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7` |
-| 410 vs 655 edges; 20 vs 9 components | mutual `n_undirected_edges=410`, `n_connected_components=20`; union `655`, `9` | same two runs; E2 JAFFE W also 655 / 9 |
-
-JAFFE checksum on the extension run: `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`. n = 50.
-
-## E6 / protocol facts in the conclusion
+## Dataset / protocol facts in Section 6
 
 | Claim | Source |
 | --- | --- |
+| JAFFE 213; YaleB 2414 / 38; USPS 9298 | matrix / JAFFE manifest; `E4_data_comparison.csv`; scientific_findings Q2 |
+| UMIST 565 unique cropped, not 564 | prior dataset audit in `report/main.tex` Round 2 and `docs/final_round_preflight.md` (blocked; not re-counted this round) |
 | n = 50 seeds 0..49 on one F (and one G) | `E6_validation.json` `kmeans_only_randomness`; 52 cells, `n_problems=0` |
 | ACC Hungarian; NMI geometric | `E6_analysis.md`; pytest 16 passed, return code 0 (`E6_pytest.txt`) |
 | ± is sample SD ddof = 1 | `E6_validation.json` `std_convention`; `E1_summary.csv` `std_convention` |
+| IRLS budget 300; γ = 1 frozen; G0 = F | `docs/final_round_preflight.md` protocol; all strict_paper SSC cells |
 
 ## Explicitly not in the report as Our Reproduction
 
@@ -154,4 +133,5 @@ JAFFE checksum on the extension run: `6da27f5954f969c6f65d782911834dd66827ec3580
 - AR, UMIST-564, MSRA50 (blocked; not filled as EXACT).
 - BinAlpha `CANDIDATE_BIN_ALPHA` (not a paper identity; omitted from Table 1).
 - k-means++ and row-norm ACC as the paper method.
+- E2 γ-grid ACC values and E3 IRLS-continuation ACC (not printed in this rewrite).
 - Any claim that maximizing ACC identifies the 2015 protocol.

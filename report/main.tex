@@ -14,7 +14,7 @@
 \usepackage{microtype}
 \usepackage{xcolor}
 
-\title{When Does Spectral Shrinkage Improve Clustering?\\A Reproduction and Failure Analysis of SSC}
+\title{A Paper Study of Spectral Shrunk Clustering}
 
 \author{%
   Group 23\thanks{HKU COMP3314 course report in the NeurIPS 2026 \texttt{preprint} style. It is \emph{not} a NeurIPS submission. Member names and emails require confirmation and are not invented.} \\
@@ -28,42 +28,58 @@
 \maketitle
 
 \begin{abstract}
-Spectral clustering embeds points with Laplacian eigenvectors and discretizes with $K$-means. Spectral Shrunk Clustering (SSC) of Chang, Nie, Ma, Yang, and Zhou then shrinks that embedding on a second graph before the same $K$-means. This COMP3314 report reimplements SSC from the printed equations, without author code, and asks when that shrinkage improves clustering. Variant E8 is the stationary system of Equation~(8); printed Equation~(13) matches the same objective with graph coefficient $\gamma/2$. E8 is a reconstruction, not a claim about the authors' historical binary. On AT\&T ORL, Zenodo JAFFE, cropped YaleB, and LIBSVM USPS, with $k{=}5$, protocol $\gamma{=}1$, and $n{=}50$ random $K$-means trials, the published SC/SSC table is not reproduced. Paired $\Delta$ACC at $\gamma{=}1$ is about ${+}1.1$ points on ORL and negative on YaleB. Shrinkage does not stably help. The YaleB gap is already present in $K$-means on $F$. $k$-means++ is a Level~C diagnostic. SPLS is unimplemented. The project is not marked fully reproduced.
+Spectral clustering builds a neighbourhood graph, embeds points with Laplacian eigenvectors, and discretizes with $K$-means. Chang, Nie, Ma, Yang, and Zhou (AAAI 2015) argue that a graph on the original points $x_i$ need not regularize the embedded points $f_i$. Spectral Shrunk Clustering (SSC) then shrinks that embedding $F$ on a second graph to $G$, drops the orthogonal constraint, and claims a convex solve that does not depend on initialization. This COMP3314 report studies the paper: the problem and contributions, the algorithm and its course connections, and the published tables and figures. A controlled reimplementation from the printed equations, without author code, does not reproduce the Table~1 SC${\to}$SSC gain at protocol $\gamma{=}1$.
 \end{abstract}
 
-\section{Introduction}
+\section{Problem formulation, motivation, and contributions}
 
-Spectral clustering builds a similarity graph, takes Laplacian eigenvectors, and runs $K$-means in that embedding \citep{shi2000normalized,vonluxburg2007tutorial}. COMP3314 contrasts that neighbourhood geometry with PCA, which keeps high-variance axes, and with LDA, which uses class scatter. Chang et al.\ argue that a graph on the original points $x_i$ need not be the right regularizer for the embedded points $f_i$. SSC therefore computes a normalized-cut embedding $F$, rebuilds a $k$-nearest-neighbour (kNN) graph on $F$, and solves a convex shrinkage problem for $G$ before the final $K$-means \citep{chang2015ssc}.
+High-dimensional distances are often unreliable, so many clustering pipelines first reduce dimension and then partition. Spectral clustering \citep{shi2000normalized} finds an embedding from the spectrum of a similarity graph on the original points $x_i$ and runs $K$-means there. Chang et al.\ observe that this two-stage pipeline assumes nearby points in the reduced space share a label, yet those neighbours may have been far apart in the original space: the manifold used to build the graph need not be the manifold of the embedding $F$ \citep{chang2015ssc}.
 
-This is a paper study with critical analysis, not a leaderboard. We reimplement SSC from the equations, tag unspecified choices as A/B/C, obtain datasets only from files with a URL and checksum, and never copy a published ACC/NMI into an Our Reproduction cell. A closer number does not promote a diagnostic to the paper method. No named dataset is marked fully protocol-reproduced.
+SSC therefore keeps the usual spectral embedding $F$ and then learns a second matrix $G$ on a $k$-nearest-neighbour graph built from the rows of $F$. The rows $g_i$ should stay close to $f_i$ and should be pulled together when $W_{ij}$ is large. The authors drop the orthogonality constraint that $F$ inherits from the Laplacian eigenproblem, and they claim the resulting problem in $G$ is convex and independent of initialization.
 
-\section{SSC objective and the E8/E13 split}
+They list three merits \citep{chang2015ssc}. First, the shrunk pattern has no orthogonal constraint, so it is more flexible for the low-dimensional manifold. Second, manifold learning and clustering are coupled, so the graph on $F$ is tailored to the later $K$-means. Third, the algorithm is said to be convex and to converge to a global optimum, hence not to rely on initialization. Those are the paper's claims; Section~\ref{sec:critique} examines their scope.
 
-Lloyd $K$-means is the last discretization in SSC and in the spectral baseline \citep{lloyd1982least}. The paper uses the symmetric normalized Laplacian of Equation~(4) and sets $k{=}5$ for every spectral method. We take $\delta^2$ as the median of positive directed kNN squared distances (unspecified; Category~B) and undirected edges as the union of the two directed relations (Category~B; \citealp{vonluxburg2007tutorial}). $F$ holds the $c$ eigenvectors for the smallest eigenvalues. Eigenvectors are \emph{not} row-normalized; Ng--Jordan--Weiss row-norm is Category~C even when ACC is higher \citep{ng2001spectral}. Pattern shrinking is cited as SPLS; we did not obtain Section~3 of that paper and keep SPLS as \texttt{NOT\_IMPLEMENTED} \citep{hou2013learning}. LDA-SC is named but not defined; it stays \texttt{APPROXIMATE} and is omitted from Table~\ref{tab:main}.
+\section{Methods, algorithms, and course connections}
 
-A second Gaussian kNN graph $W$ is built on the rows of $F$. The printed convex problem is
+The paper uses the symmetric normalized Laplacian of Equation~(4),
+\begin{equation}
+  L_n = I - D^{-1/2} A D^{-1/2},
+\end{equation}
+and obtains $F$ from the classical normalized-cut / Ng--Shi--Malik spectral embedding \citep{shi2000normalized,ng2001spectral}: the $c$ eigenvectors for the smallest eigenvalues of $L_n$. A Gaussian $k$NN graph $W$ is then built on the rows of $F$. After replacing a squared residual by an $\ell_{2,1}$ residual (to limit outliers; \citealp{nie2010efficient}), the printed convex problem is
 \begin{equation}
   \min_G \lVert G-F\rVert_{2,1} + \gamma \sum_{ij} W_{ij}\lVert g_i-g_j\rVert_2,
   \label{eq:ssc-obj}
 \end{equation}
-with $\lVert H\rVert_{2,1}=\sum_i\lVert h_i\rVert_2$ over rows and the sum over ordered pairs. Convexity is only in $G$ given fixed $F,W$ with $W$ nonnegative. It does not make spectral clustering or $K$-means convex.
+with $\lVert H\rVert_{2,1}=\sum_i\lVert h_i\rVert_2$ over rows. Algorithm~1 is an iteratively reweighted least-squares (IRLS) loop: form a diagonal residual weight $S$, reweight the graph, and solve a linear system for $G$. Theorem~1, as the authors state it, says that Algorithm~1 monotonically decreases \eqref{eq:ssc-obj} and, because the problem is convex, a fixed point of the printed linear update is a global minimizer of \eqref{eq:ssc-obj} \citep{chang2015ssc}. Labels come from $K$-means on $G$ \citep{lloyd1982least} and are not written back into $W$ or $F$.
 
-\paragraph{E8 versus E13.}
-Differentiating \eqref{eq:ssc-obj} when both ordered pairs of a symmetric $W$ are stored yields the stationary system $(S+2\gamma\widetilde L)G=SF$. That linear system is variant \textbf{E8}. Printed Equation~(13) uses $\gamma\widetilde L$ instead of $2\gamma\widetilde L$: it is the stationary point of \eqref{eq:ssc-obj} with graph coefficient $\gamma/2$, not of Equation~(8) at the printed $\gamma$. Algorithm~1 line~10 replaces $\widetilde L$ by $\widetilde W$ and $F$ by $X$; we do not execute that line. E8 is the primary reconstruction of Equation~(8). It is \emph{not} claimed to be the authors' historical code. An existing small-graph CVXPY/CLARABEL check on an $n{=}6$ chain ($\gamma{=}0.8$, seed~1) is consistent with this split: E8 matches Equation~(8) at the printed $\gamma$ (max $|G|$ gap $1.17{\times}10^{-5}$); E13 matches the $\gamma/2$ instance (max $|G|$ gap $2.33{\times}10^{-5}$). A pass of that test is not a new proof.
+COMP3314 contrasts three embeddings. PCA keeps high-variance axes. LDA uses class scatter \citep{ding2007adaptive}. Spectral embedding keeps neighbourhood geometry on a graph Laplacian \citep{vonluxburg2007tutorial}. SSC is a post-process of the third: it does not replace PCA or LDA, and Lloyd $K$-means remains the last discretization of both the spectral baseline and SSC.
 
-Default $G_0{=}F$. We stop on a relative Frobenius step of $10^{-6}$ or after 300 iterations. Labels come from $K$-means on $G$ and are never written back into $W$ or $F$.
+\section{Experimental setup and results reported in the paper}
 
-\section{Paper evidence versus our protocol}
+All numbers and figures in this section are \emph{Reported in Chang et al.\ (2015)}, not our measurements. The paper uses eight datasets: AR (840 faces, 120 people); JAFFE (213 images, 10 subjects, $26{\times}26$); ORL (40 subjects, 10 images, $32{\times}32$); UMIST (564 images, 20 people); BinAlpha (26 letters, 30 images each); MSRA50 (1799 images, 12 classes, $32{\times}32$); YaleB (2414 images, 38 people, $32{\times}32$); and USPS (9298 digits, $16{\times}16$). Every spectral method uses $k{=}5$. Parameters of all compared methods are searched on $\{10^{-6},10^{-3},1,10^{3},10^{6}\}$ and the best result is reported. The text also says each clustering is repeated 50 times with random initialization and the reported result is the one with the best objective. Tables~1--2 still print mean$\pm$standard deviation. Those two sentences are not the same protocol.
 
-Published Table~1 reports mean$\pm$std ACC/NMI. The experimental text also says each clustering is repeated 50 times with random initialization and the reported result is the one with the best objective. Those two sentences are not the same protocol. Our $\pm$ is the sample SD over 50 distinct $K$-means seeds on one embedding (E6): $F$ and $G$ are solved once.
+Compared methods are $K$-means, SC, PCA $K$-means, PCA-SC, LDA $K$-means, LDA-SC, LLC \citep{wu2006local}, and SPLS \citep{hou2013learning}. The authors' six readings of Tables~1--2 are: (i)~spectral methods beat $K$-means; (ii)~dimensionality reduction helps; (iii)~LDA beats PCA; (iv)~LLC is the most robust spectral variant; (v)~SPLS is second; (vi)~SSC is best on every dataset and both ACC and NMI. Illustrative ACC cells include SSC $76.0{\pm}1.6$ vs.\ SC $72.7{\pm}2.3$ on ORL, $81.2{\pm}1.6$ vs.\ $76.1{\pm}1.6$ on JAFFE, $49.8{\pm}1.6$ vs.\ $34.8{\pm}1.4$ on YaleB, and $75.5{\pm}1.9$ vs.\ $64.3{\pm}1.4$ on USPS. Figure~1 plots ACC against $\gamma$ and is read as preferring $\gamma{=}1$ except on MSRA50 and USPS. Figure~2, with $\gamma$ fixed at 1, is read as showing a quickly decreasing objective.
 
-Four datasets have a completed $n{=}50$ protocol. ORL is the AT\&T $92{\times}112$ release resized bilinearly to $32{\times}32$ (\texttt{att92}), not an unidentified third crop \citep{samaria1994parameterisation}. JAFFE is the verified Zenodo TIFF set, 213 images, resized to $26{\times}26$ \citep{lyons1998coding,lyons2025jaffe}. YaleB is CroppedYale 2414 non-ambient $(192,168)$ images resized bilinearly to $32{\times}32$ (\texttt{cropped2414}), not claimed pixel-identical to Deng Cai's mat \citep{georghiades2001from,lee2005acquiring}. USPS is the LIBSVM $9298{\times}256$ pair \citep{hull1994database}. Counts match the paper for JAFFE, YaleB ($2414/38$), and USPS. AR was not downloaded; UMIST archives yield 565 unique cropped images, not 564 \citep{graham1998characterising}; MSRA50 was not found. Those three names are blocked and are not filled as \texttt{EXACT}.
+\section{Critical analysis}
+\label{sec:critique}
 
-Shared \texttt{SpectralGraphConfig}: $k{=}5$, union kNN, median directed bandwidth, Equation~(4), no row-norm. Primary SSC cell: variant E8, $\gamma{=}1$ frozen without labels (not selected by ACC), $G_0{=}F$, IRLS budget 300, $K$-means \texttt{init="random"}, $n_{\mathrm{init}}{=}1$, seeds $0{\ldots}49$. The $\gamma$ grid $\{10^{-6},10^{-3},1,10^{3},10^{6}\}$ is reported separately. ACC is Hungarian matching \citep{munkres1957algorithms}; NMI is the Strehl--Ghosh geometric mean \citep{strehl2002cluster}. Code: \url{https://github.com/SelinaMai-SYM/COMP-3314-G23.git} branch \texttt{v1}. Records: \texttt{results/strict\_reproduction\_matrix.csv} and \texttt{results/final\_round/}.
+Convexity is only in $G$ given fixed $F$ and a nonnegative $W$. It does not make spectral clustering or $K$-means convex, and it does not certify a unique ACC or NMI. Theorem~1's global-optimum sentence is therefore a statement about the shrinkage subproblem, not about the clustering metric.
 
-\section{Main comparison}
+The printed stationarity condition, Equation~(13), uses $\gamma\widetilde L$ in the linear system. Differentiating \eqref{eq:ssc-obj} when both ordered pairs of a symmetric $W$ are stored yields $(S+2\gamma\widetilde L)G=SF$. Algorithm~1 line~10 replaces $\widetilde L$ by $\widetilde W$ and $F$ by $X$. Those three formulae are not the same. Variant E8 is our reconstruction of \eqref{eq:ssc-obj}; it is not a claim about the authors' historical binary. An existing $n{=}6$ chain check is consistent with the split: E8 matches \eqref{eq:ssc-obj} at the printed $\gamma$ (max $|G|$ gap $1.17{\times}10^{-5}$); printed Equation~(13) matches the $\gamma/2$ instance (max $|G|$ gap $2.33{\times}10^{-5}$). We do not execute line~10.
 
-Table~\ref{tab:main} is the only main-text comparison. Paper columns quote Chang et al.\ and are labelled historical only. Our SC and E8 cells are the $n{=}50$ strict-paper runs, not Round~2 pilots with YaleB $n{=}10$ or USPS $n{=}3$.
+Several choices are unnamed. The bandwidth $\delta$, the initializer $G_0$, whether undirected edges are the union or the intersection of directed $k$NN, and the $32{\times}32$ interpolation kernel are undefined. LDA-SC is named but not specified. Pattern shrinking is cited as SPLS \citep{hou2013learning}; we did not obtain Section~3 of that paper. ``Best objective'' and a table of mean$\pm$std are not one protocol.
+
+The problem statement is clear, the objective is writable, and the method sits next to the course treatment of graph Laplacians and Lloyd $K$-means. Those are strengths of the paper as written. A lower ACC in our reconstruction is not, by itself, a proof that the 2015 numbers are wrong.
+
+\section{Insights and proposed extension}
+
+The one planned extension replaces union $k$NN $W$ on $F$ by mutual (AND) $k$NN, with the same Gaussian weights frozen before IRLS \citep{brito1997connectivity,maier2009optimal}. Convexity of \eqref{eq:ssc-obj} is unchanged; no new method and no new theorem are claimed. On JAFFE at $\gamma{=}1$, $k{=}5$, $n{=}50$, mutual E8 ACC is $68.4{\pm}11.2$ versus union E8 $68.4{\pm}11.1$ (410 vs.\ 655 edges; 20 vs.\ 9 components). The outcome is negative or neutral. The useful observation is that whether shrinkage helps depends on the embedding graph and on $\gamma$, not on the slogan that a more convex subproblem must cluster better.
+
+\section{Reproduction}
+
+No author code is available. We rebuild SSC from the printed equations and tag unspecified choices as A/B/C. Datasets with a completed $n{=}50$ protocol are AT\&T ORL resized bilinearly to $32{\times}32$ (\texttt{att92}) \citep{samaria1994parameterisation}, verified Zenodo JAFFE resized to $26{\times}26$ \citep{lyons1998coding,lyons2025jaffe}, CroppedYale 2414 non-ambient images resized bilinearly to $32{\times}32$ (\texttt{cropped2414}) \citep{georghiades2001from,lee2005acquiring}, and LIBSVM USPS \citep{hull1994database}. Shared graph: Equation~(4), $k{=}5$, union $k$NN, median directed bandwidth, raw eigenvectors. Primary SSC cell: E8, $\gamma{=}1$ frozen without labels, $G_0{=}F$, IRLS budget 300, $K$-means \texttt{init="random"}, $n_{\mathrm{init}}{=}1$, seeds $0{\ldots}49$ on one $F$ and one $G$. ACC is Hungarian matching \citep{munkres1957algorithms}; NMI is the Strehl--Ghosh geometric mean \citep{strehl2002cluster}. Code: \url{https://github.com/SelinaMai-SYM/COMP-3314-G23.git} branch \texttt{v1}. Records: \texttt{results/strict\_reproduction\_matrix.csv} and \texttt{docs/final\_round/}.
+
+Table~\ref{tab:main} quotes the paper columns as historical only and places our SC and E8 $\gamma{=}1$ cells beside them.
 
 \begin{table}[t]
   \caption{Hungarian ACC and geometric NMI (\%). Paper cells are reported in Chang et al.\ (2015), historical only. Our SC and E8 $\gamma{=}1$ are $n{=}50$ from \texttt{strict\_reproduction\_matrix.csv}. $k$-means++ and row-norm are not in this table.}
@@ -73,39 +89,9 @@ Table~\ref{tab:main} is the only main-text comparison. Paper columns quote Chang
   \input{tables/final_main}
 \end{table}
 
-\section{Critique}
+AR was not downloaded. UMIST archives yield 565 unique cropped images, not 564 \citep{graham1998characterising}. MSRA50 was not found. SPLS stays \texttt{NOT\_IMPLEMENTED}. Those names are not filled as \texttt{EXACT}. Cropped2414 and Deng Cai are both $2414{\times}1024$ with the same class counts, but the best alignment has median L2 $1.92$ and no image coincides at $10^{-8}$; $K$-means$(F)$ ACC is $0.1834$ (cropped) vs.\ $0.2016$ (Deng Cai) against published SC $34.8\%$. The YaleB gap is already present in $K$-means on $F$. Paired $\Delta$ACC ${=}{}$ACC$(G){-}$ACC$(F)$ at E8 $\gamma{=}1$, same 50 seeds, 95\% bootstrap CI reflecting only $K$-means noise on one fixed $(F,G)$: ORL random ${+}0.0109$ $[+0.0030,+0.0187]$; JAFFE random $-0.0009$ (CI contains 0); YaleB random $-0.0072$ $[-0.0097,-0.0048]$; USPS random $-0.0004$ (CI contains 0). Only ORL's interval lies above zero, by about one percentage point; YaleB's interval lies below zero. Shrinkage does not stably help.
 
-\paragraph{Convexity is not clustering quality.}
-Equation~(8) is convex in $G$ given fixed $F,W$. That does not certify a unique clustering metric. On three real-data solves that had not met the step rule at 300 iterations (ORL $\gamma{=}1$, YaleB $\gamma{=}1$, USPS $\gamma{=}1000$), continuing until the rule fires (825/359/355 steps; 2000 identical) changes the objective by $2.5{\times}10^{-5}$, $1.3{\times}10^{-5}$, and $6{\times}10^{-6}$. ACC goes $0.57265{\to}0.57135$ (ORL, down), $0.17622{\to}0.17614$, and $0.73687{\to}0.73861$. After the step-size stop, the linear residual is still $0.002/0.171/0.058$. That residual is not a global-opt certificate. Extra IRLS past 300 does not account for the table gaps.
-
-\paragraph{The gap is already in $K$-means on $F$.}
-Table~\ref{tab:main} SC sits below published SC before any shrinkage: ORL $56.2$ vs $72.7$, JAFFE $68.5$ vs $76.1$, YaleB $18.3$ vs $34.8$, USPS $61.7$ vs $64.3$. Paired $\Delta$ACC ${=}{}$ACC$(G){-}$ACC$(F)$ at E8 $\gamma{=}1$, same 50 seeds, 95\% bootstrap CI reflecting only $K$-means noise on one fixed $(F,G)$: ORL random ${+}0.0109$ $[+0.0030,+0.0187]$; JAFFE random $-0.0009$ (CI contains 0); YaleB random $-0.0072$ $[-0.0097,-0.0048]$; USPS random $-0.0004$ (CI contains 0). Only ORL's interval lies above zero, by about one percentage point. YaleB's interval lies below zero.
-
-\paragraph{Shrinkage almost never helps at protocol $\gamma{=}1$.}
-On the saved five-point grid, larger $\gamma$ lowers TV$(G)$ under the ordered-pair sum, but a larger TV drop is not higher ACC. YaleB ACC falls monotonically as $\gamma$ grows ($0.1834$, $0.1762$, $0.1705$, $0.1289$). USPS is flat at $\gamma{=}1$ ($0.6170$), higher at $\gamma{=}1000$ ($0.7369$), and collapses at $\gamma{=}10^{6}$ ($0.3881$). That $\gamma{=}1000$ cell was not chosen by maximizing ACC and is not ``the'' reproduced USPS number. The paper's text already treats USPS as an exception to $\gamma{=}1$. We do not select $\gamma$ by ACC, and we do not conclude that the paper is wrong because our ACC is lower.
-
-\paragraph{YaleB data versions.}
-Cropped2414 and Deng Cai are both $2414{\times}1024$, 38 classes, pixels in $[0,1]$, with the same per-class counts. Best alignment (transpose) has median L2 $1.92$; zero images coincide at $10^{-8}$. Under the identical graph rule and seeds, $K$-means$(F)$ ACC is $0.1834$ (cropped) vs $0.2016$ (Deng Cai). Published SC is $34.8\%$. The version gap does not explain that distance. Bandwidth, symmetrization, row-norm, and interpolation are B or C; the highest ACC among them is not adopted as the paper method.
-
-\paragraph{$k$-means++ is a Level C diagnostic.}
-Under $k$-means++, paired $\Delta$ACC at $\gamma{=}1$ is ${+}0.0006$ on ORL (CI contains 0) and remains negative on YaleB ($-0.0023$, CI below 0). The initializer lifts ORL $K$-means$(F)$ from $0.562$ to $0.783$ and JAFFE from $0.685$ to $0.953$. JAFFE ${+}{+}$ exceeds published SSC $81.2\%$, so ``they must have used ${+}{+}$'' does not fit every dataset. YaleB ${+}{+}$ reaches only $0.218$, far from $34.8\%$. These arms are not the paper method and are not a reproduction of the table gap.
-
-\section{Existing mutual-kNN extension}
-
-The one planned extension replaces union kNN $W$ on $F$ by mutual (AND) kNN with the same Gaussian weights frozen before IRLS \citep{brito1997connectivity,maier2009optimal}. Convexity of \eqref{eq:ssc-obj} is unchanged; no new method and no new theorem are claimed. On JAFFE at $\gamma{=}1$, $k{=}5$, $n{=}50$, mutual E8 ACC is $68.4{\pm}11.2$ versus union E8 $68.4{\pm}11.1$ (410 vs 655 edges; 20 vs 9 components). The outcome is negative/neutral, not a win, and it does not close the table gaps.
-
-\section{Conclusion}
-\label{sec:conclusion}
-
-\textbf{CONFIRMED.} On the $n{=}6$ chain already in the test suite, E8 matches Equation~(8) at the printed $\gamma$ and E13 matches $\gamma/2$. ACC is Hungarian; NMI is geometric. The $n{=}50$ cells use seeds $0{\ldots}49$ on one $F$ (and one $G$).
-
-\textbf{SUPPORTED.} At E8 $\gamma{=}1$, shrinkage is not a reliable ACC improvement over SC on these four reconstructions. ORL random init is a small positive exception; YaleB is negative. Greater shrinkage is not monotone in ACC. Finishing the IRLS step rule after iteration 300 does not raise ACC in any substantial way. Deng Cai versus cropped2414 moves YaleB SC by about $1.8$ points, not from $18\%$ to $35\%$. The large YaleB gap is already in $K$-means on $F$.
-
-\textbf{UNRESOLVED.} The authors' linear system (line~10, Equation~13, or E8); $\delta$, union versus mutual, and the $32{\times}32$ kernel; which YaleB pixels and which ORL files were resized; the $\gamma$ behind each Table~1 SSC entry; whether printed $\pm$ is 50 $K$-means trials on one $G$ or 50 full SSC solves. AR, UMIST-564, BinAlpha as a paper identity, MSRA50, and SPLS are not reproduced. $k$-means++ does not explain the published gap as a reproduction. This project is not marked fully reproduced.
-
-\begin{ack}
-HKU COMP3314 course report. No external funding is claimed. Names and emails require confirmation. Code is intended for \url{https://github.com/SelinaMai-SYM/COMP-3314-G23.git} on branch \texttt{v1}.
-\end{ack}
+Chang et al.\ give a clear two-stage diagnosis and a writable shrinkage objective. The convexity claim applies to $G$ given $F,W$, not to clustering quality, and the printed linear updates are not unique. On the four reconstructions we could run, the published SC${\to}$SSC table is not reproduced. The project is not marked fully reproduced.
 
 \bibliographystyle{unsrtnat}
 \bibliography{references}

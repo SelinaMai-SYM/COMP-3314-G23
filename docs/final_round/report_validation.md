@@ -1,37 +1,40 @@
 # Report compile validation
 
-Compiled from `report/main.tex` with `latexmk -pdf -interaction=nonstopmode` in `report/` on 2026-10-30. Style: `\usepackage[preprint]{neurips_2026}`. `neurips_2026.sty` was not edited. `checklist.tex` is on disk and is **not** `\input`.
+Compiled from `report/main.tex` with `latexmk -pdf -interaction=nonstopmode` in `report/` on 2026-11-01. Style: `\usepackage[preprint]{neurips_2026}`. `neurips_2026.sty` was not edited. `checklist.tex` is on disk and is **not** `\input`.
 
 ## PDF identity
 
 | File | Bytes | SHA-256 |
 | --- | --- | --- |
-| `report/main.pdf` | 229264 | `c33304078bc4a8144d4630406e6fd0f420b9b34790910247973f905b5ae99853` |
-| `report/Group_23.pdf` | 229264 | `c33304078bc4a8144d4630406e6fd0f420b9b34790910247973f905b5ae99853` |
+| `report/main.pdf` | 225660 | `3dfe349b87987bc35c6e4f363a43c9f9d4ef9829fde9fcf3dab9c8bb2ac5f5a2` |
+| `report/Group_23.pdf` | 225660 | `3dfe349b87987bc35c6e4f363a43c9f9d4ef9829fde9fcf3dab9c8bb2ac5f5a2` |
 
 `cmp` reports the two files identical. `Group_23.pdf` is a byte copy of `main.pdf`.
 
 ## Page count (`pdfinfo`)
 
 - Pages: **5** (letter, 612 × 792 pts)
-- Main text (title through Section 7 Conclusion): **pages 1–4**
-- Acknowledgments start on page 4 after the conclusion
-- References continue onto page 5
+- Main text (title through Section 6 Reproduction): **pages 1–3**
+- References start on page 4 and continue onto page 5
+- No acknowledgments environment
 - No appendix
 - No NeurIPS checklist pages
 
-`pdftotext -layout -f 4 -l 4` begins with `7 Conclusion` and contains CONFIRMED / SUPPORTED / UNRESOLVED. Page 5 is remaining bibliography only. `pdftotext` of the whole PDF has no `NeurIPS Paper Checklist` and no `answerYes`.
+`pdftotext -layout -f 3 -l 3` ends with the last paragraph of Section 6 (`The project is not marked fully reproduced.`). `pdftotext -layout -f 4 -l 5` is bibliography only. `pdftotext` of the whole PDF has no `NeurIPS Paper Checklist` and no `answerYes`.
 
 ## Overfull / Underfull
 
-`rg Overfull main.log` and `rg Underfull main.log`: **no matches**.
+`rg Overfull main.log`: **no matches**.
 
-## Title and authors
+`rg Underfull main.log`: one `Underfull \vbox (badness 10000)` on page 3, after the last main-text paragraph and before references begin on page 4. Not an Overfull hbox.
 
-- Title: When Does Spectral Shrinkage Improve Clustering? A Reproduction and Failure Analysis of SSC
+## Title, authors, and six sections
+
+- Title: A Paper Study of Spectral Shrunk Clustering
 - Authors: Group 23, Department of Computer Science, The University of Hong Kong, COMP3314 Machine Learning
 - Names and emails: not invented; footnote says they require confirmation
 - Footer: Preprint (neurips_2026 preprint option)
+- Sections: (1) Problem formulation, motivation, and contributions; (2) Methods, algorithms, and course connections; (3) Experimental setup and results reported in the paper; (4) Critical analysis; (5) Insights and proposed extension; (6) Reproduction
 
 ## Main table
 

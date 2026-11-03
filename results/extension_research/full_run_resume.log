@@ -1,0 +1,16 @@
+resume 344 rows
+load ORL att92
+skip complete ORL att92
+load JAFFE zenodo
+skip complete JAFFE zenodo
+load YaleB cropped2414
+skip complete YaleB cropped2414
+load YaleB dengcai32
+skip complete YaleB dengcai32
+load USPS libsvm
+embeddings 2.21s n=9298 c=10
+FAILED USPS e06 default fit exceeded 180s
+FAILED USPS e08 default fit exceeded 180s
+FAILED USPS e09 default fit exceeded 180s
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 3 leaked semaphore objects to clean up at shutdown: {'/loky-33856-zw03hi55', '/loky-33856-qvet1wqr', '/loky-33856-djbp1vbb'}
+  warnings.warn(

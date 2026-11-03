@@ -1,0 +1,47 @@
+{
+  "run_id": "20261103_151111__EXT__USPS__libsvm__e03__AW__g1e+00__bb07ba56",
+  "metadata_version": null,
+  "metadata_checksum_field": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "sc_acc": [
+    0.6616476661647667,
+    0.6938051193805119,
+    0.6653043665304367
+  ],
+  "sc_nmi": [
+    0.7488506509271214,
+    0.7691350059907927,
+    0.812373885245564
+  ],
+  "ssc_acc": [
+    0.5358141535814154,
+    0.694557969455797,
+    0.6655194665519466
+  ],
+  "ssc_nmi": [
+    0.6982802211720094,
+    0.77216623977897,
+    0.8136515810215232
+  ],
+  "status": "CONVERGED",
+  "info": {
+    "local_scale_target": "AW",
+    "graph": {
+      "k": 5,
+      "delta2": null,
+      "delta": null,
+      "delta2_source": "self_tuning_zelnik_manor",
+      "bandwidth_rule": "self_tuning_zelnik_manor",
+      "symmetrization": "union_maximum",
+      "knn_method": "block",
+      "local_scale_min": 0.0005255687713592852,
+      "local_scale_median": 0.0018365639419637364,
+      "local_scale_max": 0.013125164356806255
+    },
+    "embed": {},
+    "changes": "local_scale_AW"
+  },
+  "eligibility": "VERIFIED_SOURCE"
+}

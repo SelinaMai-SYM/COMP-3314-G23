@@ -1,0 +1,44 @@
+{
+  "run_id": "20261103_151111__EXT__YaleB__cropped2414__e03__W__g1e+00__723f2d40",
+  "metadata_version": "cropped2414",
+  "metadata_checksum_field": "8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573",
+  "sc_acc": [
+    0.17771333885666943,
+    0.17149958574979288,
+    0.20381110190555096
+  ],
+  "sc_nmi": [
+    0.2655940264380164,
+    0.25718713084955613,
+    0.27118112559228863
+  ],
+  "ssc_acc": [
+    0.16528583264291632,
+    0.15658657829328915,
+    0.18931234465617233
+  ],
+  "ssc_nmi": [
+    0.25762622166544075,
+    0.24456825442047378,
+    0.2647299294027685
+  ],
+  "status": "CONVERGED",
+  "info": {
+    "local_scale_target": "W",
+    "graph": {
+      "k": 5,
+      "delta2": null,
+      "delta": null,
+      "delta2_source": "self_tuning_zelnik_manor",
+      "bandwidth_rule": "self_tuning_zelnik_manor",
+      "symmetrization": "union_maximum",
+      "knn_method": "block",
+      "local_scale_min": 0.005861972603534736,
+      "local_scale_median": 0.023733530273013226,
+      "local_scale_max": 0.10276146825008511
+    },
+    "embed": {},
+    "changes": "local_scale_W"
+  },
+  "eligibility": "PRIMARY_YALEB_VERSION"
+}

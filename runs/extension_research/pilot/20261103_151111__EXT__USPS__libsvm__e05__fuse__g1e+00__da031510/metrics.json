@@ -1,0 +1,34 @@
+{
+  "run_id": "20261103_151111__EXT__USPS__libsvm__e05__fuse__g1e+00__da031510",
+  "metadata_version": null,
+  "metadata_checksum_field": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "sc_acc": [
+    0.6215315121531512,
+    0.6549795654979566,
+    0.6372338137233814
+  ],
+  "sc_nmi": [
+    0.7323109687073744,
+    0.8100040041345542,
+    0.7809936913782193
+  ],
+  "ssc_acc": [
+    0.5495805549580555,
+    0.5746397074639708,
+    0.6448698644869865
+  ],
+  "ssc_nmi": [
+    0.7135485733565424,
+    0.7243181636570615,
+    0.7871679516451549
+  ],
+  "status": "CONVERGED",
+  "info": {
+    "fuse_lambda": 0.5,
+    "pixel_graph_assumed_reliable": false
+  },
+  "eligibility": "VERIFIED_SOURCE"
+}

@@ -31,3 +31,6 @@ report/*.bbl
 runs/strict_repro/**/*.npy
 runs/strict_paper/**/*.npy
 runs/final_round/**/*.npy
+runs/extension_research/**/*.npy
+runs/extension_research/**/*.npz
+runs/extension_research/cache/

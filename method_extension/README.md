@@ -38,3 +38,7 @@ Same \(F\) as union E8. Mutual E8 ACC **68.4±11.2** vs union E8 **68.4±11.1**
 (410 vs 655 edges; 20 vs 9 components). Negative: no ACC gain.
 Run: `20261021_161924__ROUND2__JAFFE__EXT_JAFFE_MUTUAL_KNN__45fd1c1f`.
 Union control: `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7`.
+
+## E01–E09
+
+Later extensions live in `method_extension/e01` through `method_extension/e09`. They do not replace this mutual-kNN module or its saved runs. The primary control for those experiments is original E8 (`variant="E8"`, Laplacian coefficient 2), not the E13 default and not this mutual-kNN ablation.

@@ -1,0 +1,36 @@
+# Primary gamma=1 protocol. Seeds and K-means settings are predetermined.
+gamma: 1.0
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+n_init: 1
+algorithm: lloyd
+max_iter: 300
+tol: 1.0e-4
+variant: E8
+laplacian_coefficient: 2
+k: 5
+g_init: F
+protocols:
+  - id: P1
+    name: RANDOM_MEAN50
+    initialization_label: RANDOM
+    init: random
+    selection: MEAN_OF_TRIALS
+  - id: P2
+    name: RANDOM_BEST_INERTIA50
+    initialization_label: RANDOM
+    init: random
+    selection: MIN_INERTIA
+    reuses: P1
+  - id: P3
+    name: KMEANSPP_MEAN50
+    initialization_label: SKLEARN_GREEDY_KMEANSPP
+    init: k-means++
+    selection: MEAN_OF_TRIALS
+  - id: P4
+    name: KMEANSPP_BEST_INERTIA50
+    initialization_label: SKLEARN_GREEDY_KMEANSPP
+    init: k-means++
+    selection: MIN_INERTIA
+    reuses: P3
+label_informed_selection: false
+compare_inertia_across_F_and_G: false

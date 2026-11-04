@@ -34,3 +34,7 @@ runs/final_round/**/*.npy
 runs/extension_research/**/*.npy
 runs/extension_research/**/*.npz
 runs/extension_research/cache/
+# v2 stores scalar trial tables and selected solutions.
+# Embedding caches and full assignment archives stay local.
+runs/v2_kmeans_protocol/cache/
+runs/v2_kmeans_protocol/arrays/

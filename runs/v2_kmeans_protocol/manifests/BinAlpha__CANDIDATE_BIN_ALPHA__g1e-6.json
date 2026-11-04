@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": "SOLVER_CONVERGED_NOT_A_PAPER_CERTIFICATE",
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "3f88f9e78b3871f1db506d03a936f1d933077c1456de306d3de822a5ad86f9bc",
+  "converged": true,
+  "dataset_key": "BinAlpha__CANDIDATE_BIN_ALPHA",
+  "dataset_sha256": "1285468bf651aa2b74c3c1d0c9cad00adb1e127acb6963fc24550c840c524850",
+  "embed_seconds": 0.031817167066037655,
+  "equation8_objective": 7.72774137682989e-05,
+  "f_sha256": "a0ceea5ae6649b5d059b6ce562e575767f6d27eeef8c89901365e9a1e894438a",
+  "fixed_point_residual": 3.1403642255421805e-08,
+  "g_init": "F",
+  "g_sha256": "6481baf50ca741e094ec03b5dc968363a6e08e9da77e5cc01fa8b8da6d82ae57",
+  "gamma": 1e-06,
+  "gamma_token": "1e-6",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 26,
+  "n_iterations": 3,
+  "shape_f": [
+    780,
+    26
+  ],
+  "shape_g": [
+    780,
+    26
+  ],
+  "shrink_seconds": 0.11469316715374589,
+  "solver_status": "CONVERGED n_iter=3",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

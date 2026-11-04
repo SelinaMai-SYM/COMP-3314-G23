@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": false,
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "ca27eba69d233c6377d06cd027fd8007378c21dab423db7bdd39be2c13185865",
+  "converged": false,
+  "dataset_key": "UMIST__precropped575",
+  "dataset_sha256": "129e0fa555326865f889e25065c26f60334ac3e88def3897693d95803a9b172e",
+  "embed_seconds": 0.06491208309307694,
+  "equation8_objective": 44.1786467670975,
+  "f_sha256": "2e77b2c8aba40be74d598b320768cd76aab544f3093beafce69d1b35847c5af8",
+  "fixed_point_residual": 0.13325313595557597,
+  "g_init": "F",
+  "g_sha256": "105d356058d239da169ac14cb9bcf53eb28d3d4472d4919551368245af88fa5d",
+  "gamma": 1000000.0,
+  "gamma_token": "1e6",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 20,
+  "n_iterations": 300,
+  "shape_f": [
+    575,
+    20
+  ],
+  "shape_g": [
+    575,
+    20
+  ],
+  "shrink_seconds": 0.5526952077634633,
+  "solver_status": "NONCONVERGED_RETURNED_ITERATE n_iter=300 max_iter=300 NOT_CERTIFIED_GLOBAL_OPTIMUM",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

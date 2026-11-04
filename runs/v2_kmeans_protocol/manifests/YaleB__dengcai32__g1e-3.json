@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": "SOLVER_CONVERGED_NOT_A_PAPER_CERTIFICATE",
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "893ef82c781ad1bf91a88c8594de10ecaf0a8fe3ca4cdb7d5b23bb44a0826689",
+  "converged": true,
+  "dataset_key": "YaleB__dengcai32",
+  "dataset_sha256": "e5242f52a7cb2197d1915b47910dd7f78e71bdcda5d42d031135482b3e3a7a1c",
+  "embed_seconds": 0.1377406669780612,
+  "equation8_objective": 0.06695571493792396,
+  "f_sha256": "75eb8b9bdda6ca06949f463aa5a67a00cd966f89d1697feb8b55cf7c4d3cd3fe",
+  "fixed_point_residual": 0.14369594395322688,
+  "g_init": "F",
+  "g_sha256": "838174cb517e19cc5b0ac7d6484144a358f69aeeee33e9616b07d93390e4df70",
+  "gamma": 0.001,
+  "gamma_token": "1e-3",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 38,
+  "n_iterations": 4,
+  "shape_f": [
+    2414,
+    38
+  ],
+  "shape_g": [
+    2414,
+    38
+  ],
+  "shrink_seconds": 0.08229820895940065,
+  "solver_status": "CONVERGED n_iter=4",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

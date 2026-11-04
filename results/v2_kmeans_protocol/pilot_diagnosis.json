@@ -1,0 +1,38 @@
+{
+  "paper_trace_problems": [],
+  "datasets": [
+    {
+      "benchmark": "ORL",
+      "dataset_version": "att92",
+      "reference_present": true,
+      "n_mismatched_seeds": 0,
+      "matches_v1_random_lloyd": true,
+      "mismatch_preview": [],
+      "our_g_acc_mean": 0.5726499999999999,
+      "v1_g_acc_mean": 0.5726499999999999,
+      "our_f_acc_mean": 0.5618,
+      "v1_f_acc_mean": 0.5618,
+      "prepare_ssc_family": {
+        "skipped": true,
+        "reason": "per-seed v1 metrics already match"
+      }
+    },
+    {
+      "benchmark": "JAFFE",
+      "dataset_version": "zenodo",
+      "reference_present": true,
+      "n_mismatched_seeds": 0,
+      "matches_v1_random_lloyd": true,
+      "mismatch_preview": [],
+      "our_g_acc_mean": 0.684319248826291,
+      "v1_g_acc_mean": 0.684319248826291,
+      "our_f_acc_mean": 0.6852582159624413,
+      "v1_f_acc_mean": 0.6852582159624413,
+      "prepare_ssc_family": {
+        "skipped": true,
+        "reason": "per-seed v1 metrics already match"
+      }
+    }
+  ],
+  "all_v1_p1_match": true
+}

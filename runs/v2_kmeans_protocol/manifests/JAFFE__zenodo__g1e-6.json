@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": "SOLVER_CONVERGED_NOT_A_PAPER_CERTIFICATE",
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "3f88f9e78b3871f1db506d03a936f1d933077c1456de306d3de822a5ad86f9bc",
+  "converged": true,
+  "dataset_key": "JAFFE__zenodo",
+  "dataset_sha256": "aa6cc712dd1efe37f9df57572ee2a10b648c7e43c2c16ae57a3d26cb83093a31",
+  "embed_seconds": 0.004618583247065544,
+  "equation8_objective": 2.8119419658990855e-06,
+  "f_sha256": "548dc5491152860e4a746b5ef07e7c35a22fb84c82b66aa070924399b5586f7b",
+  "fixed_point_residual": 2.131881632767156e-08,
+  "g_init": "F",
+  "g_sha256": "c40950828ff8f4612ee8be1557bebe7dbed47e2801c9e3152de1b425127bb3c1",
+  "gamma": 1e-06,
+  "gamma_token": "1e-6",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 10,
+  "n_iterations": 3,
+  "shape_f": [
+    213,
+    10
+  ],
+  "shape_g": [
+    213,
+    10
+  ],
+  "shrink_seconds": 0.004845332819968462,
+  "solver_status": "CONVERGED n_iter=3",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

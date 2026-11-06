@@ -40,6 +40,12 @@ def load_dataset(root: Path | None = None, version: str | None = None):
         return _load_precropped(root)
     if version == "figshare575":
         return _load_figshare(root)
+    if version == "lzuf574":
+        return _load_lzuf574()
+    if version == "zenodo3634017":
+        return _load_zenodo3634017()
+    if version == "roweis575":
+        return _load_roweis575()
     if version == "uncropped1012":
         raise DatasetUnavailable(
             "UMIST",
@@ -50,7 +56,7 @@ def load_dataset(root: Path | None = None, version: str | None = None):
     raise ValueError(
         "unknown UMIST version "
         f"{version!r}; known versions: sheffield564, precropped575, "
-        "figshare575, uncropped1012"
+        "figshare575, uncropped1012, lzuf574, zenodo3634017, roweis575"
     )
 
 
@@ -166,3 +172,99 @@ def _load_figshare(root: Path | None):
         "figshare_article": "https://api.figshare.com/v2/articles/33130868",
     }
     return x, y, metadata
+
+
+def _load_named_matrix(path: Path, version: str, source_url: str, expected_shape: tuple[int, int]):
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    payload = loadmat(path)
+    feature_key = "XX" if "XX" in payload else "X"
+    label_key = "YY" if "YY" in payload else "Y"
+    features = np.asarray(payload[feature_key], dtype=np.float64)
+    raw_labels = np.asarray(payload[label_key]).reshape(-1)
+    if features.shape != expected_shape:
+        raise ValueError(f"{version} shape {features.shape} != {expected_shape}")
+    labels = as_int_labels(raw_labels.astype(np.int64) - int(raw_labels.min()), features.shape[0])
+    matrix = as_float_matrix(features)
+    metadata = {
+        "dataset_name": "UMIST",
+        "version": version,
+        "verification_status": "NON_EXACT_DIAGNOSTIC",
+        "counts_as_historical": False,
+        "not_exact_564": True,
+        "source_url": source_url,
+        "archive_path": str(path),
+        "n": int(features.shape[0]),
+        "number_of_classes": int(len(np.unique(labels))),
+        "processed_feature_dimension": int(features.shape[1]),
+        "sample_selection_method": "entire downloaded matrix; no rows were removed to force 564",
+        "label_mapping": "stored labels shifted so the smallest code is 0",
+    }
+    if "im_height" in payload:
+        metadata["im_height"] = int(np.asarray(payload["im_height"]).reshape(-1)[0])
+        metadata["im_width"] = int(np.asarray(payload["im_width"]).reshape(-1)[0])
+    return matrix, labels, metadata
+
+
+def _load_lzuf574():
+    path = Path(__file__).resolve().parent / "resources" / "private" / "lzuf_umist.mat"
+    return _load_named_matrix(
+        path,
+        "lzuf574",
+        "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/umist.mat",
+        (574, 10304),
+    )
+
+
+def _load_zenodo3634017():
+    path = Path(__file__).resolve().parent / "resources" / "private" / "zenodo3634017_umist.mat"
+    return _load_named_matrix(
+        path,
+        "zenodo3634017",
+        "https://zenodo.org/records/3634017/files/umist.mat?download=1",
+        (575, 644),
+    )
+
+
+def _load_roweis575():
+    path = Path(__file__).resolve().parent / "resources" / "private" / "roweis_umist_cropped.mat"
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    payload = loadmat(path)
+    facedat = payload["facedat"]
+    images = []
+    labels = []
+    for person in range(facedat.shape[1]):
+        cell = np.asarray(facedat[0, person])
+        if cell.shape[0] != 112 or cell.shape[1] != 92:
+            raise ValueError(f"unexpected Roweis cell {cell.shape}")
+        for index in range(cell.shape[2]):
+            images.append(cell[:, :, index])
+            labels.append(person)
+    stack = np.stack(images, axis=0)
+    if stack.shape != (575, 112, 92):
+        raise ValueError(f"unexpected Roweis stack {stack.shape}")
+    matrix = as_float_matrix(stack.astype(np.float64).reshape(575, -1) / 255.0)
+    y = as_int_labels(np.asarray(labels), matrix.shape[0])
+    names = []
+    for item in np.asarray(payload["dirnames"]).reshape(-1):
+        names.append("".join(np.asarray(item).astype(str).reshape(-1).tolist()))
+    metadata = {
+        "dataset_name": "UMIST",
+        "version": "roweis575",
+        "verification_status": "NON_EXACT_UMIST575",
+        "counts_as_historical": False,
+        "not_exact_564": True,
+        "source_url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat",
+        "archive_path": str(path),
+        "n": 575,
+        "number_of_classes": 20,
+        "original_spatial_size": [112, 92],
+        "processed_feature_dimension": 112 * 92,
+        "directory_names": names,
+        "sample_selection_method": (
+            "all 575 slices in facedat. The NYU page calls this 575 images of 20 people. "
+            "It is not the 564-image SSC set, and its pixels do not match the wayback cropped 575."
+        ),
+    }
+    return matrix, y, metadata

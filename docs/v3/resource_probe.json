@@ -1,0 +1,2287 @@
+{
+  "data_root": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks",
+  "n_historical_cells": 72,
+  "n_executable_cells": 32,
+  "datasets": [
+    {
+      "dataset_id": "AR",
+      "historical_benchmark": "AR",
+      "counts_as_historical": true,
+      "version": null,
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/ar/data",
+      "role": "historical_blocked",
+      "available": false,
+      "blocker": "BLOCKED_DATA",
+      "reason": "AR is unavailable: Chang et al. name AR as 840 faces of 120 people and do not say which 840. Official Martinez distribution was not obtained. A THIRD-PARTY zip ARDB_Full.zip from Zenodo 19683234 (uploader Manu shree, not Martinez/OSU) was downloaded on 2026-10-21: 120587997 bytes, MD5 bb97bd9237680744c0c7268624696263 (matches the published Zenodo checksum), SHA-256 32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438. The zip is PKZIP, not HTML. It contains 100 folders s1-s100 with 120x165 BMP files named 1.bmp..26.bmp, not official M-xx-yy.raw / F-xx-yy.raw names. No archive document states an 840/120 or 7-image rule, so that subset was not invented. Status: SOURCE_RECOVERED_SUBSET_UNVERIFIED. Default load_dataset('AR') does not claim EXACT. See benchmarks/ar/README.md."
+    },
+    {
+      "dataset_id": "JAFFE",
+      "historical_benchmark": "JAFFE",
+      "counts_as_historical": true,
+      "version": "zenodo",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/jaffe/data",
+      "role": "historical_primary",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "JAFFE",
+        "verification_status": "verified",
+        "source_url": "https://zenodo.org/records/14974867",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/jaffe/data/jaffe.zip",
+        "SHA256_checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+        "n": 213,
+        "number_of_classes": 10,
+        "original_feature_dimension": 65536,
+        "processed_feature_dimension": 676,
+        "original_spatial_size": [
+          256,
+          256
+        ],
+        "processed_spatial_size": [
+          26,
+          26
+        ],
+        "subject_codes": {
+          "KA": 0,
+          "KL": 1,
+          "KM": 2,
+          "KR": 3,
+          "MK": 4,
+          "NA": 5,
+          "NM": 6,
+          "TM": 7,
+          "UY": 8,
+          "YM": 9
+        },
+        "palette_mode_images": 23,
+        "preprocessing_operations": [
+          "convert each TIFF to 8-bit grayscale",
+          "resize uint8 image from 256x256 to 26x26 with PIL bilinear",
+          "divide by 255",
+          "vectorize in C order"
+        ],
+        "sample_selection_method": "all 213 TIFFs in jaffe.zip, sorted by filename",
+        "random_seed": "unknown",
+        "redistribution": "forbidden by the Zenodo/JAFFE conditions of use"
+      },
+      "n_samples": 213,
+      "n_features": 676,
+      "n_classes": 10,
+      "fingerprint": {
+        "x_sha256": "d52a2533ad2a7bfbfddc5f8dccce40c3fc5ad2fb41bebab7489a3a762fbd2e1f",
+        "x_shape": [
+          213,
+          676
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "21145571f4cca89182f7eecfa06b9aeda5b9d2fb13b6c3bd207d37d236fd7983",
+        "y_shape": [
+          213
+        ]
+      },
+      "class_counts": {
+        "0": 23,
+        "1": 22,
+        "2": 22,
+        "3": 20,
+        "4": 21,
+        "5": 21,
+        "6": 20,
+        "7": 21,
+        "8": 21,
+        "9": 22
+      }
+    },
+    {
+      "dataset_id": "ORL_att92",
+      "historical_benchmark": "ORL",
+      "counts_as_historical": true,
+      "version": "att92",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/orl/data",
+      "role": "historical_primary",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "ORL",
+        "version": "att92",
+        "verification_status": "obtained",
+        "source_url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/orl/data/att92/att_faces.zip",
+        "processed_array_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/orl/data/att92/processed/orl_att92_32x32_bilinear_uint8.npy",
+        "SHA256_checksum": "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec",
+        "n": 400,
+        "number_of_classes": 40,
+        "original_feature_dimension": 10304,
+        "processed_feature_dimension": 1024,
+        "original_spatial_size": [
+          112,
+          92
+        ],
+        "processed_spatial_size": [
+          32,
+          32
+        ],
+        "interpolation": "bilinear",
+        "pixel_range_native_uint8": [
+          0,
+          251
+        ],
+        "orientation": "PGM header width 92, height 112. Saved native array is (400, 112, 92): axis 1 is file row (height), axis 2 is file column (width). No transpose was applied.",
+        "preprocessing_operations": [
+          "read AT&T PGM files in subject directory s1..s40 and image name 1.pgm..10.pgm",
+          "resize each uint8 image to 32x32 with PIL bilinear",
+          "divide by 255",
+          "vectorize in C order"
+        ],
+        "sample_selection_method": "all 400 PGM images; label = subject number minus 1",
+        "random_seed": "unknown",
+        "not_olivetti": "This release is 92x112 PGM. It is not the Olivetti 64x64 matrix used by load_dataset('ORL')."
+      },
+      "n_samples": 400,
+      "n_features": 1024,
+      "n_classes": 40,
+      "fingerprint": {
+        "x_sha256": "0049690af152377a19ceae4d5facbf28226c9d401dd5336d498246daf2f2923e",
+        "x_shape": [
+          400,
+          1024
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "ac06c330f67ebe5a89c9d305ee5c9a3ef3f4ba1b195adb1d482e93815446082a",
+        "y_shape": [
+          400
+        ]
+      },
+      "class_counts": {
+        "0": 10,
+        "1": 10,
+        "2": 10,
+        "3": 10,
+        "4": 10,
+        "5": 10,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 10,
+        "19": 10,
+        "20": 10,
+        "21": 10,
+        "22": 10,
+        "23": 10,
+        "24": 10,
+        "25": 10,
+        "26": 10,
+        "27": 10,
+        "28": 10,
+        "29": 10,
+        "30": 10,
+        "31": 10,
+        "32": 10,
+        "33": 10,
+        "34": 10,
+        "35": 10,
+        "36": 10,
+        "37": 10,
+        "38": 10,
+        "39": 10
+      }
+    },
+    {
+      "dataset_id": "UMIST_precropped575",
+      "historical_benchmark": "UMIST",
+      "counts_as_historical": false,
+      "version": "precropped575",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/umist/data",
+      "role": "supplemental_not_564",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "UMIST",
+        "version": "precropped575",
+        "verification_status": "approximate",
+        "source_url": "https://web.archive.org/web/20070805190146id_/http://images.ee.umist.ac.uk/danny/cropped.tar.gz",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/umist/data/wayback_sheffield/cropped_wayback_20070805.tar.gz",
+        "SHA256_checksum": "c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4",
+        "n": 575,
+        "number_of_classes": 20,
+        "original_feature_dimension": 10304,
+        "processed_feature_dimension": 10304,
+        "original_spatial_size": [
+          112,
+          92
+        ],
+        "pixel_range_native_uint8": [
+          0,
+          238
+        ],
+        "unique_pixel_arrays": 565,
+        "duplicate_filenames": 0,
+        "pixel_duplicate_pairs": [
+          [
+            "1b/face/1b014.pgm",
+            "1b/face/final00.pgm"
+          ],
+          [
+            "1b/face/1b016.pgm",
+            "1b/face/final01.pgm"
+          ],
+          [
+            "1b/face/1b024.pgm",
+            "1b/face/final02.pgm"
+          ],
+          [
+            "1b/face/1b032.pgm",
+            "1b/face/final03.pgm"
+          ],
+          [
+            "1b/face/1b038.pgm",
+            "1b/face/final04.pgm"
+          ],
+          [
+            "1b/face/1b040.pgm",
+            "1b/face/final05.pgm"
+          ],
+          [
+            "1b/face/1b048.pgm",
+            "1b/face/final06.pgm"
+          ],
+          [
+            "1b/face/1b056.pgm",
+            "1b/face/final07.pgm"
+          ],
+          [
+            "1b/face/1b064.pgm",
+            "1b/face/final08.pgm"
+          ],
+          [
+            "1b/face/1b072.pgm",
+            "1b/face/final09.pgm"
+          ]
+        ],
+        "preprocessing_operations": [
+          "read every PGM in the pre-cropped tar",
+          "sort by archive member name",
+          "divide by 255",
+          "vectorize in C order",
+          "no resize"
+        ],
+        "sample_selection_method": "all 575 cropped PGM files; this is not the 564-image count stated by Chang et al. and by the 2001 UMIST web page. Dropping the 10 pixel-identical final*.pgm copies yields 565, not 564. Eleven images were not dropped to force the paper count.",
+        "random_seed": "unknown",
+        "not_exact_564": true
+      },
+      "n_samples": 575,
+      "n_features": 10304,
+      "n_classes": 20,
+      "fingerprint": {
+        "x_sha256": "5b2284819f5833afa129147646dba68ddc0e4fd9739676ff3d8006c28f6d52b4",
+        "x_shape": [
+          575,
+          10304
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "8e67ad19ed89a3c5648b42a3f613ee38a42252764a68898062feb857fb8dbf05",
+        "y_shape": [
+          575
+        ]
+      },
+      "class_counts": {
+        "0": 38,
+        "1": 35,
+        "2": 26,
+        "3": 24,
+        "4": 26,
+        "5": 23,
+        "6": 19,
+        "7": 22,
+        "8": 20,
+        "9": 32,
+        "10": 34,
+        "11": 34,
+        "12": 26,
+        "13": 30,
+        "14": 19,
+        "15": 26,
+        "16": 26,
+        "17": 33,
+        "18": 48,
+        "19": 34
+      }
+    },
+    {
+      "dataset_id": "BinAlpha_candidate26x30",
+      "historical_benchmark": "BinAlpha",
+      "counts_as_historical": false,
+      "version": "CANDIDATE_BIN_ALPHA",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/binalpha/data",
+      "role": "supplemental_unverified_subset",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "CANDIDATE_BIN_ALPHA",
+        "version": "CANDIDATE_BIN_ALPHA",
+        "verification_status": "CANDIDATE_ONLY",
+        "identity": "CANDIDATE_BIN_ALPHA",
+        "not_paper_binalpha": true,
+        "not_historical_identity": true,
+        "not_exact": true,
+        "source_url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "live_roweis_url_verified_head_200": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/binaryalphadigs.mat",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/binalpha/data/binaryalphadigs.mat",
+        "index_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/binalpha/reconstructions/letters26x30_seed0.json",
+        "candidate_pointer_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/binalpha/reconstructions/CANDIDATE_BIN_ALPHA.json",
+        "SHA256_checksum": "3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7",
+        "n": 780,
+        "number_of_classes": 26,
+        "original_feature_dimension": 320,
+        "processed_feature_dimension": 320,
+        "original_spatial_size": [
+          20,
+          16
+        ],
+        "preprocessing_operations": [
+          "drop digit classes 0-9",
+          "for each letter A-Z, take the 30 example indices stored in letters26x30_seed0.json",
+          "keep stored 0/1 values; no divide-by-255",
+          "vectorize in C order",
+          "no resize"
+        ],
+        "sample_selection_method": "numpy.random.RandomState(0).choice(39, size=30, replace=False) per letter class, then sorted",
+        "random_seed": 0,
+        "reconstruction_note": "This is a reconstruction of a 26x30 draw. Chang et al. did not name Binary Alphadigits or a seed. Do not call this the paper BinAlpha.",
+        "candidate_note": "Candidate reconstruction only. Default load_dataset('BinAlpha') must not claim this is the exact Chang et al. sample set."
+      },
+      "n_samples": 780,
+      "n_features": 320,
+      "n_classes": 26,
+      "fingerprint": {
+        "x_sha256": "b4fc4fd25fc9743a1e839932465b235fa44bad231374e5ccd3b52fea6666d0d2",
+        "x_shape": [
+          780,
+          320
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "4b2156cdd08e25dfa82f1fb7de3166368c68539636f5ce610e0b2cc9e145e7d8",
+        "y_shape": [
+          780
+        ]
+      },
+      "class_counts": {
+        "0": 30,
+        "1": 30,
+        "2": 30,
+        "3": 30,
+        "4": 30,
+        "5": 30,
+        "6": 30,
+        "7": 30,
+        "8": 30,
+        "9": 30,
+        "10": 30,
+        "11": 30,
+        "12": 30,
+        "13": 30,
+        "14": 30,
+        "15": 30,
+        "16": 30,
+        "17": 30,
+        "18": 30,
+        "19": 30,
+        "20": 30,
+        "21": 30,
+        "22": 30,
+        "23": 30,
+        "24": 30,
+        "25": 30
+      }
+    },
+    {
+      "dataset_id": "MSRA50",
+      "historical_benchmark": "MSRA50",
+      "counts_as_historical": true,
+      "version": null,
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/msra50/data",
+      "role": "historical_blocked",
+      "available": false,
+      "blocker": "BLOCKED_DATA",
+      "reason": "MSRA50 is unavailable: MSRA50 is BLOCKED_NO_VERIFIED_DATA_URL. Chang et al. state 1799 images and 12 classes resized to 32x32, with no URL. Round 2 was given a null direct download URL. The page https://arxiv.org/html/2311.15214v1 is reference material only and was not saved as data. No MSRA-B, MSRA10K, TD500, or MSRC file was substituted. See benchmarks/msra50/README.md."
+    },
+    {
+      "dataset_id": "YaleB_dengcai32",
+      "historical_benchmark": "YaleB",
+      "counts_as_historical": true,
+      "version": "dengcai32",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/yaleb/data",
+      "role": "historical_version",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "YaleB",
+        "version": "dengcai32",
+        "verification_status": "approximate",
+        "source_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/yaleb/data/YaleB_32x32.mat",
+        "SHA256_checksum": "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99",
+        "n": 2414,
+        "number_of_classes": 38,
+        "original_feature_dimension": 1024,
+        "processed_feature_dimension": 1024,
+        "preprocessing_operations": [
+          "no resize; the obtained matrix is already 32x32 (1024 uint8 values)",
+          "divide by 255",
+          "keep Deng Cai row order; MATLAB reshape on his page is column-major"
+        ],
+        "sample_selection_method": "all 2414 rows in YaleB_32x32.mat",
+        "random_seed": "unknown",
+        "label_encoding": "stored gnd 1..38 mapped to 0..37"
+      },
+      "n_samples": 2414,
+      "n_features": 1024,
+      "n_classes": 38,
+      "fingerprint": {
+        "x_sha256": "7a693bc3f3916de59097945c06963c4430148e460d01d0b6c7eea940790a8fcd",
+        "x_shape": [
+          2414,
+          1024
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "08856cb83c0688992967a5bb99026e6a99e88e24b936b7715892cb4460e82cdb",
+        "y_shape": [
+          2414
+        ]
+      },
+      "class_counts": {
+        "0": 64,
+        "1": 64,
+        "2": 64,
+        "3": 64,
+        "4": 64,
+        "5": 64,
+        "6": 64,
+        "7": 64,
+        "8": 64,
+        "9": 64,
+        "10": 60,
+        "11": 59,
+        "12": 60,
+        "13": 63,
+        "14": 62,
+        "15": 63,
+        "16": 63,
+        "17": 64,
+        "18": 64,
+        "19": 64,
+        "20": 64,
+        "21": 64,
+        "22": 64,
+        "23": 64,
+        "24": 64,
+        "25": 64,
+        "26": 64,
+        "27": 64,
+        "28": 64,
+        "29": 64,
+        "30": 64,
+        "31": 64,
+        "32": 64,
+        "33": 64,
+        "34": 64,
+        "35": 64,
+        "36": 64,
+        "37": 64
+      }
+    },
+    {
+      "dataset_id": "YaleB_cropped2414",
+      "historical_benchmark": "YaleB",
+      "counts_as_historical": true,
+      "version": "cropped2414",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/yaleb/data",
+      "role": "historical_version",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "YaleB",
+        "version": "cropped2414",
+        "verification_status": "obtained",
+        "source_url": "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip",
+        "processed_array_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/yaleb/data/cropped_wayback/processed/yaleb_cropped2414_32x32_bilinear_uint8.npy",
+        "SHA256_checksum": "8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573",
+        "n": 2414,
+        "number_of_classes": 38,
+        "original_feature_dimension": 32256,
+        "processed_feature_dimension": 1024,
+        "original_spatial_size": [
+          192,
+          168
+        ],
+        "processed_spatial_size": [
+          32,
+          32
+        ],
+        "interpolation": "bilinear",
+        "pixel_range_native_uint8": [
+          0,
+          255
+        ],
+        "orientation": "Non-ambient PGM files have header width 168 and height 192. The native stack before resize is (2414, 192, 168).",
+        "preprocessing_operations": [
+          "drop filenames containing Ambient",
+          "drop non-PGM sidecars, including *.pgm.bad",
+          "keep the remaining 2414 PGM images, all shaped (192, 168)",
+          "sort by subject number then filename",
+          "resize to 32x32 with PIL bilinear",
+          "divide by 255",
+          "vectorize in C order"
+        ],
+        "sample_selection_method": "2414 non-ambient PGM images from 38 subject folders (yaleB01-yaleB13 and yaleB15-yaleB39; yaleB14 is absent). This count matches the paper. It is not a claim that these pixels equal YaleB_32x32.mat.",
+        "random_seed": "unknown",
+        "label_encoding": "subject numbers mapped to 0..37 in ascending subject-number order"
+      },
+      "n_samples": 2414,
+      "n_features": 1024,
+      "n_classes": 38,
+      "fingerprint": {
+        "x_sha256": "1ebb14cb4b96979a90fae0e013468383ebd5995e4dd919150e59b429c22a7484",
+        "x_shape": [
+          2414,
+          1024
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "08856cb83c0688992967a5bb99026e6a99e88e24b936b7715892cb4460e82cdb",
+        "y_shape": [
+          2414
+        ]
+      },
+      "class_counts": {
+        "0": 64,
+        "1": 64,
+        "2": 64,
+        "3": 64,
+        "4": 64,
+        "5": 64,
+        "6": 64,
+        "7": 64,
+        "8": 64,
+        "9": 64,
+        "10": 60,
+        "11": 59,
+        "12": 60,
+        "13": 63,
+        "14": 62,
+        "15": 63,
+        "16": 63,
+        "17": 64,
+        "18": 64,
+        "19": 64,
+        "20": 64,
+        "21": 64,
+        "22": 64,
+        "23": 64,
+        "24": 64,
+        "25": 64,
+        "26": 64,
+        "27": 64,
+        "28": 64,
+        "29": 64,
+        "30": 64,
+        "31": 64,
+        "32": 64,
+        "33": 64,
+        "34": 64,
+        "35": 64,
+        "36": 64,
+        "37": 64
+      }
+    },
+    {
+      "dataset_id": "USPS",
+      "historical_benchmark": "USPS",
+      "counts_as_historical": true,
+      "version": "libsvm",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data",
+      "role": "historical_primary",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "USPS",
+        "verification_status": "verified",
+        "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+        "archive_paths": [
+          "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+          "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+        ],
+        "n": 9298,
+        "number_of_classes": 10,
+        "original_feature_dimension": 256,
+        "processed_feature_dimension": 256,
+        "preprocessing_operations": [
+          "parse LIBSVM files; features 1..256 become a length-256 vector",
+          "map file labels 1..10 to digits 0..9",
+          "no resize; the release is already 16x16",
+          "no further scaling; stored values are already in [-1, 1]"
+        ],
+        "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+        "random_seed": "unknown",
+        "SHA256_checksum": {
+          "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+          "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+        }
+      },
+      "n_samples": 9298,
+      "n_features": 256,
+      "n_classes": 10,
+      "fingerprint": {
+        "x_sha256": "b05525bddf4cbc1e9f08135fb68cfa99e980999bfc8cc5a3d28a49b352d1a672",
+        "x_shape": [
+          9298,
+          256
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "ec43de36099465fa20121f47270ff4759333ff731732dd4ada16c7096bca80de",
+        "y_shape": [
+          9298
+        ]
+      },
+      "class_counts": {
+        "0": 1553,
+        "1": 1269,
+        "2": 929,
+        "3": 824,
+        "4": 852,
+        "5": 716,
+        "6": 834,
+        "7": 792,
+        "8": 708,
+        "9": 821
+      }
+    },
+    {
+      "dataset_id": "AR_lzuf_superset1680",
+      "historical_benchmark": "AR",
+      "counts_as_historical": false,
+      "version": "lzuf_superset1680",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/ar/data",
+      "role": "superset_not_840",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "AR",
+        "version": "lzuf_superset1680",
+        "verification_status": "DOCUMENTED_SUPERSET_ONLY",
+        "counts_as_historical": false,
+        "not_exact": true,
+        "source_url": "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/AR.mat",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/ar/resources/private/lzuf_candidate_AR.mat",
+        "SHA256_checksum": "4c8355c5afef6502d73b492a3c8d3565470bb5e11c8494e880710e630421f30b",
+        "n": 1680,
+        "number_of_classes": 120,
+        "processed_feature_dimension": 1024,
+        "images_per_identity": 14,
+        "sample_selection_method": "entire file; no 840-image subset was documented or applied",
+        "label_mapping": "stored Y values shifted to 0..119; original codes were 1..120"
+      },
+      "n_samples": 1680,
+      "n_features": 1024,
+      "n_classes": 120,
+      "fingerprint": {
+        "x_sha256": "0a3673cb86fe746637a836792444def7f0095042526c55d7c43ba024b22c5735",
+        "x_shape": [
+          1680,
+          1024
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "e1091eb44d27b29c04d89e766f110cbef4de90f1f89a4b4b69b2a38d2ae92ad7",
+        "y_shape": [
+          1680
+        ]
+      },
+      "class_counts": {
+        "0": 14,
+        "1": 14,
+        "2": 14,
+        "3": 14,
+        "4": 14,
+        "5": 14,
+        "6": 14,
+        "7": 14,
+        "8": 14,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14,
+        "13": 14,
+        "14": 14,
+        "15": 14,
+        "16": 14,
+        "17": 14,
+        "18": 14,
+        "19": 14,
+        "20": 14,
+        "21": 14,
+        "22": 14,
+        "23": 14,
+        "24": 14,
+        "25": 14,
+        "26": 14,
+        "27": 14,
+        "28": 14,
+        "29": 14,
+        "30": 14,
+        "31": 14,
+        "32": 14,
+        "33": 14,
+        "34": 14,
+        "35": 14,
+        "36": 14,
+        "37": 14,
+        "38": 14,
+        "39": 14,
+        "40": 14,
+        "41": 14,
+        "42": 14,
+        "43": 14,
+        "44": 14,
+        "45": 14,
+        "46": 14,
+        "47": 14,
+        "48": 14,
+        "49": 14,
+        "50": 14,
+        "51": 14,
+        "52": 14,
+        "53": 14,
+        "54": 14,
+        "55": 14,
+        "56": 14,
+        "57": 14,
+        "58": 14,
+        "59": 14,
+        "60": 14,
+        "61": 14,
+        "62": 14,
+        "63": 14,
+        "64": 14,
+        "65": 14,
+        "66": 14,
+        "67": 14,
+        "68": 14,
+        "69": 14,
+        "70": 14,
+        "71": 14,
+        "72": 14,
+        "73": 14,
+        "74": 14,
+        "75": 14,
+        "76": 14,
+        "77": 14,
+        "78": 14,
+        "79": 14,
+        "80": 14,
+        "81": 14,
+        "82": 14,
+        "83": 14,
+        "84": 14,
+        "85": 14,
+        "86": 14,
+        "87": 14,
+        "88": 14,
+        "89": 14,
+        "90": 14,
+        "91": 14,
+        "92": 14,
+        "93": 14,
+        "94": 14,
+        "95": 14,
+        "96": 14,
+        "97": 14,
+        "98": 14,
+        "99": 14,
+        "100": 14,
+        "101": 14,
+        "102": 14,
+        "103": 14,
+        "104": 14,
+        "105": 14,
+        "106": 14,
+        "107": 14,
+        "108": 14,
+        "109": 14,
+        "110": 14,
+        "111": 14,
+        "112": 14,
+        "113": 14,
+        "114": 14,
+        "115": 14,
+        "116": 14,
+        "117": 14,
+        "118": 14,
+        "119": 14
+      }
+    },
+    {
+      "dataset_id": "UMIST_lzuf574",
+      "historical_benchmark": "UMIST",
+      "counts_as_historical": false,
+      "version": "lzuf574",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/umist/data",
+      "role": "diagnostic_not_564",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "UMIST",
+        "version": "lzuf574",
+        "verification_status": "NON_EXACT_DIAGNOSTIC",
+        "counts_as_historical": false,
+        "not_exact_564": true,
+        "source_url": "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/umist.mat",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/umist/resources/private/lzuf_umist.mat",
+        "n": 574,
+        "number_of_classes": 20,
+        "processed_feature_dimension": 10304,
+        "sample_selection_method": "entire downloaded matrix; no rows were removed to force 564",
+        "label_mapping": "stored labels shifted so the smallest code is 0"
+      },
+      "n_samples": 574,
+      "n_features": 10304,
+      "n_classes": 20,
+      "fingerprint": {
+        "x_sha256": "51394c0aa75c0d89f0d5efb72eb1eab75dc7f201ceaace481c4a1a23776c91ef",
+        "x_shape": [
+          574,
+          10304
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "78afcee0b89363da22d90c13545bd8d13a4c7e9aca5a7f824db28886416b64ab",
+        "y_shape": [
+          574
+        ]
+      },
+      "class_counts": {
+        "0": 38,
+        "1": 35,
+        "2": 26,
+        "3": 24,
+        "4": 26,
+        "5": 23,
+        "6": 19,
+        "7": 22,
+        "8": 20,
+        "9": 32,
+        "10": 34,
+        "11": 34,
+        "12": 26,
+        "13": 30,
+        "14": 19,
+        "15": 26,
+        "16": 26,
+        "17": 33,
+        "18": 48,
+        "19": 33
+      }
+    },
+    {
+      "dataset_id": "UMIST_zenodo3634017",
+      "historical_benchmark": "UMIST",
+      "counts_as_historical": false,
+      "version": "zenodo3634017",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/umist/data",
+      "role": "diagnostic_575_resized",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "UMIST",
+        "version": "zenodo3634017",
+        "verification_status": "NON_EXACT_DIAGNOSTIC",
+        "counts_as_historical": false,
+        "not_exact_564": true,
+        "source_url": "https://zenodo.org/records/3634017/files/umist.mat?download=1",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/umist/resources/private/zenodo3634017_umist.mat",
+        "n": 575,
+        "number_of_classes": 20,
+        "processed_feature_dimension": 644,
+        "sample_selection_method": "entire downloaded matrix; no rows were removed to force 564",
+        "label_mapping": "stored labels shifted so the smallest code is 0",
+        "im_height": 28,
+        "im_width": 23
+      },
+      "n_samples": 575,
+      "n_features": 644,
+      "n_classes": 20,
+      "fingerprint": {
+        "x_sha256": "1d544578db9411425e5b4599efdefdddce4f40b703d697b1dc483d8c98f8283d",
+        "x_shape": [
+          575,
+          644
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "8e67ad19ed89a3c5648b42a3f613ee38a42252764a68898062feb857fb8dbf05",
+        "y_shape": [
+          575
+        ]
+      },
+      "class_counts": {
+        "0": 38,
+        "1": 35,
+        "2": 26,
+        "3": 24,
+        "4": 26,
+        "5": 23,
+        "6": 19,
+        "7": 22,
+        "8": 20,
+        "9": 32,
+        "10": 34,
+        "11": 34,
+        "12": 26,
+        "13": 30,
+        "14": 19,
+        "15": 26,
+        "16": 26,
+        "17": 33,
+        "18": 48,
+        "19": 34
+      }
+    },
+    {
+      "dataset_id": "UMIST_roweis575",
+      "historical_benchmark": "UMIST",
+      "counts_as_historical": false,
+      "version": "roweis575",
+      "folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/umist/data",
+      "role": "diagnostic_575_roweis",
+      "available": true,
+      "blocker": null,
+      "reason": null,
+      "metadata": {
+        "dataset_name": "UMIST",
+        "version": "roweis575",
+        "verification_status": "NON_EXACT_UMIST575",
+        "counts_as_historical": false,
+        "not_exact_564": true,
+        "source_url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat",
+        "archive_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3/benchmarks/umist/resources/private/roweis_umist_cropped.mat",
+        "n": 575,
+        "number_of_classes": 20,
+        "original_spatial_size": [
+          112,
+          92
+        ],
+        "processed_feature_dimension": 10304,
+        "directory_names": [
+          "1a",
+          "1b",
+          "1c",
+          "1d",
+          "1e",
+          "1f",
+          "1g",
+          "1h",
+          "1i",
+          "1j",
+          "1k",
+          "1l",
+          "1m",
+          "1n",
+          "1o",
+          "1p",
+          "1q",
+          "1r",
+          "1s",
+          "1t"
+        ],
+        "sample_selection_method": "all 575 slices in facedat. The NYU page calls this 575 images of 20 people. It is not the 564-image SSC set, and its pixels do not match the wayback cropped 575."
+      },
+      "n_samples": 575,
+      "n_features": 10304,
+      "n_classes": 20,
+      "fingerprint": {
+        "x_sha256": "e2282282b44f966fb943ceaf4f4de0a0d92daf0489ff5ac57772136cb9900a25",
+        "x_shape": [
+          575,
+          10304
+        ],
+        "x_dtype": "float64",
+        "y_sha256": "8e67ad19ed89a3c5648b42a3f613ee38a42252764a68898062feb857fb8dbf05",
+        "y_shape": [
+          575
+        ]
+      },
+      "class_counts": {
+        "0": 38,
+        "1": 35,
+        "2": 26,
+        "3": 24,
+        "4": 26,
+        "5": 23,
+        "6": 19,
+        "7": 22,
+        "8": 20,
+        "9": 32,
+        "10": 34,
+        "11": 34,
+        "12": 26,
+        "13": 30,
+        "14": 19,
+        "15": 26,
+        "16": 26,
+        "17": 33,
+        "18": 48,
+        "19": 34
+      }
+    }
+  ],
+  "acquisition_attempts": [
+    {
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/9606/9465",
+      "timestamp_utc": "2026-11-06T12:23:13.251499+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "application/pdf",
+      "stderr_tail": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n",
+      "asset": "SSC_AAAI_PDF"
+    },
+    {
+      "url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/binaryalphadigs.mat",
+      "timestamp_utc": "2026-11-06T12:23:14.151877+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "0",
+      "stderr_tail": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0  519k    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n",
+      "asset": "BinaryAlphadigits_live"
+    },
+    {
+      "url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data.html",
+      "timestamp_utc": "2026-11-06T12:23:15.056120+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "text/html;",
+      "stderr_tail": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0  9752    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n",
+      "asset": "BinaryAlphadigits_page"
+    },
+    {
+      "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html",
+      "timestamp_utc": "2026-11-06T12:23:16.000572+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "text/html",
+      "stderr_tail": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0 10147    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n",
+      "asset": "DengCai_FaceData"
+    },
+    {
+      "url": "https://doi.org/10.1016/j.ipm.2013.01.004",
+      "timestamp_utc": "2026-11-06T12:23:17.010516+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "text/html;charset=UTF-8",
+      "stderr_tail": "ent\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0  2671    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n",
+      "asset": "SLPS_DOI"
+    },
+    {
+      "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+      "timestamp_utc": "2026-11-06T12:23:18.789056+00:00",
+      "http_status": "200",
+      "curl_exit": 0,
+      "content_type": "application/zip",
+      "stderr_tail": "rent\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0 3680k    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n",
+      "asset": "ATT_ORL_zip"
+    }
+  ],
+  "slps_pdf": {
+    "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v2/baselines/1-s2.0-S0306457313000095-main.pdf",
+    "exists": true,
+    "bytes": 748726,
+    "sha256": "582c8de9f72c2855157a9fcac67079edd6ebcd912a5f7d938ff82a7cf587ab3c"
+  },
+  "cells": [
+    {
+      "benchmark": "AR",
+      "method": "kmeans",
+      "cell_id": "AR__kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "sc",
+      "cell_id": "AR__sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "pca_kmeans",
+      "cell_id": "AR__pca_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "pca_sc",
+      "cell_id": "AR__pca_sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "lda_kmeans",
+      "cell_id": "AR__lda_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "lda_sc",
+      "cell_id": "AR__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "llc",
+      "cell_id": "AR__llc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "spls",
+      "cell_id": "AR__spls",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "AR",
+      "method": "ssc",
+      "cell_id": "AR__ssc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "AR_lzuf_superset1680"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "kmeans",
+      "cell_id": "JAFFE__kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "sc",
+      "cell_id": "JAFFE__sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "pca_kmeans",
+      "cell_id": "JAFFE__pca_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "pca_sc",
+      "cell_id": "JAFFE__pca_sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "lda_kmeans",
+      "cell_id": "JAFFE__lda_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "lda_sc",
+      "cell_id": "JAFFE__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "llc",
+      "cell_id": "JAFFE__llc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "spls",
+      "cell_id": "JAFFE__spls",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "JAFFE",
+      "method": "ssc",
+      "cell_id": "JAFFE__ssc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "JAFFE"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "kmeans",
+      "cell_id": "ORL__kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "sc",
+      "cell_id": "ORL__sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "pca_kmeans",
+      "cell_id": "ORL__pca_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "pca_sc",
+      "cell_id": "ORL__pca_sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "lda_kmeans",
+      "cell_id": "ORL__lda_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "lda_sc",
+      "cell_id": "ORL__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "llc",
+      "cell_id": "ORL__llc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "spls",
+      "cell_id": "ORL__spls",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "ORL",
+      "method": "ssc",
+      "cell_id": "ORL__ssc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "ORL_att92"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "kmeans",
+      "cell_id": "UMIST__kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "sc",
+      "cell_id": "UMIST__sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "pca_kmeans",
+      "cell_id": "UMIST__pca_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "pca_sc",
+      "cell_id": "UMIST__pca_sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "lda_kmeans",
+      "cell_id": "UMIST__lda_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "lda_sc",
+      "cell_id": "UMIST__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "llc",
+      "cell_id": "UMIST__llc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "spls",
+      "cell_id": "UMIST__spls",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "UMIST",
+      "method": "ssc",
+      "cell_id": "UMIST__ssc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "UMIST_precropped575",
+        "UMIST_lzuf574",
+        "UMIST_zenodo3634017",
+        "UMIST_roweis575"
+      ],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "kmeans",
+      "cell_id": "BinAlpha__kmeans",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "sc",
+      "cell_id": "BinAlpha__sc",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "pca_kmeans",
+      "cell_id": "BinAlpha__pca_kmeans",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "pca_sc",
+      "cell_id": "BinAlpha__pca_sc",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "lda_kmeans",
+      "cell_id": "BinAlpha__lda_kmeans",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "lda_sc",
+      "cell_id": "BinAlpha__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "llc",
+      "cell_id": "BinAlpha__llc",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "spls",
+      "cell_id": "BinAlpha__spls",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "BinAlpha",
+      "method": "ssc",
+      "cell_id": "BinAlpha__ssc",
+      "resource_status": "SUBSET_UNVERIFIED",
+      "blocker": "SUBSET_UNVERIFIED",
+      "reason": "The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [
+        "BinAlpha_candidate26x30"
+      ],
+      "execution_status": "SUBSET_UNVERIFIED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "kmeans",
+      "cell_id": "MSRA50__kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "sc",
+      "cell_id": "MSRA50__sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "pca_kmeans",
+      "cell_id": "MSRA50__pca_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "pca_sc",
+      "cell_id": "MSRA50__pca_sc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "lda_kmeans",
+      "cell_id": "MSRA50__lda_kmeans",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "lda_sc",
+      "cell_id": "MSRA50__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "llc",
+      "cell_id": "MSRA50__llc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "spls",
+      "cell_id": "MSRA50__spls",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "MSRA50",
+      "method": "ssc",
+      "cell_id": "MSRA50__ssc",
+      "resource_status": "BLOCKED_DATA",
+      "blocker": "BLOCKED_DATA",
+      "reason": "BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",
+      "executable": false,
+      "dataset_ids": [],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_DATA",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "kmeans",
+      "cell_id": "YaleB__kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "sc",
+      "cell_id": "YaleB__sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "pca_kmeans",
+      "cell_id": "YaleB__pca_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "pca_sc",
+      "cell_id": "YaleB__pca_sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "lda_kmeans",
+      "cell_id": "YaleB__lda_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "lda_sc",
+      "cell_id": "YaleB__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "llc",
+      "cell_id": "YaleB__llc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "spls",
+      "cell_id": "YaleB__spls",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "YaleB",
+      "method": "ssc",
+      "cell_id": "YaleB__ssc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "YaleB_dengcai32",
+        "YaleB_cropped2414"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "kmeans",
+      "cell_id": "USPS__kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "sc",
+      "cell_id": "USPS__sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "pca_kmeans",
+      "cell_id": "USPS__pca_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "STANDARD_BASELINE",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "pca_sc",
+      "cell_id": "USPS__pca_sc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "lda_kmeans",
+      "cell_id": "USPS__lda_kmeans",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "lda_sc",
+      "cell_id": "USPS__lda_sc",
+      "resource_status": "PAPER_NAME_ONLY",
+      "blocker": "BLOCKED_METHOD",
+      "reason": "Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",
+      "executable": false,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "BLOCKED_METHOD",
+      "algorithm_fidelity": "BLOCKED_METHOD",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "llc",
+      "cell_id": "USPS__llc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "spls",
+      "cell_id": "USPS__spls",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    },
+    {
+      "benchmark": "USPS",
+      "method": "ssc",
+      "cell_id": "USPS__ssc",
+      "resource_status": "DATA_AVAILABLE",
+      "blocker": null,
+      "reason": null,
+      "executable": true,
+      "dataset_ids": [
+        "USPS"
+      ],
+      "supplemental_dataset_ids": [],
+      "execution_status": "PLANNED",
+      "algorithm_fidelity": "PAPER_BASED_REIMPLEMENTATION",
+      "counts_toward_72": true
+    }
+  ]
+}

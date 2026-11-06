@@ -1,4 +1,4 @@
-"""Resource probe. Raw archives stay in the read-only data root."""
+"""Resource probe and round-2 recovery. Raw archives stay outside git."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from experiments.v3_reproduction.dataset_registry import load_spec
+from experiments.v3_reproduction.resource_recovery import recover
 from experiments.v3_reproduction.job_plan import historical_cells
 from experiments.v3_reproduction.protocol_registry import load_campaign
 from experiments.v3_reproduction.provenance import json_ready

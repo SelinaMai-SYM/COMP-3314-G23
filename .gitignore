@@ -39,3 +39,5 @@ runs/extension_research/cache/
 runs/v2_kmeans_protocol/cache/
 runs/v2_kmeans_protocol/arrays/
 runs/v3_reproduction/cache/
+# Publisher PDFs, recovered archives, and face matrices stay local.
+**/resources/private/

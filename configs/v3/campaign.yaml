@@ -11,3 +11,9 @@ methods: methods.yaml
 protocols: protocols.yaml
 paper_reference: paper_reference.yaml
 yaleb_diagnostics: yaleb_diagnostics.yaml
+resource_sources: resource_sources.yaml
+# Jobs measured by this commit stay valid when later commits only add
+# resources or loaders. Methods listed in invalidate_methods are rerun.
+accepted_measurement_commits:
+  - 962e6d51b9b7b171d0efd283796c1258ab72d2a8
+invalidate_methods: []

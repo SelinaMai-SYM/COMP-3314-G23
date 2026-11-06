@@ -111,3 +111,5 @@ python -m pytest baselines/lda_spectral -q
 ## v3 status
 
 Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Round 2 read the SSC paper, the SLPS article, and Ding and Li. None of them defines LDA-SC. Status remains `METHOD_DEFINITION_UNRESOLVED`. Ding and Li define LDA-Kmeans only.

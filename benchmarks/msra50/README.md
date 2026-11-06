@@ -77,3 +77,5 @@ except DatasetUnavailable as exc:
 ## v3 status
 
 Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Round 2 status: `BLOCKED_NO_VERIFIED_DATA_URL`. No MSRA50 file was invented, and the arXiv HTML page was not saved as data.

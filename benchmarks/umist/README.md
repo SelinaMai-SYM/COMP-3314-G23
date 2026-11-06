@@ -86,3 +86,5 @@ assert m["n"] == 575 and m["unique_pixel_arrays"] == 565
 ## v3 status
 
 Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Round 2 did not find a 564-image file. LZUFE `umist.mat` is 574×10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 matches MD5 `039e0d805a5c65df7bfecd172a24f14c` and is 575×644 at 28×23. The Roweis download repeats the figshare SHA above. None of these is scheduled as the historical cell.

@@ -60,7 +60,13 @@ def _done(payload: dict[str, Any], job_id: str) -> bool:
     if not meta_path.is_file():
         return False
     meta = json.loads(meta_path.read_text())
-    if meta.get("code_commit") != payload["code_commit"]:
+    accepted = {payload["code_commit"], *payload.get("accepted_measurement_commits", [])}
+    if meta.get("code_commit") not in accepted:
+        return False
+    if (
+        meta.get("code_commit") != payload["code_commit"]
+        and meta.get("method") in set(payload.get("invalidate_methods") or [])
+    ):
         return False
     if meta.get("status") not in {"COMPLETED", "INFEASIBLE"}:
         return False

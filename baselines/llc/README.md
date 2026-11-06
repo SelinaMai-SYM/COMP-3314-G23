@@ -114,3 +114,5 @@ python -m pytest baselines/llc -q
 ## v3 status
 
 Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Round 2 kept the NeurIPS PDF (same SHA-256 as above) and downloaded Shi's `Ncut_9.zip` only for reading. `discretisation.m` sets `R = V*U'` from `svd(Discrete' * EigenVectors)`. The v3 Procrustes factor `Vt.T @ U.T` matches that formula. The zip was not executed.

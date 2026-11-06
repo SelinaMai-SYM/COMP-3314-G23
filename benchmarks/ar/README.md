@@ -76,3 +76,5 @@ except DatasetUnavailable as exc:
 ## v3 status
 
 Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Round 2: LZUFE `AR.mat` is 1680×1024, 120 identities, 14 images each, SHA-256 `4c8355c5afef6502d73b492a3c8d3565470bb5e11c8494e880710e630421f30b`. No 840-image rule is documented, so the file is `DOCUMENTED_SUPERSET_ONLY` and is not scheduled as paper AR. The 100-identity Zenodo zip remains `NON_TARGET_AR100`.

@@ -66,3 +66,35 @@ specs:
     folder: usps/data
     version: libsvm
     role: historical_primary
+  - dataset_id: AR_lzuf_superset1680
+    historical_benchmark: AR
+    counts_as_historical: false
+    loader_name: AR
+    folder: ar/data
+    version: lzuf_superset1680
+    role: superset_not_840
+    execute: false
+  - dataset_id: UMIST_lzuf574
+    historical_benchmark: UMIST
+    counts_as_historical: false
+    loader_name: UMIST
+    folder: umist/data
+    version: lzuf574
+    role: diagnostic_not_564
+    execute: false
+  - dataset_id: UMIST_zenodo3634017
+    historical_benchmark: UMIST
+    counts_as_historical: false
+    loader_name: UMIST
+    folder: umist/data
+    version: zenodo3634017
+    role: diagnostic_575_resized
+    execute: false
+  - dataset_id: UMIST_roweis575
+    historical_benchmark: UMIST
+    counts_as_historical: false
+    loader_name: UMIST
+    folder: umist/data
+    version: roweis575
+    role: diagnostic_575_roweis
+    execute: false

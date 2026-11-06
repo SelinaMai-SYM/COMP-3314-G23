@@ -10,7 +10,7 @@ from pathlib import Path
 
 from experiments.v3_reproduction.aggregate import aggregate
 from experiments.v3_reproduction.protocol_registry import load_campaign
-from experiments.v3_reproduction.resources import probe
+from experiments.v3_reproduction.resources import probe, recover
 from experiments.v3_reproduction.runner import execute_dataset
 from experiments.v3_reproduction.validate import validate
 
@@ -89,6 +89,8 @@ def _campaign(config: str, resume: bool) -> None:
             continue
         if not record.get("available"):
             continue
+        if spec.get("execute") is False:
+            continue
         payloads.append(
             {
                 "spec": spec,
@@ -100,6 +102,8 @@ def _campaign(config: str, resume: bool) -> None:
                 "code_commit": commit,
                 "git_dirty": bool(dirty.strip()),
                 "resume": resume,
+                "accepted_measurement_commits": list(campaign.get("accepted_measurement_commits") or []),
+                "invalidate_methods": list(campaign.get("invalidate_methods") or []),
                 "protocols": protocols,
             }
         )
@@ -137,8 +141,12 @@ def main(argv: list[str] | None = None) -> None:
             command.add_argument("--resume", action="store_true")
     args = parser.parse_args(argv)
     if args.command == "resources":
+        recovery = recover(args.config)
         summary = probe(args.config)
-        print(f"cells={summary['n_historical_cells']} executable={summary['n_executable_cells']}")
+        print(
+            f"cells={summary['n_historical_cells']} executable={summary['n_executable_cells']} "
+            f"recovered={recovery['n_sources']}"
+        )
     elif args.command == "plan":
         summary = probe(args.config)
         _write_plan(load_campaign(args.config), summary)

@@ -39,5 +39,8 @@ runs/extension_research/cache/
 runs/v2_kmeans_protocol/cache/
 runs/v2_kmeans_protocol/arrays/
 runs/v3_reproduction/cache/
+# Uncompressed trial table exceeds GitHub's 100MB file limit.
+# The gzip twin and SHA-256 are in results/v3_reproduction/.
+results/v3_reproduction/all_trials.csv
 # Publisher PDFs, recovered archives, and face matrices stay local.
 **/resources/private/

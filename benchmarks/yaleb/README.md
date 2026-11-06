@@ -63,3 +63,7 @@ python3 -m pytest benchmarks/yaleb/test_yaleb_versions.py -q
 ## Strict URL Task 1（2026-10-21 晚）
 
 未重下。CroppedYale zip SHA-256 仍为 `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

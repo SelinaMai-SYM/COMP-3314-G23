@@ -76,3 +76,7 @@ assert X.shape == (780, 320) and m["identity"] == "CANDIDATE_BIN_ALPHA"
 ## Strict URL Task 1（2026-10-21 晚）哈希复核
 
 未重下。父集 SHA-256 仍为 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`（MD5 `194c4c91d95f1457bbd5829e75373b96`）。计划 URL HEAD **200**、532304 字节。候选版本 `CANDIDATE_BIN_ALPHA`，种子 **0**，索引 `reconstructions/letters26x30_seed0.json`，形状 780×320。默认 `load_dataset("BinAlpha")` 仍不可用，不称 EXACT。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

@@ -72,3 +72,7 @@ except DatasetUnavailable as exc:
 ## Strict URL Task 1（2026-10-21 晚）新哈希
 
 已下载 **第三方** `data/ARDB_Full.zip`（**不是**官方 Martinez 包）。120587997 字节；MD5 `bb97bd9237680744c0c7268624696263`（与 Zenodo 公布值一致）；SHA-256 `32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438`。zip 为 PKZIP 而非 HTML。100 个身份 `s1`–`s100`。命名不是官方 `M-xx-yy.raw` / `F-xx-yy.raw`。无归档文档给出 840/120，未编造每人 7 张。状态：`SOURCE_RECOVERED_SUBSET_UNVERIFIED`。原始图像 gitignore，未提交。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

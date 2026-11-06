@@ -107,3 +107,7 @@ python -m pytest baselines/lda_spectral -q
 ## Task 1（2026-10-21）
 
 无新文件。Chang 仍只给名称。作者代码 `CODE_NOT_FOUND`。矩阵状态：`BLOCKED_MISSING_METHOD`（忠实主表）；实现仍为 `APPROXIMATE`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

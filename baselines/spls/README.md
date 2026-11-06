@@ -128,3 +128,7 @@ Local `resources/` still has no PDF. ScienceDirect abstract and full PII HEAD **
 python -m pytest baselines/spls -q
 python -c "from baselines.spls import fit_predict; import numpy as np, pytest; pytest.raises(NotImplementedError, fit_predict, np.ones((4,2)), 2, 0)"
 ```
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

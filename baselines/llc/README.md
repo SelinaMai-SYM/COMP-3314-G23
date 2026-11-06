@@ -110,3 +110,7 @@ python -m pytest baselines/llc -q
 ## Task 1（2026-10-21）
 
 新文件：`resources/Wu_Schoelkopf_2006_NIPS_LLC.pdf` 127718 字节 SHA-256 `17828ebae410aca05c026767bffb2befec09a5edfe4232c770c2782a904c12c3`（NeurIPS OA GET **200**）。作者代码 `CODE_NOT_FOUND`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

@@ -114,3 +114,7 @@ python -c "from baselines.kmeans import fit_predict; print('kmeans-ok')"
 ## Task 1（2026-10-21）
 
 无新文件。Chang AAAI OA 已存于 `SSC_method/resources/`。作者代码 `CODE_NOT_FOUND`。本包装仍是 `THIRD_PARTY_CODE`（sklearn Lloyd）+ `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

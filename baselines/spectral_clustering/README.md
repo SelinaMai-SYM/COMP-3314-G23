@@ -73,3 +73,7 @@ Full matrix: `docs/round2_reproduction_matrix.md`. Causal labels: `docs/round2_r
 ## Task 1（2026-10-21）
 
 无新文件。GitHub 仓库搜索 `spectral shrunk clustering` HTTP 200、`total_count=0`。作者代码 `CODE_NOT_FOUND`。实现仍是 `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

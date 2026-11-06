@@ -55,3 +55,7 @@ Phase 1 USPS 与 repair_round1 均为 `libsvm`。Round 2 pilot n=3（不是 50�
 ## Strict URL Task 1（2026-10-21 晚）
 
 未重下。`usps.bz2` / `usps.t.bz2` SHA-256 仍为 `3771e9dd…034f` / `a9c0164e…fc4e`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

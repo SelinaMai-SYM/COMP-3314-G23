@@ -11,7 +11,7 @@ from scipy import sparse
 
 from baselines.lda_kmeans import fit_predict as lda_kmeans_fit_predict
 from baselines.lda_spectral import fit_predict as lda_spectral_fit_predict
-from baselines.llc import local_regression_matrix, yu_shi_discretize
+from baselines.llc import llc_normalized_embedding, local_regression_matrix, yu_shi_discretize
 from baselines.spls import fit_predict as spls_fit_predict
 from benchmarks.metrics import clustering_accuracy, normalized_mutual_information
 from experiments.perturbations import drop_affinity_edges
@@ -351,22 +351,37 @@ def prepare_pca(X: np.ndarray, n_components: int) -> np.ndarray:
 
 
 def prepare_llc_embedding(
-    X: np.ndarray, n_clusters: int, k: int
+    X: np.ndarray,
+    n_clusters: int,
+    k: int,
+    reg: float = 1.0,
+    kernel: str = "gaussian",
+    gamma: float | None = None,
+    discretization_max_iter: int = 30,
+    discretization_tol: float = 1e-8,
+    dense_threshold: int = 512,
 ) -> PreparedRepresentation:
+    """Build the LLC embedding. Every argument is passed into the algorithm."""
     t0 = time.perf_counter()
-    regression = local_regression_matrix(
-        X, n_neighbors=k, reg=1.0, kernel="gaussian", gamma=None
+    normalized, info = llc_normalized_embedding(
+        X,
+        n_clusters=n_clusters,
+        n_neighbors=k,
+        reg=reg,
+        kernel=kernel,
+        gamma=gamma,
+        dense_threshold=dense_threshold,
     )
-    residual = np.eye(X.shape[0], dtype=np.float64) - regression
-    gram = residual.T @ residual
-    gram = 0.5 * (gram + gram.T)
-    _values, vectors = np.linalg.eigh(gram)
-    raw = vectors[:, :n_clusters]
-    row_norm = np.linalg.norm(raw, axis=1, keepdims=True)
-    normalized = raw / np.maximum(row_norm, 1e-12)
     extra = {
-        "llc_reg": 1.0,
-        "llc_kernel": "gaussian",
+        "llc_reg": info["llc_ridge"],
+        "llc_kernel": info["llc_kernel"],
+        "llc_kernel_bandwidth": info["llc_kernel_bandwidth"],
+        "requested_reg": reg,
+        "requested_kernel": kernel,
+        "requested_gamma": gamma,
+        "discretization_max_iter": discretization_max_iter,
+        "discretization_tol": discretization_tol,
+        "eigen_solver": info["solver"],
         "runtime_embedding_seconds": time.perf_counter() - t0,
     }
     return PreparedRepresentation(
@@ -399,10 +414,18 @@ def cluster_prepared(
             trial_extra["aligned_agreement_F_G"] = clustering_accuracy(labels_f, labels_g)
         return labels, trial_extra
     if prepared.cluster_fn == "llc_yushi":
+        max_iter = int(prepared.extra.get("discretization_max_iter", 30))
+        tol = float(prepared.extra.get("discretization_tol", 1e-8))
         labels = yu_shi_discretize(
-            prepared.features, random_state=seed, max_iter=30, tol=1e-8
+            prepared.features, random_state=seed, max_iter=max_iter, tol=tol
         )
-        return np.asarray(labels, dtype=np.int64), {"discretization": "yu_shi"}
+        return np.asarray(labels, dtype=np.int64), {
+            "discretization": "yu_shi",
+            "discretization_max_iter": max_iter,
+            "discretization_tol": tol,
+            "llc_ridge": prepared.extra.get("llc_reg"),
+            "llc_kernel_bandwidth": prepared.extra.get("llc_kernel_bandwidth"),
+        }
     raise ValueError(prepared.cluster_fn)
 
 
@@ -458,7 +481,17 @@ def prepare_method(
         return None
     k = int(params.get("k", 5))
     if method == "llc":
-        return prepare_llc_embedding(X, n_clusters, k)
+        return prepare_llc_embedding(
+            X,
+            n_clusters,
+            k,
+            reg=float(params.get("reg", params.get("llc_ridge", 1.0))),
+            kernel=str(params.get("kernel", "gaussian")),
+            gamma=params.get("gamma", params.get("llc_kernel_bandwidth", None)),
+            discretization_max_iter=int(params.get("discretization_max_iter", 30)),
+            discretization_tol=float(params.get("discretization_tol", 1e-8)),
+            dense_threshold=int(params.get("dense_threshold", 512)),
+        )
     if method == "pca_kmeans":
         n_components = int(params["n_components"])
         init = str(params.get("init", params.get("kmeans_init", "random")))

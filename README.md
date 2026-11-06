@@ -1,3 +1,9 @@
+# COMP3314 Group 23 — v3 reproduction index
+
+Branch `v3` rebuilds the Chang et al. (AAAI 2015) comparison. The campaign code is `experiments/v3_reproduction/`. Measured tables, when present, are `results/v3_reproduction/`. Numbers already in this README from v1/v2 are **historical**. They are not v3 measurements. LLC figures inherited from before the Procrustes correction are `PRE_FIX_LEGACY`.
+
+Data root is the read-only v1 archive directory configured in `configs/v3/campaign.yaml`. Restricted images are not part of this branch.
+
 # COMP3314 Group 23 — Spectral Shrunk Clustering (v1, round 2)
 
 HKU COMP3314 Machine Learning course project. **Branch: `v1`.**

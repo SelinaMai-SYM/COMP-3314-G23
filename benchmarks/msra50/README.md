@@ -73,3 +73,7 @@ except DatasetUnavailable as exc:
 ## Strict URL Task 1（2026-10-21 晚）
 
 无下载 URL。本地 `data/` 仍空。UTS 署名 AAAI PDF 与同组 1411.6241v1 只有 1799/12/1024 文献计数。状态：`BLOCKED_DATA_NOT_OBTAINED`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

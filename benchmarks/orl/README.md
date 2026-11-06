@@ -76,3 +76,7 @@ assert m2["original_spatial_size"] == [112, 92]
 ## Strict URL Task 1（2026-10-21 晚）
 
 未重下。`att_faces.zip` SHA-256 仍为 `509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

@@ -53,3 +53,7 @@ Phase 1 JAFFE 与 repair_round1 全部 6 条 COMPLETED 均为 `zenodo`。Round 2
 ## Strict URL Task 1（2026-10-21 晚）
 
 未重下。SHA-256 仍为 `6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b`。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

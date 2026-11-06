@@ -82,3 +82,7 @@ assert m["n"] == 575 and m["unique_pixel_arrays"] == 565
 ## Strict URL Task 1（2026-10-21 晚）哈希复核
 
 未重下两条 Wayback tar（SHA 仍为 `df58ad9a…c8fb` / `c1f7f6ea…dff4`）。Roweis `https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat` GET **200**，5927440 字节，SHA-256 `ddfa985c15c4f5924be47201416abe01416bdf38b19aca6baecf59d039f51361`，与本地 Figshare 副本 **逐字节相同**。本轮重算：575 文件名；565 互异字节 **等于** 565 互异像素；去掉 10 张 `final*.pgm` 仍是 **565≠564**。未删 11 张。论文 564 仍未取得。
+
+## v3 status
+
+Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.

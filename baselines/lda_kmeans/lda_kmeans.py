@@ -113,6 +113,28 @@ def _prepare_subspace(
     return centered, n_components
 
 
+def scatter_objective(
+    features: np.ndarray, labels: np.ndarray, basis: np.ndarray
+) -> dict[str, float]:
+    """Ratio of traces on the current subspace, after centering is assumed.
+
+    Ding and Li write ``Tr(U^T S_b U) / Tr(U^T S_w U)``. The generalized
+    eigenproblem instead maximizes ``Tr(U^T S_b U)`` subject to
+    ``U^T S_w U = I``. Under that constraint the denominator equals the
+    number of columns, so the ratio of traces is the mean of the retained
+    generalized eigenvalues. This is not ``Tr(S_w^{-1} S_b)``.
+    """
+    between, within = _scatter(features, labels)
+    numerator = float(np.trace(basis.T @ between @ basis))
+    denominator = float(np.trace(basis.T @ within @ basis))
+    ratio = float(numerator / denominator) if denominator > 0.0 else float("nan")
+    return {
+        "trace_between": numerator,
+        "trace_within": denominator,
+        "ratio_of_traces": ratio,
+    }
+
+
 def fit_predict(
     X: np.ndarray,
     n_clusters: int,

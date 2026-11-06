@@ -36,3 +36,20 @@ def test_each_seed_is_a_full_fit() -> None:
     centered = features - features.mean(axis=0)
     objective = scatter_objective(centered, first, np.eye(4)[:, :2])
     assert np.isfinite(objective["ratio_of_traces"]) or objective["trace_within"] == 0.0
+
+
+def test_wide_data_matches_the_ambient_generalized_eigenvectors() -> None:
+    from baselines.lda_kmeans.lda_kmeans import _data_span, _lda_basis_for_fit, lda_basis
+
+    generator = np.random.default_rng(2)
+    features = generator.normal(size=(36, 80))
+    features = features - features.mean(axis=0)
+    labels = np.repeat(np.arange(4), 9)
+    span = _data_span(features)
+    assert span is not None and span.shape == (80, 35)
+    reduced = _lda_basis_for_fit(features, labels, 3, 1e-8, span)
+    full = lda_basis(features, labels, 3, 1e-8)
+    for index in range(reduced.shape[1]):
+        if np.dot(reduced[:, index], full[:, index]) < 0:
+            reduced[:, index] *= -1
+    assert np.allclose(reduced, full, atol=1e-6)

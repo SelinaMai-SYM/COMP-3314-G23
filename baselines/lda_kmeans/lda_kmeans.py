@@ -55,11 +55,32 @@ def _scatter(
     return between, within
 
 
+def _data_span(features: np.ndarray) -> np.ndarray | None:
+    """Orthonormal basis of the row space when there are more features than samples.
+
+    Centered samples span at most ``n_samples - 1`` directions. The leading
+    generalized eigenvectors of the ridged pencil live in that span, so the
+    ambient eigenproblem reduces to an equivalent smaller one. This is not a
+    landmark or subsample approximation.
+    """
+    n_samples, n_features = features.shape
+    if n_features <= n_samples:
+        return None
+    _left, singular, vt = np.linalg.svd(features, full_matrices=False)
+    if singular.size == 0 or singular[0] <= 0:
+        return None
+    rank = int(np.sum(singular > singular[0] * 1e-10))
+    if rank <= 0 or rank >= n_features:
+        return None
+    return np.ascontiguousarray(vt[:rank].T)
+
+
 def lda_basis(
     features: np.ndarray,
     labels: np.ndarray,
     n_components: int,
     sw_reg: float,
+    ambient_dimension: int | None = None,
 ) -> np.ndarray:
     """Return the leading generalized eigenvectors of ``(S_b, S_w)``.
 
@@ -79,7 +100,10 @@ def lda_basis(
         raise ValueError("sw_reg must be a nonnegative finite float")
     between, within = _scatter(features, labels)
     eigenvalues = np.linalg.eigvalsh(within)
-    floor = float(eigenvalues[0])
+    # A wide ambient scatter has a null space even when this reduced within
+    # scatter does not. The ridge decision follows that ambient matrix.
+    ambient = features.shape[1] if ambient_dimension is None else int(ambient_dimension)
+    floor = 0.0 if ambient > features.shape[1] else float(eigenvalues[0])
     ceiling = float(eigenvalues[-1])
     if sw_reg > 0 and floor <= sw_reg * max(ceiling, 1.0):
         within = within + (sw_reg * max(ceiling, 1.0)) * np.eye(within.shape[0])
@@ -94,6 +118,25 @@ def lda_basis(
         raise np.linalg.LinAlgError("LDA returned complex eigenvectors")
     basis = np.real(vectors[:, -n_components:])
     return basis[:, ::-1]
+
+
+def _lda_basis_for_fit(
+    features: np.ndarray,
+    labels: np.ndarray,
+    n_components: int,
+    sw_reg: float,
+    span: np.ndarray | None,
+) -> np.ndarray:
+    if span is None:
+        return lda_basis(features, labels, n_components, sw_reg)
+    reduced = lda_basis(
+        features @ span,
+        labels,
+        n_components,
+        sw_reg,
+        ambient_dimension=features.shape[1],
+    )
+    return span @ reduced
 
 
 def _prepare_subspace(
@@ -182,12 +225,13 @@ def fit_predict(
         "init": options["init"],
         "algorithm": options["algorithm"],
     }
+    span = _data_span(centered)
     basis = _pca_basis(centered, n_components, seed)
     labels = kmeans_fit_predict(centered @ basis, clusters, seed, **kmeans_params)
     for _ in range(max_iter):
         if np.unique(labels).size < n_components + 1:
             break
-        basis = lda_basis(centered, labels, n_components, sw_reg)
+        basis = _lda_basis_for_fit(centered, labels, n_components, sw_reg, span)
         updated = kmeans_fit_predict(centered @ basis, clusters, seed, **kmeans_params)
         if np.array_equal(updated, labels):
             labels = updated

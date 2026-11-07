@@ -1,0 +1,99 @@
+{
+  "acc_mean": 0.5285724528572453,
+  "acc_std": 0.02062503393175152,
+  "dataset_checksum": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "dataset_identity_status": "verified_libsvm_9298",
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "dataset_version": "libsvm",
+  "factor": "LDAKM_D9",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "e678400b5586b9181ccdf19bc123f4ba6422d594",
+  "git_status_porcelain": "M SSC_method/README.md\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spls/README.md\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M results/README.md\n M scripts/run_experiment.py\n?? SSC_method/resources/\n?? baselines/lda_kmeans/resources/\n?? baselines/llc/resources/\n?? baselines/spls/resources/\n?? benchmarks/ar/resources/\n?? benchmarks/msra50/resources/\n?? benchmarks/umist/resources/\n?? configs/strict_repro/\n?? docs/resource_acquisition_matrix.md\n?? docs/task1_http_log.json\n?? docs/task1_http_log.jsonl\n?? docs/task1_resource_completion.md\n?? docs/task2_experiment_completion.md\n?? results/reproduction_full_matrix.csv\n?? results/reproduction_full_matrix.md\n?? results/strict_repro/\n?? runs/strict_repro/\n?? scripts/run_strict_repro.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "n_clusters": 10,
+  "n_features": 256,
+  "n_samples": 9298,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "nmi_mean": 0.5738224210983224,
+  "nmi_std": 0.0475975576320145,
+  "paper_fidelity_category": "A_PAPER_FAITHFUL",
+  "params": {
+    "init": "random",
+    "n_components": 9,
+    "n_init": 1
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.710287167225033,
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.5387180038718004,
+      "n_components": 9,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6054649911927753,
+      "runtime_seconds": 0.7212012503296137,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.504839750483975,
+      "n_components": 9,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.5190834240050858,
+      "runtime_seconds": 0.7270729593001306,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.5421596042159604,
+      "n_components": 9,
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.5969188480971063,
+      "runtime_seconds": 0.6825872920453548,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ],
+  "variant": null
+}

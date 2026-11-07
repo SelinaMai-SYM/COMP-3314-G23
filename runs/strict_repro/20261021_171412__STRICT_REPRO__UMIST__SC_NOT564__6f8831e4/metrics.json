@@ -1,0 +1,241 @@
+{
+  "acc_mean": 0.5159420289855072,
+  "acc_std": 0.034535353063435345,
+  "combinatorial_laplacian_eigenvalues_A": {
+    "gap_1_2": 7.476026637990094e-17,
+    "gap_2_3": 4.852826247882848e-05,
+    "listed": [
+      -7.43459807534314e-16,
+      -6.68699541154413e-16,
+      4.852826247815978e-05,
+      7.163854356655384e-05,
+      0.0003056737726516573,
+      0.00032106686071557374,
+      0.0007753175835402454,
+      0.0009800357280605426
+    ],
+    "max": 0.0009800357280605426,
+    "mean": 0.00031278259387641506,
+    "min": -7.43459807534314e-16,
+    "n": 8,
+    "solver": "scipy.sparse.linalg.eigsh"
+  },
+  "dataset_checksum": "c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4",
+  "dataset_identity_status": "not_paper_564_precropped575_n575_unique_pixels_565",
+  "dataset_metadata": {
+    "SHA256_checksum": "c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4",
+    "dataset_name": "UMIST",
+    "duplicate_filenames": 0,
+    "n": 575,
+    "not_exact_564": true,
+    "number_of_classes": 20,
+    "original_feature_dimension": 10304,
+    "original_spatial_size": [
+      112,
+      92
+    ],
+    "pixel_duplicate_pairs": [
+      [
+        "1b/face/1b014.pgm",
+        "1b/face/final00.pgm"
+      ],
+      [
+        "1b/face/1b016.pgm",
+        "1b/face/final01.pgm"
+      ],
+      [
+        "1b/face/1b024.pgm",
+        "1b/face/final02.pgm"
+      ],
+      [
+        "1b/face/1b032.pgm",
+        "1b/face/final03.pgm"
+      ],
+      [
+        "1b/face/1b038.pgm",
+        "1b/face/final04.pgm"
+      ],
+      [
+        "1b/face/1b040.pgm",
+        "1b/face/final05.pgm"
+      ],
+      [
+        "1b/face/1b048.pgm",
+        "1b/face/final06.pgm"
+      ],
+      [
+        "1b/face/1b056.pgm",
+        "1b/face/final07.pgm"
+      ],
+      [
+        "1b/face/1b064.pgm",
+        "1b/face/final08.pgm"
+      ],
+      [
+        "1b/face/1b072.pgm",
+        "1b/face/final09.pgm"
+      ]
+    ],
+    "pixel_range_native_uint8": [
+      0,
+      238
+    ],
+    "preprocessing_operations": [
+      "read every PGM in the pre-cropped tar",
+      "sort by archive member name",
+      "divide by 255",
+      "vectorize in C order",
+      "no resize"
+    ],
+    "processed_feature_dimension": 10304,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 575 cropped PGM files; this is not the 564-image count stated by Chang et al. and by the 2001 UMIST web page. Dropping the 10 pixel-identical final*.pgm copies yields 565, not 564. Eleven images were not dropped to force the paper count.",
+    "source_url": "https://web.archive.org/web/20070805190146id_/http://images.ee.umist.ac.uk/danny/cropped.tar.gz",
+    "unique_pixel_arrays": 565,
+    "verification_status": "approximate",
+    "version": "precropped575"
+  },
+  "dataset_version": "precropped575",
+  "eigen_solver": "scipy.sparse.linalg.eigsh",
+  "eigenvalues_summary": {
+    "gap_1_2": 2.1986504903867725e-16,
+    "gap_2_3": 2.042295233483533e-05,
+    "listed": [
+      -1.3859101412362103e-16,
+      8.127403491505623e-17,
+      2.0422952334916603e-05,
+      3.452089853768474e-05,
+      0.00013738451807166732,
+      0.00019170875758392237,
+      0.0003102629791831471,
+      0.0005091996377545836
+    ],
+    "max": 0.0103174194516133,
+    "mean": 0.0036550435407317603,
+    "min": -1.3859101412362103e-16,
+    "n": 20
+  },
+  "factor": "SC_NOT564",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "e678400b5586b9181ccdf19bc123f4ba6422d594",
+  "git_status_porcelain": "M SSC_method/README.md\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spls/README.md\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M results/README.md\n M scripts/run_experiment.py\n?? SSC_method/resources/\n?? baselines/lda_kmeans/resources/\n?? baselines/llc/resources/\n?? baselines/spls/resources/\n?? benchmarks/ar/resources/\n?? benchmarks/msra50/resources/\n?? benchmarks/umist/resources/\n?? configs/strict_repro/\n?? docs/resource_acquisition_matrix.md\n?? docs/task1_http_log.json\n?? docs/task1_http_log.jsonl\n?? docs/task1_resource_completion.md\n?? docs/task2_experiment_completion.md\n?? results/reproduction_full_matrix.csv\n?? results/reproduction_full_matrix.md\n?? results/strict_repro/\n?? runs/strict_repro/\n?? scripts/run_strict_repro.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "graph": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": 8.683203989676944,
+    "delta2": 75.39803152634158,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "k": 5,
+    "knn_method": "dense",
+    "symmetrization": "union_maximum"
+  },
+  "graph_stats": {
+    "degree_max": 6.48294143650703,
+    "degree_mean": 2.159172561394855,
+    "degree_min": 0.006345664297218162,
+    "n_connected_components": 2,
+    "n_undirected_edges": 1724
+  },
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "laplacian": "symmetric_normalized_eq4",
+  "n_clusters": 20,
+  "n_connected_components": 2,
+  "n_features": 10304,
+  "n_samples": 575,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "n_undirected_edges": 1724,
+  "nmi_mean": 0.7365267077245049,
+  "nmi_std": 0.038369852730609506,
+  "paper_fidelity_category": "C_DIAGNOSTIC",
+  "params": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "k": 5,
+    "kmeans_init": "random",
+    "laplacian": "symmetric_normalized_eq4",
+    "n_init": 1,
+    "row_normalize": false,
+    "symmetrization": "union"
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "row_normalize": false,
+  "runtime_embedding_seconds": 0.050729542039334774,
+  "runtime_seconds_mean": 0.003382014421125253,
+  "shared_eq4_path": true,
+  "sign_convention": "largest_magnitude_positive",
+  "spectral_backend": "shared_eq4",
+  "spectral_graph_config": {
+    "affects_F": true,
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "delta": null,
+    "delta2": null,
+    "dense_threshold": 512,
+    "eigenvector_selection": "smallest",
+    "eps": 1e-08,
+    "g_init": "F",
+    "g_init_scale": 0.001,
+    "g_init_seed": 0,
+    "k": 5,
+    "kmeans_init": "random",
+    "kmeans_n_init": 1,
+    "knn_method": "auto",
+    "laplacian": "symmetric_normalized_eq4",
+    "max_iter": 300,
+    "resolved_bandwidth_rule": "median_positive_knn_squared_distance",
+    "resolved_delta2": null,
+    "resolved_symmetrization": "union_maximum",
+    "row_normalize": false,
+    "seed": null,
+    "sign_convention": "largest_magnitude_positive",
+    "symmetrization": "union",
+    "tol": 1e-06,
+    "variant": "E13",
+    "zero_residual_floor": "median_pairwise"
+  },
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.5547826086956522,
+      "kmeans_inertia": 6.4647026993727925,
+      "kmeans_init": "random",
+      "n_predicted_labels": 575,
+      "n_unique_predicted": 20,
+      "nmi": 0.7771706447894534,
+      "runtime_seconds": 0.0077805002219974995,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.5043478260869565,
+      "kmeans_inertia": 6.302625139546469,
+      "kmeans_init": "random",
+      "n_predicted_labels": 575,
+      "n_unique_predicted": 20,
+      "nmi": 0.7314788474626972,
+      "runtime_seconds": 0.0013252091594040394,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.48869565217391303,
+      "kmeans_inertia": 8.011196217066539,
+      "kmeans_init": "random",
+      "n_predicted_labels": 575,
+      "n_unique_predicted": 20,
+      "nmi": 0.7009306309213642,
+      "runtime_seconds": 0.0010403338819742203,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ],
+  "variant": null
+}

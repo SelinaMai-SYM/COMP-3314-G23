@@ -1,0 +1,807 @@
+{
+  "date_utc": "2026-10-21T08:05:55.188236+00:00",
+  "user_agent": "COMP3314-SSC-dataset-recovery/2.0",
+  "note": "ARDB_Full.zip was HEAD-probed only. After reading the Zenodo record, the zip was not downloaded.",
+  "records": [
+    {
+      "url": "https://cs.nyu.edu/~roweis/data.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://cs.nyu.edu/~roweis/data.html",
+        "http_status": 403,
+        "effective_url": "https://cs.nyu.edu/~roweis/data.html",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://cs.nyu.edu/~roweis/data.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data.html",
+        "http_status": 200,
+        "effective_url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data.html",
+        "content_type": "text/html; charset=UTF-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/data.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/data.html",
+        "http_status": 200,
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/data.html",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/data.html",
+        "http_status": 200,
+        "content_type": "text/html",
+        "content_length": "11636",
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/data.html"
+      }
+    },
+    {
+      "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html",
+        "http_status": 200,
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html",
+        "http_status": 200,
+        "content_type": "text/html",
+        "content_length": "10147",
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html"
+      }
+    },
+    {
+      "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+        "http_status": 200,
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+        "content_type": "application/octet-stream",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+        "http_status": 200,
+        "content_type": "application/octet-stream",
+        "content_length": "2214688",
+        "effective_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat"
+      }
+    },
+    {
+      "url": "https://zenodo.org/records/19683234",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/19683234",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/records/19683234",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/19683234",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://zenodo.org/api/records/19683234",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/api/records/19683234",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/api/records/19683234",
+        "content_type": "application/json",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/api/records/19683234",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://zenodo.org/records/19683234/files/ARDB_Full.zip?download=1",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/19683234/files/ARDB_Full.zip?download=1",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/records/19683234/files/ARDB_Full.zip?download=1",
+        "content_type": "application/octet-stream",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/19683234/files/ARDB_Full.zip?download=1",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content",
+        "content_type": "application/octet-stream",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "http_status": 503,
+        "effective_url": "http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "http_status": 503,
+        "error": "Service Temporarily Unavailable"
+      }
+    },
+    {
+      "url": "https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "http_status": 0,
+        "effective_url": "https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "content_type": "",
+        "size_download": "0",
+        "ssl_verify_result": "10",
+        "curl_exit": 60,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www2.ece.ohio-state.edu/~aleix/ARdatabase.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://engineering.purdue.edu/~aleix/ARdatabase.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://engineering.purdue.edu/~aleix/ARdatabase.html",
+        "http_status": 0,
+        "effective_url": "https://engineering.purdue.edu/~aleix/ARdatabase.html",
+        "content_type": "",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 56,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://engineering.purdue.edu/~aleix/ARdatabase.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://engineering.purdue.edu/~aleix/aleix_face_DB.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://engineering.purdue.edu/~aleix/aleix_face_DB.html",
+        "http_status": 404,
+        "effective_url": "https://engineering.purdue.edu/~aleix/aleix_face_DB.html",
+        "content_type": "text/html; charset=UTF-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://engineering.purdue.edu/~aleix/aleix_face_DB.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+        "http_status": 200,
+        "effective_url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+        "content_type": "application/zip",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html",
+        "http_status": 200,
+        "effective_url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://zenodo.org/records/14974867",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/14974867",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/records/14974867",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/14974867",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://zenodo.org/records/14974867/files/jaffe.zip?download=1",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/14974867/files/jaffe.zip?download=1",
+        "http_status": 200,
+        "effective_url": "https://zenodo.org/records/14974867/files/jaffe.zip?download=1",
+        "content_type": "application/octet-stream",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://zenodo.org/records/14974867/files/jaffe.zip?download=1",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2",
+        "http_status": 200,
+        "effective_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2",
+        "content_type": "application/x-bzip2",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2",
+        "http_status": 200,
+        "effective_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2",
+        "content_type": "application/x-bzip2",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://ndownloader.figshare.com/files/5976027",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://ndownloader.figshare.com/files/5976027",
+        "http_status": 403,
+        "effective_url": "https://s3-eu-west-1.amazonaws.com/pfigshare-u-files/5976027/olivettifaces.mat?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIYCQYOYV5JSSROOA/20261021/eu-west-1/s3/aws4_request&X-Amz-Date=20261021T080653Z&X-Amz-Expires=10&X-Amz-SignedHeaders=host&X-Amz-Signature=50365d3c4607f75a70c3b7db3c24c2ad1fc933f0c7c574a31952d3fa7db94a9a",
+        "content_type": "application/xml",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://ndownloader.figshare.com/files/5976027",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "http_status": 404,
+        "effective_url": "http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "content_type": "text/html; charset=UTF-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "http_status": 404,
+        "error": "Not Found"
+      }
+    },
+    {
+      "url": "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "http_status": 200,
+        "effective_url": "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "content_type": "application/zip",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf",
+        "http_status": 200,
+        "effective_url": "https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf",
+        "content_type": "application/pdf",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://people.engr.tamu.edu/rgutierrez/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://people.engr.tamu.edu/rgutierrez/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "http_status": 404,
+        "effective_url": "https://people.engr.tamu.edu/rgutierrez/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://people.engr.tamu.edu/rgutierrez/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "http_status": 200,
+        "effective_url": "https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "content_type": "application/pdf",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/1411.6241",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://arxiv.org/abs/1411.6241",
+        "http_status": 200,
+        "effective_url": "https://arxiv.org/abs/1411.6241",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://arxiv.org/abs/1411.6241",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://arxiv.org/pdf/1411.6241.pdf",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://arxiv.org/pdf/1411.6241.pdf",
+        "http_status": 404,
+        "effective_url": "https://arxiv.org/pdf/1411.6241",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://arxiv.org/pdf/1411.6241.pdf",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "http_status": 202,
+        "effective_url": "http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "content_type": "text/html; charset=UTF-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "http_status": 202,
+        "content_type": "text/html; charset=UTF-8",
+        "content_length": "0",
+        "effective_url": "http://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz"
+      }
+    },
+    {
+      "url": "https://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "http_status": 202,
+        "effective_url": "https://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "content_type": "text/html; charset=UTF-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://eprints.lincoln.ac.uk/id/eprint/16081/1/face.tar.gz",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://images.ee.umist.ac.uk/danny/database.html",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://images.ee.umist.ac.uk/danny/database.html",
+        "http_status": 502,
+        "effective_url": "http://images.ee.umist.ac.uk/danny/database.html",
+        "content_type": "",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://images.ee.umist.ac.uk/danny/database.html",
+        "http_status": 502,
+        "error": "Bad Gateway"
+      }
+    },
+    {
+      "url": "https://www.sheffield.ac.uk/eee/research/iel/research/face",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://www.sheffield.ac.uk/eee/research/iel/research/face",
+        "http_status": 404,
+        "effective_url": "https://sheffield.ac.uk/eee/research/iel/research/face",
+        "content_type": "text/html",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://www.sheffield.ac.uk/eee/research/iel/research/face",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 403,
+        "effective_url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "http://www.cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "http://www.cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 403,
+        "effective_url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "http://www.cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 200,
+        "effective_url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "curl": {
+        "tool": "curl",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 200,
+        "effective_url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "text/plain; charset=utf-8",
+        "size_download": "0",
+        "ssl_verify_result": "0",
+        "curl_exit": 0,
+        "stderr": ""
+      },
+      "urllib": {
+        "tool": "urllib",
+        "method": "HEAD",
+        "url": "https://web.archive.org/web/20240719052709id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1028)>"
+      }
+    },
+    {
+      "url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "download": {
+        "tool": "curl",
+        "method": "GET",
+        "url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 403,
+        "effective_url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "969",
+        "curl_exit": 0,
+        "stderr": "% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n100   969    0   969    0     0   1050      0 --:--:-- --:--:-- --:--:--  1049",
+        "saved": false,
+        "rejected": "response body looks like HTML, not a MATLAB file"
+      }
+    },
+    {
+      "url": "http://www.cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "download": {
+        "tool": "curl",
+        "method": "GET",
+        "url": "http://www.cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 403,
+        "effective_url": "https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "text/html; charset=utf-8",
+        "size_download": "969",
+        "curl_exit": 0,
+        "stderr": "% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n\n  0  ",
+        "saved": false,
+        "rejected": "response body looks like HTML, not a MATLAB file"
+      }
+    },
+    {
+      "url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+      "download": {
+        "tool": "curl",
+        "method": "GET",
+        "url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "http_status": 200,
+        "effective_url": "https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat",
+        "content_type": "",
+        "size_download": "532304",
+        "curl_exit": 0,
+        "stderr": "% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n 55  519k   55  286k    0     0   154k      0  0:00:03  0:00:01  0:00:02  154k\n100  5",
+        "saved": true,
+        "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/binalpha/data/binaryalphadigs.mat",
+        "bytes": 532304,
+        "sha256": "3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7"
+      }
+    }
+  ]
+}

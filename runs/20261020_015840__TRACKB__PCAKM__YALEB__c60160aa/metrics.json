@@ -1,0 +1,151 @@
+{
+  "acc_mean": 0.09096934548467274,
+  "acc_std": 0.006283022413945263,
+  "dataset_metadata": {
+    "SHA256_checksum": "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99",
+    "dataset_name": "YaleB",
+    "label_encoding": "stored gnd 1..38 mapped to 0..37",
+    "n": 2414,
+    "number_of_classes": 38,
+    "original_feature_dimension": 1024,
+    "preprocessing_operations": [
+      "no resize; the obtained matrix is already 32x32 (1024 uint8 values)",
+      "divide by 255",
+      "keep Deng Cai row order; MATLAB reshape on his page is column-major"
+    ],
+    "processed_feature_dimension": 1024,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 2414 rows in YaleB_32x32.mat",
+    "source_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+    "verification_status": "approximate"
+  },
+  "n_clusters": 38,
+  "n_features": 1024,
+  "n_samples": 2414,
+  "n_trials_completed": 10,
+  "n_trials_requested": 10,
+  "nmi_mean": 0.12716934689303708,
+  "nmi_std": 0.008719621309968366,
+  "params": {
+    "n_components": 38
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.4839258166961372,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "trials": [
+    {
+      "acc": 0.08285004142502071,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.11841690620991961,
+      "runtime_seconds": 0.49931579176336527,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.10273405136702568,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.13832881722229554,
+      "runtime_seconds": 0.4427150832489133,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.08864954432477216,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.11850290995808666,
+      "runtime_seconds": 0.47739112516865134,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.08699254349627175,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.12083561182710671,
+      "runtime_seconds": 0.45775395911186934,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.0927920463960232,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.13360872133814605,
+      "runtime_seconds": 0.4537162082269788,
+      "seed": 4,
+      "trial_index": 4
+    },
+    {
+      "acc": 0.08740679370339685,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.12766495239613493,
+      "runtime_seconds": 0.4520318750292063,
+      "seed": 5,
+      "trial_index": 5
+    },
+    {
+      "acc": 0.0932062966031483,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.1261488612991685,
+      "runtime_seconds": 0.46114924969151616,
+      "seed": 6,
+      "trial_index": 6
+    },
+    {
+      "acc": 0.09652029826014913,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.13769706274269763,
+      "runtime_seconds": 0.4813187080435455,
+      "seed": 7,
+      "trial_index": 7
+    },
+    {
+      "acc": 0.09527754763877382,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.13541660768609923,
+      "runtime_seconds": 0.5962517089210451,
+      "seed": 8,
+      "trial_index": 8
+    },
+    {
+      "acc": 0.08326429163214581,
+      "n_components": 38,
+      "n_predicted_labels": 2414,
+      "n_unique_predicted": 38,
+      "nmi": 0.11507301825071586,
+      "runtime_seconds": 0.5176144577562809,
+      "seed": 9,
+      "trial_index": 9
+    }
+  ]
+}

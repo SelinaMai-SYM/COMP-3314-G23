@@ -1,0 +1,208 @@
+=== 2026-10-21T14:18:04Z HEAD zenodo record HTML ===
+HTTP/1.1 200 Connection established
+
+HTTP/1.1 200 OK
+server: nginx
+date: Wed, 21 Oct 2026 14:18:05 GMT
+content-type: text/html; charset=utf-8
+content-length: 72749
+vary: Accept-Encoding
+link: <https://orcid.org/0009-0007-8493-5282> ; rel="author" , <https://doi.org/10.5281/zenodo.19683234> ; rel="cite-as" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/dcat+xml" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/ld+json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/ld+json" ; profile="https://datapackage.org/profiles/2.0/datapackage.json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/marcxml+xml" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.citationstyles.csl+json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.datacite.datacite+json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.datacite.datacite+xml" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.geo+json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.inveniordm.v1+json" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.inveniordm.v1.full+csv" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/vnd.inveniordm.v1.simple+csv" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/x-bibtex" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="application/x-dc+xml" , <https://zenodo.org/api/records/19683234> ; rel="describedby" ; type="text/x-bibliography" , <https://zenodo.org/records/19683234/files/ARDB_Full.zip> ; rel="item" ; type="application/zip" , <https://zenodo.org/records/19683234/files/CK+_Full.zip> ; rel="item" ; type="application/zip" , <https://zenodo.org/records/19683234/files/EYaleB_Full.zip> ; rel="item" ; type="application/zip" , <https://creativecommons.org/licenses/by/4.0/legalcode> ; rel="license" , <https://schema.org/Dataset> ; rel="type" , <https://schema.org/AboutPage> ; rel="type" , <https://zenodo.org/api/records/19683234> ; rel="linkset" ; type="application/linkset+json"
+x-ratelimit-limit: 133
+x-ratelimit-remaining: 132
+x-ratelimit-reset: 1792592346
+retry-after: 60
+permissions-policy: interest-cohort=()
+x-frame-options: sameorigin
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+content-security-policy: default-src 'self' fonts.googleapis.com *.gstatic.com data: 'unsafe-inline' 'unsafe-eval' blob: zenodo-broker.web.cern.ch zenodo-broker-qa.web.cern.ch maxcdn.bootstrapcdn.com cdnjs.cloudflare.com ajax.googleapis.com webanalytics.web.cern.ch
+strict-transport-security: max-age=31556926; includeSubDomains
+referrer-policy: strict-origin-when-cross-origin
+set-cookie: session=ed1cf539cad3a537_6ad8c99d.p7vO-ZU667omr1gKkqmWUbtioNQ; Expires=Mon, 26 Oct 2026 14:18:05 GMT; Secure; HttpOnly; Path=/; SameSite=Lax
+x-source: ui
+
+
+=== 2026-10-21T14:18:06Z HEAD zenodo ARDB_Full.zip content ===
+HTTP/1.1 200 Connection established
+
+HTTP/1.1 200 OK
+server: nginx
+date: Wed, 21 Oct 2026 14:18:07 GMT
+content-type: application/octet-stream
+content-length: 120587997
+content-disposition: attachment; filename=ARDB_Full.zip
+oc-checksum: MD5:bb97bd9237680744c0c7268624696263
+accept-ranges: bytes
+content-type: application/octet-stream
+content-security-policy: default-src 'self' fonts.googleapis.com *.gstatic.com data: 'unsafe-inline' 'unsafe-eval' blob: zenodo-broker.web.cern.ch zenodo-broker-qa.web.cern.ch maxcdn.bootstrapcdn.com cdnjs.cloudflare.com ajax.googleapis.com webanalytics.web.cern.ch
+x-content-type-options: nosniff
+x-download-options: noopen
+x-permitted-cross-domain-policies: none
+x-frame-options: sameorigin
+x-xss-protection: 1; mode=block
+x-ratelimit-limit: 133
+x-ratelimit-remaining: 131
+x-ratelimit-reset: 1792592346
+retry-after: 58
+strict-transport-security: max-age=31556926; includeSubDomains
+referrer-policy: strict-origin-when-cross-origin
+access-control-allow-origin: *
+access-control-expose-headers: Content-Type, ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset
+x-source: files-primary
+
+
+=== 2026-10-21T14:18:36Z HEAD Roweis data.html ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 200 
+accept-ranges: bytes
+content-length: 9752
+content-type: text/html; charset=UTF-8
+date: Wed, 21 Oct 2026 14:18:37 GMT
+server: Apache/2.4.62
+content-security-policy: upgrade-insecure-requests
+strict-transport-security: max-age=31536000; preload;
+set-cookie: STATICSERVERID=s1; path=/
+
+
+=== 2026-10-21T14:18:37Z HEAD Roweis umist_cropped.mat ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 200 
+last-modified: Tue, 06 Oct 2009 23:03:02 GMT
+etag: "5a7210-4754c3b6ff580"
+accept-ranges: bytes
+content-length: 5927440
+date: Wed, 21 Oct 2026 14:18:38 GMT
+server: Apache/2.4.62
+content-security-policy: upgrade-insecure-requests
+strict-transport-security: max-age=31536000; preload;
+set-cookie: STATICSERVERID=s2; path=/
+cache-control: private
+
+
+=== 2026-10-21T14:18:38Z HEAD Roweis binaryalphadigs.mat ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 200 
+last-modified: Tue, 06 Oct 2009 23:02:53 GMT
+etag: "81f50-4754c3ae6a140"
+accept-ranges: bytes
+content-length: 532304
+date: Wed, 21 Oct 2026 14:18:39 GMT
+server: Apache/2.4.62
+content-security-policy: upgrade-insecure-requests
+strict-transport-security: max-age=31536000; preload;
+set-cookie: STATICSERVERID=s2; path=/
+cache-control: private
+
+
+=== 2026-10-21T14:18:38Z HEAD ~roweis umist_cropped.mat ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 403 
+vary: accept-language,accept-charset
+accept-ranges: bytes
+content-type: text/html; charset=utf-8
+content-language: en
+date: Wed, 21 Oct 2026 14:18:40 GMT
+server: Apache/2.4.62
+content-security-policy: upgrade-insecure-requests
+strict-transport-security: max-age=31536000; preload;
+set-cookie: USERSERVERID=p1; path=/
+
+=== 2026-10-21T14:18:57Z GET ARDB_Full.zip ===
+=== 2026-10-21T14:19:00Z GET Roweis umist_cropped.mat for byte compare ===
+http_code=200 size=5927440 content_type= url_effective=https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat
+=== 2026-10-21T14:19:05Z SPLS DOI ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 302 
+date: Wed, 21 Oct 2026 14:19:06 GMT
+content-type: text/html;charset=utf-8
+location: https://linkinghub.elsevier.com/retrieve/pii/S0306457313000095
+server: cloudflare
+vary: Origin
+vary: Accept
+expires: Wed, 21 Oct 2026 15:06:46 GMT
+link: <https://dul.usage.elsevier.com/doi/>; rel=dul
+permissions-policy: interest-cohort=(),browsing-topics=()
+cf-cache-status: DYNAMIC
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=6uOlVJgV3wyN%2F5hGoKzI6tcLO19P4hS1VERf76E7dfEyvMhhyQv%2FQ6NVH1ok8oFgaEzNWabhlx75eGaJDB9SMp6SrT3PlPVn4PbYbgi4RJ0cKTGbtQvRW5g%3D"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-ray: a4e0e5365ea16e22-LAX
+alt-svc: h3=":443"; ma=86400
+
+HTTP/1.1 200 Connection established
+
+HTTP/2 200 
+date: Wed, 21 Oct 2026 14:19:07 GMT
+content-type: text/html;charset=UTF-8
+content-length: 2671
+set-cookie: JSESSIONID=9CF2E822B6DB1A5E355829FBF6749786; Path=/retrieve; Secure; HttpOnly
+pragma: no-cache
+cache-control: no-cache, no-store, must-revalidate
+expires: Thu, 01 Jan 1970 00:00:00 GMT
+set-cookie: visitorId=Kwu9vQga6EEsk1Jrr28S; Max-Age=2147483647; Expires=Mon, 08 Nov 2094 17:33:14 GMT; Path=/
+p3p: CP="NON DSP COR CUR ADM DEV TAI PSA PSD OUR IND UNI NAV STA PRE COM INT CNT",policyref="https://linkinghub.elsevier.com/retrieve/static/P3P/IHUB-p3p.xml"
+tdm-reservation: 1
+tdm-policy: https://www.elsevier.com/tdm/tdmrep-policy.json
+content-language: en
+
+
+=== 2026-10-21T14:19:07Z ScienceDirect abstract ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 403 
+date: Wed, 21 Oct 2026 14:19:08 GMT
+content-type: text/html; charset=UTF-8
+content-length: 1207742
+accept-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cf-mitigated: challenge
+x-frame-options: SAMEORIGIN
+server: cloudflare
+critical-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=(),xr-spatial-tracking=*
+referrer-policy: same-origin
+server-timing: chlray;desc="a4e0e541fea8ccff"
+x-content-type-options: nosniff
+strict-transport-security: max-age=2678400; preload
+set-cookie: __cf_bm=dDW7V5L0ybdtFMXKBQK9AKigghoL5WYcGnrf8qjTaik-1792592348.473298-1.0.1.1-H2Dnv_4u361pNMyGf3hjbUlKUl68AMXk9GTvPU4EKQhbDMjDAcz9etsnaangCmRJYliUNnyd3Bfya.N3.P.iLyjox6T6T2Ra0WFjxvGyJV25Y6A9U3GLtVc1gftiEsZ2; HttpOnly; SameSite=None; Secure; Path=/; Domain=sciencedirect.com; Expires=Wed, 21 Oct 2026 14:49:08 GMT
+tdm-policy: https://www.elsevier.com/tdm/tdmrep-policy.json
+tdm-reservation: 1
+cf-ray: a4e0e541fea8ccff-LAX
+
+
+=== 2026-10-21T14:19:08Z ScienceDirect full pii ===
+HTTP/1.1 200 Connection established
+
+HTTP/2 403 
+date: Wed, 21 Oct 2026 14:19:09 GMT
+content-type: text/html; charset=UTF-8
+content-length: 1207730
+accept-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cf-mitigated: challenge
+x-frame-options: SAMEORIGIN
+server: cloudflare
+critical-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=(),xr-spatial-tracking=*
+referrer-policy: same-origin
+server-timing: chlray;desc="a4e0e5467902b103"
+x-content-type-options: nosniff
+strict-transport-security: max-age=2678400; preload
+set-cookie: __cf_bm=BZMOjudGgmEKT5zR.gi9DHVBCw9oaGtndSgNOKX8g2w-1792592349.2014518-1.0.1.1-CJBSVxYtmJd3x4GAAHyoEqhDejackyc9KkMi.21cTxCCfqDmiQQecGsiYD6Ii96fckbeG9j_9qqiS_dl8_1mWyz6xZ_GH5W7J_8b8ecboWrpk2MNXdCbnnhuIBzQsYKx; HttpOnly; SameSite=None; Secure; Path=/; Domain=sciencedirect.com; Expires=Wed, 21 Oct 2026 14:49:09 GMT
+tdm-policy: https://www.elsevier.com/tdm/tdmrep-policy.json
+tdm-reservation: 1
+cf-ray: a4e0e5467902b103-LAX
+
+http_code=200 size=120587997 content_type=application/octet-stream url_effective=https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content

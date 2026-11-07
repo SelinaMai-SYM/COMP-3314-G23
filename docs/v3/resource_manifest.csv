@@ -1,0 +1,14 @@
+dataset_id,historical_benchmark,available,blocker,n_samples,n_features,n_classes,version,counts_as_historical,reason
+AR,AR,False,BLOCKED_DATA,,,,,True,"AR is unavailable: Chang et al. name AR as 840 faces of 120 people and do not say which 840. Official Martinez distribution was not obtained. A THIRD-PARTY zip ARDB_Full.zip from Zenodo 19683234 (uploader Manu shree, not Martinez/OSU) was downloaded on 2026-10-21: 120587997 bytes, MD5 bb97bd9237680744c0c7268624696263 (matches the published Zenodo checksum), SHA-256 32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438. The zip is PKZIP, not HTML. It contains 100 folders s1-s100 with 120x165 BMP files named 1.bmp..26.bmp, not official M-xx-yy.raw / F-xx-yy.raw names. No archive document states an 840/120 or 7-image rule, so that subset was not invented. Status: SOURCE_RECOVERED_SUBSET_UNVERIFIED. Default load_dataset('AR') does not claim EXACT. See benchmarks/ar/README.md."
+JAFFE,JAFFE,True,,213,676,10,zenodo,True,
+ORL_att92,ORL,True,,400,1024,40,att92,True,
+UMIST_precropped575,UMIST,True,,575,10304,20,precropped575,False,
+BinAlpha_candidate26x30,BinAlpha,True,,780,320,26,CANDIDATE_BIN_ALPHA,False,
+MSRA50,MSRA50,False,BLOCKED_DATA,,,,,True,"MSRA50 is unavailable: MSRA50 is BLOCKED_NO_VERIFIED_DATA_URL. Chang et al. state 1799 images and 12 classes resized to 32x32, with no URL. Round 2 was given a null direct download URL. The page https://arxiv.org/html/2311.15214v1 is reference material only and was not saved as data. No MSRA-B, MSRA10K, TD500, or MSRC file was substituted. See benchmarks/msra50/README.md."
+YaleB_dengcai32,YaleB,True,,2414,1024,38,dengcai32,True,
+YaleB_cropped2414,YaleB,True,,2414,1024,38,cropped2414,True,
+USPS,USPS,True,,9298,256,10,libsvm,True,
+AR_lzuf_superset1680,AR,True,,1680,1024,120,lzuf_superset1680,False,
+UMIST_lzuf574,UMIST,True,,574,10304,20,lzuf574,False,
+UMIST_zenodo3634017,UMIST,True,,575,644,20,zenodo3634017,False,
+UMIST_roweis575,UMIST,True,,575,10304,20,roweis575,False,

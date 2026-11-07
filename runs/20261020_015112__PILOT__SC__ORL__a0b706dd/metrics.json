@@ -1,0 +1,87 @@
+{
+  "acc_mean": 0.5375,
+  "acc_std": 0.006614378277661504,
+  "dataset_metadata": {
+    "SHA256_checksum": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794",
+    "dataset_name": "ORL",
+    "n": 400,
+    "number_of_classes": 40,
+    "original_feature_dimension": 4096,
+    "original_spatial_size": [
+      64,
+      64
+    ],
+    "preprocessing_operations": [
+      "interpret olivettifaces.mat columns as 64x64 images using the scikit-learn axis order",
+      "resize each uint8 image to 32x32 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 1024,
+    "processed_spatial_size": [
+      32,
+      32
+    ],
+    "random_seed": "unknown",
+    "sample_selection_method": "all 400 images; label = column_index // 10",
+    "source_url": "https://ndownloader.figshare.com/files/5976027",
+    "verification_status": "approximate"
+  },
+  "n_clusters": 40,
+  "n_features": 1024,
+  "n_samples": 400,
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "nmi_mean": 0.7657517585845719,
+  "nmi_std": 0.011551439877550671,
+  "params": {
+    "k": 5
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_embedding_seconds": 0.044167791958898306,
+  "runtime_seconds_mean": 0.0014697501125435035,
+  "spectral_backend": "baselines.spectral",
+  "trial_seeds": [
+    0,
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "acc": 0.535,
+      "kmeans_inertia": 12.818868563523244,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7601949071499403,
+      "runtime_seconds": 0.0018087499774992466,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.5325,
+      "kmeans_inertia": 12.871766256097766,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7580289074821509,
+      "runtime_seconds": 0.0012790001928806305,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.545,
+      "kmeans_inertia": 12.959172043198471,
+      "kmeans_init": "random",
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7790314611216246,
+      "runtime_seconds": 0.0013215001672506332,
+      "seed": 2,
+      "trial_index": 2
+    }
+  ]
+}

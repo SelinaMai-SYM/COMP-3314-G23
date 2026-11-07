@@ -1,0 +1,599 @@
+{
+  "acc_mean": 0.5215,
+  "acc_std": 0.02905396105630392,
+  "dataset_metadata": {
+    "SHA256_checksum": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794",
+    "dataset_name": "ORL",
+    "n": 400,
+    "number_of_classes": 40,
+    "original_feature_dimension": 4096,
+    "original_spatial_size": [
+      64,
+      64
+    ],
+    "preprocessing_operations": [
+      "interpret olivettifaces.mat columns as 64x64 images using the scikit-learn axis order",
+      "resize each uint8 image to 32x32 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 1024,
+    "processed_spatial_size": [
+      32,
+      32
+    ],
+    "random_seed": "unknown",
+    "sample_selection_method": "all 400 images; label = column_index // 10",
+    "source_url": "https://ndownloader.figshare.com/files/5976027",
+    "verification_status": "approximate"
+  },
+  "n_clusters": 40,
+  "n_features": 1024,
+  "n_samples": 400,
+  "n_trials_completed": 50,
+  "n_trials_requested": 50,
+  "nmi_mean": 0.7484894536410581,
+  "nmi_std": 0.013467790933563546,
+  "params": {
+    "n_components": 80
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.06078165081329644,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "trials": [
+    {
+      "acc": 0.5325,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7595237143995274,
+      "runtime_seconds": 0.05410104198381305,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.515,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7234310932109838,
+      "runtime_seconds": 0.04926737491041422,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.5075,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7435093230600407,
+      "runtime_seconds": 0.04871783312410116,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.49,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7291956134212584,
+      "runtime_seconds": 0.04837879212573171,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.5175,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7561875649540799,
+      "runtime_seconds": 0.04995241668075323,
+      "seed": 4,
+      "trial_index": 4
+    },
+    {
+      "acc": 0.5325,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.763149391197027,
+      "runtime_seconds": 0.05341962492093444,
+      "seed": 5,
+      "trial_index": 5
+    },
+    {
+      "acc": 0.4825,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7184859796770445,
+      "runtime_seconds": 0.054712625220417976,
+      "seed": 6,
+      "trial_index": 6
+    },
+    {
+      "acc": 0.55,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7637887331722927,
+      "runtime_seconds": 0.05630462523549795,
+      "seed": 7,
+      "trial_index": 7
+    },
+    {
+      "acc": 0.5275,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.747097826922544,
+      "runtime_seconds": 0.05771766696125269,
+      "seed": 8,
+      "trial_index": 8
+    },
+    {
+      "acc": 0.5575,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7565290385244026,
+      "runtime_seconds": 0.05269962502643466,
+      "seed": 9,
+      "trial_index": 9
+    },
+    {
+      "acc": 0.555,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7687747675251143,
+      "runtime_seconds": 0.05371562484651804,
+      "seed": 10,
+      "trial_index": 10
+    },
+    {
+      "acc": 0.515,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7535678121141649,
+      "runtime_seconds": 0.05630129110068083,
+      "seed": 11,
+      "trial_index": 11
+    },
+    {
+      "acc": 0.5375,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7450933847990376,
+      "runtime_seconds": 0.13626637496054173,
+      "seed": 12,
+      "trial_index": 12
+    },
+    {
+      "acc": 0.5425,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7460523112116061,
+      "runtime_seconds": 0.06524279108271003,
+      "seed": 13,
+      "trial_index": 13
+    },
+    {
+      "acc": 0.515,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7391681627185132,
+      "runtime_seconds": 0.056061666924506426,
+      "seed": 14,
+      "trial_index": 14
+    },
+    {
+      "acc": 0.535,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7472942432624329,
+      "runtime_seconds": 0.054477292113006115,
+      "seed": 15,
+      "trial_index": 15
+    },
+    {
+      "acc": 0.505,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.746050158639549,
+      "runtime_seconds": 0.05863787466660142,
+      "seed": 16,
+      "trial_index": 16
+    },
+    {
+      "acc": 0.54,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7534272334001582,
+      "runtime_seconds": 0.05734804132953286,
+      "seed": 17,
+      "trial_index": 17
+    },
+    {
+      "acc": 0.54,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7629145079598338,
+      "runtime_seconds": 0.05825791601091623,
+      "seed": 18,
+      "trial_index": 18
+    },
+    {
+      "acc": 0.57,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7585424496285158,
+      "runtime_seconds": 0.05643833288922906,
+      "seed": 19,
+      "trial_index": 19
+    },
+    {
+      "acc": 0.4675,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7321863965702158,
+      "runtime_seconds": 0.0619824999012053,
+      "seed": 20,
+      "trial_index": 20
+    },
+    {
+      "acc": 0.5725,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7645153690829338,
+      "runtime_seconds": 0.06511954218149185,
+      "seed": 21,
+      "trial_index": 21
+    },
+    {
+      "acc": 0.535,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.768254117172948,
+      "runtime_seconds": 0.05651108315214515,
+      "seed": 22,
+      "trial_index": 22
+    },
+    {
+      "acc": 0.5225,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7564310839636237,
+      "runtime_seconds": 0.055125166196376085,
+      "seed": 23,
+      "trial_index": 23
+    },
+    {
+      "acc": 0.54,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7475013227740168,
+      "runtime_seconds": 0.057869874872267246,
+      "seed": 24,
+      "trial_index": 24
+    },
+    {
+      "acc": 0.53,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7481808570789817,
+      "runtime_seconds": 0.05680508306249976,
+      "seed": 25,
+      "trial_index": 25
+    },
+    {
+      "acc": 0.48,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7487684333392689,
+      "runtime_seconds": 0.05554137472063303,
+      "seed": 26,
+      "trial_index": 26
+    },
+    {
+      "acc": 0.5075,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7335881968160152,
+      "runtime_seconds": 0.06297437520697713,
+      "seed": 27,
+      "trial_index": 27
+    },
+    {
+      "acc": 0.47,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7262968506383114,
+      "runtime_seconds": 0.056267875246703625,
+      "seed": 28,
+      "trial_index": 28
+    },
+    {
+      "acc": 0.555,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.755248295273235,
+      "runtime_seconds": 0.05775504233315587,
+      "seed": 29,
+      "trial_index": 29
+    },
+    {
+      "acc": 0.4875,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7393381279875114,
+      "runtime_seconds": 0.058089000172913074,
+      "seed": 30,
+      "trial_index": 30
+    },
+    {
+      "acc": 0.5425,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7711478201409867,
+      "runtime_seconds": 0.05712395906448364,
+      "seed": 31,
+      "trial_index": 31
+    },
+    {
+      "acc": 0.495,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.738734007737016,
+      "runtime_seconds": 0.06114900019019842,
+      "seed": 32,
+      "trial_index": 32
+    },
+    {
+      "acc": 0.57,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7537823243655324,
+      "runtime_seconds": 0.05908074975013733,
+      "seed": 33,
+      "trial_index": 33
+    },
+    {
+      "acc": 0.465,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7281507989119239,
+      "runtime_seconds": 0.05893637519329786,
+      "seed": 34,
+      "trial_index": 34
+    },
+    {
+      "acc": 0.5075,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7603049102524156,
+      "runtime_seconds": 0.0625513750128448,
+      "seed": 35,
+      "trial_index": 35
+    },
+    {
+      "acc": 0.4925,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7432423357762439,
+      "runtime_seconds": 0.06266483291983604,
+      "seed": 36,
+      "trial_index": 36
+    },
+    {
+      "acc": 0.5175,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7536444963950327,
+      "runtime_seconds": 0.06396058294922113,
+      "seed": 37,
+      "trial_index": 37
+    },
+    {
+      "acc": 0.535,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7597110870643299,
+      "runtime_seconds": 0.05797616671770811,
+      "seed": 38,
+      "trial_index": 38
+    },
+    {
+      "acc": 0.445,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7205605788720042,
+      "runtime_seconds": 0.06393216690048575,
+      "seed": 39,
+      "trial_index": 39
+    },
+    {
+      "acc": 0.5575,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7536508506207348,
+      "runtime_seconds": 0.0615251250565052,
+      "seed": 40,
+      "trial_index": 40
+    },
+    {
+      "acc": 0.5525,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7687466463320041,
+      "runtime_seconds": 0.06141912518069148,
+      "seed": 41,
+      "trial_index": 41
+    },
+    {
+      "acc": 0.5275,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7375434773933368,
+      "runtime_seconds": 0.057542291935533285,
+      "seed": 42,
+      "trial_index": 42
+    },
+    {
+      "acc": 0.535,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7588414817311341,
+      "runtime_seconds": 0.0618921248242259,
+      "seed": 43,
+      "trial_index": 43
+    },
+    {
+      "acc": 0.5325,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7505688511570215,
+      "runtime_seconds": 0.061100708320736885,
+      "seed": 44,
+      "trial_index": 44
+    },
+    {
+      "acc": 0.49,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7323724032387644,
+      "runtime_seconds": 0.05899987509474158,
+      "seed": 45,
+      "trial_index": 45
+    },
+    {
+      "acc": 0.5125,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7528728155730935,
+      "runtime_seconds": 0.06108020804822445,
+      "seed": 46,
+      "trial_index": 46
+    },
+    {
+      "acc": 0.525,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7315178498863371,
+      "runtime_seconds": 0.059989874716848135,
+      "seed": 47,
+      "trial_index": 47
+    },
+    {
+      "acc": 0.505,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7455369674753405,
+      "runtime_seconds": 0.12396854069083929,
+      "seed": 48,
+      "trial_index": 48
+    },
+    {
+      "acc": 0.5325,
+      "n_components": 80,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7614506186344698,
+      "runtime_seconds": 0.06212970893830061,
+      "seed": 49,
+      "trial_index": 49
+    }
+  ]
+}

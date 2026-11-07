@@ -1,0 +1,9 @@
+track: TRACKB
+method: kmeans
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params: {}
+notes: Track B K-means, no label tuning
+label_informed_selection: false

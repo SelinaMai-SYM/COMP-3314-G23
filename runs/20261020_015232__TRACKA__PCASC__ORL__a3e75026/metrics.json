@@ -1,0 +1,160 @@
+{
+  "acc_mean": 0.518,
+  "acc_std": 0.027708803254160558,
+  "dataset_metadata": {
+    "SHA256_checksum": "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794",
+    "dataset_name": "ORL",
+    "n": 400,
+    "number_of_classes": 40,
+    "original_feature_dimension": 4096,
+    "original_spatial_size": [
+      64,
+      64
+    ],
+    "preprocessing_operations": [
+      "interpret olivettifaces.mat columns as 64x64 images using the scikit-learn axis order",
+      "resize each uint8 image to 32x32 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 1024,
+    "processed_spatial_size": [
+      32,
+      32
+    ],
+    "random_seed": "unknown",
+    "sample_selection_method": "all 400 images; label = column_index // 10",
+    "source_url": "https://ndownloader.figshare.com/files/5976027",
+    "verification_status": "approximate"
+  },
+  "n_clusters": 40,
+  "n_features": 1024,
+  "n_samples": 400,
+  "n_trials_completed": 10,
+  "n_trials_requested": 10,
+  "nmi_mean": 0.7522544147376352,
+  "nmi_std": 0.014251899257290222,
+  "params": {
+    "k": 5,
+    "n_components": 20
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.07184465401805937,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "trials": [
+    {
+      "acc": 0.52,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7573107842817717,
+      "runtime_seconds": 0.06482674973085523,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.4975,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7624224794671004,
+      "runtime_seconds": 0.06440316699445248,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.5125,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7572826989468557,
+      "runtime_seconds": 0.06473462516441941,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.5525,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7444031472807179,
+      "runtime_seconds": 0.06617783289402723,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.505,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7346995877008721,
+      "runtime_seconds": 0.06928741559386253,
+      "seed": 4,
+      "trial_index": 4
+    },
+    {
+      "acc": 0.53,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7599138700166047,
+      "runtime_seconds": 0.06835012510418892,
+      "seed": 5,
+      "trial_index": 5
+    },
+    {
+      "acc": 0.4725,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7285970508441331,
+      "runtime_seconds": 0.07070262497290969,
+      "seed": 6,
+      "trial_index": 6
+    },
+    {
+      "acc": 0.555,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7730949255970935,
+      "runtime_seconds": 0.07130920793861151,
+      "seed": 7,
+      "trial_index": 7
+    },
+    {
+      "acc": 0.545,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7636187707743765,
+      "runtime_seconds": 0.09409083379432559,
+      "seed": 8,
+      "trial_index": 8
+    },
+    {
+      "acc": 0.49,
+      "n_components": 20,
+      "n_predicted_labels": 400,
+      "n_unique_predicted": 40,
+      "nmi": 0.7412008324668264,
+      "runtime_seconds": 0.08456395799294114,
+      "seed": 9,
+      "trial_index": 9
+    }
+  ]
+}

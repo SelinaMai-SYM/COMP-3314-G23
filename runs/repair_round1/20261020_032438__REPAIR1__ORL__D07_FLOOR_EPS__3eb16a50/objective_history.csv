@@ -1,0 +1,2 @@
+iteration,equation8_objective,sqrt_smoothed_equation8_objective,irls_quadratic_surrogate,linear_residual,step_frobenius,denominator_floor,s_min,s_max,laplacian_coefficient,relative_obj_change,relative_iterate_change
+0.0,51.10537029063448,51.1053718383147,12.776341177523033,4.582347718103857e-08,3.246988592297808e-07,1e-08,50000000.0,50000000.0,1.0,,3.246988592297808e-07

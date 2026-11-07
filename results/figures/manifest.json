@@ -1,0 +1,24 @@
+{
+  "n_runs_seen": 191,
+  "figures": [
+    "fig1_track_a_acc.pdf",
+    "fig1_track_a_acc.svg",
+    "fig2_gamma_sensitivity.pdf",
+    "fig2_gamma_sensitivity.svg",
+    "fig3_convergence.pdf",
+    "fig3_convergence.svg",
+    "fig4_ex1_ssc_vs_rssc.pdf",
+    "fig4_ex1_ssc_vs_rssc.svg",
+    "fig5_gaussian_noise.pdf",
+    "fig5_gaussian_noise.svg",
+    "fig6_feature_corruption.pdf",
+    "fig6_feature_corruption.svg",
+    "fig7_runtime.pdf",
+    "fig7_runtime.svg",
+    "fig8_k_sensitivity.pdf",
+    "fig8_k_sensitivity.svg",
+    "fig9_outliers.pdf",
+    "fig9_outliers.svg"
+  ],
+  "note": "Every curve or bar uses completed runs. Missing series are omitted, not filled from the paper."
+}

@@ -1,0 +1,22 @@
+track: ROUND2
+method: sc
+dataset: USPS
+dataset_version: libsvm
+dataset_identity_status: verified_libsvm_9298
+factor: D12_USPS_SC
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 3
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  k: 5
+  bandwidth_rule: median_positive_knn_squared_distance
+  symmetrization: union
+  row_normalize: false
+  laplacian: symmetric_normalized_eq4
+  kmeans_init: random
+  n_init: 1
+notes: USPS SC pilot 1-3 inits on shared Eq.(4) path. Timeout allowed.
+label_informed_selection: false
+protocol: R2_one_factor_then_kmeans_seeds
+hardware_note: 8 CPU / 16 GB

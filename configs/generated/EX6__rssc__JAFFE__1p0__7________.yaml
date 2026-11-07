@@ -1,0 +1,12 @@
+track: EX6
+method: rssc
+dataset: JAFFE
+n_trials: 20
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 7
+  gamma: 1.0
+  max_iter: 300
+notes: EX6 k=7
+label_informed_selection: false

@@ -1,0 +1,24 @@
+primary: Y0
+tracks:
+  Y0:
+    per_sample_l2_on_X: false
+    row_normalize_F: false
+    role: locked_raw_pixels
+  Y1:
+    per_sample_l2_on_X: true
+    row_normalize_F: false
+    role: diagnostic_does_not_replace_Y0
+  Y2:
+    per_sample_l2_on_X: false
+    row_normalize_F: true
+    role: diagnostic_spectral_only
+  Y3:
+    per_sample_l2_on_X: true
+    row_normalize_F: true
+    role: diagnostic_spectral_only
+versions:
+  - dengcai32
+  - cropped2414
+do_not_select_by_test_acc: true
+pixel_permutation_is_not_an_explanation: true
+global_brightness_scale_is_not_an_explanation: true

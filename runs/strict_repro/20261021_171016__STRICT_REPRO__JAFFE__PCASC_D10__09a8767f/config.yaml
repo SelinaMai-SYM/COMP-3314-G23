@@ -1,0 +1,23 @@
+track: STRICT_REPRO
+method: pca_spectral
+dataset: JAFFE
+dataset_version: zenodo
+dataset_identity_status: verified_zenodo_213_not_paper_unpublished_copy
+factor: PCASC_D10
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  bandwidth_rule: median_positive_knn_squared_distance
+  symmetrization: union
+  row_normalize: false
+  laplacian: symmetric_normalized_eq4
+  kmeans_init: random
+  n_init: 1
+  n_components: 10
+notes: PCA-SC prespecified dim=10; not selected by ACC
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

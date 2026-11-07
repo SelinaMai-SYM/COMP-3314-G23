@@ -1,0 +1,21 @@
+{
+  "config_hash": "d155624f",
+  "created_at": "2026-10-21T17:12:59+08:00",
+  "dataset": "ORL",
+  "dataset_identity_status": "original_source_att92_92x112_bilinear_32x32",
+  "dataset_version": "att92",
+  "factor": "PCAKM_GRID_D80",
+  "git_branch": "v1",
+  "git_head": "e678400b5586b9181ccdf19bc123f4ba6422d594",
+  "git_status_porcelain": "M SSC_method/README.md\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spls/README.md\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M results/README.md\n M scripts/run_experiment.py\n?? SSC_method/resources/\n?? baselines/lda_kmeans/resources/\n?? baselines/llc/resources/\n?? baselines/spls/resources/\n?? benchmarks/ar/resources/\n?? benchmarks/msra50/resources/\n?? benchmarks/umist/resources/\n?? configs/strict_repro/\n?? docs/resource_acquisition_matrix.md\n?? docs/task1_http_log.json\n?? docs/task1_http_log.jsonl\n?? docs/task1_resource_completion.md\n?? docs/task2_experiment_completion.md\n?? results/reproduction_full_matrix.csv\n?? results/reproduction_full_matrix.md\n?? results/strict_repro/\n?? runs/strict_repro/\n?? scripts/run_strict_repro.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "pca_kmeans",
+  "notes": "PCA dim grid {10..150} clipped; recorded, not used to pick the matrix cell by ACC",
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "run_id": "20261021_171259__STRICT_REPRO__ORL__PCAKM_GRID_D80__d155624f",
+  "selection_uses_labels": false,
+  "track": "STRICT_REPRO",
+  "variant": null
+}

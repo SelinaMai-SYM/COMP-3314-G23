@@ -1,0 +1,35 @@
+track: STRICT_PAPER
+method: ssc
+dataset: JAFFE
+dataset_version: zenodo
+dataset_identity_status: verified_zenodo_213_not_paper_unpublished_copy
+factor: SSC_E8_G1p0
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E8
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  n_init: 1
+  eps: 1.0e-08
+  symmetrization: union
+  laplacian: symmetric_normalized_eq4
+notes: SSC E8 A=S+2gamma Ltilde gamma=1.0; F,G solved once, then 50 k-means; objectives
+  not compared across gamma
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: every gamma in {1e-6,1e-3,1,1e3,1e6} reported separately; raw SSC
+  Eq.8 objectives are NOT compared across gamma; never ACC
+hardware_note: 8 CPU / 16 GB

@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": false,
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "e1cbaa22407ee67b8dd0238d551f287882732ea8f4cc80bda8a37da9ae4da27f",
+  "converged": false,
+  "dataset_key": "BinAlpha__CANDIDATE_BIN_ALPHA",
+  "dataset_sha256": "1285468bf651aa2b74c3c1d0c9cad00adb1e127acb6963fc24550c840c524850",
+  "embed_seconds": 0.031817167066037655,
+  "equation8_objective": 46.861806137264296,
+  "f_sha256": "a0ceea5ae6649b5d059b6ce562e575767f6d27eeef8c89901365e9a1e894438a",
+  "fixed_point_residual": 0.05747886414517376,
+  "g_init": "F",
+  "g_sha256": "a8c380e4bf38320d3bd80002300aecfecc7586fd63ef7742aa830f067f7dada8",
+  "gamma": 1.0,
+  "gamma_token": "1",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 26,
+  "n_iterations": 300,
+  "shape_f": [
+    780,
+    26
+  ],
+  "shape_g": [
+    780,
+    26
+  ],
+  "shrink_seconds": 1.0774671668186784,
+  "solver_status": "NONCONVERGED_RETURNED_ITERATE n_iter=300 max_iter=300 NOT_CERTIFIED_GLOBAL_OPTIMUM",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

@@ -1,0 +1,121 @@
+[
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__sc__D03_BW_MEAN_SC__NA__NA__NA__random__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 0.9435966247692704,
+    "factor": "D03_BW_MEAN_SC",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__sc__D03_BW_UNDIRECTED_MEDIAN_SC__NA__NA__NA__random__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 0.893806875217706,
+    "factor": "D03_BW_UNDIRECTED_MEDIAN_SC",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__sc__D04_MUTUAL_SC__NA__NA__NA__random__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 0.8731657499447465,
+    "factor": "D04_MUTUAL_SC",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__sc__D06_ROW_NORM_SC__NA__NA__NA__random__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 0.8888316247612238,
+    "factor": "D06_ROW_NORM_SC",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__ssc__D08_E13_ATT92__E13__1p0__G__random__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4554789997637272,
+    "factor": "D08_E13_ATT92",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__ssc__D08_E8_ATT92__E8__1p0__G__random__att92__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4779385416768491,
+    "factor": "D08_E8_ATT92",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/ORL__ssc__D09_E8_ITER1000_ATT92__E8__1p0__G__random__att92__n5.yaml",
+    "returncode": 0,
+    "wall_seconds": 2.12558374973014,
+    "factor": "D09_E8_ITER1000_ATT92",
+    "dataset": "ORL"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/JAFFE__sc__D12_JAFFE_SC__NA__NA__NA__random__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.105743832886219,
+    "factor": "D12_JAFFE_SC",
+    "dataset": "JAFFE"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/JAFFE__ssc__D12_JAFFE_E8__E8__1p0__G__random__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.261510374955833,
+    "factor": "D12_JAFFE_E8",
+    "dataset": "JAFFE"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/JAFFE__ssc__D12_JAFFE_E13__E13__1p0__G__random__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.202568874694407,
+    "factor": "D12_JAFFE_E13",
+    "dataset": "JAFFE"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/YaleB__sc__D01_DENGCAI32_SC__NA__NA__NA__random__dengcai32__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.1527792080305517,
+    "factor": "D01_DENGCAI32_SC",
+    "dataset": "YaleB"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/YaleB__ssc__D08_DENGCAI32_E8__E8__1p0__G__random__dengcai32__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 21.659437416121364,
+    "factor": "D08_DENGCAI32_E8",
+    "dataset": "YaleB"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/YaleB__sc__D01_CROPPED2414_SC__NA__NA__NA__random__cropped2414__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.4419109588488936,
+    "factor": "D01_CROPPED2414_SC",
+    "dataset": "YaleB"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/YaleB__ssc__D08_CROPPED2414_E8__E8__1p0__G__random__cropped2414__n10.yaml",
+    "returncode": 0,
+    "wall_seconds": 20.741917541716248,
+    "factor": "D08_CROPPED2414_E8",
+    "dataset": "YaleB"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/USPS__sc__D12_USPS_SC__NA__NA__NA__random__libsvm__n3.yaml",
+    "returncode": 0,
+    "wall_seconds": 3.098835041746497,
+    "factor": "D12_USPS_SC",
+    "dataset": "USPS"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/USPS__ssc__D08_USPS_E8__E8__1p0__G__random__libsvm__n3.yaml",
+    "returncode": 0,
+    "wall_seconds": 153.76865075016394,
+    "factor": "D08_USPS_E8",
+    "dataset": "USPS"
+  },
+  {
+    "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/round2/JAFFE__rssc__EXT_JAFFE_MUTUAL_KNN__E8__1p0__G__random__zenodo__n50.yaml",
+    "returncode": 0,
+    "wall_seconds": 1.481278124731034,
+    "factor": "EXT_JAFFE_MUTUAL_KNN",
+    "dataset": "JAFFE"
+  }
+]

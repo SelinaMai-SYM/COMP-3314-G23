@@ -1,0 +1,31 @@
+\noindent
+\begin{minipage}{\textwidth}
+\centering
+\refstepcounter{table}%
+Table \thetable. Published and reproduced clustering performance (mean $\pm$ standard deviation).
+
+\vspace{0.6em}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llcccc@{}}
+\toprule
+Dataset & Metric & Published SC & Our SC & Published SSC & Our SSC \\
+\midrule
+ORL & ACC & $72.7 \pm 2.3$ & $56.2 \pm 4.2$ & $76.0 \pm 1.6$ & $57.3 \pm 3.8$ \\
+ORL & NMI & $85.8 \pm 1.9$ & $80.5 \pm 2.3$ & $88.6 \pm 1.5$ & $81.1 \pm 2.2$ \\
+JAFFE & ACC & $76.1 \pm 1.6$ & $68.5 \pm 11.2$ & $81.2 \pm 1.6$ & $68.4 \pm 11.1$ \\
+JAFFE & NMI & $80.2 \pm 0.9$ & $83.0 \pm 5.7$ & $84.3 \pm 1.6$ & $83.0 \pm 5.7$ \\
+YaleB & ACC & $34.8 \pm 1.4$ & $18.3 \pm 1.3$ & $49.8 \pm 1.6$ & $17.6 \pm 1.2$ \\
+YaleB & NMI & $55.6 \pm 1.6$ & $26.9 \pm 0.7$ & $46.8 \pm 1.3$ & $26.2 \pm 0.9$ \\
+USPS & ACC & $64.3 \pm 1.4$ & $61.7 \pm 8.1$ & $75.5 \pm 1.9$ & $61.7 \pm 8.1$ \\
+USPS & NMI & $69.5 \pm 1.6$ & $74.9 \pm 4.5$ & $79.8 \pm 1.6$ & $75.2 \pm 4.6$ \\
+\bottomrule
+\end{tabular*}
+
+\vspace{0.45em}
+\begin{minipage}{\linewidth}
+\raggedright
+Note: Published values are taken from Chang et al.\ (2015). Our SSC results use E8 with $\gamma=1$, and all reproduced values are based on 50 K-means trials with one fixed $F$ and $G$ per dataset. The published and reproduced columns do not necessarily share every historical implementation detail.
+\end{minipage}
+\end{minipage}
+\par

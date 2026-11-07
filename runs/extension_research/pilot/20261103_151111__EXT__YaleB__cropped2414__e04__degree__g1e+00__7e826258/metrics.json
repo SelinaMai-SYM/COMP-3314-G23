@@ -1,0 +1,31 @@
+{
+  "run_id": "20261103_151111__EXT__YaleB__cropped2414__e04__degree__g1e+00__7e826258",
+  "metadata_version": "cropped2414",
+  "metadata_checksum_field": "8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573",
+  "sc_acc": [
+    0.17771333885666943,
+    0.17149958574979288,
+    0.20381110190555096
+  ],
+  "sc_nmi": [
+    0.2655940264380164,
+    0.25718713084955613,
+    0.27118112559228863
+  ],
+  "ssc_acc": [
+    0.1872410936205468,
+    0.176056338028169,
+    0.19014084507042253
+  ],
+  "ssc_nmi": [
+    0.27414902469826674,
+    0.2686756140979025,
+    0.27112409882426886
+  ],
+  "status": "NONCONVERGED",
+  "info": {
+    "changes": "W_only",
+    "degree_eps": 1e-12
+  },
+  "eligibility": "PRIMARY_YALEB_VERSION"
+}

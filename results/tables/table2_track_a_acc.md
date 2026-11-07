@@ -1,0 +1,22 @@
+# Table 2. Track A ACC%
+
+Track A is label-informed. label-informed: among completed settings of this method and dataset, select the setting with the highest mean ACC over its completed trials; then report mean±std over ALL completed trials of that selected setting. The paper is ambiguous between 50 random restarts, best-objective, and mean±std. Every trial is kept. No trial is dropped by an invented best-objective filter. Paper percentages are copied from Chang et al. (2015) Tables 1–2 and are not our runs. Our values are 100× mean±std over completed trials of the selected setting. n is the actual completed trial count.
+
+| Method | Source | AR | JAFFE | ORL | UMIST | BinAlpha | MSRA50 | YaleB | USPS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| K-means | Reported in Chang et al. (2015) | 36.3 ± 1.4 | 75.6 ± 1.8 | 60.5 ± 1.8 | 41.3 ± 1.6 | 41.7 ± 1.1 | 46.2 ± 1.7 | 14.4 ± 1.5 | 65.4 ± 1.7 |
+| K-means | Our Reproduction | N/A — not reproduced | 73.2 ± 5.7 (n=50) | 51.8 ± 3.3 (n=50) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | 9.3 ± 0.6 (n=10) | 66.3 ± 1.7 (n=10) |
+| SC | Reported in Chang et al. (2015) | 41.6 ± 2.1 | 76.1 ± 1.6 | 72.7 ± 2.3 | 52.2 ± 1.4 | 43.6 ± 1.5 | 52.3 ± 1.8 | 34.8 ± 1.4 | 64.3 ± 1.4 |
+| SC | Our Reproduction | N/A — not reproduced | 67.7 ± 11.3 (n=50) | 54.2 ± 3.1 (n=50) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | 20.1 ± 1.2 (n=10) | N/A — not reproduced |
+| PCA-KM | Reported in Chang et al. (2015) | 39.8 ± 1.8 | 75.8 ± 1.5 | 64.5 ± 2.3 | 48.8 ± 1.7 | 42.4 ± 1.5 | 56.0 ± 1.9 | 24.9 ± 1.8 | 69.4 ± 1.8 |
+| PCA-KM | Our Reproduction | N/A — not reproduced | 74.8 ± 7.7 (n=50) | 53.0 ± 3.1 (n=50) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced |
+| PCA-SC | Reported in Chang et al. (2015) | 43.2 ± 1.7 | 76.9 ± 1.8 | 67.8 ± 2.1 | 54.1 ± 1.9 | 44.3 ± 1.8 | 54.9 ± 1.6 | 36.8 ± 2.0 | 69.1 ± 1.5 |
+| PCA-SC | Our Reproduction | N/A — not reproduced | 69.8 ± 8.3 (n=10) | 54.9 ± 2.7 (n=10) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced |
+| LDA-KM | Reported in Chang et al. (2015) | 40.4 ± 1.5 | 76.5 ± 1.7 | 65.6 ± 2.6 | 49.7 ± 1.8 | 42.9 ± 1.7 | 56.4 ± 1.8 | 26.1 ± 1.8 | 70.1 ± 1.3 |
+| LDA-KM | Our Reproduction | N/A — not reproduced | 64.8 ± 11.7 (n=10) | 48.5 ± 3.7 (n=10) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced |
+| LLC | Reported in Chang et al. (2015) | 48.7 ± 1.6 | 78.6 ± 1.5 | 71.5 ± 2.2 | 63.3 ± 1.8 | 40.7 ± 1.8 | 48.1 ± 1.4 | 38.2 ± 1.5 | 63.9 ± 1.7 |
+| LLC | Our Reproduction | N/A — not reproduced | 88.4 ± 6.9 (n=50) | 62.1 ± 2.0 (n=50) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced |
+| SPLS | Reported in Chang et al. (2015) | 49.2 ± 1.4 | 79.5 ± 2.1 | 74.2 ± 1.8 | 70.4 ± 1.6 | 48.5 ± 1.9 | 60.3 ± 1.3 | 47.3 ± 1.7 | 71.4 ± 1.6 |
+| SPLS | Our Reproduction | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced |
+| SSC | Reported in Chang et al. (2015) | 51.3 ± 1.5 | 81.2 ± 1.6 | 76.0 ± 1.6 | 71.1 ± 1.8 | 49.4 ± 1.3 | 63.2 ± 1.1 | 49.8 ± 1.6 | 75.5 ± 1.9 |
+| SSC | Our Reproduction | N/A — not reproduced | 74.8 ± 8.4 (n=50) | 53.9 ± 3.0 (n=50) | N/A — not reproduced | N/A — not reproduced | N/A — not reproduced | 19.7 ± 1.1 (n=10) | 62.1 ± 0.0 (n=1) |

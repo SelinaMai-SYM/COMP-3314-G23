@@ -1,0 +1,16 @@
+track: EX2
+method: ssc
+dataset: ORL
+n_trials: 20
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: EX2 Gaussian noise sigma=0.1*std seed=2
+label_informed_selection: false
+perturbation:
+  type: gaussian_noise
+  level: 0.1
+  seed: 2

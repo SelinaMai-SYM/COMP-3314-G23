@@ -1,0 +1,22 @@
+{
+  "n_jobs": 3,
+  "n_launched": 3,
+  "wall_seconds": 21.26486086845398,
+  "results": [
+    {
+      "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/generated/TRACKA__ssc__USPS__1p0__5________.yaml",
+      "returncode": 0,
+      "wall_seconds": 14.425844584126025
+    },
+    {
+      "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/generated/TRACKA__spls__USPS____________.yaml",
+      "returncode": 0,
+      "wall_seconds": 1.5545837078243494
+    },
+    {
+      "config_path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/configs/generated/TRACKA__kmeans__USPS____________.yaml",
+      "returncode": 0,
+      "wall_seconds": 4.831717875320464
+    }
+  ]
+}

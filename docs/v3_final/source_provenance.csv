@@ -1,0 +1,3 @@
+source_commit,n_configuration_rows,methods,benchmarks,note
+962e6d51b9b7b171d0efd283796c1258ab72d2a8,2283,kmeans|lda_kmeans|llc|pca_kmeans|pca_sc|sc|sc_matched_to_ssc|spls|ssc,BinAlpha|JAFFE|ORL|UMIST|YaleB,Measurement commit stored on the frozen configuration row. Not rewritten.
+f8ef02101e2d389bbe9a706b68fc5b79ffcc626c,4280,kmeans|lda_kmeans|llc|pca_kmeans|pca_sc|sc|sc_matched_to_ssc|spls|ssc,UMIST|USPS|YaleB,Measurement commit stored on the frozen configuration row. Not rewritten.

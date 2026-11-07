@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-10-21T16:15:59+08:00",
+  "created_at_utc": "2026-10-21T08:15:59+00:00",
+  "finished_at": "2026-10-21T16:16:00+08:00",
+  "n_trials_completed": 50,
+  "n_trials_requested": 50,
+  "run_id": "20261021_161559__ROUND2__JAFFE__D12_JAFFE_E13__50a3c90d",
+  "started_at": "2026-10-21T16:15:59+08:00",
+  "status": "COMPLETED",
+  "transitions": [
+    {
+      "at": "2026-10-21T16:15:59+08:00",
+      "at_utc": "2026-10-21T08:15:59+00:00",
+      "run_id": "20261021_161559__ROUND2__JAFFE__D12_JAFFE_E13__50a3c90d",
+      "status": "PLANNED"
+    },
+    {
+      "at": "2026-10-21T16:15:59+08:00",
+      "at_utc": "2026-10-21T08:15:59+00:00",
+      "status": "RUNNING"
+    },
+    {
+      "at": "2026-10-21T16:16:00+08:00",
+      "at_utc": "2026-10-21T08:16:00+00:00",
+      "n_trials_completed": 50,
+      "n_trials_requested": 50,
+      "status": "COMPLETED"
+    }
+  ],
+  "updated_at": "2026-10-21T16:16:00+08:00",
+  "updated_at_utc": "2026-10-21T08:16:00+00:00"
+}

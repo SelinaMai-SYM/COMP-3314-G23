@@ -1,0 +1,10 @@
+method: E08
+combination: [E01 p_ij, E02 alpha_i]
+both_fixed_during_optimization: true
+ablation_against: [SSC_E8, E01, E02]
+k: 5
+variant: E8
+laplacian_coefficient: 2
+gamma_primary: 1.0
+label_use: evaluation_only
+selected_by_test_accuracy: false

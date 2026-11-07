@@ -1,0 +1,5 @@
+{
+  "n_trials_completed": 0,
+  "n_trials_requested": 1,
+  "reason": "BinAlpha is unavailable: Chang et al. name BinAlpha as 26 binary handwritten alphabets with 30 randomly selected images per alphabet, without a URL, image size, or seed. Binary Alphadigits (36 classes x 39 images, 20x16) was downloaded on 2026-10-21 from a Wayback capture of the Roweis page. No evidence was found that Chang et al. used that file. The 36-class archive is therefore not called the paper BinAlpha. Use version='binaryalphadigs36' or version='letters26x30_seed0' for the parent and the UNVERIFIED reconstruction. See benchmarks/binalpha/README.md."
+}

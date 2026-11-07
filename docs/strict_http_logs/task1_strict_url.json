@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-21",
+  "user_agent": "COMP3314-SSC-strict-url-repro/1.0",
+  "workspace": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+  "git_head": "47c0f835ef69afa560b891524da894ab4b39bad2",
+  "note": "Only URLs from plan strict_url_repro_c525e30e or the exact file link on an authorized page. No invented hosts.",
+  "records": [
+    {
+      "target": "AR Zenodo record page",
+      "url": "https://zenodo.org/records/19683234",
+      "method": "HEAD",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "content_length_header": 72749,
+      "notes": "Uploader Manu shree ORCID 0009-0007-8493-5282; claimed CC-BY-4.0; NOT Martinez/OSU."
+    },
+    {
+      "target": "AR Zenodo API",
+      "url": "https://zenodo.org/api/records/19683234",
+      "method": "GET",
+      "http_status": 200,
+      "file_listed": {
+        "key": "ARDB_Full.zip",
+        "size": 120587997,
+        "checksum": "md5:bb97bd9237680744c0c7268624696263",
+        "content_url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content"
+      }
+    },
+    {
+      "target": "ARDB_Full.zip content",
+      "url": "https://zenodo.org/api/records/19683234/files/ARDB_Full.zip/content",
+      "method": "GET",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "content_disposition": "attachment; filename=ARDB_Full.zip",
+      "oc_checksum": "MD5:bb97bd9237680744c0c7268624696263",
+      "size_download": 120587997,
+      "saved_path": "benchmarks/ar/data/ARDB_Full.zip"
+    },
+    {
+      "target": "Roweis data.html",
+      "url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data.html",
+      "method": "GET",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_length_header": 9752,
+      "hrefs_used": [
+        "data/umist_cropped.mat",
+        "data/binaryalphadigs.mat"
+      ]
+    },
+    {
+      "target": "Roweis umist_cropped.mat",
+      "url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat",
+      "method": "GET",
+      "http_status": 200,
+      "content_length_header": 5927440,
+      "size_download": 5927440,
+      "saved_path": "benchmarks/umist/data/roweis_umist_cropped/umist_cropped.mat",
+      "byte_identical_to_local_figshare": true
+    },
+    {
+      "target": "Roweis binaryalphadigs.mat HEAD only",
+      "url": "https://cs.nyu.edu/home/people/in_memoriam/roweis/data/binaryalphadigs.mat",
+      "method": "HEAD",
+      "http_status": 200,
+      "content_length_header": 532304,
+      "redownloaded": false,
+      "reason": "local binaryalphadigs.mat exists and SHA-256 matches README"
+    },
+    {
+      "target": "legacy ~roweis umist_cropped.mat (not used)",
+      "url": "https://cs.nyu.edu/~roweis/data/umist_cropped.mat",
+      "method": "HEAD",
+      "http_status": 403,
+      "notes": "Not an authorized download this round; in_memoriam URL was used instead."
+    },
+    {
+      "target": "UMIST Wayback tars",
+      "urls_in_local_manifest": [
+        "https://web.archive.org/web/20050403232828id_/http://images.ee.umist.ac.uk/danny/face.tar.gz",
+        "https://web.archive.org/web/20070805190146id_/http://images.ee.umist.ac.uk/danny/cropped.tar.gz"
+      ],
+      "method": "none this round",
+      "redownloaded": false,
+      "reason": "local archives exist; SHA-256 match README"
+    },
+    {
+      "target": "SPLS DOI",
+      "url": "https://doi.org/10.1016/j.ipm.2013.01.004",
+      "method": "HEAD",
+      "http_status": 302,
+      "location": "https://linkinghub.elsevier.com/retrieve/pii/S0306457313000095",
+      "follow_up_linkinghub": 200,
+      "follow_up_content_type": "text/html;charset=UTF-8",
+      "follow_up_content_length": 2671,
+      "section_3_pdf": false
+    },
+    {
+      "target": "ScienceDirect abstract",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0306457313000095",
+      "method": "HEAD",
+      "http_status": 403,
+      "cf_mitigated": "challenge",
+      "section_3_pdf": false,
+      "paywall_bypassed": false
+    },
+    {
+      "target": "ScienceDirect full HTML",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0306457313000095",
+      "method": "HEAD",
+      "http_status": 403,
+      "cf_mitigated": "challenge",
+      "section_3_pdf": false,
+      "paywall_bypassed": false
+    }
+  ]
+}

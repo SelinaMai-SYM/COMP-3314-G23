@@ -1,0 +1,64 @@
+{
+  "note": "SC F must equal SSC F under the same SpectralGraphConfig. Compared from saved embedding_F.npy.",
+  "pairs": {
+    "ORL:att92": {
+      "sc_run": "20261021_170316__STRICT_REPRO__ORL__SC_EQ4__19517850",
+      "e8_run": "20261021_170317__STRICT_REPRO__ORL__SSC_E8_G1__68341141",
+      "status": "compared",
+      "equal_exact": true,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 0.0,
+      "shape": [
+        400,
+        40
+      ]
+    },
+    "JAFFE:zenodo": {
+      "sc_run": "20261021_170322__STRICT_REPRO__JAFFE__SC_EQ4__91b67b99",
+      "e8_run": "20261021_170323__STRICT_REPRO__JAFFE__SSC_E8_G1__2d4a870b",
+      "status": "compared",
+      "equal_exact": true,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 0.0,
+      "shape": [
+        213,
+        10
+      ]
+    },
+    "YaleB:cropped2414": {
+      "sc_run": "20261021_170327__STRICT_REPRO__YALEB__SC_EQ4__f8323013",
+      "e8_run": "20261021_170328__STRICT_REPRO__YALEB__SSC_E8_G1__333d3583",
+      "status": "compared",
+      "equal_exact": false,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 1.3292839051715077e-13,
+      "shape": [
+        2414,
+        38
+      ]
+    },
+    "USPS:libsvm": {
+      "sc_run": "20261021_170412__STRICT_REPRO__USPS__SC_EQ4__19529e79",
+      "e8_run": "20261021_170415__STRICT_REPRO__USPS__SSC_E8_G1__e36daae7",
+      "status": "compared",
+      "equal_exact": false,
+      "equal_atol_1e-12": true,
+      "max_abs_diff": 4.5102810375396984e-15,
+      "shape": [
+        9298,
+        10
+      ]
+    }
+  },
+  "sc_run": "20261021_170316__STRICT_REPRO__ORL__SC_EQ4__19517850",
+  "e8_run": "20261021_170317__STRICT_REPRO__ORL__SSC_E8_G1__68341141",
+  "status": "compared",
+  "equal_exact": true,
+  "equal_atol_1e-12": true,
+  "max_abs_diff": 0.0,
+  "shape": [
+    400,
+    40
+  ],
+  "all_equal_atol_1e-12": true
+}

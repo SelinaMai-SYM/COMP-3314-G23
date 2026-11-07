@@ -1,0 +1,10 @@
+dataset_id,prep,beta0_heldout_ari_mean,beta1_heldout_ari_mean,heldout_edge_jaccard_mean,note
+BinAlpha_candidate26x30,Y0,0.5185059937020621,0.5138085183554372,0.7793893125898399,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+JAFFE,Y0,1.0,1.0,0.9492277702804018,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+ORL_att92,Y0,0.8631981870925756,0.8631981870925756,0.9642423412394304,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+UMIST_precropped575,Y0,0.7828976792411876,0.8444875041007722,0.9877302440098189,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+USPS,Y0,0.3312673710818326,0.35320383542663686,0.04800533494505523,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+YaleB_cropped2414,Y0,0.7384469182330289,0.6966257134560025,0.8601979785576348,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+YaleB_cropped2414,Y3,0.41473678598861485,0.3651135914731074,0.27103006496825,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+YaleB_dengcai32,Y0,0.742145119316794,0.7165658175902735,0.8348863002388497,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.
+YaleB_dengcai32,Y3,0.35938305554449185,0.31934247261306803,0.2824176370714708,ARI is between the unperturbed seed-0 partition and k-means on a held-out perturbed embedding. Not a class-correctness score and not used to choose beta.

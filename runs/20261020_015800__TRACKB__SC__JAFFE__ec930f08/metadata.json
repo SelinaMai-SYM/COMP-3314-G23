@@ -1,0 +1,11 @@
+{
+  "config_hash": "ec930f08",
+  "created_at": "2026-10-20T01:58:00+08:00",
+  "dataset": "JAFFE",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "sc",
+  "notes": "Track B SC, k=5, no label tuning",
+  "run_id": "20261020_015800__TRACKB__SC__JAFFE__ec930f08",
+  "selection_uses_labels": false,
+  "track": "TRACKB"
+}

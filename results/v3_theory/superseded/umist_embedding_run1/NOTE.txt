@@ -1,0 +1,6 @@
+These 60 UMIST job files were solved on an earlier ARPACK embedding.
+That embedding had gamma_0 = 0.1366970750844067.
+A later call to eigsh, which is not seeded, produced a different embedding
+with gamma_0 = 0.1367313859608112. The retained cache uses the later embedding.
+The jobs in this folder are preserved and are excluded from assembly.
+They are not a second benchmark and were not selected by ACC.

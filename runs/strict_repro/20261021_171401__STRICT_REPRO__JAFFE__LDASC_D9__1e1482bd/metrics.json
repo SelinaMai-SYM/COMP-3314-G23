@@ -1,0 +1,203 @@
+{
+  "acc_mean": 0.3460093896713615,
+  "acc_std": 0.0992241917559587,
+  "dataset_checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+  "dataset_identity_status": "verified_zenodo_213_not_paper_unpublished_copy",
+  "dataset_metadata": {
+    "SHA256_checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+    "dataset_name": "JAFFE",
+    "n": 213,
+    "number_of_classes": 10,
+    "original_feature_dimension": 65536,
+    "original_spatial_size": [
+      256,
+      256
+    ],
+    "palette_mode_images": 23,
+    "preprocessing_operations": [
+      "convert each TIFF to 8-bit grayscale",
+      "resize uint8 image from 256x256 to 26x26 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 676,
+    "processed_spatial_size": [
+      26,
+      26
+    ],
+    "random_seed": "unknown",
+    "redistribution": "forbidden by the Zenodo/JAFFE conditions of use",
+    "sample_selection_method": "all 213 TIFFs in jaffe.zip, sorted by filename",
+    "source_url": "https://zenodo.org/records/14974867",
+    "subject_codes": {
+      "KA": 0,
+      "KL": 1,
+      "KM": 2,
+      "KR": 3,
+      "MK": 4,
+      "NA": 5,
+      "NM": 6,
+      "TM": 7,
+      "UY": 8,
+      "YM": 9
+    },
+    "verification_status": "verified"
+  },
+  "dataset_version": "zenodo",
+  "factor": "LDASC_D9",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "e678400b5586b9181ccdf19bc123f4ba6422d594",
+  "git_status_porcelain": "M SSC_method/README.md\n M baselines/README.md\n M baselines/kmeans/README.md\n M baselines/lda_kmeans/README.md\n M baselines/lda_spectral/README.md\n M baselines/llc/README.md\n M baselines/pca_kmeans/README.md\n M baselines/pca_spectral/README.md\n M baselines/spectral_clustering/README.md\n M baselines/spls/README.md\n M benchmarks/README.md\n M benchmarks/ar/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M results/README.md\n M scripts/run_experiment.py\n?? SSC_method/resources/\n?? baselines/lda_kmeans/resources/\n?? baselines/llc/resources/\n?? baselines/spls/resources/\n?? benchmarks/ar/resources/\n?? benchmarks/msra50/resources/\n?? benchmarks/umist/resources/\n?? configs/strict_repro/\n?? docs/resource_acquisition_matrix.md\n?? docs/task1_http_log.json\n?? docs/task1_http_log.jsonl\n?? docs/task1_resource_completion.md\n?? docs/task2_experiment_completion.md\n?? results/reproduction_full_matrix.csv\n?? results/reproduction_full_matrix.md\n?? results/strict_repro/\n?? runs/strict_repro/\n?? scripts/run_strict_repro.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "n_clusters": 10,
+  "n_features": 676,
+  "n_samples": 213,
+  "n_trials_completed": 10,
+  "n_trials_requested": 10,
+  "nmi_mean": 0.3672582624190431,
+  "nmi_std": 0.12264163800033843,
+  "paper_fidelity_category": "C_DIAGNOSTIC",
+  "params": {
+    "bandwidth_rule": "median_positive_knn_squared_distance",
+    "k": 5,
+    "kmeans_init": "random",
+    "laplacian": "symmetric_normalized_eq4",
+    "n_components": 9,
+    "n_init": 1,
+    "row_normalize": false,
+    "symmetrization": "union"
+  },
+  "partial": false,
+  "perturbation": {
+    "type": null
+  },
+  "runtime_seconds_mean": 0.8443055292591453,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "trials": [
+    {
+      "acc": 0.37089201877934275,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.41087423583522514,
+      "runtime_seconds": 0.4267371245659888,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.539906103286385,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.5562284077164822,
+      "runtime_seconds": 0.5715996250510216,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.3192488262910798,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.37591989410147736,
+      "runtime_seconds": 0.5092132920399308,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.29577464788732394,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.3290317241619476,
+      "runtime_seconds": 0.871911209076643,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.37089201877934275,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.4329589498569163,
+      "runtime_seconds": 0.6663675829768181,
+      "seed": 4,
+      "trial_index": 4
+    },
+    {
+      "acc": 0.24413145539906103,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.21374313792516295,
+      "runtime_seconds": 2.1380694578401744,
+      "seed": 5,
+      "trial_index": 5
+    },
+    {
+      "acc": 0.215962441314554,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.182872004630008,
+      "runtime_seconds": 0.83358075004071,
+      "seed": 6,
+      "trial_index": 6
+    },
+    {
+      "acc": 0.4460093896713615,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.49833769372850845,
+      "runtime_seconds": 0.4581385417841375,
+      "seed": 7,
+      "trial_index": 7
+    },
+    {
+      "acc": 0.39436619718309857,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.4236037528642844,
+      "runtime_seconds": 0.4598512500524521,
+      "seed": 8,
+      "trial_index": 8
+    },
+    {
+      "acc": 0.26291079812206575,
+      "implementation_status": "APPROXIMATE",
+      "n_components": 9,
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.2490128233704182,
+      "runtime_seconds": 1.5075864591635764,
+      "seed": 9,
+      "trial_index": 9
+    }
+  ],
+  "variant": null
+}

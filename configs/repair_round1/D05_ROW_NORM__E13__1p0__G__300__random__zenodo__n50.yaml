@@ -1,0 +1,32 @@
+track: REPAIR1
+method: ssc
+dataset: JAFFE
+factor: D05_ROW_NORM
+paper_fidelity_category: C_DIAGNOSTIC
+dataset_identity_status: verified_zenodo_213_not_paper_unpublished_copy
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: true
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+notes: JAFFE verified Zenodo 213x676, k=5, gamma=1, G0=F, union kNN, median positive
+  kNN squared bandwidth, raw eigenvectors, max_iter=300. Track B, no label tuning.
+  Row-normalized eigenvectors. ONE C_DIAGNOSTIC to test ORL 60% lift. Not the paper
+  method.
+label_informed_selection: false
+protocol: R1_solve_FG_once_then_kmeans_seeds
+hardware_note: 8 CPU / 16 GB
+dataset_version: zenodo

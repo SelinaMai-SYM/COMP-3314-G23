@@ -1,0 +1,10 @@
+track: TRACKB
+method: llc
+dataset: JAFFE
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+notes: Track B LLC
+label_informed_selection: false

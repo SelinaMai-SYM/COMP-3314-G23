@@ -1,0 +1,11 @@
+{
+  "config_hash": "fc07dcb4",
+  "created_at": "2026-10-20T01:59:43+08:00",
+  "dataset": "JAFFE",
+  "implementation_status": "EXTENSION",
+  "method": "rssc",
+  "notes": "EX2 Gaussian noise sigma=0.1*std seed=2",
+  "run_id": "20261020_015943__EX2__RSSC__JAFFE__fc07dcb4",
+  "selection_uses_labels": false,
+  "track": "EX2"
+}

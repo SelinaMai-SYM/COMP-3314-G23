@@ -1,0 +1,3 @@
+# JAFFE forbids redistribution, including via git.
+*
+!.gitignore

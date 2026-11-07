@@ -1,0 +1,11 @@
+{
+  "config_hash": "75f5cda4",
+  "created_at": "2026-10-20T02:00:12+08:00",
+  "dataset": "JAFFE",
+  "implementation_status": "FAITHFUL_REIMPLEMENTATION",
+  "method": "ssc",
+  "notes": "EX3 10% features -> N(0,1) seed=0",
+  "run_id": "20261020_020012__EX3__SSC__JAFFE__75f5cda4",
+  "selection_uses_labels": false,
+  "track": "EX3"
+}

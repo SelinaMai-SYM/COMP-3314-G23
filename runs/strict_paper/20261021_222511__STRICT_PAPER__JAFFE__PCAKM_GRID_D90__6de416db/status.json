@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-10-21T22:25:12+08:00",
+  "created_at_utc": "2026-10-21T14:25:12+00:00",
+  "finished_at": "2026-10-21T22:25:12+08:00",
+  "n_trials_completed": 5,
+  "n_trials_requested": 5,
+  "run_id": "20261021_222511__STRICT_PAPER__JAFFE__PCAKM_GRID_D90__6de416db",
+  "started_at": "2026-10-21T22:25:12+08:00",
+  "status": "COMPLETED",
+  "transitions": [
+    {
+      "at": "2026-10-21T22:25:12+08:00",
+      "at_utc": "2026-10-21T14:25:12+00:00",
+      "run_id": "20261021_222511__STRICT_PAPER__JAFFE__PCAKM_GRID_D90__6de416db",
+      "status": "PLANNED"
+    },
+    {
+      "at": "2026-10-21T22:25:12+08:00",
+      "at_utc": "2026-10-21T14:25:12+00:00",
+      "status": "RUNNING"
+    },
+    {
+      "at": "2026-10-21T22:25:12+08:00",
+      "at_utc": "2026-10-21T14:25:12+00:00",
+      "n_trials_completed": 5,
+      "n_trials_requested": 5,
+      "status": "COMPLETED"
+    }
+  ],
+  "updated_at": "2026-10-21T22:25:12+08:00",
+  "updated_at_utc": "2026-10-21T14:25:12+00:00"
+}

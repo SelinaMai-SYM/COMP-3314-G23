@@ -1,0 +1,23 @@
+{
+  "ssc_acc": [
+    0.6218541621854162,
+    0.6557324155732416,
+    0.6368036136803613
+  ],
+  "sc_acc": [
+    0.6215315121531512,
+    0.6549795654979566,
+    0.6372338137233814
+  ],
+  "graph": {
+    "k": 5,
+    "delta2": 1.4975367600424897e-06,
+    "delta": 0.0012237388447060467,
+    "delta2_source": "median_positive_knn_squared_distance",
+    "symmetrization": "mutual_and",
+    "knn_method": "block",
+    "n_directed_edges": 46490,
+    "n_union_undirected_edges": 30437,
+    "n_mutual_undirected_edges": 16053
+  }
+}

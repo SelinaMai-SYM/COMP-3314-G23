@@ -1,0 +1,82 @@
+{
+  "acc_mean": 0.6731555173155517,
+  "acc_std": 0.0,
+  "dataset_checksum": {
+    "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+    "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+  },
+  "dataset_identity_status": "verified_libsvm_9298",
+  "dataset_metadata": {
+    "SHA256_checksum": {
+      "usps.bz2": "3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f",
+      "usps.t.bz2": "a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+    },
+    "archive_paths": [
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.bz2",
+      "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks/usps/data/usps.t.bz2"
+    ],
+    "dataset_name": "USPS",
+    "n": 9298,
+    "number_of_classes": 10,
+    "original_feature_dimension": 256,
+    "preprocessing_operations": [
+      "parse LIBSVM files; features 1..256 become a length-256 vector",
+      "map file labels 1..10 to digits 0..9",
+      "no resize; the release is already 16x16",
+      "no further scaling; stored values are already in [-1, 1]"
+    ],
+    "processed_feature_dimension": 256,
+    "random_seed": "unknown",
+    "sample_selection_method": "all 7291 training rows followed by all 2007 test rows",
+    "source_url": "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps",
+    "verification_status": "verified"
+  },
+  "dataset_version": "libsvm",
+  "factor": "PCAKM_GRID_D80",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "47c0f835ef69afa560b891524da894ab4b39bad2",
+  "git_status_porcelain": "M baselines/spls/README.md\n M baselines/spls/resources/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/__init__.py\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/ar/resources/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/run_experiment.py\n?? benchmarks/binalpha/reconstructions/CANDIDATE_BIN_ALPHA.json\n?? configs/strict_paper/\n?? configs/strict_paper_reproduction.yaml\n?? docs/strict_experiment_protocol.md\n?? docs/strict_http_logs/\n?? docs/strict_resource_acquisition.md\n?? results/strict_paper/\n?? results/strict_reproduction_matrix.csv\n?? runs/strict_paper/\n?? scripts/run_strict_paper.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "kmeans_init": "random",
+  "n_clusters": 10,
+  "n_components": 80,
+  "n_features": 256,
+  "n_samples": 9298,
+  "n_trials_completed": 1,
+  "n_trials_requested": 1,
+  "nmi_mean": 0.6149231271975959,
+  "nmi_std": 0.0,
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "params": {
+    "init": "random",
+    "n_components": 80,
+    "n_init": 1
+  },
+  "partial": false,
+  "pca_solver": "full",
+  "perturbation": {
+    "type": null
+  },
+  "protocol": "pca_once_then_kmeans_trials",
+  "runtime_seconds_mean": 0.04935562517493963,
+  "trial_seeds": [
+    0
+  ],
+  "trials": [
+    {
+      "acc": 0.6731555173155517,
+      "kmeans_inertia": 335973.10203516425,
+      "kmeans_init": "random",
+      "n_predicted_labels": 9298,
+      "n_unique_predicted": 10,
+      "nmi": 0.6149231271975959,
+      "runtime_seconds": 0.04935562517493963,
+      "seed": 0,
+      "trial_index": 0
+    }
+  ],
+  "variant": null
+}

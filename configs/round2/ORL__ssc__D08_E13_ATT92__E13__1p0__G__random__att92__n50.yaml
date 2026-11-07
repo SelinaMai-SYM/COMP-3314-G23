@@ -1,0 +1,31 @@
+track: ROUND2
+method: ssc
+dataset: ORL
+dataset_version: att92
+dataset_identity_status: original_source_att92_92x112_bilinear_32x32
+factor: D08_E13_ATT92
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+  symmetrization: union
+  laplacian: symmetric_normalized_eq4
+notes: E13 printed Eq.(13) A=S+gamma Ltilde. Separate column from faithful E8.
+label_informed_selection: false
+protocol: R2_one_factor_then_kmeans_seeds
+hardware_note: 8 CPU / 16 GB

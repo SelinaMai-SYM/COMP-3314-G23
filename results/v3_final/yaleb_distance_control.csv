@@ -1,0 +1,3 @@
+mean_neighbor_overlap,raw_components,l2_components,raw_degree_mean,l2_degree_mean,raw_isolates,l2_isolates,dataset_id,posthoc_same_identity_raw,posthoc_same_identity_l2
+0.6187241093620547,1,1,2.6244353130819227,2.3189932708393783,0,0,YaleB_dengcai32,0.4805088702147526,0.6400705052878966
+0.5844241922120961,1,1,2.586742931691743,2.344090334429996,0,0,YaleB_cropped2414,0.41116333725029375,0.5585394581861013

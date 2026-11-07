@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-10-21T16:16:50+08:00",
+  "created_at_utc": "2026-10-21T08:16:50+00:00",
+  "finished_at": "2026-10-21T16:19:23+08:00",
+  "n_trials_completed": 3,
+  "n_trials_requested": 3,
+  "run_id": "20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b",
+  "started_at": "2026-10-21T16:16:51+08:00",
+  "status": "COMPLETED",
+  "transitions": [
+    {
+      "at": "2026-10-21T16:16:50+08:00",
+      "at_utc": "2026-10-21T08:16:50+00:00",
+      "run_id": "20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b",
+      "status": "PLANNED"
+    },
+    {
+      "at": "2026-10-21T16:16:51+08:00",
+      "at_utc": "2026-10-21T08:16:51+00:00",
+      "status": "RUNNING"
+    },
+    {
+      "at": "2026-10-21T16:19:23+08:00",
+      "at_utc": "2026-10-21T08:19:23+00:00",
+      "n_trials_completed": 3,
+      "n_trials_requested": 3,
+      "status": "COMPLETED"
+    }
+  ],
+  "updated_at": "2026-10-21T16:19:23+08:00",
+  "updated_at_utc": "2026-10-21T08:19:23+00:00"
+}

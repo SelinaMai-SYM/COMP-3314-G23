@@ -1,0 +1,478 @@
+# Read-only historical table. Do not overwrite with measured ACC/NMI.
+source: Chang et al., AAAI 2015, Tables 1 and 2
+source_audit: experiments/paper_reported.py states these are the printed table values
+  and not reproduction measurements.
+unit: percent
+datasets:
+- AR
+- JAFFE
+- ORL
+- UMIST
+- BinAlpha
+- MSRA50
+- YaleB
+- USPS
+methods:
+- kmeans
+- sc
+- pca_kmeans
+- pca_spectral
+- lda_kmeans
+- lda_spectral
+- llc
+- spls
+- ssc
+acc:
+  kmeans:
+    AR:
+      mean: 36.3
+      sd: 1.4
+    JAFFE:
+      mean: 75.6
+      sd: 1.8
+    ORL:
+      mean: 60.5
+      sd: 1.8
+    UMIST:
+      mean: 41.3
+      sd: 1.6
+    BinAlpha:
+      mean: 41.7
+      sd: 1.1
+    MSRA50:
+      mean: 46.2
+      sd: 1.7
+    YaleB:
+      mean: 14.4
+      sd: 1.5
+    USPS:
+      mean: 65.4
+      sd: 1.7
+  sc:
+    AR:
+      mean: 41.6
+      sd: 2.1
+    JAFFE:
+      mean: 76.1
+      sd: 1.6
+    ORL:
+      mean: 72.7
+      sd: 2.3
+    UMIST:
+      mean: 52.2
+      sd: 1.4
+    BinAlpha:
+      mean: 43.6
+      sd: 1.5
+    MSRA50:
+      mean: 52.3
+      sd: 1.8
+    YaleB:
+      mean: 34.8
+      sd: 1.4
+    USPS:
+      mean: 64.3
+      sd: 1.4
+  pca_kmeans:
+    AR:
+      mean: 39.8
+      sd: 1.8
+    JAFFE:
+      mean: 75.8
+      sd: 1.5
+    ORL:
+      mean: 64.5
+      sd: 2.3
+    UMIST:
+      mean: 48.8
+      sd: 1.7
+    BinAlpha:
+      mean: 42.4
+      sd: 1.5
+    MSRA50:
+      mean: 56.0
+      sd: 1.9
+    YaleB:
+      mean: 24.9
+      sd: 1.8
+    USPS:
+      mean: 69.4
+      sd: 1.8
+  pca_spectral:
+    AR:
+      mean: 43.2
+      sd: 1.7
+    JAFFE:
+      mean: 76.9
+      sd: 1.8
+    ORL:
+      mean: 67.8
+      sd: 2.1
+    UMIST:
+      mean: 54.1
+      sd: 1.9
+    BinAlpha:
+      mean: 44.3
+      sd: 1.8
+    MSRA50:
+      mean: 54.9
+      sd: 1.6
+    YaleB:
+      mean: 36.8
+      sd: 2.0
+    USPS:
+      mean: 69.1
+      sd: 1.5
+  lda_kmeans:
+    AR:
+      mean: 40.4
+      sd: 1.5
+    JAFFE:
+      mean: 76.5
+      sd: 1.7
+    ORL:
+      mean: 65.6
+      sd: 2.6
+    UMIST:
+      mean: 49.7
+      sd: 1.8
+    BinAlpha:
+      mean: 42.9
+      sd: 1.7
+    MSRA50:
+      mean: 56.4
+      sd: 1.8
+    YaleB:
+      mean: 26.1
+      sd: 1.8
+    USPS:
+      mean: 70.1
+      sd: 1.3
+  lda_spectral:
+    AR:
+      mean: 44.5
+      sd: 1.3
+    JAFFE:
+      mean: 77.4
+      sd: 1.9
+    ORL:
+      mean: 68.3
+      sd: 2.4
+    UMIST:
+      mean: 54.7
+      sd: 1.5
+    BinAlpha:
+      mean: 45.1
+      sd: 1.4
+    MSRA50:
+      mean: 55.1
+      sd: 1.7
+    YaleB:
+      mean: 38.2
+      sd: 1.6
+    USPS:
+      mean: 70.4
+      sd: 1.5
+  llc:
+    AR:
+      mean: 48.7
+      sd: 1.6
+    JAFFE:
+      mean: 78.6
+      sd: 1.5
+    ORL:
+      mean: 71.5
+      sd: 2.2
+    UMIST:
+      mean: 63.3
+      sd: 1.8
+    BinAlpha:
+      mean: 40.7
+      sd: 1.8
+    MSRA50:
+      mean: 48.1
+      sd: 1.4
+    YaleB:
+      mean: 38.2
+      sd: 1.5
+    USPS:
+      mean: 63.9
+      sd: 1.7
+  spls:
+    AR:
+      mean: 49.2
+      sd: 1.4
+    JAFFE:
+      mean: 79.5
+      sd: 2.1
+    ORL:
+      mean: 74.2
+      sd: 1.8
+    UMIST:
+      mean: 70.4
+      sd: 1.6
+    BinAlpha:
+      mean: 48.5
+      sd: 1.9
+    MSRA50:
+      mean: 60.3
+      sd: 1.3
+    YaleB:
+      mean: 47.3
+      sd: 1.7
+    USPS:
+      mean: 71.4
+      sd: 1.6
+  ssc:
+    AR:
+      mean: 51.3
+      sd: 1.5
+    JAFFE:
+      mean: 81.2
+      sd: 1.6
+    ORL:
+      mean: 76.0
+      sd: 1.6
+    UMIST:
+      mean: 71.1
+      sd: 1.8
+    BinAlpha:
+      mean: 49.4
+      sd: 1.3
+    MSRA50:
+      mean: 63.2
+      sd: 1.1
+    YaleB:
+      mean: 49.8
+      sd: 1.6
+    USPS:
+      mean: 75.5
+      sd: 1.9
+nmi:
+  kmeans:
+    AR:
+      mean: 68.7
+      sd: 3.0
+    JAFFE:
+      mean: 79.4
+      sd: 0.8
+    ORL:
+      mean: 80.3
+      sd: 1.8
+    UMIST:
+      mean: 64.4
+      sd: 1.5
+    BinAlpha:
+      mean: 58.6
+      sd: 1.4
+    MSRA50:
+      mean: 56.7
+      sd: 1.8
+    YaleB:
+      mean: 17.3
+      sd: 1.5
+    USPS:
+      mean: 67.3
+      sd: 1.8
+  sc:
+    AR:
+      mean: 71.3
+      sd: 2.6
+    JAFFE:
+      mean: 80.2
+      sd: 0.9
+    ORL:
+      mean: 85.8
+      sd: 1.9
+    UMIST:
+      mean: 72.1
+      sd: 1.7
+    BinAlpha:
+      mean: 59.7
+      sd: 1.6
+    MSRA50:
+      mean: 70.0
+      sd: 1.6
+    YaleB:
+      mean: 55.6
+      sd: 1.6
+    USPS:
+      mean: 69.5
+      sd: 1.6
+  pca_kmeans:
+    AR:
+      mean: 69.4
+      sd: 2.8
+    JAFFE:
+      mean: 79.8
+      sd: 0.8
+    ORL:
+      mean: 80.6
+      sd: 1.6
+    UMIST:
+      mean: 68.2
+      sd: 1.8
+    BinAlpha:
+      mean: 59.1
+      sd: 1.8
+    MSRA50:
+      mean: 60.3
+      sd: 1.5
+    YaleB:
+      mean: 26.7
+      sd: 1.8
+    USPS:
+      mean: 73.1
+      sd: 1.9
+  pca_spectral:
+    AR:
+      mean: 70.3
+      sd: 2.4
+    JAFFE:
+      mean: 81.5
+      sd: 1.3
+    ORL:
+      mean: 86.3
+      sd: 1.4
+    UMIST:
+      mean: 72.9
+      sd: 1.5
+    BinAlpha:
+      mean: 60.6
+      sd: 1.9
+    MSRA50:
+      mean: 72.4
+      sd: 1.8
+    YaleB:
+      mean: 38.6
+      sd: 1.5
+    USPS:
+      mean: 74.2
+      sd: 1.8
+  lda_kmeans:
+    AR:
+      mean: 69.9
+      sd: 1.9
+    JAFFE:
+      mean: 82.1
+      sd: 1.4
+    ORL:
+      mean: 81.1
+      sd: 2.1
+    UMIST:
+      mean: 68.8
+      sd: 1.5
+    BinAlpha:
+      mean: 59.8
+      sd: 1.6
+    MSRA50:
+      mean: 61.1
+      sd: 1.9
+    YaleB:
+      mean: 29.4
+      sd: 1.6
+    USPS:
+      mean: 75.1
+      sd: 1.6
+  lda_spectral:
+    AR:
+      mean: 70.8
+      sd: 1.5
+    JAFFE:
+      mean: 81.9
+      sd: 0.9
+    ORL:
+      mean: 86.8
+      sd: 1.7
+    UMIST:
+      mean: 74.1
+      sd: 2.0
+    BinAlpha:
+      mean: 61.3
+      sd: 1.7
+    MSRA50:
+      mean: 73.2
+      sd: 1.6
+    YaleB:
+      mean: 39.9
+      sd: 1.4
+    USPS:
+      mean: 75.4
+      sd: 1.7
+  llc:
+    AR:
+      mean: 71.2
+      sd: 2.4
+    JAFFE:
+      mean: 82.5
+      sd: 1.7
+    ORL:
+      mean: 84.9
+      sd: 1.5
+    UMIST:
+      mean: 77.3
+      sd: 1.8
+    BinAlpha:
+      mean: 61.4
+      sd: 1.9
+    MSRA50:
+      mean: 66.2
+      sd: 1.6
+    YaleB:
+      mean: 34.1
+      sd: 1.3
+    USPS:
+      mean: 67.5
+      sd: 1.5
+  spls:
+    AR:
+      mean: 72.4
+      sd: 1.7
+    JAFFE:
+      mean: 83.1
+      sd: 2.1
+    ORL:
+      mean: 87.2
+      sd: 1.8
+    UMIST:
+      mean: 82.2
+      sd: 1.6
+    BinAlpha:
+      mean: 63.6
+      sd: 1.8
+    MSRA50:
+      mean: 69.6
+      sd: 1.8
+    YaleB:
+      mean: 41.4
+      sd: 1.6
+    USPS:
+      mean: 76.5
+      sd: 1.8
+  ssc:
+    AR:
+      mean: 73.2
+      sd: 1.4
+    JAFFE:
+      mean: 84.3
+      sd: 1.6
+    ORL:
+      mean: 88.6
+      sd: 1.5
+    UMIST:
+      mean: 84.1
+      sd: 1.5
+    BinAlpha:
+      mean: 64.1
+      sd: 1.4
+    MSRA50:
+      mean: 72.2
+      sd: 1.4
+    YaleB:
+      mean: 46.8
+      sd: 1.3
+    USPS:
+      mean: 79.8
+      sd: 1.6
+yaleb_note: In Table 2, YaleB SSC NMI is lower than YaleB SC NMI. ACC and NMI do not
+  improve together on every dataset.

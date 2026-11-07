@@ -1,0 +1,49 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.DS_Store
+.env
+*.pem
+credentials.json
+data/raw/
+# Per-dataset raw archives. JAFFE forbids redistribution; Extended Yale B
+# and AT&T/ORL restrict republication of the images.
+benchmarks/*/data/**
+!benchmarks/*/data/.gitignore
+report/*.aux
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz
+report/*.blg
+report/*.bbl
+*.zip
+# Strict-repro embedding arrays are large; keep configs/metrics/status only.
+runs/strict_repro/**/*.npy
+runs/strict_paper/**/*.npy
+runs/final_round/**/*.npy
+runs/extension_research/**/*.npy
+runs/extension_research/**/*.npz
+runs/extension_research/cache/
+# v2 stores scalar trial tables and selected solutions.
+# Embedding caches and full assignment archives stay local.
+runs/v2_kmeans_protocol/cache/
+runs/v2_kmeans_protocol/arrays/
+local/
+runs/v3_theory/cache/
+runs/v3_reproduction/
+baselines/ssc_resources/private/
+# Uncompressed trial table exceeds GitHub's 100MB file limit.
+# The gzip twin and SHA-256 are in results/v3_reproduction/.
+results/v3_reproduction/all_trials.csv
+# Publisher PDFs, recovered archives, and face matrices stay local.
+**/resources/private/

@@ -1,0 +1,118 @@
+{
+  "checks": [
+    {
+      "name": "global_pixel_permutation_leaves_euclidean_knn",
+      "passed": true,
+      "n": 80,
+      "k": 5,
+      "max_abs_dist": 1.9326762412674725e-12
+    },
+    {
+      "name": "brightness_scale_cancels_under_median_squared_bandwidth",
+      "passed": true,
+      "scale": 2.5,
+      "delta2_ratio": 6.24999999999993,
+      "max_abs_affinity": 4.884981308350689e-14
+    },
+    {
+      "name": "fixed_bandwidth_does_not_cancel_brightness_scale",
+      "passed": true,
+      "note": "Same numerical delta^2 is a different relative bandwidth after scaling."
+    },
+    {
+      "name": "dense_knn_matches_scipy_cdist",
+      "passed": true,
+      "n": 25,
+      "k": 5
+    },
+    {
+      "name": "hand_gaussian_kernel",
+      "passed": true,
+      "delta2": 1.0,
+      "w01": 0.36787944117144233,
+      "expected": 0.36787944117144233
+    },
+    {
+      "name": "symmetrization_union_and_mutual",
+      "passed": true,
+      "union_nnz": 4,
+      "mutual_nnz": 0
+    },
+    {
+      "name": "normalized_laplacian_and_smallest_eigenvectors",
+      "passed": true,
+      "evals": [
+        2.7755575615628914e-16,
+        1.9999999999999998
+      ]
+    },
+    {
+      "name": "acc_nmi_hungarian",
+      "passed": true
+    },
+    {
+      "name": "kmeans_lloyd_runs",
+      "passed": true
+    },
+    {
+      "name": "e8_matches_independent_convex_solver",
+      "passed": true,
+      "status": "optimal",
+      "max_abs_gap": 1.1721064452741015e-05,
+      "coefficient": 2.0
+    },
+    {
+      "name": "yaleb_versions_are_not_the_same_pixel_matrix",
+      "passed": true,
+      "best_orientation": "transpose",
+      "orientations": {
+        "identity": {
+          "n_matched": 2412,
+          "median_l2": 7.6222448050959475,
+          "mean_l2": 7.7801645614516755,
+          "fraction_maxabs_le_1e-8": 0.0
+        },
+        "transpose": {
+          "n_matched": 2414,
+          "median_l2": 1.9221647704378038,
+          "mean_l2": 1.915230259091496,
+          "fraction_maxabs_le_1e-8": 0.0
+        },
+        "rot90": {
+          "n_matched": 2404,
+          "median_l2": 6.00595436951115,
+          "mean_l2": 5.95994257748734,
+          "fraction_maxabs_le_1e-8": 0.0
+        },
+        "fliplr": {
+          "n_matched": 2410,
+          "median_l2": 7.650804889401366,
+          "mean_l2": 7.823007834326757,
+          "fraction_maxabs_le_1e-8": 0.0
+        },
+        "flipud": {
+          "n_matched": 2407,
+          "median_l2": 7.646464531960092,
+          "mean_l2": 7.789378256849415,
+          "fraction_maxabs_le_1e-8": 0.0
+        },
+        "rot90_fliplr": {
+          "n_matched": 2402,
+          "median_l2": 6.140520961238504,
+          "mean_l2": 6.141444573576013,
+          "fraction_maxabs_le_1e-8": 0.0
+        }
+      }
+    }
+  ],
+  "failed": [],
+  "conclusion": "NO CONFIRMED IMPLEMENTATION BUG",
+  "best_orientation": "transpose",
+  "best_match": {
+    "n_matched": 2414,
+    "median_l2": 1.9221647704378038,
+    "mean_l2": 1.915230259091496,
+    "fraction_maxabs_le_1e-8": 0.0
+  },
+  "runtime_sec": 0.5708188340067863
+}

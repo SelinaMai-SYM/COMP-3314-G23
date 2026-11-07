@@ -1,0 +1,4 @@
+uncompressed_bytes=105307720
+gzip=all_trials.csv.gz
+sha256_uncompressed=543f10e6607739e0c77fd8191ebabc2ef260e814d46efa6115bc7fb91122925b
+The uncompressed CSV is kept on the local machine and is not pushed: it exceeds GitHub's 100MB file limit. The gzip twin and this SHA-256 cover every row.

@@ -1,0 +1,142 @@
+{
+  "acc_mean": 0.7107981220657277,
+  "acc_std": 0.05400081552867834,
+  "dataset_checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+  "dataset_identity_status": "verified_zenodo_213_not_paper_unpublished_copy",
+  "dataset_metadata": {
+    "SHA256_checksum": "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b",
+    "dataset_name": "JAFFE",
+    "n": 213,
+    "number_of_classes": 10,
+    "original_feature_dimension": 65536,
+    "original_spatial_size": [
+      256,
+      256
+    ],
+    "palette_mode_images": 23,
+    "preprocessing_operations": [
+      "convert each TIFF to 8-bit grayscale",
+      "resize uint8 image from 256x256 to 26x26 with PIL bilinear",
+      "divide by 255",
+      "vectorize in C order"
+    ],
+    "processed_feature_dimension": 676,
+    "processed_spatial_size": [
+      26,
+      26
+    ],
+    "random_seed": "unknown",
+    "redistribution": "forbidden by the Zenodo/JAFFE conditions of use",
+    "sample_selection_method": "all 213 TIFFs in jaffe.zip, sorted by filename",
+    "source_url": "https://zenodo.org/records/14974867",
+    "subject_codes": {
+      "KA": 0,
+      "KL": 1,
+      "KM": 2,
+      "KR": 3,
+      "MK": 4,
+      "NA": 5,
+      "NM": 6,
+      "TM": 7,
+      "UY": 8,
+      "YM": 9
+    },
+    "verification_status": "verified"
+  },
+  "dataset_version": "zenodo",
+  "factor": "PCAKM_GRID_D50",
+  "gamma": null,
+  "git_branch": "v1",
+  "git_head": "47c0f835ef69afa560b891524da894ab4b39bad2",
+  "git_status_porcelain": "M baselines/spls/README.md\n M baselines/spls/resources/README.md\n M benchmarks/ar/README.md\n M benchmarks/ar/__init__.py\n M benchmarks/ar/data/.gitignore\n M benchmarks/ar/loader.py\n M benchmarks/ar/manifest.yaml\n M benchmarks/ar/resources/README.md\n M benchmarks/binalpha/README.md\n M benchmarks/binalpha/__init__.py\n M benchmarks/binalpha/loader.py\n M benchmarks/binalpha/test_binalpha.py\n M benchmarks/jaffe/README.md\n M benchmarks/msra50/README.md\n M benchmarks/msra50/loader.py\n M benchmarks/orl/README.md\n M benchmarks/umist/README.md\n M benchmarks/usps/README.md\n M benchmarks/yaleb/README.md\n M experiments/methods.py\n M scripts/run_experiment.py\n?? benchmarks/binalpha/reconstructions/CANDIDATE_BIN_ALPHA.json\n?? configs/strict_paper/\n?? configs/strict_paper_reproduction.yaml\n?? docs/strict_experiment_protocol.md\n?? docs/strict_http_logs/\n?? docs/strict_resource_acquisition.md\n?? results/strict_paper/\n?? results/strict_reproduction_matrix.csv\n?? runs/strict_paper/\n?? scripts/run_strict_paper.py",
+  "git_uncommitted": true,
+  "git_uncommitted_note": "working tree has uncommitted changes; numbers are from this dirty tree",
+  "hardware_note": "8 CPU / 16 GB target; see environment.json",
+  "kmeans_init": "random",
+  "n_clusters": 10,
+  "n_components": 50,
+  "n_features": 676,
+  "n_samples": 213,
+  "n_trials_completed": 5,
+  "n_trials_requested": 5,
+  "nmi_mean": 0.8238587147992545,
+  "nmi_std": 0.033121223839311396,
+  "paper_fidelity_category": "B_AMBIGUITY",
+  "params": {
+    "init": "random",
+    "n_components": 50,
+    "n_init": 1
+  },
+  "partial": false,
+  "pca_solver": "full",
+  "perturbation": {
+    "type": null
+  },
+  "protocol": "pca_once_then_kmeans_trials",
+  "runtime_seconds_mean": 0.002491782885044813,
+  "trial_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "trials": [
+    {
+      "acc": 0.6901408450704225,
+      "kmeans_inertia": 715.1726390666835,
+      "kmeans_init": "random",
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.8301531297608472,
+      "runtime_seconds": 0.00842841574922204,
+      "seed": 0,
+      "trial_index": 0
+    },
+    {
+      "acc": 0.647887323943662,
+      "kmeans_inertia": 846.3879173011212,
+      "kmeans_init": "random",
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.7844083873293113,
+      "runtime_seconds": 0.0015057078562676907,
+      "seed": 1,
+      "trial_index": 1
+    },
+    {
+      "acc": 0.7464788732394366,
+      "kmeans_inertia": 718.0925749754672,
+      "kmeans_init": "random",
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.8500606850287874,
+      "runtime_seconds": 0.0009643747471272945,
+      "seed": 2,
+      "trial_index": 2
+    },
+    {
+      "acc": 0.784037558685446,
+      "kmeans_inertia": 793.1203607987236,
+      "kmeans_init": "random",
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.8595955059687157,
+      "runtime_seconds": 0.0007503749802708626,
+      "seed": 3,
+      "trial_index": 3
+    },
+    {
+      "acc": 0.6854460093896714,
+      "kmeans_inertia": 730.8905702084484,
+      "kmeans_init": "random",
+      "n_predicted_labels": 213,
+      "n_unique_predicted": 10,
+      "nmi": 0.7950758659086115,
+      "runtime_seconds": 0.0008100410923361778,
+      "seed": 4,
+      "trial_index": 4
+    }
+  ],
+  "variant": null
+}

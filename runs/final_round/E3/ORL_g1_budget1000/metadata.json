@@ -1,0 +1,9 @@
+{
+  "source_run_id": "20261021_222143__STRICT_PAPER__ORL__SSC_E8_G1P0__4be5ba41",
+  "budget": 1000,
+  "variant": "E8",
+  "gamma": 1.0,
+  "git_head": "cb870acd47f9a62726c0cdab9b3b03395cc5e1cc",
+  "W_edges": 1217,
+  "max_abs_vs_saved_G_at_300": NaN
+}

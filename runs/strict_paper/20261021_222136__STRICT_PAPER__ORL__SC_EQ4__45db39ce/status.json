@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-10-21T22:21:36+08:00",
+  "created_at_utc": "2026-10-21T14:21:36+00:00",
+  "finished_at": "2026-10-21T22:21:36+08:00",
+  "n_trials_completed": 50,
+  "n_trials_requested": 50,
+  "run_id": "20261021_222136__STRICT_PAPER__ORL__SC_EQ4__45db39ce",
+  "started_at": "2026-10-21T22:21:36+08:00",
+  "status": "COMPLETED",
+  "transitions": [
+    {
+      "at": "2026-10-21T22:21:36+08:00",
+      "at_utc": "2026-10-21T14:21:36+00:00",
+      "run_id": "20261021_222136__STRICT_PAPER__ORL__SC_EQ4__45db39ce",
+      "status": "PLANNED"
+    },
+    {
+      "at": "2026-10-21T22:21:36+08:00",
+      "at_utc": "2026-10-21T14:21:36+00:00",
+      "status": "RUNNING"
+    },
+    {
+      "at": "2026-10-21T22:21:36+08:00",
+      "at_utc": "2026-10-21T14:21:36+00:00",
+      "n_trials_completed": 50,
+      "n_trials_requested": 50,
+      "status": "COMPLETED"
+    }
+  ],
+  "updated_at": "2026-10-21T22:21:36+08:00",
+  "updated_at_utc": "2026-10-21T14:21:36+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "config_hash": "6eb35106",
+  "created_at": "2026-10-20T01:59:28+08:00",
+  "dataset": "ORL",
+  "implementation_status": "EXTENSION",
+  "method": "rssc",
+  "notes": "EX2 Gaussian noise sigma=0.3*std seed=1",
+  "run_id": "20261020_015928__EX2__RSSC__ORL__6eb35106",
+  "selection_uses_labels": false,
+  "track": "EX2"
+}

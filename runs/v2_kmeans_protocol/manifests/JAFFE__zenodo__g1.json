@@ -1,0 +1,33 @@
+{
+  "bandwidth_rule": "median_positive_knn_squared_distance",
+  "certified_global_optimum": false,
+  "code_commit": "2688f8d015d38bd14dee437b677edd89427cbb48",
+  "config_hash": "e1cbaa22407ee67b8dd0238d551f287882732ea8f4cc80bda8a37da9ae4da27f",
+  "converged": false,
+  "dataset_key": "JAFFE__zenodo",
+  "dataset_sha256": "aa6cc712dd1efe37f9df57572ee2a10b648c7e43c2c16ae57a3d26cb83093a31",
+  "embed_seconds": 0.004618583247065544,
+  "equation8_objective": 1.720112107892459,
+  "f_sha256": "548dc5491152860e4a746b5ef07e7c35a22fb84c82b66aa070924399b5586f7b",
+  "fixed_point_residual": 0.07963120339769404,
+  "g_init": "F",
+  "g_sha256": "34402bea33ccd42e7e77c848d44c5c27a3203118c7909c75571462767516efff",
+  "gamma": 1.0,
+  "gamma_token": "1",
+  "k": 5,
+  "laplacian_coefficient": 2.0,
+  "n_clusters": 10,
+  "n_iterations": 300,
+  "shape_f": [
+    213,
+    10
+  ],
+  "shape_g": [
+    213,
+    10
+  ],
+  "shrink_seconds": 0.21823900006711483,
+  "solver_status": "NONCONVERGED_RETURNED_ITERATE n_iter=300 max_iter=300 NOT_CERTIFIED_GLOBAL_OPTIMUM",
+  "ssc_method_sha256": "a591bf8ad33aa731bfcdffa1c6183aeb2a1b7e689c29372d4715795d9203f578",
+  "variant": "E8"
+}

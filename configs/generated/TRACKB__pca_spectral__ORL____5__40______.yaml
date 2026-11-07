@@ -1,0 +1,11 @@
+track: TRACKB
+method: pca_spectral
+dataset: ORL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 40
+  k: 5
+notes: Track B PCA-SC prespecified dimension
+label_informed_selection: false

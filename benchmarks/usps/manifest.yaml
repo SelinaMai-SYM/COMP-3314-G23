@@ -1,0 +1,41 @@
+dataset_name: USPS
+source_url: >
+  https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2
+  and
+  https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2
+source_publication: >
+  LIBSVM attributes the files to J.J. Hull, A database for handwritten text
+  recognition research, IEEE TPAMI 16(5):550-554, 1994 (LIBSVM reference
+  JJH94a). The 16x16 normalized grayscale form is the USPS zip-code set
+  described by Hastie et al. in The Elements of Statistical Learning,
+  zip.info (LeCun et al., 1990). Chang et al. do not cite a USPS paper in
+  the dataset paragraph.
+download_date: "2026-10-20"
+archive_filename: "usps.bz2 and usps.t.bz2"
+SHA256_checksum: "usps.bz2 3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f; usps.t.bz2 a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e"
+license_information: >
+  No license file is inside either bz2 archive. The files are publicly
+  posted on the LIBSVM multiclass dataset page. Exact legal terms beyond
+  that public research posting: unknown. The archives are gitignored with
+  the other raw files.
+original_sample_count: 9298
+selected_sample_count: 9298
+number_of_classes: 10
+original_feature_dimension: 256
+processed_feature_dimension: 256
+preprocessing_operations: >
+  Parse both LIBSVM files. Every row has features 1..256. File labels are
+  1..10 and are mapped to digits 0..9. No resize and no further scaling.
+  Stored values lie in [-1, 1]. Concatenate the 7291 training rows and then
+  the 2007 test rows.
+sample_selection_method: "all rows of usps.bz2 followed by all rows of usps.t.bz2"
+random_seed: unknown
+known_deviations: >
+  The paper says the 9298 images are resized to 16x16. This standard release
+  is already 16x16, so no resize was applied here. Identity check: LIBSVM
+  reports 7291/2007 examples, 256 features, and 10 classes. After the
+  label-minus-one map, class counts equal the Hastie zip.info table exactly
+  (train 1194, 1005, 731, 658, 652, 556, 664, 645, 542, 644; test 359, 264,
+  198, 166, 200, 160, 170, 147, 166, 177). The paper does not state a random
+  seed; none was used.
+verification_status: verified

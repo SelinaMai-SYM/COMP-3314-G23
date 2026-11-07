@@ -1,0 +1,22 @@
+benchmark,method,kind,acc_gap,nmi_gap,note,dataset_id,variant,acc_mean_percent,nmi_mean_percent
+JAFFE,sc,PRIMARY_VERSUS_PAPER,-7.574178403755866,2.8162126725550394,Prespecified primary minus printed table. Not an oracle.,,,,
+JAFFE,lda_kmeans,PRIMARY_VERSUS_PAPER,-12.058685446009392,-3.498255355977605,Prespecified primary minus printed table. Not an oracle.,,,,
+JAFFE,llc,PRIMARY_VERSUS_PAPER,16.08544600938967,11.186977952042156,Prespecified primary minus printed table. Not an oracle.,,,,
+ORL,sc,PRIMARY_VERSUS_PAPER,-16.520000000000003,-5.329458011727269,Prespecified primary minus printed table. Not an oracle.,,,,
+ORL,lda_kmeans,PRIMARY_VERSUS_PAPER,-9.294999999999987,-0.09728418437863695,Prespecified primary minus printed table. Not an oracle.,,,,
+ORL,llc,PRIMARY_VERSUS_PAPER,10.060000000000002,5.0930343194256125,Prespecified primary minus printed table. Not an oracle.,,,,
+USPS,lda_kmeans,PRIMARY_VERSUS_PAPER,-11.487395138739494,-14.80817249547929,Prespecified primary minus printed table. Not an oracle.,,,,
+USPS,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,USPS,E13,73.55431275543128,82.85846137018589
+USPS,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,USPS,E8,73.86577758657774,82.84120035560612
+ORL,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,ORL_att92,E13,56.285,81.70988529230881
+ORL,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,ORL_att92,E8,55.815000000000005,81.77138091870661
+JAFFE,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,JAFFE,E13,70.55399061032865,83.63000652585123
+JAFFE,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,JAFFE,E8,72.21596244131456,84.87328905600965
+YaleB,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,YaleB_cropped2414,E13,17.222866611433304,25.09018123303339
+YaleB,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,YaleB_cropped2414,E8,17.03728251864126,24.654882798056104
+YaleB,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,YaleB_dengcai32,E13,20.303231151615577,30.139622484822826
+YaleB,ssc,SENSITIVITY_GAMMA_1000_NOT_PRIMARY,,,Gamma 1000 is a grid point. It is not selected because it is closer to the paper.,YaleB_dengcai32,E8,20.308202154101078,29.698185239957674
+BinAlpha,kmeans,NON_EXACT_SUPPLEMENT,,,UMIST575 and the BinAlpha candidate are not the historical 564 / full set.,BinAlpha_candidate26x30,,43.86666666666667,
+BinAlpha,sc,NON_EXACT_SUPPLEMENT,,,UMIST575 and the BinAlpha candidate are not the historical 564 / full set.,BinAlpha_candidate26x30,,44.0076923076923,
+UMIST,kmeans,NON_EXACT_SUPPLEMENT,,,UMIST575 and the BinAlpha candidate are not the historical 564 / full set.,UMIST_precropped575,,42.493913043478265,
+UMIST,sc,NON_EXACT_SUPPLEMENT,,,UMIST575 and the BinAlpha candidate are not the historical 564 / full set.,UMIST_precropped575,,56.128695652173924,

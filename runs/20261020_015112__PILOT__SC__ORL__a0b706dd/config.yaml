@@ -1,0 +1,10 @@
+track: PILOT
+method: sc
+dataset: ORL
+n_trials: 3
+trial_seed_start: 0
+timeout_seconds: 600
+params:
+  k: 5
+notes: 'Stage A ORL pilot: 3 K-means inits, gamma=1, k=5'
+label_informed_selection: false

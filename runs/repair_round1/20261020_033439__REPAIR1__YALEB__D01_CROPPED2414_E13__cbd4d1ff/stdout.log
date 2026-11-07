@@ -1,0 +1,3 @@
+[20261020_033439__REPAIR1__YALEB__D01_CROPPED2414_E13__cbd4d1ff] loading YaleB version=cropped2414
+[20261020_033439__REPAIR1__YALEB__D01_CROPPED2414_E13__cbd4d1ff] n=2414 d=1024 c=38 method=ssc trials=10
+[20261020_033439__REPAIR1__YALEB__D01_CROPPED2414_E13__cbd4d1ff] FAILED: ArpackNoConvergence: ARPACK error -1: No convergence (24141 iterations, 0/6 eigenvectors converged)

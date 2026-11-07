@@ -1,0 +1,41 @@
+{
+  "run_id": "20261103_150958__EXT__ORL__att92__ssc__control__g1e+00__0423e503",
+  "metadata_version": "att92",
+  "metadata_checksum_field": "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec",
+  "sc_acc": [
+    0.53,
+    0.4875,
+    0.5475
+  ],
+  "sc_nmi": [
+    0.7891864278960816,
+    0.7667864159422463,
+    0.7968165607566182
+  ],
+  "ssc_acc": [
+    0.58,
+    0.53,
+    0.5125
+  ],
+  "ssc_nmi": [
+    0.8123840547352519,
+    0.7884071412632997,
+    0.7911445325071117
+  ],
+  "status": "NONCONVERGED",
+  "info": {
+    "graph": {
+      "k": 5,
+      "delta2": 0.003203354802227998,
+      "delta": 0.056598187269805714,
+      "delta2_source": "median_positive_knn_squared_distance",
+      "bandwidth_rule": "median_positive_knn_squared_distance",
+      "symmetrization": "union_maximum",
+      "knn_method": "dense"
+    },
+    "reduces_to_e8": true,
+    "match_atol": 1e-05,
+    "match_rtol": 1e-05
+  },
+  "eligibility": "PAPER_RECONSTRUCTION"
+}

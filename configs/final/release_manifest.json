@@ -15,8 +15,8 @@
   "coverage_file": "results/v3_reproduction/coverage_72_cells.csv",
   "files": {
     "configs/final/report_selection.yaml": {
-      "bytes": 1626,
-      "sha256": "424a08062f4a32bdc99e5a75dc88fc16f9a55c29ea85193ea28f42b051fc45af"
+      "bytes": 1797,
+      "sha256": "a936ce4935c17fcf013d8b4abf9a70cae66f8305df50b3c6d1bc6a9aa759b6bf"
     },
     "configs/v3/datasets.yaml": {
       "bytes": 2684,
@@ -52,9 +52,10 @@
     }
   },
   "frozen_source_commit": "95d599918627379b21f665b9b2754dd3852dc6dc",
+  "metadata_amendment": "Display v1 archived; raw trials unchanged. Continuation is counted in executed iterations and total budget; LLC n_init is null.",
   "metadata_file": "results/final/release/job_metadata.jsonl.gz",
   "paper_file": "configs/v3/paper_reference.yaml",
-  "release_id": "historical-v3-20261109",
+  "release_id": "historical-v3-20261109-metadata-corrected",
   "schema_version": 1,
   "selection_file": "configs/final/report_selection.yaml",
   "trial_file": "results/v3_reproduction/all_trials.csv.gz",

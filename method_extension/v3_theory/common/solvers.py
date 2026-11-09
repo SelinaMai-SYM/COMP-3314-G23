@@ -260,9 +260,9 @@ def compare_solvers(
 ) -> dict[str, Any]:
     """Compare IRLS with ADMM on the exact nonsmooth objective.
 
-    A small step of G is not enough. OPTIMALITY_VERIFIED requires the relative
+    A small step of G is not enough. Agreement here measures the relative
     objective gap to be within tolerance and the independent primal residual
-    to be small. Otherwise the status is NUMERICALLY_UNCERTIFIED.
+    to be small. Neither condition is a feasible-dual optimality certificate.
     """
     irls = shrink_weighted(
         embedding, affinity, gamma, fidelity, max_iter=irls_max_iter, variant=variant
@@ -281,7 +281,7 @@ def compare_solvers(
         np.isfinite(admm["primal_residual"]) and admm["primal_residual"] <= 1e-3 * (1.0 + np.linalg.norm(admm["patterns"]))
     )
     if relative_gap <= objective_gap_tol and primal_ok and irls["objective"] <= admm["objective"] * (1.0 + objective_gap_tol):
-        status = "OPTIMALITY_VERIFIED"
+        status = "SOLVER_AGREEMENT_UNCERTIFIED"
     else:
         status = "NUMERICALLY_UNCERTIFIED"
     features = np.asarray(embedding, dtype=np.float64)
@@ -339,5 +339,5 @@ def cvxpy_weighted(
         "patterns": solved,
         "objective": value,
         "solver_status": str(problem.status),
-        "status": "OPTIMALITY_VERIFIED" if verified else "NUMERICALLY_UNCERTIFIED",
+        "status": "NUMERICAL_REFERENCE_UNCERTIFIED" if verified else "NUMERICALLY_UNCERTIFIED",
     }

@@ -30,7 +30,7 @@ def test_admm_matches_cvxpy_objective_not_necessarily_unique_g() -> None:
     embedding, weights = _problem()
     gamma = 1.0
     reference = cvxpy_equation8(embedding, weights, gamma)
-    assert reference["status"] == "OPTIMALITY_VERIFIED"
+    assert reference["status"] == "NUMERICAL_REFERENCE_UNCERTIFIED"
     solved = admm_equation8(embedding, weights, gamma, max_iter=400, tol=1e-5)
     gap = abs(solved["objective"] - reference["objective"])
     assert gap <= 1e-2

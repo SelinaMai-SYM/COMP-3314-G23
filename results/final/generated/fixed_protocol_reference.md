@@ -30,7 +30,7 @@ All scores are percent. Reported in Chang et al. (2015) and Our reproduction/ada
 | ORL | lda_sc | ORL_att92 | 68.3 | BLOCKED_METHOD | BLOCKED_METHOD | BLOCKED_METHOD;  |
 | ORL | llc | ORL_att92 | 71.5 | 81.560 ± 0.705 | 89.993 ± 0.181 | COMPLETED; NOT_APPLICABLE |
 | ORL | spls | ORL_att92 | 74.2 | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED;  |
-| ORL | ssc | ORL_att92 | 76.0 | 57.135 ± 3.955 | 81.165 ± 2.204 | COMPLETED; ITERATE_CONVERGED_UNCERTIFIED |
+| ORL | ssc | ORL_att92 | 76.0 | 57.135 ± 3.955 | 81.165 ± 2.204 | COMPLETED; iteration_budget_not_300; ITERATE_CONVERGED_UNCERTIFIED |
 | UMIST | kmeans |  | 41.3 | BLOCKED_DATA | BLOCKED_DATA | BLOCKED_DATA;  |
 | UMIST | sc |  | 52.2 | BLOCKED_DATA | BLOCKED_DATA | BLOCKED_DATA;  |
 | UMIST | pca_kmeans |  | 48.8 | BLOCKED_DATA | BLOCKED_DATA | BLOCKED_DATA;  |
@@ -66,7 +66,7 @@ All scores are percent. Reported in Chang et al. (2015) and Our reproduction/ada
 | YaleB | lda_sc | YaleB_cropped2414 | 38.2 | BLOCKED_METHOD | BLOCKED_METHOD | BLOCKED_METHOD;  |
 | YaleB | llc | YaleB_cropped2414 | 38.2 | 28.037 ± 0.127 | 35.369 ± 0.393 | COMPLETED; NOT_APPLICABLE |
 | YaleB | spls | YaleB_cropped2414 | 47.3 | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED;  |
-| YaleB | ssc | YaleB_cropped2414 | 49.8 | 17.629 ± 1.190 | 26.184 ± 0.900 | COMPLETED; ITERATE_CONVERGED_UNCERTIFIED |
+| YaleB | ssc | YaleB_cropped2414 | 49.8 | 17.629 ± 1.190 | 26.184 ± 0.900 | COMPLETED; iteration_budget_not_300; ITERATE_CONVERGED_UNCERTIFIED |
 | USPS | kmeans | USPS | 65.4 | 66.059 ± 2.175 | 61.042 ± 0.874 | COMPLETED; NOT_APPLICABLE |
 | USPS | sc | USPS | 64.3 | 61.739 ± 8.086 | 74.940 ± 4.494 | COMPLETED; NOT_APPLICABLE |
 | USPS | pca_kmeans | USPS | 69.4 | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED;  |

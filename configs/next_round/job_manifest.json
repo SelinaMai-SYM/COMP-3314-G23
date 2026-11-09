@@ -1,9 +1,11 @@
 {
+  "N2_trigger": "Prespecified geometry pilot observed eigenspace/topology sensitivity and higher projected-heat kNN overlap; this is not evidence of ACC/NMI improvement.",
   "counts": {
     "A": 25,
     "B": 160,
     "C": 220,
-    "N0_selected": 4
+    "N0_selected": 4,
+    "N2_primary": 28
   },
   "notes": "Task identities are immutable; execution run ids additionally include source/protocol/data hashes. SC is evaluated once per representation.",
   "protocol_version": "performance-mechanisms-v1",
@@ -3751,6 +3753,258 @@
       "prep": "Y0",
       "task_id": "5bcd9ff9140fc7719f3cb6da",
       "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.2701243767622571,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "Y0",
+      "task_id": "2adf90bbe309dbd6f4f99c2a"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "1b22df615e1a1b1d65ef1062"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.03564778673537884,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "11a41a209396db16267cc379"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "0396b69ee5c0e6283c0e6487"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.4038237923688464,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "7546e6fb957ffdd2b886e259"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "48f7b16289be7b7c4932fe55"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.3450083871510286,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "096a243d48c7553bd721bcd2"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.2517603540394306,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "Y0",
+      "task_id": "430c7fbdb18551d2638167ac"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "49048f09c56341c7f74cdeb4"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.024568838875757257,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "81b81b736f739761546094d6"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "9b433cf231067ebfd2871050"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.4206882102299359,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "b9620df3471410cb7c72ed3a"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "9f3c23105ec6be83db44824a"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.30331324957859934,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "263ccfa0900e2d68241c8a60"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.2484745964463717,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "Y0",
+      "task_id": "128d698b0a931b80764597a6"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "f8a1dcb923fbcd97530fff94"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.18042525842963872,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "21fd1471f7505d04ed81d8ee"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "e74cf25f89d54f1dcc448582"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0434255567651223,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "a36e6c57848aaadfb61b009e"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "ce6da39ffbb36784caa79eec"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.07161077257721987,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "f72e09fde0ba0d1b9d9d7829"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.24961051029434492,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "Y0",
+      "task_id": "3a503c6133e5c689fbad766e"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "e5c69d2910503608815162e3"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.058455237523075375,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_hard128",
+      "task_id": "cd4c1059b150d318b7b45c99"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "e9dbc6fbab4435e4558a4219"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.02647323208328772,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_heat_t4_r128",
+      "task_id": "fede340464472de24ec19f4e"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "original",
+      "parameter_role": "common_gamma1",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "b128deda49bf3681d9416368"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.03299316187518342,
+      "kind": "original",
+      "parameter_role": "own_2gamma0",
+      "phase": "N2_primary",
+      "prep": "N2_W_only_heat",
+      "task_id": "1047c2f6bb4be3b8a3beb4b4"
     }
   ]
 }

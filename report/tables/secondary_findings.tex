@@ -1,0 +1,35 @@
+\subsection{Synthetic mechanism checks}
+Synthetic seeds 100--109 are independent instances; each has 50 conditional K-means seeds. Parameters and distance scales are frozen from the unpolluted instance. The full 2-by-2 and static-screening controls are retained, including uncertified inner solves. This intentionally easy geometry can show damage avoidance but is weak evidence of added clustering capacity.
+\begin{center}\small\begin{tabular}{llrrr}\toprule Scenario & Method & ACC & NMI & qualified / 10 \\\midrule
+anchor\_0.2 & SC & 100.000 & 100.000 & 10 \\
+anchor\_0.2 & SSC & 100.000 & 100.000 & 10 \\
+anchor\_0.2 & radial\_capped & 100.000 & 100.000 & 10 \\
+anchor\_0.2 & squared\_linear & 100.000 & 100.000 & 10 \\
+anchor\_0.2 & static\_screen & 100.000 & 100.000 & 10 \\
+bridge\_0.1 & SC & 100.000 & 100.000 & 10 \\
+bridge\_0.1 & SSC & 99.889 & 99.555 & 10 \\
+bridge\_0.1 & radial\_capped & 100.000 & 100.000 & 10 \\
+bridge\_0.1 & squared\_linear & 100.000 & 100.000 & 10 \\
+bridge\_0.1 & static\_screen & 100.000 & 100.000 & 10 \\
+imbalanced\_bridge & SC & 100.000 & 100.000 & 10 \\
+imbalanced\_bridge & SSC & 99.156 & 96.725 & 10 \\
+imbalanced\_bridge & radial\_capped & 100.000 & 100.000 & 10 \\
+imbalanced\_bridge & squared\_linear & 100.000 & 100.000 & 10 \\
+imbalanced\_bridge & static\_screen & 100.000 & 100.000 & 10 \\
+\bottomrule\end{tabular}\end{center}
+Bridge contamination slightly lowers SSC ACC/NMI; capping, static deletion and squared fidelity all avoid this damage, while SC is already perfect. Capping is therefore neither necessary nor shown to improve beyond SC. At 20\% anchor contamination all methods have 100\% ACC/NMI, yet capping can worsen representation MSE by removing useful correction. The radial-Huber primary pilot changes MSE slightly without label improvement; its full real-data search is not promoted.
+\subsection{Tiny global reference and initialization dependence}
+For the documented five-point graph, 1024 active states are enumerated, 960 excluded by a nonnegative constant lower bound, and 64 convex states independently certified. Original primal/dual are approximately 8; capped global primal/dual are 3. The local capped algorithm returns objective 3 (ACC/NMI 100\%) from F, but objective 8 (ACC 60\%, NMI 0) from original SSC. Global certification comes solely from enumeration on this tiny graph.
+\subsection{Secondary heat ablation}
+\subsection{Corrected full-pipeline image conditions}
+Each of four fixed image conditions reconstructs A, F, W and SSC with clean gamma=1; USPS uses [-1,1] and brightness steps scale with full domain width. Both ACC and NMI changes are measured against each method on clean data. These deterministic conditions are descriptive, not independent random perturbation seeds. No inferential CI or adaptive parameter-selection claim is made. USPS uncertified outputs remain uncertified.
+\begin{center}\small\begin{tabular}{llrrrr}\toprule Dataset & Method & min $\Delta$ACC & max $\Delta$ACC & min $\Delta$NMI & max $\Delta$NMI \\\midrule
+ORL & SC & -0.06 & 1.35 & -0.23 & 0.37 \\
+ORL & SSC & 0.00 & 1.76 & 0.00 & 0.84 \\
+JAFFE & SC & 0.00 & 0.00 & -0.00 & 0.00 \\
+JAFFE & SSC & 0.00 & 0.21 & 0.00 & 0.08 \\
+YaleB & SC & 0.08 & 0.18 & 0.08 & 0.20 \\
+YaleB & SSC & 0.03 & 0.61 & 0.03 & 0.42 \\
+USPS & SC & -0.36 & 0.09 & -0.32 & 0.48 \\
+USPS & SSC & -0.05 & 0.36 & 0.05 & 0.75 \\
+\bottomrule\end{tabular}\end{center}

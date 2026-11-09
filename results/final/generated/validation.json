@@ -10,7 +10,7 @@
   "jobs": 3059,
   "metadata_scope": "scalar trials and effective configurations; historical representation arrays not published",
   "ok": true,
-  "selection_rule": "acc-distance-batch0-v1",
+  "selection_rule": "acc-distance-batch0-v2-metadata-corrected",
   "trials": 378550,
   "uncompressed_trials_sha256": "543f10e6607739e0c77fd8191ebabc2ef260e814d46efa6115bc7fb91122925b"
 }

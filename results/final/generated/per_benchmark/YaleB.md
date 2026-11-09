@@ -21,4 +21,4 @@ All scores are percent. Reported in Chang et al. (2015) and Our reproduction/ada
 | YaleB | spls | YaleB_dengcai32 | 47.3 | 13.522 ± 0.776 | 19.438 ± 0.689 | COMPLETED; alternate_dataset_version; initialization_not_fixed_reference; NOT_APPLICABLE |
 | YaleB | spls | YaleB_cropped2414 | 47.3 | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED;  |
 | YaleB | ssc | YaleB_dengcai32 | 49.8 | 43.583 ± 1.287 | 54.906 ± 0.826 | COMPLETED; alternate_dataset_version; input_l2_normalization; embedding_row_normalization; gamma_not_fixed_one; initialization_not_fixed_reference; ITERATE_CONVERGED_UNCERTIFIED |
-| YaleB | ssc | YaleB_cropped2414 | 49.8 | 17.629 ± 1.190 | 26.184 ± 0.900 | COMPLETED; ITERATE_CONVERGED_UNCERTIFIED |
+| YaleB | ssc | YaleB_cropped2414 | 49.8 | 17.629 ± 1.190 | 26.184 ± 0.900 | COMPLETED; iteration_budget_not_300; ITERATE_CONVERGED_UNCERTIFIED |

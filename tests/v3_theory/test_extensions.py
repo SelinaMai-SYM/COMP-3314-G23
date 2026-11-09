@@ -46,8 +46,8 @@ def test_threshold_against_cvxpy():
     below = cvxpy_weighted(features, affinity, gamma_0 * 0.5)
     at_boundary = cvxpy_weighted(features, affinity, gamma_0)
     above = cvxpy_weighted(features, affinity, gamma_0 * 4.0)
-    assert below["status"] == "OPTIMALITY_VERIFIED"
-    assert at_boundary["status"] == "OPTIMALITY_VERIFIED"
+    assert below["status"] == "NUMERICAL_REFERENCE_UNCERTIFIED"
+    assert at_boundary["status"] == "NUMERICAL_REFERENCE_UNCERTIFIED"
     base_below = equation8_objective(features, features, affinity, gamma_0 * 0.5)
     base_at = equation8_objective(features, features, affinity, gamma_0)
     base_above = equation8_objective(features, features, affinity, gamma_0 * 4.0)
@@ -78,7 +78,7 @@ def test_admm_matches_cvxpy_on_weighted_objective():
     fidelity = np.array([0.5, 1.0, 1.5, 0.8])
     reference = cvxpy_weighted(features, affinity, 0.4, fidelity)
     solved = admm_weighted(features, affinity, 0.4, fidelity, max_iter=400, tol=1e-5)
-    assert reference["status"] == "OPTIMALITY_VERIFIED"
+    assert reference["status"] == "NUMERICAL_REFERENCE_UNCERTIFIED"
     assert abs(solved["objective"] - reference["objective"]) <= 1e-2 * max(1.0, abs(reference["objective"]))
     irls = shrink_weighted(features, affinity, 0.4, fidelity, variant="E8", max_iter=80)
     assert abs(irls["objective"] - reference["objective"]) <= 1e-2 * max(1.0, abs(reference["objective"]))

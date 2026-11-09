@@ -170,7 +170,7 @@ def cvxpy_equation8(
     return {
         "patterns": solved,
         "objective": value,
-        "status": "OPTIMALITY_VERIFIED" if verified else "NUMERICALLY_UNCERTIFIED",
+        "status": "NUMERICAL_REFERENCE_UNCERTIFIED" if verified else "NUMERICALLY_UNCERTIFIED",
         "solver_status": str(problem.status),
         "solver": "cvxpy_scs_equation8",
     }
@@ -208,7 +208,7 @@ def positive_residual_stationarity(
     np.add.at(gradient, src, contribution)
     np.add.at(gradient, dst, -contribution)
     return {
-        "status": "OPTIMALITY_VERIFIED"
+        "status": "STATIONARITY_RESIDUAL_UNCERTIFIED"
         if float(np.linalg.norm(gradient)) <= 1e-3
         else "NUMERICALLY_UNCERTIFIED",
         "reason": "unique subgradient because every residual is bounded away from zero",
@@ -229,9 +229,9 @@ def solver_status_from_irls(
 ) -> str:
     """Map numeric evidence onto the campaign status vocabulary."""
     if independent_gap is not None and np.isfinite(independent_gap) and independent_gap <= gap_tol:
-        return "OPTIMALITY_VERIFIED"
-    if stationarity is not None and stationarity.get("status") == "OPTIMALITY_VERIFIED":
-        return "OPTIMALITY_VERIFIED"
+        return "SOLVER_AGREEMENT_UNCERTIFIED"
+    if stationarity is not None and stationarity.get("status") == "STATIONARITY_RESIDUAL_UNCERTIFIED":
+        return "STATIONARITY_RESIDUAL_UNCERTIFIED"
     if converged:
         return "CONVERGED_BY_ITERATE_CRITERION"
     if n_iterations >= max_iter:

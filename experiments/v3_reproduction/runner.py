@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import traceback
 from pathlib import Path
@@ -60,8 +61,6 @@ def _done(payload: dict[str, Any], job_id: str) -> bool:
     if not meta_path.is_file():
         return False
     meta = json.loads(meta_path.read_text())
-    if meta.get("code_commit") != payload["code_commit"]:
-        return False
     if meta.get("source_hash") != payload.get("source_hash") or not meta.get("source_hash"):
         return False
     if meta.get("current_fingerprint") != payload.get("current_fingerprint") or meta.get("protocols") != payload.get("protocols") or meta.get("environment") != payload.get("environment"):
@@ -69,6 +68,8 @@ def _done(payload: dict[str, Any], job_id: str) -> bool:
     if meta.get("status") not in {"COMPLETED", "INFEASIBLE"}:
         return False
     if meta.get("status") == "COMPLETED" and meta.get("n_trials", 0) > 0 and not trials_path.is_file():
+        return False
+    if meta.get("n_trials",0)>0 and meta.get("trials_sha256") != hashlib.sha256(trials_path.read_bytes()).hexdigest():
         return False
     return True
 
@@ -85,6 +86,7 @@ def _write_job(payload: dict[str, Any], job_id: str, meta: dict[str, Any], rows:
     meta = dict(meta)
     meta["job_id"] = job_id
     meta["n_trials"] = len(rows)
+    meta["trials_sha256"] = hashlib.sha256(trials_path.read_bytes()).hexdigest() if rows else None
     meta["code_commit"] = payload["code_commit"]
     meta["source_hash"] = payload.get("source_hash")
     meta["environment"] = payload.get("environment")
@@ -290,7 +292,7 @@ def _solve_ssc(
         converged=bool(solved.converged),
         n_iterations=int(solved.n_iterations),
         max_iter=int(protocols["ssc_extra_iters"] if continued else max_iter),
-        stationarity=stationarity if stationarity.get("status") == "OPTIMALITY_VERIFIED" else None,
+        stationarity=stationarity if stationarity.get("status") == "STATIONARITY_RESIDUAL_UNCERTIFIED" else None,
         independent_gap=independent_gap,
         gap_tol=float(protocols["optimality_gap_tol"]),
     )

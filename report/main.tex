@@ -3,7 +3,7 @@
 \usepackage[preprint]{neurips_2026}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{hyperref,url,booktabs,amsmath,amssymb,amsfonts,microtype,longtable,array}
+\usepackage{hyperref,url,booktabs,amsmath,amssymb,amsfonts,microtype,longtable,array,graphicx}
 \title{Spectral Shrunk Clustering: Reproduction, Certificates, and When Shrinkage Helps}
 \author{Group 23\thanks{Individual member names were not present in the supplied project materials and remain to be supplied. No names are inferred from repository accounts.}\\The University of Hong Kong\\COMP3314 Machine Learning}
 \begin{document}
@@ -27,7 +27,7 @@ Both terms are convex for fixed F and nonnegative W, but uniqueness is not guara
 Convexity concerns G with F/W fixed. Graph construction, selecting an eigenspace and final K-means remain separate stages. A global representation optimum need not give globally optimal labels or higher ACC. Signs and orthogonal rotations preserve Euclidean geometry; changes to the selected eigenspace at a spectral cutoff can matter. Row normalization is a preprocessing change, not an eigenpair-residual test.
 
 \section{Published evidence and our partial reproduction}
-The paper compares nine methods on AR, JAFFE, ORL, UMIST, BinAlpha, MSRA50, YaleB and USPS, reports 50 clustering repetitions, and describes a parameter grid $\{10^{-6},10^{-3},1,10^3,10^6\}$. SSC has the highest reported ACC across these benchmarks. This does not extend to every metric: YaleB SSC ACC is 49.8 versus SC 34.8, while SSC NMI is 46.8 versus SC 55.6 (\emph{Reported in Chang et al. (2015)}). ACC uses optimal label matching; our NMI uses geometric entropy normalization.
+The paper compares nine methods on AR, JAFFE, ORL, UMIST, BinAlpha, MSRA50, YaleB and USPS, reports 50 clustering repetitions, and describes a parameter grid $\{10^{-6},10^{-3},1,10^3,10^6\}$. SSC has the highest reported ACC across these benchmarks. This does not extend to every metric: YaleB SSC ACC is 49.8 versus SC 34.8, while SSC NMI is 46.8 versus SC 55.6 (\emph{Reported in Chang et al. (2015)}). ACC uses optimal label matching; our NMI uses geometric entropy normalization. The paper also describes selecting randomized runs by objective. A selected assignment and a per-run mean/SD are distinct endpoints, so we retain both rather than attaching 50-run SD to a single assignment.
 
 Our source-based implementations include one-shot SLPS (called SPLS in the SSC table), following Hou et al.~\citep{hou2013learning}. LDA-SC remains blocked because its named algorithm is insufficiently specified. AR's required subset, historical UMIST564 and MSRA50 remain data-blocked. BinAlpha subset identity is unverified; UMIST575 and candidate BinAlpha results are supplementary, not replacements. The historical matrix has 32 completed, 24 data-blocked, 8 method-blocked and 8 subset-unverified cells.
 
@@ -60,4 +60,12 @@ SSC offers an interpretable convex representation objective, but its clustering 
 \input{tables/final_appendix}
 \section{Certificates, mechanisms, provenance and resource limits}
 \input{tables/audit_appendix}
+\subsection{Reduced-model derivation and equality cases}
+For group-constant representatives, let $r=\|u-v\|$. Since $n>m$, the fidelity is at least $m\max(d-r,0)$, attained on the anchor segment with $v=b$ for $0\le r\le d$. For linear fusion the reduced cost is $md+(\lambda-m)r$, hence $d\min(m,\lambda)$. At $\lambda=m$ every segment location is optimal. For $d>\tau$, the capped cost is piecewise linear, and its endpoint minimum is $\min(md,\lambda\tau)$; the interior kink cannot improve it. At $md=\lambda\tau$ both fused and separated endpoint solutions exist. Strict inequalities are therefore needed to claim preservation. Graph weights are fixed throughout this statement; rebuilding W as d changes can change lambda. This is not a theorem for arbitrary five-point graphs or classification risk.
+\section{Measured secondary experiments and negative findings}
+\input{tables/secondary_findings}
+\clearpage
+\section{Parameter curves and controlled edge interventions}
+\begin{figure}[h]\centering\includegraphics[width=\textwidth]{../results/next_round/figures/gamma_curves.pdf}\caption{Same seeded features and protocol; open markers are uncertified. These fresh points do not replace stronger historical points on unrecoverable old representations.}\end{figure}
+\begin{figure}[h]\centering\includegraphics[width=\textwidth]{../results/next_round/figures/edge_diagnosis.pdf}\caption{Conditional paired seed intervals at gamma=1. Oracle correction is a label-assisted diagnostic, not an unsupervised method.}\end{figure}
 \end{document}

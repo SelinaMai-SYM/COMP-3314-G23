@@ -75,4 +75,4 @@ All scores are percent. Reported in Chang et al. (2015) and Our reproduction/ada
 | USPS | lda_sc | USPS | 70.4 | BLOCKED_METHOD | BLOCKED_METHOD | BLOCKED_METHOD;  |
 | USPS | llc | USPS | 63.9 | 63.108 ± 0.005 | 73.987 ± 0.002 | COMPLETED; NOT_APPLICABLE |
 | USPS | spls | USPS | 71.4 | 71.358 ± 4.134 | 73.422 ± 1.411 | COMPLETED; initialization_not_fixed_reference; NOT_APPLICABLE |
-| USPS | ssc | USPS | 75.5 | 76.844 ± 5.117 | 84.082 ± 2.957 | COMPLETED; gamma_not_fixed_one; initialization_not_fixed_reference; ITERATE_CONVERGED_UNCERTIFIED |
+| USPS | ssc | USPS | 75.5 | 76.844 ± 5.117 | 84.082 ± 2.957 | COMPLETED; gamma_not_fixed_one; initialization_not_fixed_reference; iteration_budget_not_300; ITERATE_CONVERGED_UNCERTIFIED |

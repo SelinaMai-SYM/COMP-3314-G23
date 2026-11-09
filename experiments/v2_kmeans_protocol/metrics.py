@@ -23,8 +23,10 @@ def evaluate_partition(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, floa
     pred = np.asarray(y_pred).reshape(-1)
     acc = float(clustering_accuracy(truth, pred))
     nmi = float(normalized_mutual_information(truth, pred))
-    if not (0.0 <= acc <= 1.0 and 0.0 <= nmi <= 1.0):
+    if not (-1e-12 <= acc <= 1.0+1e-12 and -1e-12 <= nmi <= 1.0+1e-12):
         raise RuntimeError(f"metric out of range: ACC={acc} NMI={nmi}")
+    # Entropy arithmetic at a perfect partition can exceed one by machine epsilon.
+    acc=float(np.clip(acc,0.,1.));nmi=float(np.clip(nmi,0.,1.))
     return {
         "acc": acc,
         "nmi": nmi,

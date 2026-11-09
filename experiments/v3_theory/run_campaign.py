@@ -469,12 +469,14 @@ def execute_task(task: dict[str, Any]) -> dict[str, Any]:
         if admm is not None:
             relative_gap = abs(solved["objective"] - admm["objective"]) / max(abs(admm["objective"]), 1e-12)
         certificate_holds = bool(task["certificate_region"]) and abs(solved["objective"] - reference_objective) <= 1e-3 * max(1.0, abs(reference_objective)) and movement <= 1e-2
-        if certificate_holds or (relative_gap is not None and relative_gap <= 1e-3 and admm and admm["converged"]):
-            optimality = "OPTIMALITY_VERIFIED"
+        if certificate_holds:
+            optimality = "ANALYTIC_G_EQUALS_F"
+        elif relative_gap is not None and relative_gap <= 1e-3 and admm and admm["converged"]:
+            optimality = "SOLVER_AGREEMENT_UNCERTIFIED"
         else:
             optimality = "NUMERICALLY_UNCERTIFIED"
         if task["extension"] == "X1":
-            accepted = optimality == "OPTIMALITY_VERIFIED"
+            accepted = optimality == "ANALYTIC_G_EQUALS_F"
             patterns = embedding if certificate_holds else solved["patterns"]
         else:
             accepted = bool(solved["converged"])
@@ -482,7 +484,7 @@ def execute_task(task: dict[str, Any]) -> dict[str, Any]:
         if task["extension"] == "X1" and task["name"] == "control_G_equals_F":
             accepted = True
             patterns = embedding
-            optimality = "OPTIMALITY_VERIFIED" if certificate_holds or gamma == 0.0 else optimality
+            optimality = "ANALYTIC_G_EQUALS_F" if certificate_holds or gamma == 0.0 else optimality
         fused = fusion_summary(patterns, affinity)
         row: dict[str, Any] = {
             "job_id": task["job_id"],

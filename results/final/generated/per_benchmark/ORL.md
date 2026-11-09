@@ -21,4 +21,4 @@ All scores are percent. Reported in Chang et al. (2015) and Our reproduction/ada
 | ORL | spls | ORL_att92 | 74.2 | 74.195 ± 1.982 | 87.898 ± 0.866 | COMPLETED; initialization_not_fixed_reference; NOT_APPLICABLE |
 | ORL | spls | ORL_att92 | 74.2 | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED | GRID_NOT_COLLAPSED;  |
 | ORL | ssc | ORL_att92 | 76.0 | 75.965 ± 1.367 | 90.008 ± 0.411 | TRUNCATED_EXECUTION; printed_E13_gamma_half; gamma_not_fixed_one; initialization_not_fixed_reference; MAX_ITER_REACHED |
-| ORL | ssc | ORL_att92 | 76.0 | 57.135 ± 3.955 | 81.165 ± 2.204 | COMPLETED; ITERATE_CONVERGED_UNCERTIFIED |
+| ORL | ssc | ORL_att92 | 76.0 | 57.135 ± 3.955 | 81.165 ± 2.204 | COMPLETED; iteration_budget_not_300; ITERATE_CONVERGED_UNCERTIFIED |

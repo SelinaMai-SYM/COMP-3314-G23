@@ -3,7 +3,7 @@
     "A": 25,
     "B": 160,
     "C": 220,
-    "N0_selected": 3
+    "N0_selected": 4
   },
   "notes": "Task identities are immutable; execution run ids additionally include source/protocol/data hashes. SC is evaluated once per representation.",
   "protocol_version": "performance-mechanisms-v1",
@@ -209,34 +209,48 @@
       "task_id": "b01e9c78fdde813175505f48"
     },
     {
-      "dataset": "ORL_att92",
-      "gamma": 500.0,
-      "gamma_nominal": 1000.0,
-      "kind": "original",
-      "legacy_variant": "E13",
-      "phase": "N0_selected",
-      "prep": "Y0",
-      "task_id": "e06c02507a7c94a33dd80ad2"
-    },
-    {
       "dataset": "JAFFE",
       "gamma": 500000.0,
       "gamma_nominal": 1000000.0,
       "kind": "original",
+      "legacy_config_id": "JAFFE|ssc|Y0|E13|gamma=1e+06|E13|RANDOM|grid",
       "legacy_variant": "E13",
       "phase": "N0_selected",
       "prep": "Y0",
-      "task_id": "2926083e3795edcfa872e41d"
+      "task_id": "e5aa3394b9eed43e0a46ad82"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 500.0,
+      "gamma_nominal": 1000.0,
+      "kind": "original",
+      "legacy_config_id": "ORL_att92|ssc|Y0|E13|gamma=1e+03|E13|VANILLA_KMEANSPP|grid",
+      "legacy_variant": "E13",
+      "phase": "N0_selected",
+      "prep": "Y0",
+      "task_id": "47c7fba1b06eb91c3605b174"
     },
     {
       "dataset": "YaleB_dengcai32",
-      "gamma": 0.0005,
+      "gamma": 0.001,
       "gamma_nominal": 0.001,
       "kind": "original",
-      "legacy_variant": "E13",
+      "legacy_config_id": "YaleB_dengcai32|ssc|Y3|E8|gamma=1e-03|E8|SKLEARN_GREEDY_KMEANSPP|grid",
+      "legacy_variant": "E8",
       "phase": "N0_selected",
       "prep": "Y3",
-      "task_id": "96936597b29e45a1f9a95e76"
+      "task_id": "eff9b8cac744c0d0b67ff792"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "gamma_nominal": 1000.0,
+      "kind": "original",
+      "legacy_config_id": "USPS|ssc|Y0|E8|gamma=1e+03|E8|VANILLA_KMEANSPP|grid",
+      "legacy_variant": "E8",
+      "phase": "N0_selected",
+      "prep": "Y0",
+      "task_id": "d6b0d0bdac032eb23c4475c5"
     },
     {
       "dataset": "ORL_att92",

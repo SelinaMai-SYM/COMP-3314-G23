@@ -1,0 +1,73 @@
+benchmark,method,execution_status,reason,n_completed_configurations
+AR,kmeans,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,sc,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,pca_kmeans,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,pca_sc,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,lda_kmeans,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+AR,llc,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,spls,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+AR,ssc,BLOCKED_DATA,"No verified 840/120 file. The Zenodo zip has 100 identities. LZUFE AR.mat is 1680x1024 with 120 identities and 14 images each. It has no documented 840-image rule, so no subset was taken.",0
+JAFFE,kmeans,COMPLETED,,3
+JAFFE,sc,COMPLETED,,3
+JAFFE,pca_kmeans,COMPLETED,,30
+JAFFE,pca_sc,COMPLETED,,45
+JAFFE,lda_kmeans,COMPLETED,,1
+JAFFE,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+JAFFE,llc,COMPLETED,,7
+JAFFE,spls,COMPLETED,,570
+JAFFE,ssc,COMPLETED,,30
+ORL,kmeans,COMPLETED,,3
+ORL,sc,COMPLETED,,3
+ORL,pca_kmeans,COMPLETED,,30
+ORL,pca_sc,COMPLETED,,45
+ORL,lda_kmeans,COMPLETED,,1
+ORL,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+ORL,llc,COMPLETED,,7
+ORL,spls,COMPLETED,,570
+ORL,ssc,COMPLETED,,30
+UMIST,kmeans,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,sc,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,pca_kmeans,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,pca_sc,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,lda_kmeans,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+UMIST,llc,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,spls,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+UMIST,ssc,BLOCKED_DATA,"No 564-image file. LZUFE umist.mat is 574x10304 with 10 exact duplicate rows, which were not removed. Zenodo 3634017 is 575x644 (28x23), MD5 matched. Roweis umist_cropped.mat is 575 images at 112x92 and does not share pixels with the wayback 575. None of these is the SSC 564-image set.",0
+BinAlpha,kmeans,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,sc,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,pca_kmeans,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,pca_sc,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,lda_kmeans,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+BinAlpha,llc,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,spls,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+BinAlpha,ssc,SUBSET_UNVERIFIED,"The Roweis parent is 1404 images, 36 classes, 20x16, SHA-256 3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7. letters26x30 seed 0 stores every parent index and is not the author's draw.",0
+MSRA50,kmeans,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,sc,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,pca_kmeans,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,pca_sc,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,lda_kmeans,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+MSRA50,llc,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,spls,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+MSRA50,ssc,BLOCKED_DATA,"BLOCKED_NO_VERIFIED_DATA_URL. No 1799 x 12 file was found. MSRA-B, MSRA10K, TD500, and MSRC were not substituted.",0
+YaleB,kmeans,COMPLETED,,12
+YaleB,sc,COMPLETED,,24
+YaleB,pca_kmeans,COMPLETED,,120
+YaleB,pca_sc,COMPLETED,,150
+YaleB,lda_kmeans,COMPLETED,,4
+YaleB,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+YaleB,llc,COMPLETED,,28
+YaleB,spls,COMPLETED,,2280
+YaleB,ssc,COMPLETED,,240
+USPS,kmeans,COMPLETED,,3
+USPS,sc,COMPLETED,,3
+USPS,pca_kmeans,COMPLETED,,30
+USPS,pca_sc,COMPLETED,,45
+USPS,lda_kmeans,COMPLETED,,1
+USPS,lda_sc,BLOCKED_METHOD,"Chang et al. name LDA-SC and cite no algorithm. The SLPS paper defines LdaKm, and Ding and Li define LDA-Kmeans. Neither document defines LDA-SC. Status METHOD_DEFINITION_UNRESOLVED.",0
+USPS,llc,COMPLETED,,7
+USPS,spls,COMPLETED,,570
+USPS,ssc,COMPLETED,,30

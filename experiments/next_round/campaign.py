@@ -59,9 +59,12 @@ def make_manifest():
     for gamma in [1.,1e3,1e-6,1e-3,1e6]:
         for dataset in PRIMARY:tasks.append({'phase':'A','dataset':dataset,'prep':'Y0','kind':'original','gamma':gamma})
     for gamma in [1.,1e3,1e-6,1e-3,1e6]:tasks.append({'phase':'A','dataset':'YaleB_dengcai32','prep':'Y0','kind':'original','gamma':gamma})
-    # Target historical display settings with the correct effective E8 objective.
-    for dataset,prep,gamma,nominal,variant in [('ORL_att92','Y0',500.,1000.,'E13'),('JAFFE','Y0',5e5,1e6,'E13'),('YaleB_dengcai32','Y3',.0005,.001,'E13')]:
-        tasks.append({'phase':'N0_selected','dataset':dataset,'prep':prep,'kind':'original','gamma':gamma,'gamma_nominal':nominal,'legacy_variant':variant})
+    # Historical display choices are already frozen; never use them for extension parameters.
+    selections=[json.loads(line) for line in (ROOT/'results/final/generated/selection_manifest.jsonl').read_text().splitlines()]
+    for selected in selections:
+        if selected['track']!='closest_to_paper' or selected['method']!='ssc' or selected['config_id'] is None:continue
+        task={'phase':'N0_selected','dataset':selected['dataset_version'],'prep':selected['prep'],'kind':'original','gamma':selected['gamma_effective'],'gamma_nominal':selected['gamma_nominal'],'legacy_variant':selected['variant'],'legacy_config_id':selected['config_id']}
+        tasks.append(task)
     for gamma in [1.,1e3,1e-6,1e-3,1e6]:
         for dataset in PRIMARY:
             for kind,seed,tau in [('oracle_delete',None,None),('uniform_mass',None,None)]+[('random_delete',seed,None) for seed in [300,301,302]]+[('static',None,t) for t in p['tau_over_sF']]:
@@ -119,7 +122,7 @@ def _worker(task,signature):
             trials,pred,dist=evaluate(F,G,y,meta['K']);ARRAYS.mkdir(parents=True,exist_ok=True)
             np.savez_compressed(ARRAYS/(run_id+'.npz'),G=G,predictions=pred,**({'q':bound_q} if bound_q is not None else {}))
             scores={metric+'_mean':float(np.mean([v[metric] for v in trials])*100) for metric in ['acc','nmi','false_merge_rate','false_split_rate']};scores.update({metric+'_sd':float(np.std([v[metric] for v in trials],ddof=1)*100) for metric in ['acc','nmi']})
-            result={'run_id':run_id,'task':task,'status':'COMPLETED','qualified_for_method_contrast':qualified,'source_commit':commit(),'source_hash':signature,'protocol_hash':filehash(ROOT/'configs/next_round/protocol.yaml'),'representation':meta,'fitted_graph_hash':hashlib.sha256(np.ascontiguousarray(Wfit.data).tobytes()+np.ascontiguousarray(Wfit.indices).tobytes()+np.ascontiguousarray(Wfit.indptr).tobytes()).hexdigest(),'diagnostic_uses_labels':task['kind'] in ['oracle_delete','uniform_mass','random_delete'],'solver':solver,'graph':graph_diagnostics(F,Wfit,y),'distance':dist,'trials':trials,'scores':scores,'wall_seconds':time.perf_counter()-started,'cpu_seconds':time.process_time()-cpu,'peak_rss_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,'G_hash':sha256_array(G),'array_path':str((ARRAYS/(run_id+'.npz')).relative_to(ROOT)),'array_redistribution':'Local-only arrays; scalar trials and certificates are published.'}
+            result={'run_id':run_id,'task':task,'status':'COMPLETED','qualified_for_method_contrast':qualified,'source_commit':commit(),'source_hash':source_fingerprint(),'execution_signature':signature,'protocol_hash':filehash(ROOT/'configs/next_round/protocol.yaml'),'representation':meta,'fitted_graph_hash':hashlib.sha256(np.ascontiguousarray(Wfit.data).tobytes()+np.ascontiguousarray(Wfit.indices).tobytes()+np.ascontiguousarray(Wfit.indptr).tobytes()).hexdigest(),'diagnostic_uses_labels':task['kind'] in ['oracle_delete','uniform_mass','random_delete'],'solver':solver,'graph':graph_diagnostics(F,Wfit,y),'distance':dist,'trials':trials,'scores':scores,'wall_seconds':time.perf_counter()-started,'cpu_seconds':time.process_time()-cpu,'peak_rss_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,'G_hash':sha256_array(G),'array_path':str((ARRAYS/(run_id+'.npz')).relative_to(ROOT)),'array_redistribution':'Local-only arrays; scalar trials and certificates are published.'}
             dump(path,result)
             print('DONE',task['dataset'],task['kind'],task['gamma'],solver['status'],f"ACC={scores['acc_mean']:.3f}",f"cpu={result['cpu_seconds']:.1f}s",flush=True)
     except BaseException as exc:
@@ -138,7 +141,9 @@ def sc_endpoints():
 
 
 def run(phases,workers=2,budget_hours=36):
-    tasks=json.loads((ROOT/'configs/next_round/job_manifest.json').read_text())['tasks'];signature=source_fingerprint();p=protocol();JOBS.mkdir(parents=True,exist_ok=True)
+    tasks=json.loads((ROOT/'configs/next_round/job_manifest.json').read_text())['tasks'];p=protocol();JOBS.mkdir(parents=True,exist_ok=True)
+    representations={str(f.relative_to(CACHE)):filehash(f) for f in sorted(CACHE.glob('*/meta.json'))}
+    signature=hashlib.sha256(json.dumps({'source_hash':source_fingerprint(),'protocol_hash':filehash(ROOT/'configs/next_round/protocol.yaml'),'representations':representations},sort_keys=True).encode()).hexdigest()
     used=sum(json.loads(f.read_text()).get('cpu_seconds',0) for f in JOBS.glob('*.json'));queue=[]
     for task in tasks:
         if task['phase'] not in phases:continue
@@ -147,7 +152,7 @@ def run(phases,workers=2,budget_hours=36):
         path=JOBS/(task['task_id']+'-'+signature[:12]+'.json')
         if path.exists():continue
         queue.append(task)
-    context=mp.get_context('spawn');active=[];begin=time.perf_counter();baseline=resource.getrusage(resource.RUSAGE_CHILDREN);remaining=max(0,budget_hours*3600-used)
+    context=mp.get_context('spawn');active=[];spent=0.;begin=time.perf_counter();baseline=resource.getrusage(resource.RUSAGE_CHILDREN);remaining=max(0,budget_hours*3600-used)
     while queue or active:
         now=time.perf_counter();r=resource.getrusage(resource.RUSAGE_CHILDREN);spent=(r.ru_utime+r.ru_stime-baseline.ru_utime-baseline.ru_stime)
         estimated=spent+sum(now-start for _,_,start in active)

@@ -1,0 +1,160 @@
+Paper values are \emph{Reported in Chang et al. (2015)}; measured columns are \emph{Our reproduction/adapted setting}. Units are percent. Closest uses all 50 prescribed batch-0 seeds. NMI follows the same selected configuration; other batches and selected min-inertia assignments remain distinct endpoints.
+\small
+\subsection{Closest display: 72 historical cells}
+\begin{longtable}{llrllp{2.9cm}}
+\toprule Data & Method & Paper ACC & Measured ACC & Measured NMI & Status / setting \\
+\midrule\endhead
+AR & kmeans & 36.3 & -- & -- & data blocked \\
+AR & sc & 41.6 & -- & -- & data blocked \\
+AR & pca\_kmeans & 39.8 & -- & -- & data blocked \\
+AR & pca\_sc & 43.2 & -- & -- & data blocked \\
+AR & lda\_kmeans & 40.4 & -- & -- & data blocked \\
+AR & lda\_sc & 44.5 & -- & -- & method blocked \\
+AR & llc & 48.7 & -- & -- & data blocked \\
+AR & spls & 49.2 & -- & -- & data blocked \\
+AR & ssc & 51.3 & -- & -- & data blocked \\
+JAFFE & kmeans & 75.6 & 73.192 $\pm$ 5.734 & 83.068 $\pm$ 3.452 & measured; Y0, R \\
+JAFFE & sc & 76.1 & 68.526 $\pm$ 11.152 & 83.016 $\pm$ 5.724 & measured; Y0, R \\
+JAFFE & pca\_kmeans & 75.8 & 74.826 $\pm$ 7.714 & 83.106 $\pm$ 4.531 & measured; Y0, R \\
+JAFFE & pca\_sc & 76.9 & 80.028 $\pm$ 5.737 & 87.786 $\pm$ 2.965 & measured; Y0, V \\
+JAFFE & lda\_kmeans & 76.5 & 64.441 $\pm$ 9.187 & 78.602 $\pm$ 5.082 & measured; Y0, full refit \\
+JAFFE & lda\_sc & 77.4 & -- & -- & method blocked \\
+JAFFE & llc & 78.6 & 91.549 $\pm$ 0.000 & 92.745 $\pm$ 0.000 & measured; Y0, Yu-Shi \\
+JAFFE & spls & 79.5 & 80.854 $\pm$ 6.576 & 86.915 $\pm$ 3.582 & measured; Y0, one\_shot \\
+JAFFE & ssc & 81.2 & 74.751 $\pm$ 8.371 & 85.600 $\pm$ 4.325 & truncated; Y0, E13, g=1e+06, R \\
+ORL & kmeans & 60.5 & 61.455 $\pm$ 2.851 & 82.755 $\pm$ 1.166 & measured; Y0, R \\
+ORL & sc & 72.7 & 72.725 $\pm$ 3.149 & 87.492 $\pm$ 1.223 & measured; Y0, V \\
+ORL & pca\_kmeans & 64.5 & 63.115 $\pm$ 3.275 & 83.585 $\pm$ 1.224 & measured; Y0, R \\
+ORL & pca\_sc & 67.8 & 67.570 $\pm$ 2.925 & 85.810 $\pm$ 1.274 & measured; Y0, V \\
+ORL & lda\_kmeans & 65.6 & 56.305 $\pm$ 4.142 & 81.003 $\pm$ 1.652 & measured; Y0, full refit \\
+ORL & lda\_sc & 68.3 & -- & -- & method blocked \\
+ORL & llc & 71.5 & 81.070 $\pm$ 0.606 & 89.917 $\pm$ 0.270 & measured; Y0, Yu-Shi \\
+ORL & spls & 74.2 & 74.195 $\pm$ 1.982 & 87.898 $\pm$ 0.866 & measured; Y0, one\_shot \\
+ORL & ssc & 76.0 & 75.965 $\pm$ 1.367 & 90.008 $\pm$ 0.411 & truncated; Y0, E13, g=1000, V \\
+UMIST & kmeans & 41.3 & -- & -- & data blocked \\
+UMIST & sc & 52.2 & -- & -- & data blocked \\
+UMIST & pca\_kmeans & 48.8 & -- & -- & data blocked \\
+UMIST & pca\_sc & 54.1 & -- & -- & data blocked \\
+UMIST & lda\_kmeans & 49.7 & -- & -- & data blocked \\
+UMIST & lda\_sc & 54.7 & -- & -- & method blocked \\
+UMIST & llc & 63.3 & -- & -- & data blocked \\
+UMIST & spls & 70.4 & -- & -- & data blocked \\
+UMIST & ssc & 71.1 & -- & -- & data blocked \\
+BinAlpha & kmeans & 41.7 & -- & -- & subset unverified \\
+BinAlpha & sc & 43.6 & -- & -- & subset unverified \\
+BinAlpha & pca\_kmeans & 42.4 & -- & -- & subset unverified \\
+BinAlpha & pca\_sc & 44.3 & -- & -- & subset unverified \\
+BinAlpha & lda\_kmeans & 42.9 & -- & -- & subset unverified \\
+BinAlpha & lda\_sc & 45.1 & -- & -- & method blocked \\
+BinAlpha & llc & 40.7 & -- & -- & subset unverified \\
+BinAlpha & spls & 48.5 & -- & -- & subset unverified \\
+BinAlpha & ssc & 49.4 & -- & -- & subset unverified \\
+MSRA50 & kmeans & 46.2 & -- & -- & data blocked \\
+MSRA50 & sc & 52.3 & -- & -- & data blocked \\
+MSRA50 & pca\_kmeans & 56.0 & -- & -- & data blocked \\
+MSRA50 & pca\_sc & 54.9 & -- & -- & data blocked \\
+MSRA50 & lda\_kmeans & 56.4 & -- & -- & data blocked \\
+MSRA50 & lda\_sc & 55.1 & -- & -- & method blocked \\
+MSRA50 & llc & 48.1 & -- & -- & data blocked \\
+MSRA50 & spls & 60.3 & -- & -- & data blocked \\
+MSRA50 & ssc & 63.2 & -- & -- & data blocked \\
+YaleB & kmeans & 14.4 & 9.741 $\pm$ 0.465 & 13.250 $\pm$ 0.585 & measured; Y0, G; DengCai32 \\
+YaleB & sc & 34.8 & 34.362 $\pm$ 0.957 & 45.145 $\pm$ 0.731 & measured; Y3, G \\
+YaleB & pca\_kmeans & 24.9 & 9.848 $\pm$ 0.553 & 13.317 $\pm$ 0.662 & measured; Y0, G; DengCai32 \\
+YaleB & pca\_sc & 36.8 & 30.925 $\pm$ 0.543 & 38.859 $\pm$ 0.951 & measured; Y1, G; DengCai32 \\
+YaleB & lda\_kmeans & 26.1 & 9.799 $\pm$ 0.847 & 13.786 $\pm$ 1.145 & measured; Y0, full refit; DengCai32 \\
+YaleB & lda\_sc & 38.2 & -- & -- & method blocked \\
+YaleB & llc & 38.2 & 38.241 $\pm$ 0.069 & 45.232 $\pm$ 0.093 & measured; Y0, Yu-Shi; DengCai32 \\
+YaleB & spls & 47.3 & 13.522 $\pm$ 0.776 & 19.438 $\pm$ 0.689 & measured; Y0, one\_shot; DengCai32 \\
+YaleB & ssc & 49.8 & 43.583 $\pm$ 1.287 & 54.906 $\pm$ 0.826 & measured; Y3, E8, g=0.001, G; DengCai32 \\
+USPS & kmeans & 65.4 & 66.059 $\pm$ 2.175 & 61.042 $\pm$ 0.874 & measured; Y0, R \\
+USPS & sc & 64.3 & 65.597 $\pm$ 1.867 & 80.315 $\pm$ 2.128 & measured; Y0, G \\
+USPS & pca\_kmeans & 69.4 & 66.288 $\pm$ 1.948 & 60.991 $\pm$ 0.668 & measured; Y0, R \\
+USPS & pca\_sc & 69.1 & 65.881 $\pm$ 2.278 & 80.761 $\pm$ 1.029 & measured; Y0, G \\
+USPS & lda\_kmeans & 70.1 & 58.613 $\pm$ 6.332 & 60.292 $\pm$ 4.215 & measured; Y0, full refit \\
+USPS & lda\_sc & 70.4 & -- & -- & method blocked \\
+USPS & llc & 63.9 & 63.108 $\pm$ 0.005 & 73.987 $\pm$ 0.002 & measured; Y0, Yu-Shi \\
+USPS & spls & 71.4 & 71.358 $\pm$ 4.134 & 73.422 $\pm$ 1.411 & measured; Y0, one\_shot \\
+USPS & ssc & 75.5 & 76.844 $\pm$ 5.117 & 84.082 $\pm$ 2.957 & measured; Y0, E8, g=1000, V \\
+\bottomrule\end{longtable}
+\subsection{Fixed protocol: 72 cells, with measured grids retained}
+\begin{longtable}{llrllp{2.9cm}}
+\toprule Data & Method & Paper ACC & Measured ACC & Measured NMI & Status / setting \\
+\midrule\endhead
+AR & kmeans & 36.3 & -- & -- & data blocked \\
+AR & sc & 41.6 & -- & -- & data blocked \\
+AR & pca\_kmeans & 39.8 & -- & -- & data blocked \\
+AR & pca\_sc & 43.2 & -- & -- & data blocked \\
+AR & lda\_kmeans & 40.4 & -- & -- & data blocked \\
+AR & lda\_sc & 44.5 & -- & -- & method blocked \\
+AR & llc & 48.7 & -- & -- & data blocked \\
+AR & spls & 49.2 & -- & -- & data blocked \\
+AR & ssc & 51.3 & -- & -- & data blocked \\
+JAFFE & kmeans & 75.6 & 73.192 $\pm$ 5.734 & 83.068 $\pm$ 3.452 & measured; Y0, R \\
+JAFFE & sc & 76.1 & 68.526 $\pm$ 11.152 & 83.016 $\pm$ 5.724 & measured; Y0, R \\
+JAFFE & pca\_kmeans & 75.8 & -- & -- & grid not collapsed \\
+JAFFE & pca\_sc & 76.9 & -- & -- & grid not collapsed \\
+JAFFE & lda\_kmeans & 76.5 & 64.441 $\pm$ 9.187 & 78.602 $\pm$ 5.082 & measured; Y0, full refit \\
+JAFFE & lda\_sc & 77.4 & -- & -- & method blocked \\
+JAFFE & llc & 78.6 & 94.685 $\pm$ 0.743 & 93.687 $\pm$ 0.365 & measured; Y0, Yu-Shi \\
+JAFFE & spls & 79.5 & -- & -- & grid not collapsed \\
+JAFFE & ssc & 81.2 & 68.432 $\pm$ 11.081 & 83.049 $\pm$ 5.721 & truncated; Y0, E8, g=1, R \\
+ORL & kmeans & 60.5 & 61.455 $\pm$ 2.851 & 82.755 $\pm$ 1.166 & measured; Y0, R \\
+ORL & sc & 72.7 & 56.180 $\pm$ 4.193 & 80.471 $\pm$ 2.291 & measured; Y0, R \\
+ORL & pca\_kmeans & 64.5 & -- & -- & grid not collapsed \\
+ORL & pca\_sc & 67.8 & -- & -- & grid not collapsed \\
+ORL & lda\_kmeans & 65.6 & 56.305 $\pm$ 4.142 & 81.003 $\pm$ 1.652 & measured; Y0, full refit \\
+ORL & lda\_sc & 68.3 & -- & -- & method blocked \\
+ORL & llc & 71.5 & 81.560 $\pm$ 0.705 & 89.993 $\pm$ 0.181 & measured; Y0, Yu-Shi \\
+ORL & spls & 74.2 & -- & -- & grid not collapsed \\
+ORL & ssc & 76.0 & 57.135 $\pm$ 3.955 & 81.165 $\pm$ 2.204 & measured; Y0, E8, g=1, R \\
+UMIST & kmeans & 41.3 & -- & -- & data blocked \\
+UMIST & sc & 52.2 & -- & -- & data blocked \\
+UMIST & pca\_kmeans & 48.8 & -- & -- & data blocked \\
+UMIST & pca\_sc & 54.1 & -- & -- & data blocked \\
+UMIST & lda\_kmeans & 49.7 & -- & -- & data blocked \\
+UMIST & lda\_sc & 54.7 & -- & -- & method blocked \\
+UMIST & llc & 63.3 & -- & -- & data blocked \\
+UMIST & spls & 70.4 & -- & -- & data blocked \\
+UMIST & ssc & 71.1 & -- & -- & data blocked \\
+BinAlpha & kmeans & 41.7 & -- & -- & subset unverified \\
+BinAlpha & sc & 43.6 & -- & -- & subset unverified \\
+BinAlpha & pca\_kmeans & 42.4 & -- & -- & subset unverified \\
+BinAlpha & pca\_sc & 44.3 & -- & -- & subset unverified \\
+BinAlpha & lda\_kmeans & 42.9 & -- & -- & subset unverified \\
+BinAlpha & lda\_sc & 45.1 & -- & -- & method blocked \\
+BinAlpha & llc & 40.7 & -- & -- & subset unverified \\
+BinAlpha & spls & 48.5 & -- & -- & subset unverified \\
+BinAlpha & ssc & 49.4 & -- & -- & subset unverified \\
+MSRA50 & kmeans & 46.2 & -- & -- & data blocked \\
+MSRA50 & sc & 52.3 & -- & -- & data blocked \\
+MSRA50 & pca\_kmeans & 56.0 & -- & -- & data blocked \\
+MSRA50 & pca\_sc & 54.9 & -- & -- & data blocked \\
+MSRA50 & lda\_kmeans & 56.4 & -- & -- & data blocked \\
+MSRA50 & lda\_sc & 55.1 & -- & -- & method blocked \\
+MSRA50 & llc & 48.1 & -- & -- & data blocked \\
+MSRA50 & spls & 60.3 & -- & -- & data blocked \\
+MSRA50 & ssc & 63.2 & -- & -- & data blocked \\
+YaleB & kmeans & 14.4 & 9.199 $\pm$ 0.580 & 12.413 $\pm$ 0.772 & measured; Y0, R \\
+YaleB & sc & 34.8 & 18.340 $\pm$ 1.284 & 26.903 $\pm$ 0.672 & measured; Y0, R \\
+YaleB & pca\_kmeans & 24.9 & -- & -- & grid not collapsed \\
+YaleB & pca\_sc & 36.8 & -- & -- & grid not collapsed \\
+YaleB & lda\_kmeans & 26.1 & 9.672 $\pm$ 0.823 & 13.416 $\pm$ 1.065 & measured; Y0, full refit \\
+YaleB & lda\_sc & 38.2 & -- & -- & method blocked \\
+YaleB & llc & 38.2 & 28.037 $\pm$ 0.127 & 35.369 $\pm$ 0.393 & measured; Y0, Yu-Shi \\
+YaleB & spls & 47.3 & -- & -- & grid not collapsed \\
+YaleB & ssc & 49.8 & 17.629 $\pm$ 1.190 & 26.184 $\pm$ 0.900 & measured; Y0, E8, g=1, R \\
+USPS & kmeans & 65.4 & 66.059 $\pm$ 2.175 & 61.042 $\pm$ 0.874 & measured; Y0, R \\
+USPS & sc & 64.3 & 61.739 $\pm$ 8.086 & 74.940 $\pm$ 4.494 & measured; Y0, R \\
+USPS & pca\_kmeans & 69.4 & -- & -- & grid not collapsed \\
+USPS & pca\_sc & 69.1 & -- & -- & grid not collapsed \\
+USPS & lda\_kmeans & 70.1 & 58.613 $\pm$ 6.332 & 60.292 $\pm$ 4.215 & measured; Y0, full refit \\
+USPS & lda\_sc & 70.4 & -- & -- & method blocked \\
+USPS & llc & 63.9 & 63.108 $\pm$ 0.005 & 73.987 $\pm$ 0.002 & measured; Y0, Yu-Shi \\
+USPS & spls & 71.4 & -- & -- & grid not collapsed \\
+USPS & ssc & 75.5 & 61.698 $\pm$ 8.089 & 75.229 $\pm$ 4.558 & measured; Y0, E8, g=1, R \\
+\bottomrule\end{longtable}
+\normalsize
+\subsection{Selection and source trace}
+The selection manifest contains complete effective parameters, exact initializer names, seeds, batch counts, metadata/source hashes, blocked reasons, execution and solver statuses, and no-data reconstruction commands. PCA/SLPS grids have no unique locked reference. LLC uses its pre-existing ridge=1, bandwidth multiplier=1 reference and Yu--Shi rounding; LDA-Kmeans refits per seed. YaleB cropped is the fixed primary source, DengCai32 is alternate-source sensitivity. UMIST575 and candidate BinAlpha do not replace historical subsets.
+The immutable scalar package contains 378550 trials, 3059 jobs and 6563 configuration rows. It reconstructs tables without images, old worktrees, Git history or caches. It does not recover unavailable historical representation arrays. The gzip file and decompressed CSV have different hashes. See the machine-readable release manifest.

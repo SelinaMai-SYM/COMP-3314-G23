@@ -1,0 +1,9 @@
+{
+  "verification_root": "/var/folders/_c/vtgkdrv564bd4j917jq3mv6r0000gn/T/comp3314 fresh verification n21zgbpb",
+  "venv": "/var/folders/_c/vtgkdrv564bd4j917jq3mv6r0000gn/T/comp3314 fresh verification n21zgbpb/venv",
+  "requirements_file": "environment/requirements.lock.txt",
+  "install_log": "/var/folders/_c/vtgkdrv564bd4j917jq3mv6r0000gn/T/comp3314 fresh verification n21zgbpb/pip-install.log",
+  "dependency_install_exit_code": 0,
+  "verified_ca_bundle": "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/certifi/cacert.pem",
+  "install_log_with_ca": "/var/folders/_c/vtgkdrv564bd4j917jq3mv6r0000gn/T/comp3314 fresh verification n21zgbpb/pip-install-with-ca.log"
+}

@@ -1,31 +1,18 @@
-\noindent
-\begin{minipage}{\textwidth}
-\centering
-\refstepcounter{table}%
-Table \thetable. Published and reproduced clustering performance (mean $\pm$ standard deviation).
-
-\vspace{0.6em}
-\footnotesize
-\setlength{\tabcolsep}{3.5pt}%
-\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llcccc@{}}
-\toprule
-Dataset & Metric & Published SC & Our SC & Published SSC & Our SSC \\
+\begin{table}[t]
+\centering\small
+\caption{Reported in Chang et al. (2015) versus our measured ACC (percent). Closest is retrospective ACC matching. Fixed is Y0/E8/gamma=1/random. Full deviations are described in the text and appendix.}
+\label{tab:main}
+\begin{tabular}{llrrrl}
+\toprule Data & Method & Paper & Closest mean $\pm$ SD & Fixed mean $\pm$ SD & Mark \\
 \midrule
-ORL & ACC & $72.7 \pm 2.3$ & $56.2 \pm 4.2$ & $76.0 \pm 1.6$ & $57.3 \pm 3.8$ \\
-ORL & NMI & $85.8 \pm 1.9$ & $80.5 \pm 2.3$ & $88.6 \pm 1.5$ & $81.1 \pm 2.2$ \\
-JAFFE & ACC & $76.1 \pm 1.6$ & $68.5 \pm 11.2$ & $81.2 \pm 1.6$ & $68.4 \pm 11.1$ \\
-JAFFE & NMI & $80.2 \pm 0.9$ & $83.0 \pm 5.7$ & $84.3 \pm 1.6$ & $83.0 \pm 5.7$ \\
-YaleB & ACC & $34.8 \pm 1.4$ & $18.3 \pm 1.3$ & $49.8 \pm 1.6$ & $17.6 \pm 1.2$ \\
-YaleB & NMI & $55.6 \pm 1.6$ & $26.9 \pm 0.7$ & $46.8 \pm 1.3$ & $26.2 \pm 0.9$ \\
-USPS & ACC & $64.3 \pm 1.4$ & $61.7 \pm 8.1$ & $75.5 \pm 1.9$ & $61.7 \pm 8.1$ \\
-USPS & NMI & $69.5 \pm 1.6$ & $74.9 \pm 4.5$ & $79.8 \pm 1.6$ & $75.2 \pm 4.6$ \\
-\bottomrule
-\end{tabular*}
-
-\vspace{0.45em}
-\begin{minipage}{\linewidth}
-\raggedright
-Note: Published values are taken from Chang et al.\ (2015). Our SSC results use E8 with $\gamma=1$, and all reproduced values are based on 50 K-means trials with one fixed $F$ and $G$ per dataset. The published and reproduced columns do not necessarily share every historical implementation detail.
-\end{minipage}
-\end{minipage}
-\par
+ORL & SC & 72.7 & 72.725 $\pm$ 3.149 & 56.180 $\pm$ 4.193 & V \\
+ORL & SSC & 76.0 & 75.965 $\pm$ 1.367 & 57.135 $\pm$ 3.955 & V,T \\
+JAFFE & SC & 76.1 & 68.526 $\pm$ 11.152 & 68.526 $\pm$ 11.152 & R \\
+JAFFE & SSC & 81.2 & 74.751 $\pm$ 8.371 & 68.432 $\pm$ 11.081 & R,T \\
+YaleB & SC & 34.8 & 34.362 $\pm$ 0.957 & 18.340 $\pm$ 1.284 & Y3,G \\
+YaleB & SSC & 49.8 & 43.583 $\pm$ 1.287 & 17.629 $\pm$ 1.190 & Y3,G,I \\
+USPS & SC & 64.3 & 65.597 $\pm$ 1.867 & 61.739 $\pm$ 8.086 & G \\
+USPS & SSC & 75.5 & 76.844 $\pm$ 5.117 & 61.698 $\pm$ 8.089 & V,I \\
+\bottomrule\end{tabular}
+\par\footnotesize R: random; V: vanilla++; G: sklearn greedy++; T: 300-step returned iterate, optimum not certified; I: historical iterate criterion, no dual certificate.
+\end{table}

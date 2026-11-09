@@ -1,151 +1,71 @@
-# COMP3314 Group 23 — v3 reproduction index
+# COMP3314 Group 23: Spectral Shrunk Clustering - final v3
 
-Branch `v3` rebuilds the Chang et al. (AAAI 2015) comparison. The campaign code is `experiments/v3_reproduction/`. Measured tables, when present, are `results/v3_reproduction/`. Numbers already in this README from v1/v2 are **historical**. They are not v3 measurements. LLC figures inherited from before the Procrustes correction are `PRE_FIX_LEGACY`.
+Study and critical analysis of Chang, Nie, Ma, Yang and Zhou, *A Convex Formulation for Spectral Shrunk Clustering*, AAAI 2015, pp. 2532-2538, DOI [10.1609/aaai.v29i1.9606](https://doi.org/10.1609/aaai.v29i1.9606). SSC means Spectral Shrunk Clustering.
 
-Data root is the read-only v1 archive directory configured in `configs/v3/campaign.yaml`. Restricted images are not part of this branch.
+The repository separates paper reconstruction, controlled reproduction and retrospective numerical matching. An optimum for a convex representation objective does not guarantee optimal labels or improved ACC/NMI.
 
-# COMP3314 Group 23 — Spectral Shrunk Clustering (v1, round 2)
+## Setup and three checks
 
-HKU COMP3314 Machine Learning course project. **Branch: `v1`.**
-
-This directory is a from-scratch reimplementation of Chang, Nie, Ma, Yang, and Zhou, *A Convex Formulation for Spectral Shrunk Clustering*, AAAI 2015 ([doi:10.1609/aaai.v29i1.9606](https://doi.org/10.1609/aaai.v29i1.9606)). There is no official author code. The written report uses the NeurIPS 2026 LaTeX style with the **preprint** option and is a course report, not a NeurIPS submission. The compiled PDF does **not** include the NeurIPS checklist.
-
-Intended GitHub remote: [https://github.com/SelinaMai-SYM/COMP-3314-G23.git](https://github.com/SelinaMai-SYM/COMP-3314-G23.git), branch `v1` only.
-
-Group membership, names, and emails require confirmation and are not invented here.
-
-## Reproducibility Audit
-
-Short index only. Details live next to the code and data, not here.
-
-| Area | Where |
-| --- | --- |
-| Eight baselines (status, original paper, implementation map) | [`baselines/`](baselines/) |
-| Eight datasets (provenance, SHA-256, sample-set status) | [`benchmarks/`](benchmarks/) |
-| SSC equations, E8/E13, shared Eq. (4) \(F\) | [`SSC_method/`](SSC_method/) |
-| Round 2 runs and aggregated numbers | [`results/`](results/), [`runs/`](runs/) |
-
-No dataset is `FULL_PROTOCOL_REPRODUCED`. SPLS is `NOT_IMPLEMENTED`. LDA-SC is `APPROXIMATE` and is not in the faithful table. Documentation check: `python3 scripts/validate_reproducibility_docs.py`.
-
-## Provenance (keep these distinct)
-
-| Piece | Who |
-| --- | --- |
-| Original method (Eq. 4 embedding, Eq. 8 objective, printed Eq. 13 update, \(K\)-means on `G`) | Chang et al., AAAI 2015 |
-| This reimplementation (`SSC_method/`) | this course project. Variant **E8** (`A=S+2γL̃`) is the faithful stationary point of printed Eq. 8. Variant **E13** (`A=S+γL̃`) is the printed update (library default). Algorithm 1 line 10 is not executed |
-| Round 2 | shared SC/SSC \(F\), att92 / CroppedYale diagnostics, D1–D12, four-page report without checklist. Records under `runs/round2/` and `results/round2/` |
-| Repair round 1 | configurable E8/E13 and extra archives. Records under `runs/repair_round1/` |
-| Experiment protocol, historical Track A / Track B | this course project; historical `runs/` were not deleted |
-| Mutual-kNN shrinkage graph (`method_extension/`) | adaptation of an established graph to SSC; Category C; not a new theorem; negative |
-| Datasets | third-party (AT&T/ORL, JAFFE, Extended Yale B, LIBSVM USPS, Binary Alphadigits parent, extra UMIST archives that are **not** 564 images). AR Zenodo was not downloaded. MSRA50 was not found |
-| Libraries | NumPy, SciPy, scikit-learn, matplotlib, PyYAML; optional CVXPY for the convex audit |
-
-Paper table numbers are labelled **Reported in Chang et al. (2015)**. Numbers in `results/` are **Our Reproduction** from `runs/`. They are not copies of the paper. Category B (\(k\)-means++) and C (row-normalized eigenvectors, mutual kNN) are never called the paper method.
-
-## Honest headline results (round 2)
-
-- **\(F\) is shared.** Same `SpectralGraphConfig` ⇒ SC \(F\) equals SSC \(F\) (`results/round2/d2_shared_f.json`, max abs diff 0).
-- **Earliest ORL gap:** random \(K\)-means on Eq. (4) \(F\), before IRLS. Historical Olivetti SC **54.2±3.1** (n=50) verified. Unified-\(F\) Olivetti SC **53.9±3.0**. att92 SC **56.2±4.2** vs paper SC 72.7 (**−16.5 pp**).
-- **Faithful E8 does not reproduce 76%.** att92 E8 **57.3±3.8** (n=50) vs paper SSC 76.0 (**−18.7 pp**). Shrinkage still does not help.
-- **\(k\)-means++ 78.3±1.3** on the saved att92 \(F\) is **B_AMBIGUITY**, not a reproduction.
-- YaleB SSC: **n=10**, not 50. USPS SSC: **n=3**, not 50.
-- Mutual-kNN extension (JAFFE n=50): 68.4 vs union E8 68.4, not a win.
-- SPLS: `NOT_IMPLEMENTED`. LDA-SC: approximate, omitted from the faithful table.
-- No dataset `FULL_PROTOCOL_REPRODUCED`. BinAlpha 26×30 is UNVERIFIED. AR Zenodo not downloaded. MSRA50 missing. UMIST 565≠564.
-
-## Extra dataset versions (default loaders unchanged)
-
-`load_dataset("ORL")` still returns Olivetti 64×64 → 32×32. `load_dataset("YaleB")` still returns Deng Cai `YaleB_32x32.mat`. `load_dataset("UMIST"|"AR"|"BinAlpha"|"MSRA50")` still raises `DatasetUnavailable`.
-
-| Extra `version=` | What it is | What it is not |
-| --- | --- | --- |
-| `ORL` `att92` (also `att92_nearest`, `att92_bicubic`) | Cambridge AT&T 92×112, 400 images, resized to 32×32 | not the silent default |
-| `YaleB` `cropped2414` | Wayback CroppedYale, 2414 non-ambient 192×168 images | not claimed pixel-identical to Deng Cai |
-| `UMIST` `precropped575` / `figshare575` | 575 cropped 112×92 images | **not** the paper's 564 |
-| `BinAlpha` `letters26x30_seed0` | 780-letter reconstruction, seed 0 | **UNVERIFIED**; default name still unavailable |
-
-See `docs/round2_source_of_truth.md`.
-
-## Layout
-
-```text
-SSC_method/           original SSC only (E8 / E13 variants)
-baselines/            K-means, SC, PCA-*, LDA-*, LLC; SPLS raises NotImplementedError
-benchmarks/           loaders, manifests, ACC/NMI; raw images gitignored
-method_extension/     mutual-kNN W on F (RSSC); not mixed into SSC_method/
-experiments/          runner helpers, aggregation, paper-reported tables (labelled as such)
-scripts/              download, run_experiment, round2 runners, tables, validate
-runs/                 Phase 1 jobs
-runs/repair_round1/   repair-round jobs
-runs/round2/          Round 2 D1–D12 jobs
-results/round2/       registry, shared-F JSON, K-means-on-F JSON
-report/               NeurIPS 2026 preprint LaTeX → main.pdf and Group_23.pdf (no checklist)
-docs/                 round2 source-of-truth, matrix, root-cause, recovery log
-tests/                unit tests (synthetic data unless a loader test needs a local file)
-```
-
-## Install
-
-Python 3.13.3 was used (see `environment/README.md`). From this `v1` directory:
+Tested CPython 3.13.3. Package minimum is Python 3.10; other versions are not claimed bit-identical.
 
 ```bash
-python3 -m pip install -r requirements.txt
-python3 -m pytest
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r environment/requirements.lock.txt
+python -m pip install -e .
+python -m experiments.v3_reproduction smoke --dataset synthetic
+python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output results/rebuilt
+python -m experiments.v3_reproduction run-experiments --config configs/v3/campaign.yaml --data-root /path/to/benchmarks --datasets ORL_att92 JAFFE --smoke --output runs/next_round/data_smoke
 ```
 
-`pyproject.toml` puts the repo root on `pythonpath`, so an editable install is optional. Optional `cvxpy` is only for an independent convex-solver check; tests skip it if missing.
+Synthetic smoke and results rebuild need no images, caches, Git history or old branches. Real-data smoke uses three seeds, not a full experiment. [Data preparation and restrictions](docs/final/data_setup.md). Root precedence: CLI > `COMP3314_DATA_ROOT` > `local/data_root.txt` > checkout `benchmarks`; it contains `orl/data`, `jaffe/data`, `yaleb/data`, `usps/data`. There is no old-worktree pointer.
 
-## Datasets and licensing
-
-Download (skips files whose SHA-256 already matches):
+Omit `--smoke` only to deliberately run the large baseline grid. New mechanism experiments are separate:
 
 ```bash
-python3 scripts/download_datasets.py
+python -m experiments.next_round.campaign prepare --data-root /path/to/benchmarks
+python -m experiments.next_round.campaign sc
+python -m experiments.next_round.campaign run --phases A N0_selected B --workers 2 --budget-hours 36
+python -m scripts.final.analyze_next_round
 ```
 
-| Dataset | Default status | Notes |
-| --- | --- | --- |
-| ORL | approximate | Olivetti 64×64 → 32×32; extra `att92` is 92×112 |
-| JAFFE | verified | Zenodo TIFF; **research only, no redistribution**; zip must not be committed |
-| YaleB | approximate | Deng Cai `YaleB_32x32.mat`; extra `cropped2414` from Wayback |
-| USPS | verified | LIBSVM 16×16, 9298 samples |
-| AR | unavailable | official hosts failed; unofficial Zenodo zip was **not** downloaded |
-| BinAlpha | parent obtained; paper set UNVERIFIED | default still `DatasetUnavailable`; `letters26x30_seed0` is not the paper set |
-| MSRA50 | unavailable | no 1799×12 file; other MSRA corpora were not renamed |
-| UMIST | unavailable at 564 | extra 1012/575 archives; 565 unique cropped pixels ≠ 564 |
+Phase C requires the documented evidence gate. [Protocol](configs/next_round/protocol.yaml), [job manifest](configs/next_round/job_manifest.json), [all results](results/next_round/all_results.md), [negative findings](results/next_round/negative_findings.md). Model and parameter functions do not accept labels; Oracle interventions and evaluation explicitly do.
 
-Raw archives live under `benchmarks/<name>/data/` and are gitignored. Manifests and checksums **are** committed. JAFFE forbids redistribution, including via git.
+## 9 methods x 8 benchmarks
 
-## Reproduction commands actually used
+**32 COMPLETED, 24 BLOCKED_DATA, 8 BLOCKED_METHOD, 8 SUBSET_UNVERIFIED.** SLPS (SPLS in the SSC table) has a one-shot implementation. LDA-SC is unresolved. AR, historical UMIST564 and MSRA50 remain blocked. Candidate BinAlpha and UMIST575 are supplementary. PCA/SLPS have measured grids without one unique locked reference.
 
-From this `v1` root, with datasets already on disk:
+- [Closest-to-paper display: all 72 cells](results/final/closest_to_paper.md): complete batch-0 configuration mean minimizing absolute unrounded ACC distance. This is label/paper-assisted post-hoc display selection.
+- [Fixed controlled reference: all 72 cells](results/final/fixed_protocol_reference.md): existing Y0/E8/gamma=1/random; uncollapsed grids stay explicit.
+- [Selection manifest](results/final/selection_manifest.csv), [complete configuration statistics](results/final/generated/configuration_table.csv), [batch repeatability](results/final/generated/batch_repeatability.csv), [supplemental versions](results/final/generated/supplemental.md), [per-benchmark tables](results/final/generated/per_benchmark).
 
-```bash
-# historical Phase 1 (already recorded under runs/)
-python3 scripts/run_all_stages.py --stages A,B,C,D,USPS
+This historical release reconstructs 378550 trials, 3059 jobs and 6563 configurations. Counts are package-specific. Scalar reproducibility is not full recovery of old F/W arrays. Compressed and decompressed hashes are distinct in the release manifest; new executions have separate run IDs and supersedes links.
 
-# repair round 1 (already recorded under runs/repair_round1/)
-python3 scripts/run_repair_round1_orl.py
-python3 scripts/run_repair_round1_transfer.py
+| Benchmark | Method | Paper ACC (%) | Closest mean ± sample SD (%) | Setting and original solver |
+|---|---|---:|---|---|
+| JAFFE | SC | 76.1 | 68.526 ± 11.152 | JAFFE, Y0, SC, RANDOM; NOT_APPLICABLE |
+| JAFFE | SSC | 81.2 | 74.751 ± 8.371 | JAFFE, Y0, E13, RANDOM, nominal gamma=1e+06; MAX_ITER_REACHED; 300-step returned iterate, optimum not certified |
+| ORL | SC | 72.7 | 72.725 ± 3.149 | ORL_att92, Y0, SC, VANILLA_KMEANSPP; NOT_APPLICABLE |
+| ORL | SSC | 76.0 | 75.965 ± 1.367 | ORL_att92, Y0, E13, VANILLA_KMEANSPP, nominal gamma=1000; MAX_ITER_REACHED; 300-step returned iterate, optimum not certified |
+| YaleB | SC | 34.8 | 34.362 ± 0.957 | YaleB_cropped2414, Y3, SC, SKLEARN_GREEDY_KMEANSPP; NOT_APPLICABLE |
+| YaleB | SSC | 49.8 | 43.583 ± 1.287 | YaleB_dengcai32, Y3, E8, SKLEARN_GREEDY_KMEANSPP, nominal gamma=0.001; CONVERGED_BY_ITERATE_CRITERION |
+| USPS | SC | 64.3 | 65.597 ± 1.867 | USPS, Y0, SC, SKLEARN_GREEDY_KMEANSPP; NOT_APPLICABLE |
+| USPS | SSC | 75.5 | 76.844 ± 5.117 | USPS, Y0, E8, VANILLA_KMEANSPP, nominal gamma=1000; CONVERGED_BY_ITERATE_CRITERION |
 
-# round 2 diagnostics (already recorded under runs/round2/)
-python3 scripts/run_round2_diagnostics.py
-python3 scripts/validate_reproducibility_docs.py
+NMI/SD/n follow the same configuration and seeds. Min-inertia assignments are separate. Paper tuning, fixed control and closest display answer different questions. E13(gamma) maps to E8(gamma/2). Vanilla++ differs from sklearn greedy++.
 
-# rebuild Phase 1 tables/figures from runs/ (no new clustering)
-python3 scripts/generate_report_tables.py
-python3 scripts/generate_report_figures.py
+## Performance-driven extensions
 
-# report (four-page main text)
-cd report && latexmk -pdf -interaction=nonstopmode main.tex
-```
+N0 provides feasible-dual certificates; A studies parameter curves; B diagnoses incorrect fusion with Oracle deletion and matched weakening controls. The practical target is >=2 points mean ACC gain across four benchmarks, nondecreasing NMI, and comparison with SC. A 15-configuration capability oracle is separate from the fixed no-label operating point. Capped fusion is an existing penalty adapted to SSC, with inner certificates only. Huber/heat remain evidence-dependent candidates.
 
-Round 2 comparison tables live in `results/round2/` and `report/tables/round2_main.tex`. Re-running the full campaign is not required to inspect numbers.
+The diagnostic gate currently supports **0/4** datasets (two required). Formal capped experiment triggered: **False**. This is not evidence that SSC fails universally; uncertified outcomes remain visible.
 
-## Limitations
+The old held-out robustness table is retained but invalid as full-SSC robustness evidence: shrinkage was not rerun and USPS was clipped incorrectly. [Correction](docs/next_round/robustness_audit.md).
 
-Documented in `docs/round2_root_cause_analysis.md` and report Sections 4–5. Short version: E8 vs E13 factor of two; median bandwidth; \(G_0=F\); SPLS missing; AR not downloaded; BinAlpha UNVERIFIED; MSRA50 missing; UMIST not 564; YaleB 10 trials; USPS 3 trials; shrinkage did not help; extension did not help; att92 E8 57.3 is not the published 76.0; \(k\)-means++ 78.3 is B, not a reproduction.
+## Deliverables and attribution
 
-## Report
+[Report PDF](report/Group_23.pdf) and [LaTeX](report/main.tex); [guideline checklist](docs/final/guideline_checklist.md); [9-minute outline](docs/final/presentation_outline.md); [Q&A](docs/final/qa_notes.md); [validation](docs/final/validation.md); [sources, ownership and licenses](docs/final/sources_and_licenses.md). [Scientific snapshots](archive/source) are provenance only, never current imports.
 
-`report/main.pdf` and `report/Group_23.pdf` (identical copies after `latexmk`). Style: `\usepackage[preprint]{neurips_2026}`. Main text ends on page 4. The NeurIPS checklist is not included.
+This is a course report, not a NeurIPS submission. Main text is <=4 pages, excluding references/appendix. Individual member names were absent from reliable supplied materials and remain to be supplied; no names are inferred from accounts. Only the PDF is submitted to the course system by the group.
+
+Slides: 2026-11-15 23:59; report: 2026-11-29 23:59, Hong Kong/Shanghai time. Rubric: understanding 40%, analysis/insight 30%, writing 10%, presentation/Q&A 20%; reproduction is optional, up to 10 bonus points.

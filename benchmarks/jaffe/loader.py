@@ -23,7 +23,8 @@ _SUBJECTS = ("KA", "KL", "KM", "KR", "MK", "NA", "NM", "TM", "UY", "YM")
 def data_dir(root: Path | None = None) -> Path:
     if root is not None:
         return Path(root)
-    return Path(__file__).resolve().parent / "data"
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root() / "jaffe" / "data"
 
 
 def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
@@ -33,7 +34,7 @@ def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[
     if not path.is_file():
         raise FileNotFoundError(
             f"missing {path}. The official zip is https://zenodo.org/records/14974867. "
-            "curl on this network received HTTP 403; see download_datasets.py."
+            "Respect the dataset conditions and see docs/final/data_setup.md."
         )
     rows = []
     labels = []

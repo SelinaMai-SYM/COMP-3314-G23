@@ -18,7 +18,8 @@ _SHA256 = "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99"
 def data_dir(root: Path | None = None) -> Path:
     if root is not None:
         return Path(root)
-    return Path(__file__).resolve().parent / "data"
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root() / "yaleb" / "data"
 
 
 _CROPPED_DIR = "cropped_wayback"
@@ -94,7 +95,7 @@ def _load_cropped2414(root: Path | None, version: str) -> tuple[np.ndarray, np.n
     if not array_path.is_file() or not label_path.is_file():
         raise FileNotFoundError(
             f"missing cropped Yale B arrays under {base}. "
-            "See docs/repair_round1_dataset_recovery.md."
+            "Run python -m benchmarks.prepare with the matching archive; see docs/final/data_setup.md."
         )
     images = np.load(array_path)
     if images.shape != (2414, 32, 32) or images.dtype != np.uint8:

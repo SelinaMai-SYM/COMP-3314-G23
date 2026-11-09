@@ -37,7 +37,8 @@ _ATT_ARRAYS = {
 def data_dir(root: Path | None = None) -> Path:
     if root is not None:
         return Path(root)
-    return Path(__file__).resolve().parent / "data"
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root() / "orl" / "data"
 
 
 def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[np.ndarray, np.ndarray, dict]:
@@ -103,7 +104,7 @@ def _load_att92(root: Path | None, version: str) -> tuple[np.ndarray, np.ndarray
     if not array_path.is_file() or not label_path.is_file():
         raise FileNotFoundError(
             f"missing AT&T ORL arrays under {base}. "
-            "See docs/repair_round1_dataset_recovery.md."
+            "Run python -m benchmarks.prepare with the matching archive; see docs/final/data_setup.md."
         )
     images = np.load(array_path)
     if images.shape != (400, 32, 32) or images.dtype != np.uint8:

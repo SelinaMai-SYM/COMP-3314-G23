@@ -156,7 +156,9 @@ def run(phases,workers=2,budget_hours=36):
     while queue or active:
         now=time.perf_counter();r=resource.getrusage(resource.RUSAGE_CHILDREN);spent=(r.ru_utime+r.ru_stime-baseline.ru_utime-baseline.ru_stime)
         estimated=spent+sum(now-start for _,_,start in active)
-        while queue and len(active)<min(workers,2) and estimated<remaining:
+        slots_file=ROOT/'local/max_workers.txt'
+        slots=min(workers,2,int(slots_file.read_text()) if slots_file.exists() else 2)
+        while queue and len(active)<max(1,slots) and estimated<remaining:
             task=queue.pop(0);proc=context.Process(target=_worker,args=(task,signature));proc.start();active.append((proc,task,time.perf_counter()))
         for item in active[:]:
             proc,task,start=item;limit=(600 if task['dataset'] in ['ORL_att92','JAFFE'] else 1800)*(3 if task['kind']=='capped' else 1)+180

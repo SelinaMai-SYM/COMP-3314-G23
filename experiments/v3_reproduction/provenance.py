@@ -73,4 +73,4 @@ def source_fingerprint(root=None) -> str:
 
 def environment_record() -> dict:
     import platform, importlib.metadata
-    return {'python':platform.python_version(),'platform':platform.platform(),'packages':{name:importlib.metadata.version(name) for name in ['numpy','scipy','scikit-learn','pandas','PyYAML']}}
+    return {'python':platform.python_version(),'platform':platform.platform(),'packages':{name:importlib.metadata.version(name) for name in ['numpy','scipy','scikit-learn','pandas','PyYAML','Pillow']}}

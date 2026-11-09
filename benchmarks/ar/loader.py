@@ -35,7 +35,8 @@ _UNAVAILABLE = (
 def data_dir(root: Path | None = None) -> Path:
     if root is not None:
         return Path(root)
-    return Path(__file__).resolve().parent / "data"
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root() / "ar" / "data"
 
 
 _LZUF = Path(__file__).resolve().parent / "resources" / "private" / "lzuf_candidate_AR.mat"

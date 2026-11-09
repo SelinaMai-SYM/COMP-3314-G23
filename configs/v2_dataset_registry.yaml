@@ -1,8 +1,8 @@
 # Read-only data pointer. Images stay in the v1 worktree.
-data_root_env: DATA_ROOT
+data_root_env: COMP3314_DATA_ROOT
 data_root_default: sibling v1 worktree
 data_root_policy: >
-  DATA_ROOT is read-only. The campaign loads gitignored benchmark files
+  COMP3314_DATA_ROOT is read-only and contains the benchmark directories. The campaign loads gitignored benchmark files
   from the v1 worktree and never copies them into v2.
 
 datasets:

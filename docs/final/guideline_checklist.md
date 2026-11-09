@@ -14,7 +14,7 @@ Source: the user-provided course guidelines PDF, read in full; detailed submissi
 | Real group-member names and affiliations | DONE | User-confirmed Han Jiale; Lu Sinan; Mahatharadol Vie; Mai Sheung Ying. Group 23, The University of Hong Kong |
 | Filename Group_23.pdf and source | DONE | `report/Group_23.pdf`, `report/main.tex`, generated tables and bibliography; report_verification.json records final render/hash checks |
 | Public GitHub link in report | DONE | Conclusion links the v3 branch |
-| Public code/setup/run/results | PENDING_FINAL_CLONE_AND_PUSH | README, release CLI, data setup and results present; fresh clone/publish checks are recorded in `validation.md` |
+| Public code/setup/run/results | DONE | Final candidate passed in a new venv and shallow checkout; GitHub v3 remote shallow clone passed synthetic/rebuild; see validation and verification JSON records |
 | Own versus reused code and citations | DONE | `sources_and_licenses.md`, bibliography, module docstrings and source snapshots |
 | Paper results versus our measurements | DONE | Explicit table labels, fixed versus closest tracks and adjacent setting/solver deviations |
 | Reproduction scope, discrepancies and challenges | DONE | Main sections 3-5, complete 72-cell appendix, metadata/array limitations |
@@ -27,4 +27,4 @@ Source: the user-provided course guidelines PDF, read in full; detailed submissi
 | Understanding 40%, analysis/insight 30%, writing 10%, presentation/Q&A 20% | DONE | Main report/outline balance study and criticism rather than replacing them with a leaderboard |
 | Reproduction bonus up to 10 points | DONE | Clearly described as optional; no score or bonus award claimed |
 | N0/N1/N2/new performance extension claims reflect actual tests | DONE | Actual records under `results/next_round`; untriggered/uncertified experiments are labelled, not predicted gains |
-| Default branch v3 and only-v3 remote heads | PENDING_PUBLICATION | Administrator API permission verified after user login; exact lease publication and final state remain to be recorded |
+| Default branch v3 and only-v3 remote heads | DONE | Verified default=v3 and sole remote head v3; v1/v2/candidate deleted individually with exact leases after default verification. publication_status.json records each operation |

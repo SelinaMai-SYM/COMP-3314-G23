@@ -20,3 +20,9 @@ Focused local tests: `python -m pytest tests/next_round tests/v3 tests/v3_theory
 Final LaTeX/render and post-publication clone outcomes are recorded below and in `publication_status.json`. Member names were subsequently supplied and added; course-system upload and future presentation attendance are outside this GitHub task.
 
 Final local focused suite: **55 passed** after two additional empty/hash-coverage release tests. Final report: **3 main pages, 11 total**, all pages rendered and visually inspected, no overfull boxes or unresolved references/citations; PDF hash and source/copy consistency are in `report_verification.json`.
+
+## Final candidate and GitHub verification
+
+`final_candidate_verification.json`: a second brand-new venv installed all 35 exact observed dependencies in a new directory with spaces. Its depth-1 single-branch clone passed 55 tests, synthetic, no-data rebuild, explicit ORL/JAFFE smoke and forced LaTeX compilation. All 72 cells, 144 selections and complete configuration tables match byte-for-byte; compiled PDF text is identical. Key logs are committed in verification_logs.
+
+`publication_status.json` records exact-lease publication, default-branch verification and individually leased deletions. `post_publish_verification.json` records a new GitHub v3 depth-1 single-branch clone, isolated module import, synthetic and byte-identical no-data rebuild. Default v3 and only remote v3 were verified after deletion. Subsequent audit-record commits change no scientific source, data, measurements or report PDF.

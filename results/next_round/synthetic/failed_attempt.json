@@ -1,0 +1,8 @@
+{
+  "status": "FAILED_NUMERICAL_ROUNDOFF_GUARD",
+  "seed": 100,
+  "scenario": "imbalanced_clean",
+  "cause": "mathematically perfect NMI evaluated as 1.0000000000000002; strict legacy range check raised",
+  "completed_cases_preserved": 8,
+  "remedy": "Use a 1e-12 numerical bound tolerance and clamp only floating roundoff. Parameters and datasets remain unchanged."
+}

@@ -7,7 +7,10 @@ from threadpoolctl import threadpool_limits
 from SSC_method.graph_construction import knn_affinity
 from method_extension.next_round.certified_solver import solve,threshold,graph_arrays
 from method_extension.next_round.capped_fusion import fit as capped
-from experiments.next_round.evaluate import evaluate
+from experiments.next_round.evaluate import pair_errors,distance_diagnostics
+from experiments.v2_kmeans_protocol.kmeans_trials import fit_lloyd,GREEDY
+from benchmarks.metrics.accuracy import clustering_accuracy
+from benchmarks.metrics.nmi import normalized_mutual_information
 from experiments.v3_reproduction.provenance import source_fingerprint,environment_record,json_ready
 
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'results/next_round/synthetic'
@@ -27,8 +30,21 @@ def dataset(seed,case):
         a,b=np.triu_indices(len(F),1);keep=(y[a]!=y[b])&(np.asarray(W[a,b]).ravel()==0);a,b=a[keep],b[keep];n=int(round(len(w)*case['bridge']));ids=np.random.default_rng(seed+30000).choice(len(a),n,replace=False);value=float(np.median(w[w>0]));W=(W+sparse.coo_matrix((np.full(2*n,value),(np.r_[a[ids],b[ids]],np.r_[b[ids],a[ids]])),shape=W.shape)).tocsr()
     return clean,F,W,y,t
 
+def evaluate(F,G,y,K):
+    """Same metrics with an explicit floating-point boundary guard for perfect NMI.
+
+    This local compatibility guard avoids changing an in-flight baseline campaign.
+    Values farther than 1e-12 out of range are still implementation errors.
+    """
+    rows=[];predictions=[]
+    for seed in range(50):
+        fit=fit_lloyd(G,K,seed,GREEDY);pred=fit['labels'];acc=float(clustering_accuracy(y,pred));nmi=float(normalized_mutual_information(y,pred))
+        if not np.isfinite(acc+nmi) or min(acc,nmi)<-1e-12 or max(acc,nmi)>1+1e-12:raise ArithmeticError('metric beyond floating-point bound tolerance')
+        rows.append({'seed':seed,'acc':float(np.clip(acc,0,1)),'nmi':float(np.clip(nmi,0,1)),**pair_errors(y,pred),'inertia':fit['inertia'],'warning':fit['kmeans_warning'],'nmi_roundoff_guard_applied':nmi>1 or nmi<0});predictions.append(pred)
+    return rows,np.asarray(predictions),distance_diagnostics(F,G,y)
+
 def main():
-    OUT.mkdir(parents=True,exist_ok=True);manifest={'seeds':list(range(100,110)),'scenarios':SCENARIOS,'methods':['SC','SSC','squared_linear','radial_capped','squared_capped','static_screen'],'gamma':1.,'tau':'baseline sF','N1_pilot':'original/Huber/squared at gamma=2*baseline_gamma0,delta=.2*baseline_sF; clean/anchor/bridge cases','baseline_scales_frozen':True,'oracle_designed_bridges':True,'primary_claim_scope':'synthetic mechanism only; not a real-data performance claim','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'source_hash':source_fingerprint(),'script_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'environment':environment_record()};dump(OUT/'protocol.json',manifest)
+    OUT.mkdir(parents=True,exist_ok=True);manifest={'seeds':list(range(100,110)),'scenarios':SCENARIOS,'methods':['SC','SSC','squared_linear','radial_capped','squared_capped','static_screen'],'gamma':1.,'tau':'baseline sF','N1_pilot':'original/Huber/squared at gamma=2*baseline_gamma0,delta=.2*baseline_sF; clean/anchor/bridge cases','numeric_metric_guard_tolerance':1e-12,'baseline_scales_frozen':True,'oracle_designed_bridges':True,'primary_claim_scope':'synthetic mechanism only; not a real-data performance claim','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'source_hash':source_fingerprint(),'script_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'environment':environment_record()};dump(OUT/'protocol.json',manifest);dump(OUT/'protocols'/(hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest()+'.json'),manifest)
     with threadpool_limits(limits=1):
         for seed in manifest['seeds']:
             for case in SCENARIOS:

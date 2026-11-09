@@ -1,0 +1,33 @@
+dataset_name: UMIST_figshare_cropped
+source_url: "https://ndownloader.figshare.com/files/67153214"
+source_publication: >
+  Figshare article 33130868, title "UMIST Dataset", defined by the Figshare
+  API as a dataset whose description is only "UMIST Dataset". This is not
+  the Graham and Allinson distribution.
+download_date: "2026-10-20"
+archive_filename: umist_cropped.mat
+SHA256_checksum: "ddfa985c15c4f5924be47201416abe01416bdf38b19aca6baecf59d039f51361"
+license_information: >
+  Figshare API license field: CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/). The file is gitignored.
+original_sample_count: 575
+selected_sample_count: 575
+number_of_classes: 20
+original_feature_dimension: 10304
+processed_feature_dimension: 10304
+preprocessing_operations: >
+  facedat is a 1x20 MATLAB cell. Cell i has shape (112, 92, n_i) uint8.
+  Counts n_i are 38, 35, 26, 24, 26, 23, 19, 22, 20, 32, 34, 34, 26, 30,
+  19, 26, 26, 33, 48, 34. The loader walks that order, divides by 255, and
+  vectorizes in C order. No resize.
+sample_selection_method: "all 575 slices; 565 of the pixel arrays are unique"
+random_seed: unknown
+known_deviations: >
+  Not the 564-image set. SHA-256 of the 112x92 slices does not intersect
+  the 575 PGM files in cropped.tar.gz, either as stored or after a
+  transpose. version='figshare575' loads this file. The default UMIST
+  loader does not.
+verification_status: approximate
+figshare_article_api: "https://api.figshare.com/v2/articles/33130868"
+figshare_bytes: 5927440
+figshare_supplied_md5: "62bbcdd946c62a2b112d0062aa279caa"

@@ -1,0 +1,30 @@
+track: REPAIR1
+method: ssc
+dataset: USPS
+factor: D12_KMEANS_G_E13
+paper_fidelity_category: B_AMBIGUITY
+dataset_identity_status: verified_libsvm_9298
+n_trials: 3
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+notes: USPS LIBSVM 9298x256 E13 gamma=1 k=5 union kNN median bandwidth G0=F. PILOT
+  1-3 K-means inits. Sparse IRLS. TIMEOUT is a kept record. Not a 50-trial reproduction.
+label_informed_selection: false
+protocol: R1_solve_FG_once_then_kmeans_seeds
+hardware_note: 8 CPU / 16 GB
+dataset_version: libsvm

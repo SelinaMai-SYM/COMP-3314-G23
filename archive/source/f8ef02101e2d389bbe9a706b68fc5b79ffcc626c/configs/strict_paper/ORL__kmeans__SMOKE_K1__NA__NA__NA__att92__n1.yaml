@@ -1,0 +1,19 @@
+track: STRICT_PAPER
+method: kmeans
+dataset: ORL
+dataset_version: att92
+dataset_identity_status: original_source_att92_92x112_bilinear_32x32
+factor: SMOKE_K1
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 1
+trial_seed_start: 0
+timeout_seconds: 300
+params:
+  init: random
+  n_init: 1
+notes: ORL att92 smoke n=1 before the 50-trial campaign
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'K1 faithful default: random init, n_init=1, mean±std over ALL completed
+  trials; never selected by ACC'
+hardware_note: 8 CPU / 16 GB

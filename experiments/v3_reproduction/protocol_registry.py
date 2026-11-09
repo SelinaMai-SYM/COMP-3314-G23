@@ -43,7 +43,11 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 def load_campaign(config_path: str | Path) -> dict[str, Any]:
     path = Path(config_path)
+    path = path.expanduser().resolve()
     campaign = load_yaml(path)
+    repo = Path(__file__).resolve().parents[2]
+    raw_workspace = campaign.get("workspace")
+    campaign["workspace"] = str(repo if not raw_workspace else (repo / raw_workspace).resolve())
     root = path.parent
     campaign["_path"] = str(path)
     campaign["_dir"] = str(root)

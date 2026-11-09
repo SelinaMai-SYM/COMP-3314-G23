@@ -58,3 +58,19 @@ def json_ready(value: Any) -> Any:
     if isinstance(value, (str, int, bool)) or value is None:
         return value
     return str(value)
+
+
+def source_fingerprint(root=None) -> str:
+    from pathlib import Path
+    root=Path(root) if root is not None else Path(__file__).resolve().parents[2]
+    digest=hashlib.sha256()
+    for folder in ['SSC_method','benchmarks','baselines','method_extension','experiments','configs']:
+        for path in sorted((root/folder).rglob('*')):
+            if path.is_file() and path.suffix in {'.py','.yaml','.yml','.toml'} and 'data' not in path.parts and '__pycache__' not in path.parts:
+                digest.update(str(path.relative_to(root)).encode());digest.update(path.read_bytes())
+    return digest.hexdigest()
+
+
+def environment_record() -> dict:
+    import platform, importlib.metadata
+    return {'python':platform.python_version(),'platform':platform.platform(),'packages':{name:importlib.metadata.version(name) for name in ['numpy','scipy','scikit-learn','pandas','PyYAML']}}

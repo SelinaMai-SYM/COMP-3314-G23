@@ -1,0 +1,35 @@
+track: STRICT_PAPER
+method: ssc
+dataset: YaleB
+dataset_version: cropped2414
+dataset_identity_status: obtained_cropped2414_bilinear_not_claimed_sample_identity_with_dengcai
+factor: SSC_E13_G1e6
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  k: 5
+  gamma: 1000000.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  n_init: 1
+  eps: 1.0e-08
+  symmetrization: union
+  laplacian: symmetric_normalized_eq4
+notes: SSC E13 printed Eq.13 A=S+gamma Ltilde gamma=1000000.0; separate column from
+  E8; not chosen by ACC
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: every gamma in {1e-6,1e-3,1,1e3,1e6} reported separately; raw SSC
+  Eq.8 objectives are NOT compared across gamma; never ACC
+hardware_note: 8 CPU / 16 GB

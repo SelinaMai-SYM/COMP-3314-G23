@@ -1,0 +1,10 @@
+track: TRACKB
+method: sc
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params:
+  k: 5
+notes: Track B SC, k=5, no label tuning
+label_informed_selection: false

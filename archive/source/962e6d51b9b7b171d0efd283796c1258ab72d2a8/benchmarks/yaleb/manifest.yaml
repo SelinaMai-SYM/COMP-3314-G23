@@ -1,0 +1,48 @@
+dataset_name: YaleB
+source_url: "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat"
+source_publication: >
+  A.S. Georghiades, P.N. Belhumeur, and D.J. Kriegman, From Few to Many:
+  Illumination Cone Models for Face Recognition under Variable Lighting and
+  Pose, IEEE TPAMI 23(6):643-660, 2001. The cropped images are described by
+  K.C. Lee, J. Ho, and D.J. Kriegman, Acquiring Linear Subspaces for Face
+  Recognition under Variable Lighting, IEEE TPAMI, 2005. This file is Deng
+  Cai's processed matrix, described on
+  http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html and
+  http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/images.html as Extended
+  Yale Face Database B at 32x32.
+download_date: "2026-10-20"
+archive_filename: YaleB_32x32.mat
+SHA256_checksum: "3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99"
+license_information: >
+  Extended Yale B is free for research use. Publications should acknowledge
+  the database and cite Georghiades, Belhumeur, and Kriegman, PAMI 2001; the
+  cropped release additionally cites Lee, Ho, and Kriegman, PAMI 2005. Deng
+  Cai asks users of this processed file to cite his face-recognition papers.
+  Yale's terms restrict incorporating the images into another publicly
+  distributed database. The mat is gitignored. The UCSD cropped PGM zip was
+  not the file downloaded.
+original_sample_count: 2414
+selected_sample_count: 2414
+number_of_classes: 38
+original_feature_dimension: 1024
+processed_feature_dimension: 1024
+preprocessing_operations: >
+  No resize is applied by this loader. fea is uint8 (2414, 1024) with values
+  0..255, already 32x32 as stored. Divide by 255. Keep the stored vector
+  order. gnd values 1..38 are mapped to 0..37.
+sample_selection_method: "all 2414 rows; no row was dropped"
+random_seed: unknown
+known_deviations: >
+  Approximate relative to a from-scratch resize of the UCSD cropped PGMs.
+  On 2026-10-20 these URLs returned HTTP 404:
+  http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip,
+  http://vision.ucsd.edu/~leekc/ExtYaleDatabase/CroppedYaleBZip/CroppedYale.zip,
+  http://vision.ucsd.edu/~iskwak/ExtYaleDatabase/CroppedYaleBZip/CroppedYale.zip,
+  and http://vision.caltech.edu/~greg/ee148_spring2008/CroppedYale.zip.
+  The literature describes those cropped images as 168x192 (or 192x168).
+  This mat is already 32x32, so the resize kernel is unknown and was not
+  applied here. Measured per-class counts for gnd 1..38 are 64,64,64,64,64,
+  64,64,64,64,64,60,59,60,63,62,63,63,64, and 64 for gnd 19..38. The total
+  2414 and 38 classes match the paper. The paper's interpolation is still
+  unspecified. No random seed was used.
+verification_status: approximate

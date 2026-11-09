@@ -1,0 +1,19 @@
+workspace: /Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3
+data_root: /Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1/benchmarks
+inherited_v2_commit: c217836e7ca7bf5264399e8bb176522d7f721917
+remote: https://github.com/SelinaMai-SYM/COMP-3314-G23.git
+source_branch: origin/v2
+target_branch: v3
+slps_pdf: /Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v2/baselines/1-s2.0-S0306457313000095-main.pdf
+workers: 2
+datasets: datasets.yaml
+methods: methods.yaml
+protocols: protocols.yaml
+paper_reference: paper_reference.yaml
+yaleb_diagnostics: yaleb_diagnostics.yaml
+resource_sources: resource_sources.yaml
+# Jobs measured by this commit stay valid when later commits only add
+# resources or loaders. Methods listed in invalidate_methods are rerun.
+accepted_measurement_commits:
+  - 962e6d51b9b7b171d0efd283796c1258ab72d2a8
+invalidate_methods: []

@@ -1,0 +1,66 @@
+version: performance-mechanisms-v1
+primary_datasets: [ORL_att92, JAFFE, YaleB_cropped2414, USPS]
+alternate_yale: YaleB_dengcai32
+prep: Y0
+eigen_seed: 20261108
+kmeans: {initialization: SKLEARN_GREEDY_KMEANSPP, n_init: 1, algorithm: lloyd, seeds: [0, 49]}
+bootstrap: {seed: 20261108, resamples: 2000, interval: 0.95}
+practical_target: {mean_ACC_gain_pp: 2.0, mean_NMI_gain_pp_min: 0.0, datasets_required: 4}
+gamma5: [1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6]
+gamma15: [1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1, 0.5, 1.0, 2.0, 1.0e1, 1.0e2, 1.0e3, 1.0e4, 1.0e5, 1.0e6]
+tau_over_sF: [0.5, 1.0, 2.0]
+operating_point: {gamma: 1.0, tau_over_sF: 1.0}
+squared_fidelity: sum_squared_residuals_divided_by_2_sF
+pair_diagnostics: {seed: 20261108, within_pairs: 10000, between_pairs: 10000, label_assisted: true}
+random_delete_seeds: [300, 301, 302]
+mechanism_gate:
+  required_primary_datasets: 2
+  requirements: [all_involved_solutions_certified, positive_paired_ACC_CI_lower_vs_SSC, NMI_mean_not_lower_than_SSC, positive_paired_ACC_CI_lower_vs_mean_random_delete, positive_paired_ACC_CI_lower_vs_uniform_mass]
+  contrast_gamma: best_ACC_certified_SSC_in_gamma5_as_label_assisted_diagnostic
+  length_identifiability: cross_class_edge_length_AUROC_greater_than_0.5
+  labels_may_select_formal_method_parameters: false
+  note: Research-development gate uses labels; all later scores are within-dataset exploratory evidence, not an independent held-out generalization test.
+solver: {gap_tol: 1.0e-5, constraint_tolerance: 1.0e-8, max_iterations: 30000, check_every: 50, max_outer: 20}
+budget:
+  max_cpu_core_hours: 36
+  max_workers: 2
+  max_rss_gib_target: 8
+  fit_small_seconds: 600
+  fit_large_seconds: 1800
+  whole_job_extra_seconds: 180
+  phases_priority: [N0_math, N0_selected_and_gamma1, A_gamma5, B_mechanism, C_primary, C_grid, robustness, N1_N2, sensitivity, supplemental]
+nonconvex:
+  starts: [F, certified_original_SSC_same_gamma]
+  selection: minimum_same_capped_objective_without_labels
+  certificate_scope: inner_convex_subproblem_only
+  objective_acceptance_relative_tolerance: 1.0e-10
+  global_optimality_claim: false
+synthetic:
+  seeds: [100, 109]
+  classes: 3
+  points_per_class: 30
+  center_spacing: [1.0, 3.0, 6.0]
+  clean_jitter_sd: 0.1
+  observation_noise_sd: 0.1
+  anchor_outliers: [0.0, 0.05, 0.1, 0.2]
+  bridges: [0.0, 0.05, 0.1]
+  class_sizes: [[30,30,30], [10,30,50]]
+  anchor_outlier_shift: 5_times_baseline_sF
+  baseline_calibration_is_frozen_per_seed_scenario: true
+N1:
+  status: CANDIDATE_AFTER_PERFORMANCE_DIAGNOSIS
+  delta_over_sF: [0.05, 0.2, 1.0]
+  primary: {delta_over_sF: 0.2, gamma_over_gamma0: 2.0}
+  gamma_over_gamma0: [0.5, 1.0, 2.0, 10.0]
+  also_gamma_one: true
+  matched_movement_max_refinements: 6
+N2:
+  status: CANDIDATE_AFTER_PERFORMANCE_DIAGNOSIS
+  t: [1, 4, 16]
+  primary_t: 4
+  primary_r: 128
+  primary_projection_seed: 20261108
+  sensitivity_r: 256
+  sensitivity_seeds: [20261109, 20261110]
+  eta: [0, 0.01, 0.05]
+  perturbation_seeds: [200, 209]

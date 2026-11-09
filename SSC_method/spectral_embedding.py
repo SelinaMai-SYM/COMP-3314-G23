@@ -44,6 +44,7 @@ def smallest_eigenpairs(
     laplacian: sparse.spmatrix | np.ndarray,
     n_components: int,
     dense_threshold: int = 512,
+    eigen_seed: int = 20261108,
 ) -> tuple[np.ndarray, np.ndarray, str]:
     """Smallest eigenpairs of a real symmetric matrix, ascending eigenvalues."""
     if sparse.issparse(laplacian):
@@ -62,7 +63,8 @@ def smallest_eigenpairs(
     else:
         # k must be strictly less than n for ARPACK; the branch above sends
         # the near-full case to the dense solver.
-        evals, evecs = eigsh(sparse.csr_matrix(matrix), k=n_components, which="SA")
+        v0 = np.random.default_rng(eigen_seed).standard_normal(n_samples)
+        evals, evecs = eigsh(sparse.csr_matrix(matrix), k=n_components, which="SA", v0=v0)
         order = np.argsort(evals)
         evals = evals[order]
         evecs = evecs[:, order]
@@ -82,8 +84,9 @@ def embeddings_match(
     Eigenvector signs are not identified by Equation (4). Column-wise
     flipping to make the largest-magnitude entry positive is the documented
     convention used by this package. Pairwise row distances are invariant
-    to those flips; K-means coordinates are not, so shrinkage comparisons
-    must use this aligned F rather than a second independent embedding.
+    to signs and orthogonal rotations, as is Euclidean K-means geometry.
+    Repeated eigenvalues can also change the selected eigenspace at a cutoff;
+    comparisons therefore share the actual F rather than recomputing it.
     """
     aligned_left = orient_eigenvector_signs(left)
     aligned_right = orient_eigenvector_signs(right)

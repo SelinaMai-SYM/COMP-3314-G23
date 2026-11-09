@@ -1,0 +1,28 @@
+n_runs: 50
+n_batches_main: 10
+n_batches_grid: 1
+pca_dimensions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
+ssc_gamma: [1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6]
+ssc_variants: [E8, E13]
+ssc_max_iter: 300
+ssc_extra_iters: 700
+ssc_tol: 1.0e-6
+ssc_eps: 1.0e-8
+spectral_k: 5
+llc_k: 5
+llc_ridge: [0.1, 1.0, 1.5]
+llc_bandwidth_multipliers: [0.0625, 0.25, 1.0, 4.0, 16.0]
+slps_k: 7
+slps_alpha: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+admm_max_iter: 80
+admm_tol: 1.0e-3
+optimality_gap_tol: 1.0e-2
+kmeans:
+  n_init: 1
+  algorithm: lloyd
+  max_iter: 300
+  tol: 1.0e-4
+notes:
+  pca_step: "10 is a reconstruction assumption for the paper's 10-150 range."
+  batches: "Batch b uses seeds 50*b through 50*b+49. Ten batches are for prespecified reference configs. Every grid cell still has 50 runs."
+  ssc_names: "ssc_gamma is not reused as a kernel bandwidth or an LLC ridge."

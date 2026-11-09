@@ -1,0 +1,146 @@
+# Read-only data pointer. Images stay in the v1 worktree.
+data_root_env: DATA_ROOT
+data_root_default: sibling v1 worktree
+data_root_policy: >
+  DATA_ROOT is read-only. The campaign loads gitignored benchmark files
+  from the v1 worktree and never copies them into v2.
+
+datasets:
+  - benchmark: ORL
+    version: att92
+    paper_benchmark: ORL
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: OBTAINED_ATT92_BILINEAR_32x32
+    comparison_class: EXPLORATORY
+    benchmark_group: ORL
+    counts_as_independent_benchmark: true
+    priority_repeat: true
+    notes: >
+      AT&T att92, 400 images and 40 subjects, bilinear resize to 32x32.
+      The paper does not state the interpolation, so paper gaps are exploratory.
+
+  - benchmark: JAFFE
+    version: zenodo
+    paper_benchmark: JAFFE
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: ZENODO_213_NOT_AUTHOR_UNPUBLISHED_COPY
+    comparison_class: EXPLORATORY
+    benchmark_group: JAFFE
+    counts_as_independent_benchmark: true
+    priority_repeat: true
+    notes: >
+      Official Zenodo archive, 213 images and 10 subjects, resized to 26x26.
+      It is not documented as the authors' unpublished copy.
+
+  - benchmark: YaleB
+    version: cropped2414
+    paper_benchmark: YaleB
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: CROPPED2414_BILINEAR_NOT_DENGCAI_IDENTITY
+    comparison_class: EXPLORATORY
+    benchmark_group: YaleB
+    counts_as_independent_benchmark: false
+    priority_repeat: true
+    notes: >
+      Cropped Extended Yale B, 2414 images, bilinear 32x32.
+      Same paper benchmark as dengcai32. Do not average the two matrices.
+
+  - benchmark: YaleB
+    version: dengcai32
+    paper_benchmark: YaleB
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: DENGCAI32_APPROXIMATE
+    comparison_class: EXPLORATORY
+    benchmark_group: YaleB
+    counts_as_independent_benchmark: false
+    priority_repeat: true
+    notes: >
+      Deng Cai 32x32 matrix, 2414 images and 38 subjects.
+      A second matrix of the YaleB benchmark, not a second benchmark.
+
+  - benchmark: USPS
+    version: libsvm
+    paper_benchmark: USPS
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: VERIFIED_LIBSVM_9298
+    comparison_class: EXACT
+    benchmark_group: USPS
+    counts_as_independent_benchmark: true
+    priority_repeat: true
+    notes: >
+      LIBSVM USPS train plus test, 9298 samples and 10 classes.
+      The paper does not publish a file checksum. This is the standard split.
+
+  - benchmark: BinAlpha
+    version: CANDIDATE_BIN_ALPHA
+    paper_benchmark: BinAlpha
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: NON_EXACT
+    comparison_class: NOT_COMPARABLE
+    benchmark_group: BinAlpha
+    counts_as_independent_benchmark: true
+    priority_repeat: false
+    notes: >
+      CANDIDATE_BIN_ALPHA is a 26 by 30 reconstruction with a fixed seed.
+      The authors' sample indices were not recovered. Paper gaps are NOT_COMPARABLE.
+
+  - benchmark: UMIST
+    version: sheffield564
+    paper_benchmark: UMIST
+    attempt_load: true
+    run_protocols: false
+    exact_dataset_status: BLOCKED_EXACT_SUBSET
+    comparison_class: NOT_COMPARABLE
+    benchmark_group: UMIST
+    counts_as_independent_benchmark: true
+    priority_repeat: false
+    notes: >
+      The paper's 564-image subset was not verified. No images were dropped
+      using cluster accuracy.
+
+  - benchmark: UMIST
+    version: precropped575
+    paper_benchmark: UMIST
+    attempt_load: true
+    run_protocols: true
+    exact_dataset_status: NON_EXACT
+    comparison_class: NOT_COMPARABLE
+    benchmark_group: UMIST
+    counts_as_independent_benchmark: false
+    priority_repeat: false
+    notes: >
+      Pre-cropped 575-image archive. It is not the paper's 564-image set.
+      Paper gaps are NOT_COMPARABLE.
+
+  - benchmark: AR
+    version: paper840
+    paper_benchmark: AR
+    attempt_load: true
+    run_protocols: false
+    exact_dataset_status: BLOCKED
+    comparison_class: NOT_COMPARABLE
+    benchmark_group: AR
+    counts_as_independent_benchmark: true
+    priority_repeat: false
+    notes: >
+      The 840/120 subset is blocked. License, labels, and preprocessing are
+      not jointly verified. The third-party 100-identity archive is not called AR.
+
+  - benchmark: MSRA50
+    version: paper1799
+    paper_benchmark: MSRA50
+    attempt_load: true
+    run_protocols: false
+    exact_dataset_status: BLOCKED_DATA
+    comparison_class: NOT_COMPARABLE
+    benchmark_group: MSRA50
+    counts_as_independent_benchmark: true
+    priority_repeat: false
+    notes: >
+      No legitimate 1799-image, 12-class archive is on disk. Status BLOCKED_DATA.

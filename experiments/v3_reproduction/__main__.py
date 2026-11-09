@@ -76,11 +76,17 @@ def _write_plan(campaign: dict, summary: dict) -> None:
     (workspace / "docs" / "v3" / "experiment_plan.md").write_text("\n".join(lines) + "\n")
 
 
-def _campaign(config: str, resume: bool) -> None:
+def _campaign(config: str, resume: bool, data_root=None, datasets=None, output=None) -> None:
     campaign = load_campaign(config)
+    if data_root:
+        campaign["data_root"] = data_root
+    if datasets:
+        campaign["include_datasets"] = datasets
+    if output:
+        campaign["workspace"] = str(Path(output).resolve())
     workspace = Path(campaign["workspace"])
     commit, dirty = _git(workspace)
-    summary = probe(config)
+    summary = probe(config, campaign_override=campaign, network=False)
     _write_plan(campaign, summary)
     protocols = _protocols(campaign)
     include = campaign.get("include_datasets")
@@ -103,8 +109,8 @@ def _campaign(config: str, resume: bool) -> None:
                 "code_commit": commit,
                 "git_dirty": bool(dirty.strip()),
                 "resume": resume,
-                "accepted_measurement_commits": list(campaign.get("accepted_measurement_commits") or []),
-                "invalidate_methods": list(campaign.get("invalidate_methods") or []),
+                "source_hash": __import__("experiments.v3_reproduction.provenance", fromlist=["source_fingerprint"]).source_fingerprint(),
+                "environment": __import__("experiments.v3_reproduction.provenance", fromlist=["environment_record"]).environment_record(),
                 "protocols": protocols,
             }
         )
@@ -140,7 +146,32 @@ def main(argv: list[str] | None = None) -> None:
         command.add_argument("--config", required=True)
         if name == "campaign":
             command.add_argument("--resume", action="store_true")
+    rebuild = sub.add_parser("rebuild-results")
+    rebuild.add_argument("--release-manifest", required=True)
+    rebuild.add_argument("--output", required=True)
+    run = sub.add_parser("run-experiments")
+    run.add_argument("--config", required=True)
+    run.add_argument("--data-root")
+    run.add_argument("--datasets", nargs="+")
+    run.add_argument("--output")
+    run.add_argument("--resume", action="store_true")
+    run.add_argument("--smoke", action="store_true")
+    smoke = sub.add_parser("smoke")
+    smoke.add_argument("--dataset", default="synthetic", choices=["synthetic"])
     args = parser.parse_args(argv)
+    if args.command == "rebuild-results":
+        from experiments.v3_reproduction.release import rebuild as rebuild_release
+        print(json.dumps(rebuild_release(args.release_manifest,args.output),indent=2)); return
+    if args.command == "smoke":
+        from experiments.next_round.smoke import synthetic_smoke
+        print(json.dumps(synthetic_smoke(),indent=2)); return
+    if args.command == "run-experiments":
+        if args.smoke:
+            from experiments.next_round.smoke import data_smoke
+            print(json.dumps(data_smoke(args.config,args.data_root,args.datasets,args.output),indent=2))
+        else:
+            _campaign(args.config,args.resume,args.data_root,args.datasets,args.output)
+        return
     if args.command == "resources":
         recovery = recover(args.config)
         summary = probe(args.config)

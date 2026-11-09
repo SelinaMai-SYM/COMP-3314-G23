@@ -1,0 +1,10 @@
+track: TRACKA
+method: lda_kmeans
+dataset: JAFFE
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 9
+notes: 'Track A LDA-KM: 10 trials per feasible dim'
+label_informed_selection: true

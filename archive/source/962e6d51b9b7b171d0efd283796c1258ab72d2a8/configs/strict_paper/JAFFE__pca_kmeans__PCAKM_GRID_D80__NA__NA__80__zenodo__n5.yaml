@@ -1,0 +1,21 @@
+track: STRICT_PAPER
+method: pca_kmeans
+dataset: JAFFE
+dataset_version: zenodo
+dataset_identity_status: verified_zenodo_213_not_paper_unpublished_copy
+factor: PCAKM_GRID_D80
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 80
+  init: random
+  n_init: 1
+notes: PCA dim grid ASSUMPTION {10..150} clipped; inertia recorded; not ACC
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'main cell: prespecified Track-B-like dim=min(50,K,n-1,d) labeled
+  ASSUMPTION; full {10,20,...,150} grid saved and clipped by rank; optional diagnostic
+  uses lowest K-means inertia, never ACC'
+hardware_note: 8 CPU / 16 GB

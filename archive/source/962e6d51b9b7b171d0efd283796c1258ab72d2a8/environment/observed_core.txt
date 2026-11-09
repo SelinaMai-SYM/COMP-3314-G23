@@ -1,0 +1,13 @@
+# Core packages observed on the course machine (Python 3.13.3, 2026-10-20).
+# This is not a full `pip freeze` of the user site; unrelated packages are omitted.
+numpy==2.4.2
+scipy==1.17.1
+scikit-learn==1.8.0
+pandas==2.3.3
+matplotlib==3.10.8
+PyYAML==6.0.3
+pytest==9.1.1
+pillow==12.1.1
+# optional, used only by tests/test_ssc.py convex reference:
+cvxpy==1.9.3
+clarabel==0.11.1

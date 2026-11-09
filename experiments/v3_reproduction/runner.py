@@ -60,13 +60,11 @@ def _done(payload: dict[str, Any], job_id: str) -> bool:
     if not meta_path.is_file():
         return False
     meta = json.loads(meta_path.read_text())
-    accepted = {payload["code_commit"], *payload.get("accepted_measurement_commits", [])}
-    if meta.get("code_commit") not in accepted:
+    if meta.get("code_commit") != payload["code_commit"]:
         return False
-    if (
-        meta.get("code_commit") != payload["code_commit"]
-        and meta.get("method") in set(payload.get("invalidate_methods") or [])
-    ):
+    if meta.get("source_hash") != payload.get("source_hash") or not meta.get("source_hash"):
+        return False
+    if meta.get("current_fingerprint") != payload.get("current_fingerprint") or meta.get("protocols") != payload.get("protocols") or meta.get("environment") != payload.get("environment"):
         return False
     if meta.get("status") not in {"COMPLETED", "INFEASIBLE"}:
         return False
@@ -88,6 +86,10 @@ def _write_job(payload: dict[str, Any], job_id: str, meta: dict[str, Any], rows:
     meta["job_id"] = job_id
     meta["n_trials"] = len(rows)
     meta["code_commit"] = payload["code_commit"]
+    meta["source_hash"] = payload.get("source_hash")
+    meta["environment"] = payload.get("environment")
+    meta["current_fingerprint"] = payload.get("current_fingerprint")
+    meta["protocols"] = payload.get("protocols")
     temporary_meta = meta_path.with_suffix(".json.tmp")
     temporary_meta.write_text(json.dumps(json_ready(meta), indent=2))
     temporary_meta.replace(meta_path)
@@ -376,6 +378,7 @@ def _run_prep(
     spectral_only = prep in {"Y2", "Y3"}
     prepared = raw if prep in {"Y0", "Y2"} else l2_normalize_rows(raw)
     fingerprint = fingerprint_matrix(prepared, labels)
+    payload = {**payload, "current_fingerprint": fingerprint}
     main_batches = int(protocols["n_batches_main"]) if prep == "Y0" else int(protocols["n_batches_grid"])
     grid_batches = int(protocols["n_batches_grid"])
     failures = 0

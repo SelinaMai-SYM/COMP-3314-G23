@@ -104,6 +104,8 @@ def aggregate(config_path: str | Path) -> dict[str, Any]:
     out_dir = workspace / "results" / "v3_reproduction"
     out_dir.mkdir(parents=True, exist_ok=True)
     trials, jobs = _load_trials(runs_dir)
+    if not trials or not jobs:
+        raise ValueError("No raw jobs/trials: use rebuild-results for the committed release. Existing results preserved.")
     reference = campaign["_paper_reference"]
     probe_path = workspace / "docs" / "v3" / "resource_probe.json"
     probe = json.loads(probe_path.read_text()) if probe_path.is_file() else {"datasets": [], "cells": []}

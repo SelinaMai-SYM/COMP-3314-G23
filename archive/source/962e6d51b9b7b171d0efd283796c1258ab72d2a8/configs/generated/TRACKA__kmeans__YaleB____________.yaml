@@ -1,0 +1,9 @@
+track: TRACKA
+method: kmeans
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 1800
+params: {}
+notes: 'Track A YaleB reduced: 10 K-means trials'
+label_informed_selection: true

@@ -1,4 +1,4 @@
-"""Load v3 matrices from the read-only v1 archives."""
+"""Load matrices from the shared, independent benchmark data root."""
 
 from __future__ import annotations
 
@@ -13,21 +13,8 @@ from experiments.v3_reproduction.provenance import fingerprint_matrix
 
 
 def resolve_data_root(campaign: dict[str, Any] | None = None) -> Path:
-    """External benchmark directory. A blank campaign field is not a sibling path."""
-    if campaign and campaign.get("data_root"):
-        root = Path(campaign["data_root"])
-    else:
-        env = os.environ.get("COMP3314_DATA_ROOT") or os.environ.get("DATA_ROOT")
-        pointer = Path(__file__).resolve().parents[2] / "local" / "data_root.txt"
-        if env:
-            root = Path(env)
-        elif pointer.is_file() and pointer.read_text().strip():
-            root = Path(pointer.read_text().strip())
-        else:
-            raise FileNotFoundError("Set COMP3314_DATA_ROOT or local/data_root.txt")
-    if not root.is_dir():
-        raise FileNotFoundError(f"external data directory does not exist: {root}")
-    return root
+    from benchmarks.data_paths import resolve_data_root as shared_resolver
+    return shared_resolver(None if not campaign else campaign.get("data_root"))
 
 
 def l2_normalize_rows(features: np.ndarray) -> np.ndarray:

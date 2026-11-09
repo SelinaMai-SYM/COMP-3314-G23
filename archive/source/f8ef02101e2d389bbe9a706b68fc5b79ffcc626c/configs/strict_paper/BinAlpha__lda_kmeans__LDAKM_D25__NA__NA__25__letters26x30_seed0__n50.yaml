@@ -1,0 +1,20 @@
+track: STRICT_PAPER
+method: lda_kmeans
+dataset: BinAlpha
+dataset_version: letters26x30_seed0
+dataset_identity_status: CANDIDATE_BIN_ALPHA
+factor: LDAKM_D25
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 25
+  init: random
+  n_init: 1
+notes: LDA-KM dim=25=K-1; cannot search 150
+label_informed_selection: false
+protocol: strict_paper_no_ACC_selection
+selection_rule: 'main cell: n_components=K-1 (Ding–Li); grid clipped by rank<=K-1;
+  never ACC'
+hardware_note: 8 CPU / 16 GB

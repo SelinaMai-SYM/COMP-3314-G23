@@ -1,0 +1,9 @@
+track: TRACKA
+method: kmeans
+dataset: USPS
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 1800
+params: {}
+notes: USPS K-means 10 trials; cheap relative to SSC
+label_informed_selection: true

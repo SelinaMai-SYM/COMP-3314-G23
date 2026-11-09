@@ -1,0 +1,190 @@
+# Chang et al. (AAAI 2015) Setup — strict paper reproduction protocol.
+# This file is the source of truth for scripts/run_strict_paper.py.
+# Runs go to runs/strict_paper/. Do not overwrite runs/strict_repro/.
+# Numbers are never selected by ACC. SSC E8 and E13 are separate columns.
+
+protocol_name: Chang2015_strict_paper
+track: STRICT_PAPER
+paper: "Chang, Nie, Wang, Yang. Spectral Shrunk Clustering. AAAI 2015."
+hardware:
+  cpu: 8
+  memory_gb: 16
+  note: "OMP/OpenBLAS/MKL/NUMEXPR threads capped at 8"
+
+k: 5
+n_trials_paper: 50
+trial_seed_start: 0
+acc: hungarian
+nmi: geometric
+label_informed_selection: false
+
+gamma_grid:
+  values: [1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6]
+  applies_to: [ssc]
+  selection: "report every candidate; never pick by ACC; never compare raw Eq.8 objectives across gamma"
+  paper_best_objective: "AMBIGUOUS — recorded as such; not used as a selection rule"
+
+dim_grid:
+  values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
+  status: ASSUMPTION
+  paper_text: "best result over 10 through 150; step not stated"
+  clip_by_rank: true
+  lda_rank_cap: "K-1 (Ding and Li 2007); classical LDA cannot exceed this"
+  pca_main_cell_rule: "Track-B-like prespecified min(50, n_clusters, n-1, d); NOT ACC"
+  pca_best_objective_rule: "optional diagnostic: lowest K-means inertia at each dim; never ACC"
+  lda_main_cell_rule: "n_components = K-1; grid is recorded and clipped; not ACC"
+
+kmeans_init_rules:
+  K1:
+    init: random
+    n_init: 1
+    aggregation: mean_std_over_all_trials
+    role: faithful_default
+  K2:
+    init: random
+    n_init: 1
+    aggregation: single_trial_with_lowest_inertia
+    derived_from: K1
+    role: diagnostic_best_inertia
+    never_selected_by: ACC
+  K3:
+    init: k-means++
+    n_init: 1
+    aggregation: mean_std_over_all_trials
+    role: diagnostic
+  K4:
+    init: k-means++
+    n_init: 1
+    aggregation: single_trial_with_lowest_inertia
+    derived_from: K3
+    role: diagnostic_best_inertia
+    never_selected_by: ACC
+
+spectral_graph:
+  class: SSC_method.spectral_config.SpectralGraphConfig
+  k: 5
+  bandwidth_rule: median_positive_knn_squared_distance
+  bandwidth_status: ASSUMPTION
+  symmetrization: union
+  row_normalize: false
+  laplacian: symmetric_normalized_eq4
+  kmeans_init: random
+  n_init: 1
+  no_sklearn_SpectralClustering: true
+  shared_F: "F of SC == F of SSC under the same SpectralGraphConfig; compared from embedding_F.npy"
+
+ssc:
+  cluster_on: G
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  max_iter: 300
+  tol: 1.0e-6
+  eps: 1.0e-8
+  variants:
+    E8:
+      fidelity: A_PAPER_FAITHFUL
+      linear_update: equation_8_stationary
+      note: "A = S + 2 gamma Ltilde"
+    E13:
+      fidelity: B_AMBIGUITY
+      linear_update: equation_13_printed
+      note: "A = S + gamma Ltilde; separate column; not substituted for E8 by ACC"
+  irls: "unconverged stays unconverged; not forced"
+  gamma_protocol: "solve F,G once per (dataset, variant, gamma), then 50 k-means on frozen G"
+  do_not_compare_objectives_across_gamma: true
+
+methods:
+  kmeans:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: "K-means K1"
+    extra_columns: [K2, K3, K4]
+  sc:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: SC
+  pca_kmeans:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: PCA-KM
+  pca_spectral:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: PCA-SC
+  lda_kmeans:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: LDA-KM
+  lda_spectral:
+    fidelity: APPROXIMATE
+    matrix_column: LDA-SC
+    note: "not a faithful table cell; Ding-Li + SC interpretation"
+  llc:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_column: LLC
+  spls:
+    fidelity: BLOCKED_MISSING_FULL_METHOD
+    matrix_column: SPLS
+    note: "Section 3 not obtained; fit_predict raises NotImplementedError"
+  ssc:
+    fidelity: FAITHFUL_REIMPLEMENTATION
+    matrix_columns: ["SSC E8", "SSC E13"]
+
+datasets:
+  ORL:
+    version: att92
+    identity: original_source_att92_92x112_bilinear_32x32
+    status: RUN
+    n_trials: 50
+    priority: 1
+  JAFFE:
+    version: zenodo
+    identity: verified_zenodo_213_not_paper_unpublished_copy
+    status: RUN
+    n_trials: 50
+    priority: 1
+  BinAlpha:
+    version: CANDIDATE_BIN_ALPHA
+    alias_versions: [letters26x30_seed0]
+    identity: CANDIDATE_BIN_ALPHA
+    status: RUN_IF_LOADER
+    n_trials: 50
+    priority: 1
+    default_loader: unavailable
+    note: "seed 0, 780x320, indices in letters26x30_seed0.json; NOT historical identity; default load_dataset('BinAlpha') still DatasetUnavailable"
+  YaleB:
+    version: cropped2414
+    identity: obtained_cropped2414_bilinear_not_claimed_sample_identity_with_dengcai
+    status: RUN
+    n_trials: 50
+    priority: 2
+    fallback_n_trials: 10
+    note: "gamma grid first; mark INCOMPLETE with actual n if 50 is too heavy"
+  USPS:
+    version: libsvm
+    identity: verified_libsvm_9298
+    status: RUN
+    n_trials: 50
+    priority: 2
+    fallback_n_trials: 5
+    note: "gamma grid first; mark INCOMPLETE with actual n if 50 is too heavy"
+  AR:
+    version: null
+    identity: SOURCE_RECOVERED_SUBSET_UNVERIFIED
+    status: NOT_EXACT
+    paper_cell: "Do NOT fill as EXACT. Not official Martinez. Not paper 840/120."
+    obtained: "third-party Zenodo ARDB_Full.zip; MD5 bb97bd9237680744c0c7268624696263; 100 identities s1-s100"
+    diagnostic: "optional cheap diagnostic on 100-person archive only; loader currently returns no arrays under any version"
+  UMIST:
+    version: null
+    identity: BLOCKED_DATA_paper_564_not_obtained
+    status: PROBE
+    note: "575 files / 565 unique; paper 564 still missing"
+  MSRA50:
+    version: null
+    identity: BLOCKED_DATA_NOT_OBTAINED
+    status: PROBE
+
+outputs:
+  runs_dir: runs/strict_paper
+  config_dir: configs/strict_paper
+  matrix_csv: results/strict_reproduction_matrix.csv
+  protocol_md: docs/strict_experiment_protocol.md
+  do_not_overwrite: [runs/strict_repro, report, method_extension]

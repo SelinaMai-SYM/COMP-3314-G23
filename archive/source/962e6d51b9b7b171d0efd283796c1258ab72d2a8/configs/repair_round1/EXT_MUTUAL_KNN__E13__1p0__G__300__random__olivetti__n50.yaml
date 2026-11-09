@@ -1,0 +1,32 @@
+track: REPAIR1
+method: rssc
+dataset: ORL
+factor: EXT_MUTUAL_KNN
+paper_fidelity_category: C_DIAGNOSTIC
+dataset_identity_status: approximate_olivetti_64_to_32_not_att92_native
+n_trials: 50
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: median_positive_knn_squared_distance
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+notes: 'Reliability-aware SSC: mutual kNN W on F, median bandwidth taken from the
+  directed kNN of F before the mutual filter. Same preprocessing, k=5, gamma=1, E13,
+  G0=F, raw eigenvectors, same seeds as the repaired SSC E13. C_DIAGNOSTIC extension,
+  not a paper method. ORL Olivetti n=50 paired with repair1 E13. Phase 1 EX1 was 53.7
+  vs 54.0.'
+label_informed_selection: false
+protocol: R1_solve_FG_once_then_kmeans_seeds
+hardware_note: 8 CPU / 16 GB

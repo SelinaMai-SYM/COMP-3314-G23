@@ -1,0 +1,22 @@
+track: STRICT_REPRO
+method: sc
+dataset: USPS
+dataset_version: libsvm
+dataset_identity_status: verified_libsvm_9298
+factor: SC_EQ4
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  k: 5
+  bandwidth_rule: median_positive_knn_squared_distance
+  symmetrization: union
+  row_normalize: false
+  laplacian: symmetric_normalized_eq4
+  kmeans_init: random
+  n_init: 1
+notes: SC Eq4 k=5 shared F path
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

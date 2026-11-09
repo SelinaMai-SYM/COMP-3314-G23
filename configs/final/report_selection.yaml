@@ -1,0 +1,41 @@
+version: acc-distance-batch0-v1
+frozen_source_commit: 95d599918627379b21f665b9b2754dd3852dc6dc
+endpoint: all_prespecified_seeds_in_batch_0
+expected_seeds: [0, 49]
+metric: abs(unrounded_mean_acc_percent - paper_acc_percent)
+tie_absolute_tolerance: 1.0e-12
+tie_order: [frozen_solver_evidence_rank, number_of_setting_deviations, config_id_lexicographic]
+solver_evidence_rank:
+  NOT_APPLICABLE: 0
+  ANALYTIC_G_EQUALS_F: 0
+  PRIMAL_DUAL_GAP_CERTIFIED: 0
+  ITERATE_CONVERGED_UNCERTIFIED: 1
+  LEGACY_VERIFIED_NOT_DUAL_CERTIFIED: 2
+  MAX_ITER_REACHED: 3
+  UNKNOWN: 4
+fixed_reference:
+  prep: Y0
+  ssc_variant: E8
+  ssc_gamma: 1
+  initialization: RANDOM
+  yale_primary: YaleB_cropped2414
+  lda_kmeans_initialization: FULL_REFIT
+  llc_initialization: YU_SHI
+  llc_parameters: {llc_ridge: 1, bandwidth_multiplier: 1}
+  no_unique_reference: [pca_kmeans, pca_sc, spls]
+deviation_fields:
+  - alternate_dataset_version
+  - input_l2_normalization
+  - embedding_row_normalization
+  - printed_E13_gamma_half
+  - gamma_not_fixed_one
+  - initialization_not_fixed_reference
+  - n_init_not_one
+  - iteration_budget_not_300
+exclusions: [PRE_FIX_LEGACY, INVALID_CACHE, SAMPLE_MISMATCH, UNTRACEABLE, extensions]
+missing_batch0: INCOMPLETE_BATCH0
+supplemental_only: [UMIST_precropped575, BinAlpha_candidate26x30]
+notes:
+  - Closest display is retrospective label/paper-assisted numerical matching, not an unsupervised tuning algorithm.
+  - Batch >0 is a separate repeatability endpoint. A min-inertia assignment never receives per-run SD.
+  - Setting deviations are differences from the fixed controlled protocol, not evidence of implementation error.

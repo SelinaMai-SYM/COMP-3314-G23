@@ -1,0 +1,3742 @@
+{
+  "counts": {
+    "A": 25,
+    "B": 160,
+    "C": 220,
+    "N0_selected": 3
+  },
+  "notes": "Task identities are immutable; execution run ids additionally include source/protocol/data hashes. SC is evaluated once per representation.",
+  "protocol_version": "performance-mechanisms-v1",
+  "tasks": [
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "67ee012e465f163dd197ab99"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "c80c5d0f99ce32ca76e0eaee"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "65ae0bf5e3c4bfb35f831d86"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "cd920bee73487c4528323739"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "9c759e0fb44b27f9fbcdeffb"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "ec7398426878ee8ec804b32f"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "53289a409b08503d81eda4d6"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "d5939169b1570a731b9304f2"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "3bfd7fafc73e144d0619edb2"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "353f6a91e0a7d0e7d0cb1f1e"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "ac06671fad1c676bb721a89d"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "d3eaa01a6e382a88a111c934"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "b64ead965a0fbcc4fa4a5271"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "1b62aba050469a5488f3f1e2"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "00b251b83ed621825cc1176e"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "a18f416a21533634b3429102"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "b9729019cbed77a66b939c47"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "79c4fa7876ed3b196e4d748f"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "a3605d4aa40058f79dd70f85"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "010eec88b1322f8d8923070b"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "97c4bf8f2f55ea7adebbf39b"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "995cd9a94542cb33109c94ba"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "d6c18359565a8e904f536912"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "819d18b9d2e9caaa065181cc"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "A",
+      "prep": "Y0",
+      "task_id": "b01e9c78fdde813175505f48"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 500.0,
+      "gamma_nominal": 1000.0,
+      "kind": "original",
+      "legacy_variant": "E13",
+      "phase": "N0_selected",
+      "prep": "Y0",
+      "task_id": "e06c02507a7c94a33dd80ad2"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 500000.0,
+      "gamma_nominal": 1000000.0,
+      "kind": "original",
+      "legacy_variant": "E13",
+      "phase": "N0_selected",
+      "prep": "Y0",
+      "task_id": "2926083e3795edcfa872e41d"
+    },
+    {
+      "dataset": "YaleB_dengcai32",
+      "gamma": 0.0005,
+      "gamma_nominal": 0.001,
+      "kind": "original",
+      "legacy_variant": "E13",
+      "phase": "N0_selected",
+      "prep": "Y3",
+      "task_id": "96936597b29e45a1f9a95e76"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8566f4a16174e3c197d56cb2"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "eabb209caa58fe148ff96ccf"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 300,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "3f6bd73b4115a999928d343f"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 301,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "958336f3d4b4b155308d5f26"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 302,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f935208b04ca9b538131bff8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fe7ae974f1ef597a586cdb24",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8996e147ea5fddfc8c6921b3",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8200c29a39857dd0eb55e30d",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f6ab72165dd266292f9f3b69"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "148cb7634d8aa7e91c72ea28"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 300,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c1d668ce1c778016530bf174"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 301,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9dce1d3ee2a1b38689e91592"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 302,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9e3093cad4c335aca0b8fad1"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "0e64d8a8340171943d010ad6",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a7c58d8c4064da2bf2bded42",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2d07b3e333dcee97188007f4",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "050f363f94ef4008362ee2f7"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a15a212c1de1062424d229c3"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 300,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9f97cff8a87be95a9e62cc69"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 301,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2f4a832637d38378367171ac"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 302,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fc979ba92b4f877bbd5d9b24"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c8d7d66dac4b86dc73268d45",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "0c7660b2d2636e39d52adef3",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1e0ccb4e846423e130b2e4b2",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f09fa974eeb9594dfd0d3125"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "074d80db5c8a5627afaf3d93"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 300,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "743949867b6fc2db85da0667"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 301,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "93fc27e3eea99bdea5571d71"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 302,
+      "gamma": 1.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "5f3ffa22e5ad3aef545e299b"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8f370536a402a6c903899ee5",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1e15595de9dfdaee156ecb4b",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "4b1f4048c15e0b61ece2881f",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "58ec88e273afdd5cddb3fc58"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "e04e18618afb817f0c88ce51"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 300,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "ae473d896439f826f383fa4f"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 301,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "78af5dddcba21c2b0f55e019"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 302,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d3fd1135788a130e10dbd425"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "ec061ad99160b99fcd81281c",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8ec82f3c2b8cc56d8e0e1dc2",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a226ccce35a355f6a479a069",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6018d2830dafd3f8630c6df7"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "130ded09be9530e844a43805"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 300,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "236808bd0a0d03e70792edad"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 301,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "929d93ba92f7f30a788b190d"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 302,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "312748bf13ebea3152d52078"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "676ea36fc2658ef8d05aa0e0",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a8293a048c6e7a3b1b45c3cb",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7570636e3af6d2e13c1ab106",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "26d6044fcb6a451dba6280a1"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "82044c742d7878738848bb90"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 300,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d885b67c2ba20f9213ce6f6c"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 301,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7ea2b4b20aa80f863409b21a"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 302,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "0cf29af12a9a50e12e6b68d0"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "3ad65e201f3b006234b22b1c",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "ef2798f1da7c8cf25fce4a3d",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "ee1c7558fe09ed5f1c05740d",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "4900bd4e924bfb17569680d8"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "55d6d8f0587c4e79ba6c2467"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 300,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "68218d47fc969629257efe34"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 301,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "df9ef93dc8184ed88ce39435"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 302,
+      "gamma": 1000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a4e9900edf04edf3bf429af9"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "08b4a0ec2ee839bf0b56cc2f",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6414caab0d21f84659b6cdc7",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "4662311d8024381bb478981e",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "95bb6f5e49bb5001901130c8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9b4d4c0eaa129d41ad2feacd"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 300,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "b61386380fb95d3b1d9316a8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 301,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "dd5bf987e8aa100790518141"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 302,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6f21bd6a4de1f5a8cf03e325"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "73d947fa2dca7a863b0f906b",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "063fc55967471ca9ae009d53",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "b65b76194c7585e531443e56",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "246c9de217232d4f795f1602"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2f718406bdea6000855858c4"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 300,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "789af602f6338dd59eb63368"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 301,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "14e84ab81ef5e7862735ac11"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 302,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "e013c7147a05678c71e6d6b4"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6959ad229c0e1696c20f73c3",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c5c971070b083e5d002574a7",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d6ed32785fb142d325a0b082",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9ed854d419468497b7cdfa34"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1ca0d32a606f524d32284aab"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 300,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "b3b52f30cf3e3ccb9f01f4ac"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 301,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "acc07ee912c0359fc895d223"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 302,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "160f5fdf262ce7085157c41d"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "56bb57518052cb87faecdebf",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "41ae6c1795f1c7567b10d2de",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7362ef07ae291c5284a6b3a2",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d0ed2ff26b9d6bc020737ef4"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1159354ffa58cd89402f0a84"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 300,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7dc7e9453b8329f8a8bc7a08"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 301,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "cefac5979bd19163a45f5a2f"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 302,
+      "gamma": 1e-06,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f2dd41bd01947fe4ce924aa4"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6bfcd0448724468be81555f7",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "89cb65cdb82698d8c629883f",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1e-06,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2aeb19933f5f02f0a44bd934",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fce1969c43078f71d45bce0a"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2c4f8675d3b074b789dcedbc"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 300,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "0e23dd5722f59e294403ebda"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 301,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7f83553c9c7e9298e74f0583"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 302,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6e8ff3aea7346d0b42b4485e"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "05c1e49917e5a87d7b8c3bc5",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2cfd52298aa21175636ea0dd",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "ed811f049986768227d4d2fc",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8c7f1be2263718b9b78e908e"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d4d90be4574cb490044d0e40"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 300,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "503632080469853a21f81c6a"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 301,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f90e21a2147deca3976ff2e4"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 302,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "40dc1545445644aea3e5479c"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fa58fe2ae832825a53a4892f",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "115b1894b4e7f1bf9c80f316",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "b9e7c856daa0feda64bf43e1",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "eef1a3dc607730ab18a47413"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "e35b55bcf7fe5c8385a12598"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 300,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f5d2253f2b44d018344b5acc"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 301,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "962824a71713dd8578ce4ccd"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 302,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "6983a7acf97445ffe64ca78a"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "733b38bba8083fa10d5b0bf5",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d2a17990b16c2b6ab3811161",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c6d686fcd23b7c26c93c5086",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "3ea8341a0bfcc2bf524d5ebe"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "540e2bce26f2856b41978353"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 300,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fce0ca2006137fd38294df2a"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 301,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "43ecd196f56d30dfb2b0af08"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 302,
+      "gamma": 0.001,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "4f5adcf5fa8caa2299c81314"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f0616fd759094e557ed505e1",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "59b4c40ce4b07a58f1029651",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 0.001,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d0c046ac3bd5d34a13711add",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2c673c96e7deebe308a0c7b8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1eac13d46f5839d5fb6c8fd4"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 300,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "856182836f032fe15774fd84"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 301,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9aae3ee65d2fdd1bc08b4540"
+    },
+    {
+      "dataset": "ORL_att92",
+      "delete_seed": 302,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c06d2bd8827e518ccc9d38d1"
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7b8b524cd8156b176055c9bb",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "d5321345443ee3037ffa5039",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "fcb37afd4d292dc2005bb652",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "609d3cb7f9c62181ad80f85a"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "56733f55f94c102376812d46"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 300,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "eae50d5bee5d29acefc8cd67"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 301,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "2d095a79efd720963b138f40"
+    },
+    {
+      "dataset": "JAFFE",
+      "delete_seed": 302,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "bfbe81c8795617eff5635965"
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c461b14d4eecfb39c7847979",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "afd4c184f76dcaef346b4d58",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f5adc2f66e176fac037d4703",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "7923d06ac2c7b958ac2d30c9"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "3c504c91e26c5a2d7eb1989b"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 300,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "c11baf7a449a659389df618c"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 301,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "e901207f9954981f1e3a944e"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "delete_seed": 302,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8eb695d3fa70689f98a96047"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "41e70000df20aff6a3a61db0",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "1ebbf3f9a3909df0a9dfac1b",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "aa099786c1630bae8c1e592b",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "oracle_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "59530bb9fecd4be9109b751f"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "uniform_mass",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "8d2d27276d5fbe4c0b60f2e8"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 300,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "a2cda79abb4105359069dccd"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 301,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "0a5e0868f0b7881de4fe54c3"
+    },
+    {
+      "dataset": "USPS",
+      "delete_seed": 302,
+      "gamma": 1000000.0,
+      "kind": "random_delete",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "4714a6d0abbc5231b93ccf05"
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "9fbfc873924fad02353d74c4",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "f15b3a1849838edfb3dfb067",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "gamma": 1000000.0,
+      "kind": "static",
+      "phase": "B",
+      "prep": "Y0",
+      "task_id": "165ce5df75215c6cb89e9f60",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ef34faed5ea732bbb65139ff",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "754a6bf88fe71b967a749990",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3c7752817b8b9eda8183a6e4"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ad0a8a4ac28e922cfbe6337a",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "cea15ca8d37d0ffe87783922",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "65fa5d34c40bc3a59cd61945"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "6bd94e55ab032f803a1824ee",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d1dcf24170d3285012eaf061",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f286100d8be22f604c022210"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "05a7c540c64f99b0c1d7416d",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "13ae09790f147568e6c11299",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "63589323c50dbccbae1a7253"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3f7ae2d7f9504ca2fbd6d2e5",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "bf3edc0980297ddd8a5b90ff",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a8236b1e4deebbdee6c12592",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "408b9eac6df790174ab6df33",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "6f4b166978b2b81faa052bb0",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "579dd6ba7131c50d5e8c370e",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c0b84e26122db9195a72882c",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "5635008f0d9b055f53ff998b",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "0fc881c3ca721771b09c7a22",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f4a7cc08d6ea1b125108b83b",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ab28dc87c204b76d207c3146",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "40d83aa55d8c76cff2de292d",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b33a5434cfd204a6893805fe",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d4df50fe3f850de2f8be84da",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "9c0d8baba8c2e9493d56edc2",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "55076afeb72e285a7c8ad772",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d6dd7e0fc30863408ebdc8bd",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3ca14493b2ed14b8f6686210",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "00306f7f781e28f0fd265e3d",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "068878a85898ec86d67fbafc",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3887628fc310b3cdf2c2276f"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "068ec885ded013a167694ace"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "0afbbb42cb3a2265d168948a"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "abc35fb224ea33940aee8799"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d15c61e063a2937710856f4e"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "18c6505e6c01d62df92ffa87"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8248586a1923f67ad7295ea8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "28abe1c7105cee84c97978bf"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "6cecbd5d6378f2f7f3dac4d5"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b6ed60ff2b57d7aca3d7f810"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c610b9f7eb0429319d3a4efa",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c6c1b3c9386f758f69436cc1",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "1f5e7a44501e39c50fd7a347",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2c72c6047ee8c53b10bbad53",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "9a89cae257aaa4d4e88bf696"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "57f81b551ded6ebc157a5b42"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "7c28d27da27a2f0460607fc5"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e5b60593c772914fade56ec8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2454954ae5d72e68cba90cdd"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a762e19002d3da8e13e7de7a"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "4e37ade56ab657bfc37f968c"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b4cc07c82c3610be58c01c01"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "980ea4cc26fb8b4149a1865a"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "20ab8707c4e26f7b1016e045"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "66a08ffbf6cdb6c73cfb0cd5"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "243b5dddb031440ea7f0c02d"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "1717086324dc0bcb8872a241"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "da5c7bcee6b6432cdfa4f1bf"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "bf5606c347abe37ef9a7a559",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "51b98c28b5421cd0bb9aa8e5",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c1951e6f516f3d92948601cc",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b7a20c9a137e45e219796689",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3baa1c4844956931b27acf11"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e0da4e110de81eb315d2bd35"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d7351a67e210b98d86cec62d"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ad369a934b7f24cd18b45966"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "fc1dabb0279ef3ec376b0b84"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b53515bd73f1ffe73e8fb745"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "fc98e97463f73a02a7aa1aff"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ba9777e1c4891a4854d2ca87"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "380b7743b805bc3885b2f32c"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a5c81e8ec8ff56ddae8b3a79"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "4058207f719572afff83580b",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d922611e74a1f6603ec8b1e6",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "66e03150bc9d4a39cf3aa1c8",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3a2f7ac439e57c1dd12f4db9",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8ffb3ad67146ab77c7210b7c"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "5a83957d0e46cea85027ed1f"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "175eeb5e9340855ceff15422"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3c187abfd32beb6cc86a69db"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3bdd43b8b6cded394284dd2c"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "419a5394f2957a9e8aac2423"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "bac69d3c4ad6fa32cc6260c2"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ea6aaf7f4c42dd83d3b35af4"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8c32f96563097b21b32d199c"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "7714b2a1ba190fa3be414a32"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8b99259410328bf001ed3a6d"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f915aa129885d87c53df72b6"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "aac06afaeb3931f8ca6c8000"
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "716e6bcf03190706356c1ade"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3da285b973bb640db42d59cd",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "44c81d82537f360f3771a823",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8bb1188621a428600013b0df",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "45b3d1e384a8d57d2194b0b3",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "23af1bd63c7dbbfaee304e82"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "113ddd787a542b843a7e6069"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f25a46f057842bfa121537b7"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "19c475b0cd51813131baac4c"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "edaa90e57831e490cf874383"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "988f36c0504871baf8e99a31"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d7ad5d0f7886c35a35a509ce"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2c07e4d64040869da546cbb9"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2da05264584dd8329256e3ed"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "0679dac32af7a5e7af03fc30"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "148d0307a36deed9e06fa137",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "4bb64c57aacdbc1c7fc4b217",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8815aa157018a9a2fbb4411e",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b0b5724fe40f833cf5a827e0",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a552def5c51fdf93e1fc2bf1"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b405c0425dbb4faab107bd5f"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "15bea9e795375cad229f4579"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e38cbed89f44975a462757ac"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "949d3a2e3ea00f9d6c6b5b29"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "0e3f04994fe768ec5bbd55a7"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "90fbf4005eb5318df79ed39c"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c1d5bf9342336e03d1dae3f0"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "77946c520140a7d2709eeab1"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "018720aabf1c839148d3c054"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8f476898c6846d657c7e99c9"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "489e08ebcd435b31c7b33469"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "dbc532379b49666db9f3e11d"
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "7bc8755f71c045d2f5677dbb"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "bb0fd2f8a44277733254832c",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "13ccb935904ba4e24618ef61",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d5f083a773ed5b953a7d4d45",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "67587c8e0f17848ac3dc60c9",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e00657dcc7fdd0b2349157b6"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "1eb5787a4aa13cca294da0cc"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "56004279eb16f8cedc0880f0"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "93afa646f3d458820f4a93d5"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d5361192e1d8f187cc1db825"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "41ce14e5d24f1e16189eb277"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "623ffb5e53a51b5167a5e15e"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "9a983d65aa7a5522895ed514"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "373b9166f3b3eb7978bd35e3"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "9a079c49ff3b493adc3b639e"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f7a57a46e55650b02d476b94",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f662af6cec1da4d5d8a03e69",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c7cb5a28ce7da0a5854064f0",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b3eaa0045fc229f4d4a8977e",
+      "tau_multiplier": 1.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "17930ae320c8d3b67774b0f8"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1e-05,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b33349582e7fe7bcde6509e5"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.0001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2a5d047af4d31f5cb4413f36"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d1c4231edca87fbc8d800cfd"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.01,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "bb1a913a8ff837c486bc3802"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.1,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "21e9777652a9906208a39740"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.5,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "64820dcbc44a57191a0689af"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 2.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "95be342ac8aa757c80d25b87"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 10.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e590657ce492f95f54ec6345"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 100.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f1b1b214b7a39f7ab9a31769"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d69bab739dfda356a0d93045"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 10000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "510163e0493743f500a4e5bf"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 100000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "06a73cc7a8abff6a50afe96e"
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "original",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "92351d90796e5a138f34f5c8"
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d06f4a85f30fff4951480b4e",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d48384e613d6424ccc4db1ea",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "90e619ee1f36d7e46c8f2ea0",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "111cafee8576b935c52bc512",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "9ee4efeb05bc03ae47c38ed0",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "473e627d96926ad9bf2a93a4",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "37251b8da2e9036febd18cf8",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3f710d90b9099a9134ce64db",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "654f8a8deea24c48bfa47b23",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "32bd99f2a29bc40a566378e3",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "68319af10916c695b4573880",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "6564c8f60895c9200ed8cb5b",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "405182a808a616023675662b",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "780e18d7c63345c49791f204",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ff9630b90e649abb4f751b20",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "ORL_att92",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "fead9d3b2c69ec0ee636deff",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "f67823517eae352d6e6df1ec",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "84ff3fd5aa525dc9b49c1198",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "5a984824a1efbc2a5a9a5347",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "b8550fee678f6bea84641285",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "724970794c72e03adb25a9d2",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "1d87c475127d97b21907788e",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3bf0d55391f56cf4a8284a5f",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "cd84041f10ba3e213608e948",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3cf27236e7c94c12e39a3795",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "66a5871fc01ddaf7786a3c92",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a4f43d77629c0f2122f94c9e",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "41bd3f798c0e99c32ffdfdab",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a8f8d9cb2881d4d92f253636",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8de0709cb2d68d728f184b5f",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "62dee8d1903995856684f44f",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "JAFFE",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "100d24a9361f9bdbef83f191",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "97c2f4cbc6b363bf9ce03781",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e1a3588961b7495bc0600974",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "2bde45319e51f16abcabfc1e",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "507ac1da46cb560bc9236271",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "d797ac94ae473d4863947934",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "4bb6439d22dadcefa4bc602b",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "c8a606b2ce5b34c4a905c478",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "74b22a207dfc606dfa9187a3",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "ae60a207dc5d21ff378b6c90",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "48cdec3fb119ce9576466ff2",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e58547bb28258a3093b47872",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "73d68e25e98316e6a8703798",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "49f71eabdadde9c58945bfb6",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e58e5185f6ce370fcdcbc99f",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "a41c500cd4b2b25bd5a096da",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "YaleB_cropped2414",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "edc81f7449c92205d96b90f9",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "608645381430c78425dbae69",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "4ba919b99cc878112cedbe49",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "10ff09b4429039b32284e52f",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "db11a44cbd2d4a116af3e21a",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3659cfda1ddb9035aa9cdfac",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "e000ff6303448af83a791965",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "8aa1fc507e924a696eeb1c4e",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "radial",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "5e3ff3987152c04af1e481c6",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "0b95f9d80ad754b53258c6cc",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1e-06,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3ee38ada2787a9684dc33894",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "56a86fd6a8f16de7a274f516",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 0.001,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "19f0117ba094dea016677bf5",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "3556b0ca6d212742f3783373",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "341e0f4c4f6b1579b29b0e0f",
+      "tau_multiplier": 2.0
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "120019827c81ee318010631b",
+      "tau_multiplier": 0.5
+    },
+    {
+      "dataset": "USPS",
+      "fidelity": "squared",
+      "gamma": 1000000.0,
+      "kind": "capped",
+      "phase": "C",
+      "prep": "Y0",
+      "task_id": "5bcd9ff9140fc7719f3cb6da",
+      "tau_multiplier": 2.0
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+dataset_name: ORL_ATT92
+source_url: "https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att_faces.zip"
+source_publication: >
+  F.S. Samaria and A.C. Harter, Parameterisation of a stochastic model for
+  human face identification, IEEE Workshop on Applications of Computer Vision,
+  1994. The zip README identifies the images as the ORL face database from the
+  Olivetti Research Laboratory, Cambridge, taken April 1992 to April 1994.
+download_date: "2026-10-20"
+archive_filename: att_faces.zip
+SHA256_checksum: "509d763bd2276aa054d260d7f1000e8be212738134f2f83d8ff13bc2adf1c8ec"
+license_information: >
+  The zip README says: "When using these images, please give credit to
+  Olivetti Research Laboratory." The Cambridge HTML page for the same archive
+  says: "When using these images, please give credit to AT&T Laboratories
+  Cambridge." Copyright 2002 AT&T Laboratories Cambridge is printed on that
+  page. No separate license file is in the zip. The images are gitignored
+  under benchmarks/orl/data/.
+original_sample_count: 400
+selected_sample_count: 400
+number_of_classes: 40
+original_feature_dimension: 10304
+processed_feature_dimension: 1024
+preprocessing_operations: >
+  PGM header width is 92 and height is 112. The native uint8 stack is
+  (400, 112, 92), so axis 1 is the file row and axis 2 is the file column.
+  No transpose. Native pixel range measured on all 400 images is 0..251.
+  Three 32x32 uint8 arrays were written with PIL nearest, bilinear, and
+  bicubic. The att92 loader divides the selected array by 255 and
+  vectorizes in C order. att92 and att92_bilinear use bilinear.
+sample_selection_method: "all 400 PGM files; directories s1..s40; 10 images each; label = subject number minus 1"
+random_seed: unknown
+known_deviations: >
+  This is the 92x112 AT&T/ORL PGM release. It is not the Olivetti 64x64
+  matrix at benchmarks/orl/data/olivettifaces.mat. load_dataset("ORL")
+  still returns that Olivetti pipeline. orl_faces.zip from the same
+  Cambridge directory was downloaded and had the same SHA-256, so the
+  duplicate file was not kept.
+verification_status: obtained
+processed_arrays:
+  nearest_uint8_sha256: "d056a67cd3850f3c5cdf726c35247d0db11f41d45bfd11f4a5ee4da26f0fe2ea"
+  bilinear_uint8_sha256: "db8ed7a2db8b65aba8d34c9387420c014834d39cef5d27f6b994181de87a5f7d"
+  bicubic_uint8_sha256: "2e70df62a253d4f42b45dbb16b44ec0de1c832f5a1775fb398a77cbf4f058683"
+  native_uint8_sha256: "c8559063d2dde31cdd1746f2038431d995013c96eaff31ef1aaa37f8053066fa"
+  nearest_pixel_range: [0, 244]
+  bilinear_pixel_range: [14, 223]
+  bicubic_pixel_range: [9, 227]

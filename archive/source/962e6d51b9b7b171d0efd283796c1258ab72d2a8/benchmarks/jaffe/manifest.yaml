@@ -1,0 +1,37 @@
+dataset_name: JAFFE
+source_url: "https://zenodo.org/records/14974867"
+source_publication: >
+  M.J. Lyons, M. Kamachi, and J. Gyoba, The Japanese Female Facial Expression
+  (JAFFE) Dataset, 1997, DOI 10.5281/zenodo.14974867. The Zenodo record also
+  requires citation of Lyons, Kamachi, and Gyoba, arXiv:2009.05938, and Lyons,
+  arXiv:2107.13998. Chang et al. cite Lyons et al. 1997.
+download_date: "2026-10-20"
+archive_filename: jaffe.zip
+SHA256_checksum: "6da27f5954f969c6f65d782911834dd66827ec3580e79b95073eb6cb93de5c3b"
+license_information: >
+  Non-commercial scientific research only. Redistribution, including via git,
+  is forbidden. At most 10 images may be shown in a scientific publication.
+  The Zenodo API also reports md5 fe13f3302eb9968ef04367456f665436; that MD5
+  was recomputed locally and matched. curl received HTTP 403 ("unusual
+  traffic"); the bytes were retrieved through a browser session against the
+  same Zenodo URL and saved locally.
+original_sample_count: 213
+selected_sample_count: 213
+number_of_classes: 10
+original_feature_dimension: 65536
+processed_feature_dimension: 676
+preprocessing_operations: >
+  Read 213 TIFF files from jaffe.zip. All are 256x256. 190 are mode L and 23
+  are grayscale palette mode P (checked: R=G=B), converted with
+  PIL Image.convert("L"). Resize each uint8 image to 26x26 with PIL bilinear,
+  divide by 255, and vectorize in C order. No augmentation.
+sample_selection_method: "all 213 TIFFs, sorted by filename; subject id is the sorted two-letter poser code"
+random_seed: unknown
+known_deviations: >
+  The paper says to resize to 26x26 but does not name the interpolation.
+  Bilinear is this loader's choice. Poser codes and integer ids: KA=0, KL=1,
+  KM=2, KR=3, MK=4, NA=5, NM=6, TM=7, UY=8, YM=9. Observed images per poser:
+  KA 23, KL 22, KM 22, KR 20, MK 21, NA 21, NM 20, TM 21, UY 21, YM 22.
+  The paper does not state a random seed; none was used. Raw images must not
+  be committed.
+verification_status: verified

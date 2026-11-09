@@ -1,9 +1,4 @@
-"""Dataset registry for the v2 K-means protocol campaign.
-
-``DATA_ROOT`` is a read-only pointer at the v1 worktree that already
-holds gitignored images. This package never writes under that root
-and never copies those files into v2.
-"""
+"""Historical protocol registry using the current shared benchmark data root."""
 
 from __future__ import annotations
 
@@ -53,24 +48,9 @@ class DatasetEntry:
 
 
 def data_root() -> Path:
-    """Read-only external tree whose ``benchmarks/`` directory holds licensed files.
-
-    The path is taken from ``DATA_ROOT`` or from the untracked pointer
-    ``local/v1_worktree.txt``. This module does not assume a sibling directory.
-    """
-    env = os.environ.get("DATA_ROOT") or os.environ.get("COMP3314_V1_WORKTREE")
-    if env:
-        root = Path(env)
-    else:
-        pointer = REPO_ROOT / "local" / "v1_worktree.txt"
-        if not pointer.is_file() or not pointer.read_text().strip():
-            raise FileNotFoundError(
-                "Set DATA_ROOT to the external tree that contains benchmarks/."
-            )
-        root = Path(pointer.read_text().strip())
-    if not root.is_dir():
-        raise FileNotFoundError(f"DATA_ROOT does not exist: {root}")
-    return root.resolve()
+    """Shared benchmark root containing orl/data, jaffe/data, etc."""
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root()
 
 
 def refuse_write_under_data_root(path: Path) -> None:
@@ -112,7 +92,7 @@ def data_dir_for(benchmark: str) -> Path:
     package = _PACKAGE.get(benchmark)
     if package is None:
         raise KeyError(f"no data package for {benchmark}")
-    return data_root() / "benchmarks" / package / "data"
+    return data_root() / package / "data"
 
 
 def dataset_sha256(features: np.ndarray, labels: np.ndarray) -> str:

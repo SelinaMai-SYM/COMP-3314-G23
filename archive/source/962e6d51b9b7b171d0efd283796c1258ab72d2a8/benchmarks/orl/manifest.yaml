@@ -1,0 +1,36 @@
+dataset_name: ORL
+source_url: "https://ndownloader.figshare.com/files/5976027"
+source_publication: >
+  F.S. Samaria and A.C. Harter, Parameterisation of a stochastic model for
+  human face identification, IEEE Workshop on Applications of Computer Vision,
+  1994. The downloaded file is the Olivetti faces matrix distributed for
+  scikit-learn (figshare 3829989, Nelson Liu, 2016), which scikit-learn
+  documents as the AT&T Laboratories Cambridge database at 64x64 rather than
+  the often-cited 92x112 originals.
+download_date: "2026-10-20"
+archive_filename: olivettifaces.mat
+SHA256_checksum: "b612fb967f2dc77c9c62d3e1266e0c73d5fca46a4b8906c18e454d41af987794"
+license_information: >
+  No license file is inside the mat. scikit-learn's documentation says to
+  credit AT&T Laboratories Cambridge when using these images. The SHA-256
+  equals the checksum in sklearn 1.8.0 sklearn/datasets/_olivetti_faces.py.
+  The raw mat is gitignored.
+original_sample_count: 400
+selected_sample_count: 400
+number_of_classes: 40
+original_feature_dimension: 4096
+processed_feature_dimension: 1024
+preprocessing_operations: >
+  faces is uint8 with shape (4096, 400) and values 0..242. Layout matches
+  sklearn.datasets.fetch_olivetti_faces: transpose, reshape to (400, 64, 64),
+  then transpose axes (0, 2, 1). Resize each image to 32x32 with PIL bilinear,
+  divide by 255, and vectorize in C order. This is not scikit-learn's global
+  min-max scaling, which would divide by 242.
+sample_selection_method: "all 400 columns; label = column index // 10, giving 10 images for each of 40 subjects"
+random_seed: unknown
+known_deviations: >
+  Approximate size variant, not sample-level identity with a 92x112 ORL
+  release. The paper resizes to 32x32 and does not specify interpolation or
+  the 92-versus-64 source. This file is already 64x64 before our resize.
+  The paper does not state a random seed; none was used.
+verification_status: approximate

@@ -1,0 +1,14 @@
+method: E02
+changes: data_term_weights
+description: alpha_i in [0.5, 2] from the mutual-neighbor rate on F.
+alpha_min: 0.5
+alpha_max: 2.0
+reliability: mutual_knn_rate_on_F
+k: 5
+variant: E8
+laplacian_coefficient: 2
+g_init: F
+gamma_primary: 1.0
+alpha_equals_one_reduces_to: E8
+label_use: evaluation_only
+selected_by_test_accuracy: false

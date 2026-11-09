@@ -47,3 +47,8 @@ baselines/ssc_resources/private/
 results/v3_reproduction/all_trials.csv
 # Publisher PDFs, recovered archives, and face matrices stay local.
 **/resources/private/
+# Current experiment arrays and temporary build artifacts remain local.
+runs/next_round/
+.rebuild-*/
+results/**/.rebuild-*/
+tmp/

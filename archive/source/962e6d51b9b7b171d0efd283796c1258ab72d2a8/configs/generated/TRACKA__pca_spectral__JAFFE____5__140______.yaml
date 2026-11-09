@@ -1,0 +1,11 @@
+track: TRACKA
+method: pca_spectral
+dataset: JAFFE
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  n_components: 140
+  k: 5
+notes: 'Track A PCA-SC: 10 trials per dim for selection (cost)'
+label_informed_selection: true

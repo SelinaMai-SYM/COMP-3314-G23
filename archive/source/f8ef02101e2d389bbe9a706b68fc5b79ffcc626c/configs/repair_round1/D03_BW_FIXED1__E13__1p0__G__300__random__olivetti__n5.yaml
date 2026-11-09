@@ -1,0 +1,30 @@
+track: REPAIR1
+method: ssc
+dataset: ORL
+factor: D03_BW_FIXED1
+paper_fidelity_category: B_AMBIGUITY
+n_trials: 5
+trial_seed_start: 0
+timeout_seconds: 1800
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+  tol: 1.0e-06
+  variant: E13
+  cluster_on: G
+  bandwidth_rule: fixed
+  row_normalize: false
+  g_init: F
+  g_init_seed: 0
+  g_init_scale: 0.001
+  zero_residual_floor: median_pairwise
+  kmeans_init: random
+  eps: 1.0e-08
+  delta2: 1.0
+  embedding_delta2: 1.0
+notes: 'One-factor bandwidth: fixed global delta2=1.0 on both X-graph and F-graph.'
+label_informed_selection: false
+protocol: R1_solve_FG_once_then_kmeans_seeds
+covers_factors:
+- D03

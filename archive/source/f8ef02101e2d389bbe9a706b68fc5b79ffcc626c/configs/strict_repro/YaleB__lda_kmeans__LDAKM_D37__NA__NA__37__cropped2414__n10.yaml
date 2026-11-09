@@ -1,0 +1,18 @@
+track: STRICT_REPRO
+method: lda_kmeans
+dataset: YaleB
+dataset_version: cropped2414
+dataset_identity_status: obtained_cropped2414_bilinear_not_claimed_sample_identity_with_dengcai
+factor: LDAKM_D37
+paper_fidelity_category: A_PAPER_FAITHFUL
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 3600
+params:
+  n_components: 37
+  init: random
+  n_init: 1
+notes: LDA-KM dim=37=K-1; cannot search 150
+label_informed_selection: false
+protocol: strict_repro_no_ACC_selection
+hardware_note: 8 CPU / 16 GB

@@ -1,0 +1,12 @@
+track: EX1
+method: rssc
+dataset: YaleB
+n_trials: 10
+trial_seed_start: 0
+timeout_seconds: 2400
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: EX1 Reliability-aware SSC A1
+label_informed_selection: false

@@ -1,0 +1,13 @@
+track: TRACKA
+method: ssc
+dataset: USPS
+n_trials: 1
+trial_seed_start: 0
+timeout_seconds: 2700
+params:
+  k: 5
+  gamma: 1.0
+  max_iter: 300
+notes: USPS SSC gamma=1, 45 min timeout, 1 clustering if IRLS finishes. Not a 9298
+  50-trial reproduction.
+label_informed_selection: true

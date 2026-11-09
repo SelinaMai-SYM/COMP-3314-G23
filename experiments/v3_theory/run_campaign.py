@@ -86,16 +86,8 @@ SUPPLEMENTAL = (
 
 
 def data_root() -> Path:
-    env = os.environ.get("COMP3314_DATA_ROOT") or os.environ.get("DATA_ROOT")
-    if env:
-        return Path(env)
-    pointer = ROOT / "local" / "data_root.txt"
-    if pointer.is_file() and pointer.read_text().strip():
-        return Path(pointer.read_text().strip())
-    campaign = yaml.safe_load((ROOT / "configs" / "v3" / "campaign.yaml").read_text())
-    if campaign.get("data_root"):
-        return Path(campaign["data_root"])
-    raise FileNotFoundError("Set COMP3314_DATA_ROOT to the external benchmark directory")
+    from benchmarks.data_paths import resolve_data_root
+    return resolve_data_root()
 
 
 def git_commit() -> str:

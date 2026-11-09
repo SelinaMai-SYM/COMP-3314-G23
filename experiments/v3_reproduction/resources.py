@@ -98,8 +98,8 @@ def _file_record(path: Path) -> dict[str, Any]:
     }
 
 
-def probe(config_path: str | Path) -> dict[str, Any]:
-    campaign = load_campaign(config_path)
+def probe(config_path: str | Path, *, campaign_override=None, network=True) -> dict[str, Any]:
+    campaign = campaign_override or load_campaign(config_path)
     data_root = resolve_data_root(campaign)
     records = []
     for spec in campaign["_datasets"]["specs"]:
@@ -108,7 +108,7 @@ def probe(config_path: str | Path) -> dict[str, Any]:
         loaded.pop("y", None)
         records.append(json_ready(loaded))
     attempts = []
-    for item in ATTEMPTS:
+    for item in (ATTEMPTS if network else []):
         outcome = _curl(item["url"])
         outcome["asset"] = item["asset"]
         attempts.append(outcome)

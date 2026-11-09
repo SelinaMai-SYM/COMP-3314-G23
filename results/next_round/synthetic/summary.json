@@ -1,0 +1,704 @@
+[
+  {
+    "ACC": 100.0,
+    "MSE": 0.009155440557296843,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00940837130237437,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009216333050451662,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008799198345919936,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009763884527807572,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.0097183988137427,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 9,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008082986017636419,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00936335068979953,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.010844077118684233,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.011142605559405513,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.014051353885366227,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.015130248763159057,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009683717579254661,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.014323146265158218,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.015275307990444681,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009764497090406775,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.014946156857501142,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.013005280720742304,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.01337251624868987,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.020282165553428672,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.022140408100856677,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.010706776931110417,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.021452423495569767,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.022307112249027032,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.0118042450162873,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.022063225526089584,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.017281113992573628,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.017798543029713343,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.031642639561476754,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.034818530501355756,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.012282522903982874,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.03502127027716775,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.03496407394491401,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.0155915780236068,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.03481558783962428,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "anchor_0.2"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009128699530492133,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009377783322358769,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009214076330925861,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00883126217215151,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009838402993590985,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009744389601750615,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008264502815253597,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00936335068979953,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.05"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009173017427253547,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_Huber",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009403358702136017,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_original",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009227860366367283,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "N1_squared",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 99.88888888888889,
+    "MSE": 0.012124098132860672,
+    "NMI": 99.55481687149188,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009826452244363102,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009726227591133781,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008733064157163763,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00936335068979953,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "bridge_0.1"
+  },
+  {
+    "ACC": 99.83111111111111,
+    "MSE": 0.009621396141024986,
+    "NMI": 99.8597339893793,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008799195340628056,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 99.92666666666666,
+    "MSE": 0.009763884527807586,
+    "NMI": 99.9318437470364,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 99.92666666666666,
+    "MSE": 0.00971839881374262,
+    "NMI": 99.9318437470364,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 9,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008083008319942431,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 99.92666666666666,
+    "MSE": 0.00936335068979956,
+    "NMI": 99.9318437470364,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "distance_1"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008799198345919136,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.00976388452780744,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009718398813742446,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 9,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008082986017635954,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009363350689799377,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "distance_6"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008732093600784356,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009448928553437963,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009497238575326455,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008180436383188144,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009114896910423017,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_clean"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009621396141024986,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "SC",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  },
+  {
+    "ACC": 99.15555555555554,
+    "MSE": 0.04320349750455924,
+    "NMI": 96.72517514035611,
+    "independent_synthetic_seeds": 10,
+    "method": "SSC",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009495538822586221,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "radial_capped",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009480918069165857,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_capped",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.008639090582869758,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "squared_linear",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  },
+  {
+    "ACC": 100.0,
+    "MSE": 0.009114896910423017,
+    "NMI": 100.0,
+    "independent_synthetic_seeds": 10,
+    "method": "static_screen",
+    "qualified_seeds": 10,
+    "scenario": "imbalanced_bridge"
+  }
+]

@@ -1,0 +1,156 @@
+{
+  "N1_pilot": "original/Huber/squared at gamma=2*baseline_gamma0,delta=.2*baseline_sF; clean/anchor/bridge cases",
+  "baseline_scales_frozen": true,
+  "environment": {
+    "packages": {
+      "Pillow": "12.1.1",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.2",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.8.0",
+      "scipy": "1.17.1"
+    },
+    "platform": "macOS-14.5-arm64-arm-64bit-Mach-O",
+    "python": "3.13.3"
+  },
+  "gamma": 1.0,
+  "methods": [
+    "SC",
+    "SSC",
+    "squared_linear",
+    "radial_capped",
+    "squared_capped",
+    "static_screen"
+  ],
+  "numeric_metric_guard_tolerance": 1e-12,
+  "oracle_designed_bridges": true,
+  "primary_claim_scope": "synthetic mechanism only; not a real-data performance claim",
+  "scenarios": [
+    {
+      "bridge": 0.0,
+      "distance": 3.0,
+      "name": "clean",
+      "outlier": 0.0,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 3.0,
+      "name": "anchor_0.05",
+      "outlier": 0.05,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 3.0,
+      "name": "anchor_0.1",
+      "outlier": 0.1,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 3.0,
+      "name": "anchor_0.2",
+      "outlier": 0.2,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.05,
+      "distance": 3.0,
+      "name": "bridge_0.05",
+      "outlier": 0.0,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.1,
+      "distance": 3.0,
+      "name": "bridge_0.1",
+      "outlier": 0.0,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 1.0,
+      "name": "distance_1",
+      "outlier": 0.0,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 6.0,
+      "name": "distance_6",
+      "outlier": 0.0,
+      "sizes": [
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "bridge": 0.0,
+      "distance": 3.0,
+      "name": "imbalanced_clean",
+      "outlier": 0.0,
+      "sizes": [
+        10,
+        30,
+        50
+      ]
+    },
+    {
+      "bridge": 0.1,
+      "distance": 3.0,
+      "name": "imbalanced_bridge",
+      "outlier": 0.0,
+      "sizes": [
+        10,
+        30,
+        50
+      ]
+    }
+  ],
+  "script_hash": "0ba3e63f20e4a5059f18d483eb9d4004a3fcb3b233428ee7b2c375109ad4a6ea",
+  "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "source_commit": "ca8178cac1c057c777d58a5773a0e2bd00976262",
+  "source_hash": "7549303a101f5e41c896b8073c50eb724b8b7b0110a0a971695e26ad838ff219",
+  "tau": "baseline sF"
+}

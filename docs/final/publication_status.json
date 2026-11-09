@@ -1,0 +1,6 @@
+{
+  "status": "READY_FOR_FINAL_CANDIDATE_VERIFICATION_AND_PUBLICATION",
+  "administrator_API_permission_verified": true,
+  "expected_initial_heads_manifest": "git_backup.json",
+  "order": "validated payload -> exact-lease v3 push -> default v3 verified -> exact-lease other-head deletions -> remote shallow-clone checks"
+}

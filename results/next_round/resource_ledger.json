@@ -1,0 +1,26 @@
+{
+  "GPU_or_paid_compute": false,
+  "active_campaign_versions": 217,
+  "all_campaign_versions": 246,
+  "blas_threads_per_worker": 1,
+  "budget_cpu_core_hours": 36,
+  "budget_exceeded": false,
+  "conservative_session_wall_envelope_core_hours": 3.821976387222222,
+  "envelope_definition": "Two single-thread experiment workers for the entire interval since verified backup, including idle time. It covers unmetered original preparation and SC endpoints; does not claim precise attribution. Lightweight tooling outside scientific workers is not represented by per-fit CPU.",
+  "largest_recorded_fit_peak_rss_bytes": 626737152,
+  "maximum_experiment_workers": 2,
+  "memory_limit_note": "Per-fit peaks and spot checks, not a continuously enforced aggregate RSS cap. No observed overrun.",
+  "metered_cpu_core_hours": 2.6230640225,
+  "metered_cpu_seconds_by_component": {
+    "all_retained_campaign_versions": 6688.02517,
+    "corrected_robustness": 753.9895090000001,
+    "geometry_pilot": 72.408889,
+    "heat_preparation": 7.690937999999999,
+    "same_FW_legacy_IRLS_audit": 1710.9572000000003,
+    "synthetic": 209.78560400000003,
+    "tiny_global_reference": 0.17317099999999996
+  },
+  "recorded_at_utc": "2026-11-09T14:36:22.557497+00:00",
+  "rss_target_bytes": 8589934592,
+  "synthetic_instances": 100
+}

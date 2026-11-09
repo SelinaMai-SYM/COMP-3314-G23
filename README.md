@@ -66,6 +66,14 @@ The old held-out robustness table is retained but invalid as full-SSC robustness
 
 [Report PDF](report/Group_23.pdf) and [LaTeX](report/main.tex); [guideline checklist](docs/final/guideline_checklist.md); [9-minute outline](docs/final/presentation_outline.md); [Q&A](docs/final/qa_notes.md); [validation](docs/final/validation.md); [sources, ownership and licenses](docs/final/sources_and_licenses.md). [Scientific snapshots](archive/source) are provenance only, never current imports.
 
-This is a course report, not a NeurIPS submission. Main text is <=4 pages, excluding references/appendix. Individual member names were absent from reliable supplied materials and remain to be supplied; no names are inferred from accounts. Only the PDF is submitted to the course system by the group.
+This is a course report, not a NeurIPS submission. Main text is <=4 pages, excluding references/appendix. Members: Han Jiale; Lu Sinan; Mahatharadol Vie; Mai Sheung Ying. Affiliation: The University of Hong Kong. Names were supplied explicitly by the user. Only the PDF is submitted to the course system by the group.
 
 Slides: 2026-11-15 23:59; report: 2026-11-29 23:59, Hong Kong/Shanghai time. Rubric: understanding 40%, analysis/insight 30%, writing 10%, presentation/Q&A 20%; reproduction is optional, up to 10 bonus points.
+
+## Measured final status
+
+The main mechanism gate is **0/4**, so the formal real-data capped search is **NOT_RUN_MECHANISM_NOT_SUPPORTED**; the four-benchmark practical target is **not established (NA)**. Synthetic results show damage avoidance shared by simpler controls, not gain beyond SC. N1 has no demonstrated ACC/NMI gain; N2 primary ablations and corrected full-pipeline robustness are reported separately.
+
+[Planned/executed coverage](results/next_round/planned_execution_coverage.csv), [heat ablations](results/next_round/heat_primary_summary.csv), [synthetic results](results/next_round/synthetic/summary.json), [corrected robustness](results/next_round/corrected_robustness_summary.csv), [resource ledger](results/next_round/resource_ledger.json), [execution decisions](docs/next_round/execution_decisions.md), [publication status](docs/final/publication_status.json).
+
+Measured fit/audit CPU: 2.623 core-hours; conservative session envelope at completion: 3.82 core-hours, against the 36-hour cap. Maximum two single-thread experiment workers; per-fit RSS and enforcement limits are in the ledger. No task is described as budget-exhausted merely because it was not promoted.

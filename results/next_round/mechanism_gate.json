@@ -1,0 +1,121 @@
+{
+  "datasets": [
+    {
+      "baseline_run_id": "67ee012e465f163dd197ab99-ce9f546da7b8",
+      "dataset": "ORL_att92",
+      "edge_length_AUROC": 0.8302530253025303,
+      "label_assisted_gamma": 1.0,
+      "oracle_vs_SSC": {
+        "ci_lower_pp": -0.4099999999999997,
+        "ci_upper_pp": 0.645000000000001,
+        "delta_pp": 0.11500000000000067
+      },
+      "oracle_vs_SSC_NMI": {
+        "ci_lower_pp": -0.11764787362902318,
+        "ci_upper_pp": 0.47936967237704003,
+        "delta_pp": 0.17539279818947923
+      },
+      "oracle_vs_random_mean": {
+        "ci_lower_pp": -0.2183333333333308,
+        "ci_upper_pp": 0.7100000000000003,
+        "delta_pp": 0.24166666666666756
+      },
+      "oracle_vs_uniform": {
+        "ci_lower_pp": -0.5800000000000012,
+        "ci_upper_pp": 0.4500000000000006,
+        "delta_pp": -0.05499999999999998
+      },
+      "passed": false,
+      "status": "NOT_SUPPORTED_AT_LOCKED_DIAGNOSTIC"
+    },
+    {
+      "baseline_run_id": "353f6a91e0a7d0e7d0cb1f1e-ce9f546da7b8",
+      "dataset": "JAFFE",
+      "edge_length_AUROC": 0.5556284153005464,
+      "label_assisted_gamma": 1e-06,
+      "oracle_vs_SSC": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_SSC_NMI": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_random_mean": {
+        "ci_lower_pp": -1.1102230246251565e-14,
+        "ci_upper_pp": -1.1102230246251565e-14,
+        "delta_pp": -1.1102230246251565e-14
+      },
+      "oracle_vs_uniform": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "passed": false,
+      "status": "NOT_SUPPORTED_AT_LOCKED_DIAGNOSTIC"
+    },
+    {
+      "baseline_run_id": "ac06671fad1c676bb721a89d-ce9f546da7b8",
+      "dataset": "YaleB_cropped2414",
+      "edge_length_AUROC": 0.3799602543720191,
+      "label_assisted_gamma": 1e-06,
+      "oracle_vs_SSC": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_SSC_NMI": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_random_mean": {
+        "ci_lower_pp": -3.8996583739958616e-16,
+        "ci_upper_pp": 5.551115123125783e-17,
+        "delta_pp": -1.6653345369377348e-16
+      },
+      "oracle_vs_uniform": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "passed": false,
+      "status": "NOT_SUPPORTED_AT_LOCKED_DIAGNOSTIC"
+    },
+    {
+      "baseline_run_id": "d3eaa01a6e382a88a111c934-ce9f546da7b8",
+      "dataset": "USPS",
+      "edge_length_AUROC": 0.75832169062853,
+      "label_assisted_gamma": 1e-06,
+      "oracle_vs_SSC": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_SSC_NMI": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_random_mean": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "oracle_vs_uniform": {
+        "ci_lower_pp": 0.0,
+        "ci_upper_pp": 0.0,
+        "delta_pp": 0.0
+      },
+      "passed": false,
+      "status": "NOT_SUPPORTED_AT_LOCKED_DIAGNOSTIC"
+    }
+  ],
+  "formal_capped_experiment_triggered": false,
+  "length_identifiable_supported_datasets": 0,
+  "required": 2,
+  "selection_bias_note": "Oracle gamma and gate use labels on these datasets. They are diagnosis, not held-out method validation.",
+  "supported_primary_datasets": 0
+}

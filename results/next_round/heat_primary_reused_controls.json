@@ -1,0 +1,62 @@
+[
+  {
+    "dataset": "YaleB_cropped2414",
+    "gamma": 1.0,
+    "kind": "original",
+    "phase": "A",
+    "prep": "Y0",
+    "task_id": "65ae0bf5e3c4bfb35f831d86",
+    "run_id": "65ae0bf5e3c4bfb35f831d86-ce9f546da7b8",
+    "ACC": 21.547638773819386,
+    "NMI": 27.489709392478336,
+    "same_feature_SC_ACC": 21.781275890637943,
+    "same_feature_SC_NMI": 27.7308702549502,
+    "qualified": true,
+    "reused_control": true
+  },
+  {
+    "dataset": "ORL_att92",
+    "gamma": 1.0,
+    "kind": "original",
+    "phase": "A",
+    "prep": "Y0",
+    "task_id": "67ee012e465f163dd197ab99",
+    "run_id": "67ee012e465f163dd197ab99-ce9f546da7b8",
+    "ACC": 78.39000000000001,
+    "NMI": 89.74007897042416,
+    "same_feature_SC_ACC": 78.32500000000002,
+    "same_feature_SC_NMI": 89.87385215377996,
+    "qualified": true,
+    "reused_control": true
+  },
+  {
+    "dataset": "JAFFE",
+    "gamma": 1.0,
+    "kind": "original",
+    "phase": "A",
+    "prep": "Y0",
+    "task_id": "c80c5d0f99ce32ca76e0eaee",
+    "run_id": "c80c5d0f99ce32ca76e0eaee-ce9f546da7b8",
+    "ACC": 95.09859154929578,
+    "NMI": 94.05620451900623,
+    "same_feature_SC_ACC": 95.30516431924882,
+    "same_feature_SC_NMI": 94.13405498702244,
+    "qualified": true,
+    "reused_control": true
+  },
+  {
+    "dataset": "USPS",
+    "gamma": 1.0,
+    "kind": "original",
+    "phase": "A",
+    "prep": "Y0",
+    "task_id": "cd920bee73487c4528323739",
+    "run_id": "cd920bee73487c4528323739-ce9f546da7b8",
+    "ACC": 65.40180684018068,
+    "NMI": 80.11142939890237,
+    "same_feature_SC_ACC": 65.59711765971176,
+    "same_feature_SC_NMI": 80.31457542746293,
+    "qualified": false,
+    "reused_control": true
+  }
+]

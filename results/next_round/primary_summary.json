@@ -1,0 +1,38 @@
+[
+  {
+    "dataset": "ORL_att92",
+    "SC_ACC": 78.32500000000002,
+    "SSC_gamma1_ACC": 78.39000000000001,
+    "gamma1_status": "PRIMAL_DUAL_GAP_CERTIFIED",
+    "best_certified_gamma": 1.0,
+    "best_certified_ACC": 78.39000000000001,
+    "certified_configurations": 5
+  },
+  {
+    "dataset": "JAFFE",
+    "SC_ACC": 95.30516431924882,
+    "SSC_gamma1_ACC": 95.09859154929578,
+    "gamma1_status": "PRIMAL_DUAL_GAP_CERTIFIED",
+    "best_certified_gamma": 0.001,
+    "best_certified_ACC": 95.30516431924882,
+    "certified_configurations": 5
+  },
+  {
+    "dataset": "YaleB_cropped2414",
+    "SC_ACC": 21.781275890637943,
+    "SSC_gamma1_ACC": 21.547638773819386,
+    "gamma1_status": "PRIMAL_DUAL_GAP_CERTIFIED",
+    "best_certified_gamma": 0.001,
+    "best_certified_ACC": 21.781275890637943,
+    "certified_configurations": 5
+  },
+  {
+    "dataset": "USPS",
+    "SC_ACC": 65.59711765971176,
+    "SSC_gamma1_ACC": 65.40180684018068,
+    "gamma1_status": "MAX_ITER_REACHED",
+    "best_certified_gamma": 0.001,
+    "best_certified_ACC": 65.59711765971176,
+    "certified_configurations": 2
+  }
+]

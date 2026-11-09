@@ -1,0 +1,6 @@
+{
+  "cpu_seconds": 753.9895090000001,
+  "endpoints": 32,
+  "fixed_conditions": 4,
+  "inference_limit": "Conditions are descriptive; K-means seeds are conditional rounding variation, not independent image perturbations."
+}

@@ -1,6 +1,6 @@
-# Reliability-aware SSC (mutual kNN shrinkage weights)
+# Historical mutual-kNN SSC adaptation
 
-This package is the one planned extension of Chang et al., AAAI 2015. It is
+This is an earlier adaptation of Chang et al., AAAI 2015. The current performance-driven work is documented in [next_round](next_round/README.md) and [execution decisions](../docs/next_round/execution_decisions.md). Historical results below are retained. It is
 **not** original SSC. Original SSC lives in `SSC_method/` and is not modified
 here.
 

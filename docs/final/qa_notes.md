@@ -29,3 +29,5 @@
 **What is independent about the release?** A shallow single-branch checkout can import, run synthetic tests and rebuild scalar tables from committed inputs. Raw-image reruns require separately licensed data. Historical scalar provenance does not recover every old embedding array.
 
 **How much evidence does a 50-seed interval provide?** It measures conditional K-means rounding variability on fixed F/G, not uncertainty over datasets or the data-generating process. Oracle parameter selection introduces additional bias. Perturbation seeds are separate experimental units.
+
+Proposed discussion leads: Han Jiale (problem/paper contribution), Lu Sinan (objectives/certificates), Mahatharadol Vie (data/protocol/reproduction), Mai Sheung Ying (mechanism/negative results). All members should understand the full argument; these are editable role suggestions, not attendance verification.

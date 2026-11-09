@@ -1,0 +1,9 @@
+{
+  "exact_reference": "selected columns of exp(-4L), full spectrum",
+  "fixed_subset_seed": 20261108,
+  "limit": "Restricted candidate-set overlap is not full-graph exact kNN recall; r=128 has no uniform empirical guarantee.",
+  "restricted_candidate_knn_recall": 0.775,
+  "squared_distance_relative_error_median": 0.08084762415589752,
+  "squared_distance_relative_error_p95": 0.23294154656942292,
+  "subset_size": 128
+}

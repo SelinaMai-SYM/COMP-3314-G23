@@ -1,0 +1,16 @@
+{
+  "main_pages": 3,
+  "total_pages": 11,
+  "pdf_sha256": "387ca176edc5973dff9148f7275481edbf380fccb2b117d4e0743840981a2c22",
+  "main_pdf_identical": true,
+  "unresolved_citations_or_references": false,
+  "overfull_boxes": false,
+  "all_pages_rendered": true,
+  "visual_QA": "PASS: all 11 rendered pages inspected; main 3 pages, no clipping/overlap, readable tables and figures; dense secondary table separately inspected",
+  "member_names": [
+    "Han Jiale",
+    "Lu Sinan",
+    "Mahatharadol Vie",
+    "Mai Sheung Ying"
+  ]
+}

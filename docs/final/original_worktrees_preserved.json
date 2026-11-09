@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v1",
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "matches_initial": true,
+    "untracked": []
+  },
+  {
+    "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v2",
+    "patch_sha256": "9f66888c96e2e5b4eea8c6fffcc9fa34d9b66dfdb0b1c13e9b7d35a7e933251b",
+    "matches_initial": true,
+    "untracked": [
+      "baselines/1-s2.0-S0306457313000095-main.pdf"
+    ]
+  },
+  {
+    "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/v3",
+    "patch_sha256": "9bfcb819b197913b2cb48ae4445a4e22f5231e07729308a108716b37b5e5ce12",
+    "matches_initial": true,
+    "untracked": []
+  }
+]

@@ -21,3 +21,7 @@ Full numeric evidence is `results/next_round/five_point_global_check.json`. Synt
 ## Optimization contract
 
 min(r,tau)=min_{z in {0,1}} z*r+(1-z)*tau. Thresholding edges at each current r fixes z; optimizing G is then a convex SSC subproblem plus a constant. The original point is an admissible primal upper bound for that subproblem, so retaining the best actual primal and rejecting increases protects monotonicity. A fixed active set plus an inner certificate is a local block fixed point, not a general global or label-quality certificate. All inner failures, truncations and initialization differences remain visible.
+
+## Squared fidelity coefficient mapping
+
+The crossed squared control is sum_i ||g_i-f_i||²/(2*s_F) + 2*gamma*sum_e w_e*r_e, with each undirected edge once. Multiplying by 2*s_F gives sum_i ||g_i-f_i||² + 4*s_F*gamma*sum_e w_e*r_e. Thus under Equation 7's ordered-pair graph sum, gamma_E7 = 2*s_F*gamma. Multiplication does not change minimizers. This mapping does not make equal numerical gamma values across squared and non-squared fidelity comparable; the formal design allocates separate searches. For the N1 curvature control whose quadratic scale is delta, the corresponding mapping uses 2*delta*gamma instead. The capped version retains the same scaling with r replaced by min(r,tau).

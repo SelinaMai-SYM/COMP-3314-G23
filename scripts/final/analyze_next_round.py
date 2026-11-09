@@ -52,10 +52,14 @@ def run():
     result={'supported_primary_datasets':supported,'length_identifiable_supported_datasets':length_supported,'required':2,'formal_capped_experiment_triggered':supported>=2 and length_supported>=2,'datasets':gate,'selection_bias_note':'Oracle gamma and gate use labels on these datasets. They are diagnosis, not held-out method validation.'}
     dump(OUT/'mechanism_gate.json',result)
     if diagnostics:csvwrite(OUT/'paired_diagnostics.csv',diagnostics)
-    lines=['# Performance-mechanism results','','All means are over 50 greedy K-means++ seeds on a fixed representation. Solver uncertainty is retained.','',f"Preregistered mechanism gate: {supported}/4 datasets support the required certified contrasts; {length_supported}/4 additionally meet the edge-length identifiability condition.",'','| Dataset | Kind | gamma | ACC ± SD (%) | NMI ± SD (%) | Solver | gap |','|---|---|---:|---|---|---|---:|']
+    lines=['# Performance-mechanism results','','All means are over 50 greedy K-means++ seeds on a fixed representation. Solver uncertainty is retained.','',f"Preregistered mechanism gate: {supported}/4 datasets support the required certified contrasts; {length_supported}/4 additionally meet the edge-length identifiability condition.",'','| Dataset | Phase / feature / controls | Kind | gamma | ACC ± SD (%) | NMI ± SD (%) | Solver | gap |','|---|---|---|---:|---|---|---|---:|']
     for r in rows:
-        if r['execution_status']=='COMPLETED':lines.append(f"| {r['dataset']} | {r['kind']} | {r['gamma']:g} | {r['acc_mean']:.3f} ± {r['acc_sd']:.3f} | {r['nmi_mean']:.3f} ± {r['nmi_sd']:.3f} | {r['solver_status']} | {r.get('gap') if r.get('gap') is not None else 'NA'} |")
-        else:lines.append(f"| {r['dataset']} | {r['kind']} | {r['gamma']:g} | NA | NA | {r['execution_status']} | NA |")
+        setting=r['phase']+' / '+r['prep']
+        if 'tau_multiplier' in r:setting+=' / tau-sF='+str(r['tau_multiplier'])
+        if 'delete_seed' in r:setting+=' / deletion-seed='+str(r['delete_seed'])
+        if 'fidelity' in r:setting+=' / '+r['fidelity']
+        if r['execution_status']=='COMPLETED':lines.append(f"| {r['dataset']} | {setting} | {r['kind']} | {r['gamma']:g} | {r['acc_mean']:.3f} ± {r['acc_sd']:.3f} | {r['nmi_mean']:.3f} ± {r['nmi_sd']:.3f} | {r['solver_status']} | {r.get('gap') if r.get('gap') is not None else 'NA'} |")
+        else:lines.append(f"| {r['dataset']} | {setting} | {r['kind']} | {r['gamma']:g} | NA | NA | {r['execution_status']} | NA |")
     (OUT/'all_results.md').write_text('\n'.join(lines)+'\n');folder=OUT/'per_benchmark';folder.mkdir(exist_ok=True)
     for dataset in PRIMARY:
         selected=[line for line in lines[7:] if line.startswith('| '+dataset+' |')];(folder/(dataset+'.md')).write_text('\n'.join(lines[:8]+selected)+'\n')

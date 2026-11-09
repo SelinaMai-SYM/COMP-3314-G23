@@ -1,0 +1,4 @@
+# Hash manifests and scientific snapshots refer to exact committed bytes.
+* -text
+# Python's CSV writer uses standard CRLF records.
+*.csv whitespace=cr-at-eol

@@ -29,3 +29,18 @@ def test_duplicate_primary_key_fails_even_with_consistent_hashes(release_copy):
     out=root/'new-output'
     with pytest.raises(ValueError,match='duplicate trial primary key'):rebuild(path,out)
     assert not out.exists()
+
+
+def test_unhashed_required_input_is_rejected_before_output(release_copy):
+    root,path,m=release_copy;m['files'].pop(m['metadata_file']);path.write_text(json.dumps(m))
+    with pytest.raises(ValueError,match='not covered by hashes'):rebuild(path,root/'output')
+    assert not (root/'output').exists()
+
+
+def test_empty_release_fails_before_output(release_copy):
+    root,path,m=release_copy;p=root/m['trial_file']
+    with gzip.open(p,'rb') as f:header=f.readline()
+    with gzip.open(p,'wb') as f:f.write(header)
+    m['files'][m['trial_file']]['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();m['trial_sha256_uncompressed']=hashlib.sha256(header).hexdigest();path.write_text(json.dumps(m))
+    with pytest.raises(ValueError,match='empty/missing'):rebuild(path,root/'output')
+    assert not (root/'output').exists()

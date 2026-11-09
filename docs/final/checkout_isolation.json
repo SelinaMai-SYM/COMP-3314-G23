@@ -1,0 +1,6 @@
+{
+  "tracked_symlinks_or_submodules": [],
+  "outside_checkout_link_dependency": false,
+  "current_entrypoints": "experiments.v3_reproduction smoke/rebuild-results/run-experiments; experiments.next_round.campaign",
+  "verification": "Fresh single-branch checkout without old refs/data pointer passed synthetic/rebuild and explicit independent data-root smoke"
+}

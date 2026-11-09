@@ -1,0 +1,27 @@
+{
+  "cpu_seconds": 72.408889,
+  "datasets": {
+    "JAFFE": {
+      "F_knn_Jaccard": 0.9575002993527706,
+      "projected_heat_knn_Jaccard": 0.9907492494980241,
+      "raw_subspace_max_angle_degrees": 0.34597729565280316
+    },
+    "ORL_att92": {
+      "F_knn_Jaccard": 0.9735277081173667,
+      "projected_heat_knn_Jaccard": 0.9884199298603458,
+      "raw_subspace_max_angle_degrees": 7.265290993445038
+    },
+    "USPS": {
+      "F_knn_Jaccard": 0.8778973754104108,
+      "projected_heat_knn_Jaccard": 0.9713518575797139,
+      "raw_subspace_max_angle_degrees": 0.22836886310040572
+    },
+    "YaleB_cropped2414": {
+      "F_knn_Jaccard": 0.9591076172680433,
+      "projected_heat_knn_Jaccard": 0.975660932095964,
+      "raw_subspace_max_angle_degrees": 5.192046309528851
+    }
+  },
+  "rows": 80,
+  "scope": "No clustering benefit is inferred from this operator/topology pilot. Full N2 ablations remain conditional."
+}

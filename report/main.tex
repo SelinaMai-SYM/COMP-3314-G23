@@ -4,8 +4,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref,url,booktabs,amsmath,amssymb,amsfonts,microtype,longtable,array,graphicx}
+\hypersetup{hidelinks}
 \title{Spectral Shrunk Clustering: Reproduction, Certificates, and When Shrinkage Helps}
-\author{Group 23\thanks{Individual member names were not present in the supplied project materials and remain to be supplied. No names are inferred from repository accounts.}\\The University of Hong Kong\\COMP3314 Machine Learning}
+\author{Han Jiale \quad Lu Sinan \quad Mahatharadol Vie \quad Mai Sheung Ying\\Group 23\\The University of Hong Kong\\COMP3314 Machine Learning}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -33,7 +34,7 @@ Our source-based implementations include one-shot SLPS (called SPLS in the SSC t
 
 \input{tables/final_main}
 
-\textbf{Two distinct questions.} The closest column is \emph{Our adapted setting}: post-hoc selection minimizing absolute difference between the unrounded configuration-level ACC mean and published ACC. It uses all planned batch-0 seeds; NMI and SD follow the same configuration and trials. It is neither an unsupervised tuning rule nor recovered author protocol. Additional batches measure repeatability separately. The fixed column is \emph{Our reproduction}: Y0, E8, gamma=1 and random initialization, with one Lloyd start per seed. PCA and SLPS have measured grids but no unique locked reference; those fixed cells remain explicitly uncollapsed.
+\textbf{Two distinct questions.} Closest is \emph{Our adapted setting}: retrospective absolute matching of the unrounded ACC mean to the paper, using every planned batch-0 seed. NMI/SD follow the same configuration and trials. This neither recovers the author protocol nor selects without labels. Additional batches assess repeatability. Fixed is \emph{Our reproduction}: Y0/E8/gamma=1/random, one Lloyd start per seed. PCA/SLPS fixed cells remain uncollapsed because no unique reference was locked.
 
 The matched values need their settings. ORL's closest SSC uses E13, nominal gamma=1000 and vanilla++; JAFFE uses E13, $10^6$ and random. Both are 300-step truncated outputs. YaleB's closest SSC uses DengCai32, Y3 and greedy++; Y3 changes both input L2 and embedding row normalization. USPS uses E8, gamma=1000 and vanilla++. An iterate stopping criterion does not certify optimality. Full settings, NMI and all 72 cells are in the appendix and generated manifests.
 
@@ -42,14 +43,18 @@ The matched values need their settings. ORL's closest SSC uses E13, nominal gamm
 
 \input{tables/next_round_findings}
 
-\textbf{Why incorrect fusion is a hypothesis.} An edge in W attracts its endpoints even if their true classes differ. We separately measure A/W pollution, false merges, false splits and within/between-class contraction. Oracle deletion of cross-class W edges uses labels only for diagnosis; random deletion, equal remaining edge mass and static length filtering distinguish targeted correction from simply weakening shrinkage. A prespecified gate requires certified gains over these controls on at least two benchmarks, with nondecreasing NMI. Length filtering additionally needs evidence that erroneous edges are distinguishable by length. Failure or uncertainty at this gate does not establish a universal SSC failure.
+\textbf{Why incorrect fusion is a hypothesis.} An edge in W attracts its endpoints even if their true classes differ. We separately measure A/W pollution, false merges, false splits and within/between-class contraction. Oracle deletion of cross-class W edges uses labels only for diagnosis; random deletion, equal remaining edge mass and static length filtering distinguish targeted correction from simply weakening shrinkage. At the best certified original gamma, a prespecified gate requires certified gains over these controls on at least two benchmarks, with nondecreasing NMI. Length filtering additionally needs evidence that erroneous edges are distinguishable by length. Failure or uncertainty at this gate does not establish a universal SSC failure.
+
+\input{tables/graph_evidence_main}
 
 \textbf{Existing robust fusion, adapted carefully.} We examine replacing edge distance r by $\min(r,\tau)$, an existing group-truncated penalty~\citep{pan2013cluster,wu2016new}. RCC similarly motivates weakening spurious pairwise relations~\citep{shah2017robust}; this is different from robustifying anchor fidelity. For two group-constant representatives with sizes $m<n$ and separation $d>\tau$, the original optimum is $d\min(m,\lambda)$, versus $\min(md,\lambda\tau)$ for capped fusion. Thus $m<\lambda<md/\tau$ permits original fusion while capping preserves separation. This proves a narrow information-preservation mechanism, not better real-data ACC. Squared/non-squared fidelity crossed with linear/capped fusion separates anchor and edge effects. Nonconvex active-edge updates receive inner convex certificates only; initialization dependence and static-screening controls remain necessary.
 
-\textbf{Evaluation discipline.} Four-benchmark mean ACC gain of at least 2 percentage points with nondecreasing mean NMI is a practical target, not a prediction. A 15-configuration label-assisted oracle envelope is separate from the locked no-label operating point. Shared 50 K-means seeds quantify rounding variability on fixed representations, not 50 independent datasets; paired bootstrap intervals are conditional. Oracle selection intervals do not remove selection bias. Radial Huber and heat geometry remain evidence-dependent candidates; activation or stability alone cannot establish improved labels.
+\textbf{Evaluation discipline.} The practical target is four-benchmark mean ACC gain of at least 2 points with nondecreasing NMI. A 15-configuration capability oracle and locked no-label operating point are distinct; neither complete comparison is claimed when C is not triggered. Shared K-means seeds give conditional rounding intervals, not independent dataset replicates or unbiased post-selection coverage. Huber activation and heat stability alone do not establish label improvement.
+
+\input{tables/secondary_main}
 
 \section{Conclusion and limitations}
-SSC offers an interpretable convex representation objective, but its clustering benefit depends on upstream geometry, fusion relations, optimization and rounding. Our contribution is traceable partial reproduction and mechanism-specific analysis rather than a claim of universally better clustering. Dataset identity, incomplete certification, within-dataset development and missing member names remain explicit limitations. Code, setup, scalar release, report sources and negative findings are public at \url{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/v3}.
+SSC makes refinement interpretable, but label quality depends on geometry, edges, optimization and rounding. Our contribution is traceable partial reproduction and conditional mechanism analysis. Incomplete certification, historical array identity, within-dataset development limit conclusions. Code, report sources and negative findings are at \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/v3}{GitHub v3}.
 \label{main_end}
 \clearpage
 \bibliographystyle{plainnat}
@@ -60,6 +65,7 @@ SSC offers an interpretable convex representation objective, but its clustering 
 \input{tables/final_appendix}
 \section{Certificates, mechanisms, provenance and resource limits}
 \input{tables/audit_appendix}
+\input{tables/graph_evidence}
 \subsection{Reduced-model derivation and equality cases}
 For group-constant representatives, let $r=\|u-v\|$. Since $n>m$, the fidelity is at least $m\max(d-r,0)$, attained on the anchor segment with $v=b$ for $0\le r\le d$. For linear fusion the reduced cost is $md+(\lambda-m)r$, hence $d\min(m,\lambda)$. At $\lambda=m$ every segment location is optimal. For $d>\tau$, the capped cost is piecewise linear, and its endpoint minimum is $\min(md,\lambda\tau)$; the interior kink cannot improve it. At $md=\lambda\tau$ both fused and separated endpoint solutions exist. Strict inequalities are therefore needed to claim preservation. Graph weights are fixed throughout this statement; rebuilding W as d changes can change lambda. This is not a theorem for arbitrary five-point graphs or classification risk.
 \section{Measured secondary experiments and negative findings}

@@ -1,4 +1,4 @@
-version: performance-mechanisms-v1
+version: performance-mechanisms-v1.1
 primary_datasets: [ORL_att92, JAFFE, YaleB_cropped2414, USPS]
 alternate_yale: YaleB_dengcai32
 prep: Y0
@@ -64,3 +64,14 @@ N2:
   sensitivity_seeds: [20261109, 20261110]
   eta: [0, 0.01, 0.05]
   perturbation_seeds: [200, 209]
+
+N0_amendment_20261109:
+  trigger: cold_PDHG_has_certifying_dual_but_looser_primal_than_same_objective_IRLS
+  label_based_trigger: false
+  action: retain_cold_runs_and_add_IRLS_primal_initializer_before_PDHG
+  warm_max_iterations_small_and_medium: 300
+  warm_max_iterations_n_gt_3000: 30
+  warm_seconds_cap: 60
+  acceptance: strictly_lower_exact_same_objective_only
+  fallback: retain_cold_initialization_on_timeout_or_linear_solver_failure
+  note: No graph, search grid, statistical target, or parameter selection was changed. Development data have been inspected; this is not a fresh held-out experiment.

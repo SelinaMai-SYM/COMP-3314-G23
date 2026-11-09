@@ -1,4 +1,4 @@
-"""Completed measurements survive a later resource-only commit."""
+"""Changed science cannot reuse measurements through a commit allow-list."""
 
 import json
 from pathlib import Path
@@ -6,7 +6,7 @@ from pathlib import Path
 from experiments.v3_reproduction.runner import _done
 
 
-def test_prior_measurement_commit_is_reused(tmp_path: Path) -> None:
+def test_prior_measurement_commit_is_not_reused_by_allowlist(tmp_path: Path) -> None:
     payload = {
         "runs_dir": str(tmp_path),
         "dataset_id": "JAFFE",
@@ -28,7 +28,7 @@ def test_prior_measurement_commit_is_reused(tmp_path: Path) -> None:
         )
     )
     (folder / "kmeans__Y0.trials.jsonl").write_text("{}\n")
-    assert _done(payload, "kmeans__Y0")
+    assert not _done(payload, "kmeans__Y0")
 
 
 def test_invalidated_method_is_not_reused(tmp_path: Path) -> None:

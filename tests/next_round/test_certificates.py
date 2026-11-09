@@ -61,3 +61,12 @@ def test_capped_local_output_and_global_small_mask_enumeration():
     assert all(b['objective']<=a['objective']+1e-8 for a,b in zip(r['history'],r['history'][1:]))
     assert not r['globally_certified']
     assert r['objective']==pytest.approx(capped_objective(r['G'],F,W,gamma,tau))
+
+
+def test_primal_initializer_keeps_independent_certificate():
+    F=np.array([[0.],[.3],[2.]])
+    W=sparse.csr_matrix([[0,1,0],[1,0,1],[0,1,0]])
+    r=solve(F,W,.8,warm_start_irls=True)
+    assert r['certified'] and r['gap']<=1e-5
+    assert r['primal']>=r['dual']-1e-9
+    assert r['warm_start']['requested']

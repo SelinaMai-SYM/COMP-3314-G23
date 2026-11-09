@@ -28,6 +28,8 @@ X5 alpha=0 matches the frozen unit fidelity. On USPS, alpha=1 returns the same g
 
 ## Held-out perturbations
 
+**2026-11-09 audit correction:** This historical table is not valid evidence of full SSC robustness: the script compared stored SSC labels to K-means on a perturbed F without rerunning shrinkage, and USPS was clipped to [0,1] despite its [-1,1] domain. Values are retained as historical measurements only. See docs/next_round/robustness_audit.md and the new full-pipeline evaluator.
+
 ARI compares the unperturbed seed-0 partition with k-means on a held-out perturbed embedding. It is not class correctness and was not used to choose beta.
 
 | Dataset | beta=0 ARI | beta=1 ARI | Edge Jaccard |

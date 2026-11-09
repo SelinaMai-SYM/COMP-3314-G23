@@ -68,7 +68,7 @@ def _consensus(F,W,a,fidelity,delta):
     return G
 
 
-def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limit=600.,gap_tol=1e-5,check_every=50,G_init=None,q_init=None,consensus_bound=True):
+def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limit=600.,gap_tol=1e-5,check_every=50,G_init=None,q_init=None,consensus_bound=True,warm_start_irls=False):
     start=time.perf_counter();cpu=time.process_time();F=np.asarray(F,dtype=float)
     if F.ndim!=2 or not len(F) or not np.isfinite(F).all():raise ValueError('F must be nonempty finite n by d')
     if not np.isfinite(gamma) or gamma<0 or not np.isfinite(delta) or delta<0:raise ValueError('invalid gamma/delta')
@@ -92,6 +92,27 @@ def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limi
         cert=certificate(gamma*info['q_unit_gamma'],F,B,c,delta=delta,a=a,fidelity=fidelity)
         D=max(0.,cert['dual']);bestq=cert['q'];violations=(cert['edge_violation'],cert['node_violation']);reason=status='ANALYTIC_G_EQUALS_F'
     else:
+        if warm_start_irls and fidelity=='radial' and delta==0:
+            # A primal-only initializer cannot certify anything by itself.
+            # Its acceptance uses the exact same objective, never labels.
+            import signal
+            from SSC_method.optimizer import shrink_embedding
+            warm_started=time.perf_counter();warm={'requested':True,'max_iter':300 if len(F)<=3000 else 30}
+            previous_handler=signal.getsignal(signal.SIGALRM)
+            def timeout(_signum,_frame):raise TimeoutError('IRLS warm-start time allocation')
+            try:
+                signal.signal(signal.SIGALRM,timeout)
+                signal.setitimer(signal.ITIMER_REAL,min(60.,max(.01,time_limit/4)))
+                initialized=shrink_embedding(F,W,gamma,max_iter=warm['max_iter'],variant='E8')
+                value=objective(initialized.patterns,F,B,c,delta=delta,a=a,fidelity=fidelity)
+                warm.update(status='RETURNED_POINT',iterations=initialized.n_iterations,primal=value)
+                if value<P:
+                    G=initialized.patterns.copy();bestG=G.copy();P=value;source='IRLS_primal_upper_bound'
+            except Exception as exc:warm.update(status='FALLBACK_TO_COLD',error=repr(exc))
+            finally:
+                signal.setitimer(signal.ITIMER_REAL,0);signal.signal(signal.SIGALRM,previous_handler)
+            warm['wall_seconds']=time.perf_counter()-warm_started
+        else:warm={'requested':False}
         if consensus_bound:
             candidate=_consensus(F,W,a,fidelity,delta);value=objective(candidate,F,B,c,delta=delta,a=a,fidelity=fidelity)
             if value<P:bestG=candidate;P=value;source='component_consensus_upper_bound'
@@ -118,4 +139,4 @@ def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limi
                 if gap<=gap_tol and max(violations)<=1e-8:status=reason='PRIMAL_DUAL_GAP_CERTIFIED';break
                 if time.perf_counter()-start>=time_limit:status=reason='TIMEOUT_UNCERTIFIED';break
     gap=(P-D)/max(1.,abs(P),abs(D))
-    return {'G':bestG,'q':bestq,'primal':P,'dual':D,'absolute_gap':P-D,'gap':gap,'edge_violation':violations[0],'node_violation':violations[1],'iterations':iterations,'status':status,'stopping_reason':reason,'certified':bool(status in ['ANALYTIC_G_EQUALS_F','PRIMAL_DUAL_GAP_CERTIFIED']),'best_primal_source':source,'history':history,'wall_seconds':time.perf_counter()-start,'cpu_seconds':time.process_time()-cpu,'gamma':float(gamma),'gamma_effective':float(gamma),'delta':float(delta),'fidelity':fidelity,'gamma0':info['gamma0'],'scale':info['scale'],'objective_target':'undirected_E8_c=2*gamma*w','movement':float(np.linalg.norm(bestG-F)/max(np.linalg.norm(F),np.finfo(float).tiny))}
+    return {'G':bestG,'q':bestq,'primal':P,'dual':D,'absolute_gap':P-D,'gap':gap,'edge_violation':violations[0],'node_violation':violations[1],'iterations':iterations,'status':status,'stopping_reason':reason,'certified':bool(status in ['ANALYTIC_G_EQUALS_F','PRIMAL_DUAL_GAP_CERTIFIED']),'best_primal_source':source,'warm_start':warm if not analytic else {'requested':False,'reason':'analytic'},'history':history,'wall_seconds':time.perf_counter()-start,'cpu_seconds':time.process_time()-cpu,'gamma':float(gamma),'gamma_effective':float(gamma),'delta':float(delta),'fidelity':fidelity,'gamma0':info['gamma0'],'scale':info['scale'],'objective_target':'undirected_E8_c=2*gamma*w','movement':float(np.linalg.norm(bestG-F)/max(np.linalg.norm(F),np.finfo(float).tiny))}

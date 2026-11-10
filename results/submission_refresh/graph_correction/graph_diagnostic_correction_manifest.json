@@ -1,0 +1,425 @@
+{
+  "schema": 2,
+  "rows": 252,
+  "rows_by_graph_role": {
+    "A": 6,
+    "W": 246
+  },
+  "A_length_space": "X",
+  "W_length_space": "F",
+  "unchanged_historical_records": true,
+  "failures": [
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_W_only_heat",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_hard128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_heat_t4_r128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_W_only_heat",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_hard128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_heat_t4_r128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_W_only_heat",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_hard128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_heat_t4_r128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_W_only_heat",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_hard128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "cache_folder": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_heat_t4_r128",
+      "graph_role": "A",
+      "status": "NOT_REGENERATED",
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    }
+  ],
+  "recovered_sources": [
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/X.npy",
+      "sha256": "c9624eef978d6d506934ba146fbe053ad7feed3e118f17524cacc1b6e26aba83"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/A.npz",
+      "sha256": "8b6951fc68a770873845a9396346b4eeb160d367b84c60930ac13feb8f13c45a"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/y.npy",
+      "sha256": "7fd2e91664cc6f5dabb0cf82692bd4a459aadb4ab80b837f5c26bfcb942b5e0b"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/meta.json",
+      "sha256": "5890c588ff37c04cd05d16b94606301fb7489a417c67140daaa3bdc6fb3ff4e4"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/X.npy",
+      "sha256": "de59732cd10ea78779888932718184e2af8bf77b8234879e81f3e7e934d573d4"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/A.npz",
+      "sha256": "4f3429274eb1665ec7dc58e243964d58493287c47dc04ec4effc2723d85db4c1"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/y.npy",
+      "sha256": "6b5231638be0dbd85128e0f8684dc477f9e475b26f156714074b4f1f7853f942"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/meta.json",
+      "sha256": "466dd0dd0f69e1f63d4d5a5ade4756e7ee7956a2408dd0968fddecf7b5050a65"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/X.npy",
+      "sha256": "e30f38b387e04922dfc867e74953faf578d622f37ecb55149dc179bd698af6f8"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/A.npz",
+      "sha256": "d71ec9972773a177591d84df39cca4af640bb0adfa9c8076abc4ba072a9f0313"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/y.npy",
+      "sha256": "aec99b76f6298d86b31b841a8cc756418c81600d04c2947240186f1247ae4f66"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/meta.json",
+      "sha256": "97d07d2e1937e274c26341b9a1fbad0d9f5b304cc28520dd18513a9bc8758232"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/X.npy",
+      "sha256": "2ff38d5d48d7231e45b0a97966788b88f1cff0aa4470e403034f7c4315d07a1e"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/A.npz",
+      "sha256": "7825414482b841bdd05d98684678cc22b5b5f1b85c0e79ebaa999769c9e01500"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/meta.json",
+      "sha256": "20bf8c3a71d081b47fed593fa140f0086121742b48245bfd5e8a0b89bea638eb"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/X.npy",
+      "sha256": "d977338e350830e6fa5fbf10f4c32877a3e847b6db600d9a8eea8803e6a33996"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/A.npz",
+      "sha256": "8d7101b5b67bcf7b1f0afba0d7d6c5d1cf05402d697e9e83c9e3055c63c65bfc"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/meta.json",
+      "sha256": "58a748584680c56ad8bee815737a3fa3d542431745dc9a0c6f64397f2bfe13d6"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/X.npy",
+      "sha256": "7832e764933756ea33174e408de703d7259aee2355d019691962779a284cb7f2"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/A.npz",
+      "sha256": "fc6d68394dac7b0ab588a3f3cf0d46d24c08e3ffdc3349db737dd70b3270502a"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/meta.json",
+      "sha256": "60b05654572256f5a2cf447e95e6714fb32f08240f9412da9607fcf1d6815094"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/F.npy",
+      "sha256": "51e2fe2ad719462390230f49d9b94d7a43106b3876f53bac8dc4c2cfa62965f6"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__Y0/W.npz",
+      "sha256": "a1f5a38ab9be27006a89491ce9e77b13f8a4550e234b003bb6525111a6b5f8bf"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/F.npy",
+      "sha256": "135fb5edc091003be8a0d2b6fd7a3a2db6d99d28769bceb1ba4275640cd7b272"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__Y0/W.npz",
+      "sha256": "722ade4d065a756a8336d67f0b35b75400c38adde84f27909d9832e211fc1995"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_heat_t4_r128/F.npy",
+      "sha256": "d50bc72914a28f9040611971380bb59b6415e9ff2a39fdfebb57c74fd4a94929"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_heat_t4_r128/W.npz",
+      "sha256": "6d39589fb98e15db9c68ce73f8f2102bf0097b0abdc2115ed698ddafac19998c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_heat_t4_r128/y.npy",
+      "sha256": "6b5231638be0dbd85128e0f8684dc477f9e475b26f156714074b4f1f7853f942"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_heat_t4_r128/meta.json",
+      "sha256": "360f5a56dc30c360bcfebd15103ea7fbe8f96bbc073048e8e23b9e02ab95f65b"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/F.npy",
+      "sha256": "029d7622c52ab43340d01f6376e2d04295e283c053800c332556e54fdfe72e3d"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__Y0/W.npz",
+      "sha256": "efe802809b45bb1c5c575749ab3fe8deab0e2367a2102a643b8afa95bc55cdf0"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_W_only_heat/F.npy",
+      "sha256": "029d7622c52ab43340d01f6376e2d04295e283c053800c332556e54fdfe72e3d"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_W_only_heat/W.npz",
+      "sha256": "6d39589fb98e15db9c68ce73f8f2102bf0097b0abdc2115ed698ddafac19998c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_W_only_heat/y.npy",
+      "sha256": "6b5231638be0dbd85128e0f8684dc477f9e475b26f156714074b4f1f7853f942"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_W_only_heat/meta.json",
+      "sha256": "552348b0f434add69030cb30f8dc5f8c1276fbb5dd3916d21e71653e00c9b98d"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/F.npy",
+      "sha256": "db23c6dd57770c005ae2db794114593ed9c0f543c638e37db90edcf9733a1aac"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__Y0/W.npz",
+      "sha256": "b6d94f4007657361b629c339442275bb68908df8de021ad8c48adec67125b096"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_W_only_heat/F.npy",
+      "sha256": "135fb5edc091003be8a0d2b6fd7a3a2db6d99d28769bceb1ba4275640cd7b272"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_W_only_heat/W.npz",
+      "sha256": "ce11a675e1440ce936246d0946eb78dd96ee6b712486b0c9d6931e79de24c295"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_W_only_heat/y.npy",
+      "sha256": "aec99b76f6298d86b31b841a8cc756418c81600d04c2947240186f1247ae4f66"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_W_only_heat/meta.json",
+      "sha256": "3a7c09d27dd2fae4b6acf7523c7a360f5c3586f365ec79bc6514e48f7b41ef78"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_hard128/F.npy",
+      "sha256": "d5609a413b8d6e1fe3e9a899ab15524f8d0a4d414db8fd2703bfb670d79ddcb3"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_hard128/W.npz",
+      "sha256": "5b77ae42205f0e37d58f6f035a480a90a215dad65030855004aba9f87be2bed5"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_hard128/y.npy",
+      "sha256": "6b5231638be0dbd85128e0f8684dc477f9e475b26f156714074b4f1f7853f942"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/ORL_att92__N2_hard128/meta.json",
+      "sha256": "7a25142376657bad2150d2f3e5bd6797a93bdf25943139054e63cd3d6c7e3e3f"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_hard128/F.npy",
+      "sha256": "8e79f397d2a63f267e5918851d455a55940a578d7e26bc32c5bc5cfafb8df375"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_hard128/W.npz",
+      "sha256": "405c3f2029c8031cbd2207b1cfca8513d7f8f4fbb259390b7b1c98c9f315bea6"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_hard128/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_hard128/meta.json",
+      "sha256": "2df4200dc87c5057f660bf34e8a15c56173a6c45a6da9cacc0e53bc18884c6cd"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_W_only_heat/F.npy",
+      "sha256": "db23c6dd57770c005ae2db794114593ed9c0f543c638e37db90edcf9733a1aac"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_W_only_heat/W.npz",
+      "sha256": "69a0bb10d73ffa7aaba743f8bc416e485dae8054e883c196b82a0156e6fe3899"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_W_only_heat/y.npy",
+      "sha256": "7fd2e91664cc6f5dabb0cf82692bd4a459aadb4ab80b837f5c26bfcb942b5e0b"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_W_only_heat/meta.json",
+      "sha256": "67fccbd9132b17f8b27ddceda892e682b314c18862ad3d987e513e822c60311a"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_hard128/F.npy",
+      "sha256": "c2ff377eb605cd12b2e93778d2ecdf7ef3dec48334c49d0dbb4114603bcdf7a3"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_hard128/W.npz",
+      "sha256": "bb1538cf571e9f2c462015ad8ffaeabf466b607d5f13f1c4a767573e89c2e079"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_hard128/y.npy",
+      "sha256": "7fd2e91664cc6f5dabb0cf82692bd4a459aadb4ab80b837f5c26bfcb942b5e0b"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_hard128/meta.json",
+      "sha256": "2dacd6255dc43cec9c9a087c38de55eae83ded9039ff2bd36d6351febf3de1c9"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/F.npy",
+      "sha256": "3f5808cad635e7b88482295d021c7454b4ff41c489d328f001b11014fab47eb2"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y0/W.npz",
+      "sha256": "bd1e6db910cdce4477f14b62a4a5aa32625e60e46b53d034a814a8c8a6473725"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_heat_t4_r128/F.npy",
+      "sha256": "01d2ecff5eb42c0d648b60d15da4b6372755c5286989e70d6c8175acb725f91c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_heat_t4_r128/W.npz",
+      "sha256": "69a0bb10d73ffa7aaba743f8bc416e485dae8054e883c196b82a0156e6fe3899"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_heat_t4_r128/y.npy",
+      "sha256": "7fd2e91664cc6f5dabb0cf82692bd4a459aadb4ab80b837f5c26bfcb942b5e0b"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/JAFFE__N2_heat_t4_r128/meta.json",
+      "sha256": "e3cd55168717cd56080948849061a7c09d9d37c15d788ae52d216b935c8a15bd"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_heat_t4_r128/F.npy",
+      "sha256": "f0a2b73a6157470e6e43fd09ede3bb1ca94ce2b0901c26b9a1312dcf734ed80a"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_heat_t4_r128/W.npz",
+      "sha256": "d21cc2d194063e1692eab21aaa6862f4ec6eafbe144d47a3ba9b15dfcea1d40c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_heat_t4_r128/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_heat_t4_r128/meta.json",
+      "sha256": "85a64456302e117e14560ae7bc83272fc2087e9d288445e622d66329d1fa5e74"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_hard128/F.npy",
+      "sha256": "741ef310709feb8811b4a0a1b2995ca19d690f03c1094b227cb86841ccfbc769"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_hard128/W.npz",
+      "sha256": "765c2eab318125a9169c25f07b807e6372ee8bb3de95e532f1a9070110872d8c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_hard128/y.npy",
+      "sha256": "aec99b76f6298d86b31b841a8cc756418c81600d04c2947240186f1247ae4f66"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_hard128/meta.json",
+      "sha256": "1606e931d2eb0583e311f0f230bd64dc2b1f6a9548192204d9266f9c754eb527"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_W_only_heat/F.npy",
+      "sha256": "51e2fe2ad719462390230f49d9b94d7a43106b3876f53bac8dc4c2cfa62965f6"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_W_only_heat/W.npz",
+      "sha256": "d21cc2d194063e1692eab21aaa6862f4ec6eafbe144d47a3ba9b15dfcea1d40c"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_W_only_heat/y.npy",
+      "sha256": "f7d12e06389b18865b20232d0b7b2120c2c9187ea2d32eeca8549e04a8427506"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_cropped2414__N2_W_only_heat/meta.json",
+      "sha256": "4606bbac58f23ca56ef22548f54d45bbcf450a1eac1252c49c2ba5e90c8046c1"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_heat_t4_r128/F.npy",
+      "sha256": "9434a96f2151c85b5bef0c86dc960ddcf0ca720b2b114bae45e0310403571bd6"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_heat_t4_r128/W.npz",
+      "sha256": "ce11a675e1440ce936246d0946eb78dd96ee6b712486b0c9d6931e79de24c295"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_heat_t4_r128/y.npy",
+      "sha256": "aec99b76f6298d86b31b841a8cc756418c81600d04c2947240186f1247ae4f66"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/USPS__N2_heat_t4_r128/meta.json",
+      "sha256": "2bb44ea53f55489b1edbb61e526f08643d979e3b683cd2f54f80ae17e7f742f1"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/F.npy",
+      "sha256": "5efd4b03833eee447a1295ac148509283095f73b4b9c5dd78146c3f9056884d9"
+    },
+    {
+      "path": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/recovered_history/next_round/cache/YaleB_dengcai32__Y3/W.npz",
+      "sha256": "44ce854be5249bb9aa7a7f3b978c69ecabf00f15095885e3c3fc54fe0c94868f"
+    }
+  ],
+  "output_sha256": "cf8134d34a5545464982afe29fc2a200f693621a90172605077ddf7026689c4e",
+  "correction": "The old statistic counted whole-graph components covering a class. Schema 2 computes class-induced components including isolates. Upstream A edge lengths are now evaluated in saved input X; fitted W edge lengths are evaluated in saved F. A/W pollution and geometry are separate."
+}

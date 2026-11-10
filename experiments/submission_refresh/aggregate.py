@@ -46,10 +46,15 @@ def aggregate(artifact_root,output):
     inventory=list(csv.DictReader((ROOT/'results/subset_search/source_inventory.csv').open()));write_csv(out/'dataset_inventory.csv',inventory)
     # Include solver arrays/metadata and a recoverable object for every small
     # scientific record. Full archives remain outside Git, linked by hash.
-    for path in sorted((store.root/'usps_audit').glob('*')):
+    for path in sorted((store.root/'usps_audit').rglob('*')):
         if path.is_file():
-            artifacts.append({'record':str(path.relative_to(store.root)),'sha256':digest(path),'bytes':path.stat().st_size,'availability':'external durable store; audit_jobs.py regeneration'})
-    atomic_json(out/'artifact_manifest.json',{'store':'independent-data/scientific-artifacts/refresh-20261110 (outside Git)','records':artifacts,'regenerate':'python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume'})
+            relative=str(path.relative_to(store.root))
+            artifacts.append({'record':relative,'sha256':digest(path),'bytes':path.stat().st_size,'availability':'byte-exact extra file in local scientific export; audit_jobs.py regeneration'})
+            if path.suffix=='.json':artifacts.append({'record':'recovery_metadata/'+relative,'original_record_path':relative,'object':store.put(json.loads(path.read_text()))})
+    if (store.root/'usps_audit/evaluation').exists():
+        from .usps_evaluate import export_evaluation
+        export_evaluation(artifact_root,out)
+    atomic_json(out/'artifact_manifest.json',{'store':'independent-data/scientific-artifacts/refresh-20261110 (outside Git)','records':artifacts,'definitions':{'objective_graph':'parent representation W for original SSC; graph_objects.fitted_W for interventions','IRLS_objects_fitted_W':'surrogate recomputed at returned G; not a claim to be the last linear-system weight matrix','dual_q':'only certified solver graph duals; IRLS weights are not dual variables'},'regenerate':'python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume'})
     from .coverage import baseline_coverage
     baseline_coverage(artifact_root,out)
     state=ResourceLedger(artifact_root).state();state['charged_cpu_core_hours']=sum(e['charged_cpu_seconds'] for e in state['entries'])/3600;state['aggregation_this_invocation_cpu_seconds']=time.process_time()-start;atomic_json(out/'resource_usage.json',state)

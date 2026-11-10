@@ -72,8 +72,8 @@ independent CVXPY/CLARABEL convex problems, compare active/full dictionary
 solutions, check truncation and row normalization, and check self exclusion and
 zero-affinity handling. They contain no real benchmark labels.
 
-**Current validation status: tests prepared, not yet executed.** The shared
-scientific worker slots were occupied at preparation time. Tests must pass
+**Current validation status: focused validation v1 found a small-support
+implementation defect; the repair awaits revalidation.** Tests must pass
 before any G4 benchmark fit. An inner KKT check does not certify the downstream
 clustering result, and a top 50 truncated coefficient row is not claimed to be
 the untruncated elastic-net optimizer. No additional parameter grid is introduced.
@@ -126,3 +126,19 @@ orchestration do not invalidate a scientifically identical graph solve.
 The adapter and its small gate/design/cache tests are prepared; no real G4/G5
 jobs have been launched by this source-preparation work. The caller must record
 actual triggered execution and any remaining resource-limited coverage.
+
+## Focused-validation correction
+
+The preserved `validation-focused-tests-v1.log` records a failed active-support
+reference check with support size 3: the active objective was 0.4597447716 and the
+full-dictionary objective 0.1674538289. The source growth rule rounds
+`1.1*3` back to 3, leaving no new slot; the unchanged support can then trigger
+the objective-stop condition before global KKT conditions hold.
+
+The compatible backend now uses `min(n,max(size+1,round(1.1*max(active,size))))`
+to guarantee at least one additional slot when growth is required. This is an
+explicit deterministic small-support minimum-growth repair. At the declared
+default support size 100, the source's 110-slot update is unchanged. Tau, alpha
+scaling, the objective, 40-update cap and the independent convex-test tolerance
+are unchanged. No G4 benchmark fits had run when the defect was found.
+The failed test record remains available; it is not replaced by the repair.

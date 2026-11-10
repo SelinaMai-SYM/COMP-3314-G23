@@ -21,3 +21,13 @@ Before any new subset score, tolerance ties were clarified as minimum-anchored b
 ## 2026-11-10: premature LDA timer failure retained and affected limits repeated
 
 The first YaleB existing-LDA worker stopped after1058.025 measured CPU seconds (1127.555 wall), before its6000CPU-second allocation. The same early-signal defect affected this process because it started before the guard repair. Limit30 completed all50seeds; limit100 retained its partialfailedseed/checkpoints, and limit300 was unrun in that attempt. A distinct timerfix-v2 task was preregistered for complete50-seed configurations at limits100/300, with unchanged fitting code, seeds, data and convergence definitions. The completed30-limit configuration is reused. The failed attempt remains visible and charged; no successful-seed filtering or score-based adjustment is used.
+
+## 2026-11-10: executable queue priority frozen
+
+The1,202-canonical-input cohort is unchanged. Before its broad execution, a metadata-only order explicitly provisions full primary benchmarks and a representative of every family, then Yale factors and the frozen100-seed random families, followed by the full UMIST omission catalogue in the recorded20261110 permutation. USPS split diagnostics follow the count-compatible families. The four AR fixed rules are separate from weaker common-mask expansion. No new subset ACC/NMI values were consulted for this ordering; the already completed MSRA primary objects are reused.
+
+## 2026-11-10: repaired checks passed and primary cohort launched
+
+The second focused validation completed138 tests with one expected no-data integration skip. A separate real-data candidate replay passed, with no source/configuration changes during either check. The EnSC backend passed both independent convex objectives (tau0.95 and1), active-support, affinity and label-free interface checks; this validates implementation only and does not promote G4/G5. Original failed validation logs remain available.
+
+The ORL pinned-reference continuation completed its50 fixed seeds, and YaleB existing-LDA limits100/300 completed with verified whole-fit checkpoint adoption. The fixed1,202-canonical-input subset queue then started. The first MSRA other-baseline attempt completed all30 PCA endpoints before failing at its first LLC eigensolve (11/12 ARPACK eigenvectors). The numerical repair uses the existing library's dense branch for the same LLC target/grid and is separately named; the sparse failure remains a failure. No subset scores determine cohort size or stopping.

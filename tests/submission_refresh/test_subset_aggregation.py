@@ -124,3 +124,39 @@ def test_confirmation_namespace_scans_historical_sources_and_reuses_lock(tmp_pat
     (out/'winner_lock.json').write_text(json.dumps({'version':1,'winners':[{'config_id':'different'}]}))
     with pytest.raises(ValueError,match='winner lock changed'):
         aggregation.confirmation_namespace(artifacts,out,historical_paths=paths)
+
+
+def test_completion_keeps_actual_controller_original_failure_and_no_data_evidence(tiny_aggregate,tmp_path):
+    root,out,store=tiny_aggregate;folder=store.root/'subset/candidate_Y0'
+    original_source=json.loads((folder/'source.json').read_text());controller='experiments/subset_search/complete_failed.py';controller_sha='a'*64
+    actual={**original_source,'source_commit':'completion-commit','implementation_hash':'completion-byte-map','source_files':{controller:controller_sha}}
+    config=folder/'E8__1__RANDOM.json';record=json.loads(config.read_text())
+    record.update(source=actual,completion_provenance={'controller':controller,'controller_sha256':controller_sha,'source':store.put(actual),'implementation_hash':actual['implementation_hash']})
+    config.write_text(json.dumps(record))
+    active={'method':'ssc','variant':'E8','gamma_nominal':1000.,'stage':'solver'}
+    status={'status':'FAILED','source':original_source,'active_configuration':active,'error':'original numerical failure'}
+    (folder/'status.json').write_text(json.dumps(status))
+    failed=folder/'completion_failures/original.json';failed.parent.mkdir()
+    failed.write_text(json.dumps({'original_failure':True,'status':'FAILED_PRESERVED','blocked_points':['E8__1000__'+init for init in aggregation.INITS],'active_configuration':active,'error':'original numerical failure'}))
+    attempt=folder/'completion_attempts/independent.json';attempt.parent.mkdir()
+    attempt.write_text(json.dumps({'status':'COMPLETED_WITH_PRESERVED_FAILURES','source':actual}))
+    (folder/'completion_status.json').write_text(json.dumps({'latest_status':'COMPLETED_WITH_PRESERVED_FAILURES'}))
+    aggregation.aggregate(store.root,out)
+    rows=list(csv.DictReader((out/'joint_search_summary.csv').open()));row=next(r for r in rows if r['candidate_id']=='candidate_Y0')
+    assert row['scientific_source_fingerprint']=='completion-byte-map' and row['controller_sha256']==controller_sha
+    coverage=list(csv.DictReader((out/'execution_coverage.csv').open()))
+    preserved=[r for r in coverage if r['candidate_id']=='candidate_Y0' and r['gamma_nominal']=='1000.0' and r['variant']=='E8']
+    assert len(preserved)==3 and all(r['status']=='FAILED_ORIGINAL_PRESERVED' for r in preserved)
+    assert any(r['status']=='MISSING_AFTER_COMPLETION' for r in coverage)
+    artifact=json.loads((out/'artifact_manifest.json').read_text())
+    assert any(r['record'].endswith('/completion_attempts/independent.json') for r in artifact['records'])
+    assert any(r['record']=='subset/candidate_Y0/status.json' for r in artifact['records'])
+    manifest=root/'configs/subset_search/release_manifest.json';current_release.freeze(out,manifest,store.root)
+    import gzip
+    with gzip.open(out/'source_records.json.gz','rt') as stream:registry=json.load(stream)['records']
+    assert actual in registry.values() and original_source in registry.values()
+    rebuilt=tmp_path/'rebuilt without scientific objects';current_release.rebuild(manifest,rebuilt)
+    assert (rebuilt/'completion_records.json.gz').read_bytes()==(out/'completion_records.json.gz').read_bytes()
+    assert (rebuilt/'source_records.json.gz').read_bytes()==(out/'source_records.json.gz').read_bytes()
+    inventory=list(csv.DictReader((rebuilt/'configuration_inventory.csv').open()))
+    assert next(r for r in inventory if r['candidate_id']=='candidate_Y0')['scientific_source_fingerprint']=='completion-byte-map'

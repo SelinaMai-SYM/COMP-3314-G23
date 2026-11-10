@@ -1,0 +1,18 @@
+{
+  "backend_source_sha256": "05446e3f0f9b5c7f5457a4f7032da9f4b39a1c351e99f68042d8254c6c024814",
+  "junit_sha256": "4d956fbd3f62ab54391a494c9097d826b59e07c336585c701a1c978ff2f2fa82",
+  "passed": true,
+  "source_revision": "55e330e38415951f140e74739c869306acdb7a98",
+  "test_cases": [
+    "test_true_elastic_net_objective_against_independent_cvxpy[0.95]",
+    "test_true_elastic_net_objective_against_independent_cvxpy[1.0]",
+    "test_active_support_solves_same_target",
+    "test_source_affinity_truncation_and_zero_row_convention",
+    "test_source_alpha_and_self_exclusion_are_label_free"
+  ],
+  "test_file_sha256": "890b02abbbd88a5e0c519fc073ea91235222fed058ccfd15f4e447c57edf2249",
+  "test_scope": "Independent small convex references at tau0.95 and1, KKT/active support/affinity/label-free API; no G4/G5benchmark execution",
+  "validation_log_sha256": "1ed9e8d0fa3ff9dec4a20d6ec3a3fa7399736abedfc88e934e17817dd19ed291",
+  "validation_record_sha256": "1f3c32103ca418ced985219f9c04e4669f3eb412d74813060c0d61424703a696",
+  "validation_run_id": "validation-focused-tests-v2"
+}

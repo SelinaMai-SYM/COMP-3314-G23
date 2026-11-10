@@ -90,7 +90,9 @@ def elastic_net_code(dictionary, target, alpha, tau=.95, *, active_support=True,
             reason='SCREENING_CONVERGED';break
         retained=support[np.abs(values)>1e-10]
         if len(retained)>.8*size:
-            size=min(round(max(len(retained),size)*1.1),n)
+            # The source round(1.1*size) can equal size for tiny supports.
+            # Require one new slot; the default size100 growth is unchanged.
+            size=min(max(size+1,round(max(len(retained),size)*1.1)),n)
         slots=max(0,size-len(retained))
         if len(additions)>slots:
             additions=additions[np.lexsort((additions,-coherence[additions]))[:slots]]
@@ -100,7 +102,8 @@ def elastic_net_code(dictionary, target, alpha, tau=.95, *, active_support=True,
               'outer_iterations':len(history),'history':history,
               'objective':elastic_net_objective(c,D,y,alpha,tau),
               'backend':'sklearn.ElasticNet(alpha=alpha_i/d,l1_ratio=tau,fit_intercept=False)',
-              'tau_used':float(tau),'alpha_original':float(alpha)}
+              'tau_used':float(tau),'alpha_original':float(alpha),
+              'support_growth_rule':'min(n,max(size+1,round(1.1*max(active_size,size)))); minimum-one growth repair for small supports'}
 
 
 def coefficients_to_affinity(coefficients, n_nonzero=50):

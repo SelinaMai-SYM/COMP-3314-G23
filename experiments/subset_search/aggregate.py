@@ -90,7 +90,11 @@ def matched_sc_contrasts(winners,sc_rows):
     contrasts=[]
     for r in winners:
         sc=next((v for v in sc_rows if v['candidate_id']==r['candidate_id'] and v['initialization']==r['initialization']),None)
-        if sc is None:continue
+        if sc is None:
+            contrasts.append({'config_id':r['config_id'],'candidate_id':r['candidate_id'],'benchmark':r['benchmark'],'pool':r['pool'],'endpoint':r['endpoint'],
+                'status':'UNAVAILABLE_MATCHED_SC','matched_sc_status':r.get('matched_sc_status','NOT_RUN'),
+                'qualification':'The matching SC initialization failed or was unrun; no paired SC contrast is claimed.'})
+            continue
         if r.get('F_sha256') and sc.get('F_sha256')!=r['F_sha256']:raise ValueError('SC/SSC contrast does not share F')
         endpoint=sc if r['endpoint']=='mean_sample_sd_50' else sc['native_best']
         contrasts.append({'config_id':r['config_id'],'candidate_id':r['candidate_id'],'benchmark':r['benchmark'],
@@ -104,15 +108,91 @@ def matched_sc_contrasts(winners,sc_rows):
             'qualification':'Same selected samples/F/protocol. Native endpoints independently select the within-method best of 50; the two single selected seeds are not a paired seed contrast.'})
     return contrasts
 
+
+def _execution_details(folder,store):
+    """Read original and supplemental outcomes without rewriting their history."""
+    state=json.loads((folder/'status.json').read_text()) if (folder/'status.json').is_file() else {}
+    failures=[];attempts=[]
+    for path in sorted((folder/'completion_failures').glob('*.json')):
+        failures.append({'path':str(path.relative_to(store.root)),'sha256':digest(path),'record':json.loads(path.read_text())})
+    for path in sorted((folder/'completion_attempts').glob('*.json')):
+        attempts.append({'path':str(path.relative_to(store.root)),'sha256':digest(path),'record':json.loads(path.read_text())})
+    index=json.loads((folder/'completion_status.json').read_text()) if (folder/'completion_status.json').is_file() else {}
+    return {'original_status':state,'completion_failures':failures,'completion_attempts':attempts,'completion_index':index}
+
+
+def _active_matches(active,method,variant,gamma,init):
+    return active.get('method')==method and (method=='sc' or (active.get('variant')==variant and active.get('gamma_nominal')==gamma)) and (active.get('stage')=='solver' or active.get('initialization')==init)
+
+
+def _point_outcome(details,method,variant,gamma,init,record=None):
+    """Keep failed/unrun points separate from later independent completions."""
+    original=details['original_status'];active=original.get('active_configuration',{})
+    original_active=_active_matches(active,method,variant,gamma,init)
+    key='SC__'+init if method=='sc' else f'{variant}__{gamma:g}__{init}'
+    result={'original_candidate_status':original.get('status'),
+        'original_point_status':original.get('status') if original_active else None,
+        'completion_candidate_status':details['completion_index'].get('latest_status'),
+        'original_failure_preserved':original_active and original.get('status') in ['FAILED','TIMEOUT']}
+    if record is not None:
+        if result['original_failure_preserved']:raise ValueError('a completed record replaced an original failed point')
+        result.update(status='COMPLETED',execution_origin='independent_completion' if record.get('completion_provenance') else 'original_candidate')
+        return result
+    relevant=[]
+    for failure in details['completion_failures']:
+        if key in failure['record'].get('blocked_points',[]):relevant.append(failure)
+    if relevant:
+        if len(relevant)>1:raise ValueError('one frozen point has multiple permanent completion failure markers')
+        marker=relevant[0];failure=marker['record'];result.update(status='FAILED_ORIGINAL_PRESERVED' if failure.get('original_failure') else 'FAILED_COMPLETION_PRESERVED',
+            failure_record=marker['path'],failure_record_sha256=marker['sha256'],failure_error=failure.get('error'))
+        if not failure.get('original_failure'):
+            for attempt in details['completion_attempts']:
+                if attempt['record'].get('status')=='TIMEOUT' and _active_matches(attempt['record'].get('active_configuration',{}),method,variant,gamma,init):result['status']='TIMEOUT_COMPLETION_PRESERVED'
+        interruption=failure.get('interrupted_rounding',{})
+    elif original_active and original.get('status') in ['FAILED','TIMEOUT']:
+        result.update(status=original['status'],failure_error=original.get('error'));interruption=original.get('interrupted_rounding',{})
+    else:
+        interruption={};latest=result['completion_candidate_status']
+        if latest:result['status']='MISSING_AFTER_COMPLETION' if latest=='COMPLETED_WITH_PRESERVED_FAILURES' else 'NOT_RUN_AFTER_COMPLETION_'+latest
+        else:
+            status=original.get('status')
+            result['status']='MISSING_RESULT' if status=='COMPLETED' else 'NOT_RUN_AFTER_CANDIDATE_'+status if status in ['FAILED','TIMEOUT'] else 'NOT_RUN_CANDIDATE_'+status if status else 'NOT_RUN'
+    if interruption:
+        result.update(failed_rounding_seed=interruption.get('failed_rounding_seed'),
+            partial_completed_rounding_seeds=[trial['seed'] for trial in interruption.get('completed_trials',[])],
+            partial_rounding_status='INCOMPLETE_INELIGIBLE; never included in complete-50 endpoints')
+    return result
+
+
+def _configuration_provenance(folder,path,record,store):
+    primary=json.loads((folder/'source.json').read_text()) if (folder/'source.json').is_file() else {}
+    supplemental=record.get('completion_provenance',{})
+    source=record.get('source') if supplemental else primary
+    if supplemental:
+        if not isinstance(source,dict) or store.get(supplemental['source'])!=source:raise ValueError('completion configuration source object mismatch')
+        if supplemental.get('implementation_hash')!=source.get('implementation_hash'):raise ValueError('completion controller/source implementation mismatch')
+        controller=supplemental.get('controller');sha=supplemental.get('controller_sha256')
+        if source.get('source_files',{}).get(controller)!=sha:raise ValueError('completion controller bytes are not in its actual source record')
+    else:controller='experiments/subset_search/runner.py';sha=source.get('source_files',{}).get(controller)
+    return {'source_record_id':identity(source) if source else None,'original_source_record_id':identity(primary) if primary else None,
+        'scientific_source_commit':source.get('source_commit'),'scientific_source_fingerprint':source.get('implementation_hash'),
+        'cache_identity':source.get('cache_identity'),'configuration_source_kind':'per_configuration_completion' if supplemental else 'original_candidate_source',
+        'controller_path':controller,'controller_sha256':sha,'configuration_record_sha256':digest(path),
+        'completion_provenance':supplemental or None}
+
+
 def _aggregate(artifact_root,output):
     start=time.process_time();store=ArtifactStore(artifact_root);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    tie=yaml.safe_load((ROOT/'configs/subset_search/compatibility.yaml').read_text());cat=json.loads((ROOT/'results/subset_search/candidate_catalogue.json').read_text());paper=yaml.safe_load((ROOT/'configs/v3/paper_reference.yaml').read_text());summaries=[];fixed=[];coverage=[];native=[];refs=[];sc_rows=[]
+    tie=yaml.safe_load((ROOT/'configs/subset_search/compatibility.yaml').read_text());cat=json.loads((ROOT/'results/subset_search/candidate_catalogue.json').read_text());paper=yaml.safe_load((ROOT/'configs/v3/paper_reference.yaml').read_text());summaries=[];fixed=[];coverage=[];native=[];refs=[];sc_rows=[];sc_coverage=[];completion_audit={}
     trialfields=['candidate_id','config_id','method','initialization','variant','gamma_nominal','seed','acc','nmi','inertia','iterations','warning'];counts=Counter()
     with gzip.open(out/'trials.csv.gz','wt',newline='') as tf:
         writer=csv.DictWriter(tf,fieldnames=trialfields,extrasaction='ignore');writer.writeheader()
         for c in cat['candidates']:
             cid=c['candidate_id'];alias=c.get('alias_of');folder=store.root/'subset'/(alias or cid)
-            records={};representation=None
+            records={};representation=None;sc_records={}
+            details=_execution_details(folder,store)
+            if details['completion_attempts'] or details['completion_failures']:
+                completion_audit[str(folder.relative_to(store.root))]=details
             if (folder/'representation.json').exists():
                 representation=json.loads((folder/'representation.json').read_text())
                 if representation.get('fingerprint')!=c['fingerprint']:raise ValueError('candidate alias/representation fingerprint mismatch')
@@ -121,32 +201,28 @@ def _aggregate(artifact_root,output):
                 if sr.get('status')!='COMPLETED':continue
                 if representation is None or sr.get('objects',{}).get('G',{}).get('sha256')!=representation['objects']['F']['sha256']:
                     raise ValueError('matched SC did not use the exact saved candidate F')
+                sc_records[sr['initialization']]=sr
                 stats=summarize(sr['trials']);stats['native_best']={**stats['native_best'],'n':1}
-                sc_rows.append({'candidate_id':cid,'benchmark':c['benchmark'],'pool':c['pool'],'initialization':sr['initialization'],'alias_of':alias,'n_samples':c['n'],'trials':sr['trials'],**stats,'same_embedding':'representation.json exact F; no independently regenerated SC','F_sha256':representation['objects']['F']['sha256'],'input_fingerprint':representation['fingerprint'],'sample_manifest_sha256':c['manifest_sha256'],'canonical_candidate_id':alias or cid,'source_record':str(scfile.relative_to(store.root))})
-            for f in sorted(folder.glob('*.json')):
-                if f.name in ['status.json','profile.json']:continue
+                sc_rows.append({'candidate_id':cid,'benchmark':c['benchmark'],'pool':c['pool'],'initialization':sr['initialization'],'alias_of':alias,'n_samples':c['n'],'trials':sr['trials'],**stats,'same_embedding':'representation.json exact F; no independently regenerated SC','F_sha256':representation['objects']['F']['sha256'],'input_fingerprint':representation['fingerprint'],'sample_manifest_sha256':c['manifest_sha256'],'canonical_candidate_id':alias or cid,'source_record':str(scfile.relative_to(store.root)),**_configuration_provenance(folder,scfile,sr,store)})
+            for init in INITS:
+                sc_coverage.append({'candidate_id':cid,'canonical_candidate_id':alias or cid,'initialization':init,'alias_of':alias,**_point_outcome(details,'sc',None,None,init,sc_records.get(init))})
+            for f in sorted(folder.rglob('*.json')):
+                if f.name=='profile.json':continue
                 obj=json.loads(f.read_text());refs.append({'candidate_id':cid,'record':str(f.relative_to(store.root)),'object':store.put(obj)})
                 if obj.get('method')=='ssc' and obj.get('status')=='COMPLETED':records[(obj['variant'],obj['gamma_nominal'],obj['initialization'])]=obj
             for variant in ['E8','E13']:
                 for gamma in GAMMAS:
                     for init in INITS:
-                        record=records.get((variant,gamma,init));status='COMPLETED_ALIAS' if record and alias else 'COMPLETED' if record else 'NOT_RUN'
-                        if not record and (folder/'status.json').exists():
-                            candidate_status=json.loads((folder/'status.json').read_text())['status']
-                            state=json.loads((folder/'status.json').read_text())
-                            active=state.get('active_configuration',{})
-                            is_active=active.get('method')=='ssc' and active.get('variant')==variant and active.get('gamma_nominal')==gamma and (active.get('stage')=='solver' or active.get('initialization')==init)
-                            if candidate_status=='COMPLETED':status='MISSING_RESULT'
-                            elif candidate_status in ['TIMEOUT','FAILED']:
-                                status=candidate_status if is_active else 'NOT_RUN_AFTER_CANDIDATE_'+candidate_status
-                            else:status='NOT_RUN_CANDIDATE_'+candidate_status
-                        coverage.append({'candidate_id':cid,'family':c['family'],'pool':c['pool'],'variant':variant,'gamma_nominal':gamma,'initialization':init,'status':status,'alias_of':alias});counts[status]+=1
+                        record=records.get((variant,gamma,init));outcome=_point_outcome(details,'ssc',variant,gamma,init,record)
+                        if record and alias:outcome['status']='COMPLETED_ALIAS'
+                        coverage.append({'candidate_id':cid,'family':c['family'],'pool':c['pool'],'variant':variant,'gamma_nominal':gamma,'initialization':init,'alias_of':alias,**outcome});counts[outcome['status']]+=1
                         if not record:continue
                         if representation is None:raise ValueError('SSC scalar record has no recoverable candidate representation metadata')
                         # Recompute from all50 rows; stored summaries cannot mask a
                         # missing, duplicated or invalid seed in authoritative data.
                         s=summarize(record['trials']);benchmark=c['benchmark'];target={m:paper[m]['ssc'][benchmark]['mean'] for m in ['acc','nmi']}
                         row={'candidate_id':cid,'config_id':cid+'|'+variant+'|'+str(gamma)+'|'+init,'benchmark':benchmark,'family':c['family'],'pool':c['pool'],'n_samples':c['n'],'n_classes':c['classes'],'prep':c['prep'],'variant':variant,'gamma_nominal':gamma,'gamma_effective':record['gamma_effective'],'initialization':init,'solver_status':record['solver']['status'],'endpoint':'mean_sample_sd_50',**compatibility_counts(c,tie),'alias_of':alias,'record_directory':str(Path('subset')/(alias or cid)),'record_file':f'{variant}__{gamma:g}__{init}.json','F_sha256':representation['objects']['F']['sha256'],'G_sha256':record['objects']['G']['sha256'],'input_fingerprint':representation['fingerprint'],'sample_manifest_sha256':c['manifest_sha256'],**{k:v for k,v in s.items() if k!='native_best'}}
+                        row.update(**_configuration_provenance(folder,folder/row['record_file'],record,store),matched_sc_status=_point_outcome(details,'sc',None,None,init,sc_records.get(init))['status'])
                         row=distances(row,target);row.update(paper_acc=target['acc'],paper_nmi=target['nmi'],paper_acc_sd=paper['acc']['ssc'][benchmark]['sd'],paper_nmi_sd=paper['nmi']['ssc'][benchmark]['sd'],historical_identity='UNVERIFIED' if benchmark in ['AR','UMIST','BinAlpha','MSRA50'] else 'documented source; no pixel identity proof')
                         row['delta_acc_sd_pp']=row['acc_sd']-row['paper_acc_sd'];row['delta_nmi_sd_pp']=row['nmi_sd']-row['paper_nmi_sd']
                         summaries.append(row)
@@ -164,7 +240,7 @@ def _aggregate(artifact_root,output):
         for (b,pool),group in sorted(groups.items()):
             ordered=rank(group);winner={**ordered[0],'eligible_configurations':len(group),'unique_candidates':len({r['alias_of'] or r['candidate_id'] for r in group}),'candidate_aliases':len({r['candidate_id'] for r in group}),'qualification':'Retrospective numerical match; historical sample identity unverified; conditional rounding endpoint'}
             winners.append(winner);top.extend({**r,'rank':i+1} for i,r in enumerate(ordered[:10]))
-    write_csv(out/'matched_sc_summary.csv',sc_rows);write_csv(out/'execution_coverage.csv',coverage);write_csv(out/'joint_search_summary.csv',summaries);write_csv(out/'fixed_protocol_summary.csv',fixed);write_csv(out/'closest_matches.csv',winners);write_csv(out/'top_matches.csv',top)
+    write_csv(out/'matched_sc_summary.csv',sc_rows);write_csv(out/'matched_sc_coverage.csv',sc_coverage);write_csv(out/'execution_coverage.csv',coverage);write_csv(out/'joint_search_summary.csv',summaries);write_csv(out/'fixed_protocol_summary.csv',fixed);write_csv(out/'closest_matches.csv',winners);write_csv(out/'top_matches.csv',top)
     write_csv(out/'native_best_summary.csv',native)
     write_csv(out/'matched_sc_contrasts.csv',matched_sc_contrasts(winners,sc_rows))
     write_csv(out/'fixed_protocol_distribution.csv',fixed_distributions(fixed))
@@ -174,6 +250,7 @@ def _aggregate(artifact_root,output):
     write_csv(out/'reference_contrasts.csv',reference_contrasts(summaries,fixed,reference_ids,candidate_pools))
     atomic_json(out/'winner_lock.json',{'version':1,'catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json'),'selection_rule_sha256':digest(ROOT/'configs/submission_refresh/selection.yaml'),'winners':winners,'no_reselection_after_confirmation':True})
     atomic_json(out/'artifact_manifest.json',{'store':'external independent-data/scientific-artifacts/refresh-20261110','object_format':'verified content-addressed npz/npy/json','records':refs,'regeneration':'python -m experiments.subset_search run --config configs/subset_search/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume','source_catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json')})
+    with (out/'completion_records.json.gz').open('wb') as handle:handle.write(gzip.compress((json.dumps({'schema':'subset-completion-evidence-v1','records':completion_audit},sort_keys=True)+'\n').encode(),mtime=0))
     atomic_json(out/'coverage_summary.json',{'intended_candidates':len(cat['candidates']),'unique_catalogue_inputs':len({r.get('alias_of') or r['candidate_id'] for r in cat['candidates']}),'status_counts':dict(counts),'complete_unique_configurations':sum(r['alias_of'] is None for r in summaries),'complete_unique_candidates':len({r['candidate_id'] for r in summaries if not r['alias_of']}),'cpu_aggregation_seconds':time.process_time()-start})
     for b in paper['datasets']:
         rows=[r for r in winners if r['benchmark']==b]

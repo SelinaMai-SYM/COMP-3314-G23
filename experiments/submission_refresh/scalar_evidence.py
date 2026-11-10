@@ -202,6 +202,11 @@ def rebuild(manifest_path,output):
     paper=yaml.safe_load(paths[manifest['paper_file']].read_text());rows=[];native_rows=[];source_diagnostics=[]
     for record in baseline:
         base={key:record.get(key) for key in ['dataset','method','config_id','status','max_iter','parameters','initialization','native_best_status','diagnostic_summary','record_path','paper_deviations','preparation_assumptions','variant','qualification','seed_protocol','historical_lda_sc_identity','row_normalization']}
+        # Frozen scalar records can omit these optional compatibility counts.
+        # The selector expects integer counts, so normalize absent/null values
+        # here without changing the shared selection or fitting implementation.
+        for count in ['paper_deviations','preparation_assumptions']:
+            base[count]=int(record.get(count) or 0)
         base.update(source_implementation_hash=(record.get('source') or {}).get('implementation_hash'),source_commit=(record.get('source') or {}).get('source_commit'))
         base.update(n_trials=len(record['trials']),endpoint='mean_sample_sd_50',
             pool='adapted_resolution_16x16' if record['dataset']=='MSRA25_EBSA_16x16' else 'implementation_audit')

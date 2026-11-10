@@ -178,13 +178,25 @@ def generate(root: Path,date: str='2026-11-10'):
     def write(name,text):
         (out/(name+'.tex')).write_text('% Generated from authoritative CSV/JSON records; do not edit.\n'+text)
     selected={r['benchmark']:r for r in historical if r.get('method')=='ssc' and r.get('endpoint')=='mean_sample_sd_50' and number(r.get('acc_mean'))!='--'}
+    new_mean=[r for r in closest if r.get('endpoint')=='mean_sample_sd_50']
     main_rows=[]
-    for benchmark in ['ORL','JAFFE','YaleB','USPS']:
-        row=selected.get(benchmark,{**papers.get((benchmark,'ssc'),{}),'benchmark':benchmark})
-        main_rows.append([benchmark,metric(row,'acc',paper=True),metric(row,'nmi',paper=True),metric(row,'acc'),metric(row,'nmi'),number(row.get('D_max')),status_abbreviation(row)])
-    maincaption=(r'Historical SSC scalar records, reselected jointly by $D_{\max}$ then $D_{\rm mean}$; this is a retrospective match, not label-free selection. Means $\pm$ sample SD use one configuration and all 50 seeds. '
-                 r'I: iterate stopping without a gap certificate; T: iteration cap. None of these historical $G$ arrays is recoverable, so current solver audits cannot certify their exact outputs. Settings and source versions appear in the appendix.')
-    write('refresh_main',table(['Data','Paper ACC','Paper NMI','Our ACC','Our NMI',r'$D_{\max}$','Fit'],main_rows,'lrrrrrc',maincaption,'tab:refresh-main'))
+    for benchmark in (BENCHMARKS if new_mean else ['ORL','JAFFE','YaleB','USPS']):
+        if new_mean:
+            compatible=next((r for r in new_mean if r['benchmark']==benchmark and r.get('pool')=='specification_compatible'),None)
+            row=compatible or next((r for r in new_mean if r['benchmark']==benchmark and r.get('pool')=='adapted'),{})
+            row={**papers.get((benchmark,'ssc'),{}),**row}
+            label=benchmark+(r'$^\dagger$' if row.get('pool')=='adapted' else '')
+        else:
+            row=selected.get(benchmark,{**papers.get((benchmark,'ssc'),{}),'benchmark':benchmark});label=benchmark
+        main_rows.append([label,metric(row,'acc',paper=True),metric(row,'acc'),metric(row,'nmi',paper=True),metric(row,'nmi'),number(row.get('D_max')),status_abbreviation(row)])
+    if new_mean:
+        maincaption=(r'Closest evaluated SSC reconstructions under joint $D_{\max}$/$D_{\rm mean}$ matching. This is retrospective numerical selection using labels and paper targets; historical subset identity remains unverified. '
+                     r'Means $\pm$ sample SD use one configuration and all 50 seeds. Compatible-pool winners are shown where available; $\dagger$ marks a separately selected adaptation. '
+                     r'I: iterate stopping without a gap certificate; T: iteration cap; U: other uncertified state. Exact candidate IDs, counts, signed differences, settings and both pools appear in the appendix. Historical selections are retained separately.')
+    else:
+        maincaption=(r'Historical SSC scalar records, reselected jointly by $D_{\max}$ then $D_{\rm mean}$; this is a retrospective match, not label-free selection. Means $\pm$ sample SD use one configuration and all 50 seeds. '
+                     r'I: iterate stopping without a gap certificate; T: iteration cap. None of these historical $G$ arrays is recoverable, so current solver audits cannot certify their exact outputs. Settings and source versions appear in the appendix.')
+    write('refresh_main',table(['Data','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$','Fit'],main_rows,'lrrrrrc',maincaption,'tab:refresh-main'))
     if names['coverage'].exists():
         coverage_text=(f"The new campaign completed {coverage.get('complete_unique_candidates','NA')} unique candidates and {coverage.get('complete_unique_configurations','NA')} candidate/configuration pairs from {coverage.get('intended_candidates',len(cat))} intended catalogue entries. "
                        f"Aliases remain separate provenance entries; diagnostic parents do not enter the paper-compatible pool. "
@@ -253,8 +265,11 @@ def generate(root: Path,date: str='2026-11-10'):
                              r'\scriptsize '+break_text(row.get('candidate_id','Unavailable')),
                              metric(row,'acc',paper=True),metric(row,'acc'),metric(row,'nmi',paper=True),metric(row,'nmi'),number(row.get('D_max'))])
                 if row.get('candidate_id'):
+                    delta_acc=value(row,'acc_delta_pp','delta_acc_pp');delta_nmi=value(row,'nmi_delta_pp','delta_nmi_pp')
+                    if delta_acc is None and number(row.get('acc_mean'))!='--':delta_acc=float(row['acc_mean'])-float(row['paper_acc'])
+                    if delta_nmi is None and number(row.get('nmi_mean'))!='--':delta_nmi=float(row['nmi_mean'])-float(row['paper_nmi'])
                     detail=(r'$n='+escape(row.get('n_samples','--'))+'$; '+short_setting(row)+'; '+escape(row.get('solver_status','--'))+
-                            r'; $D_{\rm mean}='+number(row.get('D_mean'))+'$; '+escape(row.get('historical_identity','historical identity unverified'))+'.')
+                            r'; $\Delta_{\rm ACC}='+number(delta_acc)+r'$ pp; $\Delta_{\rm NMI}='+number(delta_nmi)+r'$ pp; $D_{\rm mean}='+number(row.get('D_mean'))+'$; '+escape(row.get('historical_identity','historical identity unverified'))+'.')
                     rows.append(r'\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+detail+r'} \\')
         appendix.append(table(['Data / pool','Selected candidate','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$'],rows,'p{1.6cm}p{3.3cm}rrrrr',long=True))
     appendix.append(r'\subsection{Additional rounding on locked winners}')

@@ -6,25 +6,36 @@ from .core import ResourceLedger,atomic_json,THREAD_ENV
 
 def _execute(task,data_root,artifact_root):
     os.environ.update(THREAD_ENV);os.environ['COMP3314_ARTIFACT_ROOT']=str(artifact_root)
-    if task['kind']=='subset':
-        from experiments.subset_search.runner import run_candidate
-        r=run_candidate(task['candidate'],data_root,artifact_root,task['cpu_limit'],task.get('profile',False))
-    elif task['kind']=='baseline':
-        from .baselines import run_baseline
-        r=run_baseline(task,data_root,artifact_root)
-    elif task['kind']=='usps':
-        from .audit_jobs import run_usps
-        r=run_usps(task,data_root,artifact_root)
-    elif task['kind']=='graph':
-        from .graph_repair import run_graph
-        r=run_graph(task,data_root,artifact_root)
-    elif task['kind']=='ensc':
-        from .ensc_campaign import run_ensc
-        r=run_ensc(task,data_root,artifact_root)
-    elif task['kind']=='validation':
-        from .validation_jobs import run_validation
-        r=run_validation(task,data_root,artifact_root)
-    else:raise ValueError(task['kind'])
+    started=time.process_time()
+    try:
+        if task['kind']=='subset':
+            from experiments.subset_search.runner import run_candidate
+            r=run_candidate(task['candidate'],data_root,artifact_root,task['cpu_limit'],task.get('profile',False))
+        elif task['kind']=='subset_completion':
+            from experiments.subset_search.complete_failed import run_completion
+            r=run_completion(task,data_root,artifact_root)
+        elif task['kind']=='baseline':
+            from .baselines import run_baseline
+            r=run_baseline(task,data_root,artifact_root)
+        elif task['kind']=='usps':
+            from .audit_jobs import run_usps
+            r=run_usps(task,data_root,artifact_root)
+        elif task['kind']=='usps_evaluate':
+            from .usps_evaluate import run_evaluation
+            r=run_evaluation(task,data_root,artifact_root)
+        elif task['kind']=='graph':
+            from .graph_repair import run_graph
+            r=run_graph(task,data_root,artifact_root)
+        elif task['kind']=='ensc':
+            from .ensc_campaign import run_ensc
+            r=run_ensc(task,data_root,artifact_root)
+        elif task['kind']=='validation':
+            from .validation_jobs import run_validation
+            r=run_validation(task,data_root,artifact_root)
+        else:raise ValueError(task['kind'])
+    except BaseException as exc:
+        import traceback
+        r={'task':task,'status':'TIMEOUT' if isinstance(exc,TimeoutError) else 'INTERRUPTED' if isinstance(exc,KeyboardInterrupt) else 'FAILED_CONTROLLER','error':repr(exc),'traceback':traceback.format_exc(),'cpu_seconds':time.process_time()-started,'scientific_outputs':'Existing checkpoints are preserved; no complete-result claim is made'}
     r.setdefault('process_cpu_seconds',__import__('time').process_time())
     atomic_json(Path(artifact_root)/'task_status'/(task['run_id']+'.json'),r)
 

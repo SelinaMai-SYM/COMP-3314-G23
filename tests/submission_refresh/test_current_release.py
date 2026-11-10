@@ -17,7 +17,8 @@ from experiments.submission_refresh.selection import summarize,distances,rank
 def write_csv(path,rows):
     path.parent.mkdir(parents=True,exist_ok=True)
     with path.open('w',newline='') as f:
-        writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+        fields=list(dict.fromkeys(key for row in rows for key in row))
+        writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader();writer.writerows(rows)
 
 
 @pytest.fixture

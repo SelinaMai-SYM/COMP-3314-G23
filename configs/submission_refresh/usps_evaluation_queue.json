@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "purpose": "Evaluate only exact archived same-F/W audit outputs after terminal audit, never substitute improved solutions into historical subset track",
+  "tasks": [
+    {
+      "run_id": "usps-solver-evaluation-v1",
+      "kind": "usps_evaluate",
+      "phase": "mandatory_usps_evaluation",
+      "cpu_limit": 900,
+      "audit_run_id": "usps-numerical-audit-v1"
+    }
+  ]
+}

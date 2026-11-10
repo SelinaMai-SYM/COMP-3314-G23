@@ -33,7 +33,8 @@ SELECTED_FIELDS=['benchmark','pool','endpoint','config_id','candidate_id',
                  'acc_mean','acc_sd','nmi_mean','nmi_sd','D_max','D_mean',
                  'delta_acc_pp','delta_nmi_pp']
 OPTIONAL_FILES={
-    'coverage':'execution_coverage.csv', 'source_inventory':'source_inventory.csv',
+    'coverage':'execution_coverage.csv','matched_sc_coverage':'matched_sc_coverage.csv',
+    'completion_records':'completion_records.json.gz','source_inventory':'source_inventory.csv',
     'artifact_manifest':'artifact_manifest.json', 'confirmation':'rounding_confirmation.csv',
     'confirmation_seed_namespace':'confirmation_seed_namespace.json',
     'matched_sc':'matched_sc_summary.csv', 'matched_sc_contrasts':'matched_sc_contrasts.csv',
@@ -230,13 +231,30 @@ def _matched_sc_rows(path):
 
 def _validate_light_csv(role,path):
     if role=='matched_sc':_matched_sc_rows(path)
+    elif role=='completion_records':
+        with gzip.open(path,'rt') as stream:record=json.load(stream)
+        if record.get('schema')!='subset-completion-evidence-v1' or not isinstance(record.get('records'),dict):raise ValueError('invalid completion evidence schema')
+        for directory,details in record['records'].items():
+            if Path(directory).is_absolute() or '..' in Path(directory).parts:raise ValueError('unsafe completion evidence path')
+            if details.get('original_status',{}).get('status')!='FAILED':raise ValueError('completion evidence does not retain its original failed status')
+            for item in details.get('completion_failures',[])+details.get('completion_attempts',[]):
+                if not isinstance(item.get('record'),dict) or not item.get('sha256'):raise ValueError('incomplete completion record identity')
+    elif role in ['coverage','matched_sc_coverage']:
+        rows=_csv_rows(path)
+        keys=['candidate_id','variant','gamma_nominal','initialization'] if role=='coverage' else ['candidate_id','initialization']
+        identities=[tuple(row.get(key) for key in keys) for row in rows]
+        if len(identities)!=len(set(identities)):raise ValueError('duplicate execution coverage key')
+
 
 
 def _verify_matched_sources(metadata,rows):
     by_key={(r['candidate_id'],r['initialization']):r for r in rows}
     for configuration in metadata:
         key=(configuration['candidate_id'],configuration['initialization'])
-        if key not in by_key:raise ValueError('complete SSC configuration lacks its complete matched SC control')
+        if key not in by_key:
+            status=configuration.get('matched_sc_status')
+            if status and status!='COMPLETED':continue
+            raise ValueError('complete SSC configuration lacks its complete matched SC control or explicit unavailable status')
         control=by_key[key]
         if not configuration.get('F_sha256') or control.get('F_sha256')!=configuration['F_sha256']:
             raise ValueError('matched SC/SSC exact F object identity mismatch')
@@ -314,11 +332,47 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
     source_records={};source_status='SOURCE_OBJECT_REFERENCES_ONLY'
     if artifact_root is not None:
         source_status='INLINE_COMMITTED_SOURCE_RECORDS'
-        for row in metadata:
-            path=Path(artifact_root)/row['record_directory']/'source.json'
-            source=json.loads(path.read_text());key=identity(source);source_records[key]=source
-            row.update(source_record_id=key,scientific_source_commit=source['source_commit'],
-                       scientific_source_fingerprint=source['implementation_hash'],cache_identity=source.get('cache_identity'))
+        from .core import ArtifactStore
+        store=ArtifactStore(artifact_root)
+        def register(row,is_sc=False):
+            if is_sc:
+                relative=Path(row['source_record']);folder=store.root/relative.parent;record_path=store.root/relative
+            else:
+                folder=store.root/row['record_directory'];record_path=folder/row['record_file']
+            if store.root not in folder.resolve().parents or store.root not in record_path.resolve().parents:raise ValueError('configuration source path escapes artifact root')
+            original=json.loads((folder/'source.json').read_text())
+            record=json.loads(record_path.read_text()) if record_path.is_file() else {}
+            supplemental=record.get('completion_provenance',{})
+            if row.get('configuration_source_kind')=='per_configuration_completion' and not supplemental:raise ValueError('completed configuration controller record is unavailable')
+            source=record.get('source') if supplemental else original
+            if supplemental:
+                if not isinstance(source,dict) or store.get(supplemental['source'])!=source:raise ValueError('per-configuration actual source object mismatch')
+                if source.get('source_files',{}).get(supplemental.get('controller'))!=supplemental.get('controller_sha256'):raise ValueError('completion controller source hash mismatch')
+                if row.get('configuration_record_sha256') and digest(record_path)!=row['configuration_record_sha256']:raise ValueError('configuration record changed after aggregation')
+            key=identity(source);original_key=identity(original);source_records[key]=source;source_records[original_key]=original
+            for field,wanted in [('source_record_id',key),('original_source_record_id',original_key),('scientific_source_fingerprint',source.get('implementation_hash'))]:
+                if row.get(field) not in [None,'',wanted]:raise ValueError('configuration actual source mapping mismatch: '+field)
+            row.update(source_record_id=key,original_source_record_id=original_key,
+                       scientific_source_commit=source.get('source_commit'),scientific_source_fingerprint=source.get('implementation_hash'),cache_identity=source.get('cache_identity'))
+        for row in metadata:register(row)
+        if (output/'matched_sc_summary.csv').is_file():
+            for row in _matched_sc_rows(output/'matched_sc_summary.csv'):register(row,True)
+        completion_path=output/'completion_records.json.gz'
+        if completion_path.is_file():
+            with gzip.open(completion_path,'rt') as stream:completion_records=json.load(stream)
+            for details in completion_records.get('records',{}).values():
+                original=details.get('original_status',{}).get('source')
+                if isinstance(original,dict):source_records[identity(original)]=original
+                for entry in details.get('completion_attempts',[]):
+                    source=entry.get('record',{}).get('source')
+                    if isinstance(source,dict):source_records[identity(source)]=source
+    elif any(row.get('source_record_id') for row in metadata):
+        # A source-aware aggregation cannot be downgraded to hash-only records.
+        existing=output/'source_records.json.gz'
+        if not existing.is_file():raise ValueError('actual source records require --artifact-root for first freeze')
+        with gzip.open(existing,'rt') as stream:source_records=json.load(stream)['records']
+        if any(row['source_record_id'] not in source_records for row in metadata):raise ValueError('inline source record unavailable')
+        source_status='INLINE_COMMITTED_SOURCE_RECORDS'
     # Validate optional light records before any release files are authored.
     for role,name in OPTIONAL_FILES.items():
         path=output/name
@@ -336,7 +390,8 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
     for role,name in OPTIONAL_FILES.items():
         if (output/name).is_file():required[role]=output/name
     inputs={role:{'path':str(path.relative_to(ROOT)),'sha256':digest(path),'bytes':path.stat().st_size} for role,path in required.items()}
-    inputs['trials']['uncompressed_sha256']=_decompressed_hash(output/'trials.csv.gz')
+    for role,path in required.items():
+        if path.suffix=='.gz':inputs[role]['uncompressed_sha256']=_decompressed_hash(path)
     manifest={'schema':SCHEMA,'checkout_root_relative':'../..','inputs':inputs,
               'trial_primary_key':['config_id','seed'],'selection_seed_set':list(range(50)),
               'metric_input_units':'unit interval; published summaries are percentage points',
@@ -361,8 +416,9 @@ def load(manifest_path):
         if not path.is_file() or path.stat().st_size==0 or digest(path)!=record['sha256'] or path.stat().st_size!=record['bytes']:
             raise ValueError(f'release input missing, empty or hash mismatch: {role}')
         paths[role]=path
-    if _decompressed_hash(paths['trials'])!=manifest['inputs']['trials']['uncompressed_sha256']:
-        raise ValueError('uncompressed trial CSV hash mismatch')
+    for role,path in paths.items():
+        expected=manifest['inputs'][role].get('uncompressed_sha256')
+        if expected is not None and _decompressed_hash(path)!=expected:raise ValueError('uncompressed release input hash mismatch: '+role)
     metadata=[_typed(row) for row in _csv_rows(paths['configuration_inventory'])]
     _canonicalize(metadata)
     catalogue=json.loads(paths['catalogue'].read_text());candidates={c['candidate_id']:c for c in catalogue['candidates']}
@@ -376,8 +432,23 @@ def load(manifest_path):
     with gzip.open(paths['source_records'],'rt') as handle:sources=json.load(handle)
     for key,record in sources['records'].items():
         if identity(record)!=key:raise ValueError('source record identity mismatch')
-    for row in metadata:
-        if row.get('source_record_id') and row['source_record_id'] not in sources['records']:raise ValueError('configuration source record missing')
+    def verify_source(row):
+        key=row.get('source_record_id')
+        if not key:return
+        if key not in sources['records']:raise ValueError('configuration source record missing')
+        record=sources['records'][key]
+        if row.get('scientific_source_fingerprint') not in [None,'',record.get('implementation_hash')]:raise ValueError('configuration scientific source fingerprint mismatch')
+        if row.get('scientific_source_commit') not in [None,'',record.get('source_commit')]:raise ValueError('configuration scientific source commit mismatch')
+        if row.get('cache_identity') not in [None,'',record.get('cache_identity')]:raise ValueError('configuration scientific cache identity mismatch')
+        original=row.get('original_source_record_id')
+        if original and original not in sources['records']:raise ValueError('configuration original source record missing')
+        if row.get('configuration_source_kind')=='per_configuration_completion':
+            if record.get('source_files',{}).get(row.get('controller_path'))!=row.get('controller_sha256') or not row.get('controller_sha256'):
+                raise ValueError('configuration actual controller source mismatch')
+    for row in metadata:verify_source(row)
+    if 'matched_sc'in paths:
+        for row in _matched_sc_rows(paths['matched_sc']):verify_source(row)
+
     for role,path in paths.items():_validate_light_csv(role,path)
     paper=yaml.safe_load(paths['paper'].read_text());protocol=yaml.safe_load(paths['protocol'].read_text())
     candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
@@ -411,6 +482,7 @@ def rebuild(manifest_path,output):
     output.parent.mkdir(parents=True,exist_ok=True);temporary=Path(tempfile.mkdtemp(prefix='.rebuild-current-',dir=output.parent))
     try:
         for name,rows in tables.items():_write_csv(temporary/name,rows)
+        for role,name in [('source_records','source_records.json.gz'),('configuration_inventory','configuration_inventory.csv')]:shutil.copy2(paths[role],temporary/name)
         for role,name in OPTIONAL_FILES.items():
             if role in paths and name not in tables:shutil.copy2(paths[role],temporary/name)
         for benchmark in sorted({r['benchmark'] for r in tables['joint_search_summary.csv']}):

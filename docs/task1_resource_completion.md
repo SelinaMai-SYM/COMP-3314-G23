@@ -1,45 +1,38 @@
-# Task 1：哪些原文资源仍然缺失
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-日期：2026-10-21。只做资源核验与合法补档。未改 `method_extension/`，未重写 `report/`，未跑 72 格，未 git commit。
+# Task 1: Original-paper resources still missing
 
-结论先说：**仍缺的是论文协议意义上的 AR 840/120、UMIST 564、BinAlpha 26×30、MSRA50 1799/12 文件，以及 Hou et al. IPM 2013 第 3 节全文与所有方法的作者代码。** 已有且哈希仍匹配的档案没有重下。
+Date: 2026-10-21. This stage verified resources and obtained lawful supporting material. It did not modify `method_extension/`, rewrite `report/`, run the 72 cells, or make a Git commit.
 
-## 仍然缺失（原文资源）
+The remaining paper-protocol gaps were AR 840/120, UMIST 564, BinAlpha 26x30, the MSRA50 1799/12 file, Section 3 of Hou et al. (IPM 2013), and author code for all methods. Existing hash-matching archives were not downloaded again.
 
-1. **AR 官方图像包与 840/120 规则**  
-   官方申请页 HTTP **503**，HTTPS 证书失败（curl 60，未跳过证书）。普渡镜像 404/502。2012 Wayback 官方页确认：126 人、大学邮箱申请密码、**禁止再分发**、**正文没有 840/120**。CVC TR 24 已合法保存，不是图像。Zenodo 19683234 仍因非 Martinez 来源且与官方禁再分发冲突而 **未下载**。同组 arXiv:1411.6241 写 AR 840×768，仍无图像名单。**没有编造 7×120 子集。**
+## Missing original resources
 
-2. **MSRA50 的 1799×12×1024 真实文件**  
-   文献指针仍在（Chang/Nie/Yang 引 He 2004/TPAMI 2005 Laplacianfaces：12 人、每场 64–80、裁 32×32）。邓蔡 `data.html` / `FaceData.html` / `MLData.html` HTTP 200，**无 MSRA50**。GitHub 仓库搜索 `MSRA50 mat` `total_count=0`。未用 MSRA-B/10K/TD500，未用 CSDN/百度网盘非官方包。计数落在 1536–1920 **不等于**已找到文件。
+1. **Official AR images and the 840/120 rule.** The application page returned HTTP 503; HTTPS certificate verification failed (curl 60, no bypass). Purdue mirrors returned 404/502. A 2012 official Wayback page confirmed 126 people, university-email password applications, and no redistribution; it did not specify 840/120. CVC TR 24 was obtained lawfully but contained no image archive. Zenodo 19683234 was not downloaded because it was not from Martinez and conflicted with official redistribution terms. The related arXiv:1411.6241 listed AR 840x768 without image indices. No 7x120 subset was invented.
 
-3. **UMIST 论文 564 张**  
-   2001 官方页（Wayback GET 200）写 “564 images of 20 people”，并提供 29Mb `face.tar.gz` 与 4.5Mb `cropped.tar.gz`。本机这两份档案哈希与 Round 2 一致：未裁剪 **1012** 不重复 PGM，裁剪 **575** PGM（565 互异像素）。页面自己的 cropped 包就不是 564。去掉 10 张 `1b/final*.pgm` 像素副本得到 **565≠564**。没有证据再删哪 1 张。默认加载器仍不可用。
+2. **The actual MSRA50 1799x12x1024 file.** Chang/Nie/Yang cited He 2004/TPAMI 2005 Laplacianfaces: 12 people, 64-80 images per session, cropped to 32x32. Deng Cai's data.html, FaceData.html, and MLData.html returned HTTP 200 without MSRA50. GitHub search `MSRA50 mat` returned total_count=0. MSRA-B/10K/TD500 and unofficial CSDN/Baidu packages were not substituted. A plausible total range of 1536-1920 did not establish file recovery.
 
-4. **论文 BinAlpha 26×30**  
-   父集 Binary Alphadigits 已在（36×39，SHA 未变）。AAAI/arXiv 仍未写父集、尺寸或种子。`letters26x30_seed0` 仍是 UNVERIFIED reconstruction。
+3. **Paper UMIST 564.** The official 2001 page (Wayback 200) stated 564 images of 20 people and offered 29Mb face.tar.gz and 4.5Mb cropped.tar.gz. Both local archives matched Round 2 hashes. The uncropped archive had 1012 distinct PGM names; the cropped archive had 575 PGM files and 565 distinct pixel arrays. Removing ten `1b/final*.pgm` copies gave 565, not 564, with no evidence for one additional omission. The strict default loader remained unavailable.
 
-5. **SPLS / SLPS 第 3 节**  
-   Unpaywall `is_oa=false` / `oa_status=closed` / `oa_locations=[]`。OpenAlex `oa_url=null`。Semantic Scholar `CLOSED`。arXiv 0 条。作者页 `[PDF]` 仍是 Elsevier DOI。HKU Find@HKUL 仅目录（200），Scholars Hub 403；本会话 **没有** 已登录的 ScienceDirect PDF。`fit_predict` 仍 `NotImplementedError`。**没有从摘要编算法。**
+4. **Paper BinAlpha 26x30.** The Binary Alphadigits parent (36x39) was present with unchanged hash. AAAI/arXiv did not identify the parent, image dimensions, or seed. `letters26x30_seed0` remained an UNVERIFIED reconstruction.
 
-6. **作者代码**  
-   SSC：xiaojun.ai HTTP 200，无 2015 实现；GitHub `spectral shrunk clustering` 仓库 **0**。Hou GitHub 无 SLPS（`PublicationCode` 空仓）。Ding–Li / Wu–Schölkopf / Chang 基线均 `CODE_NOT_FOUND`。未把 Elhamifar Sparse Subspace Clustering 或 2016 PSLSR 当成 SSC/SPLS。
+5. **SPLS/SLPS Section 3.** Unpaywall reported is_oa=false, oa_status=closed, oa_locations=[]; OpenAlex oa_url=null; Semantic Scholar CLOSED; arXiv had zero results. The author's PDF link led to Elsevier DOI. Find@HKUL returned a catalogue (200), Scholars Hub 403; there was no authenticated ScienceDirect PDF in the session. `fit_predict` still raised NotImplementedError. The method was not invented from its abstract.
 
-## 本轮合法取得（不是上述缺口的填补）
+6. **Author code.** xiaojun.ai returned 200 without a 2015 SSC implementation; GitHub `spectral shrunk clustering` found zero repositories. Hou's PublicationCode repository was empty. Ding-Li, Wu-Schölkopf, and Chang baselines remained CODE_NOT_FOUND. Elhamifar's Sparse Subspace Clustering and 2016 PSLSR were not substituted for Spectral Shrunk Clustering or SPLS.
 
-- AAAI SSC PDF（哈希与已有 `9736-45063-1-PB.pdf` 相同）
-- arXiv:1411.6308 预印本
-- NeurIPS 2006 LLC
-- Ding–Li 2007 作者页 PDF（ACM 403，未绕过）
-- CVC TR 24 与 AR 官方 Wayback HTML（条款，非图像）
-- UMIST 2001 页 HTML
-- 同组 arXiv:1411.6241v1（MSRA50 文献指针，不是数据文件）
+## Lawfully obtained supporting resources
 
-## 明确拒绝 / 未做
+- AAAI SSC PDF, matching the existing `9736-45063-1-PB.pdf` hash.
+- arXiv:1411.6308 preprint.
+- NeurIPS 2006 LLC paper.
+- Ding-Li 2007 author-page PDF; ACM 403 was not bypassed.
+- CVC TR 24 and official AR Wayback HTML: terms, not images.
+- UMIST 2001 HTML.
+- Related arXiv:1411.6241v1: a MSRA50 bibliographic pointer, not data.
 
-- 未重下哈希匹配的 JAFFE / att_faces / CroppedYale / USPS / olivetti / YaleB mat / binaryalphadigs / UMIST tars
-- 未下载 Zenodo `ARDB_Full.zip`
-- 未破解 Elsevier
-- 未联系作者（计划禁止）
-- 未把 TUNA/PyPI 当数据集
-- 未实现 SPLS
-- 未跑聚类网格
+## Explicitly not done
+
+- No repeated download of hash-matching JAFFE, att_faces, CroppedYale, USPS, Olivetti, YaleB MAT, Binary Alphadigits, or UMIST archives.
+- No Zenodo ARDB_Full.zip download.
+- No bypass of Elsevier access, contact with authors, or treatment of TUNA/PyPI as a dataset source.
+- No SPLS implementation or clustering grid at this historical stage.

@@ -1,77 +1,79 @@
-# SSC 数学审计
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-来源：Chang, Nie, Ma, Yang, Zhou，*A Convex Formulation for Spectral Shrunk Clustering*，AAAI 2015，`9736-45063-1-PB.pdf`，`pdftotext -layout` 文本。审计范围是式 (3)–(13) 和 Algorithm 1，并核对收敛证明里式 (14)–(18) 的系数。实现决定是纠错和复现假设，不是新方法。
+# SSC mathematical audit
 
-记号：样本按行存放，数组形状是 `(n, d)`。Algorithm 1 把数据写成 \(X\in\mathbb{R}^{d\times n}\)。式 (13) 的右端是 \(F\)，求解过程不乘 \(X\)。
+Source: Chang, Nie, Ma, Yang, and Zhou, *A Convex Formulation for Spectral Shrunk Clustering*, AAAI 2015, `9736-45063-1-PB.pdf`, extracted with `pdftotext -layout`. This audit covers Equations (3)-(13), Algorithm 1, and coefficient checks in Equations (14)-(18). Implementation decisions are corrections and reproduction assumptions, not a new method.
 
-## 式 (3)–(4)：谱嵌入
+Samples are rows in arrays of shape `(n,d)`. Algorithm 1 writes \(X\in\mathbb{R}^{d\times n}\). Equation (13) has F on the right; the optimization does not multiply by X.
 
-式 (3) 是 \(\min_F \operatorname{Tr}(F^\top L F)\)，约束 \(F=Y(Y^\top Y)^{-1/2}\)。式 (4) 的对称归一化拉普拉斯是
+## Equations (3)-(4): spectral representation
+
+Equation (3) minimizes \(\operatorname{Tr}(F^\top L F)\) with \(F=Y(Y^\top Y)^{-1/2}\). Equation (4) defines the symmetric normalized Laplacian
 
 \[
 L_n = I - D^{-1/2} A D^{-1/2}.
 \]
 
-\(A_{ij}=\exp(-\lVert x_i-x_j\rVert^2/\delta^2)\) 当二者为 \(k\) 近邻，否则为 0。\(D_{ii}=\sum_j A_{ij}\)。论文把所有谱方法的邻域大小设为 \(k=5\)。
+For k-neighbors, \(A_{ij}=\exp(-\lVert x_i-x_j\rVert^2/\delta^2)\), otherwise zero; \(D_{ii}=\sum_j A_{ij}\). The paper sets k=5 for all spectral methods.
 
-实现取 \(L_n\) 的 **最小** \(c\) 个特征值对应的特征向量，按特征值升序排列，作为 \(F\in\mathbb{R}^{n\times c}\)。这不是 PCA。邻居数和带宽都显式传入，不用 scikit-learn 的默认邻居数或 RBF 带宽。
+The implementation uses the c eigenvectors associated with the smallest eigenvalues of Ln, in ascending order, as F of shape n by c. This is spectral embedding, not PCA. Neighbor counts and bandwidths are passed explicitly rather than inherited from sklearn defaults.
 
-孤立点（度为 0）的 \(D^{-1/2}\) 对角元取 0，于是 \(L_n\) 在该行是单位向量。论文没有写这个边界。
+An isolated vertex uses \(D^{-1/2}_{ii}=0\), so its Ln row is a unit coordinate vector. The paper does not specify this boundary case.
 
-## 式 (5)–(8)：收缩目标
+## Equations (5)-(8): shrinkage objective
 
-谱嵌入 \(\{f_i\}\) 上再造 \(k\) 近邻图，\(W_{ij}=\exp(-\lVert f_i-f_j\rVert^2/\delta^2)\)。式 (5)–(7) 先写平方损失，式 (8) 改成行 \(\ell_{2,1}\)：
+A second k-neighbor graph is built on the spectral rows, with \(W_{ij}=\exp(-\lVert f_i-f_j\rVert^2/\delta^2)\). Equations (5)-(7) use squared losses; Equation (8) replaces them with row-wise \(\ell_{2,1}\):
 
 \[
 \min_G \lVert G-F\rVert_{2,1} + \gamma\sum_{ij} W_{ij}\lVert g_i-g_j\rVert_2,
 \quad G,F\in\mathbb{R}^{n\times c}.
 \]
 
-\(\lVert H\rVert_{2,1}=\sum_i\lVert h_i\rVert_2\)，\(h_i\) 是 \(H=G-F\) 的第 \(i\) 行。\(\sum_{ij}\) 按有序对求和；对称 \(W\) 的两条有向边都计入。
+Here \(\lVert H\rVert_{2,1}=\sum_i\lVert h_i\rVert_2\), with hi denoting row i of H=G-F. The ordered sum counts both directions of symmetric W.
 
-## 式 (9)–(10)：\(S\) 必须是 \(n\times n\)，并且按行
+## Equations (9)-(10): S must be n by n and row-wise
 
-式 (9) 的 \(\operatorname{Tr}((G-F)^\top S(G-F))\) 要求 \(S\) 为 \(n\times n\)。式 (10) 把 \(S\) 写成
+The trace \(\operatorname{Tr}((G-F)^\top S(G-F))\) in Equation (9) requires n by n S. Equation (10) prints
 
 \[
 S=\operatorname{diag}\Big(\frac{1}{2\lVert h_1\rVert_2},\ldots,\frac{1}{2\lVert h_d\rVert_2}\Big),
 \]
 
-并说 \(H=[h_1,\ldots,h_d]\)，\(d\) 是谱嵌入维数。若 \(h_j\) 是列向量，\(S\) 是 \(c\times c\)（文中混用了原始维数 \(d\) 和嵌入维数）。这与式 (9) 的乘法顺序矛盾，也与 Nie 等人 2010 年按样本（行）做 \(\ell_{2,1}\) 抗异常值的写法矛盾。
+It also writes \(H=[h_1,\ldots,h_d]\), where d denotes embedding dimension. If hj is a column, S is c by c; the paper mixes original and embedding dimensions. This conflicts with Equation (9) and with sample-wise row \(\ell_{2,1}\) robustness in Nie et al. (2010).
 
-**纠正：** \(S\) 为 \(n\times n\) 对角阵，
+**Correction:** use an n by n diagonal S,
 
 \[
 S_{ii}=\frac{1}{2\max(\lVert h_i\rVert_2,\varepsilon)},
 \]
 
-\(h_i\) 是 \(G-F\) 的第 \(i\) 行。\(\varepsilon\) 只防止除零。这不是新的正则项。
+where hi is row i of G-F. Epsilon prevents division by zero and does not introduce a new regularizer.
 
-## 式 (11)–(13) 与 Algorithm 1 第 10 行
+## Equations (11)-(13) and Algorithm 1 line 10
 
-式 (11)：\(\widetilde W_{ij}=W_{ij}/(2\lVert g_i-g_j\rVert_2)\)，\(\widetilde L=\widetilde D-\widetilde W\)，\(\widetilde D_{ii}=\sum_j\widetilde W_{ij}\)。这是组合拉普拉斯，不是式 (4) 的归一化拉普拉斯。
+Equation (11) defines \(\widetilde W_{ij}=W_{ij}/(2\lVert g_i-g_j\rVert_2)\), \(\widetilde L=\widetilde D-\widetilde W\), and \(\widetilde D_{ii}=\sum_j\widetilde W_{ij}\). This is a combinatorial Laplacian, distinct from the normalized Laplacian in Equation (4).
 
-式 (12) 写成
+Equation (12) is
 
 \[
 \min_G \operatorname{Tr}((G-F)^\top S(G-F))+\gamma\operatorname{Tr}(G^\top\widetilde L G).
 \]
 
-对 \(G\) 求导并令其为 0，得到式 (13)：
+Differentiation in G and stationarity yield Equation (13):
 
 \[
 G=(S+\gamma\widetilde L)^{-1}SF.
 \]
 
-Algorithm 1 第 10 行写成 \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\)。这里把 \(\widetilde L\) 换成了 \(\widetilde W\)，把 \(F\) 换成了 \(X\)。第 4 行还把依赖 \(G\) 的 \(\widetilde W\) 放在循环外。
+Algorithm 1 line 10 instead gives \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\), substituting W for L and X for F. Line 4 also places the G-dependent reweighted W outside the loop.
 
-**实现式 (13)，不用第 10 行。** 每次迭代都用当前 \(G\) 重算 \(\widetilde W\) 和 \(\widetilde L\)。线性系统用 `scipy.sparse.linalg.spsolve` 求解，不形成显式逆。\(S_{ii}>0\) 且 \(\gamma\ge 0\) 时，\(S+\gamma\widetilde L\) 对称正定；调用前仍做一次 \((A+A^\top)/2\)，只为去掉浮点不对称。
+**This implementation follows Equation (13), not line 10.** Reweighted W and L are rebuilt from current G each iteration. scipy.sparse.linalg.spsolve solves the linear system without an explicit inverse. Positive Sii and nonnegative gamma make S+gamma L symmetric positive definite; `(A+A.T)/2` removes numerical asymmetry before solving.
 
-\(G_0=F\)。论文只写 \(G_0\in\mathbb{R}^{n\times c}\)，没有给初值。这是假设。此时 \(H_0=0\)，式 (10) 除以零。若用 \(\varepsilon\) 作为第一次的分母下界，\(S\sim 1/\varepsilon\)，第一步的位移是 \(O(\varepsilon)\)，迭代停在 \(F\) 附近，而 \(F\) 一般不是式 (8) 的驻点。因此**只有第一次**全零残差使用另一个有限尺度：当前 \(G\) 各行两两距离的正值中位数。之后各次迭代，以及单独为零的行，仍用 \(\varepsilon\)。若每次靠近 \(F\) 都重新使用这个大尺度，迭代会周期性地被弹开，单测里能看到步长回到第一步。这个一次性尺度是数值纠正，默认记录在 `initial_zero_residual_floor`。传入 `zero_residual_floor="eps"` 可恢复“始终用 \(\varepsilon\)、因而停在 \(F\)”的行为。
+G0=F is an assumption: the paper specifies only its dimensions. At that start H0=0 and Equation (10) divides by zero. Using epsilon as the initial denominator yields S of order 1/epsilon and an initial O(epsilon) movement, often leaving the iteration near F even when F is not stationary. Only the first all-zero residual uses the median positive pairwise row distance as a finite scale. Subsequent zeros use epsilon. Reusing the large scale whenever G approaches F can repeatedly restart the initial step and cause cycles, as unit tests demonstrate. The one-time scale is recorded as `initial_zero_residual_floor`; `zero_residual_floor="eps"` retains the older near-F behavior.
 
-## 式 (14)–(18) 的系数
+## Coefficients in Equations (14)-(18)
 
-引理 1：对非零 \(g,g^t\in\mathbb{R}^{c}\)，
+Lemma 1, for nonzero \(g,g^t\in\mathbb{R}^c\), states
 
 \[
 \lVert g\rVert_2-\frac{\lVert g\rVert_2^2}{2\lVert g^t\rVert_2}
@@ -79,11 +81,11 @@ Algorithm 1 第 10 行写成 \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\)。�
 \lVert g^t\rVert_2-\frac{\lVert g^t\rVert_2^2}{2\lVert g^t\rVert_2}.
 \]
 
-式 (16) 与式 (17) 相加后，二次项抵消，得到式 (18) 的单调性。这一步代数在 \(\widetilde W_{ij}=W_{ij}/(2\lVert g_i^t-g_j^t\rVert_2)\) 的定义下是闭合的。它监控的是式 (8) 的标量目标，本身不经过迹。
+Adding Equations (16) and (17) cancels the quadratics and yields Equation (18) monotonicity. This scalar Equation (8) argument is algebraically consistent with \(\widetilde W_{ij}=W_{ij}/(2\lVert g_i^t-g_j^t\rVert_2)\); it does not pass through a trace.
 
-迹和求和并不相等。手算例子：\(G=(0.2,0.8)^\top\)，\(W_{01}=W_{10}=1\)，距离 \(0.6\)。
+The trace and ordered sum differ by a factor. Take \(G=(0.2,0.8)^\top\), \(W_{01}=W_{10}=1\), and distance 0.6:
 
-| 量 | 值 |
+| Quantity | Value |
 | --- | --- |
 | \(\sum_{ij}W_{ij}\lVert g_i-g_j\rVert_2^2\) | \(0.72\) |
 | \(\sum_{ij}W_{ij}\lVert g_i-g_j\rVert_2\) | \(1.2\) |
@@ -91,7 +93,7 @@ Algorithm 1 第 10 行写成 \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\)。�
 | \(\sum_{ij}\widetilde W_{ij}\lVert g_i-g_j\rVert_2^2\) | \(0.6\) |
 | \(\operatorname{Tr}(G^\top\widetilde L G)\) | \(0.3\) |
 
-因此在展开点上
+Thus at the expansion point,
 
 \[
 \sum_{ij}\widetilde W_{ij}\lVert g_i-g_j\rVert_2^2
@@ -99,15 +101,15 @@ Algorithm 1 第 10 行写成 \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\)。�
 = \tfrac12\sum_{ij}W_{ij}\lVert g_i-g_j\rVert_2.
 \]
 
-式 (15) 最小化 \(f(G)+\gamma\sum_{ij}\widetilde W_{ij}\lVert g_i-g_j\rVert_2^2\)。对对称 \(W\)，\(\sum_{ij}\widetilde W_{ij}\lVert\cdot\rVert_2^2=2\operatorname{Tr}(G^\top\widetilde L G)\)，所以这个主化子的驻点是
+Equation (15) minimizes \(f(G)+\gamma\sum_{ij}\widetilde W_{ij}\lVert g_i-g_j\rVert_2^2\). Symmetry gives \(\sum_{ij}\widetilde W_{ij}\lVert\cdot\rVert_2^2=2\operatorname{Tr}(G^\top\widetilde L G)\), so its stationary system is
 
 \[
 (S+2\gamma\widetilde L)G = SF.
 \]
 
-式 (12) 写成 \(\gamma\operatorname{Tr}(G^\top\widetilde L G)\)，其驻点才是式 (13) 的 \(\gamma\widetilde L\)。式 (13) 的图系数比式 (8) 的主化子少一个 2。
+Equation (12) instead has gamma times the trace, producing the gamma L coefficient in Equation (13). That coefficient lacks a factor 2 relative to the Equation (8) majorizer.
 
-对式 (8) 直接求导可以得到同一个因子。\(W\) 对称时
+Direct differentiation of Equation (8) gives the same factor. For symmetric W,
 
 \[
 \frac{\partial}{\partial g_k}\sum_{ij}W_{ij}\lVert g_i-g_j\rVert_2
@@ -117,29 +119,29 @@ Algorithm 1 第 10 行写成 \(G_{t+1}=(S_t+\gamma\widetilde W)^{-1}S_t X\)。�
 = 2S_{kk}(g_k-f_k).
 \]
 
-令梯度为零即 \((S+2\gamma\widetilde L)G=SF\)。
+Setting this gradient to zero gives \((S+2\gamma\widetilde L)G=SF\).
 
-**锁定实现仍求解式 (13)，系数是 \(\gamma\) 而不是 \(2\gamma\)。** 因此式 (13) 的不动点对应的是把式 (8) 的图项系数换成 \(\gamma/2\) 之后的凸问题，而不是印出来的式 (8)。单测在 \(n=6\)、\(c=2\)、链式 \(W\)、\(\gamma=0.8\)、随机种子 1 上，用 CVXPY 1.9.3 / CLARABEL 独立求解两个凸问题：式 (13) 的 \(G\) 与 \(\gamma/2\) 问题的解一致（目标约 \(3.844\)，最大绝对差约 \(2\times 10^{-5}\)）；同一 \(G\) 上印出来的式 (8) 目标约 \(4.537\)，而式 (8) 本身的最优值约 \(4.021\)。不把二者称为等价。
+**The implementation locked at this historical stage still solved Equation (13), with gamma rather than 2 gamma.** Its fixed point corresponds to Equation (8) with a half-gamma graph coefficient. On n=6, c=2, chain W, gamma=0.8, and seed 1, independent CVXPY 1.9.3 / CLARABEL solves gave agreement with the half-gamma problem: objective about 3.844 and maximum difference about 2e-5. The same G had printed Equation (8) value about 4.537, versus its optimum about 4.021. These are not equivalent targets.
 
-式 (12) 的二次函数（\(S\) 和 \(\widetilde L\) 冻结）另用 `numpy.linalg.solve` 和 `scipy.optimize`（L-BFGS-B）独立最小化，与稀疏求解一致。那是式 (12) 的核对，不是式 (8) 的核对。
+The frozen-S/L Equation (12) quadratic was independently checked with numpy.linalg.solve and scipy.optimize L-BFGS-B, agreeing with the sparse solve. That checks Equation (12), not Equation (8).
 
-## 监控哪一个目标
+## Monitored quantities
 
-每次迭代记录：
+Each iteration records:
 
-- `equation8_objective`：式 (8) 的原始范数，不加 \(\varepsilon\)。
-- `sqrt_smoothed_equation8_objective`：每个欧氏范数换成 \(\sqrt{\lVert v\rVert_2^2+\varepsilon^2}\)。这是平滑目标，和平方根平滑、以及分母里的 \(\max(\lVert v\rVert_2,\varepsilon)\)，是三个不同的函数。
+- `equation8_objective`: the original norm objective without epsilon.
+- `sqrt_smoothed_equation8_objective`: replaces each norm with \(\sqrt{\lVert v\rVert_2^2+\varepsilon^2}\). This smooth objective, the unsmoothed norm, and the floored denominator \(\max(\lVert v\rVert_2,\varepsilon)\) are distinct.
 
-历史里的线性残差是冻结的 \(S,\widetilde L\) 下 \(\lVert(S+\gamma\widetilde L)G-SF\rVert_F\)。返回值里的 `fixed_point_residual` 是在最终 \(G\) 上重算 \(S\) 和 \(\widetilde L\) 之后的残差。近邻距离落到 \(\varepsilon\) 上时，后者可以明显大于前者，因为 \(\widetilde W\) 对距离很敏感。
+Historical linear residuals use frozen S and L in \(\lVert(S+\gamma\widetilde L)G-SF\rVert_F\). `fixed_point_residual` rebuilds these at final G. When edge lengths reach epsilon, the latter can be much larger because reweighted W is sensitive to distance.
 
-论文没有给停止准则。实现用相对 Frobenius 步长 \(\lVert G_{t+1}-G_t\rVert_F\le \mathrm{tol}(1+\lVert G_t\rVert_F)\)，默认 \(\mathrm{tol}=10^{-6}\)，`max_iter=100`。非光滑重加权在步长约 \(10^{-8}\) 处会有数值抖动，把 `tol` 收到 \(10^{-12}\) 不一定能标成收敛，即使不动点残差已经很小。
+The paper does not state a stopping rule. The implementation uses \(\lVert G_{t+1}-G_t\rVert_F\le\mathrm{tol}(1+\lVert G_t\rVert_F)\), default tol=1e-6 and max_iter=100. Nonsmooth reweighting can jitter at steps of order 1e-8; reducing tolerance to 1e-12 need not yield a convergence flag even when the rebuilt residual is small.
 
-## 带宽、对称化和 K-means
+## Bandwidth, symmetrization, and K-means
 
-\(\delta\) 在文中未指定。复现假设：\(\delta^2\) 等于该图上有向 \(k\) 近邻平方距离中正值的中位数；没有正距离时用 \(1\)。原始特征上的图和嵌入上的图各自算自己的中位数。
+The paper does not specify delta. The reproduction uses the median positive directed k-neighbor squared distance as delta squared, falling back to 1 when no positive distance exists. The raw-feature and spectral graphs each calculate their own scale.
 
-“\(k\) 近邻”没有说明无向化。实现采用并集：\(i\) 列出 \(j\) 或 \(j\) 列出 \(i\) 则连边，权重为该距离的高斯值，对角线为 0。平局时较小的下标优先。\(n\le 1500\) 用稳定全排序；更大时用分块 `argpartition`，截断边界上的平局与全排序可能不同。
+The paper does not specify symmetrization. The implementation uses union support: either directed neighbor relation creates an edge, with Gaussian weight and zero diagonal. Ties prefer lower indices. n<=1500 uses stable full sorting; larger inputs use blocked argpartition, whose boundary ties may differ.
 
-最终在 \(G\) 上做 K-means（`k-means++`，Lloyd，显式 `n_init` 和 `random_state`）。标签只作为输出，不写回 \(W\)、\(F\) 或 \(G\)。论文实验写 50 次重复，那是实验协议，方法默认 `n_init=10`，调用时可以改。
+Final K-means uses G, Lloyd updates, explicit n_init and random_state, and the library default k-means++. Output labels do not modify W, F, or G. The 50 repetitions belong to the experiment protocol; the method default n_init=10 remains caller-adjustable.
 
-特征向量符号：每一列绝对值最大的元素为正。这只去掉符号自由度，不改变子空间；重数大于 1 时基的旋转仍不唯一。
+Eigenvector signs are fixed by making the largest-magnitude entry in each column positive. This removes sign freedom without changing the subspace; rotations within repeated eigenspaces remain nonunique.

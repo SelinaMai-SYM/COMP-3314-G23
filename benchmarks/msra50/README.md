@@ -1,81 +1,92 @@
-# MSRA50
+# MSRA source versions
 
-论文身份状态：**CANDIDATE_FOUND**（文献指针）后仍 **NOT_FOUND**（无文件）。Strict URL 轮：`BLOCKED_DATA_NOT_OBTAINED`。计数相符不等于身份。不是 **DOWNLOADED_UNVERIFIED**。
+**Current status, 2026-11-10:** native **MSRA25_EBSA_16x16** has been obtained
+and checksum-verified. It is an adapted-resolution reconstruction with 1,799
+rows and twelve classes. The strict original `load_dataset("MSRA50")` endpoint
+remains unavailable because historical source identity and the stated 32x32
+input have not been recovered. The separate Fast-CD 32x32 lead returned a
+public HTTP 429 response; that is an access restriction, not proof of permanent
+deletion. See [source recovery](../../docs/submission_refresh/source_recovery.md).
 
-索引：[docs/round2_source_of_truth.md](../../docs/round2_source_of_truth.md)。清单：`manifest.yaml`。
+## Native EBSA candidate
 
-## 身份
+The pinned EBSA source contains 1,799 images and 256 native pixel features.
+Its 16x16 resolution differs from the SSC paper's stated 32x32 preparation.
+The loader keeps all rows, including thirteen extra exact duplicate rows, and
+preserves source order. All duplicate groups have consistent labels. No resize
+or deduplication is applied. The MATLAB-declared double variables are read with
+`scipy.io.loadmat(mat_dtype=True)`, then pixel values 0-255 are divided by 255.
 
-Chang et al. 写 MSRA50：1799 张、12 类、缩到 32×32。无 URL、无引用。
+| Source file | Bytes | SHA256 |
+|---|---:|---|
+| EBSA `MSRA25.mat` at `c72bfbf13ac0e67db1a756eb26d56b7b996b64cb` | 387675 | `3c8681c40ebbed2f6dc2d2f30e7c5195e947467e8cf6797faa44753a190cd659` |
 
-同组 Chang, Nie, Yang 等，*Improved Spectral Clustering via Embedded Label Propagation*（arXiv:1411.6241）写：“The MSRA50 dataset (He et al. 2004) consists of 1799 images and 12 classes”，表列为 1024 维。其参考文献 “He et al. 2004” 实为 *Face Recognition Using Laplacianfaces*, IEEE TPAMI 27(3):328–340（期刊 2005）。
+Retrieve the file into the independent data root:
 
-He, Yan, Hu, Zhang，ICCV 2003 *Learning a Locality Preserving Subspace for Visual Recognition*，以及 He, Yan, Hu, Niyogi, Zhang，TPAMI 2005：MSRA 库在微软亚洲研究院采集，**12 人**，每人每场 **64–80** 张正面，两场，裁到 **32×32**。**两文都不写 1799，都没有下载地址。**
-
-12×2×(64..80) = 1536..1920，1799 落在区间内。这只说明算术可能，**不能**当作已找到该文件。
-
-## Chang et al. 2015 原文 vs 推断
-
-- **原文：** 1799 / 12 / 32×32。
-- **推断（不升格）：** 可能是 He 的 MSRA 人脸两场合计后的某个裁剪矩阵。
-- **禁止：** 用 MSRA-B、MSRA10K、MSRA-TD500、MSRA-CFW 顶名。清华 TUNA / PyPI 不是数据集源。
-
-## 本机文件
-
-无。无 SHA-256。
-
-## 本轮实际请求
-
-| URL | HTTP | 结果 |
-| --- | --- | --- |
-| `http://www.cad.zju.edu.cn/home/dengcai/Data/data.html` | 200 | 页面无 MSRA50 / BinAlpha 文件 |
-| `http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html` | 200 | 仅 Yale / ORL / Extended Yale B |
-| `https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf` | 200 | ICCV 2003 全文；MSRA 无 1799、无 URL |
-| `https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf` | 200 | TPAMI 2005 副本；12 人、64–80/场 |
-| `https://arxiv.org/abs/1411.6241` | 200 | 同组论文引用 He 2004 + 1799/12/1024 |
-| `https://arxiv.org/pdf/1411.6241.pdf` | 404 | 该 PDF 路径当天无效 |
-
-未下载任何 MSRA-B / 10K / TD500。
-
-## 版本对照
-
-无。`load_dataset("MSRA50")` 抛 `DatasetUnavailable`。
-
-## 样本选择 / 预处理
-
-未知。未应用。
-
-## 完整性测试（已跑）
-
-```text
-python3 -m pytest benchmarks/msra50/test_msra50.py -q
+```bash
+python -m benchmarks.msra50.retrieve --data-root /path/to/benchmarks
 ```
 
-## 哪些实验用了这个版本
-
-无。Phase 1 / repair_round1 / Round 2 都没有 MSRA50 作业。无文件。
-
-## 复现命令（本轮实测）
+Then load the explicit version:
 
 ```python
+from pathlib import Path
 from benchmarks import load_dataset
-from benchmarks.exceptions import DatasetUnavailable
-try:
-    load_dataset("MSRA50")
-except DatasetUnavailable as exc:
-    assert "1799" in str(exc)
+X, y, metadata = load_dataset("MSRA25_EBSA_16x16",
+                             root=Path("/path/to/benchmarks/msra50/data"))
+assert X.shape == (1799, 256)
 ```
 
-## Task 1（2026-10-21）
+`load_dataset("MSRA50", version="ebsa16", root=...)` is an equivalent explicit
+interface. The [manifest](manifest_ebsa16.yaml) records the native range, class
+counts, duplicate checks and reader convention. Redistribution rights have not
+been established, so the raw file remains outside Git. Public availability
+alone does not establish permission to redistribute it. Upsampling would not
+recover missing native pixels or establish historical identity.
 
-仍无 1799/12 文件。邓蔡三页 HTTP **200**，无 MSRA50。GitHub 仓库搜索 `MSRA50 mat` `total_count=0`。新保存同组 OA：`resources/Chang_Nie_Yang_Huang_2014_arxiv_1411.6241v1.pdf` 463461 字节 SHA-256 `d3d00b0fa2eeff938d65800a3a7e4d1b08987de73932e9bd04de801e708badb2`（`arxiv.org/pdf/1411.6241v1.pdf` **200**；无版本路径 **404**）。未下 MSRA-B/10K/TD500。矩阵状态：`NOT_FOUND`。
+## Historical source investigation (2026-10-21)
 
-## Strict URL Task 1（2026-10-21 晚）
+Chang et al. state MSRA50 as 1,799 images, twelve classes, resized to 32x32,
+without a URL or a source citation. The related Chang, Nie, Yang et al. paper,
+*Improved Spectral Clustering via Embedded Label Propagation*
+(arXiv:1411.6241), states the same 1,799/twelve counts and 1,024 features,
+referring to “He et al. 2004.” Its cited *Face Recognition Using Laplacianfaces*
+is IEEE TPAMI 27(3):328-340, published in 2005.
 
-无下载 URL。本地 `data/` 仍空。UTS 署名 AAAI PDF 与同组 1411.6241v1 只有 1799/12/1024 文献计数。状态：`BLOCKED_DATA_NOT_OBTAINED`。
+He, Yan, Hu and Zhang's ICCV 2003 *Learning a Locality Preserving Subspace for
+Visual Recognition* and He, Yan, Hu, Niyogi and Zhang's TPAMI 2005 paper describe
+an MSRA collection of twelve people, 64-80 frontal images per person in each
+of two sessions, cropped to 32x32. Neither gives the 1,799 count or a download
+URL. The arithmetic range 12 x 2 x (64-80) = 1,536-1,920 contains 1,799, but
+that does not identify an actual file.
 
-## v3 status
+The hypothesis that the paper used a particular two-session MSRA crop remains
+unverified. MSRA-B, MSRA10K, MSRA-TD500 and MSRA-CFW were not substituted.
+Package indexes or mirrors such as PyPI/TUNA are not evidence of dataset
+identity. Phase 1, repair_round1 and Round 2 ran no MSRA50 clustering jobs.
+At those dates no 1,799-row matrix had been obtained; the historical status
+was `BLOCKED_DATA_NOT_OBTAINED`, rather than `DOWNLOADED_UNVERIFIED`.
 
-Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+| Historical request | HTTP | Finding |
+|---|---:|---|
+| `http://www.cad.zju.edu.cn/home/dengcai/Data/data.html` | 200 | No MSRA50 or BinAlpha matrix |
+| `http://www.cad.zju.edu.cn/home/dengcai/Data/FaceData.html` | 200 | Yale, ORL and Extended Yale B links only |
+| `https://lear.inrialpes.fr/people/triggs/events/iccv03/cdrom/iccv03/0385_he.pdf` | 200 | ICCV 2003 text; no 1,799 count or data URL |
+| `https://people.engr.tamu.edu/rgutier/web_courses/cpsc689_s07/he2005laplacianfaces.pdf` | 200 | Twelve people, 64-80 images per session |
+| `https://arxiv.org/abs/1411.6241` | 200 | Related-paper count and He citation |
+| `https://arxiv.org/pdf/1411.6241.pdf` | 404 | That unversioned PDF path failed on the recorded date |
 
-Round 2 status: `BLOCKED_NO_VERIFIED_DATA_URL`. No MSRA50 file was invented, and the arXiv HTML page was not saved as data.
+Task 1 rechecked three Deng Cai pages (HTTP 200) without finding MSRA50.
+A GitHub repository search for `MSRA50 mat` returned zero repositories.
+The versioned related-paper PDF was saved as
+`resources/Chang_Nie_Yang_Huang_2014_arxiv_1411.6241v1.pdf`, 463,461 bytes,
+SHA256 `d3d00b0fa2eeff938d65800a3a7e4d1b08987de73932e9bd04de801e708badb2`.
+`https://arxiv.org/pdf/1411.6241v1.pdf` returned 200. The UTS-hosted AAAI paper
+and the related paper supplied literature counts rather than actual arrays.
+No unrelated MSRA dataset was downloaded under the MSRA50 name.
+
+See [Round 2 source records](../../docs/round2_source_of_truth.md),
+[the historical manifest](manifest.yaml) and
+[the current source inventory](../../results/subset_search/source_inventory.csv).
+Run `python -m pytest benchmarks/msra50/test_msra50.py` to check that the strict
+original endpoint still rejects a substitute.

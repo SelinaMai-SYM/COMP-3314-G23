@@ -34,7 +34,11 @@ def pair_identity(F,W):
 def _cpu_guard(seconds):
     """ITIMER_PROF counts user and system CPU; it is separate from wall time."""
     previous=signal.getsignal(signal.SIGPROF);timer=signal.getitimer(signal.ITIMER_PROF)
-    def timeout(_signum,_frame):raise TimeoutError('solver audit CPU allocation')
+    began=time.process_time()
+    def timeout(_signum,_frame):
+        remaining=seconds-(time.process_time()-began)
+        if remaining>0.01:signal.setitimer(signal.ITIMER_PROF,remaining)
+        else:raise TimeoutError('solver audit CPU allocation')
     signal.signal(signal.SIGPROF,timeout);signal.setitimer(signal.ITIMER_PROF,max(.001,seconds))
     try:yield
     finally:
@@ -173,8 +177,8 @@ def audit_pair(F,W,*,output_dir,gammas=(1.,1000.),attempt_cpu_limit=1800.,flow_c
                         best_dual=max(duals,key=lambda r:r['dual']) if duals else None
                         kwargs={'G_init':best['G'],'q_init':None if best_dual is None else best_dual['q']}
                     with _cpu_guard(limit):
-                        record=solve(F,W,gamma,max_iter=pdhg_max_iter,time_limit=max(60.,limit*4),cpu_time_limit=max(.001,limit-.05),
-                            preconditioned=stage!='uniform_PDHG',return_checkpoint=True,**kwargs)
+                        record=solve(F,W,gamma,max_iter=pdhg_max_iter,time_limit=max(60.,limit*4),cpu_time_limit=max(.001,limit-2.),
+                            preconditioned=stage!='uniform_PDHG',return_checkpoint=True,check_every=5,**kwargs)
                 record['stage']=stage;record['same_frozen_pair']=identity
             except Exception as exc:
                 record={'stage':stage,'status':'CPU_LIMIT' if isinstance(exc,TimeoutError) else 'FAILED','error':repr(exc),'same_frozen_pair':identity}

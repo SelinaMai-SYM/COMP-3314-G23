@@ -5,7 +5,7 @@ from pathlib import Path
 from .core import ResourceLedger,atomic_json,THREAD_ENV
 
 def _execute(task,data_root,artifact_root):
-    os.environ.update(THREAD_ENV)
+    os.environ.update(THREAD_ENV);os.environ['COMP3314_ARTIFACT_ROOT']=str(artifact_root)
     if task['kind']=='subset':
         from experiments.subset_search.runner import run_candidate
         r=run_candidate(task['candidate'],data_root,artifact_root,task['cpu_limit'],task.get('profile',False))
@@ -18,8 +18,11 @@ def _execute(task,data_root,artifact_root):
     elif task['kind']=='graph':
         from .graph_repair import run_graph
         r=run_graph(task,data_root,artifact_root)
+    elif task['kind']=='validation':
+        from .validation_jobs import run_validation
+        r=run_validation(task,data_root,artifact_root)
     else:raise ValueError(task['kind'])
-    r['process_cpu_seconds']=__import__('time').process_time()
+    r.setdefault('process_cpu_seconds',__import__('time').process_time())
     atomic_json(Path(artifact_root)/'task_status'/(task['run_id']+'.json'),r)
 
 def run(tasks,data_root,artifact_root):
@@ -31,7 +34,18 @@ def run(tasks,data_root,artifact_root):
                 p.join();path=Path(artifact_root)/'task_status'/(t['run_id']+'.json')
                 r=json.loads(path.read_text()) if path.exists() else {'status':'KILLED_OR_CRASHED','cpu_seconds':None}
                 ledger.finish(t['run_id'],r.get('process_cpu_seconds',r.get('cpu_seconds')),r['status']);active.remove((p,t,start));print('FINISHED',t['run_id'],r['status'],flush=True)
-        while pending and len(active)<2:
+        aggregate_rss=0
+        if active:
+            import subprocess
+            try:
+                raw=subprocess.check_output(['ps','-o','rss=','-p',','.join(str(p.pid) for p,_,_ in active)],text=True)
+                aggregate_rss=sum(int(v)*1024 for v in raw.split())
+            except subprocess.CalledProcessError:pass
+            usage_path=Path(artifact_root)/'memory_sampling.json'
+            previous=json.loads(usage_path.read_text()) if usage_path.exists() else {'max_sampled_scheduler_children_rss_bytes':0}
+            if aggregate_rss>previous['max_sampled_scheduler_children_rss_bytes']:
+                atomic_json(usage_path,{'max_sampled_scheduler_children_rss_bytes':aggregate_rss,'scope':'active children of this scheduler; per-process peaks separately recorded','target_bytes':8*2**30})
+        while pending and len(active)<2 and aggregate_rss<8*2**30:
             t=pending[0];path=Path(artifact_root)/'task_status'/(t['run_id']+'.json')
             if path.exists():
                 previous=json.loads(path.read_text())

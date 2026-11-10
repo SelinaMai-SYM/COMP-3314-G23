@@ -153,6 +153,8 @@ def llc_normalized_embedding(
     kernel: str,
     gamma: float | None,
     dense_threshold: int = 512,
+    *,
+    return_state: bool = False,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """Smallest eigenvectors of ``(I-A)^T (I-A)``, then row-normalize.
 
@@ -191,7 +193,7 @@ def llc_normalized_embedding(
     if kernel == "gaussian" and gamma is None:
         scale = float(np.mean(np.linalg.norm(X, axis=1)))
         effective_gamma = scale ** 2 if scale > 0 else 1.0
-    return normalized, {
+    info = {
         "solver": solver,
         "eigenvalues": eigenvalues,
         "llc_ridge": float(reg),
@@ -200,6 +202,9 @@ def llc_normalized_embedding(
         "n_neighbors": int(n_neighbors),
         "n_samples": int(n_samples),
     }
+    if return_state:
+        info["fit_state"] = {"regression_matrix": regression, "raw_embedding": raw, "row_norms": row_norm}
+    return normalized, info
 
 
 def _initialize_rotation(embedding: np.ndarray, seed: int) -> np.ndarray:

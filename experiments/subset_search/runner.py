@@ -23,7 +23,13 @@ def source_record():
         files.extend(sorted((ROOT/folder).rglob('*.py')))
     from experiments.submission_refresh.core import digest
     hashes={str(f.relative_to(ROOT)):digest(f) for f in files}
-    return {'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'implementation_hash':identity(hashes),'source_files':hashes,'environment':environment_record()}
+    record={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'source_files':hashes,'implementation_hash':identity(hashes),'environment':environment_record(),'working_tree_dirty':bool(subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip())}
+    from threadpoolctl import threadpool_info
+    record['thread_libraries']=threadpool_info()
+    artifact_root=os.environ.get('COMP3314_ARTIFACT_ROOT')
+    if artifact_root:
+        record['source_archive']=ArtifactStore(artifact_root).put({str(f.relative_to(ROOT)):f.read_text() for f in files})
+    return record
 
 def scientific_cache_identity(candidate, data_root=None, *, profile=False):
     """Match source behavior, environment, protocol and available input bytes.
@@ -116,7 +122,7 @@ def run_candidate(candidate,data_root,artifact_root,cpu_limit=3600,profile=False
                 if not profile:atomic_json(prep_path,meta)
             result['preparation_cpu_seconds']=time.process_time()-cpu
             if profile:
-                timings=[]
+                timings=[];result['solver_timings']=timings
                 for variant in ['E8','E13']:
                     for gamma in GAMMAS:
                         t=time.process_time();out=shrink_embedding(F,W,gamma,variant=variant,max_iter=300,tol=1e-6,eps=1e-8)

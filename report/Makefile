@@ -1,10 +1,14 @@
-.PHONY: all clean figures
+.PHONY: all clean figures refresh-tables
+PYTHON ?= python3
+REPORT_DATE ?= 2026-11-10
 all: Group_23.pdf
+refresh-tables:
+	"$(PYTHON)" ../experiments/submission_refresh/reporting.py --root .. --date $(REPORT_DATE)
 figures:
 	bash ../scripts/build_ssc_pipeline.sh
 figures/ssc_two_graph_pipeline.pdf: figures/ssc_two_graph_pipeline.tikz figures/ssc_two_graph_pipeline.tex ../scripts/build_ssc_pipeline.sh
 	bash ../scripts/build_ssc_pipeline.sh
-main.pdf: figures/ssc_two_graph_pipeline.pdf main.tex references.bib neurips_2026.sty $(wildcard tables/*.tex) $(wildcard ../results/next_round/figures/*.pdf)
+main.pdf: refresh-tables figures/ssc_two_graph_pipeline.pdf main.tex references.bib neurips_2026.sty $(wildcard tables/*.tex) $(wildcard ../results/next_round/figures/*.pdf)
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex
 	bibtex main
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex

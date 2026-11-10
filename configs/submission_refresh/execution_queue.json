@@ -204,7 +204,29 @@
       "phase": "mandatory_baseline",
       "block": "slps",
       "dataset": "YaleB_cropped2414",
-      "cpu_limit": 1200
+      "cpu_limit": 1200,
+      "extra_configs": [
+        {
+          "n_neighbors": 5,
+          "alpha": 0.2,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "YaleB_dengcai32|spls|Y0|alpha=0.20|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "YaleB_dengcai32",
+          "source_dataset_transfer": true,
+          "role": "paired_existing_reported_setting"
+        },
+        {
+          "n_neighbors": 7,
+          "alpha": 0.2,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "YaleB_dengcai32|spls|Y0|alpha=0.20|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "YaleB_dengcai32",
+          "source_dataset_transfer": true,
+          "role": "paired_existing_reported_setting"
+        }
+      ]
     },
     {
       "run_id": "slps-YaleB_dengcai32-v1",
@@ -212,7 +234,29 @@
       "phase": "mandatory_baseline",
       "block": "slps",
       "dataset": "YaleB_dengcai32",
-      "cpu_limit": 1200
+      "cpu_limit": 1200,
+      "extra_configs": [
+        {
+          "n_neighbors": 5,
+          "alpha": 0.2,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "YaleB_dengcai32|spls|Y0|alpha=0.20|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "YaleB_dengcai32",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        },
+        {
+          "n_neighbors": 7,
+          "alpha": 0.2,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "YaleB_dengcai32|spls|Y0|alpha=0.20|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "YaleB_dengcai32",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        }
+      ]
     },
     {
       "run_id": "slps-ORL_att92-v1",
@@ -220,7 +264,29 @@
       "phase": "mandatory_baseline",
       "block": "slps",
       "dataset": "ORL_att92",
-      "cpu_limit": 1200
+      "cpu_limit": 1200,
+      "extra_configs": [
+        {
+          "n_neighbors": 5,
+          "alpha": 0.85,
+          "dimension": 40,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "ORL_att92|spls|Y0|alpha=0.85|d=40|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "ORL_att92",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        },
+        {
+          "n_neighbors": 7,
+          "alpha": 0.85,
+          "dimension": 40,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "ORL_att92|spls|Y0|alpha=0.85|d=40|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "ORL_att92",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        }
+      ]
     },
     {
       "run_id": "slps-JAFFE-v1",
@@ -228,7 +294,29 @@
       "phase": "mandatory_baseline",
       "block": "slps",
       "dataset": "JAFFE",
-      "cpu_limit": 1200
+      "cpu_limit": 1200,
+      "extra_configs": [
+        {
+          "n_neighbors": 5,
+          "alpha": 0.95,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "JAFFE|spls|Y0|alpha=0.95|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "JAFFE",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        },
+        {
+          "n_neighbors": 7,
+          "alpha": 0.95,
+          "dimension": 70,
+          "initialization": "SKLEARN_GREEDY_KMEANSPP",
+          "source_config_id": "JAFFE|spls|Y0|alpha=0.95|d=70|one_shot|SKLEARN_GREEDY_KMEANSPP|grid",
+          "source_dataset_id": "JAFFE",
+          "source_dataset_transfer": false,
+          "role": "paired_existing_reported_setting"
+        }
+      ]
     },
     {
       "run_id": "slps-MSRA25_EBSA_16x16-v1",
@@ -236,7 +324,8 @@
       "phase": "mandatory_baseline",
       "block": "slps",
       "dataset": "MSRA25_EBSA_16x16",
-      "cpu_limit": 1200
+      "cpu_limit": 1200,
+      "extra_configs": []
     },
     {
       "run_id": "msra-other-v1",
@@ -282,5 +371,12 @@
       "cpu_limit": 21600,
       "attempt_cpu_limit": 1800
     }
-  ]
+  ],
+  "slps_amendment": {
+    "reason": "Required inclusion of existing reported alpha/dimension and exact rounding protocol in paired k=5/7 controls",
+    "source": "results/final/generated/selection_manifest.jsonl closest_to_paper spls rows; preserved old ACC-only selection",
+    "before_slps_scores": true,
+    "primary_grid_unchanged": true,
+    "extras_also_use_all_50_seeds": true
+  }
 }

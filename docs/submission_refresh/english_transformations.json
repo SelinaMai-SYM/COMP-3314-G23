@@ -1,0 +1,163 @@
+[
+  {
+    "path": "SSC_method/README.md",
+    "original_sha256": "8401a40ef16eb9feee5f984cb42a93b742182dfd75e2819c21046616ad198802",
+    "english_sha256": "9250b144854f6b1b89e15fb727e1bde74a534b1ed95c595186d788da91f8ed4a",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/kmeans/README.md",
+    "original_sha256": "598e99041971b6e75c08301b58f8e6aed834fc0821ade0b11f557f1736b0d868",
+    "english_sha256": "bb357ea87611341b38937551870812e47b3d2052fc00a5a690257ed4d3fce917",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/lda_spectral/README.md",
+    "original_sha256": "ebc94371ed1ffb7fe466fbc1b099c6767b85aed44088372af6351b11a1ecc17b",
+    "english_sha256": "2403c0e16136a3643ee66bc7690cf275adb9122b18c33aaa50bdfd473954d5f5",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/llc/README.md",
+    "original_sha256": "9b2e9e6b52ec1e9f8eadd800b1a33d6c0d24123a6b1820c74496e350017c5094",
+    "english_sha256": "5ce3ee00f211ec75c6539e078abc3494964dbba0a8031c583d1e71f646390a8c",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/pca_kmeans/README.md",
+    "original_sha256": "0af8454d2b43f0bfd90d5a1a8adb9ad961f758ccbc36e0266b8f3d61f5d689e7",
+    "english_sha256": "846786713e1376278c7aa4e131cc8ac1042d92c56b73316f91cd8e6110a6d9f2",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/pca_spectral/README.md",
+    "original_sha256": "fc034d6ae4fe189344f7fc3db43f0b7c7e1a9c33fc80a3c8e74051bc9fc77fde",
+    "english_sha256": "adaeaf8a4270069ef5b7d83c28c150488bba96aed470b0b687fb02eae3610224",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "baselines/spectral_clustering/README.md",
+    "original_sha256": "4dd29a0275e152b2e2de878b4dfba2b268fd9af80a25499d7ce3342fadc51c39",
+    "english_sha256": "efaeb580f040d9571ce443b3b6803c63bc55bd7224b4a5d66b480165fe571ac2",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "environment/README.md",
+    "original_sha256": "bae3e60fce8420d90aeef3953919946bf357d7f9cb4787608bb881096f1f4784",
+    "english_sha256": "435d193c4be65c6022acfa8ce7fb737a7d50e4db8428c58c3d6c7425cc97b39f",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "scripts/run_strict_repro.py",
+    "original_sha256": "9f957ea6dcab26c2965a6d66bd6af11e65c0ca88cfda28ae9a615484f0ab5f22",
+    "english_sha256": "894a4f25bc113a6d62765b15fb81ef06097df7521e3838c1d089391044f6b11f",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/task2_experiment_completion.md",
+    "original_sha256": "06b16c6922cc7a44271a11f6748941a692665050b24df91849d7474e3c134470",
+    "english_sha256": "b49b65ee72014170cf529f17ccb58c5f1ff8717e232439cd8e6aa86c266fbd02",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/guideline_compliance.md",
+    "original_sha256": "bba59cee57a8c63749fa9e85128579620f5e5739dca30b517cd748badd1bee24",
+    "english_sha256": "7c6e726eb9ba8e835a719dac69c2d0036480143e461df394f641c17ae84d98cc",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/source_inventory.md",
+    "original_sha256": "746e2c8d4b8b22d776e0c76f4c61465ca7b008a6185778100392bb15a2fb472e",
+    "english_sha256": "3bba1bb5b2c826237fa5e69cec2aac03c70a0a72ccc83e50bbc60cf3e2ed5559",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/repair_round1_mathematical_resolution.md",
+    "original_sha256": "39f22c2dc9ca6d084a0869cf60800f04552d8b43e38e0e0adb8eaaf978aa9e59",
+    "english_sha256": "9098c8d531fd8f985bd458614dcd79b399a5fef5c179aa0112dc3bac516dd96f",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/ssc_mathematical_audit.md",
+    "original_sha256": "272a221dbfd452b98a250a4e1e064e029e7749bba4de2edb100e122463b510b5",
+    "english_sha256": "18b4bfd926177efdec45e1aef13924e225013061ff5b6a71a8799f33c0c6ad83",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/reproduction_deviations.md",
+    "original_sha256": "5750d25ce1a9dca1351a85f1510ac675c469d1eaa932024c266bd34a3b715f12",
+    "english_sha256": "95b2845b26d7243e4dcdc3ff2830e56c8607c27a6450da29d38ae555d94aefa9",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/task1_resource_completion.md",
+    "original_sha256": "e62d24abcfe915b71c50f96a5620b5c4db4bb464b89e29b8b574517455527123",
+    "english_sha256": "5949e53b7876b7853034674ff52a82b694fdaf99e13cbc207790f512faceecfa",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/round2_source_of_truth.md",
+    "original_sha256": "e2e1a1a5802ab7ba55a54aa3b234c376d24ecd9ad0a35938d9e3eb9650c3aaa6",
+    "english_sha256": "398047b1e6cecdd8e04f9356512795f828fb1621a4e3ed3d4609f40cccd25d7b",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/round2_missing_resources.md",
+    "original_sha256": "a084e54d5bced8a4117512117d6cdb0c2f055cb35bb4274fdcd2d7550e7e1689",
+    "english_sha256": "7bc2e2e15ce27f66e8765092f05dd416be07e04ecd473f45434ab316b43e0ccd",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/repair_round1_closest_reconstruction.md",
+    "original_sha256": "c2f5f9d175b6c0c086dd34976d2cb61c0ea6fdb39dc2c3dc6eb445969531f3d8",
+    "english_sha256": "65d46c372f114b663349a84bd4df261c4e7299d5621c2a99080003a054034cc4",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/round2_root_cause_analysis.md",
+    "original_sha256": "352d1fbddf986cb699e9875726a643adbee1291ce12bd66a02b6b7dab2cbe949",
+    "english_sha256": "561c6985760763cbe5f8f3d9697883b1c2784220f3fb2dd4c21b5836c9120b9b",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/resource_acquisition_matrix.md",
+    "original_sha256": "1c18a5b84cfee97093a8ba5b1a5fc86ff1426adfcce1788ac4158b5f1b123e76",
+    "english_sha256": "46062b3c7ea1559fe4ba4c898b4441d65eb9c73c3c3393db9f0d5cda67cfe9d0",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/round2_reproduction_matrix.md",
+    "original_sha256": "72b8f7678bb6321dac5adfe22999b2b3119ab17b570f6fc25154c026493864f5",
+    "english_sha256": "dd7e0c7c5f27d2de0e9999f3299da3a4bf9f2e7e517efada68bd76962fd5fca9",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  },
+  {
+    "path": "docs/repair_round1_issue_tracker.md",
+    "original_sha256": "d20221aae162ad1282023ca01fff44bc0e5c4a4f76eee15ec2cb913ed0ae5d59",
+    "english_sha256": "b61dc04ae4c327bf404bd5ad896ea3809b783a0aa1cf69db8fcc5980cbc3f948",
+    "transformation": "English translation; historical scientific records retained",
+    "original_available": "external backup english-originals and Git history"
+  }
+]

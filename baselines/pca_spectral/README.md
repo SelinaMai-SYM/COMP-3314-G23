@@ -75,9 +75,9 @@ Track A used **10 trials per dimension** (cost triage), not 50.
 python -m pytest baselines/pca_spectral -q
 ```
 
-## Task 1（2026-10-21）
+## Task 1 (2026-10-21)
 
-无新文件。作者代码 `CODE_NOT_FOUND`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+No new files were obtained. Author-code status: `CODE_NOT_FOUND`; matrix status: `COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
 
 ## v3 status
 

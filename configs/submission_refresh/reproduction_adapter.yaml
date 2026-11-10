@@ -1,0 +1,10 @@
+workspace: ""
+data_root: ""
+workers: 2
+datasets: datasets.yaml
+methods: ../v3/methods.yaml
+protocols: ../v3/protocols.yaml
+paper_reference: ../v3/paper_reference.yaml
+yaleb_diagnostics: ../v3/yaleb_diagnostics.yaml
+resource_sources: ../v3/resource_sources.yaml
+# This adapter uses the existing v3 module/registry; its version is not a branch dependency.

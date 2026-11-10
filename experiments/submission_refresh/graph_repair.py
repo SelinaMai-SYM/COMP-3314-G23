@@ -27,6 +27,40 @@ BUDGETS=(.15,.05)
 DEVELOPMENT=('ORL_att92','YaleB_cropped2414')
 
 
+def scientific_source_record(*, include_ensc=False):
+    """Separate fitting/evaluation behavior from unrelated editorial modules.
+
+    Exact project bytes and commit remain recorded. Cache reuse additionally
+    requires the actual F/W object identities and all problem parameters.
+    """
+    import ast
+    from .core import ROOT,digest
+    source=source_record()
+    paths=list((ROOT/'SSC_method').glob('*.py'))
+    paths += [p for p in (ROOT/'method_extension/next_round/certified_solver').glob('*.py') if not p.name.startswith('test')]
+    paths += [ROOT/'experiments/v2_kmeans_protocol/kmeans_trials.py',
+              ROOT/'experiments/v2_kmeans_protocol/metrics.py',ROOT/'experiments/next_round/evaluate.py',
+              ROOT/'experiments/submission_refresh/graph_repair.py']
+    if include_ensc:paths.append(ROOT/'method_extension/submission_refresh/ensc.py')
+    class WithoutDocstrings(ast.NodeTransformer):
+        def _strip(self,node):
+            self.generic_visit(node)
+            if node.body and isinstance(node.body[0],ast.Expr) and isinstance(node.body[0].value,ast.Constant) and isinstance(node.body[0].value.value,str):
+                node.body=node.body[1:] or [ast.Pass()]
+            return node
+        visit_Module=_strip
+        visit_FunctionDef=_strip
+        visit_AsyncFunctionDef=_strip
+        visit_ClassDef=_strip
+    behavior={str(path.relative_to(ROOT)):identity(ast.dump(WithoutDocstrings().visit(ast.parse(path.read_text())),include_attributes=False)) for path in sorted(paths)}
+    source['project_source_fingerprint']=source['implementation_hash']
+    source['implementation_hash']=identity({'schema':'graph-scientific-behavior-v1','files':behavior,'environment':source['environment']})
+    source['scientific_source_fingerprint']=source['implementation_hash']
+    source['scientific_behavior_files']=behavior
+    source['cache_fingerprint_scope']='graph/embedding/PDHG/rounding/evaluator behavior; excludes comments,docstrings,reporting and unrelated campaign orchestration'
+    for path in paths:source['source_files'][str(path.relative_to(ROOT))]=digest(path)
+    return source
+
 def row_unit(X):
     norms=np.linalg.norm(X,axis=1,keepdims=True)
     return np.divide(X,norms,out=np.zeros_like(X,dtype=float),where=norms>0)
@@ -426,7 +460,7 @@ def run_graph(task,data_root,artifact_root):
     start=time.perf_counter();cpu=time.process_time();store=ArtifactStore(artifact_root)
     run_id=task.get('run_id',identity(task));outfolder=store.root/'graph_jobs'/run_id
     outfolder.mkdir(parents=True,exist_ok=True)
-    source=source_record();result={'task':task,'source':source,'status':'RUNNING'}
+    source=scientific_source_record();result={'task':task,'source':source,'status':'RUNNING'}
     if task.get('cpu_limit') is not None:install_cpu_limit(task['cpu_limit'])
     try:
         with threadpool_limits(limits=1):

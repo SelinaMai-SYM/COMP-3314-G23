@@ -1,78 +1,78 @@
-# 课程要求对照
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-来源是 `3314 GP Guidelines.pages` 解压后的正文，以及 NeurIPS 2026 模板源文件。组员姓名在这些材料里不存在。组别 Group 23 只从阶段计划中的仓库名 `COMP-3314-G23` 推断，需要人工确认。本文件不给评分权重。
+# Course requirement cross-check
 
-## 已读到的要求
+The historical sources were text extracted from `3314 GP Guidelines.pages` and the NeurIPS 2026 template. They did not contain member names. At this stage Group 23 was inferred from the planned repository name `COMP-3314-G23` and still needed confirmation. This document does not invent grading weights.
 
-### 选题与分析
+## Requirements read from the materials
 
-- 选择并研读一篇与课程主题相关的机器学习论文，优先来自 ICML、ICLR、NeurIPS、AAAI、CVPR、ACL、JMLR、Machine Learning、TMLR，以及 IEEE TNNLS、TPAMI、TIP、TCSVT。不确定时先问教师或助教。
-- 说明问题表述、动机、方法和主要贡献。
-- 把方法连接到课程概念。
-- 讨论论文中的实验设置和结果，以及哪些证据支持其结论。
-- 批判分析假设、优点、局限，以及可能的改进或扩展。
-- 本组论文是 Chang 等人，AAAI 2015，*A Convex Formulation for Spectral Shrunk Clustering*。AAAI 在指南的 AI/applied 会议列表中。
+### Paper choice and analysis
 
-### 书面报告
+- Select and study a machine-learning paper related to the course, preferably from ICML, ICLR, NeurIPS, AAAI, CVPR, ACL, JMLR, Machine Learning, TMLR, or IEEE TNNLS, TPAMI, TIP, TCSVT. Consult the instructor or teaching assistant when uncertain.
+- Explain the problem, motivation, method, and main contributions, and connect them to course concepts.
+- Discuss the experimental setup and results, identifying the evidence supporting the conclusions.
+- Critically analyze assumptions, strengths, limitations, and possible improvements or extensions.
+- The selected paper was Chang et al., AAAI 2015, *A Convex Formulation for Spectral Shrunk Clustering*. AAAI appeared in the guideline's AI/applied conference list.
 
-指南里有两处并列的页数说法，这里都照录：
+### Written report
 
-1. Deliverables：Written Report（3–4 pages, prepared in LaTeX），并列出建议内容：问题与动机、方法与课程概念、实验设置与结果的讨论、批判分析、自己的见解或扩展；若做复现，还要写实现范围、与原文结果的比较、遇到的困难，以及代码仓库链接。引用要清楚，论文中的图表和本组自己的结果要分开标注。
-2. Report Submission：No hard requirements on the template and page limit, but a suggested template will be in NeurIPS style。紧接着又写 Maximum 4 pages main text (references and appendix excluded)。使用 preprint 选项，即 `\usepackage[preprint]{neurips_2026}`，并列出组员姓名和单位。只收 PDF。文件名 `Group_xx`。若有复现代码，在报告中给出公开 GitHub 链接，不必上传代码包。
+The guideline contained both of the following statements:
 
-本阶段采用的读法：3–4 页 LaTeX 是建议篇幅；同一节明确写了没有硬性模板和页数限制。相邻的 “Maximum 4 pages main text” 一并记录，留待写报告时由课程组确认，这里不把它改写成扣分规则。NeurIPS 模板自身的 9 页主会限制是会议说明，不是这门课的页数上限。
+1. Deliverables described a Written Report of 3-4 pages, prepared in LaTeX. Suggested content included the problem and motivation, method and course connections, experiments, critical analysis, and the group's insights or extensions. Reproduction work should state its implementation scope, compare with the paper, discuss difficulties, and link the repository. Citations should distinguish the paper's figures/results from the group's own.
+2. Report Submission stated that there were no hard requirements on template and page limit, suggested NeurIPS style, and then specified a maximum of four main-text pages excluding references and appendix. It required preprint mode, `\usepackage[preprint]{neurips_2026}`, member names and affiliations, PDF submission named `Group_xx`, and a public GitHub link when reproduction code was available. A separate code archive was unnecessary.
 
-报告截止：2026-11-29 23:59（作业打开时间为 2026-10-13 00:00，Due 显示 Sunday, 29 November 2026, 11:59 PM）。指南写明报告截止晚于幻灯片，是为了留时间打磨报告。
+The historical reading treated the 3-4-page LaTeX description as suggested length and retained the adjacent four-main-page statement without inventing a deduction rule. The current submission follows the explicit four-main-page maximum. The NeurIPS template's nine-page conference limit is not the course limit.
 
-组员姓名和单位：**材料中没有，必须确认后才能写入报告。** 不要编造姓名、邮箱或基金号。
+Report deadline: 2026-11-29 23:59; opening time: 2026-10-13 00:00. The displayed due time was Sunday, 29 November 2026, 11:59 PM. The guideline placed the report after the slides to allow further refinement.
 
-### 可选复现加分
+Names and affiliations were absent from the materials at this historical stage and needed confirmation. Names, email addresses, and grant numbers must not be invented.
 
-- 可以复现论文中的数值、图或实验，完整或部分都可以。
-- 需要说明工作范围，并与论文结果比较，讨论差异和困难。
-- 在没有公开官方代码时从零实现，会在加分评估里得到额外考虑。本目录没有官方代码。
-- 若提交代码，放在公开 GitHub 仓库，包含 `README.md`（论文信息、环境、运行方法、复现结果），并区分自己的代码和复用代码。
-- 加分文字是：up to 10 additional percentage points, assessed separately from the base score。这是单独评估的最多 10 个百分点数，不是基础分内部的权重。
+### Optional reproduction credit
 
-### 展示
+- Numerical results, figures, or experiments may be reproduced fully or partially. State the scope, comparison, discrepancies, and difficulties.
+- A from-scratch implementation when official code is unavailable receives additional consideration. This project did not have official code.
+- Submitted code should be public on GitHub with a README describing the paper, environment, commands, results, and the distinction between original and reused code.
+- The guideline allowed up to 10 additional percentage points, assessed separately from the base score. This was not a weight within the base score.
 
-- 每组 9 分钟讲解加 3 分钟问答，成员都要参加。
-- 内容包括论文概览、方法与课程概念、证据与结果、批判分析、小组收获；若做了复现，在时间内简要报告做法、结果、比较和教训。
-- 幻灯片截止：2026-11-15 23:59（打开时间 2026-10-13 00:00）。文件名 `Group_xx`。截止后不能修改。
-- **本阶段不制作幻灯片。**
+### Presentation
 
-### 评分表里读到的文字
+- Nine minutes of presentation and three minutes of questions; all members participate.
+- Cover the paper, course connections, evidence, critical analysis, and lessons. Reproduction details and comparisons should fit within the available time.
+- Slides deadline: 2026-11-15 23:59; opening: 2026-10-13 00:00. Filename: `Group_xx`; changes after the deadline were not permitted.
+- Slides were outside this historical implementation stage.
 
-表头是 Component、Weight、Description。读到的组件和说明如下。Weight 列的数字没有可靠读出，所以这里不写百分比。
+### Rubric text
 
-| 组件 | 说明（来自表格字符串） |
+The table headings were Component, Weight, Description. Numeric weights could not be extracted reliably and are omitted.
+
+| Component | Description |
 | --- | --- |
 | Paper Understanding | Accuracy and depth in explaining the problem, methods, contributions, and connections to course topics |
 | Critical Analysis & Insight | Thoughtful interpretation of the paper's evidence, evaluation of assumptions and limitations, and well-supported insights or proposed extensions |
 | Written Report | Clarity, organization, coherence, and appropriate use of figures and citations |
 | Presentation & Q&A | Clarity, structure, effective use of visuals, and quality of responses during Q&A |
 
-字符串前面的 `f`、`N`、`Q` 是 protobuf 长度字节，不是正文。
+The preceding `f`, `N`, and `Q` characters in the extracted strings were protobuf length bytes, not report text.
 
-### 其他日程与链接（指南原文中的 URL）
+### Other dates and original links
 
-- 小组：3–4 人。组建截止 2026-09-17 23:55。逾期随机分组。
-- 选题：约 2026-09-23 至 2026-09-28 23:59，先到先得，各组论文不重复。
-- GPU 农场说明：`https://ai.hku.hk/research/major-facilities?view=article&id=130&catid=24`
-- 小组选择：`https://moodle.hku.hk/mod/choicegroup/view.php?id=4279779`
-- NeurIPS 2026 Call for Papers：`https://neurips.cc/Conferences/2026/CallForPapers`
-- 另外两个 Moodle URL 和两个作业链接也在文件里（`view.php?id=4303930`、`4324469`、`4324470`、`4324471`）。它们分别对应指南中的表格/日程/两次提交，具体哪一个 id 对应哪一次提交要以 Moodle 页面为准。
+- Groups contained 3-4 members; formation deadline: 2026-09-17 23:55, with random allocation afterward.
+- Paper selection ran approximately 2026-09-23 through 2026-09-28 23:59, first come first served, without duplicate papers across groups.
+- GPU facility: `https://ai.hku.hk/research/major-facilities?view=article&id=130&catid=24`
+- Group selection: `https://moodle.hku.hk/mod/choicegroup/view.php?id=4279779`
+- NeurIPS call: `https://neurips.cc/Conferences/2026/CallForPapers`
+- Other original Moodle IDs were `4303930`, `4324469`, `4324470`, and `4324471`; their precise table/schedule/submission mappings require the Moodle pages.
 
-## 本阶段做到和没做到的事
+## Status at the historical stage
 
-| 要求 | 状态 |
+| Requirement | Historical status |
 | --- | --- |
-| 选定 AAAI 2015 SSC 论文并核对公式 | 已写 `docs/ssc_mathematical_audit.md` |
-| 从零实现 SSC，标签不参与学习 | 已实现于 `SSC_method/` |
-| ACC（匈牙利一对一）和几何平均 NMI | 已实现于 `benchmarks/metrics/`（共享，不是数据集），并有小列联表测试 |
-| 复现差异记录 | 已写 `docs/reproduction_deviations.md`（方法差异；还没有实验数字） |
-| 书面报告、checklist、PDF | 未写。另一阶段负责 |
-| 幻灯片 | 未做 |
-| 公开 GitHub、README 中的运行结果 | 代码 README 已有；仓库发布和实验结果不在本阶段 |
-| 组员姓名与单位 | 待确认 |
-| 评分权重 | 未从指南读出，不填写 |
+| Selected AAAI 2015 SSC paper and checked formulas | `docs/ssc_mathematical_audit.md` written |
+| From-scratch SSC without evaluation labels in fitting | Implemented in `SSC_method/` |
+| Hungarian one-to-one ACC and geometric NMI | Shared `benchmarks/metrics/`, with small contingency-table tests |
+| Reproduction deviations | `docs/reproduction_deviations.md` recorded method differences; no numerical experiments yet |
+| Report, checklist, PDF | Not written; a later stage was responsible |
+| Slides | Not made |
+| Public GitHub and README results | Code README existed; publication and experiments were outside this stage |
+| Member names and affiliations | Awaited confirmation |
+| Rubric weights | Not reliably extracted; omitted |

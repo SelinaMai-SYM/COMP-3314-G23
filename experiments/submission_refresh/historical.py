@@ -23,12 +23,12 @@ def rebuild_joint(output):
             r['paper_deviations']=sum(v in ['input_l2_normalization','embedding_row_normalization','n_init_not_one'] for v in dev)
             r['preparation_assumptions']=sum(v in ['alternate_dataset_version','iteration_budget_not_300'] for v in dev)
             r.update(acc_mean=r['measured_ACC'],nmi_mean=r['measured_NMI'],acc_sd=r['measured_ACC_SD'],nmi_sd=r['measured_NMI_SD'],endpoint='mean_sample_sd_50',pool='historical_scalar',solver_track='historical_style')
-            r=distances(r,{'acc':r['paper_ACC'],'nmi':r['paper_NMI']});candidates.append(r)
+            r=distances(r,{'acc':r['paper_ACC'],'nmi':r['paper_NMI']});r['delta_acc_sd_pp']=r['acc_sd']-r['paper_ACC_SD'];r['delta_nmi_sd_pp']=r['nmi_sd']-r['paper_NMI_SD'];candidates.append(r)
             selected=json.loads(r.get('batch0_selected_statistic','{}'))
             if r['method']=='lda_kmeans':
                 endpoints.append({'benchmark':r['benchmark'],'method':r['method'],'config_id':r['config_id'],'endpoint':'native_best_of_50','status':'UNAVAILABLE_CROSS_SUBSPACE_INERTIA_NOT_COMPARABLE'})
             elif 'selected_ACC' in selected:
-                e={**r,'endpoint':'native_best_of_50','acc_mean':selected['selected_ACC'],'nmi_mean':selected['selected_NMI'],'acc_sd':None,'nmi_sd':None,'selected_seed':selected['selected_seed']}
+                e={**r,'endpoint':'native_best_of_50','acc_mean':selected['selected_ACC'],'nmi_mean':selected['selected_NMI'],'acc_sd':None,'nmi_sd':None,'measured_ACC':selected['selected_ACC'],'measured_NMI':selected['selected_NMI'],'measured_ACC_SD':None,'measured_NMI_SD':None,'delta_acc_sd_pp':None,'delta_nmi_sd_pp':None,'selected_seed':selected['selected_seed'],'n_trials':1,'delta_pp':selected['selected_ACC']-r['paper_ACC'],'selection_distance':abs(selected['selected_ACC']-r['paper_ACC'])}
                 endpoints.append(distances(e,{'acc':r['paper_ACC'],'nmi':r['paper_NMI']}))
         chosen=[]
         for b in BENCHMARKS:

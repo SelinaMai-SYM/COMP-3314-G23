@@ -1,80 +1,78 @@
-# AR
+# AR Face Database
 
-论文身份状态：第三方 Zenodo zip 已下载并 MD5 核验，**不是**官方 Martinez。840/120 仍未指定。总评 **SOURCE_RECOVERED_SUBSET_UNVERIFIED**。不是 **SAMPLE_SET_RECONSTRUCTED**（未编造 7×120）。
+**Current status, 2026-11-10:** explicit 840-image candidates are now authorized
+from the verified 120-identity LZUFE parent. Four index-order rules, fixed-seed
+independent draws and the finite common-mask family are catalogued before
+scoring. These are candidate reconstructions; the authors' historical 840
+indices remain unverified. The strict `load_dataset("AR")` endpoint remains
+unavailable. See [source recovery](../../docs/submission_refresh/source_recovery.md)
+and the [candidate catalogue](../../configs/subset_search/candidate_catalogue.json).
 
-索引：[docs/round2_source_of_truth.md](../../docs/round2_source_of_truth.md)、[docs/round2_missing_resources.md](../../docs/round2_missing_resources.md)。清单：`manifest.yaml`。
+## Source identity and the paper
 
-## 身份
+The AR Face Database is described by Martinez and Benavente, CVC Technical
+Report 24 (1998). The official release requires an application and password and
+prohibits redistribution. Its usual description has 126 people and more than
+4,000 images. Chang et al. report 840 faces of 120 people, using pixel features,
+without identifying the selected images or a resize size. Within-class image
+positions cannot be labelled as sessions or illumination conditions without
+supporting source metadata.
 
-AR Face Database，Martinez and Benavente, CVC TR 24, 1998。官方通过大学邮箱申请密码分发，禁止再分发。通常描述为 126 人、4000+ 张，不是论文的 840/120。
+The current explicit `version="lzuf_superset1680"` loads all 1,680 rows and 120
+identities from LZUFE `AR.mat`, fourteen images per identity. Its source SHA256
+is `4c8355c5afef6502d73b492a3c8d3565470bb5e11c8494e880710e630421f30b`.
+The loader now resolves `data/private/lzuf_candidate_AR.mat` through the
+independent data root. It checks the hash and counts. The parent itself is a
+diagnostic, not the paper's 840-image experiment. Candidate manifests preserve
+canonical source indices and exact seven-per-identity quotas.
 
-## Chang et al. 2015 原文 vs 推断
+## Historical recovery notes (2026-10-21)
 
-- **原文：** 840 张脸、120 人，像素特征。未写尺寸、未写哪 840 张。
-- **推断（不升格）：** 常见做法是 120 人 × 7 张，或 100 人子集。**本仓库不发明子集。**
+These notes describe earlier recovery decisions and do not prohibit the newly
+authorized candidate campaign. No AR clustering jobs ran in Phase 1,
+repair_round1 or Round 2. The third-party archive was examined only as a source.
 
-## 本机文件
+A third-party Zenodo archive `ARDB_Full.zip` was downloaded and verified:
+120,587,997 bytes; MD5 `bb97bd9237680744c0c7268624696263`; SHA256
+`32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438`.
+It is PKZIP, not HTML, and contains 100 identities `s1` through `s100`, with
+120x165 BMP images named `1.bmp` through `26.bmp`. Those names and counts differ
+from official `M-xx-yy.raw` and `F-xx-yy.raw` naming and cannot supply 120 people.
+It is not the official Martinez distribution.
 
-第三方 `data/ARDB_Full.zip`（gitignore）：120587997 字节；MD5 `bb97bd9237680744c0c7268624696263`；SHA-256 `32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438`。**不是**官方图像包。
+[Zenodo record 19683234](https://zenodo.org/records/19683234) and its API returned
+HTTP 200 on 2026-10-21. Its title is “Facial Image datasets,” uploaded by Manu
+shree (ORCID 0009-0007-8493-5282), rather than Martinez or OSU. The description
+links the files to a 2026 “MAS Machine: Multi-kernel Attention Spatio Machine”
+manuscript and includes AR, Extended Yale B and CK+. The uploader selected
+CC-BY-4.0. That claim does not make the archive an official release or override
+the original source's redistribution restrictions. Images remain outside Git.
+The archive's published and measured MD5 values agree.
 
-## Zenodo 19683234 核验（使用前）
+Before that download, official-page HTTP returned 503, HTTPS curl returned
+certificate error 60, Purdue returned 404 and RVL returned 502. A Wayback OSU
+page was saved at `resources/ARdatabase_wayback_20120501.html`, 19,396 bytes,
+SHA256 `fea9bd20c825f94f9abd8862be63f7261cd533c43085149af0179d784a4344d8`.
+It describes 126 people, password access and no redistribution, without an
+840-image rule. The CVC report was saved as
+`resources/Martinez_Benavente_1998_CVC_TR24.pdf`, 306,151 bytes, SHA256
+`9dfb1d979781d48f5a2de1b7c277a59dc71ffcb768da60f20e562d689418951b`.
+At that earlier stage the official images were `BLOCKED_ACCESS` and the
+840/120 subset `NOT_FOUND`. The later third-party download changed the source
+status to `SOURCE_RECOVERED_SUBSET_UNVERIFIED`; it did not identify the subset.
 
-| 项 | 读到的内容 |
-| --- | --- |
-| 记录 | https://zenodo.org/records/19683234 ，API 同 id，2026-10-21 HEAD **200** |
-| 标题 | Facial Image datasets |
-| 上传者 | Manu shree（ORCID 0009-0007-8493-5282），不是 Martinez / OSU |
-| 描述 | 供 2026 年文稿 “MAS Machine: Multi-kernel Attention Spatio Machine” 使用，内含 AR、Extended Yale B、CK+ |
-| 声称许可 | CC-BY-4.0（上传者填写） |
-| `ARDB_Full.zip` | API size 120587997；GET **200**，120587997 字节，`filename=ARDB_Full.zip`；公布 MD5 `bb97bd9237680744c0c7268624696263`；本机 MD5 相同；本机 SHA-256 `32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438` |
-
-官方 AR 禁止再分发。该记录 **不是** 官方发行方。用户已授权下载该 **第三方** zip 供核验。未绕过官方申请。未提交图像。不把该包称为官方 Martinez。
-
-## 版本对照
-
-无可用 version。`load_dataset("AR")` 抛 `DatasetUnavailable`。
-
-## 样本选择
-
-840/120 未指定。未构造子集。
-
-## 预处理
-
-未应用。
-
-## 完整性测试（已跑）
-
-```text
-python3 -m pytest benchmarks/ar/test_ar.py -q
-```
-
-必须继续抛 `DatasetUnavailable`。
-
-## 哪些实验用了这个版本
-
-无。Phase 1 / repair_round1 / Round 2 都没有 AR 作业。第三方 zip 仅核验，未当论文 840/120 跑聚类。
-
-## 复现命令（本轮实测）
+## Loading and checks
 
 ```python
+from pathlib import Path
 from benchmarks import load_dataset
-from benchmarks.exceptions import DatasetUnavailable
-try:
-    load_dataset("AR")
-except DatasetUnavailable as exc:
-    assert "Zenodo" in str(exc)
+X, y, metadata = load_dataset("AR", root=Path("/path/to/benchmarks/ar/data"),
+                             version="lzuf_superset1680")
 ```
 
-## Task 1（2026-10-21）
-
-仍无图像。官方页 HTTP **503**；HTTPS curl **60**；普渡 404；RVL 502。Wayback CDX 有 OSU 页捕获；GET `resources/ARdatabase_wayback_20120501.html`（19396 字节，SHA-256 `fea9bd20c825f94f9abd8862be63f7261cd533c43085149af0179d784a4344d8`）：126 人、需密码、禁止再分发、**无 840**。CVC TR 24：`resources/Martinez_Benavente_1998_CVC_TR24.pdf` 306151 字节 SHA-256 `9dfb1d979781d48f5a2de1b7c277a59dc71ffcb768da60f20e562d689418951b`。Zenodo 19683234 **未下载**。矩阵状态：官方图像 `BLOCKED_ACCESS`；840/120 `NOT_FOUND`。
-
-## Strict URL Task 1（2026-10-21 晚）新哈希
-
-已下载 **第三方** `data/ARDB_Full.zip`（**不是**官方 Martinez 包）。120587997 字节；MD5 `bb97bd9237680744c0c7268624696263`（与 Zenodo 公布值一致）；SHA-256 `32e69e8801313256b103942309e10badbd283183a44494d843e6866d22d4d438`。zip 为 PKZIP 而非 HTML。100 个身份 `s1`–`s100`。命名不是官方 `M-xx-yy.raw` / `F-xx-yy.raw`。无归档文档给出 840/120，未编造每人 7 张。状态：`SOURCE_RECOVERED_SUBSET_UNVERIFIED`。原始图像 gitignore，未提交。
-
-## v3 status
-
-Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
-
-Round 2: LZUFE `AR.mat` is 1680×1024, 120 identities, 14 images each, SHA-256 `4c8355c5afef6502d73b492a3c8d3565470bb5e11c8494e880710e630421f30b`. No 840-image rule is documented, so the file is `DOCUMENTED_SUPERSET_ONLY` and is not scheduled as paper AR. The 100-identity Zenodo zip remains `NON_TARGET_AR100`.
+The strict default must continue raising `DatasetUnavailable`; it is tested by
+`python -m pytest benchmarks/ar/test_ar.py`. The old default-loader command was
+expected to fail and was not a runnable paper-data acquisition command.
+See [Round 2 source records](../../docs/round2_source_of_truth.md),
+[missing-resource records](../../docs/round2_missing_resources.md) and
+[the manifest](manifest.yaml) for the earlier request history.

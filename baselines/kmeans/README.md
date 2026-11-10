@@ -111,9 +111,9 @@ python -m pytest baselines/kmeans -q
 python -c "from baselines.kmeans import fit_predict; print('kmeans-ok')"
 ```
 
-## Task 1（2026-10-21）
+## Task 1 (2026-10-21)
 
-无新文件。Chang AAAI OA 已存于 `SSC_method/resources/`。作者代码 `CODE_NOT_FOUND`。本包装仍是 `THIRD_PARTY_CODE`（sklearn Lloyd）+ `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+No new files were obtained. The Chang AAAI open-access paper was stored in `SSC_method/resources/`. Author-code status: `CODE_NOT_FOUND`. This wrapper remains `THIRD_PARTY_CODE` (sklearn Lloyd) plus `PAPER_BASED_REIMPLEMENTATION`. Matrix status: `COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
 
 ## v3 status
 

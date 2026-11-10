@@ -62,6 +62,8 @@ def oneshot_shrunk_patterns(
     X: np.ndarray,
     alpha: float,
     n_neighbors: int = 7,
+    *,
+    return_state: bool = False,
 ) -> tuple[np.ndarray, dict[str, Any]]:
     """Hou et al. Eq. (18): ``Y = alpha X [(1-alpha) L + alpha I]^{-1}``.
 
@@ -93,6 +95,8 @@ def oneshot_shrunk_patterns(
         if n_samples <= 1500
         else int(affinity.nnz // 2),
     }
+    if return_state:
+        info["fit_state"] = {"affinity": affinity, "laplacian": laplacian, "coefficient": coefficient}
     return shrunk, info
 
 

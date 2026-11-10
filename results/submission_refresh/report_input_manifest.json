@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-10",
+  "inputs": {
+    "baseline": {
+      "available": false,
+      "path": "results/submission_refresh/baseline_diagnostics.csv",
+      "sha256": null
+    },
+    "catalogue": {
+      "available": true,
+      "path": "results/subset_search/candidate_catalogue.json",
+      "sha256": "cb82240d9f23ab781001b2c73b89ed6c6ef95f852175e8dac5cdd83cae449472"
+    },
+    "closest": {
+      "available": false,
+      "path": "results/subset_search/closest_matches.csv",
+      "sha256": null
+    },
+    "cohort": {
+      "available": true,
+      "path": "configs/subset_search/executable_cohort.json",
+      "sha256": "2a4cc8187048572c565201fc9d6be3b4d1684f7979f7dd06837434eff4107682"
+    },
+    "confirmation": {
+      "available": false,
+      "path": "results/subset_search/rounding_confirmation.csv",
+      "sha256": null
+    },
+    "coverage": {
+      "available": false,
+      "path": "results/subset_search/coverage_summary.json",
+      "sha256": null
+    },
+    "execution": {
+      "available": false,
+      "path": "results/subset_search/execution_coverage.csv",
+      "sha256": null
+    },
+    "extension": {
+      "available": false,
+      "path": "results/submission_refresh/extension_results.csv",
+      "sha256": null
+    },
+    "fixed": {
+      "available": false,
+      "path": "results/subset_search/fixed_protocol_summary.csv",
+      "sha256": null
+    },
+    "gate": {
+      "available": false,
+      "path": "results/submission_refresh/extension_gate.json",
+      "sha256": null
+    },
+    "historical": {
+      "available": true,
+      "path": "results/submission_refresh/joint_metric_selection.csv",
+      "sha256": "df169940a4632860c7ba99d79a277c8782244374fc419fa30feac75246609688"
+    },
+    "historical_endpoints": {
+      "available": true,
+      "path": "results/submission_refresh/endpoint_comparison.csv",
+      "sha256": "93c9f19c47a98e079c7b91c433546c0c16e2dd1811bc195b0ddf3f91de9143bc"
+    },
+    "joint": {
+      "available": false,
+      "path": "results/subset_search/joint_search_summary.csv",
+      "sha256": null
+    },
+    "paper": {
+      "available": true,
+      "path": "results/submission_refresh/paper_reference_verification.json",
+      "sha256": "41d6f22d62e99a0e6e7e3246d35639ef2a34b93a652a19434cd21564aadf88ee"
+    },
+    "resource": {
+      "available": true,
+      "path": "results/submission_refresh/resource_usage.json",
+      "sha256": "3826119895d2550c4fd143a4184ca1342029ca3d9eabb1e98d758103e77a07ac"
+    }
+  },
+  "missing_values_are_not_zero": true,
+  "no_score_selection_in_generator": true,
+  "outputs": [
+    "report/tables/refresh_appendix.tex",
+    "report/tables/refresh_coverage.tex",
+    "report/tables/refresh_extension.tex",
+    "report/tables/refresh_main.tex",
+    "report/tables/refresh_repairs.tex"
+  ],
+  "schema": "report-inputs-v1",
+  "statistical_endpoints_separate": true
+}

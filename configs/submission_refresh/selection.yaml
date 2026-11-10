@@ -8,3 +8,4 @@ published_gamma_values_are_not_deviations: true
 lda_cross_subspace_native_best: UNAVAILABLE_NOT_COMMON_OBJECTIVE
 certified_and_historical_style_tracks_are_separate: true
 retrospective: true
+tolerance_buckets: anchored_at_minimum_to_avoid_nontransitive_pairwise_comparison

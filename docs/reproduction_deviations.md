@@ -1,35 +1,37 @@
-# 复现差异
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-方法部分是相对 Chang 等人 AAAI 2015 原文的假设和纠正。实验数字只来自 `runs/`，标为 Our Reproduction，不是论文表格的拷贝。
+# Reproduction deviations
 
-| 项目 | 原文 | 本实现 | 性质 |
+The method notes identify assumptions and corrections relative to Chang et al., AAAI 2015. Experimental numbers came only from actual `runs/`, labelled Our Reproduction, rather than copies of the paper tables.
+
+| Item | Paper | Implementation at this stage | Status |
 | --- | --- | --- | --- |
-| 求解 | Algorithm 1 第 10 行 \((S_t+\gamma\widetilde W)^{-1}S_t X\) | 式 (13)：\((S+\gamma\widetilde L)^{-1}SF\)，稀疏求解，无显式逆 | 锁定纠正 |
-| \(\widetilde W,\widetilde L\) | 算法第 4 行在循环外计算 | 每次迭代由当前 \(G\) 按式 (11) 重算 | 锁定纠正。式 (11) 依赖 \(G\) |
-| \(S\) | 式 (10) 按嵌入维数的对角元 \(1/(2\lVert h_j\rVert_2)\) | \(n\times n\)，按行 \(S_{ii}=1/(2\max(\lVert h_i\rVert_2,\varepsilon))\) | 锁定纠正。式 (10) 与式 (9) 的维度以及行 \(\ell_{2,1}\) 不一致 |
-| 式 (13) 的系数 | 印出的系数是 \(\gamma\widetilde L\)。式 (8) 的驻点是 \((S+2\gamma\widetilde L)G=SF\) | 求解印出的式 (13)。它对应把式 (8) 的图项写成 \((\gamma/2)\sum_{ij}W_{ij}\lVert g_i-g_j\rVert_2\) | 锁定。与式 (8) 不等价，见审计中的 CVXPY 对照 |
-| 初值 | 未指定 | \(G_0=F\) | 假设 |
-| 初值处的式 (10) | \(H=0\) 时未定义 | 仅第一次全零残差用行间距离中位数作分母尺度；其后用 \(\varepsilon\)（默认 \(10^{-8}\)） | 数值纠正。始终用 \(\varepsilon\) 会使迭代停在 \(F\)；每次回到 \(F\) 都用大尺度会循环 |
-| 监控目标 | 证明讨论式 (8)；实验曲线对应哪一个式子，图中没有公式 | 同时记录式 (8) 原始目标和 \(\sqrt{\lVert v\rVert^2+\varepsilon^2}\) 平滑目标 | 平滑目标、分母 \(\varepsilon\) 和式 (8) 三者都不宣称相等 |
-| 停止 | 未说明 | 相对 Frobenius 步长，默认 `tol=1e-6`，`max_iter=100` | 假设 |
-| \(\delta\) | 未给出 | 每个图各自取正的 \(k\) 近邻平方距离的中位数作为 \(\delta^2\) | 假设 |
-| \(k\) 近邻无向化 | 未说明 | 并集，权重取高斯值，对角线为 0。\(k=5\) | 假设。邻居数是原文实验设置 |
-| 谱嵌入 | 最小化 \(\operatorname{Tr}(F^\top L_n F)\)，\(L_n\) 为式 (4) | \(L_n\) 的 \(c\) 个最小特征向量。符号按最大绝对值元素为正。孤立点 \(D^{-1/2}=0\) | 符号和孤立点是约定。不用 PCA |
-| 数据形状 | Algorithm 1 写 \(X\in\mathbb{R}^{d\times n}\) | 数组行为样本，形状 `(n, d)` | 约定。式 (13) 不使用 \(X\) |
-| K-means | 在 \(G\) 上聚类；实验文本同时出现 50 次和最优目标 | 标签只在 \(G\) 上计算，不参与学习。每个 trial 一个随机种子、`init="random"`、`n_init=1` | 50 次属于实验协议。实际完成次数见下表，没有补造 |
-| \(\gamma\) 默认 | 在 \(\{10^{-6},10^{-3},1,10^{3},10^{6}\}\) 上选择，并称除 MSRA50 与 USPS 外 \(\gamma=1\) 通常较好 | API 默认 `gamma=1` | API 默认，不是“每个数据集的最优值” |
+| Solve | Algorithm 1 line 10: \((S_t+\gamma\widetilde W)^{-1}S_tX\) | Equation (13): \((S+\gamma\widetilde L)^{-1}SF\), sparse solve without explicit inverse | Locked correction |
+| Reweighted W/L | Algorithm line 4, outside loop | Rebuilt from current G each iteration using Equation (11) | Locked correction; Equation (11) depends on G |
+| S | Equation (10), embedding-dimensional diagonal \(1/(2\lVert h_j\rVert_2)\) | n by n row diagonal \(S_{ii}=1/(2\max(\lVert h_i\rVert_2,\varepsilon))\) | Correction of incompatible Equation (9) dimensions and row L21 norm |
+| Equation (13) coefficient | Printed gamma L; Equation (8) stationarity has 2 gamma L | Printed Equation (13), equivalent to Equation (8) with half the graph coefficient | Locked distinct target; see independent CVXPY check |
+| Initial point | Unspecified | G0=F | Assumption |
+| Equation (10) at initialization | Undefined at H=0 | Median pairwise row distance only for the first all-zero residual; epsilon=1e-8 afterward | Using epsilon throughout can leave G near F; repeatedly resetting the larger scale can cycle |
+| Objective monitoring | Proof discusses Equation (8); figure does not identify its plotted formula | Original Equation (8) and square-root smoothed objective | Original norm, smoothing, and floored denominator are distinct |
+| Stopping | Unspecified | Relative Frobenius step; tol=1e-6, max_iter=100 | Assumption |
+| Bandwidth | Unspecified | Each graph uses its median positive directed k-neighbor squared distance as delta squared | Assumption |
+| Symmetrization | Unspecified | Union support, Gaussian weights, zero diagonal, k=5 | Union is assumed; k=5 is explicit in the paper |
+| Spectral representation | Minimize trace(F.T Ln F), Equation (4) | Smallest c eigenvectors; largest-magnitude sign positive; isolated inverse degree zero | Sign/isolate conventions; not PCA |
+| Data shape | Algorithm 1 writes d by n X | Samples are rows, shape (n,d) | Convention; Equation (13) does not use X |
+| K-means | Cluster G; experiment text mentions both 50 trials and best objective | Output labels only; one external random seed, init=random, n_init=1 | Repetitions belong to experiment protocol; actual completed n retained |
+| Default gamma | Search {1e-6,1e-3,1,1e3,1e6}; gamma=1 often good except MSRA50/USPS | API gamma=1 | API default, not a universal optimum |
 
-## 实验差异（来自实际 runs/）
+## Experimental differences from actual runs
 
-- 数据集：JAFFE、USPS 已核对；ORL 是 Olivetti 64×64 再缩到 32×32；YaleB 是邓蔡 32×32 mat。AR、UMIST、BinAlpha、MSRA50 不可得。
-- 基线：SPLS 为 `NOT_IMPLEMENTED`（6 个 SKIPPED 目录）。LDA-SC 为 `APPROXIMATE`，不进主公平表。
-- 试验次数：ORL/JAFFE 上 K-means、SC、SSC、LLC 为 50；YaleB 为 10；USPS SSC 为 1，USPS K-means 为 10。不要把后两行读成 50 次复现。
-- ORL SSC Track A：53.9±3.0（n=50，γ=1e-6）对论文 76.0±1.6。与本实现 SC 54.2±3.1 不可分。**没有复现论文声称的 ORL 大幅增益。**
-- JAFFE SSC Track A：74.8±8.4（n=50，选中 γ=1e6）对论文 81.2±1.6。γ=1 时为 68.6±11.3。
-- YaleB SSC：19.7±1.1（n=10）对论文 49.8±1.6。
-- USPS SSC：62.1（n=1）对论文 75.5±1.9。
-- 扩展 mutual-kNN：ORL 53.7±2.8 vs 54.0±2.8（n=50）；JAFFE 68.6 vs 68.7（n=50）；YaleB 19.7 vs 19.9（n=10）。混合/可忽略，不是赢。
-- 一次失败：`20261020_015425__TRACKA__LDAKM__ORL__fb14ac44`（NameError），已用 `20261020_020157__TRACKA__LDAKM__ORL__fb14ac44` 重跑完成；FAILED 目录保留。
-- IRLS：γ=1 时 ORL 与 YaleB 在 max_iter=300 未达到 tol=1e-6。
+- JAFFE and USPS were verified; ORL used Olivetti 64x64 resized to 32x32; YaleB used Deng Cai's 32x32 MAT. AR, UMIST, BinAlpha, and MSRA50 were unavailable at this stage.
+- SPLS was NOT_IMPLEMENTED (six SKIPPED directories); approximate LDA-SC was excluded from the main fair table.
+- K-means, SC, SSC, and LLC used 50 trials on ORL/JAFFE, 10 on YaleB. USPS SSC used one trial and USPS K-means ten. These were not 50-trial USPS/YaleB reproductions.
+- ORL SSC Track A: 53.9±3.0 (n=50, gamma=1e-6), versus paper 76.0±1.6; comparable to SC 54.2±3.1. The paper's large ORL improvement was not reproduced.
+- JAFFE SSC Track A: 74.8±8.4 (n=50, selected gamma=1e6), versus paper 81.2±1.6; gamma=1 gave 68.6±11.3.
+- YaleB SSC: 19.7±1.1 (n=10), versus paper 49.8±1.6.
+- USPS SSC: 62.1 (n=1), versus paper 75.5±1.9.
+- Mutual-kNN extension: ORL 53.7±2.8 versus 54.0±2.8 (n=50), JAFFE 68.6 versus 68.7 (n=50), YaleB 19.7 versus 19.9 (n=10). Effects were mixed or negligible, not a performance win.
+- The failed NameError run `20261020_015425__TRACKA__LDAKM__ORL__fb14ac44` was rerun as `20261020_020157__TRACKA__LDAKM__ORL__fb14ac44`; its FAILED directory was retained.
+- At gamma=1, ORL and YaleB IRLS did not meet tol=1e-6 within max_iter=300.
 
-完整表：`results/tables/` 与 `docs/critical_analysis.md`。
+Full historical tables: `results/tables/` and `docs/critical_analysis.md`.

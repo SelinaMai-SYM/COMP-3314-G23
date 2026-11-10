@@ -1,61 +1,61 @@
 # USPS
 
-论文身份状态：**SOURCE_VERIFIED**。发布已是 16×16，加载器不再缩放。论文写“resize to 16×16”，因此预处理与论文字面不完全同一，标 **PREPROCESSING_VERIFIED**（对这份标准发布），不是 **PAPER_PROTOCOL_MATCHED**。SSC 只有 n=3 pilot，不是 **FULLY_REPRODUCED**。
+**Current status, 2026-11-10:** the source is the verified LIBSVM train/test
+release, concatenated in that order. All 9,298 rows remain in primary
+specification-compatible experiments. Train-only and test-only diagnostics
+cannot compete as the paper's 9,298-row dataset. See the
+[submission refresh](../../docs/submission_refresh/source_recovery.md) and
+[current campaign records](../../results/subset_search/). Earlier pilot results
+below do not describe current coverage.
 
-索引：[docs/round2_source_of_truth.md](../../docs/round2_source_of_truth.md)。清单：`manifest.yaml`。
+## Source, paper statements and preparation
 
-## 身份
+The LIBSVM multiclass page distributes `usps.bz2` and `usps.t.bz2`, with dataset
+attribution to Hull (TPAMI 1994); the 16x16 form is described in Hastie et al.'s
+`zip.info`. Chang et al. report 9,298 grayscale handwritten digits resized to
+16x16, without identifying a specific file release. The obtained LIBSVM data
+already have 256 native features with values in [-1,1]. No second resize or
+rescaling is applied. Preparation is verified for this source, while exact
+identity with the authors' preprocessing remains unverified.
 
-LIBSVM 多类页上的 `usps.bz2` + `usps.t.bz2`（Hull, TPAMI 1994；16×16 形式见 Hastie et al. zip.info）。
+| File | Bytes | SHA256 |
+|---|---:|---|
+| `usps.bz2` | 6579383 | `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f` |
+| `usps.t.bz2` | 1831726 | `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e` |
 
-## Chang et al. 2015 原文 vs 推断
+The compressed files contain no license notice; exact redistribution terms are
+unknown. LIBSVM makes them publicly available for research. The raw files remain
+outside Git. `version="libsvm"` is the only source version and the default;
+there is no recovered second file that the SSC authors independently resized.
 
-- **原文：** 9298 张灰度手写数字，缩到 16×16。
-- **未写：** 哪一份 USPS；是否已是 16×16。
-- **本加载器：** 标准 LIBSVM 7291+2007，已是 256 维，`[-1, 1]`，不再缩放。
-
-## 本机文件（2026-10-21 重算）
-
-| 文件 | 字节 | SHA-256 | HTTP（2026-10-21） |
-| --- | --- | --- | --- |
-| `data/usps.bz2` | 6579383 | `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f` | HEAD **200**，`Content-Length: 6579383`，`application/x-bzip2` |
-| `data/usps.t.bz2` | 1831726 | `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e` | HEAD **200**（与清单一致，未覆盖） |
-
-许可：压缩包内无许可证。LIBSVM 公开研究发布。精确条款：unknown。
-
-## 版本对照
-
-只有 `libsvm`（默认）。没有第二份“论文自己缩放过的”USPS。
-
-## 样本选择
-
-全部 7291 训练行 + 2007 测试行。标签 1..10 → 数字 0..9。类别计数与 Hastie zip.info 表一致。
-
-## 预处理
-
-解析 LIBSVM；特征 1..256；不再缩放。
-
-## 完整性 / 实测命令
+The loader parses features 1-256, concatenates all 7,291 training rows and 2,007
+test rows, and maps file labels 1-10 to digit labels 0-9. Class counts match the
+Hastie `zip.info` table. The declared test split is not used for supervised
+training in this clustering task.
 
 ```python
+from pathlib import Path
 from benchmarks import load_dataset
-X, y, m = load_dataset("USPS")
+X, y, metadata = load_dataset("USPS", root=Path("/path/to/benchmarks/usps/data"))
 assert X.shape == (9298, 256)
-assert m["SHA256_checksum"]["usps.bz2"].startswith("3771e9dd")
+assert X.min() >= -1 and X.max() <= 1
 ```
 
-## 哪些实验用了这个版本
+Perturbations must retain the native [-1,1] domain. Clipping these pixels to
+[0,1] changes the unperturbed input and invalidates a small-noise comparison.
 
-Phase 1 USPS 与 repair_round1 均为 `libsvm`。Round 2 pilot n=3（不是 50）：SC `20261021_161647__ROUND2__USPS__D12_USPS_SC__6324d037` ACC 63.8±1.7；E8 `20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b` ACC 60.7±4.0。
+## Historical recovery and experiment notes (2026-10-21)
 
-## Task 1（2026-10-21）哈希复核
+Both file HEAD requests returned HTTP 200 in the integrity audit. The existing
+archives were not replaced. Task 1 and Strict URL checks found unchanged hashes,
+lengths and `(9298,256)` matrix shape; the matrix status was
+`COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
 
-未重下。`data/usps.bz2` 6579383 字节 SHA-256 `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f`；`data/usps.t.bz2` 1831726 字节 SHA-256 `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e`。加载 `(9298, 256)`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
-
-## Strict URL Task 1（2026-10-21 晚）
-
-未重下。`usps.bz2` / `usps.t.bz2` SHA-256 仍为 `3771e9dd…034f` / `a9c0164e…fc4e`。
-
-## v3 status
-
-Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
+Phase 1 and repair_round1 used `libsvm`. The Round 2 pilot had only three runs,
+rather than the required 50: SC
+`20261021_161647__ROUND2__USPS__D12_USPS_SC__6324d037`, ACC 63.8 +/- 1.7%;
+E8 `20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b`, ACC 60.7 +/- 4.0%.
+These pilots are not labelled complete reproductions.
+See [Round 2 source records](../../docs/round2_source_of_truth.md) and
+[the manifest](manifest.yaml). Older LLC results predating the Procrustes
+correction retain `PRE_FIX_LEGACY`.

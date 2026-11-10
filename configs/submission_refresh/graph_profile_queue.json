@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "kind": "graph",
+      "run_id": "graph-profile-ORL_att92",
+      "dataset": "ORL_att92",
+      "phase": "G2",
+      "profile": true,
+      "cpu_limit": 1900,
+      "fit_cpu_limit": 1800
+    },
+    {
+      "kind": "graph",
+      "run_id": "graph-profile-YaleB_cropped2414",
+      "dataset": "YaleB_cropped2414",
+      "phase": "G2",
+      "profile": true,
+      "cpu_limit": 1900,
+      "fit_cpu_limit": 1800
+    }
+  ]
+}

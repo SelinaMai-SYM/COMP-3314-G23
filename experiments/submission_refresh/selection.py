@@ -1,6 +1,5 @@
 """Predeclared joint numerical matching, separate from capability selection."""
 from __future__ import annotations
-from functools import cmp_to_key
 import numpy as np
 TOL=1e-12
 
@@ -30,11 +29,21 @@ def compatibility(row):
     return (int(row.get('paper_deviations',0)),int(row.get('preparation_assumptions',0)),int(row.get('variant','E8')!='E8'),str(row.get('config_id',row.get('candidate_id',''))))
 
 def rank(rows):
-    def compare(a,b):
-        for k in ['D_max','D_mean']:
-            if abs(a[k]-b[k])>TOL:return -1 if a[k]<b[k] else 1
-        return (compatibility(a)>compatibility(b))-(compatibility(a)<compatibility(b))
-    return sorted(rows,key=cmp_to_key(compare))
+    # Anchor each tolerance bucket at its minimum. A pairwise epsilon
+    # comparator can be nontransitive and make selection depend on input order.
+    primary=sorted(rows,key=lambda r:(r['D_max'],r['D_mean'],compatibility(r)))
+    ordered=[];left=0
+    while left<len(primary):
+        right=left+1
+        while right<len(primary) and primary[right]['D_max']-primary[left]['D_max']<=TOL:right+=1
+        secondary=sorted(primary[left:right],key=lambda r:(r['D_mean'],compatibility(r)))
+        first=0
+        while first<len(secondary):
+            last=first+1
+            while last<len(secondary) and secondary[last]['D_mean']-secondary[first]['D_mean']<=TOL:last+=1
+            ordered.extend(sorted(secondary[first:last],key=compatibility));first=last
+        left=right
+    return ordered
 
 def capability(rows):
     return min(rows,key=lambda r:(-r['acc_mean'],-r['nmi_mean'],str(r['config_id'])))

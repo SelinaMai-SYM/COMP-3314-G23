@@ -1,14 +1,16 @@
-# Task 2：哪些已发表实验被科学地复现了？
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-**没有。** Chang et al. (AAAI 2015) Tables 1–2 的 72 个 method×dataset 格子，没有一格达到论文全协议复现（8 个数据集、每格 50 次随机聚类、论文未公开预处理、以及 SPLS / AR / MSRA50 / UMIST-564 / 论文 BinAlpha）。
+# Task 2: Which published experiments were scientifically reproduced?
 
-本轮只把下列格子算作**部分科学执行**（不是论文复现）：方法为忠实重实现；数据为指定忠实版本（ORL `att92`、JAFFE Zenodo、YaleB `cropped2414`、USPS LIBSVM）；数字来自 `runs/strict_repro/` 真实 trial；γ / 维数 / 种子均**不用 ACC 选择**；SC 与 SSC 共用 `SpectralGraphConfig`。LDA-SC 为 APPROXIMATE，不计入忠实 72 格科学复现。SPLS 为 BLOCKED_METHOD。E13 单独记录，不用 ACC 替换 E8。
+**None met the full protocol.** No cell among the 72 method-by-dataset entries in Chang et al. (AAAI 2015), Tables 1–2, met the complete published protocol (eight datasets, 50 random clustering trials per cell, unreleased preprocessing, and the unresolved SPLS / AR / MSRA50 / UMIST-564 / paper BinAlpha inputs).
 
-72 格状态：`{"BLOCKED_DATA": 32, "completed": 30, "NOT_REPRODUCED": 2, "BLOCKED_METHOD": 8}`。忠实已完成 28 格（7 方法 × 4 可加载数据集）。其中 ORL/JAFFE 为 n=50；YaleB n=10、USPS n=3 或 5，协议状态写明不是论文的 50 次。未外推。
+The following cells count as **partial scientific execution**, rather than full paper reproduction: the method was faithfully reimplemented and the data used the declared reconstructed versions (ORL `att92`, JAFFE Zenodo, YaleB `cropped2414`, USPS LIBSVM); numbers came from actual trials in `runs/strict_repro/`. Gamma, dimension, and seeds were **not selected using ACC**. SC and SSC shared `SpectralGraphConfig`. LDA-SC was APPROXIMATE and excluded from faithful execution of the 72 cells. SPLS was BLOCKED_METHOD. E13 was recorded separately and did not replace E8 based on ACC.
 
-## 部分科学执行（真实日志）
+Status of the 72 cells: `{"BLOCKED_DATA": 32, "completed": 30, "NOT_REPRODUCED": 2, "BLOCKED_METHOD": 8}`。Faithful execution completed 28 cells (7 methods x 4 loadable datasets). ORL/JAFFE had n=50; YaleB had n=10 and USPS n=3 or 5. Their protocol statuses explicitly stated that these were not the paper's 50 trials; no extrapolation was made.
 
-### n=50（ORL att92 与 JAFFE Zenodo）
+## Partial scientific execution (actual logs)
+
+### n=50 (ORL att92 and JAFFE Zenodo)
 
 - K-means × JAFFE: ACC 73.2 ± 5.7 (n=50); NMI 83.1 ± 3.5 (n=50); -2.4 pp vs historical paper mean; `20261021_170320__STRICT_REPRO__JAFFE__KMEANS__8776ae41`
 - K-means × ORL: ACC 61.5 ± 2.9 (n=50); NMI 82.8 ± 1.2 (n=50); +1.0 pp vs historical paper mean; `20261021_170315__STRICT_REPRO__ORL__KMEANS__4b8ea2b1`
@@ -25,7 +27,7 @@
 - SSC E8 × JAFFE: ACC 68.4 ± 11.1 (n=50); NMI 83.0 ± 5.7 (n=50); -12.8 pp vs historical paper mean; `20261021_170323__STRICT_REPRO__JAFFE__SSC_E8_G1__2d4a870b`
 - SSC E8 × ORL: ACC 57.3 ± 3.8 (n=50); NMI 81.1 ± 2.2 (n=50); -18.7 pp vs historical paper mean; `20261021_170317__STRICT_REPRO__ORL__SSC_E8_G1__68341141`
 
-### 预算受限（YaleB n=10，USPS n=3 或 5）
+### Budget-limited (YaleB n=10; USPS n=3 or 5)
 
 - K-means × YaleB: ACC 9.1 ± 0.5 (n=10); NMI 12.4 ± 0.7 (n=10); budget_limited_n=10_paper_protocol_is_50; `20261021_170325__STRICT_REPRO__YALEB__KMEANS__ab478656`
 - K-means × USPS: ACC 66.4 ± 0.5 (n=5); NMI 60.9 ± 0.3 (n=5); budget_limited_n=5_paper_protocol_is_50; `20261021_170410__STRICT_REPRO__USPS__KMEANS__efa8d62b`
@@ -42,19 +44,19 @@
 - SSC E8 × YaleB: ACC 17.4 ± 1.1 (n=10); NMI 26.0 ± 1.1 (n=10); budget_limited_n=10_paper_protocol_is_50; `20261021_170328__STRICT_REPRO__YALEB__SSC_E8_G1__333d3583`
 - SSC E8 × USPS: ACC 62.1 ± 3.8 (n=5); NMI 75.4 ± 3.0 (n=5); budget_limited_n=5_paper_protocol_is_50; `20261021_170415__STRICT_REPRO__USPS__SSC_E8_G1__e36daae7`
 
-## 仍然不是论文复现的原因
+## Why this still did not reproduce the paper protocol
 
-- 论文协议是每个数据集 50 次随机聚类。YaleB 实际 n=10，USPS 实际 n≤5。INCOMPLETE 只写实际 n，绝不补成 50。
-- ORL `att92` 是 AT&T 92×112 原包缩到 32×32（双线性插值是假设），不是 Olivetti，也未宣称 PAPER_PROTOCOL_MATCHED。
-- JAFFE 是已核实 Zenodo zip，不是论文未公开预处理副本。
-- YaleB `cropped2414` 计数 2414 与论文一致，不声称与邓蔡 `YaleB_32x32.mat` 逐像素同一。
-- PCA 维数步长 `{10,20,…,150}` 是假设。矩阵格用预指定维数 min(50,K,n−1,d)，**不用网格上的最高 ACC**。
-- LDA 秩 ≤ K−1（Ding–Li），网格到不了 150。
-- SSC γ 网格 `{1e-6,1e-3,1,1e3,1e6}` 已记录。矩阵格用预指定 γ=1。不按 ACC 选 γ，也不把原始式 (8) 目标跨 γ 互比。未收敛 IRLS 保持未收敛。
-- 历史 Track A / Round 2 数字没有抄进本矩阵。
-- LDA-SC（ORL/JAFFE n=10）已跑，标 APPROXIMATE，不计入忠实复现。YaleB/USPS 的 LDA-SC 为 NOT_REPRODUCED（可选近似格，未跑）。
+- The paper required 50 random clustering trials per dataset. YaleB had n=10 and USPS n<=5. INCOMPLETE reports actual n and never substitutes 50.
+- ORL `att92` was resized from the original AT&T 92x112 package to 32x32. Bilinear interpolation was an assumption; this was not Olivetti and was not claimed PAPER_PROTOCOL_MATCHED.
+- JAFFE used the verified Zenodo archive, not the paper's unreleased preprocessed copy.
+- YaleB `cropped2414` matched the count of 2414, without claiming pixel identity with Deng Cai's `YaleB_32x32.mat`.
+- The PCA grid `{10,20,...,150}` was an assumption. The matrix used the predetermined dimension min(50,K,n-1,d), **not the grid's highest ACC**.
+- LDA rank is <=K-1 (Ding and Li), so its grid cannot reach 150.
+- The SSC gamma grid `{1e-6,1e-3,1,1e3,1e6}` was recorded. The matrix used predetermined gamma=1. Gamma was not chosen by ACC, and raw Equation (8) objectives were not compared across gamma. Unconverged IRLS remained labelled unconverged.
+- Historical Track A / Round 2 measurements were not copied into this matrix.
+- LDA-SC ran on ORL/JAFFE (n=10), labelled APPROXIMATE and excluded from faithful reproduction. YaleB/USPS LDA-SC remained NOT_REPRODUCED (optional approximate cells, not run).
 
-## 阻塞
+## Blockers
 
 - SPLS: Section 3 not obtained; `baselines/spls/spls.py` raises NotImplementedError; no substitute shrinking.
 - AR: official host unavailable; unofficial Zenodo dump not used; 840/120 subset not invented.
@@ -65,7 +67,7 @@
 
 ## Shared F
 
-同一 `SpectralGraphConfig` 下 SC 的 F 必须等于 SSC 的 F。ORL att92 及其余忠实数据集的 `embedding_F.npy` 比较见下。
+SC F must equal SSC F under the same `SpectralGraphConfig`. The saved `embedding_F.npy` comparisons for ORL att92 and the other reconstructed datasets appear below.
 
 ```json
 {
@@ -134,6 +136,6 @@
 }
 ```
 
-产物：`results/reproduction_full_matrix.csv`、`results/reproduction_full_matrix.md`、`results/strict_repro/`、`runs/strict_repro/`。
-未 git commit / push。
+Outputs: `results/reproduction_full_matrix.csv`, `results/reproduction_full_matrix.md`, `results/strict_repro/`, `runs/strict_repro/`.
+No Git commit or push was made at that stage.
 

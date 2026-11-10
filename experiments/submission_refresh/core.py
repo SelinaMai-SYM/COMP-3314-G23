@@ -90,5 +90,11 @@ class ResourceLedger:
 
 def install_cpu_limit(seconds):
     import signal
-    def exceeded(_s,_f):raise TimeoutError('process CPU allocation exhausted')
-    signal.signal(signal.SIGPROF,exceeded);signal.setitimer(signal.ITIMER_PROF,float(seconds))
+    started=time.process_time();allocation=float(seconds)
+    def exceeded(_s,_f):
+        remaining=allocation-(time.process_time()-started)
+        # Some platforms deliver profiling signals before measured process CPU
+        # reaches the requested interval. Only measured CPU exhausts the budget.
+        if remaining>0.01:signal.setitimer(signal.ITIMER_PROF,remaining)
+        else:raise TimeoutError('process CPU allocation exhausted')
+    signal.signal(signal.SIGPROF,exceeded);signal.setitimer(signal.ITIMER_PROF,allocation)

@@ -1,84 +1,70 @@
-# BinAlpha
+# Binary alphabet candidates
 
-论文 BinAlpha 身份：**CANDIDATE_FOUND**（Binary Alphadigits 父集）后仍为 **UNVERIFIED**。26×30 是 **SAMPLE_SET_RECONSTRUCTED**，**不是**论文样本集。36 类全集 **禁止**叫作论文 BinAlpha。默认加载器仍不可用。
+**Current status, 2026-11-10:** the 26-by-30 seed0 reconstruction remains exact
+with respect to its stored manifest. The new campaign declares RandomState
+seeds 0-99 and first/last30 sensitivity rules before scoring. The authors'
+historical parent release and selected indices remain unverified. The strict
+`load_dataset("BinAlpha")` endpoint remains unavailable. See
+[source recovery](../../docs/submission_refresh/source_recovery.md) and the
+[candidate catalogue](../../configs/subset_search/candidate_catalogue.json).
 
-索引：[docs/round2_source_of_truth.md](../../docs/round2_source_of_truth.md)。清单：`manifest.yaml`。索引文件：`reconstructions/letters26x30_seed0.json`。
+## Identity and source
 
-## 身份
+Chang et al. specify 26 binary handwritten alphabets with 30 randomly selected
+images per alphabet. They give no parent URL, image size or seed. Binary
+Alphadigits, attributed to Simon Lucas/Algoval and distributed as a Roweis
+MATLAB dump, contains digits 0-9 and letters A-Z: 36 classes with 39 images each,
+20x16 pixels, or 1,404 images. Dropping digits and sampling 30 per letter is a
+reproducible hypothesis, not direct evidence that Chang et al. used that parent.
+Neither the AAAI paper, arXiv:1411.6308 nor the related arXiv:1411.6241 paper
+identifies Binary Alphadigits as its BinAlpha source.
 
-Chang et al. 只写“26 个二进制手写字母，每类随机 30 张”，无出处、无尺寸、无种子。本轮下载的是 **Binary Alphadigits**（Simon Lucas / Algoval；Roweis MATLAB 转储）：0–9 与 A–Z，每类 39 张，20×16，共 36×39=1404。
+The source `binaryalphadigs.mat` is 532,304 bytes, SHA256
+`3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`,
+MD5 `194c4c91d95f1457bbd5829e75373b96`. The source is kept outside Git;
+the exact reconstruction index JSON is committed. No license was found inside
+the MAT file or on the archived Roweis page, so redistribution permission is
+not assumed.
 
-**未找到** Chang 使用该集的直接证据（AAAI 正文、arXiv:1411.6308、同组 1411.6241 均未写 Binary Alphadigits）。身份保持 **UNVERIFIED**。
+## Explicit versions and reconstruction
 
-## Chang et al. 2015 原文 vs 推断
+| Version | Samples/classes | Meaning |
+|---|---:|---|
+| Default / `paper` | unavailable | `DatasetUnavailable`; strict paper identity unresolved |
+| `binaryalphadigs36` | 1404/36 | Complete parent diagnostic |
+| `CANDIDATE_BIN_ALPHA` / `letters26x30_seed0` | 780/26 | Fixed seed0 reconstruction; historical identity unverified |
 
-- **原文：** 26 个字母，每类随机 30 张。
-- **未写：** 父集、种子、图像大小、是否含数字。
-- **推断（不升格）：** 26 个字母很像 Binary Alphadigits 去掉 10 个数字后再抽样。这只是候选，不是证据。
-
-## 本机文件（2026-10-21 新下载，未覆盖任何旧 archive——原先没有）
-
-| 文件 | 字节 | SHA-256 | HTTP |
-| --- | --- | --- | --- |
-| `data/binaryalphadigs.mat` | 532304 | `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7` | 现网 `cs.nyu.edu/~roweis/data/binaryalphadigs.mat` GET **403**；Wayback `20240616024002id_` GET **200** |
-
-许可：mat 内无许可证；Wayback Roweis 页无许可声明。档案 gitignore。索引 JSON 可提交。
-
-## 版本对照
-
-| version | n | 类 | 是否论文 BinAlpha |
-| --- | --- | --- | --- |
-| 默认 / `paper` | — | — | 否；`DatasetUnavailable`（不称 EXACT） |
-| `binaryalphadigs36` | 1404 | 36 | **否** |
-| `CANDIDATE_BIN_ALPHA` / `letters26x30_seed0` | 780 | 26 | **否**（候选 reconstruction，seed 0） |
-
-## 样本选择
-
-重建规则（已写入 JSON，可重放）：
-
-- 丢掉 `classlabels` 中的 `0`–`9`。
-- 对 `A`–`Z`（父下标 10–35），`numpy.random.RandomState(0).choice(39, size=30, replace=False)`，再排序。
-- 种子 **0 是本仓库的重建种子**，不是 Chang 的种子。
-
-## 预处理
-
-细胞已是 `uint8` 20×16、值 ∈ {0,1}。不缩放，不除以 255，C 序拉直到 320 维。
-
-## 完整性测试（已跑）
-
-```text
-python3 -m pytest benchmarks/binalpha/test_binalpha.py -q
-```
-
-默认必须不可用；36 类必须是 `(1404, 320)`；26×30 / `CANDIDATE_BIN_ALPHA` 必须是 `(780, 320)` 且 `identity == "CANDIDATE_BIN_ALPHA"`，不称 EXACT。
-
-## 哪些实验用了这个版本
-
-无。Phase 1 / repair_round1 / Round 2 都没有 BinAlpha 聚类作业。不要把 36 类或 26×30 重建结果写进论文 BinAlpha 格。
-
-## 复现命令（本轮实测）
+The unchanged [seed0 manifest](reconstructions/letters26x30_seed0.json) drops
+parent classes 0-9. One `numpy.random.RandomState(0)` is advanced sequentially
+across A-Z, parent class indices 10-35. It chooses 30 of 39 indices per letter
+without replacement, then sorts the indices within each letter. Seed 0 is our
+reconstruction seed, not a recovered author seed. Cells are native uint8
+20x16 images with values in {0,1}; no division by 255 is applied. Images are
+vectorized in C order to 320 features.
 
 ```python
+from pathlib import Path
 from benchmarks import load_dataset
-from benchmarks.exceptions import DatasetUnavailable
-try:
-    load_dataset("BinAlpha")
-except DatasetUnavailable:
-    pass
-X, y, m = load_dataset("BinAlpha", version="CANDIDATE_BIN_ALPHA")
-assert X.shape == (780, 320) and m["identity"] == "CANDIDATE_BIN_ALPHA"
+X, y, metadata = load_dataset("BinAlpha", root=Path("/path/to/benchmarks/binalpha/data"),
+                             version="letters26x30_seed0")
 ```
 
-## Task 1（2026-10-21）哈希复核
+Integrity checks require `(1404,320)` for the full parent, `(780,320)` and 30
+samples per class for the reconstruction, and `identity="CANDIDATE_BIN_ALPHA"`.
+The strict default must remain unavailable; no explicit version claims EXACT.
+Run `python -m pytest benchmarks/binalpha/test_binalpha.py` and the new candidate
+replay checks under `tests/submission_refresh/`.
 
-未重下。`data/binaryalphadigs.mat` 532304 字节 SHA-256 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`。论文 26×30 仍 `NOT_FOUND`；`letters26x30_seed0` 仍 `CANDIDATE_ONLY` / UNVERIFIED。
+## Historical recovery notes (2026-10-21)
 
-## Strict URL Task 1（2026-10-21 晚）哈希复核
-
-未重下。父集 SHA-256 仍为 `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`（MD5 `194c4c91d95f1457bbd5829e75373b96`）。计划 URL HEAD **200**、532304 字节。候选版本 `CANDIDATE_BIN_ALPHA`，种子 **0**，索引 `reconstructions/letters26x30_seed0.json`，形状 780×320。默认 `load_dataset("BinAlpha")` 仍不可用，不称 EXACT。
-
-## v3 status
-
-Numbers above from v1 or v2 are historical. The v3 campaign does not copy them. See `docs/v3/` and `results/v3_reproduction/`. LLC results from before the Procrustes correction are `PRE_FIX_LEGACY`.
-
-Round 2 re-downloaded the Roweis parent. SHA-256 still `3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`: 1404 images, 36 classes, 20×16. Status `PARENT_DATA_VERIFIED`. `letters26x30_seed0` remains `HISTORICAL_INDICES_UNKNOWN`.
+No BinAlpha clustering jobs ran in Phase 1, repair_round1 or Round 2. Statements
+that the candidate had not been evaluated describe those rounds; current
+coverage is recorded in the new campaign rather than inferred from these notes.
+The live legacy `cs.nyu.edu/~roweis/data/binaryalphadigs.mat` GET returned 403,
+while Wayback capture `20240616024002id_` returned 200. The original download
+created the file without overwriting an older archive. Later Task 1 and Strict
+URL checks reused it and found the same SHA256 and length. The planned live
+Roweis URL's HEAD returned 200 in the strict check. Historical 26-by-30 identity
+remained `NOT_FOUND`; the stored reconstruction remained `CANDIDATE_ONLY`.
+See [Round 2 source records](../../docs/round2_source_of_truth.md) and
+[the manifest](manifest.yaml).

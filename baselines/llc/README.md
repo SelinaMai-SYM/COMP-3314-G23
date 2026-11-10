@@ -107,9 +107,9 @@ JAFFE beating the paper by ~10 points can come from `k=5`, \(\gamma=\sigma_0^2\)
 python -m pytest baselines/llc -q
 ```
 
-## Task 1（2026-10-21）
+## Task 1 (2026-10-21)
 
-新文件：`resources/Wu_Schoelkopf_2006_NIPS_LLC.pdf` 127718 字节 SHA-256 `17828ebae410aca05c026767bffb2befec09a5edfe4232c770c2782a904c12c3`（NeurIPS OA GET **200**）。作者代码 `CODE_NOT_FOUND`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+New file: `resources/Wu_Schoelkopf_2006_NIPS_LLC.pdf`, 127718 bytes, SHA-256 `17828ebae410aca05c026767bffb2befec09a5edfe4232c770c2782a904c12c3` (NeurIPS open-access GET **200**). Author-code status: `CODE_NOT_FOUND`; matrix status: `COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
 
 ## v3 status
 

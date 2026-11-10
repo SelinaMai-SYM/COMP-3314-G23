@@ -1,10 +1,8 @@
 workspace: ""
 # Licensed matrices are external. Set COMP3314_DATA_ROOT or local/data_root.txt.
 data_root: ""
-inherited_v2_commit: c217836e7ca7bf5264399e8bb176522d7f721917
 remote: https://github.com/SelinaMai-SYM/COMP-3314-G23.git
-source_branch: origin/v2
-target_branch: v3
+target_branch: main
 slps_pdf: ""
 workers: 2
 datasets: datasets.yaml

@@ -1,84 +1,82 @@
 \documentclass{article}
-% HKU COMP3314 course report; not a NeurIPS submission.
+% HKU COMP3314 course report, using the required preprint template.
 \usepackage[preprint]{neurips_2026}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref,url,booktabs,amsmath,amssymb,amsfonts,microtype,longtable,array,graphicx}
-\hypersetup{hidelinks}
-\title{Spectral Shrunk Clustering: Reproduction, Certificates, and When Shrinkage Helps}
+\hypersetup{hidelinks,pdftitle={Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset Uncertainty},pdfauthor={Han Jiale; Lu Sinan; Mahatharadol Vie; Mai Sheung Ying}}
+\title{Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset Uncertainty}
 \author{Han Jiale \quad Lu Sinan \quad Mahatharadol Vie \quad Mai Sheung Ying\\Group 23\\The University of Hong Kong\\COMP3314 Machine Learning}
 \begin{document}
 \maketitle
 \begin{abstract}
-Spectral Shrunk Clustering (SSC) refines a spectral representation using a convex fidelity--fusion objective. We study its motivation, optimization and experimental evidence, and reconstruct nine methods on eight historical benchmarks. Four benchmarks support measured partial reproduction; other cells retain explicit data, method or subset limitations. We separate a fixed controlled protocol from retrospective numerical matching to the published table. A feasible-dual audit distinguishes optimization error from clustering quality, and label-assisted graph interventions test whether incorrect fusion edges explain weak shrinkage gains. We also analyze an existing truncated fusion penalty as an SSC adaptation, without claiming its novelty or a global certificate for its nonconvex optimization. Results and limitations are generated from auditable scalar trials.
+Spectral Shrunk Clustering (SSC) refines a spectral representation through a convex fidelity--fusion objective. We examine its mathematical target, reproduce available benchmark settings, and distinguish optimization validity from final clustering accuracy. Missing historical sample indices motivate a predeclared source/subset sensitivity campaign. Joint ACC/NMI matching replaces ACC-only retrospective selection; mean/sample-SD and native-objective-selected assignments remain separate endpoints. Numerical audits preserve feasible dual bounds and correct a graph fragmentation statistic. Source and implementation repairs include native 16-by-16 MSRA data and explicitly labelled LDA adaptations. These experiments quantify reproducible reconstructions and limitations, without identifying historical datasets merely from numerical agreement.
 \end{abstract}
 
-\section{Problem, motivation, and the paper's contribution}
-Spectral clustering represents samples by eigenvectors of a graph Laplacian before applying K-means. This can reveal geometry missed by clustering the original pixels, but the representation and graph are imperfect. Chang et al.~\citep{chang2015ssc} propose learning \emph{shrunk patterns} from the spectral coordinates: nearby embedded samples should move together while retaining fidelity to their initial positions. Their contribution is a representation-refinement formulation, removal of an orthogonality constraint from this refinement, and an iterative optimization procedure with empirical clustering evidence. SSC here means \emph{Spectral Shrunk Clustering}, not Sparse Subspace Clustering.
+\section{What SSC optimizes}
+Spectral clustering (SC) represents samples using graph-Laplacian eigenvectors and then applies K-means. Chang et al.~\citep{chang2015ssc} argue that directly clustering the initial spectral coordinates can be unreliable, and propose learning \emph{shrunk patterns} that preserve their anchors while contracting neighboring representations. Their contribution is a convex representation-refinement formulation, relaxation of an orthogonality constraint in this stage, and an iterative algorithm with clustering experiments. SSC here means Spectral Shrunk Clustering, rather than Sparse Subspace Clustering.
 
-Let $A$ be the input-space affinity and $D_A$ its degree matrix. The eigenvectors for the $c$ smallest eigenvalues of $L_A=I-D_A^{-1/2}AD_A^{-1/2}$ form $F\in\mathbb R^{n\times c}$. Unlike PCA's variance criterion, this embedding depends on neighborhood geometry. Unlike LDA, labels do not enter our embedding or shrinkage functions; the class count follows the benchmark protocol.
-
-\section{Method and what convexity guarantees}
-Figure~\ref{fig:ssc-two-graphs} separates the two graph roles: $A$ determines the initial spectral geometry, while $W$, built from $F$, sets pairwise fusion strengths. $F$ remains the fidelity anchor. Changing $W$ with $F$ fixed changes refinement; changing $A$ generally also changes $F$ and hence $W$.
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
-\caption{Two graphs with different roles in spectral shrunk clustering. The input-space affinity $A$ defines the Laplacian used to obtain the spectral representation $F$. A second graph $W$, constructed in the spectral space, controls pairwise fusion during refinement. SSC optimizes $G$ while keeping $F$ and $W$ fixed, then applies K-means to $G$. The SC baseline applies K-means directly to the same $F$.}
-\label{fig:ssc-two-graphs}
-\end{figure}
-With an oriented incidence matrix B storing each undirected edge once, Equation 8 is
+The input-space affinity $A$ determines $L_A=I-D_A^{-1/2}AD_A^{-1/2}$. The $c$ smallest eigenvectors form $F\in\mathbb R^{n\times c}$. A second affinity $W$ is constructed from $F$ and controls refinement (Figure~\ref{fig:two}). With each undirected edge stored once in incidence matrix $B$, Equation~8 is
 \begin{equation}
- P_0(G)=\sum_i\|g_i-f_i\|_2+2\gamma\sum_{e}w_e\|(BG)_e\|_2.\label{eq:ssc}
+ P(G)=\sum_i\|g_i-f_i\|_2+2\gamma\sum_e w_e\|(BG)_e\|_2.\label{eq:target}
 \end{equation}
-Both terms are convex for fixed F and nonnegative W, but uniqueness is not guaranteed. The authors use iteratively reweighted quadratic problems. Under the ordered-pair convention, the stationary system has $S+2\gamma\widetilde L$ (E8); the printed Equation 13 has $S+\gamma\widetilde L$ (E13). E13 at nominal gamma therefore targets E8 at effective gamma/2. Comparing these unequal objectives at the same nominal gamma would create a false solver discrepancy.
+The factor~2 implements the paper's ordered-pair sum. Its stationary IRLS system uses $S+2\gamma\widetilde L$ (E8), whereas printed Equation~13 uses $S+\gamma\widetilde L$ (E13). Thus E13 at nominal gamma targets E8 at effective gamma/2. We retain both tracks, rather than calling unequal targets a solver discrepancy.
 
-Convexity concerns G with F/W fixed. Graph construction, selecting an eigenspace and final K-means remain separate stages. A global representation optimum need not give globally optimal labels or higher ACC. Signs and orthogonal rotations preserve Euclidean geometry; changes to the selected eigenspace at a spectral cutoff can matter. Row normalization is a preprocessing change, not an eigenpair-residual test.
+\begin{figure}[ht]
+\centering\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
+\caption{The two graph roles are distinct. $A$ determines the initial spectral geometry $F$; $W$, built in that geometry, controls fusion while $F$ remains fixed. Matched SC clusters the same $F$, and SSC clusters $G$.}
+\label{fig:two}
+\end{figure}
 
-\section{Published evidence and our partial reproduction}
-The paper compares nine methods on AR, JAFFE, ORL, UMIST, BinAlpha, MSRA50, YaleB and USPS, reports 50 clustering repetitions, and describes a parameter grid $\{10^{-6},10^{-3},1,10^3,10^6\}$. SSC has the highest reported ACC across these benchmarks. This does not extend to every metric: YaleB SSC ACC is 49.8 versus SC 34.8, while SSC NMI is 46.8 versus SC 55.6 (\emph{Reported in Chang et al. (2015)}). ACC uses optimal label matching; our NMI uses geometric entropy normalization. The paper also describes selecting randomized runs by objective. A selected assignment and a per-run mean/SD are distinct endpoints, so we retain both rather than attaching 50-run SD to a single assignment.
+For fixed $F,W$, nonnegative weights make~\eqref{eq:target} convex; unsquared fidelity does not guarantee uniqueness. Graph construction, eigenspace selection and final K-means are separate operations. A globally optimal $G$ therefore need not improve ACC or NMI. Orthogonal eigenspace rotations preserve Euclidean distances, but a changed cutoff eigenspace or row normalization can alter clustering.
 
-Our source-based implementations include one-shot SLPS (called SPLS in the SSC table), following Hou et al.~\citep{hou2013learning}. LDA-SC remains blocked because its named algorithm is insufficiently specified. AR's required subset, historical UMIST564 and MSRA50 remain data-blocked. BinAlpha subset identity is unverified; UMIST575 and candidate BinAlpha results are supplementary, not replacements. The historical matrix has 32 completed, 24 data-blocked, 8 method-blocked and 8 subset-unverified cells.
+\section{Published results and the reproduction protocol}
+We verified all 288 reported means and SD values in the paper's Tables~1--2: nine methods, eight benchmarks and two metrics. The paper states $k=5$, 50 random initializations, a five-value parameter grid and native-objective selection. It does not fully resolve the SD hierarchy, source indices, Gaussian width or graph symmetrization. Our choices are union kNN, median positive directed-neighbor squared-distance width, deterministic eigensolver initialization, and explicit one-start Lloyd rounding. ACC uses optimal label assignment and NMI uses geometric entropy normalization.
 
-\input{tables/final_main}
+The paper's SSC ACC gains do not imply superiority on every metric: YaleB SC/SSC have ACC 34.8/49.8 but NMI 55.6/46.8. We therefore minimize joint discrepancy in percentage points,
+\[
+ D_{\max}=\max(|\overline{\mathrm{ACC}}-\mathrm{ACC}_{p}|,|\overline{\mathrm{NMI}}-\mathrm{NMI}_{p}|),\qquad
+ D_{\mathrm{mean}}=\tfrac12(d_{\mathrm{ACC}}+d_{\mathrm{NMI}}).
+\]
+We rank by $D_{\max}$, then $D_{\mathrm{mean}}$, with a $10^{-12}$ tolerance and frozen compatibility tie breaks. Published-grid gamma values are not penalized for differing from 1. Both metrics and SD come from one configuration and its complete 50 seeds. The single native-best-of-50 assignment has no across-run SD; existing independent batches are a separate repeatability endpoint. Raw LDA inertia across learned subspaces is not treated as a common selection objective.
 
-\textbf{Two distinct questions.} Closest is \emph{Our adapted setting}: retrospective absolute matching of the unrounded ACC mean to the paper, using every planned batch-0 seed. NMI/SD follow the same configuration and trials. This neither recovers the author protocol nor selects without labels. Additional batches assess repeatability. Fixed is \emph{Our reproduction}: Y0/E8/gamma=1/random, one Lloyd start per seed. PCA/SLPS fixed cells remain uncollapsed because no unique reference was locked.
+\input{tables/refresh_main}
 
-The matched values need their settings. ORL's closest SSC uses E13, nominal gamma=1000 and vanilla++; JAFFE uses E13, $10^6$ and random. Both are 300-step truncated outputs. YaleB's closest SSC uses DengCai32, Y3 and greedy++; Y3 changes both input L2 and embedding row normalization. USPS uses E8, gamma=1000 and vanilla++. An iterate stopping criterion does not certify optimality. Full settings, NMI and all 72 cells are in the appendix and generated manifests.
+\subsection{Dataset-subset uncertainty and retrospective numerical matching}
+Original sample indices were unavailable. We evaluated predeclared candidate subsets and preparation protocols and selected the smallest joint discrepancy from published ACC/NMI. \textbf{This is a retrospective numerical match, not label-free selection or an unbiased superiority test.} The selected manifests are reproducible; their identity as the authors' historical datasets remains unverified. AR seven-of-fourteen rules, UMIST deduplication/omission hypotheses, and BinAlpha 30-per-letter draws preserve explicit source indices. Different membership always rebuilds $A,F,W,G$. Diagnostic parents and native 16-by16 MSRA are separately labelled; resolution is not recovered by upsampling. ORL/JAFFE membership is not arbitrarily searched. Yale source, resizing and Y0--Y3 normalization factors remain distinct. USPS uses the full 9,298 rows in specification-compatible experiments.
 
-\section{Critical analysis and performance-driven extensions}
-\textbf{Optimization versus the target.} We implement standard PDHG~\citep{chambolle2011first} and recover feasible dual variables instead of using agreement between two solvers as a certificate. For $c_e=2\gamma w_e$, any q satisfying $\|q_e\|\le c_e$ and $\|(B^Tq)_i\|\le1$ gives $D(q)=\langle B^Tq,F\rangle\le\min P_0$. We retain actual best primal/dual points and require relative gap $\le10^{-5}$. Label-free IRLS initialization can tighten the primal bound; its acceptance uses the same objective, not ACC. Historical outputs and fresh seeded representations remain distinct artifacts.
+\input{tables/refresh_coverage}
 
-\input{tables/next_round_findings}
+\section{What discrepancies can be explained}
+\textbf{Numerics.} For $c_e=2\gamma w_e$, feasible $q$ with $\|q_e\|\le c_e$ and $\|(B^Tq)_i\|\le1$ gives lower bound $D(q)=\langle B^Tq,F\rangle$. We retain the best feasible initial dual before PDHG updates~\citep{chambolle2011first}, and use relative gap at most $10^{-5}$ with capacity violations at most $10^{-8}$. A diagonal formulation uses $K=\mathrm{diag}(\sqrt w)B$ and maps its dual back to the original capacities. Independent small convex references validate the target. USPS $\gamma=1,1000$ audits use one frozen current $F/W$, historical-style IRLS, linear residual checks, continuation and bounded dual-flow candidates. Agreement between solvers alone is not certification; new arrays never impersonate missing historical artifacts.
 
-\textbf{Why incorrect fusion is a hypothesis.} An edge in W attracts its endpoints even if their true classes differ. We separately measure A/W pollution, false merges, false splits and within/between-class contraction. Oracle deletion of cross-class W edges uses labels only for diagnosis; random deletion, equal remaining edge mass and static length filtering distinguish targeted correction from simply weakening shrinkage. At the best certified original gamma, a prespecified gate requires certified gains over these controls on at least two benchmarks, with nondecreasing NMI. Length filtering additionally needs evidence that erroneous edges are distinguishable by length. Failure or uncertainty at this gate does not establish a universal SSC failure.
+\textbf{Implementation and sources.} Ding--Li LDA-Kmeans~\citep{ding2007adaptive}, audited through a pinned ClustPy reference\footnote{\url{https://github.com/collinleiber/ClustPy/blob/4ac9d00685efc7432800684f5bfac0f01af59172/clustpy/centroid/ldakmeans.py}; the observed port retains the BSD-3-Clause notice.}, can fail at singular $S_w$ and can return a projection newer than its labels at the cap. We expose the projection actually used, count failures, compare 30/100/300 limits, and preserve the reference's behavior. A separately named PCA-preconditioned ridge LDA-Kmeans$\to$SC adaptation uses $p_0=\min(100,p,n-c,\mathrm{rank}(X_c))$, $r=\min(c-1,p_0)$ and ridge $10^{-6}\mathrm{tr}(S_t)/p_0$, with matched controls. It does not recover historical LDA-SC. Paired one-shot SLPS~\citep{hou2013learning} experiments separate $k=5$ from the source's $k=7$, alpha and dimension effects. Native 16-by16 EBSA MSRA retains all 1,799 rows and duplicates. Counts and good scores cannot establish historical pixel identity.
 
-\input{tables/graph_evidence_main}
+\input{tables/refresh_repairs}
 
-\textbf{Existing robust fusion, adapted carefully.} We examine replacing edge distance r by $\min(r,\tau)$, an existing group-truncated penalty~\citep{pan2013cluster,wu2016new}. RCC similarly motivates weakening spurious pairwise relations~\citep{shah2017robust}; this is different from robustifying anchor fidelity. For two group-constant representatives with sizes $m<n$ and separation $d>\tau$, the original optimum is $d\min(m,\lambda)$, versus $\min(md,\lambda\tau)$ for capped fusion. Thus $m<\lambda<md/\tau$ permits original fusion while capping preserves separation. This proves a narrow information-preservation mechanism, not better real-data ACC. Squared/non-squared fidelity crossed with linear/capped fusion separates anchor and edge effects. Nonconvex active-edge updates receive inner convex certificates only; initialization dependence and static-screening controls remain necessary.
+\section{Graph diagnostics and conditional extension}
+Incorrect $W$ edges attract different classes, but that observation alone does not identify the main performance bottleneck. We measure $A$ and $W$ separately. Class-induced fragmentation now counts connected components of each $W[C,C]$, including isolates, excess fragments and largest-component fractions. Whole-graph coverage is retained under its accurate name. Deleting edges need not preserve $G=F$: on an eight-node cycle at $\gamma=0.6$, deleting one edge destroys force cancellation. The sufficient incident-mass bound $2\gamma\max_i\sum_j w_{ij}\le1$ is a separate statement.
 
-\textbf{Evaluation discipline.} The practical target is four-benchmark mean ACC gain of at least 2 points with nondecreasing NMI. A 15-configuration capability oracle and locked no-label operating point are distinct; neither complete comparison is claimed when C is not triggered. Shared K-means seeds give conditional rounding intervals, not independent dataset replicates or unbiased post-selection coverage. Huber activation and heat stability alone do not establish label improvement.
+The prior wrong-edge gate remains 0/4. New graph repair uses full preregistered ORL and cropped YaleB, independently of subset matching. G1 records complete SC/SSC error casebooks; G2 crosses anchors $F_0,U$ with graphs $W_0,W_a$ at matched total mass. G3 tests constrained oracle deletion/completion within a frozen, label-blind top-20-neighbor pool, against fixed oracle deletion plus blind random additions and separate randomized controls. Its 15\%/$\gamma=1000$ gate requires certified active shrinkage, at least 1-point paired ACC gain, nondecreasing NMI, 20\% fewer excess fragments and positive conditional bootstrap intervals. Only that gate permits an EnSC graph adaptation~\citep{you2016oracle}. No new Huber, capped-fusion or heat grids are launched.
 
-\input{tables/secondary_main}
+\input{tables/refresh_extension}
 
-\section{Conclusion and limitations}
-SSC makes refinement interpretable, but label quality depends on geometry, edges, optimization and rounding. Our contribution is traceable partial reproduction and conditional mechanism analysis. Incomplete certification, historical array identity, within-dataset development limit conclusions. Code, report sources and negative findings are at \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/v3}{GitHub v3}.
+The final practical target remains four-benchmark macro-average ACC gain of at least 2 points over the stronger fair SC/SSC capability baseline, without decreasing mean NMI relative to either. Both $F_0$-SC and $U$-SC belong to the fair-SC envelope. Capability-oracle and locked label-free operation are distinct; incomplete coverage leaves the four-benchmark conclusion unavailable. New rounding seeds on the same datasets assess conditional rounding stability, not unseen-data generalization.
+
+\section{Conclusion}
+SSC gives a clear convex refinement target, while clustering quality depends on representation, graph, solver and rounding choices. Our contribution is reproducible source/subset sensitivity and explicit numerical and implementation audits, including negative or unresolved evidence. Exact historical LDA-SC and several dataset identities remain unresolved. Code, complete records and commands are available at \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/main}{GitHub main}.
 \label{main_end}
 \clearpage
-\bibliographystyle{plainnat}
-\bibliography{references}
-\clearpage
-\appendix
-\section{Historical cells, selection, and effective settings}
-\input{tables/final_appendix}
-\section{Certificates, mechanisms, provenance and resource limits}
+\bibliographystyle{plainnat}\bibliography{references}
+\clearpage\appendix
+\section{Historical release and endpoint separation}
+The original scalar release and ACC-only selections remain historical records. Current joint selections are regenerated from complete seed groups; frozen measurements are not rewritten. Missing historical representations limit optimization re-audits on their exact arrays. The historical 72-cell identity/status matrix remains separate from newly measured candidates and adaptations.
+The original ACC-only closest-display and fixed-reference tables remain available in the committed historical release. The current joint 72-cell table below supersedes their display selection without rewriting any trial.
+\section{Current authoritative results and coverage}
+\input{tables/refresh_appendix}
+\section{Earlier numerical and mechanism findings}
+The following records describe the earlier campaign. Its measured CPU costs and 0/4 gate are historical; the current combined campaign uses the separate shared ledger above. The truncated fusion penalty already appears in PRclust~\citep{pan2013cluster,wu2016new}; robust pairwise fusion is also central to Shah--Koltun RCC~\citep{shah2017robust}. These works differ from Sun et al.'s resistant convex clustering. We claim no invention of those penalties.
 \input{tables/audit_appendix}
 \input{tables/graph_evidence}
-\subsection{Reduced-model derivation and equality cases}
-For group-constant representatives, let $r=\|u-v\|$. Since $n>m$, the fidelity is at least $m\max(d-r,0)$, attained on the anchor segment with $v=b$ for $0\le r\le d$. For linear fusion the reduced cost is $md+(\lambda-m)r$, hence $d\min(m,\lambda)$. At $\lambda=m$ every segment location is optimal. For $d>\tau$, the capped cost is piecewise linear, and its endpoint minimum is $\min(md,\lambda\tau)$; the interior kink cannot improve it. At $md=\lambda\tau$ both fused and separated endpoint solutions exist. Strict inequalities are therefore needed to claim preservation. Graph weights are fixed throughout this statement; rebuilding W as d changes can change lambda. This is not a theorem for arbitrary five-point graphs or classification risk.
-\section{Measured secondary experiments and negative findings}
 \input{tables/secondary_findings}
-\clearpage
-\section{Parameter curves and controlled edge interventions}
-\begin{figure}[h]\centering\includegraphics[width=\textwidth]{../results/next_round/figures/gamma_curves.pdf}\caption{Same seeded features and protocol; open markers are uncertified. These fresh points do not replace stronger historical points on unrecoverable old representations.}\end{figure}
-\begin{figure}[h]\centering\includegraphics[width=\textwidth]{../results/next_round/figures/edge_diagnosis.pdf}\caption{Conditional paired seed intervals at gamma=1. Oracle correction is a label-assisted diagnostic, not an unsupervised method.}\end{figure}
 \end{document}

@@ -27,3 +27,22 @@ def test_objects_and_archive_detect_corruption(tmp_path):
 def test_shared_ledger_reservations(tmp_path):
     l=ResourceLedger(tmp_path);assert l.reserve('a',100,'subset');assert l.reserve('b',100,'baseline');assert not l.reserve('c',1,'subset')
     l.finish('a',20,'COMPLETED');assert l.reserve('c',1,'confirmation');l.finish('b',None,'KILLED');assert l.state()['entries'][-1]['charged_cpu_seconds']==100
+
+def test_cpu_guard_rearms_early_signals(monkeypatch):
+    import signal
+    from experiments.submission_refresh import core
+    handlers={};timers=[];clock=iter([0.,.25,1.1])
+    monkeypatch.setattr(core.time,'process_time',lambda:next(clock))
+    monkeypatch.setattr(signal,'signal',lambda kind,fn:handlers.__setitem__(kind,fn))
+    monkeypatch.setattr(signal,'setitimer',lambda kind,value:timers.append(value))
+    core.install_cpu_limit(1.)
+    handlers[signal.SIGPROF](None,None)
+    assert timers==[1.,.75]
+    with pytest.raises(TimeoutError):handlers[signal.SIGPROF](None,None)
+
+
+def test_tolerance_ranking_is_independent_of_input_order():
+    import itertools
+    rows=[{'config_id':str(i),'D_max':1+i*.75e-12,'D_mean':3-i,'variant':'E8'} for i in range(3)]
+    ranks={tuple(r['config_id'] for r in rank(list(order))) for order in itertools.permutations(rows)}
+    assert len(ranks)==1

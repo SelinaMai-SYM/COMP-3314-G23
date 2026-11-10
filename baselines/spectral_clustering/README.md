@@ -70,9 +70,9 @@ Confidence: **high** that the gap is present before IRLS and that source/bandwid
 
 Full matrix: `docs/round2_reproduction_matrix.md`. Causal labels: `docs/round2_root_cause_analysis.md`.
 
-## Task 1（2026-10-21）
+## Task 1 (2026-10-21)
 
-无新文件。GitHub 仓库搜索 `spectral shrunk clustering` HTTP 200、`total_count=0`。作者代码 `CODE_NOT_FOUND`。实现仍是 `PAPER_BASED_REIMPLEMENTATION`。矩阵状态：`COMPLETE_WITH_UNSPECIFIED_SETTINGS`。
+No new files were obtained. A GitHub repository search for `spectral shrunk clustering` returned HTTP 200 and `total_count=0`. Author-code status: `CODE_NOT_FOUND`. The implementation remains `PAPER_BASED_REIMPLEMENTATION`; matrix status: `COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
 
 ## v3 status
 

@@ -1,6 +1,8 @@
-# Round 2 source of truth（索引）
+> Historical record translated into English on 2026-11-10. Statements describe the earlier stage; see [current findings](submission_refresh/research_findings.md) for subsequent corrections and results.
 
-日期：2026-10-21。工作区：`v1/`。本文件是索引，**不重复**各数据集的完整表格。细节、SHA-256、实验归属和复现命令在各包 README：
+# Round 2 source of truth (index)
+
+Date: 2026-10-21; worktree then named `v1/`. This index does not duplicate full dataset tables. Package READMEs provide details, SHA-256 values, experiment attribution, and reproduction commands:
 
 - [benchmarks/orl/README.md](../benchmarks/orl/README.md)
 - [benchmarks/jaffe/README.md](../benchmarks/jaffe/README.md)
@@ -11,51 +13,51 @@
 - [benchmarks/binalpha/README.md](../benchmarks/binalpha/README.md)
 - [benchmarks/msra50/README.md](../benchmarks/msra50/README.md)
 
-HTTP 全日志：[round2_missing_resources.md](round2_missing_resources.md)、[round2_http_log.json](round2_http_log.json)。
+Full HTTP records: [round2_missing_resources.md](round2_missing_resources.md) and [round2_http_log.json](round2_http_log.json).
 
-校验和均为 2026-10-21 对本机文件重算，或对新下载文件当场计算。没有编造。未覆盖已有 archive。默认 `load_dataset("ORL")` / `load_dataset("YaleB")` 未改。未改 `SSC_method/` 优化器，未重写报告，未 git commit。
+Checksums were recomputed locally on 2026-10-21 or calculated immediately after downloads. Existing archives were not overwritten. Default ORL/YaleB loaders, the SSC optimizer, and report were unchanged in this resource stage; no Git commit was made.
 
-README 保真词（八档）与下表六档同时使用：NOT_FOUND / CANDIDATE_FOUND / DOWNLOADED_UNVERIFIED / SOURCE_VERIFIED / SAMPLE_SET_RECONSTRUCTED / PREPROCESSING_VERIFIED / PAPER_PROTOCOL_MATCHED / FULLY_REPRODUCED。
+The eight README fidelity labels were used alongside the six dimensions below: NOT_FOUND / CANDIDATE_FOUND / DOWNLOADED_UNVERIFIED / SOURCE_VERIFIED / SAMPLE_SET_RECONSTRUCTED / PREPROCESSING_VERIFIED / PAPER_PROTOCOL_MATCHED / FULLY_REPRODUCED.
 
-## 数据集六档
+## Six dataset verification dimensions
 
-符号：Y = 是；N = 否；P = 部分（论文未写全）；R = 仅 reconstruction；U = 身份未核实。
+Y=yes; N=no; P=partial (paper underspecified); R=reconstruction only; U=unverified identity.
 
-| 数据集 | SOURCE_FOUND | ARCHIVE_DOWNLOADED | CONTENTS_VERIFIED | SAMPLE_SET_MATCHED | PREPROCESSING_MATCHED | FULL_PROTOCOL_REPRODUCED | README 总评 |
+| Dataset | SOURCE_FOUND | ARCHIVE_DOWNLOADED | CONTENTS_VERIFIED | SAMPLE_SET_MATCHED | PREPROCESSING_MATCHED | FULL_PROTOCOL_REPRODUCED | README assessment |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ORL `att92` | Y | Y | Y | Y（400/40） | P（32×32 已做，插值未写） | N | PREPROCESSING_VERIFIED |
-| ORL 默认 Olivetti | Y（另一来源） | Y | Y | Y（400/40） | N（64×64 不是 92×112） | N | SOURCE_VERIFIED（对 mat） |
-| JAFFE | Y | Y | Y | Y（213/10） | P（26×26 双线性） | N | SOURCE_VERIFIED |
-| YaleB `cropped2414` | Y | Y | Y | Y（2414/38，去 Ambient） | P | N | SOURCE_VERIFIED |
-| YaleB 默认邓蔡 | Y | Y | Y | Y（计数） | N（缩放核未知） | N | SOURCE_VERIFIED（对 mat） |
-| USPS | Y | Y | Y | Y（9298/10） | P（发布已是 16×16） | N | SOURCE_VERIFIED |
-| AR | N（官方）；候选 Zenodo 已拒 | N | N | N（840/120 未写） | N | N | NOT_FOUND |
-| UMIST 564 | P（页写 564，文件不是） | Y（1012/575） | Y（对已有档案） | N | N | N | CANDIDATE_FOUND，样本集未匹配 |
-| BinAlpha 论文集 | U | Y（父集） | Y（36×39×20×16） | R（26×30 seed0） | P（父集无需缩放） | N | SAMPLE_SET_RECONSTRUCTED / UNVERIFIED |
-| MSRA50 | P（文献指针，无 URL） | N | N | N | N | N | CANDIDATE_FOUND → NOT_FOUND |
+| ORL att92 | Y | Y | Y | Y (400/40) | P (32x32; interpolation unspecified) | N | PREPROCESSING_VERIFIED |
+| ORL default Olivetti | Y (different source) | Y | Y | Y (400/40) | N (64x64 differs from 92x112) | N | SOURCE_VERIFIED for MAT |
+| JAFFE | Y | Y | Y | Y (213/10) | P (26x26 bilinear) | N | SOURCE_VERIFIED |
+| YaleB cropped2414 | Y | Y | Y | Y (2414/38; Ambient removed) | P | N | SOURCE_VERIFIED |
+| YaleB default Deng Cai | Y | Y | Y | Y (counts) | N (unknown resize kernel) | N | SOURCE_VERIFIED for MAT |
+| USPS | Y | Y | Y | Y (9298/10) | P (release already 16x16) | N | SOURCE_VERIFIED |
+| AR | N (official); Zenodo candidate rejected | N | N | N (840/120 unspecified) | N | N | NOT_FOUND |
+| UMIST 564 | P (page says 564; files differ) | Y (1012/575) | Y (existing archives) | N | N | N | CANDIDATE_FOUND; unmatched membership |
+| Paper BinAlpha | U | Y (parent) | Y (36x39x20x16) | R (26x30 seed0) | P (no parent resizing) | N | SAMPLE_SET_RECONSTRUCTED / UNVERIFIED |
+| MSRA50 | P (bibliographic pointer; no URL) | N | N | N | N | N | CANDIDATE_FOUND -> NOT_FOUND |
 
-没有一个数据集达到 **FULL_PROTOCOL_REPRODUCED** 或 **PAPER_PROTOCOL_MATCHED**。
+No dataset reached FULL_PROTOCOL_REPRODUCED or PAPER_PROTOCOL_MATCHED.
 
-## 回收结论（短）
+## Recovery findings
 
-- **BinAlpha 子集存在：** `version="letters26x30_seed0"`，780 张，索引在 `benchmarks/binalpha/reconstructions/letters26x30_seed0.json`。默认名仍不可用。36 类全集不是论文 BinAlpha。
-- **AR：** Zenodo `ARDB_Full.zip` HEAD 200 / 120587997 字节，上传者不是官方，声称 CC-BY 与官方禁再分发冲突。**未下载、未使用。**
-- **MSRA50：** Nie/Yang 同组文引用 He et al. 2004 给出 1799/12/1024；He ICCV 2003 / TPAMI 2005 只有 12 人与 64–80/场，无 1799、无文件。未替换其它 MSRA 库。
-- **UMIST：** 575 裁剪包文件名无重复；10 组像素重复（`1b` 的 `final*.pgm`）。去掉后是 565，不是 564。未删 11 张。
+- BinAlpha reconstruction existed: `version="letters26x30_seed0"`, 780 images, with indices in `benchmarks/binalpha/reconstructions/letters26x30_seed0.json`. The strict default remained unavailable; the 36-class parent was not the paper dataset.
+- AR: Zenodo ARDB_Full.zip HEAD returned 200 and 120587997 bytes, but the uploader was unofficial and its CC-BY claim conflicted with official redistribution terms. It was not downloaded or used in this stage.
+- MSRA50: the related Nie/Yang paper cited He et al. 2004 and listed 1799/12/1024. He ICCV 2003 / TPAMI 2005 described 12 people and 64-80 images per session without a 1799-row file. Other MSRA corpora were not substituted.
+- UMIST: 575 cropped filenames were unique; ten pixel duplicate groups occurred among `1b/final*.pgm`. Deduplication gave 565, not 564. Eleven images were not arbitrarily deleted.
 
-## 基线保真
+## Baseline fidelity
 
-依据 `baselines/*/…py` 与 [repair_round1_baseline_audit.md](repair_round1_baseline_audit.md)。无作者二进制，故无 **ORIGINAL_CODE_VERIFIED**。
+Evidence: `baselines/*/...py` and [repair_round1_baseline_audit.md](repair_round1_baseline_audit.md). No author binary was available, so no method was ORIGINAL_CODE_VERIFIED.
 
-| 方法 | 标签 | 说明 |
+| Method | Label | Explanation |
 | --- | --- | --- |
-| K-means | PAPER_FAITHFUL_REIMPLEMENTATION | Lloyd + `init="random"`。k-means++ 是 AMBIGUITY_RECONSTRUCTION，不是默认。 |
-| Spectral clustering | PAPER_FAITHFUL_REIMPLEMENTATION | 式 (4)，k=5，不用 sklearn `SpectralClustering`。带宽与 union kNN 为 AMBIGUITY_RECONSTRUCTION。 |
-| PCA-KM | PAPER_FAITHFUL_REIMPLEMENTATION | 居中、不默认白化。维数步长 10 为 AMBIGUITY_RECONSTRUCTION。 |
-| PCA-SC | PAPER_FAITHFUL_REIMPLEMENTATION | PCA 后接式 (4)。 |
-| LDA-KM | PAPER_FAITHFUL_REIMPLEMENTATION | Ding–Li 交替，伪标签。 |
-| LDA-SC | APPROXIMATE | Chang 未写循环；不进忠实主表。 |
-| LLC | PAPER_FAITHFUL_REIMPLEMENTATION | Wu & Schölkopf。k=5 是比较协议。 |
-| SPLS / SLPS | NOT_IMPLEMENTED | 第 3 节仍未读到。 |
+| K-means | PAPER_FAITHFUL_REIMPLEMENTATION | Lloyd, init=random; k-means++ is an explicit ambiguity reconstruction |
+| SC | PAPER_FAITHFUL_REIMPLEMENTATION | Equation (4), k=5; no sklearn SpectralClustering; bandwidth/union support assumed |
+| PCA-KM | PAPER_FAITHFUL_REIMPLEMENTATION | Centered, no default whitening; dimension increment 10 assumed |
+| PCA-SC | PAPER_FAITHFUL_REIMPLEMENTATION | PCA followed by Equation (4) |
+| LDA-KM | PAPER_FAITHFUL_REIMPLEMENTATION | Ding-Li alternation using pseudo-labels |
+| LDA-SC | APPROXIMATE | Chang did not specify its loop; excluded from faithful main table |
+| LLC | PAPER_FAITHFUL_REIMPLEMENTATION | Wu and Schölkopf; k=5 comparison protocol |
+| SPLS/SLPS | NOT_IMPLEMENTED | Section 3 had not been obtained at this stage |
 
-Round 1 数字只作历史对照，见 `results/repair_round1/`。
+Round 1 results remained historical comparisons in `results/repair_round1/`.

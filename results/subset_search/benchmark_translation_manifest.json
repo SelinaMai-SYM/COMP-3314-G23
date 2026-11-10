@@ -1,0 +1,68 @@
+{
+  "schema": "english-replacement-v1",
+  "records": [
+    {
+      "path": "benchmarks/README.md",
+      "original_sha256": "461567765405bcd974f1006b220a42b429f733761a97760ca586c1935f26ba7d",
+      "english_replacement_sha256": "1b97b85c439d0f4fda0ae5bb3f6c9f185b875841457def513471d54590fa62bb",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/umist/README.md",
+      "original_sha256": "51426bdb6510da0aac18eb0d1d45f839fc5648897a90b220262ad3db10c93b6d",
+      "english_replacement_sha256": "66109c0e0f5c3c9c9aa3d712c5b5552124f4c397ce533ce09042e1736e329c2c",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/usps/README.md",
+      "original_sha256": "10e489901dce60e5ba29b7955e5cbb32a080fd32f35d16d617a0959235a40aba",
+      "english_replacement_sha256": "ee9058696e8f892c63b0fd210383aeb15b45217096848dcdfa02fefbf1cf357e",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/msra50/README.md",
+      "original_sha256": "887e2481a5ddccc36e642b945d7c7ea882cdbaccfb76324dcd76f3262bc0f4cd",
+      "english_replacement_sha256": "9df136f93d723280a9dffbcb6e011022a7707e32f9cbf1741892279298fc623c",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/jaffe/README.md",
+      "original_sha256": "956d104a1fa817d33d6181a52fad597bcc3010f578ec86603e9e88e414f1290b",
+      "english_replacement_sha256": "01ee8ce29a32f6bd9ae19855985737aa80a98f6cb988ccfdeae1f11ba591e9c8",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/yaleb/README.md",
+      "original_sha256": "ce5309fe78b12eb2dce49e7a7c21b17b315384af664d4dd29b5ce83bb3c3bb2a",
+      "english_replacement_sha256": "001ea8e66dd1ab8be7f8a21115ea86c2dbd71b9641a1446b31b219f5a8f4513e",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/ar/README.md",
+      "original_sha256": "728c3d4eb5fd09f75918631bbba3dd31811c435334e97f63fedc84ee49cc40ef",
+      "english_replacement_sha256": "4c042b25fa5973ebcef18d20bdfac7ec25461de0a8a45fda4469243e127349b1",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/orl/README.md",
+      "original_sha256": "5c23a5f00750a70320ad3515aa6a5658d4511a1755ce372c453d3b623616151d",
+      "english_replacement_sha256": "f26d497deb0f4502bbb12af241c94e7df6d49f68d8fb7d18817a51ed771af033",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    },
+    {
+      "path": "benchmarks/binalpha/README.md",
+      "original_sha256": "bda19167c84a7ec9b00e76c65069b80733e5ee6b577b0b9b184198e94557add2",
+      "english_replacement_sha256": "f493b4c43934e983512214c94d2cb1eea3456fa60e790b11b82dea61abc50675",
+      "transformation": "English editorial translation; dated historical findings retained; current candidate route added",
+      "original_preservation": "Git history at 5a02a702e6a0764299829885e8a3850e6483aaab and verified external preflight bundle"
+    }
+  ]
+}

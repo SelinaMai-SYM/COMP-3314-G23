@@ -1,0 +1,218 @@
+{
+  "ledger": {
+    "active": {
+      "profile-b3cf90aff12357705887": {
+        "phase": "profile",
+        "seconds": 1800,
+        "timestamp": 1794290397.6571698
+      }
+    },
+    "entries": [
+      {
+        "charged_cpu_seconds": 3.666698,
+        "phase": "profile",
+        "run_id": "profile-202373fc803d41d5c77d",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 17.602627,
+        "phase": "profile",
+        "run_id": "profile-5eb661ae7f59b1ed2640",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 3.3967400000000003,
+        "phase": "profile",
+        "run_id": "profile-7bab5857fd6db713ad07",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 1.8203529999999999,
+        "phase": "profile",
+        "run_id": "profile-e91afabc7f00deb920ec",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 26.780731,
+        "phase": "profile",
+        "run_id": "profile-c2c322157793f86eddc0",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 9.588156,
+        "phase": "profile",
+        "run_id": "profile-bf70a97dedc707e370cc",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.05354599999999987,
+        "phase": "profile",
+        "run_id": "profile-1d9497580d19ad626d09",
+        "status": "FAILED"
+      },
+      {
+        "charged_cpu_seconds": 0.05449400000000004,
+        "phase": "profile",
+        "run_id": "profile-a4dab0d6fdef804fbe45",
+        "status": "FAILED"
+      },
+      {
+        "charged_cpu_seconds": 4.378933,
+        "phase": "profile",
+        "run_id": "profile-08cd838d196f89bf9cf3",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 5.575516,
+        "phase": "profile",
+        "run_id": "profile-f56a651ba163ca2c280f",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.039134,
+        "phase": "profile",
+        "run_id": "profile-d6401f52d1564b7b8aee",
+        "status": "FAILED"
+      },
+      {
+        "charged_cpu_seconds": 5.663206000000001,
+        "phase": "profile",
+        "run_id": "profile-3dced90d0f3e7de65d59",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 5.555676,
+        "phase": "profile",
+        "run_id": "profile-ba09c9040b2dac8010ed",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 4.772775,
+        "phase": "profile",
+        "run_id": "profile-0762a3e0213680570607",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 420.0,
+        "note": "Two catalogue preparations180sec each and60sec small unit checks upper estimate; exact individual process CPU unavailable",
+        "phase": "validation",
+        "run_id": "preparation-and-unit-checks",
+        "status": "CONSERVATIVE_ACCOUNTING"
+      },
+      {
+        "charged_cpu_seconds": 0.42911699999999997,
+        "phase": "profile",
+        "run_id": "profile-lda-existing-JAFFE-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.4236360000000001,
+        "phase": "profile",
+        "run_id": "profile-lda-reference-JAFFE-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.31756399999999996,
+        "phase": "profile",
+        "run_id": "profile-lda-adapted-JAFFE-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 30.639186,
+        "phase": "profile",
+        "run_id": "profile-lda-existing-YaleB-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 9.87307,
+        "phase": "profile",
+        "run_id": "profile-lda-reference-YaleB-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 29.473181,
+        "phase": "profile",
+        "run_id": "profile-lda-adapted-YaleB-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 4.927475,
+        "phase": "profile",
+        "run_id": "profile-lda-existing-USPS-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 4.9249529999999995,
+        "phase": "profile",
+        "run_id": "profile-lda-reference-USPS-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 6.659603000000001,
+        "phase": "profile",
+        "run_id": "profile-lda-adapted-USPS-v1",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 1.7047360000000003,
+        "phase": "profile",
+        "run_id": "profile-slps-YaleB_cropped2414",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 1.6560249999999999,
+        "phase": "profile",
+        "run_id": "profile-slps-YaleB_dengcai32",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.23554199999999992,
+        "phase": "profile",
+        "run_id": "profile-slps-ORL_att92",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.2847329999999999,
+        "phase": "profile",
+        "run_id": "profile-slps-JAFFE",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.2681070000000001,
+        "phase": "profile",
+        "run_id": "profile-slps-MSRA25_EBSA_16x16",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.8227610000000001,
+        "phase": "profile",
+        "run_id": "profile-lda_existing-MSRA",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.7490129999999999,
+        "phase": "profile",
+        "run_id": "profile-lda_reference-MSRA",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 0.62388,
+        "phase": "profile",
+        "run_id": "profile-lda_adapted-MSRA",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 1.521368,
+        "phase": "profile",
+        "run_id": "profile-msra_other-MSRA",
+        "status": "PROFILE_ONLY_INELIGIBLE"
+      }
+    ],
+    "limit_seconds": 129600,
+    "max_workers": 2,
+    "reserve_seconds": 7200,
+    "rss_target_bytes": 8589934592,
+    "version": 1
+  },
+  "not_launched": []
+}

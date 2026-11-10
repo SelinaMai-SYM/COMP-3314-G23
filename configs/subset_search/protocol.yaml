@@ -16,3 +16,12 @@ fixed_protocol: {variant: E8, gamma: 1, initialization: RANDOM}
 confirmation: {first_seed_minimum: 1000000, count: 50, reselect: false}
 cohort: {random_prefix_choices: [10, 32, 100], finite_permutation_seed: 20261110, freeze_before_scores: true}
 priority: [mandatory_repairs, primary_candidate_families, random_coverage, umist_omissions, graph_repair, ar_common_masks]
+reference_candidates:
+  AR: AR_first7
+  UMIST: UMIST_LZUFE574_exact_dedup564
+  BinAlpha: BinAlpha_random_seed000
+  YaleB: YaleB_cropped2414_Y0
+  USPS: USPS
+  MSRA50: MSRA25_EBSA_16x16
+  ORL: ORL_att92
+  JAFFE: JAFFE

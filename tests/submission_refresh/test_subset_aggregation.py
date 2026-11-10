@@ -9,6 +9,7 @@ import yaml
 from experiments.submission_refresh.core import ArtifactStore,digest
 from experiments.subset_search import aggregate as aggregation
 from experiments.submission_refresh import current_release
+from experiments.subset_search.markdown import benchmark_markdown
 
 
 def test_family_distributions_keep_benchmarks_pools_and_alias_weights_separate():
@@ -29,6 +30,21 @@ def test_missing_reference_still_has_four_explicit_contrasts():
     rows=aggregation.reference_contrasts([],[],{'MSRA50':'reference'},{'MSRA50':{'adapted'}})
     assert len(rows)==4
     assert all(r['status']=='UNAVAILABLE_INCOMPLETE_REFERENCE' for r in rows)
+
+
+def test_markdown_reports_native_sd_as_unavailable_and_keeps_empty_pools_explicit():
+    paper={'acc':{'ssc':{'ORL':{'mean':50.,'sd':1.}}},'nmi':{'ssc':{'ORL':{'mean':60.,'sd':2.}}}}
+    row={'benchmark':'ORL','pool':'adapted','endpoint':'native_best_of_50','candidate_id':'candidate',
+         'config_id':'candidate|E8|1|RANDOM','acc_mean':55.,'nmi_mean':65.,'acc_sd':99.,'nmi_sd':99.,
+         'paper_acc':50.,'paper_nmi':60.,'paper_acc_sd':1.,'paper_nmi_sd':2.,'seed':3,
+         'delta_acc_pp':5.,'delta_nmi_pp':5.,'delta_acc_sd_pp':98.,'delta_nmi_sd_pp':97.,
+         'source_specification_deviations':['declared alternative'],'n_samples':400,'n_classes':40,'n':1}
+    text=benchmark_markdown('ORL',[row],paper)
+    assert '55.000 (single assignment; SD NA)' in text
+    assert '99.000' not in text and '+98.000' not in text
+    assert text.count('UNAVAILABLE: no complete eligible configuration')==3
+    assert 'candidate\\|E8\\|1\\|RANDOM' in text
+    assert '50.000 +/- 1.000' in text and '+5.000 / +5.000' in text
 
 
 @pytest.fixture
@@ -84,6 +100,7 @@ def test_aggregate_and_no_data_rebuild_preserve_native_and_fixed_endpoints(tiny_
     assert (rebuilt/'reference_contrasts.csv').exists()
     assert (rebuilt/'fixed_protocol_family_distributions.csv').exists()
     assert (rebuilt/'matched_sc_contrasts.csv').exists()
+    assert (rebuilt/'YaleB.md').read_bytes()==(out/'YaleB.md').read_bytes()
 
 
 def test_aggregate_rejects_sc_using_different_f(tiny_aggregate):

@@ -8,6 +8,7 @@ import yaml
 from experiments.submission_refresh.core import ROOT,ArtifactStore,ResourceLedger,atomic_json,digest,identity
 from experiments.submission_refresh.selection import distances,rank,summarize
 from .runner import GAMMAS,INITS,round_embedding
+from .markdown import benchmark_markdown
 
 def write_csv(path,rows,fields=None):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -222,6 +223,7 @@ def _aggregate(artifact_root,output):
                         # missing, duplicated or invalid seed in authoritative data.
                         s=summarize(record['trials']);benchmark=c['benchmark'];target={m:paper[m]['ssc'][benchmark]['mean'] for m in ['acc','nmi']}
                         row={'candidate_id':cid,'config_id':cid+'|'+variant+'|'+str(gamma)+'|'+init,'benchmark':benchmark,'family':c['family'],'pool':c['pool'],'n_samples':c['n'],'n_classes':c['classes'],'prep':c['prep'],'variant':variant,'gamma_nominal':gamma,'gamma_effective':record['gamma_effective'],'initialization':init,'solver_status':record['solver']['status'],'endpoint':'mean_sample_sd_50',**compatibility_counts(c,tie),'alias_of':alias,'record_directory':str(Path('subset')/(alias or cid)),'record_file':f'{variant}__{gamma:g}__{init}.json','F_sha256':representation['objects']['F']['sha256'],'G_sha256':record['objects']['G']['sha256'],'input_fingerprint':representation['fingerprint'],'sample_manifest_sha256':c['manifest_sha256'],**{k:v for k,v in s.items() if k!='native_best'}}
+                        row.update(parent_id=c.get('parent_id'),source_version=c.get('parent_id'),original_parent_id=c.get('original_parent_id'),n_features=c.get('p'),source_url=c.get('source_url'),membership_rule=c.get('construction_rule'),source_specification_deviations=c.get('specification_deviations',[]))
                         row.update(**_configuration_provenance(folder,folder/row['record_file'],record,store),matched_sc_status=_point_outcome(details,'sc',None,None,init,sc_records.get(init))['status'])
                         row=distances(row,target);row.update(paper_acc=target['acc'],paper_nmi=target['nmi'],paper_acc_sd=paper['acc']['ssc'][benchmark]['sd'],paper_nmi_sd=paper['nmi']['ssc'][benchmark]['sd'],historical_identity='UNVERIFIED' if benchmark in ['AR','UMIST','BinAlpha','MSRA50'] else 'documented source; no pixel identity proof')
                         row['delta_acc_sd_pp']=row['acc_sd']-row['paper_acc_sd'];row['delta_nmi_sd_pp']=row['nmi_sd']-row['paper_nmi_sd']
@@ -253,11 +255,7 @@ def _aggregate(artifact_root,output):
     with (out/'completion_records.json.gz').open('wb') as handle:handle.write(gzip.compress((json.dumps({'schema':'subset-completion-evidence-v1','records':completion_audit},sort_keys=True)+'\n').encode(),mtime=0))
     atomic_json(out/'coverage_summary.json',{'intended_candidates':len(cat['candidates']),'unique_catalogue_inputs':len({r.get('alias_of') or r['candidate_id'] for r in cat['candidates']}),'status_counts':dict(counts),'complete_unique_configurations':sum(r['alias_of'] is None for r in summaries),'complete_unique_candidates':len({r['candidate_id'] for r in summaries if not r['alias_of']}),'cpu_aggregation_seconds':time.process_time()-start})
     for b in paper['datasets']:
-        rows=[r for r in winners if r['benchmark']==b]
-        text=[f'# {b}: closest evaluated reconstructions','','Retrospective joint ACC/NMI matching within each endpoint and eligibility pool. Sample identity remains unverified. A single native-best result has no across-run SD.','','| Pool / endpoint | Candidate | ACC / paper | NMI / paper | Dmax / Dmean | Solver |','|---|---|---:|---:|---:|---|']
-        for r in rows:
-            text.append(f"| {r['pool']} / {r['endpoint']} | {r['candidate_id']} | {r['acc_mean']:.3f} / {r['paper_acc']:.1f} | {r['nmi_mean']:.3f} / {r['paper_nmi']:.1f} | {r['D_max']:.3f} / {r['D_mean']:.3f} | {r['solver_status']} |")
-        (out/(b+'.md')).write_text('\n'.join(text)+'\n')
+        (out/(b+'.md')).write_text(benchmark_markdown(b,winners,paper))
     return winners
 
 def aggregate(artifact_root,output):

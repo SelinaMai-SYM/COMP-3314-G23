@@ -242,14 +242,73 @@ def _select(records):
             groups[family]=capability(flat)
     operating=next((r for r in records if r['family']=='S_tau0.95' and r['gamma']==1.),None)
     original_fixed=next((r for r in records if r['family']=='original_ssc' and r['gamma']==1.),None)
-    required=[r for r in records if r['family'] in ['original_ssc','S_tau0.95']]
-    validity=len(required)==20 and all(r['status']=='COMPLETED' and r.get('solver',{}).get('certified') for r in required)
+    datasets={r.get('dataset') for r in records}
+    definitions=intended_configurations(next(iter(datasets))) if len(datasets)==1 and next(iter(datasets)) in DATASETS else []
+    expected={r['config_id'] for r in definitions};actual={r['config_id'] for r in records}
+    by_id={r['config_id']:r for r in records}
+    missing=sorted(expected-actual);invalid=[]
+    for definition in definitions:
+        row=by_id.get(definition['config_id'])
+        if row is None:continue
+        if any(row.get(key)!=value for key,value in definition.items()) or row.get('status')!='COMPLETED':
+            invalid.append(definition['config_id']);continue
+        if definition['anchor']!='native_spectral' and not row.get('solver',{}).get('certified'):
+            invalid.append(definition['config_id']);continue
+        try:summarize(row['trials'],objective=None)
+        except (KeyError,ValueError,TypeError):invalid.append(definition['config_id']);continue
+        if definition['family']=='wider_knn' and row.get('mass_matching',{}).get('count_qualified') is False:
+            invalid.append(definition['config_id'])
+    validity=bool(definitions) and len(records)==len(actual)==44 and actual==expected and not missing and not invalid
     return {'capability':groups,'locked_label_free_operating_point':operating,'original_fixed_gamma1':original_fixed,
-            'comparison_validity':'COMPLETE_CERTIFIED_PRIMARY_AND_ORIGINAL_SEARCH' if validity else 'INCOMPLETE_OR_UNCERTIFIED_PRIMARY_OR_ORIGINAL_CONTROL',
+            'comparison_validity':'COMPLETE_CERTIFIED_REQUIRED_DESIGN' if validity else 'INCOMPLETE_OR_UNQUALIFIED_REQUIRED_DESIGN',
+            'missing_required_configurations':missing,'invalid_required_configurations':invalid,
             'qualified_for_four_benchmark_claim':validity,
             'primary_method':'S_tau0.95 five-gamma grid, never replaced by a better control',
             'selection':'ACC mean then NMI mean then stable configuration ID; label-assisted capability oracle',
             'no_second_performance_gate':True}
+
+
+def _resume_context(definition,graph,anchor,meta,store,source,construction_source,graph_metadata):
+    ensc=definition['graph'].startswith('S_tau')
+    return {'schema':'G4-resume-context-v1','definition':definition,
+        'anchor':None if anchor is None else store.put(anchor),'graph':store.put(graph),'graph_shape':list(graph.shape),'graph_nnz':int(graph.nnz),
+        'input_objects':{key:meta['objects'][key] for key in ['X','y','F0','U']},
+        'scientific_source_fingerprint':source['implementation_hash'],
+        'construction_source_fingerprint':construction_source['implementation_hash'] if ensc else None,
+        'backend_source_sha256':digest(ROOT/'method_extension/submission_refresh/ensc.py') if ensc else None,
+        'environment':source['environment'],'graph_metadata_fingerprint':identity(graph_metadata),
+        'rounding':{'initialization':GREEDY,'n_init':1,'seeds':list(range(50))}}
+
+
+def _verify_saved_record(record,definition,context,store,seen):
+    if any(record.get(key)!=value for key,value in definition.items()) or record.get('resume_context')!=context:
+        raise ValueError('G4 saved configuration anchor/graph/source context mismatch; preserve it under its original run ID')
+    def verify(value):
+        if isinstance(value,dict):
+            if {'sha256','path','kind'}<=value.keys():
+                key=(value['sha256'],value['path'])
+                if key not in seen:
+                    item=store.get(value);seen.add(key)
+                    if isinstance(item,(dict,list)):verify(item)
+            else:
+                for item in value.values():verify(item)
+        elif isinstance(value,list):
+            for item in value:verify(item)
+    verify(record.get('objects',{}));verify(record.get('graph_objects',{}))
+    if record.get('status')=='COMPLETED':
+        summarize(record['trials'],objective=None)
+        predictions=store.get(record['objects']['predictions'])
+        if predictions.shape!=(50,context['graph_shape'][0]):raise ValueError('G4 saved prediction dimensions mismatch')
+        expected_source=context['construction_source_fingerprint'] if definition['anchor']=='native_spectral' else context['scientific_source_fingerprint']
+        if record.get('source',{}).get('implementation_hash')!=expected_source:raise ValueError('G4 saved scientific source fingerprint mismatch')
+        ref=record['objects'].get('affinity') if definition['anchor']=='native_spectral' else record.get('graph_objects',{}).get('fitted_W')
+        if ref!=context['graph']:raise ValueError('G4 saved actual graph object mismatch')
+        if definition['anchor']!='native_spectral' and record['objects'].get('anchor')!=context['anchor']:
+            raise ValueError('G4 saved actual anchor object mismatch')
+    elif record.get('status')=='DEGENERATE_AFFINITY':
+        if context['graph_nnz']!=0 or record.get('graph_objects',{}).get('W')!=context['graph']:raise ValueError('G4 saved degenerate affinity context mismatch')
+    else:raise ValueError('G4 saved result has an unknown/incomplete status')
+    return record
 
 
 def run_ensc(task,data_root,artifact_root):
@@ -286,19 +345,22 @@ def run_ensc(task,data_root,artifact_root):
             _,_,_,weights=graph_arrays(graphs['S_tau0.95'])
             randomized,info=_random_graph(len(F0),weights,400);graphs['random_count_mass_seed400'],mass=mass_match(randomized,mass0);details['random_count_mass_seed400']={**info,**mass}
             result['graph_objects']={name:store.put(W) for name,W in graphs.items()};result['graph_metadata']=details
-            records=[];result['records']=records;fit_limit=min(1800.,float(task.get('fit_cpu_limit',1800)))
+            records=[];result['records']=records;verified_resume_objects=set();fit_limit=min(1800.,float(task.get('fit_cpu_limit',1800)))
             for definition in result['intended_configurations']:
                 result['active_configuration']=definition['config_id'];path=folder/'records'/(identity(definition)+'.json')
-                if path.exists():records.append(json.loads(path.read_text()));continue
                 graph=graphs[definition['graph']]
+                anchor=None if definition['anchor']=='native_spectral' else F0 if definition['anchor']=='F0' else U
+                context=_resume_context(definition,graph,anchor,meta,store,source,construction_source,details.get(definition['graph'],{'status':'ORIGINAL_GRAPH'}))
+                if path.exists():
+                    records.append(_verify_saved_record(json.loads(path.read_text()),definition,context,store,verified_resume_objects));continue
                 if graph.nnz==0:
-                    record={**definition,'status':'DEGENERATE_AFFINITY','graph_objects':{'W':store.put(graph)}};atomic_json(path,record);records.append(record);continue
+                    record={**definition,'status':'DEGENERATE_AFFINITY','graph_objects':{'W':store.put(graph)},'resume_context':context};atomic_json(path,record);records.append(record);continue
                 if definition['anchor']=='native_spectral':
-                    record={**definition,**_native_spectral(graph,meta['K'],y,store,construction_source)};atomic_json(path,record)
+                    record={**definition,**_native_spectral(graph,meta['K'],y,store,construction_source),'resume_context':context};atomic_json(path,record)
                 else:
                     anchor=F0 if definition['anchor']=='F0' else U
                     solution=_solution(anchor,graph,meta,store,source,gamma=definition['gamma'],fit_cpu_limit=fit_limit)
-                    record=_save_result(path,{**definition,'phase':'G4','method':definition['family']},solution,graph,anchor,y,
+                    record=_save_result(path,{**definition,'phase':'G4','method':definition['family'],'resume_context':context},solution,graph,anchor,y,
                                         details.get(definition['graph'],{'status':'ORIGINAL_GRAPH'}),store)
                 records.append(record)
             result.pop('active_configuration',None);result['records']=records;result['selection']=_select(records)
@@ -361,6 +423,7 @@ def aggregate_ensc(artifact_root,output):
         qualified=selected['qualified_for_four_benchmark_claim'] and all(v is not None for v in [proposed,sc,ssc])
         summary={'dataset':dataset,'qualified':qualified,'comparison_status':selected['comparison_validity'],
                  'complete_records':sum(r['status']=='COMPLETED' for r in records),'intended_records':44,
+                 'missing_required_configurations':selected['missing_required_configurations'],'invalid_required_configurations':selected['invalid_required_configurations'],
                  'ACC_gain_vs_stronger_fair_baseline_pp':None,'NMI_gain_vs_SC_pp':None,'NMI_gain_vs_SSC_pp':None}
         if all(v is not None for v in [proposed,sc,ssc]):
             summary.update(ACC_gain_vs_stronger_fair_baseline_pp=proposed['acc_mean']-max(sc['acc_mean'],ssc['acc_mean']),

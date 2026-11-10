@@ -1,0 +1,14 @@
+{
+  "multi_batch_configurations": 112,
+  "multi_batch_rows": 1120,
+  "outputs": {
+    "historical_repeatability_batches.csv": "1442d924246337004a6c40caaf347f19ca408245b47bc008e48d7805d4055c25",
+    "historical_repeatability_summary.csv": "feea1dd625af9111d43e11fd63f097c7103e772866dc202c9b38351e6e16d4db"
+  },
+  "schema": "historical-repeatability-v1",
+  "scope": "Historical conditional rounding batches, not new experiments or independent dataset replicates. Ranges describe batch variation. Each native assignment has no within-batch SD.",
+  "selection": "all configurations with at least two complete disjoint50-seed batches; no ACC/NMI ranking",
+  "source": "validated frozen release/batch_repeatability.csv",
+  "source_rows": 7571,
+  "source_sha256": "5e435b58cb4661c13ebf4354044cb6f73188756576268c1f835a5c131a5df1eb"
+}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "choice_basis": "Fixed numerical targets, original same-objective gap evidence; no labels or ACC/NMI choose G/q or continuation cohort",
+  "source_audit_preserved": true,
+  "shared_USPS_cap_seconds": 21600,
+  "tasks": [
+    {
+      "kind": "usps_continuation",
+      "phase": "mandatory_usps",
+      "audit_run_id": "usps-numerical-audit-v1",
+      "cpu_limit": 1800,
+      "max_iter": 300000,
+      "gap_tol": 1e-05,
+      "preconditioned": true,
+      "run_id": "usps-continuation-gamma1-v1",
+      "gamma": 1.0
+    },
+    {
+      "kind": "usps_continuation",
+      "phase": "mandatory_usps",
+      "audit_run_id": "usps-numerical-audit-v1",
+      "cpu_limit": 1800,
+      "max_iter": 300000,
+      "gap_tol": 1e-05,
+      "preconditioned": true,
+      "run_id": "usps-continuation-gamma1000-v1",
+      "gamma": 1000.0
+    }
+  ]
+}

@@ -23,6 +23,15 @@ def _execute(task,data_root,artifact_root):
         elif task['kind']=='usps_evaluate':
             from .usps_evaluate import run_evaluation
             r=run_evaluation(task,data_root,artifact_root)
+        elif task['kind']=='msra_llc_repair':
+            from .msra_llc_continuation import run_continuation
+            r=run_continuation(task,data_root,artifact_root)
+        elif task['kind']=='usps_continuation':
+            from .usps_continuation import run_continuation
+            r=run_continuation(task,data_root,artifact_root)
+        elif task['kind']=='usps_continuation_evaluate':
+            from .usps_continuation import run_rounding
+            r=run_rounding(task,data_root,artifact_root)
         elif task['kind']=='graph':
             from .graph_repair import run_graph
             r=run_graph(task,data_root,artifact_root)

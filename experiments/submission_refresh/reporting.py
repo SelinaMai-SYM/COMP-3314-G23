@@ -167,7 +167,8 @@ def generate(root: Path,date: str='2026-11-10'):
            'joint':subset/'joint_search_summary.csv','fixed':subset/'fixed_protocol_summary.csv',
            'closest':subset/'closest_matches.csv','confirmation':subset/'rounding_confirmation.csv',
            'baseline':refresh/'baseline_diagnostics.csv','extension':refresh/'extension_results.csv',
-           'gate':refresh/'extension_gate.json','resource':refresh/'resource_usage.json','cohort':root/'configs/subset_search/executable_cohort.json'}
+           'gate':refresh/'extension_gate.json','resource':refresh/'resource_usage.json','cohort':root/'configs/subset_search/executable_cohort.json',
+           'repeatability':refresh/'historical_repeatability_summary.csv','repeatability_manifest':refresh/'historical_repeatability_manifest.json'}
     inputs={k:{'path':str(p.relative_to(root)),'available':p.exists(),
                'sha256':hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None} for k,p in names.items()}
     historical=read_csv(names['historical']);hist_endpoints=read_csv(names['historical_endpoints'])
@@ -249,6 +250,17 @@ def generate(root: Path,date: str='2026-11-10'):
         row=next((r for r in hist_endpoints if r.get('benchmark')==benchmark and r.get('method')=='ssc' and r.get('endpoint')=='native_best_of_50'),{})
         native_rows.append([benchmark,metric(row,'acc',native=True),metric(row,'nmi',native=True),number(row.get('D_max')),number(row.get('D_mean')),escape(value(row,'selected_seed',default='--')),status_abbreviation(row)])
     appendix.append(table(['SSC data','ACC','NMI',r'$D_{\max}$',r'$D_{\rm mean}$','Seed','Fit'],native_rows,'lrrrrrc',long=True))
+    appendix += [r'\subsection{Separate historical repeatability batches}',
+                 r'Existing multi-batch records are a separate endpoint. Each batch contains50 disjoint rounding seeds on its fixed input. The following ranges describe variation of batch means and native-selected assignments, without treating a single native assignment as having a within-batch SD. They are not independent datasets, and are not new campaign measurements. All methods and exact configuration IDs are preserved in \texttt{historical\_repeatability\_batches.csv} and its summary/manifest. LDA source-native selection remains diagnostic only.']
+    repeatability=read_csv(names['repeatability'])
+    repeat_rows=[]
+    for row in repeatability:
+        if row.get('method')!='ssc':continue
+        parts=row['config_id'].split('|');setting=parts[0]+' / '+parts[3]+' / '+parts[4]+' / '+{'RANDOM':'R','SKLEARN_GREEDY_KMEANSPP':'G'}.get(parts[-2],parts[-2])
+        ranges=[number(row.get(field+'_min'))+'--'+number(row.get(field+'_max')) for field in ['ACC','NMI','selected_ACC','selected_NMI']]
+        repeat_rows.append([break_text(setting),escape(row.get('batches','--')),*ranges])
+    if repeat_rows:appendix.append(table(['SSC setting','Batches','Batch ACC','Batch NMI','Native ACC','Native NMI'],repeat_rows,'p{4.0cm}rrrrr',long=True))
+    else:appendix.append(r'No validated multi-batch summary is currently available; no repeatability result is inferred.')
     appendix += [r'\subsection{Dataset-subset matching: both endpoints and eligibility pools}',
                  r'The following rows use complete evaluated configurations only. Paper values are fixed SSC targets. R/V/G denote random, vanilla K-means++ and sklearn greedy K-means++; each is one Lloyd start. Specification-compatible dimensions/counts do not establish historical pixel identity. Adapted rows retain explicit source/resolution/preparation differences. Diagnostic parents cannot win either pool.']
     for endpoint in ENDPOINTS:
@@ -270,6 +282,8 @@ def generate(root: Path,date: str='2026-11-10'):
                     if delta_nmi is None and number(row.get('nmi_mean'))!='--':delta_nmi=float(row['nmi_mean'])-float(row['paper_nmi'])
                     detail=(r'$n='+escape(row.get('n_samples','--'))+'$; '+short_setting(row)+'; '+escape(row.get('solver_status','--'))+
                             r'; $\Delta_{\rm ACC}='+number(delta_acc)+r'$ pp; $\Delta_{\rm NMI}='+number(delta_nmi)+r'$ pp; $D_{\rm mean}='+number(row.get('D_mean'))+'$; '+escape(row.get('historical_identity','historical identity unverified'))+'.')
+                    if endpoint=='mean_sample_sd_50':
+                        detail+=r' $\Delta_{\rm SD,ACC}='+number(row.get('delta_acc_sd_pp'))+r'$ pp; $\Delta_{\rm SD,NMI}='+number(row.get('delta_nmi_sd_pp'))+'$ pp.'
                     rows.append(r'\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+detail+r'} \\')
         appendix.append(table(['Data / pool','Selected candidate','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$'],rows,'p{1.6cm}p{3.3cm}rrrrr',long=True))
     appendix.append(r'\subsection{Additional rounding on locked winners}')

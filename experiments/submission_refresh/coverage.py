@@ -60,6 +60,11 @@ def _declare(task):
                 name=f"spls__k{k}__alpha{alpha:g}__d{config['dimension']}"
                 if config['initialization']!='RANDOM':name+='__'+config['initialization']
                 add(name,'spls',dict(config),evidence='slps_alias')
+    elif block=='msra_llc':
+        from .msra_llc_continuation import configurations
+        for config in configurations(task):
+            add(config['name'],'llc',config,evidence='msra_llc_rounding',
+                expected_config_id=run_id+f"|{config['ridge']}|{config['bandwidth_factor']}")
     elif block=='msra_other':
         add('kmeans','kmeans')
         for dimension in task['dimensions']:
@@ -151,6 +156,20 @@ def _collect(spec,folder,files,block_state):
         checkpoint=files.get(actual_name+'__checkpoint.json')
         if checkpoint and final is None:
             for trial in checkpoint.get('completed_trials',[]):add_trial(trial,folder/(actual_name+'__checkpoint.json'))
+    elif spec.get('evidence')=='msra_llc_rounding':
+        for seed in EXPECTED_SEEDS:
+            path=folder/'rounding'/actual_name/(str(seed)+'.json');checkpoint=_read(path)
+            if checkpoint is None:continue
+            if checkpoint.get('_read_error'):
+                errors.append(checkpoint['_read_error']);continue
+            state=checkpoint.get('status','UNKNOWN')
+            if seed not in seeds:
+                if state=='COMPLETED' and checkpoint.get('trial'):
+                    add_trial(checkpoint['trial'],path)
+                else:
+                    seeds[seed]={'seed_status':state,'fit_completed':False,'metrics_present':False,
+                                 'evidence_record':str(path),'error':checkpoint.get('error')}
+            seeds[seed]['fit_checkpoint_status']=state
     active=block_state.get('active_configuration')
     if active==actual_name:
         interrupted=block_state.get('interrupted_rounding',{})
@@ -177,13 +196,13 @@ def baseline_coverage(artifact_root,output):
     """Write configuration/seed coverage from frozen queues and raw metadata."""
     store=Path(artifact_root).resolve();output=Path(output);output.mkdir(parents=True,exist_ok=True)
     ledger=_read(store/'resource_ledger.json') or {};tasks=[];queue_sources=[];seen={}
-    for relative in ['configs/submission_refresh/execution_queue.json','configs/submission_refresh/validation_queue.json']:
+    for relative in ['configs/submission_refresh/execution_queue.json','configs/submission_refresh/validation_queue.json','configs/submission_refresh/msra_llc_continuation_queue.json']:
         path=ROOT/relative;queue=_read(path)
         if queue is None:continue
         if queue.get('_read_error'):raise ValueError('corrupt frozen queue '+str(path))
         queue_sources.append({'path':relative,'sha256':digest(path)})
         for task in queue.get('tasks',[]):
-            if task.get('kind')!='baseline' or task.get('profile'):continue
+            if task.get('kind') not in ['baseline','msra_llc_repair'] or task.get('profile'):continue
             if task['run_id'] in seen:
                 if seen[task['run_id']]!=task:raise ValueError('conflicting frozen baseline task '+task['run_id'])
                 continue

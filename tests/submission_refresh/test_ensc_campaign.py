@@ -69,3 +69,38 @@ def test_graph_cache_fingerprint_ignores_unrelated_editorial_modules(tmp_path,mo
     p.write_text('value=2\n')
     assert graph_repair.scientific_source_record()['implementation_hash']!=old['implementation_hash']
     assert old['project_source_fingerprint']=='project_raw_hash'
+
+
+def test_complete_claim_requires_both_sc_anchors_and_all_required_controls():
+    records=[]
+    trials=[{'seed':seed,'acc':.5,'nmi':.5} for seed in range(50)]
+    for definition in campaign.intended_configurations('ORL_att92'):
+        records.append({**definition,'status':'COMPLETED','trials':trials,'summary':{'acc_mean':50.,'nmi_mean':50.,'acc_sd':0.,'nmi_sd':0.},
+            'solver':{'certified':True},'mass_matching':{'count_qualified':True}})
+    assert campaign._select(records)['qualified_for_four_benchmark_claim']
+    for omitted in [('fair_sc','U'),('native_ensc_S_tau0.95','native_spectral'),('Wa','F0')]:
+        subset=[r for r in records if not (r['family']==omitted[0] and r['anchor']==omitted[1])]
+        result=campaign._select(subset)
+        assert not result['qualified_for_four_benchmark_claim'] and result['missing_required_configurations']
+    records[2]={**records[2],'solver':{'certified':False}}
+    assert not campaign._select(records)['qualified_for_four_benchmark_claim']
+
+
+def test_saved_g4_record_requires_exact_graph_anchor_source_and_available_objects(tmp_path):
+    import copy
+    store=ArtifactStore(tmp_path/'store');F=np.array([[0.],[1.],[2.]])
+    graph=sparse.csr_matrix([[0.,1.,0.],[1.,0.,1.],[0.,1.,0.]])
+    definition=campaign.intended_configurations('ORL_att92')[0]
+    context={'schema':'G4-resume-context-v1','definition':definition,'graph':store.put(graph),'graph_shape':[3,3],'graph_nnz':4,
+        'anchor':store.put(F),'scientific_source_fingerprint':'exact-fit-source','construction_source_fingerprint':None}
+    predictions=store.put(np.zeros((50,3),dtype=int))
+    record={**definition,'resume_context':context,'status':'COMPLETED','source':{'implementation_hash':'exact-fit-source'},
+        'trials':[{'seed':seed,'acc':.5,'nmi':.5} for seed in range(50)],'objects':{'G':store.put(F),'anchor':store.put(F),'predictions':predictions},
+        'graph_objects':{'fitted_W':context['graph']}}
+    assert campaign._verify_saved_record(record,definition,context,store,set()) is record
+    changed=copy.deepcopy(context);changed['scientific_source_fingerprint']='different-controller'
+    with pytest.raises(ValueError,match='context mismatch'):campaign._verify_saved_record(record,definition,changed,store,set())
+    changed=copy.deepcopy(record);changed['graph_objects']['fitted_W']=store.put(graph*2)
+    with pytest.raises(ValueError,match='actual graph'):campaign._verify_saved_record(changed,definition,context,store,set())
+    (store.root/predictions['path']).write_bytes(b'corrupt')
+    with pytest.raises(ValueError,match='corrupt'):campaign._verify_saved_record(record,definition,context,store,set())

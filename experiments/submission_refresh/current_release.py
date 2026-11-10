@@ -485,13 +485,10 @@ def rebuild(manifest_path,output):
         for role,name in [('source_records','source_records.json.gz'),('configuration_inventory','configuration_inventory.csv')]:shutil.copy2(paths[role],temporary/name)
         for role,name in OPTIONAL_FILES.items():
             if role in paths and name not in tables:shutil.copy2(paths[role],temporary/name)
-        for benchmark in sorted({r['benchmark'] for r in tables['joint_search_summary.csv']}):
-            text=[f'# {benchmark}: scalar release rebuild','','Retrospective joint ACC/NMI matching. Historical sample identity remains unverified. Mean/sample-SD and single native-best endpoints are separate.','','| Pool / endpoint | Candidate | ACC (%) | NMI (%) | Dmax / Dmean | Solver |','|---|---|---:|---:|---:|---|']
-            for row in tables['closest_matches.csv']:
-                if row['benchmark']!=benchmark:continue
-                fmt=lambda m:f"{row[m+'_mean']:.3f}"+(f" +/- {row[m+'_sd']:.3f}" if row[m+'_sd'] is not None else ' (single run)')
-                text.append(f"| {row['pool']} / {row['endpoint']} | {row['candidate_id']} | {fmt('acc')} | {fmt('nmi')} | {row['D_max']:.3f} / {row['D_mean']:.3f} | {row['solver_status']} |")
-            (temporary/(benchmark+'.md')).write_text('\n'.join(text)+'\n')
+        from experiments.subset_search.markdown import benchmark_markdown
+        paper=yaml.safe_load(paths['paper'].read_text())
+        for benchmark in paper.get('datasets',sorted({r['benchmark'] for r in tables['joint_search_summary.csv']})):
+            (temporary/(benchmark+'.md')).write_text(benchmark_markdown(benchmark,tables['closest_matches.csv'],paper))
         validation={'schema':SCHEMA,'ok':True,**manifest['counts'],'source_identity_status':manifest['source_identity_status'],
                     'compressed_trials_sha256':manifest['inputs']['trials']['sha256'],
                     'uncompressed_trials_sha256':manifest['inputs']['trials']['uncompressed_sha256'],

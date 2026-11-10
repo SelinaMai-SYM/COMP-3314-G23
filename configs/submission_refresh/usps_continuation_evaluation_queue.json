@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "condition": "Run only after both continuation fits are terminal and original audit/evaluation records remain unchanged",
+  "tasks": [
+    {
+      "run_id": "usps-continuation-evaluation-v1",
+      "kind": "usps_continuation_evaluate",
+      "phase": "mandatory_usps_evaluation",
+      "audit_run_id": "usps-numerical-audit-v1",
+      "cpu_limit": 900,
+      "continuation_run_ids": [
+        "usps-continuation-gamma1-v1",
+        "usps-continuation-gamma1000-v1"
+      ]
+    }
+  ]
+}

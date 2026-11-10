@@ -87,7 +87,7 @@ def _verify(stream,manifest,payload,manifest_path):
 
 
 def export(artifact_root,output):
-    store=ArtifactStore(artifact_root);objects={};logical=[];input_manifests=[]
+    store=ArtifactStore(artifact_root);objects={};logical=[];input_manifests=[];declared_extra=[]
     def visit(value):
         for ref in references(value):
             _object_reference(ref)
@@ -103,10 +103,19 @@ def export(artifact_root,output):
         manifest=json.loads(path.read_text());visit(manifest)
         input_manifests.append({'path':name,'sha256':digest(path)})
         logical.extend(record for record in manifest.get('records',[]) if 'object'in record)
-    extra=[];audit=store.root/'usps_audit'
+        declared_extra.extend(manifest.get('extra_files',[]))
+    extra=list(declared_extra);audit=store.root/'usps_audit'
     if audit.exists():
         for path in sorted(audit.rglob('*')):
             if path.is_file():extra.append({'relative_path':str(path.relative_to(store.root)),'sha256':digest(path),'bytes':path.stat().st_size})
+    by_extra={}
+    for ref in extra:
+        relative=_name(ref['relative_path']);path=(store.root/relative).resolve()
+        if store.root not in path.parents or not path.is_file() or digest(path)!=ref['sha256'] or path.stat().st_size!=ref['bytes']:
+            raise ValueError('declared raw scientific file missing or changed: '+relative)
+        if relative in by_extra and by_extra[relative]!=ref:raise ValueError('conflicting raw scientific file records')
+        by_extra[relative]=ref
+    extra=list(by_extra.values())
     if not objects and not extra:raise ValueError('empty scientific export')
     _validate_logical(logical,list(objects.values()),extra)
     manifest={'schema':'recoverable-scientific-export-v1','logical_records':logical,'objects':list(objects.values()),

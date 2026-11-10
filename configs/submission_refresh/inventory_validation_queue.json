@@ -1,0 +1,17 @@
+{
+  "tasks": [
+    {
+      "run_id": "validation-corrected-inventory-v1",
+      "kind": "validation",
+      "phase": "validation",
+      "cpu_limit": 900,
+      "wall_limit": 1800,
+      "command": [
+        "{python}",
+        "-c",
+        "from experiments.submission_refresh.inventory import build_inventory;import sys;build_inventory(sys.argv[1])",
+        "{validation_dir}/corrected_inventory"
+      ]
+    }
+  ]
+}

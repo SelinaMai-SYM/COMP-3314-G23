@@ -43,5 +43,7 @@ def rebuild_joint(output):
         _write_csv(out/'endpoint_comparison.csv',chosen)
         _write_csv(out/'all_joint_configurations.csv',candidates)
         _write_csv(out/'all_native_endpoints.csv',endpoints)
+        from .repeatability import build as build_repeatability
+        build_repeatability(Path(tmp)/'validated/batch_repeatability.csv',out)
         atomic_json(out/'historical_joint_manifest.json',{'version':1,'source_manifest_sha256':digest(ROOT/'configs/final/release_manifest.json'),'selection_sha256':digest(ROOT/'configs/submission_refresh/selection.yaml'),'complete_configuration_count':len(candidates),'selected':chosen,'validation':'immutable release checked from compressed and decompressed hashes; all seeds verified before selection'})
         return chosen

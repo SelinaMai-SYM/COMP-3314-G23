@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "run_id": "validation-focused-tests-v3",
+      "kind": "validation",
+      "phase": "validation",
+      "cpu_limit": 900,
+      "wall_limit": 1800,
+      "command": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/submission_refresh",
+        "tests/next_round",
+        "tests/v3/test_lda_math.py",
+        "tests/v3/test_llc_procrustes.py",
+        "tests/v3/test_ssc_solver.py",
+        "tests/v3/test_metrics.py",
+        "tests/v3/test_no_label_leakage.py",
+        "tests/v3/test_dataset_integrity.py",
+        "tests/test_dataset_dispatch.py",
+        "baselines/lda_kmeans/test_lda_kmeans.py",
+        "baselines/llc/test_llc.py",
+        "baselines/spls/test_spls.py",
+        "--junitxml",
+        "{validation_dir}/pytest.xml",
+        "-ra"
+      ],
+      "purpose": "New graph/EnSCprovenance,recovery, LLCrepair, USPScontinuations, inventory/table/repeatabilitysemanticchecks"
+    },
+    {
+      "run_id": "validation-joint-history-repeatability-v2",
+      "kind": "validation",
+      "phase": "validation",
+      "cpu_limit": 900,
+      "wall_limit": 1800,
+      "command": [
+        "{python}",
+        "-m",
+        "experiments.submission_refresh",
+        "rebuild",
+        "--output",
+        "{validation_dir}/joint_historical_rebuilt"
+      ]
+    }
+  ]
+}

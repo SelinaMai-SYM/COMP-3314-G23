@@ -28,7 +28,7 @@
         "{validation_dir}/pytest.xml",
         "-ra"
       ],
-      "purpose": "Current-v2 EnSC scalar contexts, mixed backend/control validation, confirmation archive recovery, figure dependency preflight and all existing focused regressions; fitting behavior unchanged."
+      "purpose": "Current-v2 EnSC scalar contexts, mixed backend/control validation, confirmation archive recovery, figure dependency preflight and all existing focused regressions; fitting behavior unchanged. Includes enforcement and failed-attempt preservation for the existing120-second locked-winner confirmation cap."
     }
   ]
 }

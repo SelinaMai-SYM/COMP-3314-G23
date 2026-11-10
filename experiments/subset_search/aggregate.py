@@ -446,17 +446,49 @@ def confirm(artifact_root,output):
             summarize(cached['trials'],range(first,first+50))
             rows.append(cached);continue
         if not ledger.reserve(rid,120,'confirmation'):rows.append({'config_id':winner['config_id'],'status':'NOT_RUN_BUDGET'});continue
-        t=time.process_time()
+        t=time.process_time();status='FAILED';stage='input_verification';trials=None;pred=None;sc=None;scp=None
         try:
+            install_cpu_limit(120)
             folder=store.root/winner['record_directory'];record=json.loads((folder/winner['record_file']).read_text());rep=json.loads((folder/'representation.json').read_text())
             if winner.get('G_sha256') and winner['G_sha256']!=record['objects']['G']['sha256']:raise ValueError('locked winner G object changed before confirmation')
             if winner.get('F_sha256') and winner['F_sha256']!=rep['objects']['F']['sha256']:raise ValueError('locked winner F object changed before confirmation')
             G=store.get(record['objects']['G']);F=store.get(rep['objects']['F']);y=store.get(rep['objects']['y']);K=len(np.unique(y))
             with threadpool_limits(limits=1):
-                trials,pred,centers=round_embedding(G,y,K,winner['initialization'],range(first,first+50));sc,scp,_=round_embedding(F,y,K,winner['initialization'],range(first,first+50))
+                stage='locked_candidate_rounding'
+                trials,pred,centers=round_embedding(G,y,K,winner['initialization'],range(first,first+50))
+                stage='matched_sc_rounding'
+                sc,scp,_=round_embedding(F,y,K,winner['initialization'],range(first,first+50))
+            stage='summary_and_publication'
             s=summarize(trials,range(first,first+50));endpoint=s if winner['endpoint']=='mean_sample_sd_50' else s['native_best'];target={'acc':winner['paper_acc'],'nmi':winner['paper_nmi']}
             row={'config_id':winner['config_id'],'candidate_id':winner['candidate_id'],'benchmark':winner['benchmark'],'pool':winner['pool'],'endpoint':winner['endpoint'],'status':'COMPLETED','first_seed':first,'namespace_sha256':identity(namespace),'winner_lock_sha256':namespace['winner_lock_sha256'],'locked_F_sha256':winner.get('F_sha256'),'locked_G_sha256':winner.get('G_sha256'),'selection_acc':winner['acc_mean'],'selection_nmi':winner['nmi_mean'],'confirmation':distances(endpoint,target),'confirmation_all50':{k:v for k,v in s.items() if k!='native_best'},'matched_sc':summarize(sc,range(first,first+50)),'trials':trials,'objects':{'predictions':store.put(pred),'matched_sc_predictions':store.put(scp)},'cpu_seconds':time.process_time()-t,'qualification':'New rounding seeds on the same fixed samples/G; no historical identity, generalization or label-free selection guarantee'}
-            atomic_json(path,row);rows.append(row);ledger.finish(rid,time.process_time()-t,'COMPLETED')
-        except BaseException:
-            ledger.finish(rid,time.process_time()-t,'FAILED');raise
+            atomic_json(path,row);rows.append(row);status='COMPLETED'
+        except BaseException as exc:
+            # Failure provenance is cleanup, not another rounding attempt. It
+            # must survive the timer that interrupted the fixed seed sequence.
+            signal.setitimer(signal.ITIMER_PROF,0)
+            status='TIMEOUT' if isinstance(exc,TimeoutError) else 'INTERRUPTED' if isinstance(exc,KeyboardInterrupt) else 'FAILED'
+            failure={'config_id':winner['config_id'],'candidate_id':winner['candidate_id'],
+                'endpoint':winner['endpoint'],'status':status,'first_seed':first,'seeds':list(range(first,first+50)),
+                'namespace_sha256':identity(namespace),'winner_lock_sha256':namespace['winner_lock_sha256'],
+                'stage':stage,'exception_type':type(exc).__name__,'error':repr(exc),
+                'failed_rounding_seed':getattr(exc,'failed_rounding_seed',None),
+                'partial_trials':getattr(exc,'partial_trials',[]),'objects':{},
+                'cpu_limit':120,'no_winner_or_seed_reselection':True,
+                'qualification':'Failed fixed-winner confirmation attempt; partial outcomes are not a completed endpoint'}
+            # A timeout can arrive just after atomic publication. This attempt
+            # started without a completed path, so it owns any such new file.
+            path.unlink(missing_ok=True)
+            for name,values in [('completed_candidate_predictions',pred),('completed_matched_sc_predictions',scp),
+                ('partial_predictions',getattr(exc,'partial_predictions',None))]:
+                if values is not None:
+                    try:failure['objects'][name]=store.put(values)
+                    except Exception as artifact_error:failure.setdefault('partial_artifact_errors',{})[name]=repr(artifact_error)
+            if trials is not None:failure['completed_candidate_trials']=trials
+            if sc is not None:failure['completed_matched_sc_trials']=sc
+            failure['cpu_seconds']=time.process_time()-t
+            atomic_json(confirmation/'failures'/rid/('attempt-'+str(time.time_ns())+'.json'),failure)
+            raise
+        finally:
+            signal.setitimer(signal.ITIMER_PROF,0)
+            ledger.finish(rid,time.process_time()-t,status)
     write_csv(out/'rounding_confirmation.csv',rows)

@@ -4,6 +4,12 @@ Study and critical analysis of Chang, Nie, Ma, Yang and Zhou, *A Convex Formulat
 
 The repository separates paper reconstruction, controlled reproduction and retrospective numerical matching. An optimum for a convex representation objective does not guarantee optimal labels or improved ACC/NMI.
 
+## Method overview
+
+![SSC pipeline: input-space affinity A defines F; spectral-space graph W weights refinement from F to G](docs/figures/ssc_two_graph_pipeline.svg)
+
+**A** is built from input features to obtain **F**, the initial spectral representation and fidelity anchor. **W** is built from F to control pairwise fusion. With F and W fixed, SSC optimizes **G**, the refined representation, then clusters G with K-means. The SC baseline clusters the same F directly. See the [report](report/Group_23.pdf) for the objective and mathematical details, and [figure build instructions](report/README.md#method-flowchart) for the editable source and exports.
+
 ## Setup and three checks
 
 Tested CPython 3.13.3. Package minimum is Python 3.10; other versions are not claimed bit-identical.

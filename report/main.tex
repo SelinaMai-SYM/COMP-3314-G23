@@ -16,9 +16,16 @@ Spectral Shrunk Clustering (SSC) refines a spectral representation using a conve
 \section{Problem, motivation, and the paper's contribution}
 Spectral clustering represents samples by eigenvectors of a graph Laplacian before applying K-means. This can reveal geometry missed by clustering the original pixels, but the representation and graph are imperfect. Chang et al.~\citep{chang2015ssc} propose learning \emph{shrunk patterns} from the spectral coordinates: nearby embedded samples should move together while retaining fidelity to their initial positions. Their contribution is a representation-refinement formulation, removal of an orthogonality constraint from this refinement, and an iterative optimization procedure with empirical clustering evidence. SSC here means \emph{Spectral Shrunk Clustering}, not Sparse Subspace Clustering.
 
-Let A be the original affinity, D its degree matrix, and $L=I-D^{-1/2}AD^{-1/2}$. The $c$ smallest eigenvectors form $F\in\mathbb R^{n\times c}$. SSC constructs a second graph W in F and optimizes G before K-means. A and W encode different relationships. This connects course concepts in graph-based dimensionality reduction, eigenvectors, regularization and convexity. Unlike PCA's variance criterion, the embedding depends on neighborhood geometry. Unlike LDA, labels do not enter our embedding or shrinkage functions; the class count follows the benchmark protocol.
+Let $A$ be the input-space affinity and $D_A$ its degree matrix. The eigenvectors for the $c$ smallest eigenvalues of $L_A=I-D_A^{-1/2}AD_A^{-1/2}$ form $F\in\mathbb R^{n\times c}$. Unlike PCA's variance criterion, this embedding depends on neighborhood geometry. Unlike LDA, labels do not enter our embedding or shrinkage functions; the class count follows the benchmark protocol.
 
 \section{Method and what convexity guarantees}
+Figure~\ref{fig:ssc-two-graphs} separates the two graph roles: $A$ determines the initial spectral geometry, while $W$, built from $F$, sets pairwise fusion strengths. $F$ remains the fidelity anchor. Changing $W$ with $F$ fixed changes refinement; changing $A$ generally also changes $F$ and hence $W$.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
+\caption{Two graphs with different roles in spectral shrunk clustering. The input-space affinity $A$ defines the Laplacian used to obtain the spectral representation $F$. A second graph $W$, constructed in the spectral space, controls pairwise fusion during refinement. SSC optimizes $G$ while keeping $F$ and $W$ fixed, then applies K-means to $G$. The SC baseline applies K-means directly to the same $F$.}
+\label{fig:ssc-two-graphs}
+\end{figure}
 With an oriented incidence matrix B storing each undirected edge once, Equation 8 is
 \begin{equation}
  P_0(G)=\sum_i\|g_i-f_i\|_2+2\gamma\sum_{e}w_e\|(BG)_e\|_2.\label{eq:ssc}

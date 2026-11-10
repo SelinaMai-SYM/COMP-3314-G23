@@ -12,6 +12,7 @@ import argparse
 import csv
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import math
 import os
@@ -474,7 +475,7 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
                 'expanded_baseline_native_selection.csv', 'baseline_source_native_diagnostics.csv'])]
         for rebuilt, committed, files in comparisons:
             for name in files:
-                details = compare_csv(self.checkout / committed / name, rebuilt / name)
+                details = compare_csv(self.checkout / committed / name, rebuilt / name,transport_root=self.checkout)
                 self.check('csv-parity-' + rebuilt.name + '-' + name, True, **details)
         for benchmark in BENCHMARKS:
             name = benchmark + '.md'
@@ -650,13 +651,45 @@ def _equivalent(left, right):
         return False
 
 
-def compare_csv(committed, rebuilt):
+def _csv_transport(root=None):
+    """Load the stdlib-only reader from the exact checked source tree.
+
+    The standalone harness runs before project installation. Loading by file
+    avoids host-package/PYTHONPATH fallbacks; acceptance supplies its fresh
+    checkout explicitly, while unit callers default to this harness's tree.
+    """
+    root=Path(root) if root is not None else Path(__file__).resolve().parents[2]
+    path=root/'experiments/submission_refresh/csv_transport.py'
+    fingerprint=sha(path)
+    location=hashlib.sha256(str(path.resolve()).encode()).hexdigest()[:16]
+    name='comp3314_acceptance_csv_transport_'+location+'_'+fingerprint
+    if name not in sys.modules:
+        specification=importlib.util.spec_from_file_location(name,path)
+        if specification is None or specification.loader is None:raise ImportError('CSV transport helper cannot be loaded: '+str(path))
+        module=importlib.util.module_from_spec(specification)
+        sys.modules[name]=module
+        try:specification.loader.exec_module(module)
+        except BaseException:
+            sys.modules.pop(name,None)
+            raise
+    return sys.modules[name],path,fingerprint
+
+
+def compare_csv(committed, rebuilt,*,transport_root=None):
     """Compare deterministic CSV views, allowing only numeric serialization noise."""
+    transport,helper_path,helper_sha=_csv_transport(transport_root)
+    requested_committed=Path(committed);requested_rebuilt=Path(rebuilt)
+    committed=transport.resolve_csv(requested_committed,required=True)
+    rebuilt=transport.resolve_csv(requested_rebuilt,required=True)
     def read(path):
-        with Path(path).open(newline='') as stream:
-            reader = csv.DictReader(stream)
-            fields = reader.fieldnames
-            rows = list(reader)
+        previous=csv.field_size_limit()
+        try:
+            csv.field_size_limit(max(previous,64*1024*1024))
+            with transport.open_csv(path,newline='') as stream:
+                reader = csv.DictReader(stream)
+                fields = reader.fieldnames
+                rows = list(reader)
+        finally:csv.field_size_limit(previous)
         if not fields or not rows: raise ValueError('empty acceptance CSV: ' + str(path))
         return fields, rows
     fields, left = read(committed)
@@ -671,6 +704,10 @@ def compare_csv(committed, rebuilt):
                 raise ValueError(f'rebuilt CSV value/order mismatch: {committed}, row {index + 1}, {field}')
     return {'committed': str(committed), 'rebuilt': str(rebuilt), 'rows': len(left),
         'columns': fields, 'committed_sha256': sha(committed), 'rebuilt_sha256': sha(rebuilt),
+        'committed_requested':str(requested_committed),'rebuilt_requested':str(requested_rebuilt),
+        'committed_transport':'gzip' if committed.suffix=='.gz' else 'plain',
+        'rebuilt_transport':'gzip' if rebuilt.suffix=='.gz' else 'plain',
+        'csv_transport_helper':str(helper_path),'csv_transport_helper_sha256':helper_sha,
         'numeric_absolute_tolerance': 1e-9}
 
 

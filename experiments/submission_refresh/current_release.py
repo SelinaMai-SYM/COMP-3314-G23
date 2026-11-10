@@ -13,6 +13,7 @@ import hashlib
 import io
 import json
 import math
+import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -22,8 +23,11 @@ import yaml
 
 from experiments.submission_refresh.core import ROOT, atomic_json, digest, identity
 from experiments.submission_refresh.selection import distances, rank, summarize
+from experiments.submission_refresh.csv_transport import (
+    DEFAULT_MIN_BYTES, copy_plain_csv, open_csv, pack_large_csvs, resolve_csv)
 
 SCHEMA='subset-scalar-release-v1'
+CSV_PACK_MIN_BYTES=DEFAULT_MIN_BYTES
 SUMMARY_FIELDS={'acc_mean','acc_sd','nmi_mean','nmi_sd','n','seed','native_objective','native_best'}
 DERIVED_FIELDS={'D_max','D_mean','d_acc','d_nmi','delta_acc_pp','delta_nmi_pp',
                 'paper_acc','paper_nmi','paper_acc_sd','paper_nmi_sd','delta_acc_sd_pp','delta_nmi_sd_pp'}
@@ -44,7 +48,7 @@ OPTIONAL_FILES={
 
 
 def _csv_rows(path):
-    with Path(path).open(newline='') as handle:
+    with open_csv(path) as handle:
         reader=csv.DictReader(handle)
         if not reader.fieldnames:
             raise ValueError(f'empty CSV input: {path}')
@@ -52,6 +56,30 @@ def _csv_rows(path):
     if not rows:
         raise ValueError(f'empty CSV input: {path}')
     return rows
+
+
+def _available_file(path):
+    path=Path(path)
+    return resolve_csv(path) if path.name.endswith(('.csv','.csv.gz')) else path if path.is_file() else None
+
+
+def _publish_inventory(output,metadata,manifest_path):
+    """Stage the complete inventory and choose transport before hash locking."""
+    logical=output/'configuration_inventory.csv';previous=resolve_csv(logical)
+    if previous is not None and previous.name.endswith('.csv.gz'):
+        # A later freeze may replace its own verified inventory, never an
+        # unrelated compressed file that happens to use this filename.
+        old=json.loads(manifest_path.read_text()) if manifest_path.is_file() else {}
+        info=old.get('inputs',{}).get('configuration_inventory',{})
+        if info.get('path')!=str(previous.relative_to(ROOT)) or info.get('sha256')!=digest(previous):
+            raise ValueError('refusing to replace an unknown gzip configuration inventory')
+    with tempfile.TemporaryDirectory(prefix='.inventory-transport-',dir=output) as work:
+        staged=Path(work)/logical.name;_write_csv(staged,metadata)
+        pack_large_csvs(Path(work),min_bytes=CSV_PACK_MIN_BYTES,names=[logical.name])
+        actual=resolve_csv(staged,required=True);target=output/actual.name
+        os.replace(actual,target)
+        if previous is not None and previous!=target:previous.unlink()
+    return target
 
 
 def _write_csv(path,rows):
@@ -333,12 +361,13 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
         for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd']:
             if not math.isclose(float(row[key]),recomputed[row['config_id']][key],abs_tol=1e-10,rel_tol=0):raise ValueError('original summary differs from authoritative trials')
     selected=_csv_rows(output/'closest_matches.csv');_check_selected(rebuilt['closest_matches.csv'],selected)
-    if (output/'matched_sc_summary.csv').is_file():
+    if _available_file(output/'matched_sc_summary.csv') is not None:
         from experiments.subset_search.aggregate import matched_sc_contrasts
         sc=_matched_sc_rows(output/'matched_sc_summary.csv');_verify_matched_sources(metadata,sc)
         rebuilt['matched_sc_contrasts.csv']=matched_sc_contrasts(rebuilt['closest_matches.csv'],sc)
     for role in ['family_distributions','reference_contrasts','matched_sc_contrasts','certified_search_status']:
-        if (output/OPTIONAL_FILES[role]).is_file():_verify_derived(role,rebuilt[OPTIONAL_FILES[role]],output/OPTIONAL_FILES[role])
+        path=_available_file(output/OPTIONAL_FILES[role])
+        if path is not None:_verify_derived(role,rebuilt[OPTIONAL_FILES[role]],path)
     source_records={};source_status='SOURCE_OBJECT_REFERENCES_ONLY'
     if artifact_root is not None:
         source_status='INLINE_COMMITTED_SOURCE_RECORDS'
@@ -365,7 +394,7 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
             row.update(source_record_id=key,original_source_record_id=original_key,
                        scientific_source_commit=source.get('source_commit'),scientific_source_fingerprint=source.get('implementation_hash'),cache_identity=source.get('cache_identity'))
         for row in metadata:register(row)
-        if (output/'matched_sc_summary.csv').is_file():
+        if _available_file(output/'matched_sc_summary.csv') is not None:
             for row in _matched_sc_rows(output/'matched_sc_summary.csv'):register(row,True)
         completion_path=output/'completion_records.json.gz'
         if completion_path.is_file():
@@ -385,11 +414,12 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
         source_status='INLINE_COMMITTED_SOURCE_RECORDS'
     # Validate optional light records before any release files are authored.
     for role,name in OPTIONAL_FILES.items():
-        path=output/name
-        if path.is_file():_validate_light_csv(role,path)
+        path=_available_file(output/name)
+        if path is not None:_validate_light_csv(role,path)
     output.relative_to(ROOT);manifest_path.relative_to(ROOT)
-    _write_csv(output/'certified_search_status.csv',rebuilt['certified_search_status.csv'])
-    inventory=output/'configuration_inventory.csv';_write_csv(inventory,metadata)
+    if _available_file(output/'certified_search_status.csv') is None:
+        _write_csv(output/'certified_search_status.csv',rebuilt['certified_search_status.csv'])
+    inventory=_publish_inventory(output,metadata,manifest_path)
     sources=output/'source_records.json.gz'
     payload=(json.dumps({'schema':'deduplicated-scientific-source-records-v1','status':source_status,'records':source_records},sort_keys=True,indent=2)+'\n').encode()
     with sources.open('wb') as handle:handle.write(gzip.compress(payload,mtime=0))
@@ -399,7 +429,8 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
               'paper':ROOT/'configs/v3/paper_reference.yaml'}
     if (ROOT/'configs/subset_search/compatibility.yaml').exists():required['compatibility']=ROOT/'configs/subset_search/compatibility.yaml'
     for role,name in OPTIONAL_FILES.items():
-        if (output/name).is_file():required[role]=output/name
+        path=_available_file(output/name)
+        if path is not None:required[role]=path
     inputs={role:{'path':str(path.relative_to(ROOT)),'sha256':digest(path),'bytes':path.stat().st_size} for role,path in required.items()}
     for role,path in required.items():
         if path.suffix=='.gz':inputs[role]['uncompressed_sha256']=_decompressed_hash(path)
@@ -424,6 +455,11 @@ def load(manifest_path):
     paths={}
     for role,record in manifest['inputs'].items():
         path=_safe_path(root,record['path'])
+        if path.name.endswith(('.csv','.csv.gz')):
+            # A manifest pins the physical transport; do not silently switch
+            # to a different representation even if its logical CSV matches.
+            actual=resolve_csv(path,required=True)
+            if actual!=path:raise ValueError('release CSV transport differs from hash-locked path: '+role)
         if not path.is_file() or path.stat().st_size==0 or digest(path)!=record['sha256'] or path.stat().st_size!=record['bytes']:
             raise ValueError(f'release input missing, empty or hash mismatch: {role}')
         paths[role]=path
@@ -494,9 +530,12 @@ def rebuild(manifest_path,output):
     output.parent.mkdir(parents=True,exist_ok=True);temporary=Path(tempfile.mkdtemp(prefix='.rebuild-current-',dir=output.parent))
     try:
         for name,rows in tables.items():_write_csv(temporary/name,rows)
-        for role,name in [('source_records','source_records.json.gz'),('configuration_inventory','configuration_inventory.csv')]:shutil.copy2(paths[role],temporary/name)
+        shutil.copy2(paths['source_records'],temporary/'source_records.json.gz')
+        copy_plain_csv(paths['configuration_inventory'],temporary/'configuration_inventory.csv')
         for role,name in OPTIONAL_FILES.items():
-            if role in paths and name not in tables:shutil.copy2(paths[role],temporary/name)
+            if role in paths and name not in tables:
+                if name.endswith('.csv'):copy_plain_csv(paths[role],temporary/name)
+                else:shutil.copy2(paths[role],temporary/name)
         from experiments.subset_search.markdown import benchmark_markdown
         paper=yaml.safe_load(paths['paper'].read_text())
         for benchmark in paper.get('datasets',sorted({r['benchmark'] for r in tables['joint_search_summary.csv']})):

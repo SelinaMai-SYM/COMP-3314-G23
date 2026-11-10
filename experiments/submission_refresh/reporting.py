@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse,csv,hashlib,json,math
 from collections import Counter,defaultdict
 from pathlib import Path
+from .csv_transport import resolve_csv,open_csv
 
 BENCHMARKS=['AR','JAFFE','ORL','UMIST','BinAlpha','MSRA50','YaleB','USPS']
 ENDPOINTS=['mean_sample_sd_50','native_best_of_50']
@@ -62,8 +63,13 @@ def status_abbreviation(row):
 
 
 def read_csv(path):
-    if not path.exists():return []
-    with path.open(newline='') as f:return list(csv.DictReader(f))
+    actual=resolve_csv(path)
+    if actual is None:return []
+    previous=csv.field_size_limit()
+    try:
+        csv.field_size_limit(max(previous,64*1024*1024))
+        with open_csv(actual,newline='') as f:return list(csv.DictReader(f))
+    finally:csv.field_size_limit(previous)
 
 
 def read_json(path,default=None):
@@ -569,9 +575,10 @@ def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate
 def generate(root: Path,date: str='2026-11-10'):
     root=root.resolve();refresh=root/'results/submission_refresh';refresh.mkdir(parents=True,exist_ok=True);subset=root/'results/subset_search';out=root/'report/tables';out.mkdir(parents=True,exist_ok=True)
     names={'historical':refresh/'joint_metric_selection.csv','historical_endpoints':refresh/'endpoint_comparison.csv',
+           'historical_all_joint':refresh/'all_joint_configurations.csv','historical_all_native':refresh/'all_native_endpoints.csv',
            'paper':refresh/'paper_reference_verification.json','catalogue':subset/'candidate_catalogue.json',
            'coverage':subset/'coverage_summary.json','execution':subset/'execution_coverage.csv',
-           'joint':subset/'joint_search_summary.csv','fixed':subset/'fixed_protocol_summary.csv',
+           'joint':subset/'joint_search_summary.csv','native':subset/'native_best_summary.csv','fixed':subset/'fixed_protocol_summary.csv',
            'closest':subset/'closest_matches.csv','confirmation':subset/'rounding_confirmation.csv',
            'baseline':refresh/'baseline_diagnostics.csv','extension':refresh/'extension_results.csv',
            'graph_diagnostics':refresh/'graph_diagnostics.csv','casebooks':refresh/'casebook_summary.csv',
@@ -586,8 +593,17 @@ def generate(root: Path,date: str='2026-11-10'):
            'certified_search_status':subset/'certified_search_status.csv',
            'ensc_capability':refresh/'ensc_capability_and_operating_point.csv',
            'ensc_conclusion':refresh/'ensc_four_benchmark_conclusion.json'}
-    inputs={k:{'path':str(p.relative_to(root)),'available':p.exists(),
-               'sha256':hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None} for k,p in names.items()}
+    logical_names=dict(names)
+    for key,path in names.items():
+        if path.suffix=='.csv':names[key]=resolve_csv(path) or path
+    def input_record(key,path):
+        record={'path':str(path.relative_to(root)),'logical_path':str(logical_names[key].relative_to(root)),
+                'available':path.exists(),'sha256':None}
+        if record['available']:
+            with path.open('rb') as stream:record['sha256']=hashlib.file_digest(stream,'sha256').hexdigest()
+        if logical_names[key].suffix=='.csv':record['transport']=('gzip' if path.suffix=='.gz' else 'plain') if record['available'] else None
+        return record
+    inputs={key:input_record(key,path) for key,path in names.items()}
     historical=read_csv(names['historical']);hist_endpoints=read_csv(names['historical_endpoints'])
     papers=paper_lookup(read_json(names['paper'],{}));cat=read_json(names['catalogue'],{}).get('candidates',[])
     coverage=read_json(names['coverage'],{});cohort=read_json(names['cohort'],{});joint=read_csv(names['joint']);closest=read_csv(names['closest'])

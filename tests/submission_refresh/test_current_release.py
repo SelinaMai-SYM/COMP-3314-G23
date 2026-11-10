@@ -12,6 +12,7 @@ import yaml
 from experiments.submission_refresh import current_release as release
 from experiments.submission_refresh.core import digest
 from experiments.submission_refresh.selection import summarize,distances,rank
+from experiments.submission_refresh.csv_transport import pack_large_csvs
 
 
 def write_csv(path,rows):
@@ -83,6 +84,60 @@ def test_current_release_fresh_copy_needs_no_data_artifacts_or_git(scalar_fixtur
     # A verified previous output can be replaced without leaving a stale backup.
     assert release.rebuild(fresh/'configs/subset_search/release_manifest.json',rebuilt)['ok']
     assert not rebuilt.with_name(rebuilt.name+'.previous').exists()
+
+
+def test_gzip_joint_and_inventory_freeze_rebuild_without_external_access(scalar_fixture,tmp_path,monkeypatch):
+    root,output,manifest=scalar_fixture
+    original_joint=(output/'joint_search_summary.csv').read_bytes()
+    original_selected=(output/'closest_matches.csv').read_bytes()
+    pack_large_csvs(output,min_bytes=0,names=['joint_search_summary.csv','closest_matches.csv'])
+    monkeypatch.setattr(release,'CSV_PACK_MIN_BYTES',0)
+    frozen=release.freeze(output,manifest,tmp_path/'external scientific objects')
+    inventory=frozen['inputs']['configuration_inventory']
+    assert inventory['path'].endswith('configuration_inventory.csv.gz')
+    actual=root/inventory['path']
+    raw_inventory=gzip.decompress(actual.read_bytes())
+    assert inventory['sha256']==digest(actual)
+    assert inventory['uncompressed_sha256']==hashlib.sha256(raw_inventory).hexdigest()
+    assert not (output/'configuration_inventory.csv').exists()
+    assert gzip.decompress((output/'joint_search_summary.csv.gz').read_bytes())==original_joint
+    assert gzip.decompress((output/'closest_matches.csv.gz').read_bytes())==original_selected
+    # A later freeze may replace only its own already hash-locked gzip inventory.
+    assert release.freeze(output,manifest,tmp_path/'external scientific objects')['expected_selections']==frozen['expected_selections']
+    fresh=tmp_path/'fresh gzip checkout';shutil.copytree(root,fresh)
+    shutil.rmtree(tmp_path/'external scientific objects')
+    from experiments.submission_refresh.core import ArtifactStore
+    import subprocess
+    def denied(*args,**kwargs):raise AssertionError('no-data gzip replay must not access arrays, objects or Git')
+    monkeypatch.setattr(ArtifactStore,'get',denied)
+    monkeypatch.setattr(release.np,'load',denied)
+    monkeypatch.setattr(subprocess,'run',denied)
+    monkeypatch.setattr(subprocess,'check_output',denied)
+    rebuilt=tmp_path/'plain rebuilt outputs'
+    assert release.rebuild(fresh/'configs/subset_search/release_manifest.json',rebuilt)['ok']
+    assert (rebuilt/'configuration_inventory.csv').read_bytes()==raw_inventory
+    assert not list(rebuilt.glob('*.csv.gz'))
+    assert {row['candidate_id'] for row in csv.DictReader((rebuilt/'closest_matches.csv').open())}=={'B'}
+
+
+@pytest.mark.parametrize('change',['ambiguous','uncompressed_hash'])
+def test_gzip_inventory_integrity_fails_before_output(scalar_fixture,tmp_path,monkeypatch,change):
+    root,output,manifest=scalar_fixture
+    monkeypatch.setattr(release,'CSV_PACK_MIN_BYTES',0)
+    frozen=release.freeze(output,manifest,tmp_path/'external scientific objects')
+    actual=root/frozen['inputs']['configuration_inventory']['path']
+    raw=gzip.decompress(actual.read_bytes())
+    if change=='ambiguous':
+        actual.with_suffix('').write_bytes(raw)
+        expected='ambiguous CSV transport'
+    else:
+        actual.write_bytes(gzip.compress(raw.replace(b'ITERATE_CONVERGED_UNCERTIFIED',b'CHANGED'),mtime=0))
+        frozen['inputs']['configuration_inventory'].update(sha256=digest(actual),bytes=actual.stat().st_size)
+        manifest.write_text(json.dumps(frozen))
+        expected='uncompressed release input hash mismatch'
+    destination=tmp_path/'rebuild must not exist'
+    with pytest.raises(ValueError,match=expected):release.rebuild(manifest,destination)
+    assert not destination.exists()
 
 
 def test_hash_mismatch_fails_before_output_write(scalar_fixture,tmp_path):

@@ -40,6 +40,27 @@ After installing the fresh environment, the runner reuses the actual pytest sele
 
 Further checks cover synthetic execution, historical scalar rebuilding, joint historical rebuilding, current subset rebuilding, current baseline/graph scalar rebuilding, deterministic published CSV parity and the eight subset Markdown tables. The real-data smoke loads ORL, JAFFE and all 1799 native 16-by-16 MSRA rows; three rounding seeds are an execution check, not a new reproduction endpoint. Missing final release manifests or authoritative tables fail acceptance rather than being skipped. If requested, the real-candidate replay runs `tests/submission_refresh/test_candidates.py` after these no-data stages and the real smoke, sets COMP3314_DATA_ROOT only inside that child Python process, records its actual JUnit counts and requires the integration test to execute without skips. This does not change the parent environment or any no-data command.
 
+CSV parity uses the shared, standard-library-only `csv_transport.py` from the
+tested fresh checkout, loaded by its explicit file path without adding a host
+checkout to Python's import path. A logical `.csv` input may be committed solely
+as `.csv.gz`; fallback occurs only when the plain representation is absent.
+Having both representations, a missing required input, corrupt gzip, or invalid
+plain input fails acceptance instead of selecting another copy or skipping the
+comparison. The same schema, row-order and numerical-tolerance checks apply
+after decompression. Each check records the requested and actual paths, actual
+compressed/plain file hashes, transport types, and the tested helper hash.
+Metadata cells up to 64 MiB are supported without changing the caller's global
+CSV limit. Rebuilding may emit ordinary CSV even when publication uses gzip.
+
+Report generation follows the same resolution rule. Its input manifest records
+the actual `.csv.gz` path and byte hash alongside the logical `.csv` name,
+including the joint and native endpoint source views. Plain and gzip transports
+produce the same table content; the manifest correctly differs because the
+stored input bytes differ. Missing optional report inputs remain explicitly
+unavailable. Prepared metadata fixtures exercise these rules without any model
+fit, plotting or scientific-object access; final validation status is recorded
+by the shared scheduler rather than inferred from their existence.
+
 Report checks compile the preprint, check the four author identities and preserve the two-graph source. `references_start` follows the main `clearpage` and precedes the bibliography. Its compiled page minus one counts every main page, including pending floats flushed by that clearpage; this value must be at most four. `main_end` must fall within those pages, with valid source ordering of both labels, clearpage, bibliography and appendix. The parser accepts ordinary and hyperref label records with balanced nested braces and rejects missing/duplicate/nonnumeric labels. References remain excluded; the unique PDF-text appendix boundary is checked separately. Thus a body ending on page four with a main float on page five fails even when references start on page six. The runner also checks undefined references/citations and PDF text flags, compares regenerated table sources, and renders every PDF page. **Visual review, natural-English review, external/live links, sole remote head/default branch and publication remain separate checks.** The runner explicitly leaves visual review unapproved.
 
 Before compiling, the runner verifies the committed `Group_23.pdf` still has its checkout inventory hash and extracts it with `pdftotext -layout` to `acceptance outputs/committed-report-text.txt`. It extracts regenerated text with the same command and requires case-sensitive equality after whitespace normalization, recording both text hashes. A stale committed PDF therefore fails even if current sources compile. Differences only in PDF binary metadata remain allowed; the root workflow still visually inspects every page of the committed final PDF.

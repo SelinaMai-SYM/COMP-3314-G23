@@ -18,10 +18,31 @@ def pair_errors(y,pred):
 
 
 def graph_diagnostics(F,W,y):
+    """Schema 2 separates whole-graph coverage from class-induced connectivity."""
+    W=sparse.csr_matrix(W).copy();W.sum_duplicates();W.eliminate_zeros();y=np.asarray(y)
     B,i,j,w=graph_arrays(W);length=np.linalg.norm(B@F,axis=1);cross=y[i]!=y[j]
     components,labels=connected_components(W,directed=False)
-    fragments=[len(np.unique(labels[y==k])) for k in np.unique(y)]
-    return {'edges':len(w),'edge_mass_undirected':float(w.sum()),'components':components,'cross_class_edge_fraction':float(cross.mean()) if len(w) else None,'cross_class_mass_fraction':float(w[cross].sum()/w.sum()) if w.sum()>0 else None,'cross_edge_length_AUROC':float(roc_auc_score(cross,length)) if len(np.unique(cross))==2 else None,'within_class_components_mean':float(np.mean(fragments)),'length_positive_median':float(np.median(length[length>0])) if np.any(length>0) else 0.}
+    fragments=[];isolates=[];largest=[];classes=np.unique(y)
+    for k in classes:
+        ids=np.flatnonzero(y==k);subgraph=W[ids][:,ids]
+        count,membership=connected_components(subgraph,directed=False)
+        fragments.append(int(count))
+        isolates.append(int(np.count_nonzero(np.diff(subgraph.indptr)==0)))
+        largest.append(float(np.bincount(membership).max()/len(ids)))
+    coverage=[len(np.unique(labels[y==k])) for k in classes]
+    return {'diagnostic_schema':2,'edges':len(w),'edge_mass_undirected':float(w.sum()),
+        'components':int(components),'cross_class_edge_fraction':float(cross.mean()) if len(w) else None,
+        'cross_class_mass_fraction':float(w[cross].sum()/w.sum()) if w.sum()>0 else None,
+        'cross_edge_length_AUROC':float(roc_auc_score(cross,length)) if len(np.unique(cross))==2 else None,
+        'class_ids':classes.tolist(),'within_class_components':fragments,
+        'within_class_components_mean':float(np.mean(fragments)),
+        'within_class_excess_fragments':int(np.sum(np.asarray(fragments)-1)),
+        'within_class_isolates':isolates,'within_class_isolates_total':int(sum(isolates)),
+        'within_class_largest_component_fraction':largest,
+        'within_class_largest_component_fraction_mean':float(np.mean(largest)),
+        'whole_graph_components_covering_class':coverage,
+        'whole_graph_components_covering_class_mean':float(np.mean(coverage)),
+        'length_positive_median':float(np.median(length[length>0])) if np.any(length>0) else 0.}
 
 
 def distance_diagnostics(F,G,y):

@@ -1,0 +1,85 @@
+{
+  "tasks": [
+    {
+      "kind": "baseline",
+      "run_id": "profile-slps-YaleB_cropped2414",
+      "dataset": "YaleB_cropped2414",
+      "block": "slps",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-slps-YaleB_dengcai32",
+      "dataset": "YaleB_dengcai32",
+      "block": "slps",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-slps-ORL_att92",
+      "dataset": "ORL_att92",
+      "block": "slps",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-slps-JAFFE",
+      "dataset": "JAFFE",
+      "block": "slps",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-slps-MSRA25_EBSA_16x16",
+      "dataset": "MSRA25_EBSA_16x16",
+      "block": "slps",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-lda_existing-MSRA",
+      "dataset": "MSRA25_EBSA_16x16",
+      "block": "lda_existing",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-lda_reference-MSRA",
+      "dataset": "MSRA25_EBSA_16x16",
+      "block": "lda_reference",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-lda_adapted-MSRA",
+      "dataset": "MSRA25_EBSA_16x16",
+      "block": "lda_adapted",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    },
+    {
+      "kind": "baseline",
+      "run_id": "profile-msra_other-MSRA",
+      "dataset": "MSRA25_EBSA_16x16",
+      "block": "msra_other",
+      "cpu_limit": 900,
+      "profile": true,
+      "phase": "profile"
+    }
+  ]
+}

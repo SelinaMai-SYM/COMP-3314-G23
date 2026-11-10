@@ -1,0 +1,10 @@
+version: joint-minimax-v1-frozen-20261110
+unit: percentage_points
+endpoints: [mean_sample_sd_50, native_best_of_50, repeatability_batches]
+primary_ranking: [D_max, D_mean]
+tie_tolerance_pp: 1.0e-12
+compatibility_tie_order: [explicit_paper_deviations, additional_preparation_assumptions, E8_target_preference, stable_id]
+published_gamma_values_are_not_deviations: true
+lda_cross_subspace_native_best: UNAVAILABLE_NOT_COMMON_OBJECTIVE
+certified_and_historical_style_tracks_are_separate: true
+retrospective: true

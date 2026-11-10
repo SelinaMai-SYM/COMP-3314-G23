@@ -42,11 +42,11 @@ def load_dataset(root: Path | None = None, version: str | None = None):
     if version == "figshare575":
         return _load_figshare(root)
     if version == "lzuf574":
-        return _load_lzuf574()
+        return _load_lzuf574(root)
     if version == "zenodo3634017":
-        return _load_zenodo3634017()
+        return _load_zenodo3634017(root)
     if version == "roweis575":
-        return _load_roweis575()
+        return _load_roweis575(root)
     if version == "uncropped1012":
         raise DatasetUnavailable(
             "UMIST",
@@ -207,8 +207,8 @@ def _load_named_matrix(path: Path, version: str, source_url: str, expected_shape
     return matrix, labels, metadata
 
 
-def _load_lzuf574():
-    path = Path(__file__).resolve().parent / "resources" / "private" / "lzuf_umist.mat"
+def _load_lzuf574(root=None):
+    path = data_dir(root) / "private" / "lzuf_umist.mat"
     return _load_named_matrix(
         path,
         "lzuf574",
@@ -217,8 +217,8 @@ def _load_lzuf574():
     )
 
 
-def _load_zenodo3634017():
-    path = Path(__file__).resolve().parent / "resources" / "private" / "zenodo3634017_umist.mat"
+def _load_zenodo3634017(root=None):
+    path = data_dir(root) / "private" / "zenodo3634017_umist.mat"
     return _load_named_matrix(
         path,
         "zenodo3634017",
@@ -227,8 +227,8 @@ def _load_zenodo3634017():
     )
 
 
-def _load_roweis575():
-    path = Path(__file__).resolve().parent / "resources" / "private" / "roweis_umist_cropped.mat"
+def _load_roweis575(root=None):
+    path = data_dir(root) / "private" / "roweis_umist_cropped.mat"
     if not path.is_file():
         raise FileNotFoundError(path)
     payload = loadmat(path)

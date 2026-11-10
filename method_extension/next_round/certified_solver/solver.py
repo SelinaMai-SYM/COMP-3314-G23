@@ -68,7 +68,16 @@ def _consensus(F,W,a,fidelity,delta):
     return G
 
 
-def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limit=600.,gap_tol=1e-5,check_every=50,G_init=None,q_init=None,consensus_bound=True,warm_start_irls=False):
+def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limit=600.,gap_tol=1e-5,check_every=50,G_init=None,q_init=None,consensus_bound=True,warm_start_irls=False,preconditioned=False,cpu_time_limit=None,return_checkpoint=False):
+    """Solve the fixed convex target; optional diagonal steps change only optimization.
+
+    ``q_init`` is interpreted in the original edge capacities ``2*gamma*w``.
+    With diagonal steps, K=diag(sqrt(w))B and q=diag(sqrt(w))p.
+    Feasible lower bounds always use the original, unscaled incidence B.
+    A returned checkpoint contains the actual final iterate, separately from
+    the best primal and best feasible dual. Restarting from it is a valid
+    same-objective warm restart, not a promise of identical iterates.
+    """
     start=time.perf_counter();cpu=time.process_time();F=np.asarray(F,dtype=float)
     if F.ndim!=2 or not len(F) or not np.isfinite(F).all():raise ValueError('F must be nonempty finite n by d')
     if not np.isfinite(gamma) or gamma<0 or not np.isfinite(delta) or delta<0:raise ValueError('invalid gamma/delta')
@@ -85,12 +94,21 @@ def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limi
     if initialP<P:bestG=F.copy();P=initialP;source='F'
     q=np.zeros((len(w),F.shape[1])) if q_init is None else np.array(q_init,dtype=float,copy=True)
     if q.shape!=(len(w),F.shape[1]) or not np.isfinite(q).all():raise ValueError('invalid q_init')
-    bestq=np.zeros_like(q);D=0.;violations=(0.,0.);history=[];iterations=0;reason='MAX_ITER_REACHED';status=reason
+    initial_cert=certificate(q,F,B,c,delta=delta,a=a,fidelity=fidelity)
+    q=initial_cert['q'].copy()
+    bestq=np.zeros_like(q);D=0.;violations=(0.,0.)
+    if initial_cert['dual']>D:
+        D=initial_cert['dual'];bestq=q.copy();violations=(initial_cert['edge_violation'],initial_cert['node_violation'])
+    initial_dual=D
+    history=[{'iteration':0,'primal':P,'dual':D,'gap':(P-D)/max(1.,abs(P),abs(D)),'wall_seconds':time.perf_counter()-start}]
+    iterations=0;reason='MAX_ITER_REACHED';status=reason
     analytic=(info['tv_F']==0 or gamma==0 or (delta==0 and fidelity=='radial' and gamma<=info['gamma0']))
     if analytic:
         bestG=F.copy();P=initialP
         cert=certificate(gamma*info['q_unit_gamma'],F,B,c,delta=delta,a=a,fidelity=fidelity)
-        D=max(0.,cert['dual']);bestq=cert['q'];violations=(cert['edge_violation'],cert['node_violation']);reason=status='ANALYTIC_G_EQUALS_F'
+        if cert['dual']>=D:
+            D=max(0.,cert['dual']);bestq=cert['q'];violations=(cert['edge_violation'],cert['node_violation'])
+        reason=status='ANALYTIC_G_EQUALS_F'
     else:
         if warm_start_irls and fidelity=='radial' and delta==0:
             # A primal-only initializer cannot certify anything by itself.
@@ -116,12 +134,24 @@ def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limi
         if consensus_bound:
             candidate=_consensus(F,W,a,fidelity,delta);value=objective(candidate,F,B,c,delta=delta,a=a,fidelity=fidelity)
             if value<P:bestG=candidate;P=value;source='component_consensus_upper_bound'
-        degree=np.bincount(np.r_[i,j],minlength=len(F));step=.99/np.sqrt(2*max(1,int(degree.max())))
-        tau=sigma=float(step);Gbar=G.copy();average=np.zeros_like(G)
-        for it in range(1,int(max_iter)+1):
-            q+=sigma*(B@Gbar);r=np.linalg.norm(q,axis=1)
+        if preconditioned:
+            root_w=np.sqrt(w)
+            weighted_degree=np.bincount(np.r_[i,j],weights=np.r_[root_w,root_w],minlength=len(F))
+            tau=np.divide(.99,weighted_degree,out=np.ones(len(F)),where=weighted_degree>0)
+            # Sigma_e=.99/(2*sqrt(w_e)) in p coordinates. Thus the
+            # original q update has coefficient w_e*Sigma_e.
+            dual_step=.99*root_w/2
+        else:
+            degree=np.bincount(np.r_[i,j],minlength=len(F));step=.99/np.sqrt(2*max(1,int(degree.max())))
+            tau=np.full(len(F),step);dual_step=np.full(len(w),step)
+        Gbar=G.copy();average=np.zeros_like(G)
+        if (P-D)/max(1.,abs(P),abs(D))<=gap_tol and max(violations)<=1e-8:
+            status=reason='PRIMAL_DUAL_GAP_CERTIFIED'
+        iteration_budget=0 if status=='PRIMAL_DUAL_GAP_CERTIFIED' else int(max_iter)
+        for it in range(1,iteration_budget+1):
+            q+=dual_step[:,None]*(B@Gbar);r=np.linalg.norm(q,axis=1)
             factor=np.minimum(1.,np.divide(c,r,out=np.ones_like(c),where=r>0));q*=factor[:,None]
-            Y=G-tau*(B.T@q);v=Y-F;r=np.linalg.norm(v,axis=1)
+            Y=G-tau[:,None]*(B.T@q);v=Y-F;r=np.linalg.norm(v,axis=1)
             if fidelity=='squared':s=delta/(delta+tau*a)
             else:
                 s=np.where(r<=delta+tau*a,delta/(delta+tau*a),1-np.divide(tau*a,r,out=np.zeros_like(r),where=r>0))
@@ -137,6 +167,10 @@ def solve(F,W,gamma,*,delta=0.,a=None,fidelity='radial',max_iter=30000,time_limi
                 if not np.isfinite(P+D+gap):raise ArithmeticError('nonfinite objective/gap')
                 history.append({'iteration':it,'primal':P,'dual':D,'gap':gap,'wall_seconds':time.perf_counter()-start})
                 if gap<=gap_tol and max(violations)<=1e-8:status=reason='PRIMAL_DUAL_GAP_CERTIFIED';break
+                if cpu_time_limit is not None and time.process_time()-cpu>=cpu_time_limit:status=reason='CPU_LIMIT_UNCERTIFIED';break
                 if time.perf_counter()-start>=time_limit:status=reason='TIMEOUT_UNCERTIFIED';break
     gap=(P-D)/max(1.,abs(P),abs(D))
-    return {'G':bestG,'q':bestq,'primal':P,'dual':D,'absolute_gap':P-D,'gap':gap,'edge_violation':violations[0],'node_violation':violations[1],'iterations':iterations,'status':status,'stopping_reason':reason,'certified':bool(status in ['ANALYTIC_G_EQUALS_F','PRIMAL_DUAL_GAP_CERTIFIED']),'best_primal_source':source,'warm_start':warm if not analytic else {'requested':False,'reason':'analytic'},'history':history,'wall_seconds':time.perf_counter()-start,'cpu_seconds':time.process_time()-cpu,'gamma':float(gamma),'gamma_effective':float(gamma),'delta':float(delta),'fidelity':fidelity,'gamma0':info['gamma0'],'scale':info['scale'],'objective_target':'undirected_E8_c=2*gamma*w','movement':float(np.linalg.norm(bestG-F)/max(np.linalg.norm(F),np.finfo(float).tiny))}
+    output={'G':bestG,'q':bestq,'primal':P,'dual':D,'absolute_gap':P-D,'gap':gap,'edge_violation':violations[0],'node_violation':violations[1],'iterations':iterations,'status':status,'stopping_reason':reason,'certified':bool(status in ['ANALYTIC_G_EQUALS_F','PRIMAL_DUAL_GAP_CERTIFIED']),'best_primal_source':source,'warm_start':warm if not analytic else {'requested':False,'reason':'analytic'},'history':history,'wall_seconds':time.perf_counter()-start,'cpu_seconds':time.process_time()-cpu,'gamma':float(gamma),'gamma_effective':float(gamma),'delta':float(delta),'fidelity':fidelity,'gamma0':info['gamma0'],'scale':info['scale'],'objective_target':'undirected_E8_c=2*gamma*w','movement':float(np.linalg.norm(bestG-F)/max(np.linalg.norm(F),np.finfo(float).tiny)),'normalized_L21_movement':float(np.linalg.norm(bestG-F,axis=1).sum()/max(np.linalg.norm(F,axis=1).sum(),np.finfo(float).tiny)),'initial_dual':initial_dual,'preconditioned':bool(preconditioned),'step_formulation':'K=diag(sqrt(w))B; q=diag(sqrt(w))p' if preconditioned else 'uniform unweighted B'}
+    if return_checkpoint:
+        output['checkpoint']={'G_last':G.copy(),'q_last':q.copy(),'G_best':bestG.copy(),'q_best':bestq.copy(),'gamma':float(gamma),'fidelity':fidelity,'delta':float(delta),'iterations':iterations,'preconditioned':bool(preconditioned)}
+    return output

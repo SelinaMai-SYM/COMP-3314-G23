@@ -1,0 +1,286 @@
+{
+  "version": 1,
+  "frozen_before_new_baseline_scores": true,
+  "profiling": "profiles consumed no evaluators; projected50 costs fit allowance with per-blockcaps",
+  "tasks": [
+    {
+      "run_id": "lda_existing-YaleB_cropped2414-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_existing",
+      "dataset": "YaleB_cropped2414",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 6000
+    },
+    {
+      "run_id": "lda_reference-YaleB_cropped2414-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_reference",
+      "dataset": "YaleB_cropped2414",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 3600
+    },
+    {
+      "run_id": "lda_adapted-YaleB_cropped2414-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_adapted",
+      "dataset": "YaleB_cropped2414",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 3600
+    },
+    {
+      "run_id": "lda_existing-JAFFE-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_existing",
+      "dataset": "JAFFE",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_reference-JAFFE-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_reference",
+      "dataset": "JAFFE",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_adapted-JAFFE-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_adapted",
+      "dataset": "JAFFE",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_existing-ORL_att92-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_existing",
+      "dataset": "ORL_att92",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_reference-ORL_att92-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_reference",
+      "dataset": "ORL_att92",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_adapted-ORL_att92-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_adapted",
+      "dataset": "ORL_att92",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_existing-USPS-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_existing",
+      "dataset": "USPS",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_reference-USPS-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_reference",
+      "dataset": "USPS",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_adapted-USPS-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_adapted",
+      "dataset": "USPS",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_existing-MSRA25_EBSA_16x16-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_existing",
+      "dataset": "MSRA25_EBSA_16x16",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_reference-MSRA25_EBSA_16x16-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_reference",
+      "dataset": "MSRA25_EBSA_16x16",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "lda_adapted-MSRA25_EBSA_16x16-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "lda_adapted",
+      "dataset": "MSRA25_EBSA_16x16",
+      "limits": [
+        30,
+        100,
+        300
+      ],
+      "cpu_limit": 1800
+    },
+    {
+      "run_id": "slps-YaleB_cropped2414-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "slps",
+      "dataset": "YaleB_cropped2414",
+      "cpu_limit": 1200
+    },
+    {
+      "run_id": "slps-YaleB_dengcai32-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "slps",
+      "dataset": "YaleB_dengcai32",
+      "cpu_limit": 1200
+    },
+    {
+      "run_id": "slps-ORL_att92-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "slps",
+      "dataset": "ORL_att92",
+      "cpu_limit": 1200
+    },
+    {
+      "run_id": "slps-JAFFE-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "slps",
+      "dataset": "JAFFE",
+      "cpu_limit": 1200
+    },
+    {
+      "run_id": "slps-MSRA25_EBSA_16x16-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "slps",
+      "dataset": "MSRA25_EBSA_16x16",
+      "cpu_limit": 1200
+    },
+    {
+      "run_id": "msra-other-v1",
+      "kind": "baseline",
+      "phase": "mandatory_baseline",
+      "block": "msra_other",
+      "dataset": "MSRA25_EBSA_16x16",
+      "cpu_limit": 1800,
+      "dimensions": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150
+      ],
+      "llc_ridge": [
+        0.1,
+        1.0,
+        1.5
+      ],
+      "llc_bandwidth": [
+        0.0625,
+        0.25,
+        1.0,
+        4.0,
+        16.0
+      ]
+    },
+    {
+      "run_id": "usps-numerical-audit-v1",
+      "kind": "usps",
+      "phase": "mandatory_usps",
+      "cpu_limit": 21600,
+      "attempt_cpu_limit": 1800
+    }
+  ]
+}

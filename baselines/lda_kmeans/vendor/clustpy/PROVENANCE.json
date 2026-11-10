@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/collinleiber/ClustPy",
+  "commit": "4ac9d00685efc7432800684f5bfac0f01af59172",
+  "core_path": "clustpy/centroid/ldakmeans.py",
+  "core_git_blob": "e2d952694a20ccabe0d38bd54ba9e5b5c5d4b846",
+  "core_sha256": "65ef823ea16d16b23aff2ba64b458191bb731449912b0eb5470ebd975a502f8e",
+  "license": "BSD-3-Clause",
+  "license_sha256": "3214b487824f00db03e95026167a76fac7fa0c76b9884a818fb44dd6cc8dbe12",
+  "license_git_blob": "c90e75be68c71c798a227b8b88f8d1cad468aedf",
+  "helper_paths": ["clustpy/alternative/nrkmeans.py", "clustpy/utils/checks.py"],
+  "execution": "reference.py is a minimal port of the core with observation-only instrumentation and a scoped global NumPy seed for deterministic PCA. Vendored originals are unchanged provenance copies, not imported dependencies.",
+  "validation_scope": "Synthetic exact-core agreement, singular-update failures, max-iteration returned-state inconsistency and repeatability. Real-data execution coverage is recorded by the shared campaign."
+}

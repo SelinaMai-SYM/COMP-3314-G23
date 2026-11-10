@@ -1,0 +1,22 @@
+dataset_id: MSRA25_EBSA_16x16
+loader_version: ebsa16
+source_url: https://raw.githubusercontent.com/LZUFE-Machine-Learning/EBSA/c72bfbf13ac0e67db1a756eb26d56b7b996b64cb/dataset/MSRA25.mat
+source_commit: c72bfbf13ac0e67db1a756eb26d56b7b996b64cb
+source_filename: MSRA25.mat
+external_relative_path: msra50/data/EBSA_c72bfbf_MSRA25.mat
+source_sha256: 3c8681c40ebbed2f6dc2d2f30e7c5195e947467e8cf6797faa44753a190cd659
+source_bytes: 387675
+sample_count: 1799
+class_count: 12
+native_resolution: [16, 16]
+feature_dimension: 256
+class_counts: [175, 154, 113, 178, 186, 159, 179, 128, 133, 131, 128, 135]
+native_pixel_range: [0, 255]
+duplicate_extra_rows: 13
+duplicate_policy: preserve all rows; all exact duplicate groups have consistent labels
+reader: scipy.io.loadmat(mat_dtype=True)
+matlab_declared_dtype: double
+preprocessing: divide pixels by 255; no resize; preserve original row order
+specification_status: adapted native resolution differs from the paper's stated 32x32
+historical_identity: unverified
+redistribution_status: not established; data stays outside Git

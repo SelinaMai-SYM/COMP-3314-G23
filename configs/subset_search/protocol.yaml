@@ -1,0 +1,18 @@
+version: subset-search-20261110-v1
+selection: configs/submission_refresh/selection.yaml
+k: 5
+preprocessing: Y0
+input_row_normalization: false
+embedding_row_normalization: false
+bandwidth: median_positive_directed_knn_squared_distance
+symmetrization: union_maximum
+representation_seed: 20261108
+gamma_nominal: [1.0e-6, 1.0e-3, 1, 1000, 1000000]
+variants: [E8, E13]
+initializations: [RANDOM, VANILLA_KMEANSPP, SKLEARN_GREEDY_KMEANSPP]
+solver: {name: historical_style_IRLS, max_iter: 300, tol: 1.0e-6, eps: 1.0e-8, zero_residual_floor: median_pairwise, continuation: false}
+rounding: {seeds: [0, 49], n_init: 1, algorithm: lloyd, max_iter: 300, tol: 1.0e-4}
+fixed_protocol: {variant: E8, gamma: 1, initialization: RANDOM}
+confirmation: {first_seed_minimum: 1000000, count: 50, reselect: false}
+cohort: {random_prefix_choices: [10, 32, 100], finite_permutation_seed: 20261110, freeze_before_scores: true}
+priority: [mandatory_repairs, primary_candidate_families, random_coverage, umist_omissions, graph_repair, ar_common_masks]

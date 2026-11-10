@@ -25,6 +25,7 @@ _ALIASES = {
     "binalpha": "BinAlpha",
     "bin_alpha": "BinAlpha",
     "msra50": "MSRA50",
+    "msra25_ebsa_16x16": "MSRA25_EBSA_16x16",
     "msra": "MSRA50",
     "yaleb": "YaleB",
     "yale_b": "YaleB",
@@ -39,6 +40,7 @@ _PACKAGES = {
     "UMIST": "benchmarks.umist",
     "BinAlpha": "benchmarks.binalpha",
     "MSRA50": "benchmarks.msra50",
+    "MSRA25_EBSA_16x16": "benchmarks.msra50",
     "YaleB": "benchmarks.yaleb",
     "USPS": "benchmarks.usps",
 }
@@ -56,6 +58,8 @@ def load_dataset(name: str, root: Path | None = None, version: str | None = None
     if key is None:
         known = ", ".join(sorted(set(_ALIASES.values())))
         raise KeyError(f"unknown dataset {name!r}; known datasets: {known}")
+    if key == "MSRA25_EBSA_16x16" and version is None:
+        version = "ebsa16"
     module_name = _PACKAGES[key]
     module = __import__(module_name, fromlist=["load_dataset"])
     if version is None:

@@ -1,0 +1,8 @@
+{
+  "schema": "ssc-candidate-catalogue-v1",
+  "frozen_before_scoring": true,
+  "catalogue_path": "results/subset_search/candidate_catalogue.json",
+  "catalogue_sha256": "cb82240d9f23ab781001b2c73b89ed6c6ef95f852175e8dac5cdd83cae449472",
+  "intended_candidate_count": 4736,
+  "unique_physical_inputs": 4630
+}

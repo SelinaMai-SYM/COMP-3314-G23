@@ -1,0 +1,10 @@
+version: submission-refresh-20261110
+max_cpu_core_hours: 36
+reserved_final_core_hours: 2
+workers: 2
+threads_per_worker: 1
+rss_target_gib: 8
+usps_max_core_hours: 6
+seed_list: {start: 0, stop_exclusive: 50}
+slps: {datasets: [YaleB_cropped2414, YaleB_dengcai32, ORL_att92, JAFFE], neighbors: [5, 7], alpha: [0.2, 0.5, 0.8], dimensions: [30, 70, 110]}
+lda: {datasets: [YaleB_cropped2414, JAFFE, ORL_att92, USPS, MSRA25_EBSA_16x16], limits: [30, 100, 300], reference_commit: 4ac9d00685efc7432800684f5bfac0f01af59172, inner_n_init: 10, adapted_max_iter: 300}

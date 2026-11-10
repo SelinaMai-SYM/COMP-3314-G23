@@ -7,11 +7,11 @@ shown as unavailable; implementation checks are not substituted for measurements
 - Source generation: `python -m experiments.submission_refresh.reporting --date 2026-11-10`.
 - Build: `make -C report all` using NeurIPS 2026 preprint style, pdflatex and BibTeX.
 - The generated input manifest records every CSV/JSON input hash and availability.
-- Main-text end label: page 4. Total preliminary PDF:13 pages.
+- Main-text end label: page 4. Total preliminary PDF: 13 pages.
 - Latest checked PDF SHA-256: `5db5133444002788e070d136de20391b660783d3bb3f5298dac522f29f28c685`.
 - Four confirmed authors and HKU affiliation are present. The two-graph diagram is preserved.
 - No overfull boxes, undefined citations or undefined references remain in the final LaTeX log.
-- All13 pages were rendered with Poppler and inspected individually. No clipped text,
+- All 13 pages were rendered with Poppler and inspected individually. No clipped text,
   overlapping cells, unreadable tables, broken symbols or missing citations were found.
 - Report metadata includes the exact title and all four authors.
 - Three endpoint/provenance regression checks passed; native-best assignments never receive mean-endpoint SD.

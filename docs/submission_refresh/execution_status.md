@@ -10,6 +10,6 @@ Resume mandatory work:
 python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --queue configs/submission_refresh/execution_queue.json --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
 ```
 
-Then run the predeclared subset cohort. Graph diagnostics follow primary-family coverage; weak AR common masks come last. All selected means require50 complete seeds, and subsequent confirmation does not reselect. Historical scalar selection has already rebuilt successfully from the immutable gzip release. Final tables/PDF/publication are pending actual campaign completion.
+Then run the predeclared subset cohort. Graph diagnostics follow primary-family coverage; weak AR common masks come last. All selected means require 50 complete seeds, and subsequent confirmation does not reselect. Historical scalar selection has already rebuilt successfully from the immutable gzip release. Final tables/PDF/publication are pending actual campaign completion.
 
 MSRA's first real repair task executes its preregistered K-means/SC/SSC block before LDA, PCA, LLC or SLPS. It uses the same native dataset candidate and exact shared subset protocol, then records that nested work as charged to its owning baseline task. The later subset queue reuses those recoverable objects. No second resource allowance is created.

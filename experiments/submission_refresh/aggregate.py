@@ -48,6 +48,36 @@ def _register_scientific_tree(store,artifacts):
     return list(unique.values()),extra
 
 
+def _ensc_extension_metadata(gate,store,output):
+    """Reflect actual conditional execution without filling unqualified metrics."""
+    from .ensc_campaign import DATASETS,aggregate_ensc
+    result=dict(gate);formal=[]
+    for path in sorted((store.root/'ensc_jobs').glob('*/status.json')):
+        status=json.loads(path.read_text());task=status.get('task',{})
+        if not task.get('profile') and task.get('dataset') in DATASETS:formal.append(str(path.relative_to(store.root)))
+    result.update(G4_G5_implementation_status='PREPARED; execution requires the fixed G3 gate and current backend validation',
+        ensc_formal_job_records=formal,four_benchmark_ACC_gain_pp=None,four_benchmark_NMI_gain_pp=None,
+        four_benchmark_NMI_gain_vs_SC_pp=None,four_benchmark_NMI_gain_vs_SSC_pp=None)
+    macro=aggregate_ensc(store.root,output) if formal else None
+    if not result.get('promotion_passed'):
+        result['G4_G5_status']='NOT_RUN_GATE_NOT_PASSED'
+        if macro is not None:result['ensc_records_not_qualified_by_current_G3_gate']=True
+        return result
+    if macro is None:
+        result['G4_G5_status']='TRIGGERED_NOT_RUN'
+        return result
+    result.update(G4_G5_status=macro['status'],ensc_four_benchmark_conclusion=macro)
+    statuses=macro.get('dataset_status',[])
+    qualified=macro.get('status')=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS' and len(statuses)==len(DATASETS) and {row.get('dataset') for row in statuses}==set(DATASETS) and all(row.get('qualified') is True for row in statuses)
+    if qualified:
+        for field in ['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']:
+            result[field]=macro.get(field)
+        result['practical_target_met']=macro.get('practical_target_met')
+    # A single NMI value would conceal which fair baseline was used.
+    result['NMI_contrast_definition']='Separate macro-average NMI contrasts against fair SC and fair original SSC; the legacy undifferentiated NMI field stays unavailable.'
+    return result
+
+
 def aggregate(artifact_root,output):
     start=time.process_time();out=Path(output);out.mkdir(parents=True,exist_ok=True);store=ArtifactStore(artifact_root)
     baseline=[];coverage=[];artifacts=[];graphrows=[];graphdiagnostics=[];cases=[];case_summaries=[]
@@ -93,7 +123,8 @@ def aggregate(artifact_root,output):
                     'case_table_sha256':case_hash,**row})
         artifacts.append({'record':str(path.relative_to(store.root)),'object':store.put(r)})
     anypass=any(g['passed'] for g in gates.values());all_eval=all(g['decision'] in ['PASSED','FAILED'] for g in gates.values())
-    gate={'version':1,'prior_campaign_gate':'0/4 unchanged','datasets':gates,'promotion_passed':anypass,'decision':'PASSED' if anypass else 'FAILED' if all_eval else 'INCOMPLETE_OR_NUMERICALLY_UNCERTIFIED','G4_G5_status':'TRIGGERED_IMPLEMENTATION_REQUIRED' if anypass else 'NOT_RUN_GATE_NOT_PASSED','four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_pp':None,'scope':'Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs'}
+    gate={'version':1,'prior_campaign_gate':'0/4 unchanged','datasets':gates,'promotion_passed':anypass,'decision':'PASSED' if anypass else 'FAILED' if all_eval else 'INCOMPLETE_OR_NUMERICALLY_UNCERTIFIED','G4_G5_status':'TRIGGERED_NOT_RUN' if anypass else 'NOT_RUN_GATE_NOT_PASSED','four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_pp':None,'scope':'Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs'}
+    gate=_ensc_extension_metadata(gate,store,out)
     write_csv(out/'baseline_diagnostics.csv',baseline or [{'status':'NO_COMPLETED_BASELINE_RECORDS'}]);write_csv(out/'execution_coverage.csv',coverage)
     write_csv(out/'extension_results.csv',graphrows or [{'status':'NOT_RUN','reason':'Priority follows mandatory repairs and primary subset coverage'}]);write_csv(out/'graph_diagnostics.csv',graphdiagnostics or [{'schema_version':2,'status':'NO_NEW_GRAPH_RECORDS'}]);write_csv(out/'error_cases.csv',cases or [{'status':'NOT_RUN'}]);write_csv(out/'casebook_summary.csv',case_summaries or [{'status':'NOT_RUN'}]);atomic_json(out/'extension_gate.json',gate)
     from .inventory import build_inventory

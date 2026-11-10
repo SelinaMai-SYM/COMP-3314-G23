@@ -10,25 +10,25 @@ At that snapshot the shared ledger had **3.6995 charged CPU-core hours**, 69 cha
 
 | Item | Exact path | Snapshot / remaining acceptance |
 |---|---|---|
-| I1 | `docs/submission_refresh/preflight.md` | PRESENT. Present: starting tip, verified backup, data/artifact roots and shared allowance. |
-| I2 | `docs/submission_refresh/language_and_editorial_audit.md` | PRESENT. Present snapshot; repeat after final tables/PDF and repository-description update. |
-| I3 | `docs/submission_refresh/source_recovery.md` | PRESENT. Present: EBSA16 verified, Fast-CD bounded 429 attempts, parent acquisition/provenance. |
-| I4 | `docs/submission_refresh/protocol_map.md` | PRESENT. Present; reconcile final actual coverage and deviations. |
-| I5 | `docs/submission_refresh/issue_closure.md` | PRESENT. Present execution-stage ledger; close/reclassify only from final validation and run evidence. |
-| I6 | `docs/submission_refresh/research_findings.md` | PRESENT. Present execution-stage findings; final selected values and gate/cost conclusions pending. |
-| I7 | `docs/submission_refresh/experiment_log.md` | PRESENT. Present append-only log; continue through aggregation, confirmation and publication. |
+| I1 | `docs/submission_refresh/preflight.md` | PRESENT: starting tip, verified backup, data/artifact roots and shared allowance. |
+| I2 | `docs/submission_refresh/language_and_editorial_audit.md` | PRESENT: snapshot available; repeat after final tables/PDF and repository-description update. |
+| I3 | `docs/submission_refresh/source_recovery.md` | PRESENT: EBSA16 verified, Fast-CD bounded 429 attempts, parent acquisition/provenance. |
+| I4 | `docs/submission_refresh/protocol_map.md` | PRESENT; reconcile final actual coverage and deviations. |
+| I5 | `docs/submission_refresh/issue_closure.md` | PRESENT: execution-stage ledger; close/reclassify only from final validation and run evidence. |
+| I6 | `docs/submission_refresh/research_findings.md` | PRESENT: execution-stage findings; final selected values and gate/cost conclusions pending. |
+| I7 | `docs/submission_refresh/experiment_log.md` | PRESENT: append-only log; continue through aggregation, confirmation and publication. |
 | I8 | `results/submission_refresh/dataset_inventory.csv` | MISSING. Corrected audit and duplicate maps are committed under `results/submission_refresh/source_audit/`; `experiments/submission_refresh/inventory.py` validates these against the frozen initial source_inventory.csv and will generate this file, `dataset_inventory.v2.csv` and its manifest during final aggregation. |
-| I9 | `results/submission_refresh/joint_metric_selection.csv` | PRESENT. Present historical joint mean selection; new subset matches remain a separate pending block. |
-| I10 | `results/submission_refresh/endpoint_comparison.csv` | PRESENT. Present historical endpoint separation; new endpoints need final scalar aggregation. |
-| I11 | `results/submission_refresh/baseline_diagnostics.csv` | MISSING. Pending aggregation of completed/failed baseline jobs and all-50 eligibility. |
+| I9 | `results/submission_refresh/joint_metric_selection.csv` | PRESENT: historical joint mean selection; new subset matches remain a separate pending block. |
+| I10 | `results/submission_refresh/endpoint_comparison.csv` | PRESENT: historical endpoint separation; new endpoints need final scalar aggregation. |
+| I11 | `results/submission_refresh/baseline_diagnostics.csv` | MISSING. Pending aggregation of completed/failed baseline jobs and eligibility requiring all 50 seeds. |
 | I12 | `results/submission_refresh/error_cases.csv` | MISSING. Pending G1 casebook aggregation; implementation availability is not a measured casebook. |
-| I13 | `results/submission_refresh/graph_diagnostics.csv` | MISSING. Pending current/schema2 export; corrected historical-graph validation completed externally. |
+| I13 | `results/submission_refresh/graph_diagnostics.csv` | MISSING. Pending current/schema 2 export; corrected historical-graph validation completed externally. |
 | I14 | `results/submission_refresh/extension_results.csv` | MISSING. Pending actual graph block and aggregation, or explicit unrun coverage. |
 | I15 | `results/submission_refresh/extension_gate.json` | MISSING. Pending actual fixed G3 evidence; absence is not a failed gate. |
 | I16 | `results/submission_refresh/artifact_manifest.json` | MISSING. Pending authoritative object references, availability checks and verified export/recovery record. |
 | I17 | `results/submission_refresh/execution_coverage.csv` | MISSING. Pending consolidated planned/completed/failed/timeout/unrun inventory. |
-| I18 | `results/submission_refresh/resource_usage.json` | PRESENT. Present scheduler snapshot; final actual CPU, active reservations and supplementary costs pending. |
-| I19 | `report/Group_23.pdf` | PRESENT. Present PRELIMINARY PDF; regenerate from final authoritative records and repeat full visual QA. |
+| I18 | `results/submission_refresh/resource_usage.json` | PRESENT: scheduler snapshot; final actual CPU, active reservations and supplementary costs pending. |
+| I19 | `report/Group_23.pdf` | PRESENT: PRELIMINARY PDF; regenerate from final authoritative records and repeat full visual QA. |
 | I20 | `docs/submission_refresh/final_handover.md` | MISSING. Pending final English handover, actual outcomes, tested/final commits and publication checks. |
 
 The report sources `report/main.tex`, `report/references.bib`, `report/neurips_2026.sty`, `report/tables/refresh_*.tex` and `report/figures/ssc_two_graph_pipeline.pdf` exist. The current PDF still matches the preliminary QA hash `5db5133444002788e070d136de20391b660783d3bb3f5298dac522f29f28c685`: four main pages and thirteen total pages were checked. That validation does not certify a later regenerated report.
@@ -37,13 +37,13 @@ The report sources `report/main.tex`, `report/references.bib`, `report/neurips_2
 
 | Required block | Existing paths / pending output |
 |---|---|
-| Frozen source/catalogue/protocol | Present: `results/subset_search/source_inventory.csv`, `candidate_catalogue.json`, `sample_manifests/*.json`; `configs/subset_search/protocol.yaml`, `compatibility.yaml`, `candidate_catalogue.json`, `executable_cohort.json`. Catalogue 4736 entries / 4630 unique inputs; initial executable cohort 1202 canonical inputs. |
-| Exact sample replay | 4736 sample manifests exist; preserve their hashes, selected/excluded indices, quotas, order and aliases. Do not regenerate membership to improve scores. |
+| Frozen source/catalogue/protocol | Present: `results/subset_search/source_inventory.csv`, `candidate_catalogue.json`, `sample_manifests/*.json`; `configs/subset_search/protocol.yaml`, `compatibility.yaml`, `candidate_catalogue.json`, `executable_cohort.json`. Catalogue: 4,736 entries / 4,630 unique inputs; initial executable cohort: 1,202 canonical inputs. |
+| Exact sample replay | 4,736 sample manifests exist; preserve their hashes, selected/excluded indices, quotas, order and aliases. Do not regenerate membership to improve scores. |
 | Execution matrix and trials | Pending: `results/subset_search/execution_coverage.csv`, `trials.csv.gz`. Gzip is the documented transport equivalent of required `trials.csv`; keep compressed and decompressed hashes. |
-| Analysis1 sensitivity | Pending: `fixed_protocol_summary.csv`, `fixed_protocol_distribution.csv`, `fixed_protocol_family_distributions.csv`; strict Y0/E8/gamma 1/random, separated benchmark/pool/family and alias weighting. |
-| Analysis2 and endpoints | Pending: `joint_search_summary.csv`, `native_best_summary.csv`, `closest_matches.csv`, `top_matches.csv`, `reference_contrasts.csv`. Both metrics/SD must share a complete 50-seed configuration; single native endpoints have n=1 and no SD. |
+| Analysis 1 sensitivity | Pending: `fixed_protocol_summary.csv`, `fixed_protocol_distribution.csv`, `fixed_protocol_family_distributions.csv`; strict Y0/E8/gamma 1/random, separated benchmark/pool/family and alias weighting. |
+| Analysis 2 and endpoints | Pending: `joint_search_summary.csv`, `native_best_summary.csv`, `closest_matches.csv`, `top_matches.csv`, `reference_contrasts.csv`. Both metrics/SD must share a complete 50-seed configuration; single native endpoints have n=1 and no SD. |
 | Matched SC | Pending: `matched_sc_summary.csv`, `matched_sc_contrasts.csv`; verify exact saved F/sample fingerprints, same initialization and complete 50 seeds. |
-| Locked confirmation | Pending: `winner_lock.json`, `confirmation_seed_namespace.json`, `rounding_confirmation.csv`. First unused aligned block>=1000000 is audited against historical recorded seeds and persisted; no reselection. |
+| Locked confirmation | Pending: `winner_lock.json`, `confirmation_seed_namespace.json`, `rounding_confirmation.csv`. First unused aligned block at or above 1,000,000 is audited against historical recorded seeds and persisted; no reselection. |
 | Recoverable artifacts/cost | Durable external store exists. Pending final `results/subset_search/artifact_manifest.json`, final `resource_usage.json`, verified archive export and recovery evidence. A hash alone does not establish recovery. |
 | Per-benchmark Markdown | Pending new `results/subset_search/{AR,JAFFE,ORL,UMIST,BinAlpha,MSRA50,YaleB,USPS}.md`; historical tables remain under `results/v3_reproduction/per_benchmark/`. |
 | Current no-data releases | Code exists. Pending `configs/subset_search/release_manifest.json`, `results/subset_search/configuration_inventory.csv`, `source_records.json.gz`; and `configs/submission_refresh/evidence_manifest.json` plus its committed baseline/graph scalar records. |

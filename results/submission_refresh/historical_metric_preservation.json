@@ -1,0 +1,19 @@
+{
+  "reference_commit": "4c8979a5f478467c13a9c4cffbc982e7d6a560fb",
+  "current_source_commit": "02534e7",
+  "tables": {
+    "all_joint_configurations.csv": {
+      "rows": 6303,
+      "primary_endpoint_metric_changes": 0
+    },
+    "all_native_endpoints.csv": {
+      "rows": 6303,
+      "primary_endpoint_metric_changes": 0
+    },
+    "joint_metric_selection.csv": {
+      "rows": 72,
+      "primary_endpoint_metric_changes": 0
+    }
+  },
+  "native_legacy_alias_correction": "measured_ACC/NMI aliases now describe their single selected assignment and measured_SD aliases are unavailable; original acc_mean/nmi_mean endpoint scores unchanged. Frozen raw trials unchanged."
+}

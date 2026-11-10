@@ -104,3 +104,33 @@ def test_saved_g4_record_requires_exact_graph_anchor_source_and_available_object
     with pytest.raises(ValueError,match='actual graph'):campaign._verify_saved_record(changed,definition,context,store,set())
     (store.root/predictions['path']).write_bytes(b'corrupt')
     with pytest.raises(ValueError,match='corrupt'):campaign._verify_saved_record(record,definition,context,store,set())
+
+
+@pytest.mark.parametrize('mismatch',['X','y','F0','scientific_source','environment','graph','anchor','actual_source_record'])
+def test_aggregation_rejects_mixed_sources_even_when_G_and_trials_are_identical(tmp_path,mismatch):
+    import copy
+    from experiments.submission_refresh.core import atomic_json
+    store=ArtifactStore(tmp_path/'store');definition=campaign.intended_configurations('ORL_att92')[0]
+    F=np.arange(6.).reshape(3,2);ref=store.put(F);W=store.put(sparse.eye(3))
+    inputs={'X':ref,'y':store.put(np.array([0,1,1])),'F0':ref,'U':ref}
+    context={'schema':'G4-resume-context-v1','definition':definition,'input_objects':inputs,'anchor':ref,'graph':W,
+        'graph_shape':[3,3],'graph_nnz':3,'graph_metadata_fingerprint':'fixed-graph-metadata',
+        'scientific_source_fingerprint':'fixed-science','construction_source_fingerprint':None,'backend_source_sha256':None,
+        'environment':{'python':'fixed'},'rounding':{'seeds':list(range(50)),'n_init':1}}
+    record={**definition,'resume_context':context,'source':{'implementation_hash':'fixed-science','source_commit':'original'},
+        'status':'COMPLETED','objects':{'G':ref},'trials':[{'seed':seed,'acc':.5,'nmi':.5} for seed in range(50)],
+        'summary':{'acc_mean':50.,'nmi_mean':50.,'acc_sd':0.,'nmi_sd':0.}}
+    changed=copy.deepcopy(record)
+    if mismatch in ['X','y','F0']:changed['resume_context']['input_objects'][mismatch]=store.put(F+1)
+    elif mismatch=='scientific_source':changed['resume_context']['scientific_source_fingerprint']='other-science'
+    elif mismatch=='environment':changed['resume_context']['environment']={'python':'other'}
+    elif mismatch=='graph':changed['resume_context']['graph']=store.put(sparse.eye(3)*2)
+    elif mismatch=='anchor':changed['resume_context']['anchor']=store.put(F+1)
+    else:changed['source']['source_commit']='other-actual-source'
+    for name,value in [('first',record),('second',changed)]:
+        folder=store.root/'ensc_jobs'/name
+        atomic_json(folder/'status.json',{'task':{'dataset':'ORL_att92'},'status':'COMPLETED'})
+        atomic_json(folder/'records/one.json',value)
+    with pytest.raises(ValueError,match='mix|distinct source|anchor differs'):
+        campaign.aggregate_ensc(store.root,tmp_path/'outputs')
+    assert not (tmp_path/'outputs/ensc_four_benchmark_conclusion.json').exists()

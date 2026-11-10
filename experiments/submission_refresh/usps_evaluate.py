@@ -270,6 +270,11 @@ def export_evaluation(artifact_root,output):
         if record.get('status')=='COMPLETED':
             summary=summarize(record['trials'])
         row={k:v for k,v in record.items() if k not in ['trials','summary','objects','audit_metadata']}
+        audit=record.get('audit_metadata',{});linear=audit.get('linear_checks',{})
+        row.update(fit_cpu_seconds=audit.get('cpu_seconds'),fit_wall_seconds=audit.get('wall_seconds'),
+                   cg_calls=linear.get('cg_calls'),cg_failures=linear.get('cg_failures'),
+                   cg_max_relative_residual=linear.get('cg_max_relative_residual'),
+                   final_linear_relative_residual=linear.get('relative_linear_residual'))
         row.update({k:v for k,v in summary.items() if k!='native_best'})
         row['source_record']=str(path.relative_to(root));row['native_best']=summary.get('native_best')
         rows.append(row)

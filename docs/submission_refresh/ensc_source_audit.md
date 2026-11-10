@@ -55,7 +55,7 @@ step, rather than a hidden alteration in this helper.
 The source native spectral-clustering code has an unseeded eigensolver and a
 constructor default of 20 K-means initializations (its docstring says 10).
 A matched native control must save a deterministically seeded eigenspace and
-use the prescribed 50 one-start rounding seeds. The author-default20-start
+use the prescribed 50 one-start rounding seeds. The author-default 20-start
 control, if run, belongs in a distinct budget-labelled track.
 
 ## True elastic-net replacement and validation status

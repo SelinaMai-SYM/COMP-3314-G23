@@ -18,4 +18,6 @@ The detailed path inventory is in `results/submission_refresh/language_inventory
 
 ## Editorial boundaries and remaining checks
 
+A subsequent prose review corrected joined words and numbers in the README and campaign notes. It preserved identifiers, executable examples, equations, links and execution-status qualifications. This editorial pass does not close pending scientific validation or publication checks.
+
 Prose now explains concrete actions, evidence, and limitations. Old resource tables remain historical records, not recommendations to bypass restrictions or present-day availability claims. External papers retain their original attribution and legal notices. Personal path strings that document a historical investigation remain evidence rather than runtime dependencies; current commands use an explicit data root. Repository description, current main-branch links, final report rendering, and the final no-data/real-data checks are closed by the publication audit. No claim of English-only completion is made from the preliminary Unicode count alone.

@@ -159,6 +159,197 @@ def figure(root,rows,papers,winners,catalogue):
     return True
 
 
+
+def significant(value,digits=5):
+    """Compact objective/gap display without changing stored precision."""
+    try:
+        value=float(value)
+        return f'{value:.{digits}g}' if math.isfinite(value) else '--'
+    except (TypeError,ValueError):return '--'
+
+
+def _usps_scalar(row,*keys):
+    direct=value(row,*keys)
+    if direct is not None:return direct
+    for field in ['solver','audit_metadata']:
+        nested=unpack_json(row.get(field),{}) or {}
+        result=value(nested,*keys)
+        if result is not None:return result
+    return None
+
+
+def _usps_bool(value):
+    if isinstance(value,bool):return value
+    if str(value).lower() in ['true','1','yes']:return True
+    if str(value).lower() in ['false','0','no']:return False
+    return None
+
+
+def usps_numerical_appendix(original,continuation_fits,continuation_rounding):
+    """Display every locked numerical point, never select by scores or gaps."""
+    stages=['IRLS300','uniform_PDHG','diagonal_PDHG','component_dual_flow','diagonal_warm_restart']
+    labels={'SC_F':'SC on F','IRLS300':'IRLS300','uniform_PDHG':'Uniform',
+            'diagonal_PDHG':'Diagonal','component_dual_flow':'Flow',
+            'diagonal_warm_restart':'Warm restart','diagonal_continuation':'Extra restart'}
+    pairs=[]
+    for row in original+continuation_fits+continuation_rounding:
+        pair=unpack_json(row.get('pair_identity'),None)
+        if pair is None:pair=(unpack_json(row.get('provenance'),{}) or {}).get('pair_identity')
+        if pair:pairs.append(json.dumps(pair,sort_keys=True))
+    if len(set(pairs))>1:raise ValueError('USPS appendix cannot combine different frozen F/W pairs')
+    def exact(rows,field,key):
+        found=[row for row in rows if row.get(field)==key]
+        if len(found)>1:raise ValueError('duplicate committed USPS scalar point: '+str(key))
+        return found[0] if found else {}
+    sc=exact(original,'name','SC_F')
+    if not sc:sc=exact(continuation_rounding,'name','SC_F')
+    points=[('SC on F',None,sc,sc,'SC_F')]
+    for gamma in [1.,1000.]:
+        for stage in stages:
+            name=f'gamma_{gamma:g}_{stage}';row=exact(original,'name',name)
+            points.append((labels[stage],gamma,row,row,stage))
+    # The two preregistered attempts remain visible even before their exports.
+    extra_ids=[f'usps-continuation-gamma{gamma:g}-v1' for gamma in [1.,1000.]]
+    extra_ids+=sorted({row.get('run_id') for row in continuation_fits if row.get('run_id')} - set(extra_ids))
+    extra_ids+=sorted({row.get('name') for row in continuation_rounding if row.get('name') and row.get('name')!='SC_F'}-set(extra_ids))
+    for run_id in extra_ids:
+        fit=exact(continuation_fits,'run_id',run_id);rounding=exact(continuation_rounding,'name',run_id)
+        gamma=value(fit,'gamma_effective','gamma_nominal',default=value(rounding,'gamma_effective','gamma_nominal'))
+        if gamma is None:
+            gamma=1. if run_id=='usps-continuation-gamma1-v1' else 1000. if run_id=='usps-continuation-gamma1000-v1' else None
+        points.append(('Extra restart',gamma,fit,rounding,'diagonal_continuation'))
+    numerical=[];performance=[]
+    for label,gamma,fit,rounding,stage in points:
+        numeric=fit or rounding;sc_row=stage=='SC_F'
+        status=_usps_scalar(numeric,'solver_status','status')
+        if status in [None,'COMPLETED']:
+            status=_usps_scalar(rounding,'solver_status') or status or 'UNAVAILABLE'
+        flag=_usps_bool(_usps_scalar(numeric,'certified'))
+        certified='--' if sc_row or flag is None else 'C' if flag else 'U'
+        cpu=_usps_scalar(numeric,'fit_cpu_seconds','solver_cpu_seconds','original_solver_cpu_seconds','original_fit_cpu_seconds')
+        if cpu is None and stage=='diagonal_continuation':cpu=value(fit,'cpu_seconds')
+        if cpu is None:
+            for field in ['solver','audit_metadata']:
+                recorded=unpack_json(numeric.get(field),{}) or {}
+                if recorded.get('cpu_seconds') is not None:cpu=recorded['cpu_seconds'];break
+        numerical.append([label,significant(gamma,4),significant(_usps_scalar(numeric,'primal')),
+                          significant(_usps_scalar(numeric,'dual')),
+                          significant(_usps_scalar(numeric,'relative_gap','gap'),3),certified,
+                          number(cpu,1),break_text(status)])
+        count=value(rounding,'n_trials','n')
+        scalar_fields_complete=all(number(rounding.get(key))!='--' for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd'])
+        complete=rounding.get('status')=='COMPLETED' and str(count)=='50' and scalar_fields_complete
+        means=rounding if complete else {}
+        historical=_usps_bool(_usps_scalar(rounding,'historical_300_protocol_complete','complete_historical_execution'))
+        historical_label=('yes' if historical else 'no' if historical is False else '--') if stage=='IRLS300' else '--'
+        outcome=rounding.get('status') or 'ROUNDING_UNAVAILABLE'
+        if rounding.get('status')=='COMPLETED' and not complete:
+            outcome='INCOMPLETE_SEED_SET' if str(count)!='50' else 'INCOMPLETE_SCALAR_FIELDS'
+        performance.append([label,significant(gamma,4),metric(means,'acc',native=False),metric(means,'nmi',native=False),
+                            str(count) if count is not None else '--',historical_label,break_text(outcome)])
+    text=[r'\subsection{USPS numerical audit on one newly frozen F/W pair}',
+          r'These rows use a newly generated, recoverable current USPS representation and its exact shrinkage graph. They do not identify or replace the missing historical selected F/G arrays. Every non-SC point targets unsquared E8 with undirected coefficient $2\gamma w$. All original ten stages remain visible; the two additional restarts are separate numerical attempts, not replacements for the historical finite-iteration winner or subset-search output.',
+          r'Tables~\ref{tab:usps-numerical-audit} and~\ref{tab:usps-numerical-rounding} refer to the same stage/gamma rows. C/U denote the recorded certified/uncertified state, with a required relative gap at most $10^{-5}$ and capacity violation at most $10^{-8}$ for certification. A solver stopping status alone is not a certificate. Uncertified points cannot establish that the mathematical objective lacks clustering capacity. Missing exports or saved points stay unavailable.',
+          table(['Stage',r'$\gamma$','Primal','Dual','Rel. gap','Cert.','CPU (s)','Solver status'],numerical,
+                'p{1.65cm}rrrrcrp{2.4cm}',
+                'Same-target numerical evidence. Original rows show fit CPU only where committed scalar metadata provides it; extra-restart CPU is the full controller attempt, including checks and I/O. A dash means unavailable metadata, not zero cost. The input manifest hashes each scalar source.','tab:usps-numerical-audit',long=True),
+          r'Clustering metrics below are percent, mean $\pm$ sample SD over the same fifty greedy K-means++/Lloyd seeds 0--49 on each saved G. Both metrics come from one complete endpoint. This is conditional rounding variability, not independent datasets or full-pipeline uncertainty. A native-best assignment is not substituted for a mean, and its single-run value receives no across-run SD.',
+          table(['Stage',r'$\gamma$','ACC','NMI','n','IRLS300 complete','Evaluation status'],performance,
+                'p{1.65cm}rrrccp{3.0cm}',
+                'Paired rounding protocol on the fixed current F/W. The IRLS300 flag refers only to completion of the declared historical-style 300-step protocol, including its iterate stopping rule; it does not certify optimality. Other stages are separate algorithms/restarts.','tab:usps-numerical-rounding',long=True)]
+    if not original and not continuation_fits and not continuation_rounding:
+        text.insert(1,r'No committed USPS numerical evaluation export is currently available. The planned rows below contain no inferred objective or clustering values.')
+    return text
+
+
+def ensc_macro_qualified(conclusion):
+    expected={'ORL_att92','JAFFE','YaleB_cropped2414','USPS'}
+    rows=conclusion.get('dataset_status',[]) if conclusion else []
+    metrics=['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']
+    return bool(conclusion and conclusion.get('status')=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS'
+                and conclusion.get('primary_family')=='S_tau0.95' and conclusion.get('equal_dataset_weights') is True
+                and len(rows)==4 and {row.get('dataset') for row in rows}==expected
+                and all(row.get('qualified') is True for row in rows)
+                and all(number(conclusion.get(key))!='--' for key in metrics))
+
+
+def ensc_appendix(rows,conclusion,gate):
+    """Display source-selected capability/operating rows and qualified macros."""
+    datasets=['ORL_att92','JAFFE','YaleB_cropped2414','USPS']
+    families=[('S_tau0.95','label_assisted_capability'),('S_tau0.95','locked_label_free_gamma1'),
+              ('fair_sc','label_assisted_capability'),('original_ssc','label_assisted_capability'),
+              ('Wa','label_assisted_capability'),('S_tau1','label_assisted_capability'),
+              ('wider_knn','label_assisted_capability'),('random_count_mass_seed400','label_assisted_capability'),
+              ('native_ensc_S_tau0.95','label_assisted_capability'),('native_ensc_S_tau1','label_assisted_capability')]
+    labels={'S_tau0.95':r'EnSC $\tau=.95$ + SSC','fair_sc':'Fair SC (F0/U)',
+            'original_ssc':'Original SSC','Wa':'Angular SSC','S_tau1':r'Sparse $\tau=1$ + SSC',
+            'wider_knn':'Wider-kNN SSC','random_count_mass_seed400':'Matched random SSC',
+            'native_ensc_S_tau0.95':r'Native EnSC $\tau=.95$', 'native_ensc_S_tau1':r'Native EnSC $\tau=1$'}
+    index={}
+    for row in rows:
+        if not row.get('dataset') or not row.get('family') or not row.get('track'):continue
+        key=(row['dataset'],row['family'],row['track'])
+        if key in index:raise ValueError('duplicate committed G4 capability/operating endpoint')
+        index[key]=row
+    output=[r'\subsection{Conditional EnSC adaptation: capability and locked operation}',
+            r'The primary adaptation is the fixed $\tau=.95$ EnSC graph used only as the fusion graph for anchor F0. The source coefficient parameter is 50; graphs are matched to W0 total mass. Capability rows are label-assisted oracles: one complete configuration is selected by mean ACC, then NMI, then stable ID. The primary graph has five declared SSC gamma values; original SSC receives the frozen 15-value path. Controls remain separate named families. The locked operating row uses source 50/$\tau=.95$/SSC gamma 1 without choosing parameters from labels. Both kinds of row use previously examined benchmarks; neither is an unseen-data test.']
+    if not rows:
+        output.append(escape('No committed G4/G5 capability export is available. The current gate records dependent-stage status '+str(gate.get('G4_G5_status','UNAVAILABLE'))+'. No completed method performance or four-benchmark gain is inferred from an implementation or a passed pilot gate.'))
+    rendered=[]
+    for dataset in datasets:
+        display={'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset)
+        for family,track in families:
+            row=index.get((dataset,family,track),{})
+            method=labels[family]+(' (locked)' if track=='locked_label_free_gamma1' else ' (oracle)')
+            if family=='fair_sc' and row.get('config_id'):
+                parts=row['config_id'].split('|')
+                if len(parts)>=2:method='Fair SC: '+escape(parts[-2])+' (oracle)'
+            metrics_valid=str(row.get('n',''))=='50' and all(number(row.get(k))!='--' for k in ['acc_mean','acc_sd','nmi_mean','nmi_sd'])
+            measured=row if metrics_valid else {}
+            flag=_usps_bool(row.get('certified'))
+            mark='--' if family=='fair_sc' or family.startswith('native_') or flag is None else 'C' if flag else 'U'
+            solver=row.get('solver_status') or 'NOT_RUN_OR_UNAVAILABLE'
+            if row and not metrics_valid:solver='INCOMPLETE_SCALAR_ENDPOINT'
+            rendered.append([display,method,significant(row.get('gamma'),4),metric(measured,'acc',native=False),
+                             metric(measured,'nmi',native=False),break_text(mark+' / '+solver)])
+    output.append(table(['Data','Method / track',r'$\gamma$','ACC','NMI','Cert. / solver'],rendered,
+                        'p{1.2cm}p{3.6cm}rrrp{3.0cm}',
+                        'Conditional G4/G5 results, percent mean plus sample SD over 50 matched greedy one-start roundings. Missing rows stay unavailable. C/U describe certified/uncertified fusion solves; native spectral controls have no SSC gap certificate. Search completeness and comparison validity are separate from completion of an individual selected row.','tab:ensc-capability',long=True))
+    output += [r'The native EnSC controls cluster each learned affinity in its own spectral space, with an explicit seeded eigensolver and the same fifty greedy one-start rounds. This differs from the source constructor default of 20 K-means starts. Gains over original SC/SSC must not be credited to SSC shrinkage when the native affinity clustering already explains them. The following differences compare the selected primary $\tau=.95$ + SSC row against matched native $\tau=.95$ EnSC, when both complete rows exist. They are descriptive differences after capability selection, not unbiased intervals or matched-movement evidence.']
+    own=[]
+    for dataset in datasets:
+        proposed=index.get((dataset,'S_tau0.95','label_assisted_capability'),{})
+        native=index.get((dataset,'native_ensc_S_tau0.95','label_assisted_capability'),{})
+        complete_pair=all(str(row.get('n',''))=='50' and all(number(row.get(key))!='--' for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd']) for row in [proposed,native])
+        differences=[]
+        for metric_name in ['acc','nmi']:
+            key=metric_name+'_mean'
+            differences.append(number(float(proposed[key])-float(native[key])) if complete_pair else 'NA')
+        own.append([{'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset),*differences])
+    output.append(table(['Data',r'$\Delta$ACC vs native EnSC (pp)',r'$\Delta$NMI vs native EnSC (pp)'],own,'lrr',long=True))
+    output.append(r'\paragraph{Four-benchmark qualification.}')
+    qualified=ensc_macro_qualified(conclusion)
+    if qualified:
+        output.append(escape('All four prescribed comparisons satisfy the committed search/solver qualification. Equal-weight capability contrasts: ACC versus the stronger fair SC/SSC baseline '+number(conclusion['four_benchmark_ACC_gain_pp'])+' pp; NMI versus fair SC '+number(conclusion['four_benchmark_NMI_gain_vs_SC_pp'])+' pp; NMI versus fair original SSC '+number(conclusion['four_benchmark_NMI_gain_vs_SSC_pp'])+' pp. Predeclared practical target met: '+('yes' if conclusion.get('practical_target_met') is True else 'no' if conclusion.get('practical_target_met') is False else 'unavailable')+'. These are label-assisted capability results, separate from the locked operating point.'))
+    else:
+        output.append(escape('The formal four-benchmark macro ACC gain and both NMI contrasts are NA. Committed conclusion status: '+str(conclusion.get('status','NOT_RUN_OR_UNAVAILABLE'))+'. Missing datasets, incomplete searches or unresolved solver/control validity cannot be replaced by zeros or by averages over a favorable subset.'))
+    details=[]
+    for dataset in datasets:
+        found=[r for r in conclusion.get('dataset_status',[]) if r.get('dataset')==dataset]
+        if len(found)>1:raise ValueError('duplicate G4 dataset qualification row')
+        row=found[0] if found else {}
+        coverage=str(row.get('complete_records','--'))+'/'+str(row.get('intended_records','--'))
+        qualification='qualified' if row.get('qualified') is True else 'unqualified' if row else 'unavailable'
+        details.append([{'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset),coverage,
+                        number(row.get('ACC_gain_vs_stronger_fair_baseline_pp')),number(row.get('NMI_gain_vs_SC_pp')),
+                        number(row.get('NMI_gain_vs_SSC_pp')),break_text(qualification+' / '+str(row.get('comparison_status','UNAVAILABLE')))])
+        if row.get('ACC_loss_exceeds_1pp') is True:
+            details.append(r'\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+escape(dataset+': observed ACC loss exceeds 1 percentage point against the stronger fair baseline; qualification above still applies.')+r'} \\')
+    output.append(table(['Data','Complete/intended',r'$\Delta$ACC strong',r'$\Delta$NMI SC',r'$\Delta$NMI SSC','Qualification'],details,
+                        'lp{2.0cm}rrrp{3.7cm}',
+                        'Per-dataset selected-capability contrasts, in percentage points. Unqualified rows are diagnostic observations only and do not enter a formal macro conclusion. Negative values and losses remain visible.','tab:ensc-four-way',long=True))
+    return output
+
 def generate(root: Path,date: str='2026-11-10'):
     root=root.resolve();refresh=root/'results/submission_refresh';refresh.mkdir(parents=True,exist_ok=True);subset=root/'results/subset_search';out=root/'report/tables';out.mkdir(parents=True,exist_ok=True)
     names={'historical':refresh/'joint_metric_selection.csv','historical_endpoints':refresh/'endpoint_comparison.csv',
@@ -168,7 +359,12 @@ def generate(root: Path,date: str='2026-11-10'):
            'closest':subset/'closest_matches.csv','confirmation':subset/'rounding_confirmation.csv',
            'baseline':refresh/'baseline_diagnostics.csv','extension':refresh/'extension_results.csv',
            'gate':refresh/'extension_gate.json','resource':refresh/'resource_usage.json','cohort':root/'configs/subset_search/executable_cohort.json',
-           'repeatability':refresh/'historical_repeatability_summary.csv','repeatability_manifest':refresh/'historical_repeatability_manifest.json'}
+           'repeatability':refresh/'historical_repeatability_summary.csv','repeatability_manifest':refresh/'historical_repeatability_manifest.json',
+           'usps_solver_evaluation':refresh/'usps_solver_evaluation.csv',
+           'usps_continuation_audit':refresh/'usps_continuation_audit.csv',
+           'usps_continuation_evaluation':refresh/'usps_continuation_evaluation.csv',
+           'ensc_capability':refresh/'ensc_capability_and_operating_point.csv',
+           'ensc_conclusion':refresh/'ensc_four_benchmark_conclusion.json'}
     inputs={k:{'path':str(p.relative_to(root)),'available':p.exists(),
                'sha256':hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None} for k,p in names.items()}
     historical=read_csv(names['historical']);hist_endpoints=read_csv(names['historical_endpoints'])
@@ -176,6 +372,7 @@ def generate(root: Path,date: str='2026-11-10'):
     coverage=read_json(names['coverage'],{});cohort=read_json(names['cohort'],{});joint=read_csv(names['joint']);closest=read_csv(names['closest'])
     baseline=read_csv(names['baseline']);extension=read_csv(names['extension']);gate=read_json(names['gate'],{})
     confirmations=read_csv(names['confirmation']);resources=read_json(names['resource'],{})
+    ensc_rows=read_csv(names['ensc_capability']);ensc_conclusion=read_json(names['ensc_conclusion'],{})
     def write(name,text):
         (out/(name+'.tex')).write_text('% Generated from authoritative CSV/JSON records; do not edit.\n'+text)
     selected={r['benchmark']:r for r in historical if r.get('method')=='ssc' and r.get('endpoint')=='mean_sample_sd_50' and number(r.get('acc_mean'))!='--'}
@@ -199,7 +396,8 @@ def generate(root: Path,date: str='2026-11-10'):
                      r'I: iterate stopping without a gap certificate; T: iteration cap. None of these historical $G$ arrays is recoverable, so current solver audits cannot certify their exact outputs. Settings and source versions appear in the appendix.')
     write('refresh_main',table(['Data','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$','Fit'],main_rows,'lrrrrrc',maincaption,'tab:refresh-main'))
     if names['coverage'].exists():
-        coverage_text=(f"The new campaign completed {coverage.get('complete_unique_candidates','NA')} unique candidates and {coverage.get('complete_unique_configurations','NA')} candidate/configuration pairs from {coverage.get('intended_candidates',len(cat))} intended catalogue entries. "
+        coverage_text=(f"The new campaign obtained complete configurations on {coverage.get('complete_unique_candidates','NA')} unique inputs, yielding {coverage.get('complete_unique_configurations','NA')} SSC input/configuration pairs from {coverage.get('intended_candidates',len(cat))} intended catalogue entries. "
+                       f"Of these, {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC configurations; {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} inputs completed the full 30-SSC plus three matched-SC design. "
                        f"Aliases remain separate provenance entries; diagnostic parents do not enter the paper-compatible pool. "
                        f"All failed, timed-out and unrun combinations remain in the coverage matrix. ")
     else:
@@ -221,7 +419,8 @@ def generate(root: Path,date: str='2026-11-10'):
         decision=gate.get('decision','UNAVAILABLE');g4=gate.get('G4_G5_status','UNAVAILABLE')
         count=sum(r.get('status')=='COMPLETED' for r in extension)
         ext_text=f"New graph-repair coverage: {count} complete configuration records; promotion status {decision}; dependent G4/G5 status {g4}. "
-        if gate.get('four_benchmark_ACC_gain_pp') is None:ext_text+='The four-benchmark performance target is unavailable. '
+        if not ensc_macro_qualified(ensc_conclusion):ext_text+='The formal four-benchmark performance conclusion is unavailable. '
+        else:ext_text+='The qualified four-benchmark capability contrasts are reported separately from locked label-free operation in the appendix. '
     else:ext_text='G1--G3 are implemented and preregistered; no aggregated new graph-repair result is available. G4/G5 have not been promoted, and the four-benchmark target is unavailable. '
     ext_text+='The earlier 0/4 wrong-edge gate is retained as a historical result; it is not replaced by this protocol.'
     write('refresh_extension',r'\noindent '+escape(ext_text)+'\n')
@@ -309,7 +508,11 @@ def generate(root: Path,date: str='2026-11-10'):
                 rows.append(r'\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+escape(diagnostics)+r'} \\')
         appendix.append(table(['Data','Method','Setting','ACC','NMI','Status'],rows,'p{2.0cm}p{2.1cm}p{2.1cm}rrp{1.7cm}',long=True))
     else:appendix.append(r'Baseline result aggregation is pending or contains no complete endpoint. Implementation tests do not establish benchmark performance.')
+    appendix += usps_numerical_appendix(read_csv(names['usps_solver_evaluation']),read_csv(names['usps_continuation_audit']),read_csv(names['usps_continuation_evaluation']))
+    appendix += ensc_appendix(ensc_rows,ensc_conclusion,gate)
     appendix.append(r'\subsection{Coverage, solver qualification and cost}')
+    if names['coverage'].exists():
+        appendix.append(escape(f"Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. {coverage.get('complete_unique_candidates','NA')} unique inputs yielded {coverage.get('complete_unique_configurations','NA')} complete SSC input/configuration pairs; {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC points and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed all 30 SSC plus three matched-SC points."))
     if cat:
         summary_rows=[]
         for benchmark in BENCHMARKS:

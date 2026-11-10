@@ -253,7 +253,13 @@ def _aggregate(artifact_root,output):
     atomic_json(out/'winner_lock.json',{'version':1,'catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json'),'selection_rule_sha256':digest(ROOT/'configs/submission_refresh/selection.yaml'),'winners':winners,'no_reselection_after_confirmation':True})
     atomic_json(out/'artifact_manifest.json',{'store':'external independent-data/scientific-artifacts/refresh-20261110','object_format':'verified content-addressed npz/npy/json','records':refs,'regeneration':'python -m experiments.subset_search run --config configs/subset_search/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume','source_catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json')})
     with (out/'completion_records.json.gz').open('wb') as handle:handle.write(gzip.compress((json.dumps({'schema':'subset-completion-evidence-v1','records':completion_audit},sort_keys=True)+'\n').encode(),mtime=0))
-    atomic_json(out/'coverage_summary.json',{'intended_candidates':len(cat['candidates']),'unique_catalogue_inputs':len({r.get('alias_of') or r['candidate_id'] for r in cat['candidates']}),'status_counts':dict(counts),'complete_unique_configurations':sum(r['alias_of'] is None for r in summaries),'complete_unique_candidates':len({r['candidate_id'] for r in summaries if not r['alias_of']}),'cpu_aggregation_seconds':time.process_time()-start})
+    ssc_counts=Counter(r['candidate_id'] for r in summaries if not r['alias_of'])
+    sc_counts=Counter(r['candidate_id'] for r in sc_rows if not r['alias_of'])
+    atomic_json(out/'coverage_summary.json',{'intended_candidates':len(cat['candidates']),'unique_catalogue_inputs':len({r.get('alias_of') or r['candidate_id'] for r in cat['candidates']}),'status_counts':dict(counts),'complete_unique_configurations':sum(r['alias_of'] is None for r in summaries),'complete_unique_candidates':len(ssc_counts),
+        'inputs_with_complete_30point_ssc_grid':sum(count==30 for count in ssc_counts.values()),
+        'inputs_with_complete_30point_ssc_and_3matched_sc_grid':sum(count==30 and sc_counts[cid]==3 for cid,count in ssc_counts.items()),
+        'candidate_completion_definition':'complete_unique_candidates counts inputs with any complete SSC configuration; full-grid counts are separate; aliases never multiply independent inputs',
+        'cpu_aggregation_seconds':time.process_time()-start})
     for b in paper['datasets']:
         (out/(b+'.md')).write_text(benchmark_markdown(b,winners,paper))
     return winners

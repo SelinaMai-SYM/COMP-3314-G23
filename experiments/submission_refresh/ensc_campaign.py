@@ -384,7 +384,7 @@ def aggregate_ensc(artifact_root,output):
     from .aggregate import write_csv
     from experiments.next_round.evaluate import paired
     store=ArtifactStore(artifact_root);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    by_dataset={dataset:{} for dataset in DATASETS};metadata={};coverage=[]
+    by_dataset={dataset:{} for dataset in DATASETS};metadata={};coverage=[];provenance={dataset:{} for dataset in DATASETS}
     for folder in sorted((store.root/'ensc_jobs').glob('*')):
         status_path=folder/'status.json'
         if not status_path.exists():continue
@@ -393,9 +393,42 @@ def aggregate_ensc(artifact_root,output):
         dataset=task.get('dataset')
         if dataset not in DATASETS:continue
         for path in sorted((folder/'records').glob('*.json')):
-            row=json.loads(path.read_text());key=row['config_id']
+            row=json.loads(path.read_text());key=row['config_id'];context=row.get('resume_context')
+            if not isinstance(context,dict) or context.get('schema')!='G4-resume-context-v1':raise ValueError('G4 aggregation requires verified per-configuration resume contexts')
+            definition=next((item for item in intended_configurations(dataset) if item['config_id']==key),None)
+            if definition is None or row.get('dataset')!=dataset or context.get('definition')!=definition:
+                raise ValueError('G4 record is outside its fixed benchmark/configuration context')
+            inputs=context.get('input_objects',{})
+            if not all(isinstance(inputs.get(name),dict) and inputs[name].get('sha256') for name in ['X','y','F0','U']):raise ValueError('G4 common exact input object identities are unavailable')
+            common={name:context.get(name) for name in ['input_objects','scientific_source_fingerprint','environment','rounding']}
+            if not common['scientific_source_fingerprint'] or not isinstance(common['environment'],dict) or not isinstance(common['rounding'],dict):
+                raise ValueError('G4 common scientific source/environment/rounding context is unavailable')
+            track=provenance[dataset]
+            if 'common_context'in track and track['common_context']!=common:
+                raise ValueError('G4 benchmark records mix exact inputs or scientific source contexts across job folders')
+            track['common_context']=common
+            if context.get('construction_source_fingerprint') is not None:
+                construction={name:context.get(name) for name in ['construction_source_fingerprint','backend_source_sha256']}
+                if 'construction_context'in track and track['construction_context']!=construction:
+                    raise ValueError('G4 benchmark records mix scientific EnSC construction sources across job folders')
+                track['construction_context']=construction
+            graph_context={name:context.get(name) for name in ['graph','graph_shape','graph_nnz','graph_metadata_fingerprint','construction_source_fingerprint','backend_source_sha256']}
+            graphs=track.setdefault('graphs',{})
+            if definition['graph'] in graphs and graphs[definition['graph']]!=graph_context:
+                raise ValueError('G4 benchmark records mix graph construction/resume contexts across job folders')
+            graphs[definition['graph']]=graph_context
+            if definition['anchor']!='native_spectral' and context.get('anchor')!=inputs[definition['anchor']]:
+                raise ValueError('G4 configuration anchor differs from its common exact input object')
+            actual_source=row.get('source',{}).get('implementation_hash')
+            expected_source=context.get('construction_source_fingerprint') if definition['anchor']=='native_spectral' else context['scientific_source_fingerprint']
+            if row.get('status')=='COMPLETED' and actual_source!=expected_source:raise ValueError('G4 actual scientific source differs from its resume context')
+            track.setdefault('job_status_records',[])
+            status_record=str(status_path.relative_to(store.root))
+            if status_record not in track['job_status_records']:track['job_status_records'].append(status_record)
             if key in by_dataset[dataset]:
                 old=by_dataset[dataset][key]
+                if old.get('resume_context')!=context or identity(old.get('source',{}))!=identity(row.get('source',{})):
+                    raise ValueError('repeated G4 configurations have distinct source/resume identities; keep separate labelled tracks')
                 if old.get('objects',{}).get('G')!=row.get('objects',{}).get('G') or old.get('trials')!=row.get('trials'):
                     raise ValueError('distinct repeated G4 scientific outputs require separate labelled source tracks')
             else:by_dataset[dataset][key]=row
@@ -424,6 +457,7 @@ def aggregate_ensc(artifact_root,output):
         summary={'dataset':dataset,'qualified':qualified,'comparison_status':selected['comparison_validity'],
                  'complete_records':sum(r['status']=='COMPLETED' for r in records),'intended_records':44,
                  'missing_required_configurations':selected['missing_required_configurations'],'invalid_required_configurations':selected['invalid_required_configurations'],
+                 'input_and_source_provenance':provenance[dataset],
                  'ACC_gain_vs_stronger_fair_baseline_pp':None,'NMI_gain_vs_SC_pp':None,'NMI_gain_vs_SSC_pp':None}
         if all(v is not None for v in [proposed,sc,ssc]):
             summary.update(ACC_gain_vs_stronger_fair_baseline_pp=proposed['acc_mean']-max(sc['acc_mean'],ssc['acc_mean']),

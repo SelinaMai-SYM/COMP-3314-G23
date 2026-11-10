@@ -28,6 +28,10 @@ pytest 9.1.1 and optional cvxpy 1.9.3 (CLARABEL) were installed in the user envi
 
 The Anaconda scikit-learn binary was incompatible with the installed NumPy, so those tests did not use `/opt/anaconda3/bin/python`.
 
+## Current HTTPS audit dependency
+
+The pinned environment includes `certifi==2026.2.25`, the installed version checked on 2026-11-10. `scripts/submission_refresh/link_audit.py` uses its CA bundle for verified HTTPS requests. This explicit dependency is required by fresh environments; adding the pin does not substitute for the final isolated-environment and published-link checks. TLS verification remains enabled.
+
 ## Historical disk note
 
 Approximately 9.2 GiB remained on the data volume then. Raw images and virtual environments were kept outside the repository. Current pinned dependencies are in `requirements.lock.txt`; this old disk estimate is not the current resource inventory.

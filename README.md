@@ -12,11 +12,11 @@ Read the [course report](report/Group_23.pdf), [current research findings](docs/
 
 ## What the results mean
 
-The frozen historical release has 72 cells:32 measured, 24 data-blocked, 8 method-blocked and8 subset-unverified. These original statuses remain separate from new candidate measurements. Exact historical LDA-SC and several original sample manifests remain unresolved.
+The frozen historical release has 72 cells: 32 measured, 24 data-blocked, 8 method-blocked and 8 subset-unverified. These original statuses remain separate from new candidate measurements. Exact historical LDA-SC and several original sample manifests remain unresolved.
 
-Current display selection minimizes the joint ACC/NMI discrepancy to the paper, using one complete configuration and all 50 declared seeds. **This is retrospective numerical matching.** It does not establish historical sample identity, label-free model selection or unbiased superiority. The earlier ACC-only selections are preserved. A native-best-of50 assignment is a separate endpoint with no across-run SD. See the [joint tables](results/submission_refresh/joint_metric_selection.csv) and [endpoint comparison](results/submission_refresh/endpoint_comparison.csv).
+Current display selection minimizes the joint ACC/NMI discrepancy to the paper, using one complete configuration and all 50 declared seeds. **This is retrospective numerical matching.** It does not establish historical sample identity, label-free model selection or unbiased superiority. The earlier ACC-only selections are preserved. A native-best-of-50 assignment is a separate endpoint with no across-run SD. See the [joint tables](results/submission_refresh/joint_metric_selection.csv) and [endpoint comparison](results/submission_refresh/endpoint_comparison.csv).
 
-The candidate catalogue records all intended subsets, exact source indices, aliases and preprocessing. Different subsets rebuild A,F,W,G. Native16-by16 MSRA25 is an adapted-resolution source, with all 1,799 rows retained; it is not called recovered 32-by32 MSRA50. The pinned ClustPy LDA reference is instrumented without concealing failures. The ridge LDA-to-SC adaptation has its own name and controls.
+The candidate catalogue records all intended subsets, exact source indices, aliases and preprocessing. Different subsets rebuild A, F, W and G. The native 16-by-16 MSRA25 file is an adapted-resolution source, with all 1,799 rows retained. Its availability does not establish recovery of the paper's 32-by-32 MSRA50 source. The pinned ClustPy LDA reference is instrumented without concealing failures. The ridge LDA-to-SC adaptation has its own name and controls.
 
 The previous wrong-edge gate remains 0/4. New G1–G3 graph diagnostics are independent of subset winners; only their fixed gate can permit the EnSC adaptation. No additional Huber, capped-fusion or heat grids belong to this refresh. Incomplete or uncertified comparisons do not support a four-benchmark gain claim.
 
@@ -36,7 +36,7 @@ Keep restricted data outside the checkout. Loader priority is explicit CLI root,
 python -m benchmarks.msra50.retrieve --data-root DATA_ROOT
 ```
 
-Each campaign uses one durable external ARTIFACT_ROOT. Both campaigns share its resource_ledger.json: 36 additional CPU-core hours, two single-thread workers, 8 GiB aggregate RSS target, USPS repair at most 6 hours and a 2-hour finalization reserve. Creating a new root must not reset an ongoing allowance. Exact matrices, predictions, duals, checkpoints and source records are recoverable there; large/restricted arrays stay outside Git.
+Use one durable external ARTIFACT_ROOT for both campaigns. Its shared resource_ledger.json records the allowance: 36 additional CPU-core hours, two single-thread workers, 8 GiB aggregate RSS target, USPS repair at most 6 hours and a 2-hour finalization reserve. Creating a new root must not reset an ongoing allowance. Exact matrices, predictions, duals, checkpoints and source records are recoverable there; large/restricted arrays stay outside Git.
 
 ## Rebuild, run and validate
 
@@ -55,7 +55,7 @@ python -m experiments.submission_refresh run --config configs/submission_refresh
 python -m experiments.subset_search run --config configs/subset_search/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
 ```
 
-The [execution checkpoint](docs/submission_refresh/execution_status.md) identifies pending stages and resume commands. Queue reductions are frozen from label-blind cost profiles; failures and unrun combinations remain visible. Ordinary v3 module names identify experiment versions and do not depend on another Git branch.
+The [execution checkpoint](docs/submission_refresh/execution_status.md) identifies pending stages and resume commands. Any reductions to the queue are frozen using label-blind cost profiles; failures and unrun combinations remain visible. Ordinary v3 module names identify experiment versions and do not depend on another Git branch.
 
 For a small real-data check, including the MSRA loader:
 

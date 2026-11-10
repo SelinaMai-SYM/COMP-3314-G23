@@ -1,10 +1,17 @@
 # Research findings - combined refresh
 
-This is an execution-stage record. The final coverage, selected values and resource use must be read together; a completed execution is not proof of numerical reproduction.
+Execution snapshot: **10 November 2026, 12:19 UTC**. This is an execution-stage record. The final coverage, selected values and resource use must be read together; a completed execution is not proof of numerical reproduction. EnSC G4 is running. Final subset winners, isolated acceptance and publication remain outside this note's claims.
 
 The frozen historical release supports a balanced joint ACC/NMI display selection. It changes several SC/SSC choices compared with ACC-only matching while preserving every underlying historical trial. Both means, both sample SDs and the complete configuration remain linked. This selection is retrospective and uses paper targets and labels.
 
 The new native MSRA source is a 16-by-16, 1,799-row EBSA matrix. All duplicate rows remain. Its resolution and historical-identity status are separate: a good metric match cannot turn it into the unknown native 32-by-32 source. The Fast-CD public download remained rate limited in bounded requests; this does not prove permanent deletion or an authentication requirement.
+
+The mandatory baseline block has **190 complete scalar endpoints**, each with
+all 50 declared seeds. This endpoint count is separate from coverage declarations,
+aliases, interrupted attempts and continuation records. Their successful scalar
+rebuild checks do not establish historical dataset identity or turn a failed fit
+into a successful baseline. The original sparse LLC failure remains recorded
+beside its separately named dense repair.
 
 The completed LDA block now covers ORL att92, JAFFE, YaleB cropped2414, full USPS
 and native MSRA25 EBSA16. Each discussed configuration has all 50 external seeds;
@@ -67,8 +74,57 @@ mean contrasts are not new uncertainty intervals or unseen-data estimates.
 
 Whole-graph component coverage was an incorrect proxy for class-induced fragmentation. The repaired diagnostic counts each class-induced subgraph, including isolates, excess components and largest-component fractions. Edge deletion can destroy force cancellation: the eight-cycle counterexample disproves a universal no-movement-preservation claim. The separate incident-mass sufficient bound remains valid.
 
+The same-current-input USPS audit separates numerical quality from clustering
+quality. The gamma 1 continuation meets the 1e-5 relative-gap criterion with zero
+recorded capacity violations, but gives 65.564% ACC / 80.228% NMI versus same-F SC
+at 65.597% / 80.315%: increments of -0.033/-0.086 pp. Certification came from a
+better feasible lower bound on the saved primal point, not improved clustering.
+Gamma 1000 still has relative gap 0.341772 after 300,000 updates. Its fused saved
+point's 16.703% ACC / 0.000% NMI cannot establish that fusion is optimal. Neither
+the original incomplete IRLS300 attempts nor these continuations replace locked
+finite-iteration subset outputs. See the [USPS continuation evidence](usps_continuations.md).
+
+All **362 frozen G1–G3 controllers are terminal with COMPLETED status**: two
+casebooks, 48 angular-anchor points and 312 completion points. Controller
+completion, complete 50-seed rounding and solver certification remain separate.
+In [G1](g1_casebook_findings.md), certified active gamma-1 shrinkage changes ORL
+ACC/NMI by only +0.155/+0.014 pp and cropped YaleB by -0.270/-0.276 pp relative
+to same-F SC. A and W0 have different contamination and class-connectivity
+patterns; YaleB W0 edge-length AUROC 0.380 does not support treating its longest
+edges as the erroneous relations.
+
+The [G2 factorial](g2_angular_findings.md) shows larger gains before shrinkage:
+U-SC exceeds F0-SC by +1.850/+1.016 pp on ORL and +4.016/+4.864 pp on cropped
+YaleB. At fixed U/Wa, certified gamma-1 shrinkage adds only +0.170/+0.077 and
++0.314/+0.089 pp respectively. Thus the total normalized-pipeline gain cannot
+be credited entirely to shrinkage. Thirty-two of 48 G2 rows are certified;
+large-gamma uncertified rows keep their numerical qualifications. Angular
+construction does not generally repair within-class fragmentation.
+
 The first validation pass caught a small-support EnSC active-set growth defect before any G4/G5 benchmark execution. Its objective and tau were not replaced to make the test pass. The minimum-growth repair and independent convex-reference checks are recorded separately from the source pin and real-data execution status.
 
-The original wrong-edge gate remains 0/4. The new completion gate uses different preregistered questions and controls. It cannot retrospectively turn the old gate into a success. New graph repair inputs remain the full development benchmarks, independently of any subset winner. Until that gate and comparable controls are complete, the four-benchmark practical improvement is unavailable.
+The original wrong-edge gate remains **0/4**. The separate fixed G3 completion
+gate now passes on ORL at gamma 1000 and addition fraction 0.15. Completion
+exceeds deletion-only ACC by 10.415 pp (paired conditional bootstrap interval
+9.920–10.915) and fixed Oracle deletion plus mean blind additions by 24.863 pp
+(24.557–25.170), with nondecreasing NMI and a 93.75% reduction in excess
+fragments. The involved ORL points are certified. Cropped YaleB's primary
+contrast is **NOT_EVALUABLE_UNCERTIFIED**, despite favorable descriptive scores.
+The [fixed gate record](../../results/submission_refresh/extension_gate.json)
+does not retrospectively change the old gate or establish a label-free result:
+Oracle edits use labels, and intervals describe rounding on fixed development
+data rather than unseen-dataset uncertainty.
+
+This ORL promotion authorizes the preregistered EnSC adaptation. Its full
+four-benchmark G4 campaign is running on the fixed development inputs,
+independently of subset winners. Capability, the locked operating point and the
+four-benchmark ACC/NMI target remain pending; no extension gain is asserted.
+
+Two final evidence-path defects have implementation repairs awaiting focused
+validation: current-v2 EnSC aggregation now checks current adapter identities and
+compares backend identities within EnSC families, while the scientific archive
+manifest now registers confirmation predictions and the seed namespace. The
+prior aggregation failure remains visible. Prepared regression fixtures are not yet
+reported as passed checks or final archive recovery.
 
 Authoritative outputs are [baseline diagnostics](../../results/submission_refresh/baseline_diagnostics.csv), [joint historical selection](../../results/submission_refresh/joint_metric_selection.csv), [subset coverage](../../results/subset_search/execution_coverage.csv), [subset matches](../../results/subset_search/closest_matches.csv), and the [extension gate](../../results/submission_refresh/extension_gate.json). Detailed failures and source qualifications belong beside their results, rather than being reclassified as external data restrictions.

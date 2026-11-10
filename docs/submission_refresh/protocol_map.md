@@ -14,3 +14,5 @@
 | LDA | Named methods and dimension search | Exact historical LDA-SC algorithm remains unresolved | Existing30/100/300, pinned reference and separately named ridge adaptation |
 
 The joint selection minimizes absolute ACC/NMI discrepancy to the paper. It uses labels and paper targets retrospectively. Different selected cells are a descriptive patchwork, not one uniform label-free algorithm. Published-grid gamma values are legitimate choices and do not count as explicit paper deviations. The paper does not resolve how the SD was formed after native-objective selection; our endpoints do not claim to resolve that ambiguity.
+
+Subset compatibility ties use the explicit counts in `configs/subset_search/compatibility.yaml`. For example, exact deduplication plus an unknown omission has two preparation assumptions; direct paper-specified BinAlpha random sampling is not itself an extra deviation. This inventory was fixed before subset scores. Minimum-anchored numerical tolerance buckets make the ordering independent of input row order.

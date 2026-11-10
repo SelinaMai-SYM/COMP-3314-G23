@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "purpose": "Prepublication validation via the same shared ledger and at most two single-thread workers; no validation job bypasses reservation.",
+  "purpose": "Pre-subset acceptance checks and completion of the same LDA limits after the CPU timer defect; all work shares one ledger.",
   "frozen_before_execution": true,
   "outputs": "External artifact-root/validation; rebuild outputs never overwrite committed results.",
   "tasks": [
@@ -26,7 +26,10 @@
         "tests/test_dataset_dispatch.py",
         "baselines/lda_kmeans/test_lda_kmeans.py",
         "baselines/llc/test_llc.py",
-        "baselines/spls/test_spls.py"
+        "baselines/spls/test_spls.py",
+        "--junitxml",
+        "{validation_dir}/pytest.xml",
+        "-ra"
       ]
     },
     {
@@ -76,6 +79,51 @@
         "--output",
         "{validation_dir}/source_audit"
       ]
+    },
+    {
+      "run_id": "lda_existing-YaleB_cropped2414-timerfix-v2",
+      "kind": "baseline",
+      "phase": "mandatory_repair",
+      "block": "lda_existing",
+      "dataset": "YaleB_cropped2414",
+      "limits": [
+        100,
+        300
+      ],
+      "cpu_limit": 6000,
+      "reason": "Complete the same100/300 configurations after premature timer failure; adopt every verified completed same-cap seed checkpoint, retain genuine failures, retryCPUtimeout/missingfixedseeds. Never reuse30 states as100/300.",
+      "continue_from": "lda_existing-YaleB_cropped2414-v1"
+    },
+    {
+      "run_id": "validation-corrected-historical-graphs-v1",
+      "kind": "validation",
+      "phase": "validation",
+      "cpu_limit": 900,
+      "wall_limit": 1800,
+      "command": [
+        "{python}",
+        "-m",
+        "experiments.submission_refresh.correct_graph_diagnostics",
+        "--cache-root",
+        "{artifact_root}/recovered_history/next_round/cache",
+        "--jobs-root",
+        "results/next_round/jobs",
+        "--output",
+        "{validation_dir}/graph_correction"
+      ]
+    },
+    {
+      "run_id": "lda_reference-ORL_att92-continuation-v2",
+      "kind": "baseline",
+      "phase": "mandatory_repair",
+      "block": "lda_reference",
+      "dataset": "ORL_att92",
+      "limits": [
+        300
+      ],
+      "cpu_limit": 2400,
+      "continue_from": "lda_reference-ORL_att92-v1",
+      "reason": "Label-blind timing28seeds/1633CPU estimated50~3000CPU beyondoriginal1800block allocation. Completeexact50byadoptingeveryverifiedcompletedwholefit; noORLrefscoresinspectedforscopechange, no successfulseedfiltering ormodelchanges."
     }
   ]
 }

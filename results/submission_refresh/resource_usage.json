@@ -1,10 +1,15 @@
 {
   "ledger": {
     "active": {
-      "profile-b3cf90aff12357705887": {
-        "phase": "profile",
+      "msra-other-v1": {
+        "phase": "mandatory_baseline",
         "seconds": 1800,
-        "timestamp": 1794290397.6571698
+        "timestamp": 1794294486.882973
+      },
+      "usps-numerical-audit-v1": {
+        "phase": "mandatory_usps",
+        "seconds": 21600,
+        "timestamp": 1794294494.457325
       }
     },
     "entries": [
@@ -206,6 +211,139 @@
         "phase": "profile",
         "run_id": "profile-msra_other-MSRA",
         "status": "PROFILE_ONLY_INELIGIBLE"
+      },
+      {
+        "charged_cpu_seconds": 652.361806,
+        "phase": "profile",
+        "run_id": "profile-b3cf90aff12357705887",
+        "status": "TIMEOUT"
+      },
+      {
+        "charged_cpu_seconds": 1058.025206,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_existing-YaleB_cropped2414-v1",
+        "status": "TIMEOUT"
+      },
+      {
+        "charged_cpu_seconds": 878.4318039999999,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_reference-YaleB_cropped2414-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 29.921119,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_existing-JAFFE-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 44.591488,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_reference-JAFFE-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 4.305804999999999,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_adapted-JAFFE-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 60,
+        "note": "Preliminary report compile/render/visualQA and3tinyreporting tests, agent upper estimate60CPU seconds; nofits",
+        "phase": "validation",
+        "run_id": "preliminary-report-validation",
+        "status": "CONSERVATIVE_ACCOUNTING"
+      },
+      {
+        "charged_cpu_seconds": 259.808806,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_existing-ORL_att92-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 1487.9122920000002,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_adapted-YaleB_cropped2414-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 34.320414,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_adapted-ORL_att92-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 606.4886769999999,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_existing-USPS-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 1800.123576,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_reference-ORL_att92-v1",
+        "status": "TIMEOUT"
+      },
+      {
+        "charged_cpu_seconds": 134.229184,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_reference-USPS-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 82.82257299999999,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_existing-MSRA25_EBSA_16x16-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 20.234395,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_reference-MSRA25_EBSA_16x16-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 26.87316,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_adapted-MSRA25_EBSA_16x16-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 28.240932,
+        "phase": "mandatory_baseline",
+        "run_id": "slps-YaleB_cropped2414-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 28.731630000000003,
+        "phase": "mandatory_baseline",
+        "run_id": "slps-YaleB_dengcai32-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 5.012681000000001,
+        "phase": "mandatory_baseline",
+        "run_id": "slps-ORL_att92-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 2.204303,
+        "phase": "mandatory_baseline",
+        "run_id": "slps-JAFFE-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 7.476679,
+        "phase": "mandatory_baseline",
+        "run_id": "slps-MSRA25_EBSA_16x16-v1",
+        "status": "COMPLETED"
+      },
+      {
+        "charged_cpu_seconds": 273.19351900000004,
+        "phase": "mandatory_baseline",
+        "run_id": "lda_adapted-USPS-v1",
+        "status": "COMPLETED"
       }
     ],
     "limit_seconds": 129600,
@@ -214,5 +352,11 @@
     "rss_target_bytes": 8589934592,
     "version": 1
   },
-  "not_launched": []
+  "not_launched": [
+    "validation-focused-tests-v1",
+    "validation-synthetic-cli-v1",
+    "validation-historical-rebuild-v1",
+    "validation-source-audit-v1",
+    "lda_existing-YaleB_cropped2414-timerfix-v2"
+  ]
 }

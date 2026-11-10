@@ -50,5 +50,7 @@ def aggregate(artifact_root,output):
         if path.is_file():
             artifacts.append({'record':str(path.relative_to(store.root)),'sha256':digest(path),'bytes':path.stat().st_size,'availability':'external durable store; audit_jobs.py regeneration'})
     atomic_json(out/'artifact_manifest.json',{'store':'independent-data/scientific-artifacts/refresh-20261110 (outside Git)','records':artifacts,'regenerate':'python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume'})
+    from .coverage import baseline_coverage
+    baseline_coverage(artifact_root,out)
     state=ResourceLedger(artifact_root).state();state['charged_cpu_core_hours']=sum(e['charged_cpu_seconds'] for e in state['entries'])/3600;state['aggregation_this_invocation_cpu_seconds']=time.process_time()-start;atomic_json(out/'resource_usage.json',state)
     return {'baseline_configurations':len(baseline),'graph_configurations':len(graphrows),'promotion':gate['decision']}

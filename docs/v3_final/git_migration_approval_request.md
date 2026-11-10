@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # Git migration approval request
 
 Branch deletion awaits approval. No remote branch was deleted. The GitHub default branch was not changed. Existing `v3` history was not replaced and was not force-pushed.

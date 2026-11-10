@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # v3 implementation fixes
 
 Inherited commit `c217836e7ca7bf5264399e8bb176522d7f721917`. v1/v2 measurements are historical. LLC numbers from those branches are `PRE_FIX_LEGACY` and are not copied into v3 tables.

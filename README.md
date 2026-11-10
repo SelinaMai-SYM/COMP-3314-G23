@@ -1,8 +1,8 @@
 # COMP3314 Group 23: Spectral Shrunk Clustering
 
-We study **Spectral Shrunk Clustering** (Chang et al., AAAI2015): a convex refinement of a spectral embedding followed by K-means. This project separates reconstruction of the paper, numerical optimization, source/subset uncertainty and conditional graph-repair diagnostics.
+We study **Spectral Shrunk Clustering** (Chang et al., AAAI 2015): a convex refinement of a spectral embedding followed by K-means. This project separates reconstruction of the paper, numerical optimization, source/subset uncertainty and conditional graph-repair diagnostics.
 
-Authors: Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying. The University of Hong Kong, Group23.
+Authors: Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying. The University of Hong Kong, Group 23.
 
 ![Input and shrinkage graphs have different roles](docs/figures/ssc_two_graph_pipeline.svg)
 
@@ -12,17 +12,17 @@ Read the [course report](report/Group_23.pdf), [current research findings](docs/
 
 ## What the results mean
 
-The frozen historical release has72 cells:32 measured,24 data-blocked,8 method-blocked and8 subset-unverified. These original statuses remain separate from new candidate measurements. Exact historical LDA-SC and several original sample manifests remain unresolved.
+The frozen historical release has 72 cells:32 measured, 24 data-blocked, 8 method-blocked and8 subset-unverified. These original statuses remain separate from new candidate measurements. Exact historical LDA-SC and several original sample manifests remain unresolved.
 
-Current display selection minimizes the joint ACC/NMI discrepancy to the paper, using one complete configuration and all50 declared seeds. **This is retrospective numerical matching.** It does not establish historical sample identity, label-free model selection or unbiased superiority. The earlier ACC-only selections are preserved. A native-best-of50 assignment is a separate endpoint with no across-run SD. See the [joint tables](results/submission_refresh/joint_metric_selection.csv) and [endpoint comparison](results/submission_refresh/endpoint_comparison.csv).
+Current display selection minimizes the joint ACC/NMI discrepancy to the paper, using one complete configuration and all 50 declared seeds. **This is retrospective numerical matching.** It does not establish historical sample identity, label-free model selection or unbiased superiority. The earlier ACC-only selections are preserved. A native-best-of50 assignment is a separate endpoint with no across-run SD. See the [joint tables](results/submission_refresh/joint_metric_selection.csv) and [endpoint comparison](results/submission_refresh/endpoint_comparison.csv).
 
-The candidate catalogue records all intended subsets, exact source indices, aliases and preprocessing. Different subsets rebuild A,F,W,G. Native16-by16 MSRA25 is an adapted-resolution source, with all1799 rows retained; it is not called recovered32-by32 MSRA50. The pinned ClustPy LDA reference is instrumented without concealing failures. The ridge LDA-to-SC adaptation has its own name and controls.
+The candidate catalogue records all intended subsets, exact source indices, aliases and preprocessing. Different subsets rebuild A,F,W,G. Native16-by16 MSRA25 is an adapted-resolution source, with all 1,799 rows retained; it is not called recovered 32-by32 MSRA50. The pinned ClustPy LDA reference is instrumented without concealing failures. The ridge LDA-to-SC adaptation has its own name and controls.
 
-The previous wrong-edge gate remains0/4. New G1–G3 graph diagnostics are independent of subset winners; only their fixed gate can permit the EnSC adaptation. No additional Huber, capped-fusion or heat grids belong to this refresh. Incomplete or uncertified comparisons do not support a four-benchmark gain claim.
+The previous wrong-edge gate remains 0/4. New G1–G3 graph diagnostics are independent of subset winners; only their fixed gate can permit the EnSC adaptation. No additional Huber, capped-fusion or heat grids belong to this refresh. Incomplete or uncertified comparisons do not support a four-benchmark gain claim.
 
 ## Set up and obtain data
 
-Use CPython3.13 and the [pinned environment](environment/requirements.lock.txt):
+Use CPython 3.13 and the [pinned environment](environment/requirements.lock.txt):
 
 ```bash
 python3 -m venv .venv
@@ -36,7 +36,7 @@ Keep restricted data outside the checkout. Loader priority is explicit CLI root,
 python -m benchmarks.msra50.retrieve --data-root DATA_ROOT
 ```
 
-Each campaign uses one durable external ARTIFACT_ROOT. Both campaigns share its resource_ledger.json:36 additional CPU-core hours, two single-thread workers,8GiB aggregate RSS target, USPS repair at most6hours and a2hour finalization reserve. Creating a new root must not reset an ongoing allowance. Exact matrices, predictions, duals, checkpoints and source records are recoverable there; large/restricted arrays stay outside Git.
+Each campaign uses one durable external ARTIFACT_ROOT. Both campaigns share its resource_ledger.json: 36 additional CPU-core hours, two single-thread workers, 8 GiB aggregate RSS target, USPS repair at most 6 hours and a 2-hour finalization reserve. Creating a new root must not reset an ongoing allowance. Exact matrices, predictions, duals, checkpoints and source records are recoverable there; large/restricted arrays stay outside Git.
 
 ## Rebuild, run and validate
 

@@ -37,7 +37,7 @@ OPTIONAL_FILES={
     'artifact_manifest':'artifact_manifest.json', 'confirmation':'rounding_confirmation.csv',
     'confirmation_seed_namespace':'confirmation_seed_namespace.json',
     'matched_sc':'matched_sc_summary.csv', 'matched_sc_contrasts':'matched_sc_contrasts.csv',
-    'reference_contrasts':'reference_contrasts.csv', 'resource_usage':'resource_usage.json',
+    'reference_contrasts':'reference_contrasts.csv', 'family_distributions':'fixed_protocol_family_distributions.csv', 'resource_usage':'resource_usage.json',
 }
 
 
@@ -142,7 +142,7 @@ def _read_trials(path,metadata):
     return summaries,count
 
 
-def _reconstruct(trial_path,metadata,paper):
+def _reconstruct(trial_path,metadata,paper,reference_ids=None,candidate_pools=None):
     summaries,count=_read_trials(trial_path,metadata)
     mean_rows=[];native_rows=[];fixed=[]
     for raw in metadata:
@@ -158,7 +158,7 @@ def _reconstruct(trial_path,metadata,paper):
         native.update(delta_acc_sd_pp=None,delta_nmi_sd_pp=None)
         if native['acc_sd'] is not None or native['nmi_sd'] is not None:raise ValueError('single-result SD must be unavailable')
         mean_rows.append(mean);native_rows.append(native)
-        if row['variant']=='E8' and float(row['gamma_nominal'])==1 and row['initialization']=='RANDOM':fixed.append(mean)
+        if row['prep']=='Y0' and row['variant']=='E8' and float(row['gamma_nominal'])==1 and row['initialization']=='RANDOM':fixed.append(mean)
     winners=[];top=[]
     for rows in [mean_rows,native_rows]:
         groups=defaultdict(list)
@@ -172,17 +172,12 @@ def _reconstruct(trial_path,metadata,paper):
                     'qualification':'Retrospective numerical match; historical sample identity unverified; conditional rounding endpoint'}
             winners.append(winner)
             top.extend({**r,'rank':i+1} for i,r in enumerate(ordered[:10]))
-    distribution=[]
-    for benchmark in sorted({r['benchmark'] for r in fixed}):
-        rows=[r for r in fixed if r['benchmark']==benchmark and not r.get('alias_of')]
-        if not rows:continue
-        for metric in ['acc_mean','nmi_mean']:
-            numbers=[r[metric] for r in rows]
-            distribution.append({'benchmark':benchmark,'metric':metric,'unique_candidates':len(rows),
-                                 'median':float(np.median(numbers)),'min':min(numbers),'max':max(numbers)})
+    from experiments.subset_search.aggregate import fixed_distributions,family_distributions,reference_contrasts
     return {'joint_search_summary.csv':mean_rows,'native_best_summary.csv':native_rows,
             'fixed_protocol_summary.csv':fixed,'closest_matches.csv':winners,
-            'top_matches.csv':top,'fixed_protocol_distribution.csv':distribution},count
+            'top_matches.csv':top,'fixed_protocol_distribution.csv':fixed_distributions(fixed),
+            'fixed_protocol_family_distributions.csv':family_distributions(fixed),
+            'reference_contrasts.csv':reference_contrasts(mean_rows,fixed,reference_ids or {},candidate_pools)},count
 
 
 def _selection_view(rows):
@@ -207,15 +202,90 @@ def _check_selected(actual,expected):
             elif left[key]!=right[key]:raise ValueError(f'selected identity/endpoint mismatch: {key}')
 
 
-def _validate_light_csv(role,path):
-    if role!='matched_sc':return
-    for row in _csv_rows(path):
-        if 'trials' not in row:raise ValueError('matched SC lightweight record lacks full trials')
-        trials=json.loads(row['trials']);summary=summarize(trials)
-        stored=json.loads(row['summary']) if row.get('summary') else row
+def _matched_sc_rows(path):
+    rows=[];keys=set()
+    for raw in _csv_rows(path):
+        if 'trials' not in raw:raise ValueError('matched SC lightweight record lacks full trials')
+        key=(raw['candidate_id'],raw['initialization'])
+        if key in keys:raise ValueError('duplicate matched SC candidate/initialization record')
+        keys.add(key)
+        trials=json.loads(raw['trials']);summary=summarize(trials)
+        stored=json.loads(raw['summary']) if raw.get('summary') else raw
         for field in ['acc_mean','acc_sd','nmi_mean','nmi_sd']:
             if field in stored and stored[field] not in [None,''] and not math.isclose(float(stored[field]),summary[field],abs_tol=1e-10,rel_tol=0):
                 raise ValueError('matched SC summary differs from its complete 50 trials')
+        native=json.loads(raw['native_best']) if raw.get('native_best') else stored.get('native_best')
+        if native is None:raise ValueError('matched SC native endpoint missing')
+        expected=summary['native_best']
+        for field in ['acc_mean','nmi_mean','seed','native_objective','acc_sd','nmi_sd']:
+            value=native.get(field);wanted=expected[field]
+            if wanted is None:
+                if value is not None:raise ValueError('matched SC single-result SD must be unavailable')
+            elif value is None or not math.isclose(float(value),float(wanted),rel_tol=0,abs_tol=1e-10):
+                raise ValueError('matched SC native endpoint differs from its native-best trial')
+        if native.get('n',1)!=1:raise ValueError('matched SC native endpoint must have n=1')
+        rows.append({**_typed(raw),**summary,'native_best':{**expected,'n':1}})
+    return rows
+
+
+def _validate_light_csv(role,path):
+    if role=='matched_sc':_matched_sc_rows(path)
+
+
+def _verify_matched_sources(metadata,rows):
+    by_key={(r['candidate_id'],r['initialization']):r for r in rows}
+    for configuration in metadata:
+        key=(configuration['candidate_id'],configuration['initialization'])
+        if key not in by_key:raise ValueError('complete SSC configuration lacks its complete matched SC control')
+        control=by_key[key]
+        if not configuration.get('F_sha256') or control.get('F_sha256')!=configuration['F_sha256']:
+            raise ValueError('matched SC/SSC exact F object identity mismatch')
+        for field in ['benchmark','pool','n_samples']:
+            if control.get(field)!=configuration.get(field):raise ValueError('matched SC/SSC source metadata mismatch')
+        for field in ['input_fingerprint','sample_manifest_sha256']:
+            if control.get(field)!=configuration.get(field):raise ValueError('matched SC/SSC sample fingerprint mismatch')
+
+
+def _verify_derived(role,actual,path):
+    if not actual:
+        try:empty_rows=_csv_rows(path)
+        except ValueError as exc:
+            if 'empty CSV input' in str(exc):return
+            raise
+        if all(row.get('status')=='NO_COMPLETE_ELIGIBLE_RECORDS' for row in empty_rows):return
+        raise ValueError(f'{role} has stored rows but no recomputable eligible observations')
+    expected=_csv_rows(path)
+    if role=='family_distributions':
+        key_fields=['benchmark','pool','family','weighting','metric'];numeric=['declared_candidates','observations','median','min','max']
+    elif role=='reference_contrasts':
+        key_fields=['benchmark','target_pool','reference_candidate','contrast'];numeric=['acc_mean','nmi_mean','D_max','D_mean','eligible_configurations_in_contrast']
+    elif role=='matched_sc_contrasts':
+        key_fields=['config_id','endpoint'];numeric=['ssc_acc','ssc_nmi','sc_acc','sc_nmi','delta_acc_pp','delta_nmi_pp']
+    else:return
+    def normalize(value):return '' if value is None else str(value)
+    def mapping(rows):
+        result={tuple(normalize(row.get(k)) for k in key_fields):row for row in rows}
+        if len(result)!=len(rows):raise ValueError('duplicate derived-table primary key')
+        return result
+    left=mapping(actual);right=mapping(expected)
+    if left.keys()!=right.keys():raise ValueError(f'{role} derived identities/coverage mismatch')
+    for key,row in left.items():
+        old=right[key]
+        if role=='reference_contrasts' and normalize(row.get('config_id'))!=normalize(old.get('config_id')):
+            raise ValueError('reference contrast selected a different configuration')
+        for field in numeric:
+            a=row.get(field);b=old.get(field)
+            if a in [None,''] and b in [None,'']:continue
+            if a in [None,''] or b in [None,''] or not math.isclose(float(a),float(b),rel_tol=0,abs_tol=1e-10):
+                raise ValueError(f'{role} derived scalar mismatch: {field}')
+
+
+def _verify_compatibility(metadata,candidates,policy):
+    from experiments.subset_search.aggregate import compatibility_counts
+    for row in metadata:
+        counts=compatibility_counts(candidates[row['candidate_id']],policy)
+        for field in ['paper_deviations','preparation_assumptions','compatibility_policy_version']:
+            if row.get(field)!=counts[field]:raise ValueError('configuration differs from the frozen compatibility policy')
 
 
 def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root=None):
@@ -224,12 +294,23 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
     original=_csv_rows(output/'joint_search_summary.csv')
     metadata=_canonicalize([_typed({k:v for k,v in row.items() if k not in SUMMARY_FIELDS|DERIVED_FIELDS}) for row in original])
     paper=yaml.safe_load((ROOT/'configs/v3/paper_reference.yaml').read_text())
-    rebuilt,trial_count=_reconstruct(output/'trials.csv.gz',metadata,paper)
+    catalogue=json.loads((ROOT/'results/subset_search/candidate_catalogue.json').read_text())
+    protocol=yaml.safe_load((ROOT/'configs/subset_search/protocol.yaml').read_text())
+    compatibility_path=ROOT/'configs/subset_search/compatibility.yaml'
+    if compatibility_path.exists():_verify_compatibility(metadata,{c['candidate_id']:c for c in catalogue['candidates']},yaml.safe_load(compatibility_path.read_text()))
+    candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
+    rebuilt,trial_count=_reconstruct(output/'trials.csv.gz',metadata,paper,protocol.get('reference_candidates',{}),candidate_pools)
     recomputed={r['config_id']:r for r in rebuilt['joint_search_summary.csv']}
     for row in original:
         for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd']:
             if not math.isclose(float(row[key]),recomputed[row['config_id']][key],abs_tol=1e-10,rel_tol=0):raise ValueError('original summary differs from authoritative trials')
     selected=_csv_rows(output/'closest_matches.csv');_check_selected(rebuilt['closest_matches.csv'],selected)
+    if (output/'matched_sc_summary.csv').is_file():
+        from experiments.subset_search.aggregate import matched_sc_contrasts
+        sc=_matched_sc_rows(output/'matched_sc_summary.csv');_verify_matched_sources(metadata,sc)
+        rebuilt['matched_sc_contrasts.csv']=matched_sc_contrasts(rebuilt['closest_matches.csv'],sc)
+    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts']:
+        if (output/OPTIONAL_FILES[role]).is_file():_verify_derived(role,rebuilt[OPTIONAL_FILES[role]],output/OPTIONAL_FILES[role])
     source_records={};source_status='SOURCE_OBJECT_REFERENCES_ONLY'
     if artifact_root is not None:
         source_status='INLINE_COMMITTED_SOURCE_RECORDS'
@@ -251,6 +332,7 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
               'catalogue':ROOT/'results/subset_search/candidate_catalogue.json',
               'protocol':ROOT/'configs/subset_search/protocol.yaml','selection':ROOT/'configs/submission_refresh/selection.yaml',
               'paper':ROOT/'configs/v3/paper_reference.yaml'}
+    if (ROOT/'configs/subset_search/compatibility.yaml').exists():required['compatibility']=ROOT/'configs/subset_search/compatibility.yaml'
     for role,name in OPTIONAL_FILES.items():
         if (output/name).is_file():required[role]=output/name
     inputs={role:{'path':str(path.relative_to(ROOT)),'sha256':digest(path),'bytes':path.stat().st_size} for role,path in required.items()}
@@ -284,6 +366,7 @@ def load(manifest_path):
     metadata=[_typed(row) for row in _csv_rows(paths['configuration_inventory'])]
     _canonicalize(metadata)
     catalogue=json.loads(paths['catalogue'].read_text());candidates={c['candidate_id']:c for c in catalogue['candidates']}
+    if 'compatibility' in paths:_verify_compatibility(metadata,candidates,yaml.safe_load(paths['compatibility'].read_text()))
     for row in metadata:
         c=candidates.get(row['candidate_id'])
         if c is None or c['benchmark']!=row['benchmark'] or c['pool']!=row['pool'] or int(c['n'])!=row['n_samples']:
@@ -296,12 +379,20 @@ def load(manifest_path):
     for row in metadata:
         if row.get('source_record_id') and row['source_record_id'] not in sources['records']:raise ValueError('configuration source record missing')
     for role,path in paths.items():_validate_light_csv(role,path)
-    paper=yaml.safe_load(paths['paper'].read_text());tables,count=_reconstruct(paths['trials'],metadata,paper)
+    paper=yaml.safe_load(paths['paper'].read_text());protocol=yaml.safe_load(paths['protocol'].read_text())
+    candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
+    tables,count=_reconstruct(paths['trials'],metadata,paper,protocol.get('reference_candidates',{}),candidate_pools)
     if count!=manifest['counts']['trials'] or len(metadata)!=manifest['counts']['complete_configurations_including_aliases']:
         raise ValueError('release counts disagree')
     if len({r['canonical_config_id'] for r in metadata})!=manifest['counts']['canonical_configurations']:
         raise ValueError('canonical configuration count disagrees')
     _check_selected(tables['closest_matches.csv'],manifest['expected_selections'])
+    if 'matched_sc' in paths:
+        from experiments.subset_search.aggregate import matched_sc_contrasts
+        sc=_matched_sc_rows(paths['matched_sc']);_verify_matched_sources(metadata,sc)
+        tables['matched_sc_contrasts.csv']=matched_sc_contrasts(tables['closest_matches.csv'],sc)
+    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts']:
+        if role in paths:_verify_derived(role,tables[OPTIONAL_FILES[role]],paths[role])
     return root,manifest,paths,tables
 
 
@@ -321,7 +412,7 @@ def rebuild(manifest_path,output):
     try:
         for name,rows in tables.items():_write_csv(temporary/name,rows)
         for role,name in OPTIONAL_FILES.items():
-            if role in paths:shutil.copy2(paths[role],temporary/name)
+            if role in paths and name not in tables:shutil.copy2(paths[role],temporary/name)
         for benchmark in sorted({r['benchmark'] for r in tables['joint_search_summary.csv']}):
             text=[f'# {benchmark}: scalar release rebuild','','Retrospective joint ACC/NMI matching. Historical sample identity remains unverified. Mean/sample-SD and single native-best endpoints are separate.','','| Pool / endpoint | Candidate | ACC (%) | NMI (%) | Dmax / Dmean | Solver |','|---|---|---:|---:|---:|---|']
             for row in tables['closest_matches.csv']:

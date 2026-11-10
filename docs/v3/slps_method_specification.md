@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # SLPS method specification
 
 Source: Hou, Nie, Jiao, Zhang, and Wu, “Learning a subspace for clustering via pattern shrinking,” *Information Processing & Management* 49(4):871–883, 2013. DOI `10.1016/j.ipm.2013.01.004`. Local file `baselines/spls/resources/private/hou2013_slps.pdf` (PDF 1.7, 13 pages). This note is an independent mapping. It is not a transcription of the article.

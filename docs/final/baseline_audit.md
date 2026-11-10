@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # Baseline audit and corrections
 
 Audit date: 2026-11-09, Hong Kong/Shanghai. Reviewed snapshot: `95d599918627379b21f665b9b2754dd3852dc6dc`; local starting v3: `7406f6b030130100414faace1e919b51ce0cf56b`. Scientific trees were identical; the migration-approval document differed and is preserved in `archive/docs/`. Source/status/parameter evidence below comes from that snapshot unless a new result file is named.

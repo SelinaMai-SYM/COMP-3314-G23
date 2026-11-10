@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # Q&A notes
 
 **Why call a result closest if it is not faithful?** It is a retrospective display statistic selected against the paper ACC. Inputs, gamma, E13 and K-means choices can differ. It is useful for tracing numerical proximity, not for recovering the author protocol or proving superiority.

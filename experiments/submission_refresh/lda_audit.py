@@ -112,6 +112,9 @@ def run_block(task,X,y,K,store,folder,source):
     seeds=list(range(1) if profile else range(50))
     implementation={'lda_existing':'existing','lda_reference':'clustpy_pinned','lda_adapted':'pca_ridge_adapted'}[block]
     limits=([30] if profile else task.get('limits',[30,100,300])) if block=='lda_existing' else [300]
+    if task.get('continue_from'):
+        from .lda_continuation import adopt_fit_checkpoints
+        adopt_fit_checkpoints(task,X,y,K,store,folder,source)
     prepared=prepare_pca(X,K) if block=='lda_adapted' else None
     if profile:
         # The pilot never invokes evaluation or accesses y. It is ineligible for
@@ -159,7 +162,10 @@ def run_block(task,X,y,K,store,folder,source):
             if path.exists():
                 saved=json.loads(path.read_text())
                 if saved.get('implementation_hash')!=source['implementation_hash']:
-                    raise ValueError('LDA continuation source mismatch')
+                    adoption=saved.get('adoption',{})
+                    if adoption.get('accepted_current_implementation_hash')!=source['implementation_hash'] or not adoption.get('compatibility_proof'):
+                        raise ValueError('LDA continuation source mismatch')
+                    store.get(adoption['compatibility_proof'])
             else:
                 begin=time.process_time()
                 try:

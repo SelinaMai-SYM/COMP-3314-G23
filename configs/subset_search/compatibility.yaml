@@ -1,0 +1,37 @@
+version: compatibility-ties-v1-before-subset-scoring
+scope: Tie-breaking only; never changes data, fitting, grids or eligibility pools.
+family_preparation_assumptions:
+  AR_fixed7: 1
+  AR_random7: 1
+  AR_common_mask: 1
+  AR_parent: 0
+  UMIST_exact_dedup564: 1
+  UMIST_dedup565: 1
+  UMIST_parent: 0
+  UMIST_single_omission: 2
+  UMIST_LZUFE574_stratified564: 2
+  UMIST_Wayback575_stratified564: 2
+  UMIST_Wayback_dedup565_stratified564: 3
+  UMIST_Roweis575_stratified564: 2
+  UMIST_Zenodo575_28x23_stratified564: 2
+  BinAlpha_random30: 0
+  BinAlpha_order_sensitivity: 1
+  BinAlpha_parent: 0
+  YaleB_source_preparation: 0
+  USPS_split: 1
+  fixed_membership: 0
+additional_assumptions:
+  declared_resize_interpolation_for_cropped_yaleb: 1
+  input_row_L2: 1
+  embedding_row_L2: 1
+paper_deviation_flags:
+  native_MSRA16_instead_of32: 1
+  deterministic_BinAlpha_membership_instead_of_stated_random_sampling: 1
+  input_row_L2_changes_pixel_vectors: 1
+  embedding_row_L2_changes_raw_eigenvector_representation: 1
+notes:
+  - UMIST deduplication plus an unknown omission requires two declared preparation assumptions.
+  - Random stratification includes an assumed quota rule and an assumed draw.
+  - BinAlpha random selection itself is specified by the paper; its unknown seed is not an extra protocol deviation.
+  - All historical source identities remain unverified regardless of this tie score.
+  - Published-grid gamma values and random kmeans++ variants are not penalized merely for differing from the reference gamma1/random setting.

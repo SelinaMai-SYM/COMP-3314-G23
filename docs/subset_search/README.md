@@ -16,3 +16,15 @@ Changed membership always rebuilds A,F,W,G. Fixed sensitivity uses Y0/E8/gamma1/
 The required trials.csv content is transported as trials.csv.gz to remain below Git file limits. Decompress with `gzip -dc results/subset_search/trials.csv.gz > trials.csv`. Complete summaries, top10 pools and fixed-protocol distributions retain both endpoints. Scientific objects live in a durable external store. Artifact manifests supply verified content addresses and regeneration commands.
 
 All4736 intended candidates were fixed before scores. The initial executable cohort contains1202 canonical inputs, with complete100-seed random families and the full UMIST omission family. ARcommon masks are deferred until mandatory repairs, broader subset coverage and graph diagnostics have received their provision. A bounded full-USPS profiling attempt timed out; its cost and failure remain visible. Per-candidate caps are recorded before scoring, including the larger full-USPS cap.
+
+The additional-rounding seed namespace is frozen before the first confirmation
+fit. Its audit scans current tracked historical result CSV/gzip, JSONL and JSON
+records for actual ACC/NMI rows with rounding-seed fields, including the v2,
+v3 reproduction, next-round and v3-theory raw trials. The audit records source
+hashes, observed columns, counts and ranges. Static sample manifests and this
+campaign's own confirmation files are excluded. The first unused aligned
+50-seed block at or above 1,000,000 is bound to the exact winner-lock hash and
+persisted in both the durable artifact store and committed scalar outputs.
+Resume reuses that block, verifies the frozen historical source hashes and
+rejects a changed winner lock; existing confirmation results never trigger a
+new seed choice.

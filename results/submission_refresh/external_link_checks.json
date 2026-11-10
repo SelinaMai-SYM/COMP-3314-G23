@@ -1,0 +1,106 @@
+{
+  "checks": {
+    "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat": {
+      "checked_at_utc": "2026-11-10T07:03:11Z",
+      "final_url": "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://arxiv.org/abs/1304.0499": {
+      "checked_at_utc": "2026-11-10T07:03:12Z",
+      "final_url": "https://arxiv.org/abs/1304.0499",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://arxiv.org/html/1906.09581v3": {
+      "checked_at_utc": "2026-11-10T07:03:13Z",
+      "final_url": "https://arxiv.org/html/1906.09581v3",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://arxiv.org/pdf/2311.15214": {
+      "checked_at_utc": "2026-11-10T07:03:06Z",
+      "final_url": "https://arxiv.org/pdf/2311.15214",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html": {
+      "checked_at_utc": "2026-11-10T07:03:16Z",
+      "final_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://doi.org/10.1016/j.ipm.2013.01.004": {
+      "checked_at_utc": "2026-11-10T07:03:18Z",
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0306457313000095",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [
+        {
+          "status": 302,
+          "url": "https://linkinghub.elsevier.com/retrieve/pii/S0306457313000095"
+        }
+      ],
+      "retry_after": ""
+    },
+    "https://github.com/ChongYou/subspace-clustering/tree/55e330e38415951f140e74739c869306acdb7a98": {
+      "checked_at_utc": "2026-11-10T07:02:57Z",
+      "final_url": "https://github.com/ChongYou/subspace-clustering/tree/55e330e38415951f140e74739c869306acdb7a98",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://github.com/LZUFE-Machine-Learning/EBSA/blob/c72bfbf13ac0e67db1a756eb26d56b7b996b64cb/dataset/MSRA25.mat": {
+      "checked_at_utc": "2026-11-10T07:03:01Z",
+      "final_url": "https://github.com/LZUFE-Machine-Learning/EBSA/blob/c72bfbf13ac0e67db1a756eb26d56b7b996b64cb/dataset/MSRA25.mat",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://github.com/collinleiber/ClustPy/blob/4ac9d00685efc7432800684f5bfac0f01af59172/clustpy/centroid/ldakmeans.py": {
+      "checked_at_utc": "2026-11-10T07:02:55Z",
+      "final_url": "https://github.com/collinleiber/ClustPy/blob/4ac9d00685efc7432800684f5bfac0f01af59172/clustpy/centroid/ldakmeans.py",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://github.com/moetayuko/Fast-CD/tree/f13a4f6e08fc5677062dfbbb2b208e324109edd7": {
+      "checked_at_utc": "2026-11-10T07:03:03Z",
+      "final_url": "https://github.com/moetayuko/Fast-CD/tree/f13a4f6e08fc5677062dfbbb2b208e324109edd7",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/AR.mat": {
+      "checked_at_utc": "2026-11-10T07:03:07Z",
+      "final_url": "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/AR.mat",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    },
+    "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/umist.mat": {
+      "checked_at_utc": "2026-11-10T07:03:09Z",
+      "final_url": "https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/umist.mat",
+      "http_result": "ACCESSIBLE",
+      "http_status": 200,
+      "redirects": [],
+      "retry_after": ""
+    }
+  },
+  "schema": "ordinary-public-head-checks-v1"
+}

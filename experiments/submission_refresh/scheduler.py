@@ -18,6 +18,9 @@ def _execute(task,data_root,artifact_root):
     elif task['kind']=='graph':
         from .graph_repair import run_graph
         r=run_graph(task,data_root,artifact_root)
+    elif task['kind']=='ensc':
+        from .ensc_campaign import run_ensc
+        r=run_ensc(task,data_root,artifact_root)
     elif task['kind']=='validation':
         from .validation_jobs import run_validation
         r=run_validation(task,data_root,artifact_root)
@@ -57,7 +60,12 @@ def run(tasks,data_root,artifact_root):
                 pending.pop(0);continue
             if not ledger.reserve(t['run_id'],t['cpu_limit'],t.get('phase','experiment')):break
             pending.pop(0);p=ctx.Process(target=_execute,args=(t,str(data_root),str(artifact_root)));p.start();active.append((p,t,time.monotonic()));print('START',t['run_id'],flush=True)
-        if pending and not active:break
+        if pending and not active:
+            # Another shared scheduler may own the two slots or a reservation.
+            # Wait for actual charges before declaring the remaining queue unrun.
+            if ledger.state()['active']:
+                time.sleep(.5);continue
+            break
         atomic_json(Path(artifact_root)/'queues'/(__import__('hashlib').sha256(str([t['run_id'] for t in tasks]).encode()).hexdigest()[:20]+'.json'),{'pending':[t['run_id'] for t in pending],'active':[{'run_id':t['run_id'],'pid':p.pid} for p,t,_ in active],'updated_unix':time.time()})
         if active:time.sleep(.5)
     return {'not_launched':[t['run_id'] for t in pending],'ledger':ledger.state()}

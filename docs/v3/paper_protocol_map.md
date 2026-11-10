@@ -1,3 +1,5 @@
+> Historical record from an earlier campaign. The findings, validation counts and publication state below retain their recorded scope. Current evidence and remaining work are tracked in the [submission-refresh findings](../submission_refresh/research_findings.md) and [handover](../submission_refresh/final_handover.md).
+
 # Paper protocol map
 
 Source PDF checked for this campaign: AAAI 2015, 7 pages, Chang, Nie, Ma, Yang, Zhou, *A Convex Formulation for Spectral Shrunk Clustering*. Tables 1 and 2 were read from that PDF. Printed means and SDs are in `configs/v3/paper_reference.yaml`.

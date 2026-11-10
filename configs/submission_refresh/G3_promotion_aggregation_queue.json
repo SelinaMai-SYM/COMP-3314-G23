@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "run_id": "validation-G3-promotion-aggregation-v1",
+      "kind": "validation",
+      "phase": "aggregation",
+      "cpu_limit": 900,
+      "wall_limit": 1800,
+      "command": [
+        "{python}",
+        "-m",
+        "experiments.submission_refresh",
+        "aggregate",
+        "--artifact-root",
+        "{artifact_root}",
+        "--output",
+        "results/submission_refresh"
+      ],
+      "purpose": "Authoritative interimG3promotion snapshot after fixedORLprimarygate; full362scopecontinues; no finalmacroclaim"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "scope": "G4labelblindcostprofilesonly;fixedG3gatepassedandpinnedbackendverified;noACC/NMIcomputed",
+  "tasks": [
+    {
+      "kind": "ensc",
+      "phase": "G4_profile",
+      "run_id": "ensc-profile-ORL_att92-v1",
+      "dataset": "ORL_att92",
+      "profile": true,
+      "profile_rows": 3,
+      "cpu_limit": 900,
+      "fit_cpu_limit": 60,
+      "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+      "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825"
+    },
+    {
+      "kind": "ensc",
+      "phase": "G4_profile",
+      "run_id": "ensc-profile-JAFFE-v1",
+      "dataset": "JAFFE",
+      "profile": true,
+      "profile_rows": 3,
+      "cpu_limit": 900,
+      "fit_cpu_limit": 60,
+      "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+      "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825"
+    },
+    {
+      "kind": "ensc",
+      "phase": "G4_profile",
+      "run_id": "ensc-profile-YaleB_cropped2414-v1",
+      "dataset": "YaleB_cropped2414",
+      "profile": true,
+      "profile_rows": 3,
+      "cpu_limit": 900,
+      "fit_cpu_limit": 60,
+      "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+      "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825"
+    },
+    {
+      "kind": "ensc",
+      "phase": "G4_profile",
+      "run_id": "ensc-profile-USPS-v1",
+      "dataset": "USPS",
+      "profile": true,
+      "profile_rows": 3,
+      "cpu_limit": 900,
+      "fit_cpu_limit": 60,
+      "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+      "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825"
+    }
+  ]
+}

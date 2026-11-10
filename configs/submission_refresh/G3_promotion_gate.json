@@ -1,0 +1,209 @@
+{
+  "G4_G5_implementation_status": "PREPARED; execution requires the fixed G3 gate and current backend validation",
+  "G4_G5_status": "TRIGGERED_NOT_RUN",
+  "datasets": {
+    "ORL_att92": {
+      "blind_control_certification": {
+        "blind_400": true,
+        "blind_401": true,
+        "blind_402": true
+      },
+      "blind_control_solver_statuses": {
+        "blind_400": "PRIMAL_DUAL_GAP_CERTIFIED",
+        "blind_401": "PRIMAL_DUAL_GAP_CERTIFIED",
+        "blind_402": "PRIMAL_DUAL_GAP_CERTIFIED"
+      },
+      "conditions": {
+        "ACC_CI_positive_vs_delete": true,
+        "ACC_CI_positive_vs_mean_blind": true,
+        "ACC_gain_at_least_1pp": true,
+        "NMI_not_decreased": true,
+        "active_delete_and_both": true,
+        "certified_involved_solutions": true,
+        "excess_fragments_reduced_at_least_20pct": true
+      },
+      "contrasts": {
+        "both_minus_blind_mean_acc": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 24.55666666666667,
+          "ci_upper_pp": 25.17,
+          "delta_pp": 24.863333333333326,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_blind_mean_nmi": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 8.528442887587476,
+          "ci_upper_pp": 8.711183954360607,
+          "delta_pp": 8.621359561271406,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_delete_acc": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 9.920000000000002,
+          "ci_upper_pp": 10.915,
+          "delta_pp": 10.415,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_delete_nmi": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 4.868709721815029,
+          "ci_upper_pp": 5.181531828032236,
+          "delta_pp": 5.023432925223974,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_fully_random_mean_acc": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 30.575000000000003,
+          "ci_upper_pp": 31.19166666666667,
+          "delta_pp": 30.883333333333336,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_fully_random_mean_nmi": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 12.56606841363966,
+          "ci_upper_pp": 12.787899370602643,
+          "delta_pp": 12.677614992936267,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_same_class_random_mean_acc": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 6.533333333333336,
+          "ci_upper_pp": 7.2317083333333345,
+          "delta_pp": 6.873333333333334,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        },
+        "both_minus_same_class_random_mean_nmi": {
+          "bootstrap_seed": 424242,
+          "ci_lower_pp": 3.0006529939282656,
+          "ci_upper_pp": 3.2063368970011314,
+          "delta_pp": 3.1022803535876915,
+          "resamples": 10000,
+          "unit": "rounding_seed_conditional_on_fixed_data_and_representation"
+        }
+      },
+      "decision": "PASSED",
+      "excess_fragment_reduction_fraction": 0.9375,
+      "fixed_addition_fraction": 0.15,
+      "fixed_gamma": 1000,
+      "gate_comparator": "fixed_oracle_deletion_plus_mean_blind_random_additions",
+      "input_provenance": {
+        "dataset": "ORL_att92",
+        "fixed_input_objects": {
+          "A": {
+            "bytes": 16454,
+            "kind": "sparse",
+            "path": "objects/4f/4f3429274eb1665ec7dc58e243964d58493287c47dc04ec4effc2723d85db4c1.npz",
+            "sha256": "4f3429274eb1665ec7dc58e243964d58493287c47dc04ec4effc2723d85db4c1"
+          },
+          "F0": {
+            "bytes": 122059,
+            "kind": "compressed_array",
+            "path": "objects/3c/3c961c05cfca16a93627ec27be860e41b2f1de9516c5927e2e3fb8d7acee21ed.npz",
+            "sha256": "3c961c05cfca16a93627ec27be860e41b2f1de9516c5927e2e3fb8d7acee21ed"
+          },
+          "U": {
+            "bytes": 123061,
+            "kind": "compressed_array",
+            "path": "objects/ae/aee1995c3d0b4769e2ad31a34ff2df3ad6077dd5f12f3f59e7ab3ccaed2c991b.npz",
+            "sha256": "aee1995c3d0b4769e2ad31a34ff2df3ad6077dd5f12f3f59e7ab3ccaed2c991b"
+          },
+          "W0": {
+            "bytes": 15458,
+            "kind": "sparse",
+            "path": "objects/ef/efe802809b45bb1c5c575749ab3fe8deab0e2367a2102a643b8afa95bc55cdf0.npz",
+            "sha256": "efe802809b45bb1c5c575749ab3fe8deab0e2367a2102a643b8afa95bc55cdf0"
+          },
+          "X": {
+            "bytes": 562851,
+            "kind": "compressed_array",
+            "path": "objects/86/86d2c118fc08b1d2a132ebcc308549c740c237328bcaa5624dec037e341c9935.npz",
+            "sha256": "86d2c118fc08b1d2a132ebcc308549c740c237328bcaa5624dec037e341c9935"
+          },
+          "y": {
+            "bytes": 308,
+            "kind": "compressed_array",
+            "path": "objects/e5/e550191826967af5f7df3622630a25534b87b8ca85903041aed620ac3557d6b0.npz",
+            "sha256": "e550191826967af5f7df3622630a25534b87b8ca85903041aed620ac3557d6b0"
+          }
+        },
+        "input_record": "graph_inputs/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/representation.json",
+        "input_record_sha256": "996bd0ed458e9b741406e933ec0cb21ecdadf50ab09165758f0cb8b5a69d23bb",
+        "input_version": "26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7",
+        "scientific_source_fingerprint": "2ed5b6fb520753cd8a339744ed4c787b6efa630ec77d554f1637a5d110eaccbb"
+      },
+      "not_an_unseen_test": "development benchmarks already observed during design",
+      "passed": true
+    },
+    "YaleB_cropped2414": {
+      "decision": "NOT_EVALUABLE_INCOMPLETE",
+      "input_provenance": {
+        "dataset": "YaleB_cropped2414",
+        "fixed_input_objects": {
+          "A": {
+            "bytes": 131378,
+            "kind": "sparse",
+            "path": "objects/78/7825414482b841bdd05d98684678cc22b5b5f1b85c0e79ebaa999769c9e01500.npz",
+            "sha256": "7825414482b841bdd05d98684678cc22b5b5f1b85c0e79ebaa999769c9e01500"
+          },
+          "F0": {
+            "bytes": 702793,
+            "kind": "compressed_array",
+            "path": "objects/fc/fcb84ae35d417fd0547f2b4d32c05d9d7f2897a371642868c74e89ff52c941f6.npz",
+            "sha256": "fcb84ae35d417fd0547f2b4d32c05d9d7f2897a371642868c74e89ff52c941f6"
+          },
+          "U": {
+            "bytes": 702764,
+            "kind": "compressed_array",
+            "path": "objects/e2/e2180917e72a402dbc6c9d6a28052ef96b308e60a6d95cdf11eab6ee7a922578.npz",
+            "sha256": "e2180917e72a402dbc6c9d6a28052ef96b308e60a6d95cdf11eab6ee7a922578"
+          },
+          "W0": {
+            "bytes": 122182,
+            "kind": "sparse",
+            "path": "objects/a1/a1f5a38ab9be27006a89491ce9e77b13f8a4550e234b003bb6525111a6b5f8bf.npz",
+            "sha256": "a1f5a38ab9be27006a89491ce9e77b13f8a4550e234b003bb6525111a6b5f8bf"
+          },
+          "X": {
+            "bytes": 3300619,
+            "kind": "compressed_array",
+            "path": "objects/1d/1d6512afd8396f0e7dc38c5bc34e90d9e33e18e645349bb16a68eae337e19c1d.npz",
+            "sha256": "1d6512afd8396f0e7dc38c5bc34e90d9e33e18e645349bb16a68eae337e19c1d"
+          },
+          "y": {
+            "bytes": 344,
+            "kind": "compressed_array",
+            "path": "objects/f0/f091ef69d1de9d62cdbf79cb926ccae5c624f386681259dd56123764c45c76e7.npz",
+            "sha256": "f091ef69d1de9d62cdbf79cb926ccae5c624f386681259dd56123764c45c76e7"
+          }
+        },
+        "input_record": "graph_inputs/YaleB_cropped2414/5d150a617d9e9b424666eb43aa9700d0c6caba7da08079a0136cc0890bfd5e4e/representation.json",
+        "input_record_sha256": "83a2485e9097e4935631afd3341e1904915d73da21879c75f8bbe44d4ea6c6ab",
+        "input_version": "5d150a617d9e9b424666eb43aa9700d0c6caba7da08079a0136cc0890bfd5e4e",
+        "scientific_source_fingerprint": "2ed5b6fb520753cd8a339744ed4c787b6efa630ec77d554f1637a5d110eaccbb"
+      },
+      "missing": [
+        "delete"
+      ],
+      "passed": false
+    }
+  },
+  "decision": "PASSED",
+  "ensc_formal_job_records": [],
+  "four_benchmark_ACC_gain_pp": null,
+  "four_benchmark_NMI_gain_pp": null,
+  "four_benchmark_NMI_gain_vs_SC_pp": null,
+  "four_benchmark_NMI_gain_vs_SSC_pp": null,
+  "locked_label_free_operating_point": null,
+  "parameter_selection_gap": null,
+  "prior_campaign_gate": "0/4 unchanged",
+  "promotion_passed": true,
+  "scope": "Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs",
+  "version": 1
+}

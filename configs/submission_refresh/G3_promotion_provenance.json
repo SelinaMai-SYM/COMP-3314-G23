@@ -1,0 +1,85 @@
+{
+  "created_utc": "2026-11-10T11:42:44.961655+00:00",
+  "datasets_required": 1,
+  "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+  "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825",
+  "input_record": {
+    "dataset": "ORL_att92",
+    "fixed_input_objects": {
+      "A": {
+        "bytes": 16454,
+        "kind": "sparse",
+        "path": "objects/4f/4f3429274eb1665ec7dc58e243964d58493287c47dc04ec4effc2723d85db4c1.npz",
+        "sha256": "4f3429274eb1665ec7dc58e243964d58493287c47dc04ec4effc2723d85db4c1"
+      },
+      "F0": {
+        "bytes": 122059,
+        "kind": "compressed_array",
+        "path": "objects/3c/3c961c05cfca16a93627ec27be860e41b2f1de9516c5927e2e3fb8d7acee21ed.npz",
+        "sha256": "3c961c05cfca16a93627ec27be860e41b2f1de9516c5927e2e3fb8d7acee21ed"
+      },
+      "U": {
+        "bytes": 123061,
+        "kind": "compressed_array",
+        "path": "objects/ae/aee1995c3d0b4769e2ad31a34ff2df3ad6077dd5f12f3f59e7ab3ccaed2c991b.npz",
+        "sha256": "aee1995c3d0b4769e2ad31a34ff2df3ad6077dd5f12f3f59e7ab3ccaed2c991b"
+      },
+      "W0": {
+        "bytes": 15458,
+        "kind": "sparse",
+        "path": "objects/ef/efe802809b45bb1c5c575749ab3fe8deab0e2367a2102a643b8afa95bc55cdf0.npz",
+        "sha256": "efe802809b45bb1c5c575749ab3fe8deab0e2367a2102a643b8afa95bc55cdf0"
+      },
+      "X": {
+        "bytes": 562851,
+        "kind": "compressed_array",
+        "path": "objects/86/86d2c118fc08b1d2a132ebcc308549c740c237328bcaa5624dec037e341c9935.npz",
+        "sha256": "86d2c118fc08b1d2a132ebcc308549c740c237328bcaa5624dec037e341c9935"
+      },
+      "y": {
+        "bytes": 308,
+        "kind": "compressed_array",
+        "path": "objects/e5/e550191826967af5f7df3622630a25534b87b8ca85903041aed620ac3557d6b0.npz",
+        "sha256": "e550191826967af5f7df3622630a25534b87b8ca85903041aed620ac3557d6b0"
+      }
+    },
+    "input_record": "graph_inputs/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/representation.json",
+    "input_record_sha256": "996bd0ed458e9b741406e933ec0cb21ecdadf50ab09165758f0cb8b5a69d23bb",
+    "input_version": "26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7",
+    "scientific_source_fingerprint": "2ed5b6fb520753cd8a339744ed4c787b6efa630ec77d554f1637a5d110eaccbb"
+  },
+  "origin_aggregation_overall_status": "FAILED_AFTER_GATE_VALIDATION_IN_UNRELATED_DERIVED_INVENTORY_VIEW",
+  "origin_aggregation_run": "validation-G3-promotion-aggregation-v1",
+  "primary_records": [
+    {
+      "arm": "delete",
+      "path": "graph_records/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/G3__0.15__delete__1000.json",
+      "sha256": "14202c282c2e59ef5f95c64ea0f7d025424f3f2b7de1c2465fe85e7567ff94a5"
+    },
+    {
+      "arm": "both",
+      "path": "graph_records/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/G3__0.15__both__1000.json",
+      "sha256": "9d3ea6b939f739f93fbd00b09b88ebbf533629c611258d5f412b302f9151331a"
+    },
+    {
+      "arm": "blind_400",
+      "path": "graph_records/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/G3__0.15__blind_400__1000.json",
+      "sha256": "abb00643f130742415e1ae46344d7874a912f74226518113a88cdec5b8305a9a"
+    },
+    {
+      "arm": "blind_401",
+      "path": "graph_records/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/G3__0.15__blind_401__1000.json",
+      "sha256": "c17fdb8bfcaf8b381d6171e008782ccab5dd07b08428117fb923613ff6d2ef14"
+    },
+    {
+      "arm": "blind_402",
+      "path": "graph_records/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/G3__0.15__blind_402__1000.json",
+      "sha256": "44ce87f8c3cb5ea8d225a09df6713d65eafb5e8b18855315eee17f89efe4b754"
+    }
+  ],
+  "promotion_evidence_valid": true,
+  "protocol_sha256": "70db74af3244a323c26f356e2d0c2fa129a4091562897f82909b199860aab989",
+  "qualification": "aggregate._gate_input_identity and fixed gate calculation completed before build_inventory rejected its output directory. Only the verified G3 evidence is promoted; whole aggregation success is not claimed. The queued v2 independently reruns inventory tests and complete aggregation. Full362graphscopecontinues.",
+  "qualifying_dataset": "ORL_att92",
+  "schema": "immutable-G3-promotion-evidence-v1"
+}

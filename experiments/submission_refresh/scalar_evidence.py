@@ -25,6 +25,7 @@ BENCHMARK={'ORL_att92':'ORL','JAFFE':'JAFFE','YaleB_cropped2414':'YaleB','YaleB_
 OPTIONAL_LIGHT=['baseline_execution_coverage.csv','baseline_seed_coverage.csv','baseline_coverage_manifest.json',
     'execution_coverage.csv','graph_execution_coverage.csv','graph_coverage_manifest.json','resource_usage.json','error_cases.csv','casebook_summary.csv',
     'source_version_audit.json','usps_numerical_reference_input_identity.json']
+PUBLIC_SCHEMA='submission-scalar-evidence-public-v1'
 
 
 def _safe_path(root,relative):
@@ -183,6 +184,23 @@ def _validate_graph_coverage(csv_path,manifest_path,root,locked=None):
     """Verify the full frozen design before copying a coverage snapshot."""
     from .graph_coverage import _validate_tasks,EXPECTED_PHASES,SCHEMA
     manifest=json.loads(manifest_path.read_text())
+    if manifest.get('schema')=='public-scientific-graph-coverage-v1':
+        from .public_records import payload_hash
+        if manifest.get('intended_tasks')!=362 or manifest.get('phase_counts')!=EXPECTED_PHASES or digest(csv_path)!=manifest.get('coverage_sha256'):
+            raise ValueError('public graph coverage must retain the complete verified 362-point design')
+        relative=manifest.get('design_path');path=_safe_path(root,relative)
+        if locked is not None and relative not in locked:raise ValueError('public graph design is not hash-locked')
+        if digest(path)!=manifest.get('design_sha256'):raise ValueError('public graph design hash mismatch')
+        definitions=json.loads(path.read_text()).get('configurations',[])
+        with csv_path.open(newline='') as stream:rows=list(csv.DictReader(stream))
+        if len(definitions)!=362 or len(rows)!=362 or dict(Counter(row.get('phase') for row in rows))!=EXPECTED_PHASES:
+            raise ValueError('public graph coverage must retain all 362 tasks')
+        from .graph_coverage import SELECTORS
+        expected={row.get('configuration_id'):row for row in definitions};actual={row.get('configuration_id'):row for row in rows}
+        if len(expected)!=362 or len(actual)!=362 or expected.keys()!=actual.keys():raise ValueError('public graph design identities differ')
+        for key,row in expected.items():
+            if payload_hash({name:row[name] for name in SELECTORS[row['phase']]})!=key:raise ValueError('public scientific graph configuration identity mismatch')
+        return [path]
     if manifest.get('schema')!=SCHEMA or manifest.get('intended_tasks')!=362 or manifest.get('phase_counts')!=EXPECTED_PHASES:
         raise ValueError('graph coverage must describe the full 362-task design')
     if any(manifest.get(key) is not False for key in ['array_objects_read','fits_run','labels_evaluated','score_based_scope_selection']):
@@ -315,7 +333,7 @@ def _diagnostic_native(row,base,paper):
 
 def rebuild(manifest_path,output):
     manifest_path=Path(manifest_path).resolve();initial_manifest_hash=digest(manifest_path);manifest=json.loads(manifest_path.read_text())
-    if manifest.get('schema')!='submission-scalar-evidence-v1':raise ValueError('unknown scalar evidence schema')
+    if manifest.get('schema') not in ['submission-scalar-evidence-v1',PUBLIC_SCHEMA]:raise ValueError('unknown scalar evidence schema')
     root=(manifest_path.parent/manifest.get('checkout_root_relative','../..')).resolve()
     required=['baseline_file','graph_file','paper_file']
     if manifest.get('selection_file'):required.append('selection_file')
@@ -343,6 +361,8 @@ def rebuild(manifest_path,output):
         current=records[0]
         if _current_counts(current)!=manifest.get('current_scalar_counts'):raise ValueError('current scalar extension count mismatch')
         ensc_derived,usps_derived=_derive_current(current)
+    if manifest.get('schema')==PUBLIC_SCHEMA:
+        _validate_public_projection(manifest,paths,baseline,graphs,current)
     for relative in manifest.get('inventory_inputs',[]):
         if relative not in paths:raise ValueError('source inventory audit input is not hash-locked')
     if manifest.get('inventory_inputs'):
@@ -404,6 +424,8 @@ def rebuild(manifest_path,output):
     if ensc_derived is not None:
         from .ensc_campaign import apply_ensc_gate
         gate=apply_ensc_gate(gate,ensc_derived)
+    if manifest.get('schema')==PUBLIC_SCHEMA:
+        gate.pop('G4_G5_implementation_status',None)
     out=Path(output).resolve()
     if any(path==out or out in path.parents for path in [manifest_path,*paths.values()]):raise ValueError('rebuild output would replace its own release inputs')
     if out.exists() and (not out.is_dir() or (any(out.iterdir()) and not (out/'evidence_validation.json').exists())):raise ValueError('refusing unknown nonempty evidence output')
@@ -447,3 +469,157 @@ def rebuild(manifest_path,output):
     finally:
         if tmp.exists():shutil.rmtree(tmp)
     return gate
+
+
+def _public_packet_records(baseline,graphs,current):
+    yield from baseline;yield from graphs
+    if current is not None:
+        for key in ['jobs','records']:
+            for entry in current['ensc'].get(key,[]):yield entry['record']
+        for entries in current['usps'].values():
+            if isinstance(entries,list):
+                for entry in entries:yield entry['record']
+        for entry in current.get('graph_inputs',[]):yield entry['record']
+
+
+def _validate_public_projection(manifest,paths,baseline,graphs,current):
+    from .public_records import read_archive_receipt,payload_hash,SCHEMA
+    projection_path=manifest.get('projection_file');receipt_path=manifest.get('archive_receipt_file')
+    if projection_path not in paths or receipt_path not in paths:raise ValueError('public projection/archive proof is not hash-locked')
+    receipt=read_archive_receipt(paths[receipt_path]);projection=json.loads(paths[projection_path].read_text())
+    if projection.get('schema')!=SCHEMA or projection.get('archive_id')!=receipt['archive_id'] or projection.get('original_evidence_manifest_sha256')!=receipt['raw_release_inputs']['evidence_manifest']['sha256']:
+        raise ValueError('public projection does not match its verified raw archive')
+    records=projection.get('records',[])
+    if Counter(row.get('public_record_sha256') for row in records)!=Counter(payload_hash(row) for row in _public_packet_records(baseline,graphs,current)):
+        raise ValueError('public payload hashes do not match projection mapping')
+    for row in records:
+        if row.get('schema')!=SCHEMA or not isinstance(row.get('original_record_sha256'),str) or len(row['original_record_sha256'])!=64:
+            raise ValueError('original record identities are unavailable in public projection')
+    for row in _public_packet_records(baseline,graphs,current):
+        if 'public_source_record_sha256'in row and payload_hash(row.get('source'))!=row['public_source_record_sha256']:
+            raise ValueError('public source payload hash mismatch')
+    if current is not None:
+        seen={}
+        for entry in current['ensc'].get('records',[]):
+            record=entry['record'];key=record.get('config_id');source=record.get('original_source_record_sha256')
+            if key in seen and seen[key]!=source:raise ValueError('public projection cannot merge distinct original scientific source IDs')
+            seen[key]=source
+
+
+def project_existing_release(manifest_path,public_root,*,archive_receipt):
+    """Project a frozen release into a separate package after verified recovery.
+
+    This explicit publication step never opens the scientific store, data root
+    or Git history, and never changes raw release files. Default freeze remains
+    the original raw mode. The returned package is independently rebuildable.
+    """
+    from .public_records import (read_archive_receipt,project_record,project_current,
+        public_coverage_rows,final_resource_summary,payload_hash,_clean,SCHEMA)
+    import copy
+    source_manifest=Path(manifest_path).resolve();original_hash=digest(source_manifest)
+    original=json.loads(source_manifest.read_text())
+    if original.get('schema')!='submission-scalar-evidence-v1':raise ValueError('public projection requires an original raw scalar release')
+    root=(source_manifest.parent/original.get('checkout_root_relative','../..')).resolve()
+    destination=Path(public_root).resolve()
+    if destination==root or destination in root.parents:raise ValueError('public projection cannot replace the raw checkout')
+    if destination.exists() and (not destination.is_dir() or any(destination.iterdir())):raise ValueError('public package destination must be new or empty')
+    receipt_hash=digest(archive_receipt);receipt=read_archive_receipt(archive_receipt)
+    if receipt['raw_release_inputs']['evidence_manifest']['sha256']!=original_hash:raise ValueError('archive receipt does not cover this raw evidence manifest')
+    if any(Path(relative).is_absolute() or '..' in Path(relative).parts or str(Path(relative))!=relative for relative in original['files']):
+        raise ValueError('public release inputs require canonical checkout-relative paths')
+    paths={relative:_safe_path(root,relative) for relative in original['files']}
+    for relative,info in original['files'].items():
+        path=paths[relative]
+        if not path.is_file() or digest(path)!=info['sha256'] or path.stat().st_size!=info['bytes']:raise ValueError('raw evidence hash/size mismatch before public projection')
+        if info.get('uncompressed_sha256'):
+            with gzip.open(path,'rb') as stream:
+                if hashlib.file_digest(stream,'sha256').hexdigest()!=info['uncompressed_sha256']:raise ValueError('raw uncompressed evidence hash mismatch')
+    def read(role):
+        if not original.get(role):return []
+        with gzip.open(paths[original[role]],'rt') as stream:return [json.loads(line) for line in stream if line.strip()]
+    baseline=read('baseline_file');graphs=read('graph_file');current_records=read('current_scalar_file')
+    _validate_records(baseline,'baseline');_validate_records(graphs,'graph')
+    if not baseline or len(baseline)!=original['baseline_records'] or len(graphs)!=original['graph_records']:raise ValueError('invalid original scalar counts')
+    if original.get('current_scalar_file') and len(current_records)!=1:raise ValueError('invalid current scalar record count')
+    receipts=[]
+    def project(rows,kind):
+        values=[]
+        for row in rows:
+            value,proof=project_record(row,kind);values.append(value);receipts.append(proof)
+        return values
+    baseline=project(baseline,'baseline');graphs=project(graphs,'graph');current=None
+    if current_records:
+        current,proofs=project_current(current_records[0]);receipts+=proofs
+    _validate_records(baseline,'baseline');_validate_records(graphs,'graph')
+    if current is not None:_derive_current(current)
+    parent=Path(original['baseline_file']).parent
+    graph_csv=str(parent/'graph_execution_coverage.csv');graph_meta=str(parent/'graph_coverage_manifest.json')
+    graph_design=None;raw_queue=None;graph_info=None
+    if graph_csv in paths or graph_meta in paths:
+        if graph_csv not in paths or graph_meta not in paths:raise ValueError('raw graph coverage pair is incomplete')
+        _validate_graph_coverage(paths[graph_csv],paths[graph_meta],root,locked=paths)
+        graph_info=json.loads(paths[graph_meta].read_text());raw_queue=graph_info['queue_path']
+        from .graph_coverage import SELECTORS
+        graph_design={'schema':'public-scientific-graph-design-v1','configurations':[
+            {key:task[key] for key in [*SELECTORS[task['phase']],'configuration_id']}
+            for task in json.loads(paths[raw_queue].read_text())['tasks']]}
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    stage=Path(tempfile.mkdtemp(prefix='.public-scientific-package-',dir=destination.parent))
+    try:
+        files={};supplementary=[];source_files=[]
+        packet_roles={original['baseline_file']:(baseline,'baseline_records'),original['graph_file']:(graphs,'graph_records')}
+        if current is not None:packet_roles[original['current_scalar_file']]=([current],'current_scalar_records')
+        for relative,path in paths.items():
+            if relative==raw_queue or relative==graph_meta:continue
+            target=stage/relative;target.parent.mkdir(parents=True,exist_ok=True)
+            if relative in packet_roles:
+                payload,_=_gzip_bytes(packet_roles[relative][0]);target.write_bytes(payload)
+            elif relative in original.get('inventory_inputs',[]):shutil.copy2(path,target)
+            elif path.suffix=='.csv':
+                with path.open(newline='') as stream:rows=list(csv.DictReader(stream))
+                rows=public_coverage_rows(rows)
+                write_csv(target,rows or [{'status':'NO_RECORDED_SCIENTIFIC_ROWS'}])
+            elif path.name=='resource_usage.json':atomic_json(target,final_resource_summary(json.loads(path.read_text())))
+            elif path.name=='baseline_coverage_manifest.json':
+                raw=json.loads(path.read_text());atomic_json(target,{'schema':'public-scientific-baseline-coverage-v1',
+                    'original_manifest_sha256':digest(path),'expected_seeds':list(range(50)),
+                    'scientific_status_summary':_clean({k:v for k,v in raw.items() if k in ['configuration_count','seed_rows','status_counts','configuration_status_counts']})})
+            elif path.suffix=='.json':atomic_json(target,_clean(json.loads(path.read_text())))
+            elif path.suffix in ['.yaml','.yml']:shutil.copy2(path,target)
+            else:raise ValueError('unsupported public scalar input transport: '+relative)
+            if relative in original.get('supplementary_files',[]):supplementary.append(relative)
+            source_files.append({'original_path':relative,'original_sha256':digest(path),'public_path':relative,'public_sha256':digest(target)})
+        if graph_design is not None:
+            design_relative='configs/submission_refresh/graph_design.public.v1.json';design_path=stage/design_relative;atomic_json(design_path,graph_design)
+            atomic_json(stage/graph_meta,{'schema':'public-scientific-graph-coverage-v1','intended_tasks':362,
+                'phase_counts':graph_info['phase_counts'],'coverage_sha256':digest(stage/graph_csv),
+                'design_path':design_relative,'design_sha256':digest(design_path),
+                'original_coverage_manifest_sha256':digest(paths[graph_meta])})
+            supplementary.append(graph_meta)
+            source_files += [{'original_path':raw_queue,'original_sha256':digest(paths[raw_queue]),'public_path':design_relative,'public_sha256':digest(design_path)},
+                {'original_path':graph_meta,'original_sha256':digest(paths[graph_meta]),'public_path':graph_meta,'public_sha256':digest(stage/graph_meta)}]
+        proof_relative=str(parent/'public_archive_receipt.v1.json');atomic_json(stage/proof_relative,receipt)
+        projection_relative=str(parent/'public_projection.v1.json')
+        atomic_json(stage/projection_relative,{'schema':SCHEMA,'archive_id':receipt['archive_id'],
+            'original_evidence_manifest_sha256':original_hash,'records':receipts,'files':source_files,
+            'record_hash_semantics':'Original record and record_sha256 references identify raw archived evidence; public payloads have separate canonical public_record_sha256 hashes.'})
+        supplementary += [proof_relative,projection_relative]
+        for path in stage.rglob('*'):
+            if not path.is_file():continue
+            relative=str(path.relative_to(stage));info={'sha256':digest(path),'bytes':path.stat().st_size}
+            if path.suffix=='.gz':
+                with gzip.open(path,'rb') as stream:info['uncompressed_sha256']=hashlib.file_digest(stream,'sha256').hexdigest()
+            files[relative]=info
+        public=copy.deepcopy(original);public.update(schema=PUBLIC_SCHEMA,files=files,supplementary_files=sorted(set(supplementary)),
+            projection_file=projection_relative,archive_receipt_file=proof_relative,original_evidence_manifest_sha256=original_hash)
+        manifest_relative=source_manifest.relative_to(root);target_manifest=stage/manifest_relative;atomic_json(target_manifest,public)
+        _validate_public_projection(public,{key:stage/key for key in files},baseline,graphs,current)
+        if graph_design is not None:_validate_graph_coverage(stage/graph_csv,stage/graph_meta,stage,locked=files)
+        if digest(archive_receipt)!=receipt_hash or digest(source_manifest)!=original_hash or any(digest(path)!=original['files'][relative]['sha256'] for relative,path in paths.items()):
+            raise ValueError('raw release changed during public projection')
+        if destination.exists():destination.rmdir()
+        stage.rename(destination)
+        return {'manifest_path':str(destination/manifest_relative),'schema':PUBLIC_SCHEMA,'archive_id':receipt['archive_id'],
+            'records':len(receipts),'raw_inputs_modified':False}
+    finally:
+        if stage.exists():shutil.rmtree(stage)

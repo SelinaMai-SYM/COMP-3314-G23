@@ -140,6 +140,113 @@ def test_gzip_inventory_integrity_fails_before_output(scalar_fixture,tmp_path,mo
     assert not destination.exists()
 
 
+def public_archive_receipt(output,manifest,path):
+    original=json.loads(manifest.read_text());source=output.parent.parent/original['inputs']['source_records']['path']
+    value={'schema':'public-scientific-archive-receipt-v1','verified':True,'archive_id':'fixture-archive',
+        'archive_sha256':'a'*64,'bytes':1000,'recovered_objects':3,'recovered_extra_files':4,'recovery_proof_sha256':'b'*64,
+        'raw_release_inputs':{'source_records':{'sha256':digest(source),'uncompressed_sha256':hashlib.sha256(gzip.decompress(source.read_bytes())).hexdigest()},
+            'current_release_manifest':{'sha256':digest(manifest)},'evidence_manifest':{'sha256':'c'*64},
+            'artifact_manifests':{'refresh_sha256':'d'*64,'subset_sha256':'e'*64},
+            'seed_inventory_proof':{'sha256':'f'*64},'original_namespace':{'sha256':'0'*64}}}
+    path.write_text(json.dumps(value));return path
+
+
+def test_public_current_projection_preserves_ids_measurements_and_failure_coverage(scalar_fixture,tmp_path):
+    root,output,manifest=scalar_fixture;objects=tmp_path/'external scientific objects'
+    for source in objects.glob('subset/*/source.json'):
+        raw=json.loads(source.read_text());raw.update(working_tree_dirty=True,hostname='private-host',
+            thread_libraries=[{'version':'1','num_threads':1,'filepath':'/Users/private/library.dylib'}],
+            command=['private-command'],source_files={'experiments/subset_search/runner.py':'a'*64})
+        source.write_text(json.dumps(raw))
+    write_csv(output/'execution_coverage.csv',[{'candidate_id':'A','variant':'E13','gamma_nominal':'1.0',
+        'initialization':'RANDOM','status':'FAILED','original_candidate_status':'FAILED','failed_rounding_seed':'7',
+        'source_queue':'private-queue','error':'CG residual 0.004 at /Users/private/workspace'}])
+    (output/'resource_usage.json').write_text(json.dumps({'ledger':{'limit_seconds':129600,'max_workers':2,'active':{},
+        'entries':[{'run_id':'private-task','phase':'baseline','charged_cpu_seconds':12.5,'status':'FAILED'}]}}))
+    (output/'artifact_manifest.json').write_text(json.dumps({'store':'/Users/private/artifacts','records':[{'record':'subset/A/source.json'}]}))
+    completion={'schema':'subset-completion-evidence-v1','records':{'subset/A':{
+        'original_status':{'status':'FAILED','traceback':'/Users/private/trace','error':'CG residual 0.004'},
+        'completion_failures':[{'sha256':'a'*64,'record':{'status':'TIMEOUT','source_error':.004,'objective':2.5,'traceback':'/Users/private/trace'}}],
+        'completion_attempts':[]}}}
+    (output/'completion_records.json.gz').write_bytes(gzip.compress(json.dumps(completion).encode(),mtime=0))
+    raw_manifest=release.freeze(output,manifest,objects)
+    raw_before=tmp_path/'raw rebuild';release.rebuild(manifest,raw_before)
+    raw_source=output/'source_records.json.gz';raw_bytes=raw_source.read_bytes()
+    raw_ids=set(json.loads(gzip.decompress(raw_bytes))['records'])
+    proof=public_archive_receipt(output,manifest,tmp_path/'external archive receipt.json')
+    projected=release.project_existing_release(output,manifest,archive_receipt=proof)
+    assert projected['expected_selections']==raw_manifest['expected_selections']
+    for role in ['trials','configuration_inventory','catalogue','protocol','selection','paper']:
+        assert projected['inputs'][role]==raw_manifest['inputs'][role]
+    registry_path=root/projected['inputs']['source_records']['path'];public=json.loads(gzip.decompress(registry_path.read_bytes()))
+    assert set(public['records'])==raw_ids
+    assert all(entry['original_record_sha256']==key for key,entry in public['records'].items())
+    assert all(entry['public_record_sha256']!=key for key,entry in public['records'].items())
+    assert b'/Users/' not in gzip.decompress(registry_path.read_bytes()) and raw_source.read_bytes()==raw_bytes
+    assert release.project_existing_release(output,manifest,archive_receipt=proof)==projected
+    # Remove original private envelopes: public replay must not dereference them.
+    for role in ['source_records','coverage','resource_usage','artifact_manifest','completion_records']:
+        (root/raw_manifest['inputs'][role]['path']).unlink()
+    rebuilt=tmp_path/'public rebuild';release.rebuild(manifest,rebuilt)
+    for name in ['joint_search_summary.csv','native_best_summary.csv','closest_matches.csv']:
+        assert (rebuilt/name).read_bytes()==(raw_before/name).read_bytes()
+    rows=list(csv.DictReader((rebuilt/'execution_coverage.csv').open()))
+    assert len(rows)==1 and rows[0]['status']=='FAILED' and rows[0]['failed_rounding_seed']=='7'
+    assert 'source_queue' not in rows[0] and '/Users/' not in (rebuilt/'execution_coverage.csv').read_text()
+    cleaned=json.loads(gzip.decompress((rebuilt/'completion_records.json.gz').read_bytes()))
+    failure=cleaned['records']['subset/A']['completion_failures'][0]
+    assert failure['record']['status']=='TIMEOUT' and failure['record']['source_error']==.004 and failure['record']['objective']==2.5
+    assert 'traceback' not in failure['record'] and failure['original_file_sha256']=='a'*64
+    assert failure['original_record_sha256']!=failure['public_record_sha256']
+
+
+def test_public_source_payload_hash_is_checked_even_if_transport_hash_is_updated(scalar_fixture,tmp_path):
+    root,output,manifest=scalar_fixture
+    proof=public_archive_receipt(output,manifest,tmp_path/'archive receipt.json')
+    projected=release.project_existing_release(output,manifest,archive_receipt=proof)
+    path=root/projected['inputs']['source_records']['path'];registry=json.loads(gzip.decompress(path.read_bytes()))
+    next(iter(registry['records'].values()))['record']['cache_identity']='different-actual-source'
+    payload=(json.dumps(registry)+'\n').encode();path.write_bytes(gzip.compress(payload,mtime=0))
+    projected['inputs']['source_records'].update(sha256=digest(path),bytes=path.stat().st_size,uncompressed_sha256=hashlib.sha256(payload).hexdigest())
+    manifest.write_text(json.dumps(projected));target=tmp_path/'not authored'
+    with pytest.raises(ValueError,match='public source registry payload hash mismatch'):release.rebuild(manifest,target)
+    assert not target.exists()
+
+
+def test_public_projection_requires_matching_verified_archive_before_writes(scalar_fixture,tmp_path):
+    root,output,manifest=scalar_fixture;before=manifest.read_bytes()
+    proof=public_archive_receipt(output,manifest,tmp_path/'unverified receipt.json')
+    value=json.loads(proof.read_text());value['verified']=False;proof.write_text(json.dumps(value))
+    with pytest.raises(ValueError,match='verified scientific archive'):release.project_existing_release(output,manifest,archive_receipt=proof)
+    assert manifest.read_bytes()==before and not (output/'source_records.public.v1.json.gz').exists()
+
+
+def test_public_current_release_replays_archived_namespace_after_raw_history_removal(scalar_fixture,tmp_path,monkeypatch):
+    from experiments.subset_search import aggregate,confirmation_public
+    from experiments.submission_refresh.core import atomic_json
+    root,output,manifest=scalar_fixture;store=tmp_path/'external scientific objects'
+    monkeypatch.setattr(aggregate,'ROOT',root);monkeypatch.setattr(confirmation_public,'ROOT',root)
+    old=root/'results/historical/rounding.csv';write_csv(old,[{'seed':0,'acc':.5,'nmi':.6}])
+    atomic_json(output/'winner_lock.json',{'winners':[{'config_id':'B|E8|1000.0|RANDOM'}]})
+    ns=aggregate.confirmation_namespace(store,output,historical_paths=[old])
+    confirmation_public.prepare_seed_inventory_proof(store,output)
+    release.freeze(output,manifest,store)
+    proof=public_archive_receipt(output,manifest,tmp_path/'archive receipt.json')
+    value=json.loads(proof.read_text())
+    value['raw_release_inputs']['original_namespace']['sha256']=digest(output/'confirmation_seed_namespace.json')
+    value['raw_release_inputs']['seed_inventory_proof']['sha256']=digest(store/'confirmation'/confirmation_public.PREPARED)
+    proof.write_text(json.dumps(value))
+    confirmation_public.project_confirmation_namespace(store,output,archive_receipt=proof,root=root)
+    projected=release.project_existing_release(output,manifest,archive_receipt=proof)
+    assert {'confirmation_seed_proof','confirmation_namespace_projection','confirmation_winner_lock'}<=projected['inputs'].keys()
+    old.unlink();shutil.rmtree(store)
+    fresh=tmp_path/'public clone';shutil.copytree(root,fresh)
+    rebuilt=tmp_path/'public namespace replay'
+    assert release.rebuild(fresh/'configs/subset_search/release_manifest.json',rebuilt)['ok']
+    public=json.loads((rebuilt/'confirmation_seed_namespace.json').read_text())
+    assert public['version']==3 and public['first']==ns['first'] and public['winner_lock_sha256']==ns['winner_lock_sha256']
+
+
 def test_hash_mismatch_fails_before_output_write(scalar_fixture,tmp_path):
     root,output,manifest=scalar_fixture
     (output/'trials.csv.gz').write_bytes(b'not the frozen input')

@@ -396,6 +396,12 @@ def confirmation_namespace(artifact_root,output,*,historical_paths=None):
     if existing:
         namespace=existing[0]
         if any(record!=namespace for record in existing):raise ValueError('confirmation namespace copies disagree')
+        if namespace.get('version')==3:
+            from .confirmation_public import validate_public_namespace
+            validate_public_namespace(namespace,out,root=ROOT)
+            if not persistent.exists():atomic_json(persistent,namespace)
+            if not published.exists():atomic_json(published,namespace)
+            return namespace
         if namespace.get('version')!=2 or namespace.get('winner_lock_sha256')!=lock_hash:
             raise ValueError('winner lock changed or old confirmation namespace is not fully verified; never advance/reselect on resume')
         first=namespace['first']

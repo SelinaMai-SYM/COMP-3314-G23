@@ -41,10 +41,109 @@ OPTIONAL_FILES={
     'completion_records':'completion_records.json.gz','source_inventory':'source_inventory.csv',
     'artifact_manifest':'artifact_manifest.json', 'confirmation':'rounding_confirmation.csv',
     'confirmation_seed_namespace':'confirmation_seed_namespace.json',
+    'confirmation_winner_lock':'winner_lock.json',
+    'confirmation_seed_proof':'confirmation_seed_proof.public.v1.json',
+    'confirmation_namespace_projection':'confirmation_namespace_transformation.v1.json',
     'matched_sc':'matched_sc_summary.csv', 'matched_sc_contrasts':'matched_sc_contrasts.csv',
     'reference_contrasts':'reference_contrasts.csv', 'family_distributions':'fixed_protocol_family_distributions.csv', 'resource_usage':'resource_usage.json',
     'certified_search_status':'certified_search_status.csv',
 }
+
+
+def _source_registry_records(registry):
+    """Return scientific payloads while preserving the original source IDs."""
+    records=registry.get('records')
+    if not isinstance(records,dict):raise ValueError('invalid scientific source registry')
+    if registry.get('schema')=='public-scientific-source-records-v1':
+        from .public_records import public_source_payload
+        result={}
+        for original,entry in records.items():
+            if (not isinstance(original,str) or len(original)!=64 or set(original)-set('0123456789abcdef')
+                or not isinstance(entry,dict) or entry.get('original_record_sha256')!=original):
+                raise ValueError('public source registry original identity mismatch')
+            record=entry.get('record')
+            if not isinstance(record,dict) or identity(record)!=entry.get('public_record_sha256'):
+                raise ValueError('public source registry payload hash mismatch')
+            if public_source_payload(record)!=record:
+                raise ValueError('public source registry contains unapproved fields')
+            result[original]=record
+        return result
+    if registry.get('schema')!='deduplicated-scientific-source-records-v1':
+        raise ValueError('unknown scientific source registry schema')
+    for key,record in records.items():
+        if identity(record)!=key:raise ValueError('source record identity mismatch')
+    return records
+
+
+def _public_light_projections(manifest,output,stage,archive):
+    """Version operational envelopes, retaining every scientific outcome."""
+    from .public_records import public_coverage_rows,public_metadata_payload,final_resource_summary
+    files=[];receipts=[];pins={}
+    for role in ['coverage','matched_sc_coverage','completion_records','resource_usage','artifact_manifest']:
+        if role not in manifest['inputs']:continue
+        info=manifest['inputs'][role];source=_safe_path(ROOT,info['path'])
+        if role in ['coverage','matched_sc_coverage']:
+            raw=_csv_rows(source);public=public_coverage_rows(raw)
+            keys=['candidate_id','variant','gamma_nominal','initialization','status','original_candidate_status',
+                  'original_point_status','completion_candidate_status','original_failure_preserved','failed_rounding_seed']
+            if len(public)!=len(raw) or any(any(after.get(key)!=before[key] for key in keys if key in before) for before,after in zip(raw,public)):
+                raise ValueError('public coverage projection changed a scientific configuration or outcome')
+            name=Path(OPTIONAL_FILES[role]).stem+'.public.v1.csv';temporary=stage/name
+            _write_csv(temporary,public);pack_large_csvs(stage,min_bytes=CSV_PACK_MIN_BYTES,names=[name])
+            temporary=resolve_csv(temporary,required=True);target=output/temporary.name
+            row_count=len(raw)
+        else:
+            opener=gzip.open if source.suffix=='.gz' else open
+            with opener(source,'rt') as stream:raw=json.load(stream)
+            if role=='resource_usage':public=final_resource_summary(raw)
+            elif role=='artifact_manifest':
+                public={'schema':'public-scientific-artifact-manifest-v1','archive_id':archive['archive_id'],
+                    'archive_sha256':archive['archive_sha256'],'recovered_objects':archive['recovered_objects'],
+                    'recovered_extra_files':archive['recovered_extra_files'],
+                    'original_manifest_sha256':info['sha256'],'logical_records':len(raw.get('records',[])),
+                    'recovery_command':'python -m experiments.submission_refresh.export_artifacts recover --archive ARCHIVE --output ARTIFACT_ROOT',
+                    'qualification':'The verified private archive retains the complete original logical-record and object inventory.'}
+            else:
+                public=public_metadata_payload(raw)
+                def finalized(value):
+                    if isinstance(value,list):return [finalized(item) for item in value]
+                    if not isinstance(value,dict):return value
+                    result={key:finalized(item) for key,item in value.items() if key not in ['task','run_id']}
+                    if isinstance(value.get('task'),dict):
+                        settings={key:finalized(item) for key,item in value['task'].items() if key in ['dataset','gamma','max_iter','initialization','seeds','seed']}
+                        if settings:result['scientific_configuration']=settings
+                    return result
+                public=finalized(public)
+                for directory,details in raw.get('records',{}).items():
+                    clean=public['records'][directory]
+                    if clean.get('original_status',{}).get('status')!=details.get('original_status',{}).get('status'):
+                        raise ValueError('public completion projection changed original failure status')
+                    for kind in ['completion_failures','completion_attempts']:
+                        original=details.get(kind,[]);projected=clean.get(kind,[])
+                        if len(projected)!=len(original):raise ValueError('public completion projection hid an execution outcome')
+                        for before,after in zip(original,projected):
+                            record=before.get('record',{});payload=after.get('record',{})
+                            if record.get('status')!=payload.get('status'):raise ValueError('public completion status changed')
+                            after.update(original_file_sha256=before.get('sha256'),original_record_sha256=identity(record),public_record_sha256=identity(payload))
+                    clean['original_status_record_sha256']=identity(details.get('original_status',{}))
+                    clean['public_status_record_sha256']=identity(clean.get('original_status',{}))
+                public['public_projection_schema']='public-subset-completion-records-v1'
+                public['sha256_fields_identify_original_archived_files']=True
+            name=Path(OPTIONAL_FILES[role]).name
+            name=name[:-8]+'.public.v1.json.gz' if name.endswith('.json.gz') else name[:-5]+'.public.v1.json'
+            temporary=stage/name;target=output/name
+            if name.endswith('.gz'):
+                temporary.write_bytes(gzip.compress((json.dumps(public,sort_keys=True,indent=2)+'\n').encode(),mtime=0))
+            else:atomic_json(temporary,public)
+            row_count=len(raw.get('records',[])) if role in ['artifact_manifest','completion_records'] else None
+        if target.exists():raise ValueError('public light projection target already exists: '+target.name)
+        _validate_light_csv(role,temporary)
+        record={'role':role,'original_file_sha256':info['sha256'],'public_file_sha256':digest(temporary),
+            'original_logical_sha256':info.get('uncompressed_sha256',info['sha256']),
+            'public_logical_sha256':_decompressed_hash(temporary) if temporary.suffix=='.gz' else digest(temporary),
+            'configuration_or_record_count':row_count,'original_evidence_preserved_in_verified_archive':True}
+        receipts.append(record);files.append((temporary,target));pins[role]=(target,temporary)
+    return files,pins,receipts
 
 
 def _csv_rows(path):
@@ -446,6 +545,114 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
     return manifest
 
 
+def project_existing_release(output=Path('results/subset_search'),manifest_path=None,*,archive_receipt):
+    """Publish source and operational-envelope projections after archival.
+
+    Original source/configuration IDs and all numerical inputs remain unchanged.
+    The original registry remains available for explicit archival/cleanup; this
+    function never deletes it or changes any scientific measurement.
+    """
+    from .public_records import public_source_payload,read_archive_receipt
+    from .scalar_evidence import _publish_files
+    output=Path(output).resolve();manifest_path=Path(manifest_path or ROOT/'configs/subset_search/release_manifest.json').resolve()
+    manifest=json.loads(manifest_path.read_text());original_manifest_hash=digest(manifest_path)
+    receipt=read_archive_receipt(archive_receipt)
+    expected=receipt['raw_release_inputs'];original_info=manifest['inputs']['source_records']
+    original_path=_safe_path(ROOT,original_info['path'])
+    if digest(original_path)!=original_info['sha256'] or original_path.stat().st_size!=original_info['bytes']:
+        raise ValueError('source registry changed before public projection')
+    with gzip.open(original_path,'rt') as stream:registry=json.load(stream)
+    if registry.get('schema')=='public-scientific-source-records-v1':
+        _source_registry_records(registry)
+        if manifest.get('public_projection',{}).get('original_manifest_sha256')!=expected['current_release_manifest']['sha256']:
+            raise ValueError('public source release belongs to a different archived manifest')
+        public_receipt=_safe_path(ROOT,manifest['inputs']['public_archive_receipt']['path'])
+        if json.loads(public_receipt.read_text())!=receipt or digest(public_receipt)!=manifest['inputs']['public_archive_receipt']['sha256']:
+            raise ValueError('public archive receipt differs on resume')
+        for role,info in manifest['inputs'].items():
+            path=_safe_path(ROOT,info['path'])
+            if not path.is_file() or digest(path)!=info['sha256'] or path.stat().st_size!=info['bytes']:
+                raise ValueError('public release input changed on resume: '+role)
+        return manifest
+    if original_manifest_hash!=expected['current_release_manifest']['sha256']:
+        raise ValueError('private archive receipt does not cover the original current manifest')
+    raw_hash=_decompressed_hash(original_path)
+    if original_info['sha256']!=expected['source_records']['sha256'] or raw_hash!=expected['source_records']['uncompressed_sha256']:
+        raise ValueError('private archive receipt does not cover the exact original source registry')
+    originals=_source_registry_records(registry);records={};mapping=[]
+    for key,raw in originals.items():
+        clean=public_source_payload(raw);public_hash=identity(clean)
+        records[key]={'original_record_sha256':key,'public_record_sha256':public_hash,'record':clean}
+        mapping.append({'original_record_sha256':key,'public_record_sha256':public_hash})
+    projected={'schema':'public-scientific-source-records-v1','status':'PUBLIC_PROJECTED_SOURCE_RECORDS',
+        'original_registry_uncompressed_sha256':raw_hash,'records':records,
+        'qualification':'Registry keys identify archived original source records; projected payload hashes identify the public whitelist, never the original bytes. Actual source identity uses per-file and implementation hashes with archived source bytes; a commit identifier alone is not a byte-identity certificate.'}
+    _source_registry_records(projected)
+    target=output/'source_records.public.v1.json.gz';receipt_target=output/'public_archive_receipt.v1.json'
+    transform_target=output/'source_registry_transformation.v1.json'
+    if any(path.exists() for path in [target,receipt_target,transform_target]):
+        raise ValueError('public source projection outputs already exist; preserve and inspect them')
+    # Namespace publication is a separate explicit projection with its original
+    # hash pinned by the old manifest; do not accept unrelated optional changes.
+    authorized={}
+    namespace=output/'confirmation_seed_namespace.json';namespace_transform=output/'confirmation_namespace_transformation.v1.json'
+    if 'confirmation_seed_namespace' in manifest['inputs'] and digest(namespace)!=manifest['inputs']['confirmation_seed_namespace']['sha256']:
+        if not namespace_transform.is_file():raise ValueError('confirmation namespace changed without a public projection receipt')
+        ns_receipt=json.loads(namespace_transform.read_text())
+        if ns_receipt.get('original_namespace_sha256')!=manifest['inputs']['confirmation_seed_namespace']['sha256'] or ns_receipt.get('public_namespace_sha256')!=digest(namespace):
+            raise ValueError('public confirmation namespace projection does not match the archived release')
+        from experiments.subset_search.confirmation_public import validate_public_namespace
+        proof=validate_public_namespace(json.loads(namespace.read_text()),output,root=ROOT)
+        if (proof['archive_id']!=receipt['archive_id'] or proof['archive_sha256']!=receipt['archive_sha256']
+            or proof['archived_seed_preparation_sha256']!=expected['seed_inventory_proof']['sha256']
+            or proof['original_namespace_sha256']!=expected['original_namespace']['sha256']):
+            raise ValueError('public namespace proof belongs to a different verified archive')
+        for role,name in [('confirmation_seed_namespace','confirmation_seed_namespace.json'),
+                          ('confirmation_winner_lock','winner_lock.json'),
+                          ('confirmation_seed_proof','confirmation_seed_proof.public.v1.json'),
+                          ('confirmation_namespace_projection','confirmation_namespace_transformation.v1.json')]:
+            path=output/name
+            if not path.is_file():raise ValueError('public confirmation projection is incomplete')
+            authorized[role]=path
+    for role,info in manifest['inputs'].items():
+        if role in authorized or role=='source_records':continue
+        path=_safe_path(ROOT,info['path'])
+        if not path.is_file() or digest(path)!=info['sha256'] or path.stat().st_size!=info['bytes']:
+            raise ValueError('scientific release input changed before public projection: '+role)
+    stage=Path(tempfile.mkdtemp(prefix='.public-source-registry-',dir=output))
+    try:
+        payload=(json.dumps(projected,sort_keys=True,indent=2)+'\n').encode()
+        public_file=stage/target.name;public_file.write_bytes(gzip.compress(payload,mtime=0))
+        public_receipt=stage/receipt_target.name;atomic_json(public_receipt,receipt)
+        light_files,light_pins,light_receipts=_public_light_projections(manifest,output,stage,receipt)
+        transform={'schema':'public-source-registry-transformation-v1','original_manifest_sha256':original_manifest_hash,
+            'original_registry_sha256':original_info['sha256'],'original_registry_uncompressed_sha256':raw_hash,
+            'public_registry_sha256':digest(public_file),'public_registry_uncompressed_sha256':hashlib.sha256(payload).hexdigest(),
+            'archive_id':receipt['archive_id'],'records':sorted(mapping,key=lambda row:row['original_record_sha256']),
+            'light_projections':light_receipts,
+            'source_record_ids_preserved':True,'measurements_and_configuration_identities_unchanged':True,
+            'raw_trials_and_configuration_inventory_unchanged':True}
+        transformation=stage/transform_target.name;atomic_json(transformation,transform)
+        new=json.loads(json.dumps(manifest));new['source_identity_status']='PUBLIC_PROJECTED_SOURCE_RECORDS'
+        new['public_projection']={'schema':'public-current-source-projection-v1','original_manifest_sha256':original_manifest_hash,
+            'archive_id':receipt['archive_id'],'qualification':projected['qualification']}
+        def pin(role,path,source=None):
+            actual=source or path
+            info={'path':str(path.relative_to(ROOT)),'sha256':digest(actual),'bytes':actual.stat().st_size}
+            if path.suffix=='.gz':info['uncompressed_sha256']=_decompressed_hash(actual)
+            new['inputs'][role]=info
+        pin('source_records',target,public_file);pin('public_archive_receipt',receipt_target,public_receipt)
+        pin('source_registry_transformation',transform_target,transformation)
+        for role,path in authorized.items():pin(role,path)
+        for role,(path,staged_path) in light_pins.items():pin(role,path,staged_path)
+        manifest_file=stage/'release_manifest.json';atomic_json(manifest_file,new)
+        if digest(manifest_path)!=original_manifest_hash or digest(original_path)!=original_info['sha256']:
+            raise ValueError('raw source release changed during public projection')
+        _publish_files([(public_file,target),(public_receipt,receipt_target),(transformation,transform_target),*light_files,(manifest_file,manifest_path)],stage)
+        return new
+    finally:shutil.rmtree(stage)
+
+
 def load(manifest_path):
     manifest_path=Path(manifest_path).resolve();manifest=json.loads(manifest_path.read_text())
     if manifest.get('schema')!=SCHEMA:raise ValueError('unsupported current release schema')
@@ -476,19 +683,33 @@ def load(manifest_path):
             raise ValueError('configuration/catalogue identity mismatch')
         p=_safe_path(root,c['manifest_path'])
         if not p.is_file() or digest(p)!=c['manifest_sha256']:raise ValueError('sample manifest missing/hash mismatch')
-    with gzip.open(paths['source_records'],'rt') as handle:sources=json.load(handle)
-    for key,record in sources['records'].items():
-        if identity(record)!=key:raise ValueError('source record identity mismatch')
+    with gzip.open(paths['source_records'],'rt') as handle:registry=json.load(handle)
+    sources=_source_registry_records(registry)
+    if registry.get('schema')=='public-scientific-source-records-v1':
+        from .public_records import read_archive_receipt
+        if not {'public_archive_receipt','source_registry_transformation'}<=paths.keys():
+            raise ValueError('public source registry is missing its archival transformation receipt')
+        archive=read_archive_receipt(paths['public_archive_receipt']);transform=json.loads(paths['source_registry_transformation'].read_text())
+        mappings=sorted([{'original_record_sha256':key,'public_record_sha256':entry['public_record_sha256']} for key,entry in registry['records'].items()],key=lambda row:row['original_record_sha256'])
+        if (transform.get('schema')!='public-source-registry-transformation-v1'
+            or transform.get('public_registry_sha256')!=manifest['inputs']['source_records']['sha256']
+            or transform.get('public_registry_uncompressed_sha256')!=manifest['inputs']['source_records'].get('uncompressed_sha256')
+            or transform.get('original_registry_sha256')!=archive['raw_release_inputs']['source_records']['sha256']
+            or transform.get('original_registry_uncompressed_sha256')!=archive['raw_release_inputs']['source_records']['uncompressed_sha256']
+            or transform.get('original_registry_uncompressed_sha256')!=registry.get('original_registry_uncompressed_sha256')
+            or transform.get('original_manifest_sha256')!=archive['raw_release_inputs']['current_release_manifest']['sha256']
+            or transform.get('records')!=mappings):
+            raise ValueError('public source registry transformation does not match verified archive/source mappings')
     def verify_source(row):
         key=row.get('source_record_id')
         if not key:return
-        if key not in sources['records']:raise ValueError('configuration source record missing')
-        record=sources['records'][key]
+        if key not in sources:raise ValueError('configuration source record missing')
+        record=sources[key]
         if row.get('scientific_source_fingerprint') not in [None,'',record.get('implementation_hash')]:raise ValueError('configuration scientific source fingerprint mismatch')
         if row.get('scientific_source_commit') not in [None,'',record.get('source_commit')]:raise ValueError('configuration scientific source commit mismatch')
         if row.get('cache_identity') not in [None,'',record.get('cache_identity')]:raise ValueError('configuration scientific cache identity mismatch')
         original=row.get('original_source_record_id')
-        if original and original not in sources['records']:raise ValueError('configuration original source record missing')
+        if original and original not in sources:raise ValueError('configuration original source record missing')
         if row.get('configuration_source_kind')=='per_configuration_completion':
             if record.get('source_files',{}).get(row.get('controller_path'))!=row.get('controller_sha256') or not row.get('controller_sha256'):
                 raise ValueError('configuration actual controller source mismatch')
@@ -497,6 +718,19 @@ def load(manifest_path):
         for row in _matched_sc_rows(paths['matched_sc']):verify_source(row)
 
     for role,path in paths.items():_validate_light_csv(role,path)
+    if 'confirmation_seed_namespace' in paths:
+        namespace=json.loads(paths['confirmation_seed_namespace'].read_text())
+        if namespace.get('version')==3:
+            from experiments.subset_search.confirmation_public import validate_public_namespace
+            if not {'confirmation_seed_proof','confirmation_namespace_projection','confirmation_winner_lock','public_archive_receipt'}<=paths.keys():
+                raise ValueError('public confirmation namespace is missing its hash-locked archival proof')
+            proof=validate_public_namespace(namespace,paths['confirmation_seed_namespace'].parent,root=root)
+            from .public_records import read_archive_receipt
+            archive=read_archive_receipt(paths['public_archive_receipt'])
+            if (proof['archive_id']!=archive['archive_id'] or proof['archive_sha256']!=archive['archive_sha256']
+                or proof['archived_seed_preparation_sha256']!=archive['raw_release_inputs']['seed_inventory_proof']['sha256']
+                or proof['original_namespace_sha256']!=archive['raw_release_inputs']['original_namespace']['sha256']):
+                raise ValueError('public confirmation proof differs from the verified archive receipt')
     paper=yaml.safe_load(paths['paper'].read_text());protocol=yaml.safe_load(paths['protocol'].read_text())
     candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
     certified_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in {c['benchmark'] for c in catalogue['candidates']}}
@@ -531,6 +765,9 @@ def rebuild(manifest_path,output):
     try:
         for name,rows in tables.items():_write_csv(temporary/name,rows)
         shutil.copy2(paths['source_records'],temporary/'source_records.json.gz')
+        for role,name in [('public_archive_receipt','public_archive_receipt.v1.json'),
+                          ('source_registry_transformation','source_registry_transformation.v1.json')]:
+            if role in paths:shutil.copy2(paths[role],temporary/name)
         copy_plain_csv(paths['configuration_inventory'],temporary/'configuration_inventory.csv')
         for role,name in OPTIONAL_FILES.items():
             if role in paths and name not in tables:

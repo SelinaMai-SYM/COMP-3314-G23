@@ -67,7 +67,7 @@ def derive_usps_views(evidence):
             trials.extend({'config_id':config,'name':record['name'],**trial} for trial in record.get('trials',[]))
     seen=set()
     for item in evidence.get('continuation_fits',[]):
-        record=item['record'];task=record.get('task',{});solver=record.get('solver',{});run_id=task.get('run_id')
+        record=item['record'];task=record.get('task',{});solver=record.get('solver',{});run_id=task.get('fit_id',task.get('run_id'))
         if not run_id or run_id in seen:raise ValueError('missing/duplicate USPS continuation fit identity')
         seen.add(run_id)
         fits.append({'run_id':run_id,'gamma_effective':task.get('gamma'),'status':record.get('status'),

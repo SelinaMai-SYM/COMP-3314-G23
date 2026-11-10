@@ -211,7 +211,7 @@ def _usps_bool(value):
     return None
 
 
-def usps_numerical_appendix(original,continuation_fits,continuation_rounding,input_identity=None):
+def usps_numerical_appendix(original,continuation_fits,continuation_rounding,input_identity=None,*,public=False):
     """Display every locked numerical point, never select by scores or gaps."""
     stages=['IRLS300','uniform_PDHG','diagonal_PDHG','component_dual_flow','diagonal_warm_restart']
     labels={'SC_F':'SC on F','IRLS300':'IRLS300','uniform_PDHG':'Uniform',
@@ -278,13 +278,13 @@ def usps_numerical_appendix(original,continuation_fits,continuation_rounding,inp
           r'Tables~\ref{tab:usps-numerical-audit} and~\ref{tab:usps-numerical-rounding} refer to the same stage/gamma rows. C/U denote the recorded certified/uncertified state, with a required relative gap at most $10^{-5}$ and capacity violation at most $10^{-8}$ for certification. A solver stopping status alone is not a certificate. Uncertified points cannot establish that the mathematical objective lacks clustering capacity. Missing exports or saved points stay unavailable.',
           table(['Stage',r'$\gamma$','Primal','Dual','Rel. gap','Cert.','CPU (s)','Solver status'],numerical,
                 'p{1.65cm}rrrrcrp{2.4cm}',
-                'Same-target numerical evidence. Original rows show fit CPU only where committed scalar metadata provides it; extra-restart CPU is the full controller attempt, including checks and I/O. A dash means unavailable metadata, not zero cost. The input manifest hashes each scalar source.','tab:usps-numerical-audit',long=True),
+                ('Same-target numerical evidence. Original rows show fit CPU only where recorded; extra-restart CPU includes the full numerical attempt. A dash means unavailable metadata, not zero cost.' if public else 'Same-target numerical evidence. Original rows show fit CPU only where committed scalar metadata provides it; extra-restart CPU is the full controller attempt, including checks and I/O. A dash means unavailable metadata, not zero cost. The input manifest hashes each scalar source.'),'tab:usps-numerical-audit',long=True),
           r'Clustering metrics below are percent, mean $\pm$ sample SD over the same fifty greedy K-means++/Lloyd seeds 0--49 on each saved G. Both metrics come from one complete endpoint. This is conditional rounding variability, not independent datasets or full-pipeline uncertainty. A native-best assignment is not substituted for a mean, and its single-run value receives no across-run SD.',
           table(['Stage',r'$\gamma$','ACC','NMI','n','IRLS300 complete','Evaluation status'],performance,
                 'p{1.65cm}rrrccp{3.0cm}',
                 'Paired rounding protocol on the fixed current F/W. The IRLS300 flag refers only to completion of the declared historical-style 300-step protocol, including its iterate stopping rule; it does not certify optimality. Other stages are separate algorithms/restarts.','tab:usps-numerical-rounding',long=True)]
     if not original and not continuation_fits and not continuation_rounding:
-        text.insert(1,r'No committed USPS numerical evaluation export is currently available. The planned rows below contain no inferred objective or clustering values.')
+        text.insert(1,r'USPS numerical evaluation is unavailable; the rows below contain no inferred objective or clustering values.' if public else r'No committed USPS numerical evaluation export is currently available. The planned rows below contain no inferred objective or clustering values.')
     if input_identity:
         identity_status=input_identity.get('status','UNAVAILABLE')
         same=input_identity.get('same_current_F_W_content_addresses') is True
@@ -295,11 +295,11 @@ def usps_numerical_appendix(original,continuation_fits,continuation_rounding,inp
     return text
 
 
-def certified_search_appendix(rows):
+def certified_search_appendix(rows,*,public=False):
     output=[r'\subsection{Separate certified-search availability}',
             r'The closest subset matches above belong to the locked finite historical-style IRLS track. A complete 50-start execution does not establish optimality. No comparable certified subset-search track was executed, so no certified closest winner is selected. Separate numerical references, including a continuation on the current USPS input, cannot transfer a certificate to a different saved G. Counts below describe the historical-style coverage only; native rows summarize the same 50-start configuration pool but select one assignment, with no across-run SD.']
     if not rows:
-        output.append(r'The machine-readable certified-search availability export is not yet available; no certified winner or coverage count is inferred.')
+        output.append(r'Comparable certified-search coverage is unavailable; no certified winner or coverage count is inferred.' if public else r'The machine-readable certified-search availability export is not yet available; no certified winner or coverage count is inferred.')
         return output
     seen=set();rendered=[]
     for row in rows:
@@ -369,7 +369,7 @@ def ensc_two_track_macro(conclusion):
     return output
 
 
-def ensc_appendix(rows,conclusion,gate):
+def ensc_appendix(rows,conclusion,gate,*,public=False):
     """Display source-selected capability/operating rows and qualified macros."""
     datasets=['ORL_att92','JAFFE','YaleB_cropped2414','USPS']
     families=[('S_tau0.95','label_assisted_capability'),('S_tau0.95','locked_label_free_gamma1'),
@@ -390,7 +390,7 @@ def ensc_appendix(rows,conclusion,gate):
     output=[r'\subsection{Conditional EnSC adaptation: capability and locked operation}',
             r'The primary adaptation is the fixed $\tau=.95$ EnSC graph used only as the fusion graph for anchor F0. The source coefficient parameter is 50; graphs are matched to W0 total mass. Capability rows are label-assisted oracles: one complete configuration is selected by mean ACC, then NMI, then stable ID. The primary graph has five declared SSC gamma values; original SSC receives the frozen 15-value path. Controls remain separate named families. The locked operating row uses source 50/$\tau=.95$/SSC gamma 1 without choosing parameters from labels. Both kinds of row use previously examined benchmarks; neither is an unseen-data test.']
     if not rows:
-        output.append(escape('No committed G4/G5 capability export is available. The current gate records dependent-stage status '+str(gate.get('G4_G5_status','UNAVAILABLE'))+'. No completed method performance or four-benchmark gain is inferred from an implementation or a passed pilot gate.'))
+        output.append(r'EnSC adaptation performance is unavailable. An oracle graph intervention does not establish an unsupervised-method gain.' if public else escape('No committed G4/G5 capability export is available. The current gate records dependent-stage status '+str(gate.get('G4_G5_status','UNAVAILABLE'))+'. No completed method performance or four-benchmark gain is inferred from an implementation or a passed pilot gate.'))
     rendered=[]
     for dataset in datasets:
         display={'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset)
@@ -441,7 +441,7 @@ def ensc_appendix(rows,conclusion,gate):
                         'Per-dataset selected-capability contrasts, in percentage points. Unqualified rows are diagnostic observations only and do not enter a formal macro conclusion. Negative values and losses remain visible.','tab:ensc-four-way',long=True))
     return output
 
-def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate):
+def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate,*,public=False):
     """Render the fixed G1--G3 evidence without selecting configurations."""
     datasets=['ORL_att92','YaleB_cropped2414'];gammas=[0.,.001,1.,10.,1000.,1000000.]
     labels={'ORL_att92':'ORL','YaleB_cropped2414':'YaleB cropped'}
@@ -485,22 +485,24 @@ def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate
         complete=row.get('status')=='COMPLETED' and str(value(row,'n','n_trials',default=''))=='50'
         complete=complete and all(number(row.get(field))!='--' for field in ['acc_mean','nmi_mean','acc_sd','nmi_sd'])
         if state and _usps_bool(state.get('point_complete')) is False:complete=False
-        outcome='saved '+str(state.get('saved_output_state','unavailable'))+'; controller '+str(state.get('controller_status','unavailable')) if state else str(row.get('status','UNAVAILABLE'))
+        if public:
+            outcome=str(state.get('saved_output_state') or state.get('status') or row.get('status','UNAVAILABLE'))
+        else:outcome='saved '+str(state.get('saved_output_state','unavailable'))+'; controller '+str(state.get('controller_status','unavailable')) if state else str(row.get('status','UNAVAILABLE'))
         stats=graph_stats.get((row.get('dataset'),row.get('config_id')), {})
         return row if complete else {},row,stats,break_text(outcome)
-    output=[r'\subsection{New fixed-representation graph evidence: G1--G3}',
+    output=[r'\subsection{Fixed-representation graph evidence: G1--G3}' if public else r'\subsection{New fixed-representation graph evidence: G1--G3}',
         r'This section uses the preregistered full ORL and cropped YaleB inputs, independently of retrospective subset winners. No best gamma, budget, graph or seed is selected here. Means and sample SD use the same fifty paired greedy K-means++/Lloyd seeds 0--49. A dash denotes unavailable evidence. C/U records certified/uncertified solver status; certification does not imply accurate clustering. The source files and hashes are listed in the generated report-input manifest.']
     if coverage:
         total=len(coverage);declared=coverage_manifest.get('intended_tasks','unavailable')
-        output.append(escape(f'Graph coverage snapshot: {total} committed rows; manifest declares {declared} intended tasks. The full design has 362 tasks (2 G1, 48 G2 and 312 G3). Controller execution and saved scientific output are counted separately; a saved point can survive a failed controller.'))
+        output.append(escape(f'The graph design contains {total} recorded comparisons across G1, G2 and G3. Scientific outcome and numerical qualification remain distinct.' if public else f'Graph coverage snapshot: {total} committed rows; manifest declares {declared} intended tasks. The full design has 362 tasks (2 G1, 48 G2 and 312 G3). Controller execution and saved scientific output are counted separately; a saved point can survive a failed controller.'))
         counts=[]
         for phase in ['G1','G2','G3']:
             rows=[row for row in coverage if row.get('phase')==phase]
-            for kind,key in [('Controller','controller_status'),('Saved output','saved_output_state')]:
+            for kind,key in ([('Scientific output','saved_output_state')] if public else [('Controller','controller_status'),('Saved output','saved_output_state')]):
                 counts.extend([phase,kind,break_text(state),str(count)] for state,count in sorted(Counter(row.get(key,'UNAVAILABLE') for row in rows).items()))
         output.append(table(['Phase','Observation','State','Tasks'],counts,'p{1cm}p{2cm}p{8cm}p{.8cm}',
-            'Full intended graph coverage, including failed, pending and unrun tasks. Shared mathematical problem IDs remain aliases rather than independent reruns.','tab:graph-design-coverage',long=True))
-    else:output.append(r'The committed 362-task graph coverage inventory is unavailable. Missing launch records are not treated as completed experiments.')
+            ('Graph-design coverage, including unsuccessful and unevaluated configurations. Shared mathematical problem identities are aliases, not independent measurements.' if public else 'Full intended graph coverage, including failed, pending and unrun tasks. Shared mathematical problem IDs remain aliases rather than independent reruns.'),'tab:graph-design-coverage',long=True))
+    else:output.append(r'Graph-design coverage is unavailable; no additional completed comparison is inferred.' if public else r'The committed 362-task graph coverage inventory is unavailable. Missing launch records are not treated as completed experiments.')
     output.append(r'\paragraph{G1: fixed gamma 1 casebooks.} Casebook correctness uses an optimal assignment separately for each partition. Error-rate means below average the fifty paired rounding outcomes; deltas are SSC minus SC. They describe the fixed data and representation, not independent test datasets.')
     errors=[];performance=[];strata=[];examples=[];pollution=[]
     for row in casebooks:
@@ -552,7 +554,7 @@ def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate
                     g2.append([escape(labels[dataset]),anchor,graph,significant(gamma,4),metric(means,'acc',native=False),metric(means,'nmi',native=False),
                         cert(row),significant(row.get('normalized_L21_movement'),3),outcome])
     output.append(r'\paragraph{G2: all 48 fixed cells.} F0 is the saved raw spectral anchor; U is its row-normalized version. W0 and Wa are constructed in those respective geometries. Every graph is mass-matched to W0; equal mass does not equalize node forces or movement. Gamma zero is the anchor-only SC endpoint. Cached gamma-zero graph-arm rows are declared aliases, not independent fits.')
-    output.append(table(['Data','Anchor','Graph',r'$\gamma$','ACC','NMI','Cert.','L21 move','Saved / controller outcome'],g2,'p{1.4cm}p{.6cm}p{.6cm}p{1.1cm}p{1.7cm}p{1.7cm}p{.55cm}p{.9cm}p{2.6cm}',
+    output.append(table(['Data','Anchor','Graph',r'$\gamma$','ACC','NMI','Cert.','L21 move','Scientific outcome' if public else 'Saved / controller outcome'],g2,'p{1.4cm}p{.6cm}p{.6cm}p{1.1cm}p{1.7cm}p{1.7cm}p{.55cm}p{.9cm}p{2.6cm}',
         'Complete fixed G2 path, including unavailable/failed cells. Movement is sum of row displacements divided by sum of anchor row norms; it is not Frobenius movement.','tab:graph-g2-all-cells',long=True))
     output.append(r'\paragraph{G3: fixed primary budget and gamma.} The following rows use only the 15\% addition budget and effective E8 gamma 1000. Additions come from the already frozen label-blind pool, with at most two newly incident edges per node and median positive W0 edge weight before mass matching. Oracle additions join same-class components after cross-class deletion and are reused unchanged in add-only and both arms. Other gammas and the 5\% budget remain sensitivity records in the full CSVs, not alternative promotion gates.')
     arms=[('none','No edits'),('delete','Oracle delete'),('add','Oracle add'),('both','Oracle delete+completion')]
@@ -594,6 +596,8 @@ def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate
 
 def generate(root: Path,date: str='2026-11-10'):
     root=root.resolve();refresh=root/'results/submission_refresh';refresh.mkdir(parents=True,exist_ok=True);subset=root/'results/subset_search';out=root/'report/tables';out.mkdir(parents=True,exist_ok=True)
+    evidence_manifest=root/'configs/submission_refresh/evidence_manifest.json'
+    public=read_json(evidence_manifest,{}).get('schema')=='submission-scalar-evidence-public-v1'
     names={'historical':refresh/'joint_metric_selection.csv','historical_endpoints':refresh/'endpoint_comparison.csv',
            'historical_all_joint':refresh/'all_joint_configurations.csv','historical_all_native':refresh/'all_native_endpoints.csv',
            'paper':refresh/'paper_reference_verification.json','catalogue':subset/'candidate_catalogue.json',
@@ -603,7 +607,7 @@ def generate(root: Path,date: str='2026-11-10'):
            'baseline':refresh/'baseline_diagnostics.csv','extension':refresh/'extension_results.csv',
            'graph_diagnostics':refresh/'graph_diagnostics.csv','casebooks':refresh/'casebook_summary.csv',
            'graph_execution':refresh/'graph_execution_coverage.csv','graph_coverage_manifest':refresh/'graph_coverage_manifest.json',
-           'graph_protocol':root/'configs/submission_refresh/extension_protocol.yaml',
+           'graph_protocol':root/('configs/submission_refresh/graph_design.public.v1.json' if public else 'configs/submission_refresh/extension_protocol.yaml'),
            'gate':refresh/'extension_gate.json','resource':refresh/'resource_usage.json','cohort':root/'configs/subset_search/executable_cohort.json',
            'repeatability':refresh/'historical_repeatability_summary.csv','repeatability_manifest':refresh/'historical_repeatability_manifest.json',
            'usps_solver_evaluation':refresh/'usps_solver_evaluation.csv',
@@ -613,6 +617,7 @@ def generate(root: Path,date: str='2026-11-10'):
            'certified_search_status':subset/'certified_search_status.csv',
            'ensc_capability':refresh/'ensc_capability_and_operating_point.csv',
            'ensc_conclusion':refresh/'ensc_four_benchmark_conclusion.json'}
+    if public:names['evidence_manifest']=evidence_manifest
     logical_names=dict(names)
     for key,path in names.items():
         if path.suffix=='.csv':names[key]=resolve_csv(path) or path
@@ -662,6 +667,12 @@ def generate(root: Path,date: str='2026-11-10'):
     if cohort.get('candidate_ids'):
         coverage_text+=f"The label-blind executable cohort freezes {len(cohort['candidate_ids'])} entries before scoring. "
     coverage_text+=r'The search distribution and locked-winner confirmation are reported separately in the appendix; a larger search may improve numerical matching without resolving historical identity.'
+    if public:
+        if names['coverage'].exists():
+            coverage_text=(f"The evaluated design obtained complete SSC configurations on {coverage.get('complete_unique_candidates','NA')} unique inputs, yielding {coverage.get('complete_unique_configurations','NA')} input/configuration pairs. "
+                           f"Of these, {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC settings and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed the 30-SSC plus three matched-SC design. ")
+        else:coverage_text='Evaluated source/subset coverage and selected scores are unavailable. '
+        coverage_text+='Aliases are provenance entries, and diagnostic parents are excluded from equivalent paper reconstruction. Additional rounding on locked selections measures conditional stability; closer numerical matching does not identify historical data.'
     write('refresh_coverage',r'\noindent '+escape(coverage_text)+'\n')
     complete=[r for r in baseline if r.get('status')=='COMPLETED' and str(r.get('n_trials','50'))=='50' and number(r.get('acc_mean'))!='--']
     if names['baseline'].exists():
@@ -671,6 +682,9 @@ def generate(root: Path,date: str='2026-11-10'):
         if not complete:repairs_text+='No new baseline endpoint currently qualifies as a complete measured result. '
     else:repairs_text='The repaired baseline implementations are available; new baseline result aggregation is pending. No additional benchmark result is inferred from implementation tests. '
     repairs_text+='Native 16-by16 MSRA and adapted LDA-to-SC remain separately named adaptations; exact historical LDA-SC remains unavailable.'
+    if public:
+        repairs_text=(f"The baseline comparison contains {slps} complete 50-seed SLPS configurations, {lda} LDA configurations/control endpoints and {other} other configurations. " if names['baseline'].exists() else 'Baseline measurements are unavailable. ')
+        repairs_text+='The appendix retains numerical failures, iteration-limit outcomes and update diagnostics. Native 16-by-16 MSRA and ridge LDA-to-SC are explicitly named adaptations; exact historical LDA-SC remains unresolved.'
     write('refresh_repairs',r'\noindent '+escape(repairs_text)+'\n')
     if gate:
         decision=gate.get('decision','UNAVAILABLE');g4=gate.get('G4_G5_status','UNAVAILABLE')
@@ -683,6 +697,15 @@ def generate(root: Path,date: str='2026-11-10'):
         else:ext_text+='The four-benchmark capability and locked-operation conclusions remain unavailable. '
     else:ext_text='G1--G3 are implemented and preregistered; no aggregated new graph-repair result is available. G4/G5 have not been promoted, and the four-benchmark target is unavailable. '
     ext_text+='The earlier 0/4 wrong-edge gate is retained as a historical result; it is not replaced by this protocol.'
+    if public:
+        decision=gate.get('decision','UNAVAILABLE')
+        ext_text=f"The fixed oracle graph-intervention criterion is {decision.lower().replace('_',' ')}. "
+        capability=ensc_macro_qualified(ensc_conclusion);operating=ensc_macro_qualified(ensc_conclusion,'locked_label_free_gamma1')
+        if capability and operating:ext_text+='The four-benchmark capability and locked-operation targets are qualified and reported separately. '
+        elif capability:ext_text+='The capability target is qualified; locked operation lacks a qualified four-benchmark comparison. '
+        elif operating:ext_text+='Locked operation is qualified; capability lacks a qualified four-benchmark comparison. '
+        else:ext_text+='The capability and locked-operation macro targets are unavailable because all four required comparisons must be qualified. '
+        ext_text+='Oracle graph evidence, unsupervised affinity construction and net shrinkage gains are distinct conclusions.'
     write('refresh_extension',r'\noindent '+escape(ext_text)+'\n')
 
     appendix=[r'\subsection{Jointly reselected historical mean endpoint}',
@@ -719,7 +742,7 @@ def generate(root: Path,date: str='2026-11-10'):
         ranges=[number(row.get(field+'_min'))+'--'+number(row.get(field+'_max')) for field in ['ACC','NMI','selected_ACC','selected_NMI']]
         repeat_rows.append([break_text(setting),escape(row.get('batches','--')),*ranges])
     if repeat_rows:appendix.append(table(['SSC setting','Batches','Batch ACC','Batch NMI','Native ACC','Native NMI'],repeat_rows,'p{4.0cm}rrrrr',long=True))
-    else:appendix.append(r'No validated multi-batch summary is currently available; no repeatability result is inferred.')
+    else:appendix.append(r'Multi-batch repeatability evidence is unavailable.' if public else r'No validated multi-batch summary is currently available; no repeatability result is inferred.')
     appendix += [r'\subsection{Dataset-subset matching: both endpoints and eligibility pools}',
                  r'The following rows use complete evaluated configurations only. Paper values are fixed SSC targets. R/V/G denote random, vanilla K-means++ and sklearn greedy K-means++; each is one Lloyd start. Specification-compatible dimensions/counts do not establish historical pixel identity. Adapted rows retain explicit source/resolution/preparation differences. Diagnostic parents cannot win either pool.']
     for endpoint in ENDPOINTS:
@@ -745,7 +768,7 @@ def generate(root: Path,date: str='2026-11-10'):
                         detail+=r' $\Delta_{\rm SD,ACC}='+number(row.get('delta_acc_sd_pp'))+r'$ pp; $\Delta_{\rm SD,NMI}='+number(row.get('delta_nmi_sd_pp'))+'$ pp.'
                     rows.append(r'\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+detail+r'} \\')
         appendix.append(table(['Data / pool','Selected candidate','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$'],rows,'p{1.6cm}p{3.3cm}rrrrr',long=True))
-    appendix += certified_search_appendix(read_csv(names['certified_search_status']))
+    appendix += certified_search_appendix(read_csv(names['certified_search_status']),public=public)
     appendix.append(r'\subsection{Additional rounding on locked winners}')
     if confirmations:
         rows=[]
@@ -755,8 +778,8 @@ def generate(root: Path,date: str='2026-11-10'):
                          number(row.get('selection_acc')),number(row.get('selection_nmi')),metric({**conf,'endpoint':row.get('endpoint')},'acc'),metric({**conf,'endpoint':row.get('endpoint')},'nmi'),escape(row.get('status','--'))])
         appendix.append(table(['Data','Endpoint','Select ACC','Select NMI','Confirm ACC','Confirm NMI','Status'],rows,'llrrrrl',long=True))
         appendix.append(r'Additional seeds check rounding on the same samples and saved G. Winners are not reselected. These intervals/SD do not establish historical identity, unseen-data generalization or label-free model selection.')
-    else:appendix.append(r'No completed additional-rounding record is currently aggregated. Winners, if available, remain locked; no stability result is inferred.')
-    appendix.append(r'\subsection{Complete baseline repair endpoints}')
+    else:appendix.append(r'Additional-rounding evidence is unavailable; no stability result is inferred.' if public else r'No completed additional-rounding record is currently aggregated. Winners, if available, remain locked; no stability result is inferred.')
+    appendix.append(r'\subsection{Baseline comparisons}' if public else r'\subsection{Complete baseline repair endpoints}')
     if baseline and any(r.get('method') for r in baseline):
         rows=[]
         for row in baseline:
@@ -765,14 +788,18 @@ def generate(root: Path,date: str='2026-11-10'):
             setting='limit '+str(row['max_iter']) if row.get('max_iter') else str(row.get('config_id','')).split('|')[-1].replace('spls__','')
             rows.append([break_text(row.get('dataset','--')).replace(r'MSRA25\_EBSA\_16x16','MSRA16'),name,break_text(setting),metric(row,'acc'),metric(row,'nmi'),break_text(row.get('status','--'))])
             if row.get('termination_counts'):
-                diagnostics=f"Stops: {row['termination_counts']}; failed updates: {row.get('update_failures_total','--')}; zero-success runs: {row.get('no_successful_lda_update_runs','--')}."
+                stops=row['termination_counts']
+                if public:
+                    counts=unpack_json(stops,{})
+                    if isinstance(counts,dict):stops=', '.join(str(key).replace('_',' ')+' ('+str(count)+')' for key,count in sorted(counts.items()))
+                diagnostics=f"Stops: {stops}; failed updates: {row.get('update_failures_total','--')}; zero-success runs: {row.get('no_successful_lda_update_runs','--')}."
                 rows.append(r'\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+escape(diagnostics)+r'} \\')
         appendix.append(table(['Data','Method','Setting','ACC','NMI','Status'],rows,'p{2.0cm}p{2.1cm}p{2.1cm}rrp{1.7cm}',long=True))
-    else:appendix.append(r'Baseline result aggregation is pending or contains no complete endpoint. Implementation tests do not establish benchmark performance.')
-    appendix += usps_numerical_appendix(read_csv(names['usps_solver_evaluation']),read_csv(names['usps_continuation_audit']),read_csv(names['usps_continuation_evaluation']),read_json(names['usps_numerical_reference_input_identity'],{}))
+    else:appendix.append(r'No complete baseline endpoint is available.' if public else r'Baseline result aggregation is pending or contains no complete endpoint. Implementation tests do not establish benchmark performance.')
+    appendix += usps_numerical_appendix(read_csv(names['usps_solver_evaluation']),read_csv(names['usps_continuation_audit']),read_csv(names['usps_continuation_evaluation']),read_json(names['usps_numerical_reference_input_identity'],{}),public=public)
     appendix += graph_appendix(extension,read_csv(names['graph_diagnostics']),read_csv(names['casebooks']),
-        read_csv(names['graph_execution']),read_json(names['graph_coverage_manifest'],{}),gate)
-    appendix += ensc_appendix(ensc_rows,ensc_conclusion,gate)
+        read_csv(names['graph_execution']),read_json(names['graph_coverage_manifest'],{}),gate,public=public)
+    appendix += ensc_appendix(ensc_rows,ensc_conclusion,gate,public=public)
     appendix.append(r'\subsection{Coverage, solver qualification and cost}')
     if names['coverage'].exists():
         appendix.append(escape(f"Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. {coverage.get('complete_unique_candidates','NA')} unique inputs yielded {coverage.get('complete_unique_configurations','NA')} complete SSC input/configuration pairs; {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC points and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed all 30 SSC plus three matched-SC points."))
@@ -788,12 +815,20 @@ def generate(root: Path,date: str='2026-11-10'):
         appendix.append(table(['Execution status','Intended combinations'],
             [[break_text(status),str(count)] for status,count in sorted(coverage['status_counts'].items())],
             'p{9cm}r',long=True))
-    if resources:
+    if public and resources:
+        hours=resources.get('total_cpu_core_hours')
+        if hours is None and resources.get('total_cpu_seconds') is not None:hours=float(resources['total_cpu_seconds'])/3600
+        workers=resources.get('max_workers','--');rss=resources.get('rss_target_bytes')
+        rss_text=number(float(rss)/(1024**3),1)+' GiB' if rss is not None else 'unavailable'
+        appendix.append(escape(f"The computational cost is {number(hours,4)} CPU-core hours. Experiments used at most {workers} single-thread workers and an aggregate RSS target of {rss_text}. Cost and numerical qualification are reported separately from clustering performance."))
+        costs=resources.get('phase_cpu_seconds',{})
+        if costs:appendix.append(table(['Experiment group','CPU seconds'],[[break_text(phase),number(seconds,1)] for phase,seconds in sorted(costs.items())],'lr',long=True))
+    elif resources:
         ledger=resources.get('ledger',resources)
         entries=ledger.get('entries',[]);charged=sum(float(r.get('charged_cpu_seconds',0)) for r in entries)/3600
         appendix.append(escape(f"Shared ledger charged {charged:.4f} CPU-core hours as of this aggregation. Limit 36, with 2 reserved for final checks; at most 2 single-thread workers and 8 GiB aggregate RSS target. Active reservations: {len(ledger.get('active',{}))}. This is a snapshot, not a prediction of final resource use."))
-    else:appendix.append(r'Resource aggregation is not yet available.')
-    if gate:appendix.append(r'\paragraph{Graph gate.} '+escape(f"Promotion status: {gate.get('decision','unavailable')}; dependent experiments: {gate.get('G4_G5_status','unavailable')}. Four-benchmark performance conclusion remains unavailable unless complete valid controls and all four datasets exist."))
+    else:appendix.append(r'Computational cost is unavailable.' if public else r'Resource aggregation is not yet available.')
+    if gate:appendix.append(r'\paragraph{Graph criterion.} '+escape(f"Oracle intervention criterion: {gate.get('decision','unavailable')}. A formal four-benchmark performance conclusion requires complete, qualified controls on all four datasets.") if public else r'\paragraph{Graph gate.} '+escape(f"Promotion status: {gate.get('decision','unavailable')}; dependent experiments: {gate.get('G4_G5_status','unavailable')}. Four-benchmark performance conclusion remains unavailable unless complete valid controls and all four datasets exist."))
     plotted=figure(root,joint,papers,closest,cat)
     if plotted:appendix += [r'\begin{figure}[p]\centering\includegraphics[width=\linewidth,height=.86\textheight,keepaspectratio]{figures/subset_acc_nmi.pdf}',
         r'\caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}']
@@ -801,6 +836,7 @@ def generate(root: Path,date: str='2026-11-10'):
     write('refresh_appendix','\n\n'.join(appendix)+'\n')
     manifest={'schema':'report-inputs-v1','date':date,'inputs':inputs,'outputs':[str(p.relative_to(root)) for p in sorted(out.glob('refresh_*.tex'))],
               'statistical_endpoints_separate':True,'missing_values_are_not_zero':True,'no_score_selection_in_generator':True}
+    if public:manifest['presentation']='public-scientific'
     (refresh/'report_input_manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n')
     return manifest
 

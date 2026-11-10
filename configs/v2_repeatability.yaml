@@ -1,8 +1,0 @@
-# Best-of-50 repeatability. Batch 0 is seeds 0..49.
-n_batches: 10
-batch_size: 50
-seed_rule: batch b uses seeds 50*b .. 50*b+49
-priority_benchmarks: [ORL, JAFFE, YaleB, USPS]
-statistic: sample standard deviation across one selected trial per batch
-not_the_within_batch_sd: true
-protocols: [RANDOM_BEST_INERTIA50, KMEANSPP_BEST_INERTIA50]

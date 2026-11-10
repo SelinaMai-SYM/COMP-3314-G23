@@ -1,31 +1,53 @@
-# Course report source
+# Project report
 
-Run `make -C report` from the checkout root. It compiles the retained NeurIPS 2026 **preprint** template and copies the resulting PDF to `Group_23.pdf`. TeX Live/LaTeX with BibTeX is required; no publisher PDF, image dataset, old branch or external worktree is used.
+**Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset
+Uncertainty**
 
-Tables and figures are generated from committed scalar manifests and measured records:
+Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying — Group 23,
+The University of Hong Kong, COMP3314 Machine Learning.
+
+The [report PDF](Group_23.pdf) presents the SSC formulation, historical paper
+reconstruction, numerical certificates, baseline comparisons and graph mechanism
+experiments. Final source/subset matches and locked-selection rounding are
+explicitly reserved, without partial winners. The NeurIPS 2026 preprint format has at most four main-text
+pages; references and the detailed scientific appendix are separate. The appendix
+contains full endpoint/coverage qualifications rather than treating unavailable
+results as zeros.
+
+## Build
+
+From the checkout root, after installing the
+[pinned Python dependencies](../environment/requirements.lock.txt):
 
 ```bash
-python -m scripts.final.analyze_next_round
-python -m scripts.final.build_delivery
-python -m scripts.final.summarize_secondary
-python -m scripts.final.plot_delivery
-python -m scripts.final.finalize_records
 make -C report
 ```
 
-The resource-ledger timestamp/envelope is retained when the measured inputs are unchanged; it is an audit envelope, not a new experiment. Rebuilding numerical tables does not rerun fits. Main text ends at `main_end` and must remain at most four pages; references and appendices are excluded. The checklist and presentation outline are under `docs/final/`.
+The build requires `make`, Bash, TeX Live with `pdflatex`, BibTeX, `standalone`,
+TikZ and AMS math, plus Poppler's `pdftocairo` for figure conversion. It regenerates
+tables from the historical and completed flat scalar records and writes
+`report/Group_23.pdf`. Raw image
+archives and model fitting are not required.
 
-## Method flowchart
+`PYTHON` selects the interpreter; `REPORT_DATE` controls the generated metadata
+date. The table generator supports direct script invocation and loads its CSV
+transport helper from the same checkout. A logical CSV can be supplied as its
+sole gzip representation; ambiguous plain/gzip duplicates are rejected.
 
-The authoritative editable drawing is `report/figures/ssc_two_graph_pipeline.tikz`; the adjacent `.tex` file only wraps it for standalone compilation. From the repository root:
+## Editable diagram and result sources
+
+The diagram source is [ssc_two_graph_pipeline.tikz](figures/ssc_two_graph_pipeline.tikz),
+with a standalone wrapper beside it. Rebuild its PDF/SVG/PNG exports with:
 
 ```bash
 bash scripts/build_ssc_pipeline.sh
-make -C report
 ```
 
-Requires Bash, TeX Live (`pdflatex`, `standalone`, TikZ, AMS math), and Poppler (`pdftocairo`). The script exports the report PDF and GitHub SVG/PNG from the same drawing; SVG glyphs are vector paths, so no viewer font installation is needed. The PDF is included at report text width (approximately 9 pt figure text, with 8 pt arrow labels).
-
-For an isolated rebuild, pass a new output directory, for example `bash scripts/build_ssc_pipeline.sh /tmp/ssc-figure-check`. Only the output root changes; sources are resolved relative to the script, without data, caches, or another checkout. Exports appear under `report/figures/` (PDF) and `docs/figures/` (SVG and PNG) within that directory.
-
-The diagram follows `spectral_embedding.py` (X to A, normalized Laplacian, c smallest eigenvectors), `ssc.py` (F to W, fixed F/W refinement, K-means on G), and `objective.py` (unsquared Equation 8 norms). The symmetric ordered-pair sum in code equals twice the undirected-edge sum in the figure. Row normalization remains a protocol choice; the existing E8/E13 discussion in the report still applies to historical solver outputs.
+The input graph A and shrinkage graph W retain their distinct roles in both the
+diagram and code. Generated report tables share the authoritative records used
+by the [combined benchmark tables](../results/submission_refresh/per_benchmark/).
+Final subset/scientific-archive rebuild interfaces require the corresponding
+published final manifests; see [release availability](../docs/reproducibility.md#final-release-interfaces).
+See [methods](../docs/methods.md), [experimental protocol](../docs/experimental_protocol.md),
+[data](../docs/data.md), [reproducibility](../docs/reproducibility.md),
+[results](../docs/results.md) and [limitations](../docs/limitations.md).

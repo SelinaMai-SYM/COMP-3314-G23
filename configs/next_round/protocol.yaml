@@ -1,3 +1,5 @@
+# Historical scientific design for secondary mechanisms. Role labels describe
+# the declared hypotheses; measured outcomes and qualifications are separate.
 version: performance-mechanisms-v1.1
 primary_datasets: [ORL_att92, JAFFE, YaleB_cropped2414, USPS]
 alternate_yale: YaleB_dengcai32

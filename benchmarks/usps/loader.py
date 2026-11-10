@@ -34,7 +34,7 @@ def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[
         path = root_dir / relative
         if not path.is_file():
             raise FileNotFoundError(
-                f"missing {path}. Place the external archive listed in docs/v3_final/external_data_manifest.csv."
+                f"missing {path}. See docs/data.md for provider files and independent data-root setup."
             )
         x_part, y_part = preprocess(path, expected_n, expected_counts)
         parts_x.append(x_part)

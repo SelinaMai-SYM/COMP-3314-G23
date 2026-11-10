@@ -52,3 +52,13 @@ runs/next_round/
 .rebuild-*/
 results/**/.rebuild-*/
 tmp/
+
+# Local model artifacts and publication checks
+runs/
+artifacts/
+report/main.pdf
+results/**/language_inventory.json
+results/**/external_link_checks.json
+results/**/link_audit.csv
+results/**/artifact_manifest.json
+results/**/source_records.json.gz

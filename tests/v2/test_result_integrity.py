@@ -50,3 +50,18 @@ def test_paper_numbers_match_the_audited_module() -> None:
     sc_nmi, _ = paper_stat("nmi", "sc", "YaleB")
     ssc_nmi, _ = paper_stat("nmi", "ssc", "YaleB")
     assert ssc_nmi < sc_nmi
+
+
+def test_historical_diagnosis_requires_explicit_references(monkeypatch):
+    from types import SimpleNamespace
+    from experiments.v2_kmeans_protocol import verify_provenance as provenance
+
+    def unavailable(*args, **kwargs):
+        raise AssertionError("Absent historical references must not load data or refit a representation")
+
+    monkeypatch.setattr(provenance, "read_trials", unavailable)
+    monkeypatch.setattr(provenance, "load_features", unavailable)
+    monkeypatch.setattr(provenance, "_compare_prepare_ssc_family", unavailable)
+    result = provenance.diagnose_entry(SimpleNamespace(benchmark="ORL", version="att92"))
+    assert result["reference_present"] is False
+    assert result["matches_v1_random_lloyd"] is False

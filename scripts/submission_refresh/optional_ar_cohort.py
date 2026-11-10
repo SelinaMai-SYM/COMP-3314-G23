@@ -1,7 +1,7 @@
 """Freeze a last-priority AR common-mask cohort from blind cost metadata.
 
-Preparation only until explicitly invoked after graph/G4 closure. No matrix
-objects or performance values are decoded. A frozen decision is immutable:
+Scope selection follows the completed fixed graph design. No matrix objects
+or performance values are decoded. A frozen decision is immutable:
 resume verifies/reuses it rather than consulting updated costs or scores.
 """
 from __future__ import annotations

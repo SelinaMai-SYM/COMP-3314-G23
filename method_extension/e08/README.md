@@ -1,3 +1,14 @@
-# E08 — recurrence and row weights together
+# E08: recurrence with weighted fidelity
 
-Use the same p_ij as E01 and the same α_i as E02. Both are computed from F and then held fixed. The solver is the alpha-weighted E8 iteration. Compare with SSC, E01, and E02 on the same F. Do not rank the methods by which objective value is smaller: E02 and E08 optimize a different function from Equation (8).
+`CombinedRecurrenceReliabilitySSC` combines the fixed recurrence
+probabilities of [E01](../e01/README.md) and the positive fidelity weights
+of [E02](../e02/README.md). Both are computed from \(F\) before fitting.
+
+The weighted E8 solve is compared with SSC, E01 and E02 on the same anchor.
+Its modified fidelity means raw objective values are not comparable to
+original Equation 8 as a method ranking. A combined score cannot isolate
+the contribution of either component without the separate controls.
+
+See the [adaptation index](../README.md),
+[theory](../../docs/theory.md), [results](../../docs/results.md)
+and [reproducibility](../../docs/reproducibility.md).

@@ -31,6 +31,33 @@ else:
 
 BENCHMARKS=['AR','JAFFE','ORL','UMIST','BinAlpha','MSRA50','YaleB','USPS']
 ENDPOINTS=['mean_sample_sd_50','native_best_of_50']
+PUBLICATION_STAGE={
+    'schema':'public-publication-stage-v1',
+    'stage':'methods-and-completed-studies',
+    'presentation':'public-scientific',
+}
+SUBSET_RESERVED=(
+    'Final SSC source/subset matching and locked-winner confirmation are reserved '
+    'for the completed, validated scalar release. This edition presents the '
+    'method, historical reconstruction and completed baseline, numerical and '
+    'graph studies. No partial subset winner, performance average or confirmation '
+    'result is reported.'
+)
+
+
+def public_presentation_inputs(root):
+    """Choose publication style; this never qualifies a numerical result."""
+    root=Path(root)
+    evidence=root/'configs/submission_refresh/evidence_manifest.json'
+    if evidence.is_file() and json.loads(evidence.read_text()).get('schema')=='submission-scalar-evidence-public-v1':
+        return {'evidence_manifest':evidence}
+    stage=root/'configs/submission_refresh/publication_stage.json'
+    if stage.is_file():
+        if json.loads(stage.read_text())!=PUBLICATION_STAGE:
+            raise ValueError('Unsupported explicit publication stage')
+        return {'publication_stage':stage}
+    return {}
+
 METHODS={'kmeans':'K-means','sc':'SC','pca_kmeans':'PCA--K-means','pca_spectral':'PCA--SC',
          'pca_sc':'PCA--SC','lda_kmeans':'LDA--K-means','lda_spectral':'LDA--SC',
          'lda_sc':'LDA--SC','llc':'LLC','spls':'SLPS','ssc':'SSC','lda_existing':'LDA existing',
@@ -596,8 +623,9 @@ def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate
 
 def generate(root: Path,date: str='2026-11-10'):
     root=root.resolve();refresh=root/'results/submission_refresh';refresh.mkdir(parents=True,exist_ok=True);subset=root/'results/subset_search';out=root/'report/tables';out.mkdir(parents=True,exist_ok=True)
-    evidence_manifest=root/'configs/submission_refresh/evidence_manifest.json'
-    public=read_json(evidence_manifest,{}).get('schema')=='submission-scalar-evidence-public-v1'
+    presentation_inputs=public_presentation_inputs(root)
+    public=bool(presentation_inputs)
+    subset_reserved='publication_stage' in presentation_inputs
     names={'historical':refresh/'joint_metric_selection.csv','historical_endpoints':refresh/'endpoint_comparison.csv',
            'historical_all_joint':refresh/'all_joint_configurations.csv','historical_all_native':refresh/'all_native_endpoints.csv',
            'paper':refresh/'paper_reference_verification.json','catalogue':subset/'candidate_catalogue.json',
@@ -617,7 +645,7 @@ def generate(root: Path,date: str='2026-11-10'):
            'certified_search_status':subset/'certified_search_status.csv',
            'ensc_capability':refresh/'ensc_capability_and_operating_point.csv',
            'ensc_conclusion':refresh/'ensc_four_benchmark_conclusion.json'}
-    if public:names['evidence_manifest']=evidence_manifest
+    names.update(presentation_inputs)
     logical_names=dict(names)
     for key,path in names.items():
         if path.suffix=='.csv':names[key]=resolve_csv(path) or path
@@ -634,6 +662,10 @@ def generate(root: Path,date: str='2026-11-10'):
     coverage=read_json(names['coverage'],{});cohort=read_json(names['cohort'],{});joint=read_csv(names['joint']);closest=read_csv(names['closest'])
     baseline=read_csv(names['baseline']);extension=read_csv(names['extension']);gate=read_json(names['gate'],{})
     confirmations=read_csv(names['confirmation']);resources=read_json(names['resource'],{})
+    if subset_reserved:
+        # The explicit initial edition cannot publish an interim winner even
+        # if an unrelated partial summary was left beside its completed studies.
+        joint=[];closest=[];coverage={};confirmations=[]
     ensc_rows=read_csv(names['ensc_capability']);ensc_conclusion=read_json(names['ensc_conclusion'],{})
     def write(name,text):
         (out/(name+'.tex')).write_text('% Generated from authoritative CSV/JSON records; do not edit.\n'+text)
@@ -668,11 +700,13 @@ def generate(root: Path,date: str='2026-11-10'):
         coverage_text+=f"The label-blind executable cohort freezes {len(cohort['candidate_ids'])} entries before scoring. "
     coverage_text+=r'The search distribution and locked-winner confirmation are reported separately in the appendix; a larger search may improve numerical matching without resolving historical identity.'
     if public:
-        if names['coverage'].exists():
+        if subset_reserved:
+            coverage_text=SUBSET_RESERVED
+        elif names['coverage'].exists():
             coverage_text=(f"The evaluated design obtained complete SSC configurations on {coverage.get('complete_unique_candidates','NA')} unique inputs, yielding {coverage.get('complete_unique_configurations','NA')} input/configuration pairs. "
                            f"Of these, {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC settings and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed the 30-SSC plus three matched-SC design. ")
         else:coverage_text='Evaluated source/subset coverage and selected scores are unavailable. '
-        coverage_text+='Aliases are provenance entries, and diagnostic parents are excluded from equivalent paper reconstruction. Additional rounding on locked selections measures conditional stability; closer numerical matching does not identify historical data.'
+        if not subset_reserved:coverage_text+='Aliases are provenance entries, and diagnostic parents are excluded from equivalent paper reconstruction. Additional rounding on locked selections measures conditional stability; closer numerical matching does not identify historical data.'
     write('refresh_coverage',r'\noindent '+escape(coverage_text)+'\n')
     complete=[r for r in baseline if r.get('status')=='COMPLETED' and str(r.get('n_trials','50'))=='50' and number(r.get('acc_mean'))!='--']
     if names['baseline'].exists():
@@ -745,7 +779,9 @@ def generate(root: Path,date: str='2026-11-10'):
     else:appendix.append(r'Multi-batch repeatability evidence is unavailable.' if public else r'No validated multi-batch summary is currently available; no repeatability result is inferred.')
     appendix += [r'\subsection{Dataset-subset matching: both endpoints and eligibility pools}',
                  r'The following rows use complete evaluated configurations only. Paper values are fixed SSC targets. R/V/G denote random, vanilla K-means++ and sklearn greedy K-means++; each is one Lloyd start. Specification-compatible dimensions/counts do not establish historical pixel identity. Adapted rows retain explicit source/resolution/preparation differences. Diagnostic parents cannot win either pool.']
-    for endpoint in ENDPOINTS:
+    if subset_reserved:
+        appendix[-1]=escape(SUBSET_RESERVED)
+    for endpoint in ([] if subset_reserved else ENDPOINTS):
         heading='Mean/sample-SD over 50 fixed-G roundings' if endpoint=='mean_sample_sd_50' else 'Single native-best assignment among 50 fixed-G roundings'
         appendix.append(r'\paragraph{'+heading+'}')
         rows=[]
@@ -768,7 +804,7 @@ def generate(root: Path,date: str='2026-11-10'):
                         detail+=r' $\Delta_{\rm SD,ACC}='+number(row.get('delta_acc_sd_pp'))+r'$ pp; $\Delta_{\rm SD,NMI}='+number(row.get('delta_nmi_sd_pp'))+'$ pp.'
                     rows.append(r'\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+detail+r'} \\')
         appendix.append(table(['Data / pool','Selected candidate','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$'],rows,'p{1.6cm}p{3.3cm}rrrrr',long=True))
-    appendix += certified_search_appendix(read_csv(names['certified_search_status']),public=public)
+    if not subset_reserved:appendix += certified_search_appendix(read_csv(names['certified_search_status']),public=public)
     appendix.append(r'\subsection{Additional rounding on locked winners}')
     if confirmations:
         rows=[]
@@ -778,7 +814,7 @@ def generate(root: Path,date: str='2026-11-10'):
                          number(row.get('selection_acc')),number(row.get('selection_nmi')),metric({**conf,'endpoint':row.get('endpoint')},'acc'),metric({**conf,'endpoint':row.get('endpoint')},'nmi'),escape(row.get('status','--'))])
         appendix.append(table(['Data','Endpoint','Select ACC','Select NMI','Confirm ACC','Confirm NMI','Status'],rows,'llrrrrl',long=True))
         appendix.append(r'Additional seeds check rounding on the same samples and saved G. Winners are not reselected. These intervals/SD do not establish historical identity, unseen-data generalization or label-free model selection.')
-    else:appendix.append(r'Additional-rounding evidence is unavailable; no stability result is inferred.' if public else r'No completed additional-rounding record is currently aggregated. Winners, if available, remain locked; no stability result is inferred.')
+    else:appendix.append(r'Final locked-winner confirmation is reserved; no stability result is reported.' if subset_reserved else r'Additional-rounding evidence is unavailable; no stability result is inferred.' if public else r'No completed additional-rounding record is currently aggregated. Winners, if available, remain locked; no stability result is inferred.')
     appendix.append(r'\subsection{Baseline comparisons}' if public else r'\subsection{Complete baseline repair endpoints}')
     if baseline and any(r.get('method') for r in baseline):
         rows=[]
@@ -801,9 +837,9 @@ def generate(root: Path,date: str='2026-11-10'):
         read_csv(names['graph_execution']),read_json(names['graph_coverage_manifest'],{}),gate,public=public)
     appendix += ensc_appendix(ensc_rows,ensc_conclusion,gate,public=public)
     appendix.append(r'\subsection{Coverage, solver qualification and cost}')
-    if names['coverage'].exists():
+    if not subset_reserved and names['coverage'].exists():
         appendix.append(escape(f"Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. {coverage.get('complete_unique_candidates','NA')} unique inputs yielded {coverage.get('complete_unique_configurations','NA')} complete SSC input/configuration pairs; {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC points and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed all 30 SSC plus three matched-SC points."))
-    if cat:
+    if cat and not subset_reserved:
         summary_rows=[]
         for benchmark in BENCHMARKS:
             intended=[r for r in cat if r.get('benchmark')==benchmark]
@@ -820,7 +856,7 @@ def generate(root: Path,date: str='2026-11-10'):
         if hours is None and resources.get('total_cpu_seconds') is not None:hours=float(resources['total_cpu_seconds'])/3600
         workers=resources.get('max_workers','--');rss=resources.get('rss_target_bytes')
         rss_text=number(float(rss)/(1024**3),1)+' GiB' if rss is not None else 'unavailable'
-        appendix.append(escape(f"The computational cost is {number(hours,4)} CPU-core hours. Experiments used at most {workers} single-thread workers and an aggregate RSS target of {rss_text}. Cost and numerical qualification are reported separately from clustering performance."))
+        appendix.append(escape(f"The recorded scientific-campaign charge is {number(hours,4)} CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most {workers} single-thread workers and an aggregate RSS target of {rss_text}. Per-fit measured costs and numerical qualifications are reported separately from clustering performance."))
         costs=resources.get('phase_cpu_seconds',{})
         if costs:appendix.append(table(['Experiment group','CPU seconds'],[[break_text(phase),number(seconds,1)] for phase,seconds in sorted(costs.items())],'lr',long=True))
     elif resources:
@@ -829,7 +865,7 @@ def generate(root: Path,date: str='2026-11-10'):
         appendix.append(escape(f"Shared ledger charged {charged:.4f} CPU-core hours as of this aggregation. Limit 36, with 2 reserved for final checks; at most 2 single-thread workers and 8 GiB aggregate RSS target. Active reservations: {len(ledger.get('active',{}))}. This is a snapshot, not a prediction of final resource use."))
     else:appendix.append(r'Computational cost is unavailable.' if public else r'Resource aggregation is not yet available.')
     if gate:appendix.append(r'\paragraph{Graph criterion.} '+escape(f"Oracle intervention criterion: {gate.get('decision','unavailable')}. A formal four-benchmark performance conclusion requires complete, qualified controls on all four datasets.") if public else r'\paragraph{Graph gate.} '+escape(f"Promotion status: {gate.get('decision','unavailable')}; dependent experiments: {gate.get('G4_G5_status','unavailable')}. Four-benchmark performance conclusion remains unavailable unless complete valid controls and all four datasets exist."))
-    plotted=figure(root,joint,papers,closest,cat)
+    plotted=False if subset_reserved else figure(root,joint,papers,closest,cat)
     if plotted:appendix += [r'\begin{figure}[p]\centering\includegraphics[width=\linewidth,height=.86\textheight,keepaspectratio]{figures/subset_acc_nmi.pdf}',
         r'\caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}']
     appendix += [r'\paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: '+escape(date)+'.']
@@ -837,6 +873,7 @@ def generate(root: Path,date: str='2026-11-10'):
     manifest={'schema':'report-inputs-v1','date':date,'inputs':inputs,'outputs':[str(p.relative_to(root)) for p in sorted(out.glob('refresh_*.tex'))],
               'statistical_endpoints_separate':True,'missing_values_are_not_zero':True,'no_score_selection_in_generator':True}
     if public:manifest['presentation']='public-scientific'
+    if subset_reserved:manifest['publication_stage']='methods-and-completed-studies'
     (refresh/'report_input_manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n')
     return manifest
 

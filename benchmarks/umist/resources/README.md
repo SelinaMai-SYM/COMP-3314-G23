@@ -1,7 +1,14 @@
-# UMIST 2001 database page (Wayback)
+# UMIST source description
 
-| File | Bytes | SHA-256 | GET |
-| --- | --- | --- | --- |
-| `database_wayback_20010405.html` | 3878 | `a8a91fbea393f524e3275acad9356512145547217c18f446eb08eae849cb263a` | `https://web.archive.org/web/20010405174454id_/http://images.ee.umist.ac.uk/danny/database.html` HTTP 200 |
+The [archived UMIST database page](database_wayback_20010405.html) attributes the
+database to Graham and Allinson and describes 564 images of twenty people.
+It links the uncropped and cropped archives and records the original publication
+conditions. Recorded SHA-256:
+`a8a91fbea393f524e3275acad9356512145547217c18f446eb08eae849cb263a`.
 
-The page says the database “consists of 564 images of 20 people” and offers `face.tar.gz` (~29Mb) and `cropped.tar.gz` (~4.5Mb). The on-disk cropped archive matching that size is 575 PGM files (see `../README.md`). That mismatch is why 564 stays `CANDIDATE_ONLY`.
+The corresponding available cropped archive contains 575 PGM files and 565
+unique pixel rows. The stated count therefore does not determine the paper's
+membership. The LZUFE first-occurrence dedup564 candidate and cropped-source
+omission hypotheses remain distinct. See [UMIST source versions](../README.md),
+[the data guide](../../../docs/data.md) and
+[identity limitations](../../../docs/limitations.md).

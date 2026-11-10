@@ -2,79 +2,223 @@
   "date": "2026-11-10",
   "inputs": {
     "baseline": {
-      "available": false,
+      "available": true,
+      "logical_path": "results/submission_refresh/baseline_diagnostics.csv",
       "path": "results/submission_refresh/baseline_diagnostics.csv",
-      "sha256": null
+      "sha256": "7d5fcb162e05f7e0f3b8895db70f165219bde6c0e0be12e93a62af361decd0ea",
+      "transport": "plain"
+    },
+    "casebooks": {
+      "available": true,
+      "logical_path": "results/submission_refresh/casebook_summary.csv",
+      "path": "results/submission_refresh/casebook_summary.csv",
+      "sha256": "98aaabde33171622aeade40d08dc27eea9953e58c5cb9efbc077fe628f64fab8",
+      "transport": "plain"
     },
     "catalogue": {
       "available": true,
+      "logical_path": "results/subset_search/candidate_catalogue.json",
       "path": "results/subset_search/candidate_catalogue.json",
       "sha256": "cb82240d9f23ab781001b2c73b89ed6c6ef95f852175e8dac5cdd83cae449472"
     },
+    "certified_search_status": {
+      "available": false,
+      "logical_path": "results/subset_search/certified_search_status.csv",
+      "path": "results/subset_search/certified_search_status.csv",
+      "sha256": null,
+      "transport": null
+    },
     "closest": {
       "available": false,
+      "logical_path": "results/subset_search/closest_matches.csv",
       "path": "results/subset_search/closest_matches.csv",
-      "sha256": null
+      "sha256": null,
+      "transport": null
     },
     "cohort": {
       "available": true,
+      "logical_path": "configs/subset_search/executable_cohort.json",
       "path": "configs/subset_search/executable_cohort.json",
-      "sha256": "2a4cc8187048572c565201fc9d6be3b4d1684f7979f7dd06837434eff4107682"
+      "sha256": "495b7bfe0495ac821b73a6b7ce0680dd193df7d592098a3c1e6eb0918e09bc2c"
     },
     "confirmation": {
       "available": false,
+      "logical_path": "results/subset_search/rounding_confirmation.csv",
       "path": "results/subset_search/rounding_confirmation.csv",
-      "sha256": null
+      "sha256": null,
+      "transport": null
     },
     "coverage": {
       "available": false,
+      "logical_path": "results/subset_search/coverage_summary.json",
       "path": "results/subset_search/coverage_summary.json",
       "sha256": null
     },
+    "ensc_capability": {
+      "available": true,
+      "logical_path": "results/submission_refresh/ensc_capability_and_operating_point.csv",
+      "path": "results/submission_refresh/ensc_capability_and_operating_point.csv",
+      "sha256": "aa65a3edd302be7a15ed2b337ff72c93779658e05029932854404da9cc4fa96c",
+      "transport": "plain"
+    },
+    "ensc_conclusion": {
+      "available": true,
+      "logical_path": "results/submission_refresh/ensc_four_benchmark_conclusion.json",
+      "path": "results/submission_refresh/ensc_four_benchmark_conclusion.json",
+      "sha256": "906bf9e9b2573f2ae9512ec07262ddcb1717a6303943bcd4b21325ed481f30dc"
+    },
     "execution": {
       "available": false,
+      "logical_path": "results/subset_search/execution_coverage.csv",
       "path": "results/subset_search/execution_coverage.csv",
-      "sha256": null
+      "sha256": null,
+      "transport": null
     },
     "extension": {
-      "available": false,
+      "available": true,
+      "logical_path": "results/submission_refresh/extension_results.csv",
       "path": "results/submission_refresh/extension_results.csv",
-      "sha256": null
+      "sha256": "5d2de88e8c5e47d4f686c2c06d048a795b9e6716831dcf9051583dfd21ad1a74",
+      "transport": "plain"
     },
     "fixed": {
       "available": false,
+      "logical_path": "results/subset_search/fixed_protocol_summary.csv",
       "path": "results/subset_search/fixed_protocol_summary.csv",
-      "sha256": null
+      "sha256": null,
+      "transport": null
     },
     "gate": {
-      "available": false,
+      "available": true,
+      "logical_path": "results/submission_refresh/extension_gate.json",
       "path": "results/submission_refresh/extension_gate.json",
-      "sha256": null
+      "sha256": "cdffff6444aa102abb312c442d0124a1eb9516753170c4da96f24e40e252ef10"
+    },
+    "graph_coverage_manifest": {
+      "available": true,
+      "logical_path": "results/submission_refresh/graph_coverage_manifest.json",
+      "path": "results/submission_refresh/graph_coverage_manifest.json",
+      "sha256": "0578cb47774c010545898a2005a211feaf9fee15681010642cf7942d50774208"
+    },
+    "graph_diagnostics": {
+      "available": true,
+      "logical_path": "results/submission_refresh/graph_diagnostics.csv",
+      "path": "results/submission_refresh/graph_diagnostics.csv",
+      "sha256": "374a565c44039eab7fbd940951f3497472f9fbbc6e93886b861ae1de629d4a2e",
+      "transport": "plain"
+    },
+    "graph_execution": {
+      "available": true,
+      "logical_path": "results/submission_refresh/graph_execution_coverage.csv",
+      "path": "results/submission_refresh/graph_execution_coverage.csv",
+      "sha256": "ada523eeeff1ee52ba68c1f842eb8c7381cd4dc20d13d5dd4867b78c7e6a1803",
+      "transport": "plain"
+    },
+    "graph_protocol": {
+      "available": true,
+      "logical_path": "configs/submission_refresh/graph_design.public.v1.json",
+      "path": "configs/submission_refresh/graph_design.public.v1.json",
+      "sha256": "f008fbd6d512a654b59aeef2b7deb32eadf3f743a46885381802c4d2a797e953"
     },
     "historical": {
       "available": true,
+      "logical_path": "results/submission_refresh/joint_metric_selection.csv",
       "path": "results/submission_refresh/joint_metric_selection.csv",
-      "sha256": "df169940a4632860c7ba99d79a277c8782244374fc419fa30feac75246609688"
+      "sha256": "f338f05c39bc043d74840ad796955b2406a3ac5bfd7d3a4024a3e1f5b6d7fb67",
+      "transport": "plain"
+    },
+    "historical_all_joint": {
+      "available": true,
+      "logical_path": "results/submission_refresh/all_joint_configurations.csv",
+      "path": "results/submission_refresh/all_joint_configurations.csv",
+      "sha256": "23fdf7cd8e8c7ef83a3c2791aee48032efce8a3697ff1bc875a833cd461da945",
+      "transport": "plain"
+    },
+    "historical_all_native": {
+      "available": true,
+      "logical_path": "results/submission_refresh/all_native_endpoints.csv",
+      "path": "results/submission_refresh/all_native_endpoints.csv",
+      "sha256": "d8072b68350b3debb4205041d9d4c5e0d112f193092a4c6ed1fefb3305f76d73",
+      "transport": "plain"
     },
     "historical_endpoints": {
       "available": true,
+      "logical_path": "results/submission_refresh/endpoint_comparison.csv",
       "path": "results/submission_refresh/endpoint_comparison.csv",
-      "sha256": "93c9f19c47a98e079c7b91c433546c0c16e2dd1811bc195b0ddf3f91de9143bc"
+      "sha256": "00c4b177a551b28e5c19f847ab62fff54b7aa92300e949ed281d61aff734225c",
+      "transport": "plain"
     },
     "joint": {
       "available": false,
+      "logical_path": "results/subset_search/joint_search_summary.csv",
       "path": "results/subset_search/joint_search_summary.csv",
-      "sha256": null
+      "sha256": null,
+      "transport": null
+    },
+    "native": {
+      "available": false,
+      "logical_path": "results/subset_search/native_best_summary.csv",
+      "path": "results/subset_search/native_best_summary.csv",
+      "sha256": null,
+      "transport": null
     },
     "paper": {
       "available": true,
+      "logical_path": "results/submission_refresh/paper_reference_verification.json",
       "path": "results/submission_refresh/paper_reference_verification.json",
       "sha256": "41d6f22d62e99a0e6e7e3246d35639ef2a34b93a652a19434cd21564aadf88ee"
     },
-    "resource": {
+    "publication_stage": {
       "available": true,
+      "logical_path": "configs/submission_refresh/publication_stage.json",
+      "path": "configs/submission_refresh/publication_stage.json",
+      "sha256": "fbd22564b954736076744648c60ed30b4c90c03523f81b323ef495f2612f2144"
+    },
+    "repeatability": {
+      "available": true,
+      "logical_path": "results/submission_refresh/historical_repeatability_summary.csv",
+      "path": "results/submission_refresh/historical_repeatability_summary.csv",
+      "sha256": "feea1dd625af9111d43e11fd63f097c7103e772866dc202c9b38351e6e16d4db",
+      "transport": "plain"
+    },
+    "repeatability_manifest": {
+      "available": true,
+      "logical_path": "results/submission_refresh/historical_repeatability_manifest.json",
+      "path": "results/submission_refresh/historical_repeatability_manifest.json",
+      "sha256": "9431c133a3941a51e40ea7cb5850a3090b00419556c402b149ac7aeaf878a599"
+    },
+    "resource": {
+      "available": false,
+      "logical_path": "results/submission_refresh/resource_usage.json",
       "path": "results/submission_refresh/resource_usage.json",
-      "sha256": "3826119895d2550c4fd143a4184ca1342029ca3d9eabb1e98d758103e77a07ac"
+      "sha256": null
+    },
+    "usps_continuation_audit": {
+      "available": true,
+      "logical_path": "results/submission_refresh/usps_continuation_audit.csv",
+      "path": "results/submission_refresh/usps_continuation_audit.csv",
+      "sha256": "62179642dfa709a98b5b357905760ce23b18b87540132ec4bdb5b2da2fe7504e",
+      "transport": "plain"
+    },
+    "usps_continuation_evaluation": {
+      "available": true,
+      "logical_path": "results/submission_refresh/usps_continuation_evaluation.csv",
+      "path": "results/submission_refresh/usps_continuation_evaluation.csv",
+      "sha256": "589b56d2ab74cd1a02bce4e509e6efe420b343b4d4c9193f18881224f611ce4d",
+      "transport": "plain"
+    },
+    "usps_numerical_reference_input_identity": {
+      "available": true,
+      "logical_path": "results/submission_refresh/usps_numerical_reference_input_identity.json",
+      "path": "results/submission_refresh/usps_numerical_reference_input_identity.json",
+      "sha256": "d63a406a2d54d958a799738da76c78c6ee03362c1952cabf5bc539b196c3d988"
+    },
+    "usps_solver_evaluation": {
+      "available": true,
+      "logical_path": "results/submission_refresh/usps_solver_evaluation.csv",
+      "path": "results/submission_refresh/usps_solver_evaluation.csv",
+      "sha256": "4c44913e1c072312bef2eb6d5bef0cb837b786544ebd37f4f4bdad2d9ffbbb98",
+      "transport": "plain"
     }
   },
   "missing_values_are_not_zero": true,
@@ -86,6 +230,8 @@
     "report/tables/refresh_main.tex",
     "report/tables/refresh_repairs.tex"
   ],
+  "presentation": "public-scientific",
+  "publication_stage": "methods-and-completed-studies",
   "schema": "report-inputs-v1",
   "statistical_endpoints_separate": true
 }

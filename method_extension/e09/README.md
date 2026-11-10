@@ -1,3 +1,13 @@
-# E09 — recurrence on a local-scale W
+# E09: recurrence on a local-scale fusion graph
 
-F is the control embedding, the same initial F as SSC and E01. W is the E03-W local-scale affinity, multiplied by the E01 edge-recurrence probabilities. Compare with SSC, E01, and E03-W. E03-A is a different embedding and is not the ablation partner.
+`RecurrenceLocalScaleSSC` keeps the control spectral anchor \(F\).
+The E03-W local-scale affinity is multiplied by the E01 recurrence
+probabilities before shrinkage.
+
+The appropriate component controls are SSC, [E01](../e01/README.md)
+and [E03-W](../e03/README.md), all on that same anchor. E03-A changes the
+embedding and is not a fixed-representation ablation partner.
+
+See the [adaptation index](../README.md),
+[methods](../../docs/methods.md), [results](../../docs/results.md)
+and [reproducibility](../../docs/reproducibility.md).

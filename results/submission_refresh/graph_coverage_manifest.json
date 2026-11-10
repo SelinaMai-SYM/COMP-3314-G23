@@ -1,0 +1,13 @@
+{
+  "coverage_sha256": "ada523eeeff1ee52ba68c1f842eb8c7381cd4dc20d13d5dd4867b78c7e6a1803",
+  "design_path": "configs/submission_refresh/graph_design.public.v1.json",
+  "design_sha256": "f008fbd6d512a654b59aeef2b7deb32eadf3f743a46885381802c4d2a797e953",
+  "intended_tasks": 362,
+  "original_coverage_manifest_sha256": "2c114a687cc4dff053df07adb4d876594d899ae04630441e85b6ddf32ddd6213",
+  "phase_counts": {
+    "G1": 2,
+    "G2": 48,
+    "G3": 312
+  },
+  "schema": "public-scientific-graph-coverage-v1"
+}

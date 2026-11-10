@@ -1,7 +1,0 @@
-{
-  "USPS_gamma1": "Interrupted by recorded 1800-second large-fit guard; incomplete result, not certified",
-  "USPS_gamma1000": "CG failure, info=12000; no usable result or certificate",
-  "guard_record": "irls_timeout_guard.json",
-  "identity": "Fresh same-F/W comparisons; no claim to recover baseline historical G",
-  "raw_failure_records_retained": true
-}

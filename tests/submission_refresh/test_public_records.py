@@ -58,6 +58,8 @@ def test_numeric_objectives_failures_kkt_and_costs_survive_without_tracebacks():
     assert not {'traceback','cwd'}&result.keys() and 'traceback' not in failure
     assert result['task']=={'dataset':'JAFFE'}
     assert '/Users/' not in json.dumps(result)
+    projected,_=public.project_record({'rounding_signature':'a'*64,'status':'COMPLETED'},'usps')
+    assert projected['rounding_signature']=='a'*64
 
 
 def test_coverage_projection_cleans_nested_csv_json_but_keeps_scientific_keys():

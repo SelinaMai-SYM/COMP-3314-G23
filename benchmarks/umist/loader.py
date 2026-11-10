@@ -23,7 +23,7 @@ _UNAVAILABLE = (
     "112x92, of which 565 pixel arrays are unique. "
     "Figshare 67153214 is also 575 slices and is not pixel-identical to that tar. "
     "Use version='precropped575' or version='figshare575' to load those "
-    "non-exact files. See docs/repair_round1_dataset_recovery.md."
+    "non-exact files. See docs/data.md."
 )
 
 

@@ -53,7 +53,7 @@ _USPS=_BASELINE|_GRAPH|_JOB|_INPUT|{'schema','name','n_trials','n_samples','n_cl
     'target','labels_loaded_for_fitting','same_frozen_pair','records','source_fingerprint','source_commit',
     'environment','limits','historical_identity','linear_checks','protocol','checkpoint','history',
     'fixed_point_residual','initial_zero_residual_floor','objects','solver','F_shape','W_shape','K',
-    'feature_hash','label_hash','fingerprint','input_metadata','complete_points','missing_G_points','unique_G_hashes'}
+    'feature_hash','label_hash','fingerprint','input_metadata','complete_points','missing_G_points','unique_G_hashes','rounding_signature'}
 
 
 def payload_hash(value):

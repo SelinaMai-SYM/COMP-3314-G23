@@ -51,7 +51,7 @@ class SpectralShrunkClustering:
     zero_residual_floor:
         How to define Equation (10) when G - F is entirely zero. The default
         ``'median_pairwise'`` is the numerical correction documented in
-        ``docs/reproduction_deviations.md``. ``'eps'`` is the literal floor
+        ``docs/methods.md``. ``'eps'`` is the literal floor
         and stays at F.
     variant:
         Linear system. ``'E13'`` (default) is the printed Equation (13),

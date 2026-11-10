@@ -168,12 +168,20 @@ def test_scheduler_routes_archive_without_a_second_worker_pool(small_archive,mon
     assert saved['status']=='FIXTURE_ONLY' and saved['task']==definition
 
 
-def test_final_archive_queues_are_separate_bounded_and_use_one_shared_reserve():
-    root=Path(__file__).resolve().parents[2]
-    export=json.loads((root/'configs/finalization_archive_queue.json').read_text())['tasks']
-    recover=json.loads((root/'configs/finalization_recovery_queue.json').read_text())['tasks']
+def test_archive_specs_are_separate_bounded_and_use_one_shared_reserve(small_archive):
+    _,store,_=small_archive
+    export=[task('export')]
+    recover=[task('recover')]
     assert len(export)==len(recover)==1
     assert export[0]['cpu_limit']==3600 and recover[0]['cpu_limit']==1800
     assert recover[0]['depends_on']==export[0]['run_id']
     assert recover[0]['archive_name']==export[0]['archive_name']
     assert all(row['phase']=='aggregation' and row['kind']=='archive' for row in export+recover)
+    ledger=ResourceLedger(store.root)
+    for definition in export+recover:
+        assert ledger.reserve(definition['run_id'],definition['cpu_limit'],definition['phase'])
+    state=ledger.state()
+    assert state['max_workers']==2 and sum(item['seconds'] for item in state['active'].values())==5400
+    assert not ledger.reserve('third-fixture-task',1,'aggregation')
+    for definition in export+recover:ledger.finish(definition['run_id'],0,'FIXTURE_NOT_EXECUTED')
+    assert not ledger.state()['active']

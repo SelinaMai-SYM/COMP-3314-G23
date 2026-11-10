@@ -14,4 +14,4 @@ The practical four-benchmark +2pp ACC/nondecreasing NMI target is **not establis
 - Native prclust is validated only on a tiny software sanity check; external RCC is source-inspected, not a benchmark comparison.
 - Old missing F/W/G arrays, unavailable historical dataset identities remain explicit limitations.
 
-All retained failures, cold and warm solver versions, trials, costs and unexecuted planned cells are published.
+The retained scalar views report numerical qualifications and negative findings. Complete original records and source-derived arrays are preserved in the recoverable scientific archive; see [reproducibility](../../docs/reproducibility.md).

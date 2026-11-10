@@ -1,4 +1,4 @@
-"""Cheap diagnostics for repair-round one-factor SSC runs.
+"""Graph and convergence diagnostics for one-factor SSC experiments.
 
 These helpers do not change solver defaults. They record graph overlap,
 connected components, and history increments used by the repair runner.

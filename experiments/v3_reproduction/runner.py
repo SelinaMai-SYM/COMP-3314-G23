@@ -1,4 +1,4 @@
-"""Execute v3 jobs. One dataset worker does not commit the worktree."""
+"""Execute independent v3 dataset jobs and record their scientific outputs."""
 
 from __future__ import annotations
 

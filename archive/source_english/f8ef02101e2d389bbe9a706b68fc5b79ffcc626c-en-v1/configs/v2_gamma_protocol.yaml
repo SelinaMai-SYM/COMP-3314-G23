@@ -1,8 +1,0 @@
-# SSC gamma grid. F is not recomputed. The max labeled ACC is an oracle.
-gammas: [1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6]
-reuse_sc_trials: true
-recompute_G: true
-oracle_label: ORACLE_BEST_TEST_ACC
-fair_unsupervised_selection: false
-variant: E8
-laplacian_coefficient: 2

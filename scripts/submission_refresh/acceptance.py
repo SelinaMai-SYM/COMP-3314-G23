@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Verify one exact committed candidate in a fresh checkout and environment.
+"""Validate a committed release in an isolated checkout and environment.
 
-This is a verification command, not a publisher. Run it through the shared
-``validation`` scheduler (cpu_limit <= 900, wall_limit <= 1800), passing a new
-external output directory. It never pushes, renames a branch or changes GitHub.
-PDF pages are rendered for the separate visual review; this command cannot
-certify that review. Failed and interrupted commands retain their evidence.
+Checks include regression tests, data-free rebuilds, real-data smoke tests and
+report validation. Test reports, diagnostic logs and rendered PDF pages are
+saved to an external directory. PDF appearance requires a separate visual review.
 """
 from __future__ import annotations
 import argparse
@@ -420,24 +418,24 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
                 and integration[0]['status'] == 'passed', actual_skips=skipped)
 
     def focused_regressions(self):
-        config = self.checkout / 'configs/submission_refresh/revalidation_v4_queue.json'
-        tasks = json.loads(config.read_text())['tasks']
-        matches = [task for task in tasks if task.get('run_id') == 'validation-focused-tests-v4']
-        self.check('focused-v4-selection-present', len(matches) == 1)
-        command = matches[0]['command']
-        self.check('focused-v4-pytest-command', command[:3] == ['{python}', '-m', 'pytest']
-            and command.count('--junitxml') == 1)
-        arguments = list(command[3:])
+        config = self.checkout / 'configs/validation.json'
+        selection = json.loads(config.read_text())
+        self.check('formal-validation-schema', selection.get('schema') == 'project-validation-v1')
+        arguments = selection.get('pytest_argv')
+        self.check('formal-validation-pytest-arguments', isinstance(arguments, list) and bool(arguments)
+            and all(isinstance(value, str) and value for value in arguments)
+            and arguments.count('--junitxml') == 1)
+        arguments = list(arguments)
         index = arguments.index('--junitxml')
-        self.check('focused-v4-junit-argument', index + 1 < len(arguments))
+        self.check('formal-validation-junit-argument', index + 1 < len(arguments))
         junit = self.products / 'focused-regressions.xml'
         arguments[index + 1] = str(junit)
-        self.check('focused-v4-no-unresolved-placeholders', not any('{' in value or '}' in value for value in arguments))
+        self.check('formal-validation-no-unresolved-placeholders', not any('{' in value or '}' in value for value in arguments))
         self.check('focused-no-data-environment', all(key not in self.env for key in
             ['COMP3314_DATA_ROOT', 'COMP3314_ARTIFACT_ROOT', 'PYTHONPATH']))
         self.result['focused_selection'] = {'config': str(config.relative_to(self.checkout)),
-            'sha256': sha(config), 'task_run_id': matches[0]['run_id'],
-            'qualification': 'The committed v4 pytest selection is reused verbatim except its fresh JUnit output path.'}
+            'sha256': sha(config),
+            'qualification': 'The committed pytest selection is reused verbatim except its fresh JUnit output path.'}
         self.pytest_stage('focused-regressions', [self.python, '-m', 'pytest', *arguments], junit,
             expected_integration_skip=True)
 

@@ -1,85 +1,8 @@
 {
-  "version": 1,
-  "purpose": "Pre-subset acceptance checks and completion of the same LDA limits after the CPU timer defect; all work shares one ledger.",
-  "frozen_before_execution": true,
-  "outputs": "External artifact-root/validation; rebuild outputs never overwrite committed results.",
+  "schema": "public-baseline-design-v1",
+  "original_design_sha256": "f76a5bda491eada2331305d9be10b2d358b550696317fafda9e8f20616b0915c",
+  "purpose": "Additional declared LDA baseline configurations; quality checks use configs/validation.json.",
   "tasks": [
-    {
-      "run_id": "validation-focused-tests-v1",
-      "kind": "validation",
-      "phase": "validation",
-      "cpu_limit": 900,
-      "wall_limit": 1800,
-      "command": [
-        "{python}",
-        "-m",
-        "pytest",
-        "-q",
-        "tests/submission_refresh",
-        "tests/next_round",
-        "tests/v3/test_lda_math.py",
-        "tests/v3/test_llc_procrustes.py",
-        "tests/v3/test_ssc_solver.py",
-        "tests/v3/test_metrics.py",
-        "tests/v3/test_no_label_leakage.py",
-        "tests/v3/test_dataset_integrity.py",
-        "tests/test_dataset_dispatch.py",
-        "baselines/lda_kmeans/test_lda_kmeans.py",
-        "baselines/llc/test_llc.py",
-        "baselines/spls/test_spls.py",
-        "--junitxml",
-        "{validation_dir}/pytest.xml",
-        "-ra"
-      ]
-    },
-    {
-      "run_id": "validation-synthetic-cli-v1",
-      "kind": "validation",
-      "phase": "validation",
-      "cpu_limit": 900,
-      "wall_limit": 1800,
-      "command": [
-        "{python}",
-        "-m",
-        "experiments.v3_reproduction",
-        "smoke",
-        "--dataset",
-        "synthetic"
-      ]
-    },
-    {
-      "run_id": "validation-historical-rebuild-v1",
-      "kind": "validation",
-      "phase": "validation",
-      "cpu_limit": 900,
-      "wall_limit": 1800,
-      "command": [
-        "{python}",
-        "-m",
-        "experiments.v3_reproduction",
-        "rebuild-results",
-        "--release-manifest",
-        "configs/final/release_manifest.json",
-        "--output",
-        "{validation_dir}/historical_rebuilt"
-      ]
-    },
-    {
-      "run_id": "validation-source-audit-v1",
-      "kind": "validation",
-      "phase": "validation",
-      "cpu_limit": 900,
-      "wall_limit": 1800,
-      "command": [
-        "{python}",
-        "-m",
-        "experiments.submission_refresh.source_audit",
-        "--data-root",
-        "{data_root}",
-        "--output",
-        "{validation_dir}/source_audit"
-      ]
-    },
     {
       "run_id": "lda_existing-YaleB_cropped2414-timerfix-v2",
       "kind": "baseline",
@@ -93,24 +16,6 @@
       "cpu_limit": 6000,
       "reason": "Complete the same100/300 configurations after premature timer failure; adopt every verified completed same-cap seed checkpoint, retain genuine failures, retryCPUtimeout/missingfixedseeds. Never reuse30 states as100/300.",
       "continue_from": "lda_existing-YaleB_cropped2414-v1"
-    },
-    {
-      "run_id": "validation-corrected-historical-graphs-v1",
-      "kind": "validation",
-      "phase": "validation",
-      "cpu_limit": 900,
-      "wall_limit": 1800,
-      "command": [
-        "{python}",
-        "-m",
-        "experiments.submission_refresh.correct_graph_diagnostics",
-        "--cache-root",
-        "{artifact_root}/recovered_history/next_round/cache",
-        "--jobs-root",
-        "results/next_round/jobs",
-        "--output",
-        "{validation_dir}/graph_correction"
-      ]
     },
     {
       "run_id": "lda_reference-ORL_att92-continuation-v2",

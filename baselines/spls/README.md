@@ -1,45 +1,59 @@
-# SPLS / SLPS
+# One-shot SLPS: subspace learning by pattern shrinking
 
-**Package status:** `NUMERICALLY_VALIDATED` one-shot reimplementation.
+This package implements the one-shot procedure of Hou, Nie, Jiao, Zhang and
+Wu, [*Learning a Subspace for Clustering via Pattern Shrinking*](https://doi.org/10.1016/j.ipm.2013.01.004),
+Information Processing & Management 49(4):871–883, 2013. The package identifier
+`spls` is retained for compatibility with the SSC comparison; the method is
+called SLPS in the source publication.
 
-Hou, Nie, Jiao, Zhang, and Wu, *Information Processing & Management* 49(4):871–883, 2013. DOI `10.1016/j.ipm.2013.01.004`. Title: “Learning a subspace for clustering via pattern shrinking.” Chang et al. (AAAI 2015) call it **SPLS**.
+## Objective and algorithm
 
-The 13-page publisher PDF is local and read-only. A private copy for this worktree is `resources/private/hou2013_slps.pdf`. That directory is gitignored. The PDF and a full text extract are not committed. Reading the PDF is `FULL_TEXT_VERIFIED_LOCAL`. The equation-level notes are `docs/v3/slps_method_specification.md` (`METHOD_SPECIFICATION_COMPLETE`). `spls.py` is `IMPLEMENTED`. Algebraic tests are `NUMERICALLY_VALIDATED`. None of these stages means the SSC table has been reproduced.
+The one-shot \(\beta\to0\) procedure constructs a union nearest-neighbor
+graph with Zelnik-Manor local scaling,
 
-No author code was found. Earlier v1/v2 notes that said Section 3 had not been obtained are historical and are superseded by the local PDF.
+\[
+W_{ij}=\exp(-\|x_i-x_j\|^2/(\sigma_i\sigma_j)),
+\]
 
-## Paper procedure that this package runs
+then solves Equation 18. With row-oriented data, the code computes
 
-Section 4 of Hou et al. uses one-shot SLPS, the `β → 0` case:
+\[
+[(1-\alpha)L+\alpha I]Y=\alpha X.
+\]
 
-1. Union kNN graph, `k = 7`, Zelnik-Manor local scaling in place of the global width in Eq. (7).
-2. Shrunk patterns, Eq. (18): `Y = α X [(1−α)L + α I]^{-1}` with samples as columns in the paper. The code stores rows and solves on the left.
-3. PCA of those patterns, Eq. (19), subspace dimension `d`.
-4. K-means on the embedding (their PsKm). PsNcut is a different wrapper and is not this SSC cell.
+PCA of centered \(Y\) gives the requested embedding, followed by K-means
+(the source's PsKm variant). PsNcut is a different pipeline.
 
-`α` is searched on `{0.05, …, 0.95}` in the paper. The paper does not state a label-blind rule for choosing `α` or `d`. v3 does not choose them by accuracy. The campaign’s 50-run SSC protocol overrides the paper’s “best of 100 K-means runs” reporting rule. See the specification for shapes, the objective, and the overrides.
+| Component | API |
+|---|---|
+| Local-scale affinity | `local_scaling_affinity` |
+| Pattern shrinkage | `oneshot_shrunk_patterns` |
+| PCA coordinates | `pca_embedding` |
+| Complete PsKm partition | `fit_predict` |
 
-LDA-SC is not defined in this paper. The paper’s LdaKm citation is Ding and Li’s LDA-Kmeans.
+```python
+from baselines.spls import fit_predict
 
-## Code
-
-| Piece | Function |
-| --- | --- |
-| Local scaling graph | `local_scaling_affinity` |
-| Eq. (18) | `oneshot_shrunk_patterns` |
-| Eq. (19) | `pca_embedding` |
-| PsKm | `fit_predict` |
-
-Ground-truth labels are rejected.
-
-## Tests
-
-```text
-python -m pytest baselines/spls/test_spls.py -q
+labels = fit_predict(X, n_clusters=3, random_state=0,
+                     n_components=10, alpha=0.5, n_neighbors=7)
 ```
 
-The tests check a dense Eq. (18) solve, that alpha changes `Y`, that the local-scaling weight matches `exp(-d^2/(σ_i σ_j))`, and that labels are not accepted.
+`n_components` is required. `alpha` lies in `(0,1]`, and the default
+neighbor count is seven. PCA is unwhitened and rejects dimensions above its
+declared numerical-rank threshold. Rounding defaults to one RANDOM Lloyd
+start, 300 iterations and tolerance `1e-4`. Ground-truth labels are rejected.
 
-## v3 status
+## Comparison limits
 
-v1/v2 numbers are historical and are not copied into v3 rows. Fresh measurements live under `results/v3_reproduction/` after the campaign writes them.
+The source searches alpha and dimension without specifying a label-blind
+selection rule. Library calls fit one supplied pair; the current experimental
+design reports paired k=5/k=7 controls and explicit parameter grids. Its
+50-seed mean/SD endpoint differs from the source's best-of-100 K-means
+reporting, and those endpoints are not merged.
+
+The implementation is an independent formula-based reconstruction. It is
+available from the code and does not require a local publisher PDF to run.
+This does not establish exact numerical reproduction of the SSC paper's
+SLPS cells. See [methods](../../docs/methods.md),
+[results](../../docs/results.md), [theory](../../docs/theory.md) and
+[reproducibility](../../docs/reproducibility.md).

@@ -1,4 +1,5 @@
 # Read-only historical table. Do not overwrite with measured ACC/NMI.
+original_configuration_sha256: f26a8f49277819b604d989bcfcaceb5c2a5a210cc0f038b452d5312476984dd0
 source: Chang et al., AAAI 2015, Tables 1 and 2
 source_audit: experiments/paper_reported.py states these are the printed table values
   and not reproduction measurements.

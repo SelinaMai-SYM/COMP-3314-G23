@@ -16,6 +16,6 @@ def resolve_data_root(explicit: str | Path | None = None) -> Path:
         raise FileNotFoundError(
             f"Benchmark root {root} does not exist. Set --data-root or "
             "COMP3314_DATA_ROOT to a directory containing orl/data, jaffe/data, "
-            "yaleb/data, usps/data. See docs/final/data_setup.md."
+            "yaleb/data, usps/data. See docs/data.md."
         )
     return root

@@ -34,7 +34,7 @@ def load_dataset(root: Path | None = None, version: str | None = None) -> tuple[
     if not path.is_file():
         raise FileNotFoundError(
             f"missing {path}. The official zip is https://zenodo.org/records/14974867. "
-            "Respect the dataset conditions and see docs/final/data_setup.md."
+            "Respect the dataset conditions and see docs/data.md."
         )
     rows = []
     labels = []

@@ -48,6 +48,32 @@ def test_process_monitor_uses_explicit_absolute_binary_and_clean_environment(mon
     assert children==[101] and cpu==.02 and rss==3000*1024
 
 
+def test_formal_validation_selection_needs_no_execution_queue_and_uses_fresh_junit(tmp_path,monkeypatch,acceptance_module):
+    acceptance=make_acceptance(acceptance_module,tmp_path)
+    selection_path=Path(__file__).resolve().parents[2]/'configs/validation.json'
+    selection=json.loads(selection_path.read_text())
+    config=acceptance.checkout/'configs/validation.json'
+    config.parent.mkdir(parents=True)
+    config.write_text(selection_path.read_text())
+    acceptance.python=acceptance.venv/'bin/python'
+    observed={}
+    def capture(name,command,junit,expected_integration_skip):
+        observed.update(name=name,command=command,junit=junit,expected_skip=expected_integration_skip)
+    monkeypatch.setattr(acceptance,'pytest_stage',capture)
+    acceptance.focused_regressions()
+    original=selection['pytest_argv']
+    expected=list(original)
+    expected[expected.index('--junitxml')+1]=str(acceptance.products/'focused-regressions.xml')
+    assert observed['command']==[acceptance.python,'-m','pytest',*expected]
+    assert observed['expected_skip'] is True
+    assert '--junitxml' in observed['command'] and '-ra' in observed['command']
+    assert 'tests/submission_refresh' in expected and 'tests/next_round' in expected
+    assert acceptance.result['focused_selection']['config']=='configs/validation.json'
+    assert 'task_run_id' not in acceptance.result['focused_selection']
+    assert '{validation_dir}/pytest.xml' in original
+    assert not (acceptance.checkout/'configs/submission_refresh').exists()
+
+
 REPORT_SOURCE=r'''
 \section{Conclusion}
 Body ends here. \label{main_end}

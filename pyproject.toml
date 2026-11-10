@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "comp3314-ssc"
-version = "0.1.0"
-description = "Faithful reimplementation of Spectral Shrunk Clustering (Chang et al., AAAI 2015)."
-readme = "SSC_method/README.md"
+version = "1.0.0"
+description = "A reproducible study of Spectral Shrunk Clustering, source sensitivity, and graph refinement."
+readme = "README.md"
+license = {file = "LICENSE"}
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
@@ -27,5 +28,6 @@ reference = ["cvxpy"]
 include = ["SSC_method*", "benchmarks*", "baselines*", "method_extension*", "experiments*", "scripts*"]
 
 [tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
 testpaths = ["tests", "baselines", "benchmarks"]
 pythonpath = ["."]

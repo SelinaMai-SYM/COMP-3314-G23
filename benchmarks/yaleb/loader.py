@@ -52,7 +52,7 @@ def _load_dengcai(root: Path | None) -> tuple[np.ndarray, np.ndarray, dict]:
     path = data_dir(root) / _ARCHIVE
     if not path.is_file():
         raise FileNotFoundError(
-            f"missing {path}. Place the external archive listed in docs/v3_final/external_data_manifest.csv."
+            f"missing {path}. See docs/data.md for provider files and independent data-root setup."
         )
     mat = loadmat(path)
     features = np.asarray(mat["fea"])
@@ -95,7 +95,7 @@ def _load_cropped2414(root: Path | None, version: str) -> tuple[np.ndarray, np.n
     if not array_path.is_file() or not label_path.is_file():
         raise FileNotFoundError(
             f"missing cropped Yale B arrays under {base}. "
-            "Run python -m benchmarks.prepare with the matching archive; see docs/final/data_setup.md."
+            "Run python -m benchmarks.prepare with the matching archive; see docs/data.md."
         )
     images = np.load(array_path)
     if images.shape != (2414, 32, 32) or images.dtype != np.uint8:

@@ -1,5 +1,21 @@
-# E02 — unsupervised row weights
+# E02: positive fidelity weights
 
-The objective is sum_i α_i ||g_i - f_i||_2 + γ sum_ij W_ij ||g_i - g_j||_2. α_i = 0.5 + 1.5 m_i, where m_i is the fraction of the k nearest neighbors of row i of F that list i back. The interval is [0.5, 2]. W and F stay on the original construction. α is frozen before IRLS.
+`ReliabilityWeightedSSC` uses the objective
 
-α = 1 is the original E8 linear system and must match `shrink_embedding(..., variant="E8")`. A small nonuniform α is checked against CVXPY. The alpha-weighted value is not comparable to Equation (8) unless α = 1.
+\[
+\sum_i\alpha_i\|g_i-f_i\|_2+
+2\gamma\sum_e w_e\|g_i-g_j\|_2.
+\]
+
+The reciprocal-neighbor fraction \(m_i\) in \(F\) defines
+\(\alpha_i=0.5+1.5m_i\in[0.5,2]\). These weights are frozen before
+IRLS; \(F\) and \(W\) retain the control construction.
+
+Uniform \(\alpha=1\) recovers the E8 system. Nonuniform fidelity changes
+the target, so its objective value is not directly comparable to original
+Equation 8. Reciprocal neighbors are a label-free reliability heuristic,
+not a guarantee of correct membership.
+
+See the [adaptation index](../README.md), [theory](../../docs/theory.md),
+[results](../../docs/results.md) and
+[reproducibility](../../docs/reproducibility.md).

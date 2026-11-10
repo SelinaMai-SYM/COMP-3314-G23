@@ -1,7 +1,14 @@
-# LLC paper PDF (Task 1, 2026-10-21)
+# LLC references
 
-| File | Bytes | SHA-256 | GET |
-| --- | --- | --- | --- |
-| `Wu_Schoelkopf_2006_NIPS_LLC.pdf` | 127718 | `17828ebae410aca05c026767bffb2befec09a5edfe4232c770c2782a904c12c3` | `https://proceedings.neurips.cc/paper_files/paper/2006/file/366f0bc7bd1d4bf414073cabbadfdfcd-Paper.pdf` HTTP 200 |
+The specification is Wu and Schölkopf,
+[*A Local Learning Approach for Clustering*](https://proceedings.neurips.cc/paper_files/paper/2006/file/366f0bc7bd1d4bf414073cabbadfdfcd-Paper.pdf),
+NeurIPS 2006, pp. 1529–1536. Its discretization follows the Yu–Shi
+orthogonal Procrustes construction described in that paper.
 
-NeurIPS proceedings OA. First page title: “A Local Learning Approach for Clustering”. Author code: `CODE_NOT_FOUND`.
+The project implementation is an independent reconstruction. A publication
+link is a reference, not an implementation or software license. Local copies
+of publisher PDFs are not needed to run the library.
+
+See the [LLC README](../README.md), [methods](../../../docs/methods.md),
+[theory](../../../docs/theory.md) and
+[reproducibility](../../../docs/reproducibility.md).

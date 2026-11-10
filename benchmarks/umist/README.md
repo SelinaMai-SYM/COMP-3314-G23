@@ -1,101 +1,92 @@
 # UMIST / Sheffield face datasets
 
-**Current status, 2026-11-10:** the new campaign records an exact-first-occurrence
-LZUFE dedup564 candidate, the Wayback565 single-omission family and declared
-stratified draws. These hypotheses preserve their exact sample manifests; none
-establishes which 564 images the SSC authors used. The strict
-`load_dataset("UMIST")` default remains unavailable. See
-[source recovery](../../docs/submission_refresh/source_recovery.md) and the
-[candidate catalogue](../../configs/subset_search/candidate_catalogue.json).
+Chang et al. report 564 images of twenty people without specifying a resize or
+sample indices. The available UMIST sources differ in row count, pixels and
+resolution. Strict `load_dataset("UMIST")` raises `DatasetUnavailable`; explicit
+versions and subset hypotheses retain their own identities.
 
-## Identity and versions
+## Source versions
 
-Graham and Allinson (1998) describe the Sheffield/UMIST faces. The Wayback page
-from 2001-04-05 states 564 images of 20 people, approximately 220x220, and links
-`face.tar.gz` (about 29 MB) and `cropped.tar.gz` (about 4.5 MB). Chang et al.
-state 564 images, 20 people and pixel features without specifying a resize or
-a rule for obtaining 564 rows from a larger archive.
-
-| Explicit version | Rows/features | Qualification |
+| Version | Rows / features | Scientific qualification |
 |---|---:|---|
-| Default / `sheffield564` | unavailable | Strict historical sample identity unresolved |
-| `lzuf574` | 574/10304 | Ten extra exact duplicate rows; dedup564 is an explicit candidate |
-| `precropped575` | 575/10304 | Wayback cropped archive, native 112x92, pixels 0-238 |
-| `figshare575` / `roweis575` | 575/10304 | Byte-identical MAT source copies; distinct pixels from Wayback |
-| `zenodo3634017` | 575/644 | Native 28x23 matrix; resolution kept separate |
-| `uncropped1012` | unavailable as a matrix | 122 spatial shapes; no undeclared resizing |
+| Default / `sheffield564` | Unavailable | Historical 564-image membership unresolved |
+| `lzuf574` | 574 / 10304 | Ten extra exact duplicate rows; first-occurrence dedup564 is a hypothesis |
+| `precropped575` | 575 / 10304 | Archived cropped source, native 112×92; 565 distinct pixel rows |
+| `figshare575` / `roweis575` | 575 / 10304 | Identical MAT-file bytes; pixels differ from the archived cropped source |
+| `zenodo3634017` | 575 / 644 | Separate native 28×23 matrix |
+| `uncropped1012` | No rectangular matrix | 122 spatial shapes; no undeclared resize |
 
-The LZUFE parent is read through the independent root at
-`umist/data/private/lzuf_umist.mat`; SHA256
-`b66a95533e77a90310bc6119c219bc96e6ad8e343e50e0db0f5e740402d50d92`.
-Its ten extra duplicate rows have consistent labels. First occurrences are
-retained in canonical source order, and the inverse row mapping is saved.
-Matching 564 rows and 20 identities is not evidence that the authors applied
-that deduplication.
+The original database is attributed to Graham and Allinson (1998). The
+[archived source description](resources/README.md) says 564 images, but that
+statement does not identify a 564-row selection from the available archives.
 
-## Archived files and duplicate audit
+## Files and pinned row rules
 
-| File relative to UMIST data | Bytes | SHA256 |
-|---|---:|---|
-| `wayback_sheffield/face_wayback_20050403.tar.gz` | 29385054 | `df58ad9a38573624ab75be66d7d47243f674214cc0cb68d8a619247e1fd0c8fb` |
-| `wayback_sheffield/cropped_wayback_20070805.tar.gz` | 4506480 | `c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4` |
-| `figshare_umist_cropped/umist_cropped.mat` | 5927440 | `ddfa985c15c4f5924be47201416abe01416bdf38b19aca6baecf59d039f51361` |
+Paths below are beneath `umist/data` in the independent data root.
 
-The cropped archive has 575 distinct filenames, including distinct basenames,
-and 565 distinct pixel arrays. Ten exact duplicate pairs are all in `1b/face/`:
-`1b014.pgm=final00.pgm`, `1b016=final01`, `1b024=final02`, `1b032=final03`,
-`1b038=final04`, `1b040=final05`, `1b048=final06`, `1b056=final07`,
-`1b064=final08`, `1b072=final09`.
-Removing those ten `final*.pgm` copies leaves 565 images, not 564. Every
-one-omission hypothesis is therefore labelled as an unknown omission.
+| File | Expected SHA-256 / role |
+|---|---|
+| `private/lzuf_umist.mat` | `b66a95533e77a90310bc6119c219bc96e6ad8e343e50e0db0f5e740402d50d92` |
+| `wayback_sheffield/cropped_wayback_20070805.tar.gz` | `c1f7f6ead672c9861428f4a4366c73e3fcc9ef4654a1bc0b880f2257a978dff4` |
+| `wayback_sheffield/face_wayback_20050403.tar.gz` | `df58ad9a38573624ab75be66d7d47243f674214cc0cb68d8a619247e1fd0c8fb` |
+| `figshare_umist_cropped/umist_cropped.mat` | `ddfa985c15c4f5924be47201416abe01416bdf38b19aca6baecf59d039f51361` |
+| `private/roweis_umist_cropped.mat` | Same SHA-256 as the Figshare MAT; an alias, not independent evidence |
+| `private/zenodo3634017_umist.mat` | Separate 28×23 source; identity retained in the source inventory |
 
-The uncropped archive contains 1,013 PGM members with 1,012 distinct names;
-`1t/1t052.pgm` occurs twice. Figshare has the same class-count distribution as
-the cropped tar, but its pixel-hash intersection with Wayback is zero, even
-after transposition. The Roweis MAT is byte-identical to Figshare, rather than
-an independent release. Zenodo 3634017's measured MD5 is
-`039e0d805a5c65df7bfecd172a24f14c`.
+Provider references are [LZUFE](https://raw.githubusercontent.com/LZUFE-Machine-Learning/Datasets/main/umist.mat),
+[archived cropped images](https://web.archive.org/web/20070805190146id_/http://images.ee.umist.ac.uk/danny/cropped.tar.gz),
+[Figshare](https://ndownloader.figshare.com/files/67153214),
+[Roweis](https://cs.nyu.edu/home/people/in_memoriam/roweis/data/umist_cropped.mat)
+and [Zenodo 3634017](https://zenodo.org/records/3634017).
 
-The 2001 page permits publication of subject 1a only with written permission.
-The Figshare API lists CC BY 4.0 for its MAT copy; that is not a license statement
-from the original Graham release. Raw images stay outside Git.
+The LZUFE source preserves matrix row order. Exact first-occurrence
+deduplication retains 564 rows and records the full original-to-retained mapping;
+this is not evidence that the SSC authors deduplicated that source.
 
-## Loading and checks
+The cropped archive contains 575 distinct filenames. Ten exact duplicate pairs
+are in `1b/face`: `1b014.pgm=final00.pgm`, `1b016=final01`, `1b024=final02`,
+`1b032=final03`, `1b038=final04`, `1b040=final05`, `1b048=final06`,
+`1b056=final07`, `1b064=final08`, `1b072=final09`. Removing those copies leaves
+565, not 564. Each single-omission candidate therefore records an explicitly
+unknown omitted row. The uncropped archive contains 1,013 PGM members with
+1,012 distinct names (`1t/1t052.pgm` is repeated) and is not stacked without
+another declared spatial transformation.
+
+Figshare/Roweis MATLAB cells are traversed by stored person order, then the last
+image axis; labels are 0–19. Their pixels are distinct from the archived cropped
+source, even after transposition. Raw source versions retain every row;
+deduplication, omission and stratified subsets are separately named in the
+[catalogue](../../configs/subset_search/candidate_catalogue.json).
+
+## Loading and preparation
 
 ```python
 from pathlib import Path
 from benchmarks import load_dataset
-X, y, metadata = load_dataset("UMIST", root=Path("/path/to/benchmarks/umist/data"),
-                             version="precropped575")
-assert X.shape == (575, 10304)
-assert metadata["unique_pixel_arrays"] == 565
+
+X, y, metadata = load_dataset(
+    "UMIST", root=Path("/path/to/benchmarks/umist/data"), version="lzuf574"
+)
 ```
 
-The explicit cropped loader retains all 575 images, divides by 255 and does not
-resize. Run `python -m pytest benchmarks/umist/test_umist.py` and the candidate
-replay checks. The strict default remains unavailable, and the cropped metadata
-retains `not_exact_564`.
+The named MAT versions read their files directly. For `precropped575`, the loader
+requires `wayback_sheffield/processed/umist_precropped575_uint8.npy` with shape
+`(575,112,92)` and `umist_precropped575_labels_int64.npy`. Its deterministic
+preparation reads all PGM members from the pinned cropped archive, sorts archive
+member names, retains every image in that order and assigns labels by canonical
+person-directory order `1a..1t`. Save native uint8 images and integer labels;
+the loader divides by 255 and vectorizes in C order, without resizing. The
+shared `benchmarks.prepare` command is for ORL/YaleB, not UMIST.
 
-## Historical recovery notes (2026-10-21)
+The [Wayback manifest](manifest_wayback.yaml), [Figshare manifest](manifest_figshare_cropped.yaml)
+and [source inventory](../../results/subset_search/source_inventory.csv) retain
+checksums and source qualifications. Each changed subset rebuilds A/F/W/G rather
+than selecting rows of a parent embedding.
 
-Phase 1, repair_round1 and Round 2 ran no UMIST clustering jobs. At that time no
-new 564-row reconstruction was authorized and images were not removed merely
-to force the count. Those dated decisions do not describe the current explicit
-candidate campaign. Earlier v3 notes retained LZUFE574 without deduplication;
-new dedup564 results have distinct manifests and run identities.
+## Terms
 
-On 2026-10-21, Lincoln `face.tar.gz` returned HTTP 202 through a WAF,
-`images.ee.umist.ac.uk` returned 502 and the Sheffield page returned 404.
-Existing archives were not downloaded again. The Wayback 2001 page was saved
-as `resources/database_wayback_20010405.html`, 3,878 bytes, SHA256
-`a8a91fbea393f524e3275acad9356512145547217c18f446eb08eae849cb263a`,
-from a successful `id_` GET. It states 564 even though the corresponding saved
-cropped archive contains 575 PGM files. A later strict Roweis GET returned 200,
-5,927,440 bytes and the same hash as Figshare. Distinct byte arrays and distinct
-pixel arrays both numbered 565 for the Wayback archive. Historical identity
-remained `CANDIDATE_ONLY`, rather than recovered.
-
-See [Round 2](../../docs/round2_source_of_truth.md), [the base manifest](manifest.yaml),
-[Wayback](manifest_wayback.yaml) and [Figshare](manifest_figshare_cropped.yaml).
-Older v1/v2 measurements remain historical; LLC results predating the Procrustes
-correction retain the `PRE_FIX_LEGACY` qualification.
+The original page permits publishing subject 1a only with written permission.
+The Figshare mirror lists CC BY 4.0 for its copy; that is not an original Graham
+release license. Keep raw images outside Git and retain Graham/Allinson
+attribution. See [data terms](../../docs/data.md) and
+[scientific limitations](../../docs/limitations.md).

@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-10T11:42:44.961655+00:00",
+  "archive_receipt": "results/submission_refresh/public_archive_receipt.v1.json",
   "datasets_required": 1,
   "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
   "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825",
@@ -48,8 +48,7 @@
     "input_version": "26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7",
     "scientific_source_fingerprint": "2ed5b6fb520753cd8a339744ed4c787b6efa630ec77d554f1637a5d110eaccbb"
   },
-  "origin_aggregation_overall_status": "FAILED_AFTER_GATE_VALIDATION_IN_UNRELATED_DERIVED_INVENTORY_VIEW",
-  "origin_aggregation_run": "validation-G3-promotion-aggregation-v1",
+  "original_provenance_sha256": "e6596057bf2eb2c522500e57296af312e4b7dea241a383c2b00e610a0897a554",
   "primary_records": [
     {
       "arm": "delete",
@@ -79,13 +78,7 @@
   ],
   "promotion_evidence_valid": true,
   "protocol_sha256": "70db74af3244a323c26f356e2d0c2fa129a4091562897f82909b199860aab989",
-  "qualification": "aggregate._gate_input_identity and fixed gate calculation completed before build_inventory rejected its output directory. Only the verified G3 evidence is promoted; whole aggregation success is not claimed. The queued v2 independently reruns inventory tests and complete aggregation. Full362graphscopecontinues.",
+  "qualification": "The fixed-input ORL oracle intervention satisfies the declared scientific criterion. Labels are used for diagnosis; this does not establish unsupervised graph-repair performance.",
   "qualifying_dataset": "ORL_att92",
-  "schema": "immutable-G3-promotion-evidence-v1",
-  "subsequent_full_aggregation_validation": {
-    "canonical_inventory_regressions_passed": 7,
-    "original_gate_file_unchanged": true,
-    "passed": true,
-    "run_id": "validation-G3-promotion-aggregation-v2"
-  }
+  "schema": "public-G3-promotion-provenance-v1"
 }

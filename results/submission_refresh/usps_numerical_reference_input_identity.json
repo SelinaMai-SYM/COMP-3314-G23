@@ -1,0 +1,55 @@
+{
+  "arrays_loaded_for_this_view": false,
+  "benchmark": "USPS",
+  "certificate_transferred_to_locked_IRLS_G": false,
+  "historical_missing_F_G_identity_established": false,
+  "numerical_reference_exports": [
+    "usps_continuation_audit.csv",
+    "usps_continuation_evaluation.csv"
+  ],
+  "same_current_F_W_content_addresses": true,
+  "schema": "usps-numerical-reference-input-identity-v1",
+  "scope": "Exact recorded current F/W object references only; no historical-array identity or closest-search claim. Each numerical certificate applies only to its own saved continuation G. Matching F/W does not certify a different historical-style IRLS G.",
+  "sources": {
+    "numerical_audit": {
+      "available": true,
+      "objects": {
+        "F": {
+          "bytes": 711729,
+          "kind": "compressed_array",
+          "path": "objects/14/1421d76bc80b6db829fb4f8861d64e6fea841873e2c36c3a29c6400a77cf33ad.npz",
+          "sha256": "1421d76bc80b6db829fb4f8861d64e6fea841873e2c36c3a29c6400a77cf33ad"
+        },
+        "W": {
+          "bytes": 587038,
+          "kind": "sparse",
+          "path": "objects/72/722ade4d065a756a8336d67f0b35b75400c38adde84f27909d9832e211fc1995.npz",
+          "sha256": "722ade4d065a756a8336d67f0b35b75400c38adde84f27909d9832e211fc1995"
+        }
+      },
+      "path": "usps_audit/frozen_pair.json",
+      "sha256": "732c53211a1defc324fc5569495505690caa8ec60de334bfbb1b985b25354032"
+    },
+    "subset_search": {
+      "available": true,
+      "objects": {
+        "F": {
+          "bytes": 711729,
+          "kind": "compressed_array",
+          "path": "objects/14/1421d76bc80b6db829fb4f8861d64e6fea841873e2c36c3a29c6400a77cf33ad.npz",
+          "sha256": "1421d76bc80b6db829fb4f8861d64e6fea841873e2c36c3a29c6400a77cf33ad"
+        },
+        "W": {
+          "bytes": 587038,
+          "kind": "sparse",
+          "path": "objects/72/722ade4d065a756a8336d67f0b35b75400c38adde84f27909d9832e211fc1995.npz",
+          "sha256": "722ade4d065a756a8336d67f0b35b75400c38adde84f27909d9832e211fc1995"
+        }
+      },
+      "path": "subset/USPS/representation.json",
+      "sha256": "b04e6cd32e647bb58c5da30f8b47467325c2e1d64fefd70a9c837906d54a2973"
+    }
+  },
+  "status": "MATCHING_RECORDED_CURRENT_F_W_OBJECTS",
+  "subset_candidate_id": "USPS"
+}

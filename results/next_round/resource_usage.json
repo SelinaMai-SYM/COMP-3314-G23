@@ -1,7 +1,0 @@
-{
-  "charged_cpu_seconds": 6604.942987,
-  "max_cpu_core_hours": 36.0,
-  "rss_limit_target_gib": 8,
-  "wall_seconds_this_invocation": 1734.2998285419308,
-  "workers": 2
-}

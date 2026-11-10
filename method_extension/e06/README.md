@@ -1,5 +1,15 @@
-# E06 — alternating graph and shrinkage
+# E06: alternating graph construction and shrinkage
 
-Start from the control F. For three outer iterations, build a kNN affinity on the current representation, freeze it, and run E8 with the data term still anchored at the original F. The next graph is built on the new G.
+`AlternatingGraphSSC` performs three outer iterations. Each builds a
+nearest-neighbor graph on the current representation, freezes that graph,
+and solves E8 with fidelity anchored at the **original** \(F\).
+The next graph is constructed from the new \(G\).
 
-Each inner problem is convex while W is frozen and nonnegative. The alternation is not claimed to converge to a global minimizer of a joint objective. The recorded objective is the alpha-weighted (here α = 1) objective of the last frozen W. It is not comparable to the control objective on a different W.
+Every fixed nonnegative-graph subproblem is convex. This does not establish
+global convergence for the alternation or define a certified joint
+objective. The final recorded objective belongs to the last frozen graph;
+its raw value cannot be compared with a control objective on another graph.
+
+See the [adaptation index](../README.md),
+[theory](../../docs/theory.md), [results](../../docs/results.md)
+and [reproducibility](../../docs/reproducibility.md).

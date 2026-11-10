@@ -1,44 +1,59 @@
-# Historical mutual-kNN SSC adaptation
+# SSC adaptations and numerical mechanisms
 
-This is an earlier adaptation of Chang et al., AAAI 2015. The current performance-driven work is documented in [next_round](next_round/README.md) and [execution decisions](../docs/next_round/execution_decisions.md). Historical results below are retained. It is
-**not** original SSC. Original SSC lives in `SSC_method/` and is not modified
-here.
+This library contains explicitly named adaptations of
+[original SSC](../SSC_method/README.md). The scientific question is net
+ACC/NMI improvement from shrinkage under matched input, representation and
+rounding. A graph change, a different fidelity and a different rounding rule
+are separate interventions.
 
-## What changes
+| Components | Purpose |
+|---|---|
+| [`ReliabilityAwareSSC`](rssc.py) and [mutual graph helper](mutual_knn.py) | Mutual-neighbor support on the fusion graph |
+| [E01–E09](#named-mechanism-controls) | Separately named graph, fidelity and rounding controls |
+| [Convex solver and secondary candidates](next_round/README.md) | Feasible-dual certification, capped fusion, radial Huber and heat geometry |
+| [EnSC graph adapter](submission_refresh/README.md) | Attributed elastic-net coefficients and affinity construction |
+| [Earlier theory controls](v3_theory/README.md) | Threshold, calibration, perturbation and weighted-fidelity mechanisms |
 
-1. Compute the spectral embedding `F` exactly as original SSC (union kNN on
-   the features, symmetric normalized Laplacian, `c` smallest eigenvectors).
-2. On `F`, build a **mutual** kNN Gaussian affinity `W` (keep an edge only
-   when each embedded point is among the other's `k` neighbors).
-3. Freeze `W`. Run the original IRLS solver (`SSC_method.optimizer.shrink_embedding`),
-   which solves Equation (13), not Algorithm 1 line 10.
-4. Cluster the rows of `G` with K-means.
+## Mutual-neighbor adaptation
 
-Ablation **A0** is original SSC (union kNN `W`). Ablation **A1** is this
-module (mutual kNN `W` only). The optimizer, `G_0 = F`, bandwidth rule, and
-metrics do not change.
+`ReliabilityAwareSSC` keeps the original union-neighbor input graph and
+spectral anchor \(F\), but retains a fusion edge only when its endpoints
+are mutual neighbors in \(F\). The bandwidth is computed from positive
+directed-neighbor squared distances **before** mutual filtering. Thus the
+support change does not silently change the bandwidth estimate.
 
-## What this is not
+The graph is frozen before the original IRLS solve, initialized at \(G=F\).
+This class retains the E13 linear-system convention. Its control must use
+that same convention; E01–E09 instead declare E8 controls explicitly.
+Mutual support can remove useful within-class connections, so increased
+sparsity is not itself evidence of better clustering.
 
-Chi and Lange (2015) already use **union** kNN Gaussian weights, frozen
-before convex clustering. Mutual kNN itself is older still (Brito et al.
-1997; von Luxburg 2007). The combination "mutual kNN support on SSC's
-shrinkage `W`" was not found in the literature check
-(`docs/literature_review.md`). Call it an adaptation, not a new convexity
-theorem. Equation (8) remains convex for the same reason whenever `W` is
-nonnegative and held fixed.
+Mutual nearest-neighbor graphs are established constructions. This package
+does not claim a new graph family, a new convexity theorem or guaranteed
+accuracy improvement. Fixed nonnegative graph weights preserve convexity
+of the stated SSC target.
 
-Bandwidth: if omitted, `delta^2` is the median of positive *directed* kNN
-squared distances, computed before the mutual filter, so the scale matches
-original SSC and the only change is which edges remain.
+## Named mechanism controls
 
-## Round 2 result (JAFFE, n=50, Category C)
+| Identifier | Modification |
+|---|---|
+| [E01](e01/README.md) | Perturbation recurrence reweights \(W\) |
+| [E02](e02/README.md) | Positive fidelity weights from neighbor reciprocity |
+| [E03](e03/README.md) | Local-scale affinity placed in \(A\), \(W\), or both |
+| [E04](e04/README.md) | Degree normalization and a separate global-scale control |
+| [E05](e05/README.md) | Combine input-space and embedding-space relations |
+| [E06](e06/README.md) | Alternate graph construction and fixed-anchor shrinkage |
+| [E07](e07/README.md) | Compare rounding rules on the same representation |
+| [E08](e08/README.md) | Combine E01 recurrence with E02 fidelity weights |
+| [E09](e09/README.md) | Combine recurrence with the E03-W local-scale graph |
 
-Same \(F\) as union E8. Mutual E8 ACC **68.4±11.2** vs union E8 **68.4±11.1**
-(410 vs 655 edges; 20 vs 9 components). Negative: no ACC gain.
-Run: `20261021_161924__ROUND2__JAFFE__EXT_JAFFE_MUTUAL_KNN__45fd1c1f`.
-Union control: `20261021_161558__ROUND2__JAFFE__D12_JAFFE_E8__b643eae7`.
+Parameters and seed conventions are part of each named construction.
+Different targets cannot be ranked by comparing their raw objective
+values. Compatibility `y` arguments in the E01–E09 fitting adapter are
+discarded; labels do not determine its graph or solver updates.
 
-## E01–E09
-
-Later extensions live in `method_extension/e01` through `method_extension/e09`. They do not replace this mutual-kNN module or its saved runs. The primary control for those experiments is original E8 (`variant="E8"`, Laplacian coefficient 2), not the E13 default and not this mutual-kNN ablation.
+The main conclusions, including negative and numerically unresolved
+comparisons, are in [results](../docs/results.md).
+See [methods](../docs/methods.md), [theory](../docs/theory.md),
+[limitations](../docs/limitations.md) and
+[reproducibility](../docs/reproducibility.md).

@@ -93,7 +93,7 @@ def _pack_arrays(value,store):
 
 
 def run_block(task,X,y,K,store,folder,source):
-    """Run/resume the LDA portion of the root's shared baseline worker.
+    """Run or resume a seeded LDA baseline block.
 
     Every external seed has its own final checkpoint. Failures are retained and
     disqualify the corresponding complete configuration. Fifty independent

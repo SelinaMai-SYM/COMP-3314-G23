@@ -1,61 +1,46 @@
 # USPS
 
-**Current status, 2026-11-10:** the source is the verified LIBSVM train/test
-release, concatenated in that order. All 9,298 rows remain in primary
-specification-compatible experiments. Train-only and test-only diagnostics
-cannot compete as the paper's 9,298-row dataset. See the
-[submission refresh](../../docs/submission_refresh/source_recovery.md) and
-[current campaign records](../../results/subset_search/). Earlier pilot results
-below do not describe current coverage.
+The explicit/default `libsvm` source consists of the complete training file
+followed by the complete test file: 7,291+2,007=9,298 digit samples, ten classes
+and 256 native features. Train-only/test-only subsets are diagnostics and do
+not compete as the paper's 9,298-row input.
 
-## Source, paper statements and preparation
+## Source and preparation
 
-The LIBSVM multiclass page distributes `usps.bz2` and `usps.t.bz2`, with dataset
-attribution to Hull (TPAMI 1994); the 16x16 form is described in Hastie et al.'s
-`zip.info`. Chang et al. report 9,298 grayscale handwritten digits resized to
-16x16, without identifying a specific file release. The obtained LIBSVM data
-already have 256 native features with values in [-1,1]. No second resize or
-rescaling is applied. Preparation is verified for this source, while exact
-identity with the authors' preprocessing remains unverified.
+The [LIBSVM dataset page](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#usps)
+attributes USPS to Hull (TPAMI 1994). The source files already represent 16×16
+images in `[-1,1]`. They receive no second resize or rescaling. Chang et al.
+report 9,298 digits and 16×16 pixels, but do not identify the exact release or
+all preprocessing, so source verification is distinct from historical identity.
 
-| File | Bytes | SHA256 |
+Place both files in `usps/data` beneath the independent data root:
+
+| File | Bytes | Expected SHA-256 |
 |---|---:|---|
 | `usps.bz2` | 6579383 | `3771e9dd6ba685185f89867b6e249233dd74652389f263963b3b741e994b034f` |
 | `usps.t.bz2` | 1831726 | `a9c0164e797d60142a50604917f0baa604f326e9a689698763793fa5d12ffc4e` |
 
-The compressed files contain no license notice; exact redistribution terms are
-unknown. LIBSVM makes them publicly available for research. The raw files remain
-outside Git. `version="libsvm"` is the only source version and the default;
-there is no recovered second file that the SSC authors independently resized.
-
-The loader parses features 1-256, concatenates all 7,291 training rows and 2,007
-test rows, and maps file labels 1-10 to digit labels 0-9. Class counts match the
-Hastie `zip.info` table. The declared test split is not used for supervised
-training in this clustering task.
+The loader parses feature indices 1–256, preserves all rows in train-then-test
+order and maps stored labels 1–10 to 0–9. The declared split is not supervised
+training in this clustering task. It returns a float64 `(9298,256)` matrix;
+missing sparse feature entries remain zero.
 
 ```python
 from pathlib import Path
 from benchmarks import load_dataset
+
 X, y, metadata = load_dataset("USPS", root=Path("/path/to/benchmarks/usps/data"))
-assert X.shape == (9298, 256)
-assert X.min() >= -1 and X.max() <= 1
 ```
 
-Perturbations must retain the native [-1,1] domain. Clipping these pixels to
-[0,1] changes the unperturbed input and invalidates a small-noise comparison.
+Perturbations use the full native `[-1,1]` domain and preserve zero-change input
+identity. Clipping these values to `[0,1]` changes the unperturbed data and does
+not represent a small-noise comparison.
 
-## Historical recovery and experiment notes (2026-10-21)
+## Terms and interpretation
 
-Both file HEAD requests returned HTTP 200 in the integrity audit. The existing
-archives were not replaced. Task 1 and Strict URL checks found unchanged hashes,
-lengths and `(9298,256)` matrix shape; the matrix status was
-`COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
-
-Phase 1 and repair_round1 used `libsvm`. The Round 2 pilot had only three runs,
-rather than the required 50: SC
-`20261021_161647__ROUND2__USPS__D12_USPS_SC__6324d037`, ACC 63.8 +/- 1.7%;
-E8 `20261021_161650__ROUND2__USPS__D08_USPS_E8__c638f49b`, ACC 60.7 +/- 4.0%.
-These pilots are not labelled complete reproductions.
-See [Round 2 source records](../../docs/round2_source_of_truth.md) and
-[the manifest](manifest.yaml). Older LLC results predating the Procrustes
-correction retain `PRE_FIX_LEGACY`.
+The compressed files contain no license notice; exact redistribution terms are
+not established by public availability. Keep the raw files outside Git and
+retain the source attribution. The [manifest](manifest.yaml),
+[data guide](../../docs/data.md), [protocol](../../docs/experimental_protocol.md)
+and [results](../../docs/results.md) record source and numerical qualifications,
+including the distinction between a saved output and a certified optimum.

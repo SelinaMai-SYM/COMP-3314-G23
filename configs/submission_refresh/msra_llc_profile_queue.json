@@ -1,11 +1,9 @@
 {
   "schema": "msra-llc-dense-continuation-v1",
   "choice_frozen_before_LLC_scores": true,
-  "reason": "First original LLC configuration failed ARPACK before any LLC evaluation:17991 iterations,11/12 eigenvectors. Uniformly use the existing dense branch for all15 unchanged pairs.",
+  "reason": "Label-blind runtime profile for the existing dense LLC backend on the unchanged scientific grid; the sparse eigensolver limitation is retained in the results.",
   "model_grid_unchanged": true,
   "original_sparse_failure_retained": true,
-  "complete_existing_PCA_Kmeans_endpoints": 31,
-  "no_actual_jobs_launched_by_generation": true,
   "tasks": [
     {
       "kind": "msra_llc_repair",
@@ -82,5 +80,6 @@
       "profile": true,
       "cpu_limit": 120
     }
-  ]
+  ],
+  "original_design_sha256": "0730e43f8d01241d5f2903c8b89ce178b8123cbcc067e7d6c1a3dfc9388f544e"
 }

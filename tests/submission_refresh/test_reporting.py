@@ -1,6 +1,7 @@
 """The publication generator preserves scientific endpoints and unavailable values."""
 from pathlib import Path
 import csv,json
+import pytest
 import experiments.submission_refresh.reporting as reporting
 
 
@@ -45,6 +46,36 @@ def test_missing_aggregation_never_turns_into_performance_zero(tmp_path,monkeypa
     content=(tmp_path/'report/tables/refresh_main.tex').read_text()
     assert '0.00' not in content
     assert 'unavailable' in (tmp_path/'report/tables/refresh_extension.tex').read_text()
+
+
+def test_explicit_public_stage_reserves_subset_results_without_final_manifest(tmp_path,monkeypatch):
+    marker=tmp_path/'configs/submission_refresh/publication_stage.json'
+    marker.parent.mkdir(parents=True)
+    marker.write_text(json.dumps(reporting.PUBLICATION_STAGE))
+    write_csv(tmp_path/'results/subset_search/closest_matches.csv',[
+        {'benchmark':'ORL','candidate_id':'INTERIM_ONLY','pool':'specification_compatible',
+         'endpoint':'mean_sample_sd_50','acc_mean':99.,'acc_sd':.1,'nmi_mean':99.,'nmi_sd':.2}])
+    monkeypatch.setattr(reporting,'figure',lambda *args:pytest.fail('Reserved subset results must not be plotted'))
+    manifest=reporting.generate(tmp_path)
+    content=(tmp_path/'report/tables/refresh_appendix.tex').read_text()
+    assert 'INTERIM' not in content and '99.00' not in content
+    assert 'reserved' in (tmp_path/'report/tables/refresh_coverage.tex').read_text()
+    assert manifest['presentation']=='public-scientific'
+    assert manifest['publication_stage']=='methods-and-completed-studies'
+    assert manifest['inputs']['publication_stage']['sha256']
+    assert 'evidence_manifest' not in manifest['inputs']
+    assert not (marker.parent/'evidence_manifest.json').exists()
+
+
+def test_final_public_evidence_style_precedes_stage_marker_and_invalid_stage_fails(tmp_path):
+    folder=tmp_path/'configs/submission_refresh';folder.mkdir(parents=True)
+    marker=folder/'publication_stage.json'
+    marker.write_text(json.dumps({**reporting.PUBLICATION_STAGE,'stage':'unrecognized'}))
+    with pytest.raises(ValueError,match='publication stage'):
+        reporting.public_presentation_inputs(tmp_path)
+    evidence=folder/'evidence_manifest.json'
+    evidence.write_text(json.dumps({'schema':'submission-scalar-evidence-public-v1'}))
+    assert reporting.public_presentation_inputs(tmp_path)=={'evidence_manifest':evidence}
 
 
 def test_generator_hashes_certified_availability_and_scopes_same_input_reference(tmp_path,monkeypatch):

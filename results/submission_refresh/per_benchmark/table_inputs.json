@@ -1,0 +1,9 @@
+{
+  "configs/submission_refresh/publication_stage.json": "fbd22564b954736076744648c60ed30b4c90c03523f81b323ef495f2612f2144",
+  "configs/v3/paper_reference.yaml": "ef0b2af8faf4d1bf02517686a61dbcf1047337e9cb30983a8307536a22259e63",
+  "results/submission_refresh/baseline_source_native_diagnostics.csv": "4bdf628c17cbd222a93105d704d0d6a7d5c763d34d596a4ded0a3668e346a227",
+  "results/submission_refresh/endpoint_comparison.csv": "00c4b177a551b28e5c19f847ab62fff54b7aa92300e949ed281d61aff734225c",
+  "results/submission_refresh/expanded_baseline_native_selection.csv": "1e1e12d0c51b17f609d0a8b69e83257b5d5935b45e83fdb4e48be01534df985e",
+  "results/submission_refresh/expanded_baseline_selection.csv": "d9bc8c28d4b09bfc8663ca17d61f7e31dac2aedbdf7d3684a242e375ac9d4d52",
+  "results/submission_refresh/joint_metric_selection.csv": "f338f05c39bc043d74840ad796955b2406a3ac5bfd7d3a4024a3e1f5b6d7fb67"
+}

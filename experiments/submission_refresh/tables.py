@@ -8,6 +8,7 @@ import yaml
 from .core import ROOT,atomic_json,digest
 from .scalar_evidence import PAPER_METHOD
 from .csv_transport import resolve_csv,open_csv
+from .reporting import public_presentation_inputs,SUBSET_RESERVED
 
 NAMES=['AR','JAFFE','ORL','UMIST','BinAlpha','MSRA50','YaleB','USPS']
 INPUTS=[('results/submission_refresh/joint_metric_selection.csv',None),
@@ -108,7 +109,7 @@ def public_qualification(row,pool,endpoint):
     return '; '.join(qualifications)
 
 
-def public_view(name,rows,paper):
+def public_view(name,rows,paper,*,subset_reserved=False):
     text=[f'# {name}: clustering results','',
         'ACC/NMI and sample SD are percentages; signed differences and joint discrepancies are percentage points. Each pair of metrics uses one configuration and seed set. Joint matches are retrospective, using labels and paper targets; numerical closeness does not establish historical source or sample identity. Native-best endpoints contain one assignment and have no across-run SD. Compatible, adapted and diagnostic results remain separate.','',
         '| Method / endpoint | Source and settings | Paper ACC / NMI (mean ± SD) | Our ACC / NMI | Δ mean ACC / NMI; Δ SD (pp) | Dmax / Dmean (pp) | Scientific qualification |',
@@ -136,18 +137,23 @@ def public_view(name,rows,paper):
                 public_setting(row),' / '.join(reported),metric(row,'acc').replace('+/-','±')+' / '+metric(row,'nmi').replace('+/-','±'),
                 pair(row,'delta_','_pp',True)+'; '+sd_delta,distance,public_qualification(row,pool,endpoint)]
         text.append('| '+' | '.join(map(cell,values))+' |')
-    text+=['','Configuration identities, exact source/sample hashes and complete trial records are retained in the public registry and CSV releases. Coverage distinguishes complete, unsuccessful and unevaluated configurations. `table_inputs.json` records the exact source-file hashes.']
+    if subset_reserved:
+        text+=['',SUBSET_RESERVED,'',
+            'Exact settings and available source hashes for the completed studies are retained in their CSV releases. The final subset registry is reserved. `table_inputs.json` records the exact inputs used for this edition.']
+    else:
+        text+=['','Configuration identities, exact source/sample hashes and complete trial records are retained in the public registry and CSV releases. Coverage distinguishes complete, unsuccessful and unevaluated configurations. `table_inputs.json` records the exact source-file hashes.']
     return '\n'.join(text)+'\n'
 
 
 def build(root=ROOT):
     root=Path(root).resolve();out=root/'results/submission_refresh/per_benchmark'
     paper_path=root/'configs/v3/paper_reference.yaml';hashes={str(paper_path.relative_to(root)):digest(paper_path)};paper=yaml.safe_load(paper_path.read_text())
-    evidence_manifest=root/'configs/submission_refresh/evidence_manifest.json'
-    public=evidence_manifest.exists() and json.loads(evidence_manifest.read_text()).get('schema')=='submission-scalar-evidence-public-v1'
-    if public:hashes[str(evidence_manifest.relative_to(root))]=digest(evidence_manifest)
+    presentation_inputs=public_presentation_inputs(root)
+    public=bool(presentation_inputs);subset_reserved='publication_stage' in presentation_inputs
+    for path in presentation_inputs.values():hashes[str(path.relative_to(root))]=digest(path)
     paths=[];rows=[]
     for relative,endpoint in INPUTS:
+        if subset_reserved and relative.startswith('results/subset_search/'):continue
         path=resolve_csv(root/relative)
         if path is None:continue
         paths.append(path);hashes[str(path.relative_to(root))]=digest(path)
@@ -161,7 +167,7 @@ def build(root=ROOT):
     try:
         for name in NAMES:
             if public:
-                (stage/(name+'.md')).write_text(public_view(name,rows,paper))
+                (stage/(name+'.md')).write_text(public_view(name,rows,paper,subset_reserved=subset_reserved))
                 continue
             text=[f'# {name}: authoritative reproduction and audit views','',
                 'All scores and SDs are percentages; differences are percentage points. Joint matching is retrospective and label/paper-assisted. A count-compatible candidate does not establish historical identity. Single native-best assignments have no across-run SD. Source-native learned-subspace selection is diagnostic only and excluded from primary selection. Different implementation/source pools stay separate.','',

@@ -1,4 +1,4 @@
-"""Provenance checks. v1 metrics are a diagnostic reference, not a result source."""
+"""Scientific provenance comparisons with explicit historical references."""
 
 from __future__ import annotations
 
@@ -15,21 +15,6 @@ from experiments.v2_kmeans_protocol.paper_comparison import paper_stat
 from experiments.v2_kmeans_protocol.protocol_runner import read_trials, trials_path
 from experiments.v2_kmeans_protocol.representation_cache import MANIFEST_ROOT
 from experiments.v2_kmeans_protocol.select_best_inertia import select_min_inertia
-
-V1_METRICS = {
-    ("ORL", "att92"): {
-        "ssc": REPO_ROOT
-        / "runs/strict_paper/20261021_222143__STRICT_PAPER__ORL__SSC_E8_G1P0__4be5ba41/metrics.json",
-        "sc": REPO_ROOT
-        / "runs/strict_paper/20261021_222136__STRICT_PAPER__ORL__SC_EQ4__45db39ce/metrics.json",
-    },
-    ("JAFFE", "zenodo"): {
-        "ssc": REPO_ROOT
-        / "runs/strict_paper/20261021_222434__STRICT_PAPER__JAFFE__SSC_E8_G1P0__8a4a026d/metrics.json",
-        "sc": REPO_ROOT
-        / "runs/strict_paper/20261021_222427__STRICT_PAPER__JAFFE__SC_EQ4__2a69392b/metrics.json",
-    },
-}
 
 
 def _close(left: float, right: float, atol: float = 1e-6, rtol: float = 1e-5) -> bool:
@@ -60,17 +45,23 @@ def _indexed(rows: list[dict[str, str]], **filters: str) -> dict[int, dict[str, 
     return chosen
 
 
-def diagnose_entry(entry: DatasetEntry) -> dict[str, Any]:
-    """Compare our P1 trials with the v1 random Lloyd metrics for this version."""
-    paths = V1_METRICS.get((entry.benchmark, entry.version))
+def diagnose_entry(
+    entry: DatasetEntry, reference_metrics: dict[str, Path] | None = None,
+) -> dict[str, Any]:
+    """Compare trials with explicitly supplied historical SC/SSC references.
+
+    Reference files are not inferred from previous output directories.
+    Omitting them reports unavailable historical identity without fitting.
+    """
+    paths = {name: Path(path) for name, path in reference_metrics.items()} if reference_metrics else None
     report: dict[str, Any] = {
         "benchmark": entry.benchmark,
         "dataset_version": entry.version,
-        "reference_present": paths is not None and all(path.is_file() for path in paths.values()),
+        "reference_present": paths is not None and set(paths) == {"sc", "ssc"} and all(path.is_file() for path in paths.values()),
     }
     if not report["reference_present"]:
         report["matches_v1_random_lloyd"] = False
-        report["reason"] = "v1 metrics.json is missing"
+        report["reason"] = "Explicit historical SC/SSC reference metrics are unavailable"
         return report
     ours = read_trials(trials_path(entry))
     ssc_ref = json.loads(paths["ssc"].read_text(encoding="utf-8"))

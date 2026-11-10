@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "candidate_count": 2482,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "b5d35561a1b80a357234133214bb2a043e20816688bb1cedab140e98cd9b3991",
+      "path": "configs/subset_search/executable_cohort.json",
+      "public_sha256": "495b7bfe0495ac821b73a6b7ce0680dd193df7d592098a3c1e6eb0918e09bc2c"
+    },
+    {
+      "candidate_count": 2482,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "ee43bc15c8d5e2e0fca88be2c3cffcb4ec52c381070cdfad1f36ddc5f8778829",
+      "path": "configs/subset_search/executable_cohort_order.json",
+      "public_sha256": "0b14182e267a8dd5db27411d09464a9848a4ffc360f4fe475757be806d112365"
+    },
+    {
+      "candidate_count": 1202,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "2a4cc8187048572c565201fc9d6be3b4d1684f7979f7dd06837434eff4107682",
+      "path": "configs/subset_search/executable_cohort_primary_v1.json",
+      "public_sha256": "5bd669af595cde999068ef9303e54f24de2ffaacc00f928681c4775a2ee170fd"
+    },
+    {
+      "candidate_count": 1202,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "63e3eef76c8c5f8c718dd46f32dd64369e6acbedf221c594ae54ac04eea15032",
+      "path": "configs/subset_search/executable_cohort_order_primary_v1.json",
+      "public_sha256": "076e99837a0370f1a4a899036f8c171c98f65f1d71eb0b852d9d12f266ef46ab"
+    },
+    {
+      "candidate_count": 1280,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "b4fe055a49065fcfb985b380103e20c47830875f0007e1eabdc2684ae12a0e1d",
+      "path": "configs/subset_search/optional_ar_common_cohort_v1.json",
+      "public_sha256": "3ed3ad1d1b73223773f6deed629113267e5ff82477cb714da207bd98c86de525"
+    },
+    {
+      "candidate_count": 1280,
+      "candidate_ids_order_rng_and_compute_limits_unchanged": true,
+      "original_sha256": "b7497c2193887fd7b5246c3597024519f9cbc2fc9d2b11a35b7c06f5f56fdec7",
+      "path": "configs/subset_search/optional_ar_common_cohort_v1_order.json",
+      "public_sha256": "2dcef002df3d7c9699c960860a6c1674e786f2761392c3f4680f21be1ae8f9b0"
+    }
+  ],
+  "optional_candidate_count": 1280,
+  "primary_candidate_count": 1202,
+  "publication_stage": {
+    "presentation": "public-scientific",
+    "schema": "public-publication-stage-v1",
+    "stage": "methods-and-completed-studies"
+  },
+  "schema": "public-scientific-cohort-projections-v1",
+  "scope": "Frozen scientific declarations only; no current search scores, completion claims or archive verification are inferred.",
+  "score_values_read": false,
+  "union_candidate_count": 2482
+}

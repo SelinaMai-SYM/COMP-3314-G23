@@ -1,70 +1,59 @@
 # Binary alphabet candidates
 
-**Current status, 2026-11-10:** the 26-by-30 seed0 reconstruction remains exact
-with respect to its stored manifest. The new campaign declares RandomState
-seeds 0-99 and first/last30 sensitivity rules before scoring. The authors'
-historical parent release and selected indices remain unverified. The strict
-`load_dataset("BinAlpha")` endpoint remains unavailable. See
-[source recovery](../../docs/submission_refresh/source_recovery.md) and the
-[candidate catalogue](../../configs/subset_search/candidate_catalogue.json).
+Chang et al. specify 26 binary handwritten alphabets with thirty randomly
+selected images per alphabet, without a parent URL, image size or seed. This
+implementation provides an explicitly named Binary Alphadigits parent and a
+manifest-defined 26×30 reconstruction. Neither establishes the authors'
+historical parent or indices. Strict `load_dataset("BinAlpha")` raises
+`DatasetUnavailable`.
 
-## Identity and source
+## Source and values
 
-Chang et al. specify 26 binary handwritten alphabets with 30 randomly selected
-images per alphabet. They give no parent URL, image size or seed. Binary
-Alphadigits, attributed to Simon Lucas/Algoval and distributed as a Roweis
-MATLAB dump, contains digits 0-9 and letters A-Z: 36 classes with 39 images each,
-20x16 pixels, or 1,404 images. Dropping digits and sampling 30 per letter is a
-reproducible hypothesis, not direct evidence that Chang et al. used that parent.
-Neither the AAAI paper, arXiv:1411.6308 nor the related arXiv:1411.6241 paper
-identifies Binary Alphadigits as its BinAlpha source.
+Binary Alphadigits, attributed to Simon Lucas/Algoval and distributed as a
+[Roweis MATLAB dump](https://cs.nyu.edu/home/people/in_memoriam/roweis/data/binaryalphadigs.mat),
+contains digits 0–9 and letters A–Z: 36 classes, 39 examples each, 20×16 binary
+pixels. The [recorded archived source](https://web.archive.org/web/20240616024002id_/https://cs.nyu.edu/~roweis/data/binaryalphadigs.mat)
+is a separate retrieval reference. Place `binaryalphadigs.mat` in
+`binalpha/data` beneath the independent data root.
 
-The source `binaryalphadigs.mat` is 532,304 bytes, SHA256
-`3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`,
-MD5 `194c4c91d95f1457bbd5829e75373b96`. The source is kept outside Git;
-the exact reconstruction index JSON is committed. No license was found inside
-the MAT file or on the archived Roweis page, so redistribution permission is
-not assumed.
+Expected file length is 532,304 bytes; SHA-256 is
+`3ee9392e64e4e3bb7b35502b69bf2555a0b4197c1b31048c4189b84bc0bc6ea7`
+and MD5 is `194c4c91d95f1457bbd5829e75373b96`. The loader checks the MATLAB cell
+shape/class ordering and native uint8 20×16 images, keeps values `{0,1}` without
+dividing by 255, and vectorizes in C order to 320 features. The complete parent
+has 1,404 rows and is a diagnostic source.
 
-## Explicit versions and reconstruction
+## Versions and exact row rules
 
-| Version | Samples/classes | Meaning |
+| Version | Samples / classes | Qualification |
 |---|---:|---|
-| Default / `paper` | unavailable | `DatasetUnavailable`; strict paper identity unresolved |
-| `binaryalphadigs36` | 1404/36 | Complete parent diagnostic |
-| `CANDIDATE_BIN_ALPHA` / `letters26x30_seed0` | 780/26 | Fixed seed0 reconstruction; historical identity unverified |
+| Default / `paper` | Unavailable | Strict historical identity unresolved |
+| `binaryalphadigs36` | 1404 / 36 | Entire parent in class-major, stored-example order |
+| `CANDIDATE_BIN_ALPHA` / `letters26x30_seed0` | 780 / 26 | Fixed seed-0 hypothesis, not recovered author membership |
 
-The unchanged [seed0 manifest](reconstructions/letters26x30_seed0.json) drops
-parent classes 0-9. One `numpy.random.RandomState(0)` is advanced sequentially
-across A-Z, parent class indices 10-35. It chooses 30 of 39 indices per letter
-without replacement, then sorts the indices within each letter. Seed 0 is our
-reconstruction seed, not a recovered author seed. Cells are native uint8
-20x16 images with values in {0,1}; no division by 255 is applied. Images are
-vectorized in C order to 320 features.
+The unchanged [seed-0 manifest](reconstructions/letters26x30_seed0.json) removes
+parent digit classes 0–9. One `numpy.random.RandomState(0)` is advanced across
+letters A–Z, parent class indices 10–35. It selects thirty of thirty-nine
+examples without replacement, then sorts selected example indices within each
+letter. Final labels are 0–25 in that canonical letter order. The loader reads
+the stored exact indices rather than drawing a new subset.
 
 ```python
 from pathlib import Path
 from benchmarks import load_dataset
-X, y, metadata = load_dataset("BinAlpha", root=Path("/path/to/benchmarks/binalpha/data"),
-                             version="letters26x30_seed0")
+
+X, y, metadata = load_dataset(
+    "BinAlpha", root=Path("/path/to/benchmarks/binalpha/data"),
+    version="letters26x30_seed0"
+)
 ```
 
-Integrity checks require `(1404,320)` for the full parent, `(780,320)` and 30
-samples per class for the reconstruction, and `identity="CANDIDATE_BIN_ALPHA"`.
-The strict default must remain unavailable; no explicit version claims EXACT.
-Run `python -m pytest benchmarks/binalpha/test_binalpha.py` and the new candidate
-replay checks under `tests/submission_refresh/`.
+The [candidate catalogue](../../configs/subset_search/candidate_catalogue.json)
+keeps further RandomState seeds 0–99 and first/last-thirty sensitivities separate,
+with selected/excluded original rows and aliases. A changed subset rebuilds its
+own graphs and representation. Counts or close clustering scores do not resolve
+historical identity.
 
-## Historical recovery notes (2026-10-21)
-
-No BinAlpha clustering jobs ran in Phase 1, repair_round1 or Round 2. Statements
-that the candidate had not been evaluated describe those rounds; current
-coverage is recorded in the new campaign rather than inferred from these notes.
-The live legacy `cs.nyu.edu/~roweis/data/binaryalphadigs.mat` GET returned 403,
-while Wayback capture `20240616024002id_` returned 200. The original download
-created the file without overwriting an older archive. Later Task 1 and Strict
-URL checks reused it and found the same SHA256 and length. The planned live
-Roweis URL's HEAD returned 200 in the strict check. Historical 26-by-30 identity
-remained `NOT_FOUND`; the stored reconstruction remained `CANDIDATE_ONLY`.
-See [Round 2 source records](../../docs/round2_source_of_truth.md) and
-[the manifest](manifest.yaml).
+No redistribution license is established by the MAT file or the archived Roweis
+page. The source remains outside Git. See [the manifest](manifest.yaml),
+[data terms](../../docs/data.md) and [scientific limitations](../../docs/limitations.md).

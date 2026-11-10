@@ -1,5 +1,18 @@
-# E05 — feature graph and embedding graph
+# E05: input-space and embedding-space relations
 
-W_F is the control kNN affinity on F. W_X is the same rule on the original features. E05-fuse uses 0.5 W_F + 0.5 W_X. E05-bilateral keeps a W_F edge only when W_X also has that edge. λ = 0.5 is fixed.
+`CrossSpaceSSC` distinguishes the control affinity \(W_F\) on the
+spectral anchor from \(W_X\), constructed by the same neighbor rule on
+input features.
 
-On YaleB the pixel-space graph is not assumed to be reliable. Both variants are still run, and a negative result is kept.
+**E05-fuse** uses \(0.5W_F+0.5W_X\).
+**E05-bilateral** retains a \(W_F\) edge only when the input-space graph
+also contains that edge. The mixture coefficient is fixed.
+
+Input-space similarity is not assumed to identify the class correctly,
+particularly under illumination changes. The two variants remain
+separately named, and neither graph agreement nor reduced support proves
+a clustering improvement.
+
+See the [adaptation index](../README.md),
+[methods](../../docs/methods.md), [results](../../docs/results.md)
+and [reproducibility](../../docs/reproducibility.md).

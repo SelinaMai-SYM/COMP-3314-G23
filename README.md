@@ -1,74 +1,93 @@
-# COMP3314 Group 23: Spectral Shrunk Clustering
+# Spectral Shrunk Clustering
 
-We study **Spectral Shrunk Clustering** (Chang et al., AAAI 2015): a convex refinement of a spectral embedding followed by K-means. This project separates reconstruction of the paper, numerical optimization, source/subset uncertainty and conditional graph-repair diagnostics.
+Research software and a technical report on **Spectral Shrunk Clustering**
+([Chang et al., AAAI 2015](https://doi.org/10.1609/aaai.v29i1.9606)). The project
+studies whether refining a spectral representation improves clustering, and how
+the answer depends on graph construction, numerical solution and data identity.
 
-Authors: Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying. The University of Hong Kong, Group 23.
+**Han Jiale · Lu Sinan · Mahatharadol Vie · Mai Sheung Ying**
+Group 23, The University of Hong Kong — COMP3314 Machine Learning.
 
-![Input and shrinkage graphs have different roles](docs/figures/ssc_two_graph_pipeline.svg)
+## What the project provides
 
-The input graph A determines the spectral coordinates F. A separate graph W built from F controls shrinkage into G. Matched SC clusters that same F. Convexity of the refinement does not guarantee better clustering labels.
+- An array-based SSC implementation with explicit E8/E13 parameter conventions.
+- Primal–dual solvers with objective gaps and capacity diagnostics.
+- Spectral, PCA, LDA, LLC and SLPS baselines, plus separately named graph and
+  fidelity adaptations, including an attributed EnSC affinity.
+- Source-aware benchmark loaders, published ACC/NMI records and scalar-result
+  reconstruction tools.
+- A technical report, mathematical derivations and editable method figures.
 
-Read the [course report](report/Group_23.pdf), [current research findings](docs/submission_refresh/research_findings.md), [issue closure](docs/submission_refresh/issue_closure.md) and [execution handover](docs/submission_refresh/final_handover.md). Detailed candidate results are in [results/subset_search](results/subset_search); the [campaign notes](docs/subset_search/README.md) explain the two statistical endpoints and coverage.
+## Two graphs, two roles
 
-## What the results mean
+![The input graph A defines F; the shrinkage graph W refines F into G](docs/figures/ssc_two_graph_pipeline.svg)
 
-The frozen historical release has 72 cells: 32 measured, 24 data-blocked, 8 method-blocked and 8 subset-unverified. These original statuses remain separate from new candidate measurements. Exact historical LDA-SC and several original sample manifests remain unresolved.
+The input affinity **A** determines the spectral representation **F**. A second
+graph **W**, constructed from F, controls refinement into **G**. Matched spectral
+clustering clusters F; SSC clusters G. Convex refinement and improved clustering
+are distinct claims. The [methods](docs/methods.md) explain the objective,
+parameter mapping and numerical qualifications.
 
-Current display selection minimizes the joint ACC/NMI discrepancy to the paper, using one complete configuration and all 50 declared seeds. **This is retrospective numerical matching.** It does not establish historical sample identity, label-free model selection or unbiased superiority. The earlier ACC-only selections are preserved. A native-best-of-50 assignment is a separate endpoint with no across-run SD. See the [joint tables](results/submission_refresh/joint_metric_selection.csv) and [endpoint comparison](results/submission_refresh/endpoint_comparison.csv).
+## Install and use
 
-The candidate catalogue records all intended subsets, exact source indices, aliases and preprocessing. Different subsets rebuild A, F, W and G. The native 16-by-16 MSRA25 file is an adapted-resolution source, with all 1,799 rows retained. Its availability does not establish recovery of the paper's 32-by-32 MSRA50 source. The pinned ClustPy LDA reference is instrumented without concealing failures. The ridge LDA-to-SC adaptation has its own name and controls.
-
-The previous wrong-edge gate remains 0/4. New G1–G3 graph diagnostics are independent of subset winners; only their fixed gate can permit the EnSC adaptation. No additional Huber, capped-fusion or heat grids belong to this refresh. Incomplete or uncertified comparisons do not support a four-benchmark gain claim.
-
-## Set up and obtain data
-
-Use CPython 3.13 and the [pinned environment](environment/requirements.lock.txt):
+Use Python 3.13 from the repository root:
 
 ```bash
+git clone --single-branch --branch main https://github.com/SelinaMai-SYM/COMP-3314-G23.git
+cd COMP-3314-G23
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r environment/requirements.lock.txt
 ```
 
-Keep restricted data outside the checkout. Loader priority is explicit CLI root, COMP3314_DATA_ROOT, ignored local pointer, then checkout benchmarks. Follow the [data instructions](docs/final/data_setup.md) and [new source audit](docs/submission_refresh/source_recovery.md). To retrieve the pinned native MSRA source:
+For a numeric sample-by-feature matrix `X` and a chosen cluster count:
 
-```bash
-python -m benchmarks.msra50.retrieve --data-root DATA_ROOT
+```python
+from SSC_method import SpectralShrunkClustering
+
+model = SpectralShrunkClustering(
+    n_clusters=3, gamma=1.0, k=5, variant="E8", max_iter=300,
+    kmeans_n_init=1, kmeans_random_state=0,
+)
+labels = model.fit_predict(X)
+F, G = model.embedding_, model.shrunk_
 ```
 
-Use one durable external ARTIFACT_ROOT for both campaigns. Its shared resource_ledger.json records the allowance: 36 additional CPU-core hours, two single-thread workers, 8 GiB aggregate RSS target, USPS repair at most 6 hours and a 2-hour finalization reserve. Creating a new root must not reset an ongoing allowance. Exact matrices, predictions, duals, checkpoints and source records are recoverable there; large/restricted arrays stay outside Git.
+This is an illustrative configuration. The [library guide](SSC_method/README.md)
+documents its options; the [experimental protocol](docs/experimental_protocol.md)
+defines the benchmark settings and statistical endpoints. Provider files and
+independent data roots are described in [data setup](docs/data.md).
 
-## Rebuild, run and validate
-
-The frozen historical release rebuild requires no raw data, old worktrees, publisher PDF or Git history:
-
-```bash
-python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output results/rebuilt
-python -m experiments.submission_refresh rebuild --output results/joint_rebuilt
-python -m experiments.v3_reproduction smoke --dataset synthetic
-```
-
-Run mandatory repairs, then the frozen subset cohort, using the same object root and ledger:
+Reconstruct the published historical tables without image archives:
 
 ```bash
-python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
-python -m experiments.subset_search run --config configs/subset_search/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
+python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output local/rebuilt_historical
 ```
 
-The [execution checkpoint](docs/submission_refresh/execution_status.md) identifies pending stages and resume commands. Any reductions to the queue are frozen using label-blind cost profiles; failures and unrun combinations remain visible. Ordinary v3 module names identify experiment versions and do not depend on another Git branch.
+## Report and results
 
-For a small real-data check, including the MSRA loader:
+Read the [technical report](report/Group_23.pdf), [results summary](docs/results.md)
+and [benchmark comparisons](results/submission_refresh/per_benchmark/).
+Both ACC and NMI remain attached to one configuration and statistical endpoint.
+Closest paper matches are retrospective selections using labels and published
+targets; they do not identify historical sample membership or provide label-free
+parameter selection. Scientific restrictions and negative findings are retained
+in [limitations](docs/limitations.md).
 
-```bash
-python -m experiments.v3_reproduction run-experiments --config configs/submission_refresh/reproduction_adapter.yaml --data-root DATA_ROOT --datasets ORL_att92 JAFFE MSRA25_EBSA_16x16 --smoke --output local/real_smoke
-```
+Final source/subset selections and additional rounding are reserved for the
+versioned subset release; [the results page](docs/results.md) contains their
+dedicated section. Scientific-archive availability is documented separately
+in the [reproducibility guide](docs/reproducibility.md#archive-availability).
 
-After campaign completion, aggregate authoritative records and build the report:
+See [theory](docs/theory.md) for derivations,
+[reproducibility](docs/reproducibility.md) for release interfaces and
+[report sources](report/README.md) for the preprint and figure build.
 
-```bash
-python -m experiments.subset_search aggregate --artifact-root ARTIFACT_ROOT
-python -m experiments.submission_refresh aggregate --artifact-root ARTIFACT_ROOT
-make -C report all
-```
+## License and attribution
 
-See [source and license notes](docs/final/sources_and_licenses.md). [English transformation records](docs/submission_refresh/language_and_editorial_audit.md) distinguish original source hashes from translated bytes. Historical measurements and original text remain in Git history and the verified external backup; current rebuilds read committed current files.
+Original project code is available under the [MIT License](LICENSE). See
+[NOTICE.md](NOTICE.md) for third-party attribution.
+
+Dataset and provider-material terms are separate from the software license.
+Restricted image archives are not redistributed; source attribution and
+conditions are retained in the [data documentation](docs/data.md).

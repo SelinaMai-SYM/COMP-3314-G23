@@ -1,70 +1,72 @@
 # Benchmark datasets
 
-This directory contains loaders, source manifests and the protocol for the eight
-datasets in Chang et al., *A Convex Formulation for Spectral Shrunk Clustering*
-(AAAI 2015). Synthetic data are used only for implementation checks. They never
-stand in for AR, JAFFE, ORL, UMIST, BinAlpha, MSRA50, YaleB or USPS.
+This directory provides loaders, source manifests and preparation conventions
+for the eight benchmarks in Chang et al., *A Convex Formulation for Spectral
+Shrunk Clustering* (AAAI 2015). Synthetic data are separate examples and never
+substitute for a named benchmark.
 
-**Current status, 2026-11-10:** the
-[submission refresh](../docs/submission_refresh/source_recovery.md) adds explicit
-candidate subsets and a native 16x16 MSRA source. These are reproducible
-reconstructions, with historical identity qualified separately. The older notes
-below describe source recovery, rather than current experiment completion.
-See the [candidate catalogue](../configs/subset_search/candidate_catalogue.json)
-and current [campaign records](../results/subset_search/) for measured coverage.
+The [data guide](../docs/data.md), [source inventory](../results/submission_refresh/dataset_inventory.csv)
+and [experimental protocol](../docs/experimental_protocol.md) distinguish
+verified source bytes from historical sample identity. Measured comparisons are
+in [results](../docs/results.md). Reproducible candidate subsets do not establish
+which rows the paper's authors used.
 
-Raw images and archives belong outside the checkout in an independent data root.
-The corresponding `data/` directories are ignored by Git. JAFFE prohibits
-redistribution; Extended Yale B and AT&T/ORL also restrict public redistribution.
-Source hashes, licensing information and preprocessing are recorded in each
-package's manifests. Download or copy the authorized sources using the current
-[data setup instructions](../docs/final/data_setup.md); historical instructions
-that mentioned a `v1` checkout are superseded. A versioned Python module name
-does not require another branch.
+## Data root and loading
 
-## Loading
+Keep provider archives and prepared images in an independent data root, with
+subdirectories such as `orl/data`, `jaffe/data` and `usps/data`. Command-line
+`--data-root` takes precedence over `COMP3314_DATA_ROOT`, the ignored
+`local/data_root.txt` pointer, and checkout-local `benchmarks/`. A direct loader's
+`root` argument instead names that dataset's **data directory**:
 
 ```python
 from pathlib import Path
-from benchmarks import DatasetUnavailable, load_dataset
+from benchmarks import load_dataset
 
 root = Path("/path/to/benchmarks")
 X, y, metadata = load_dataset("ORL", root=root / "orl/data", version="att92")
 ```
 
-`X` is a float64 matrix of shape `(n,d)` and `y` contains integer labels.
-Unavailable strict datasets raise `DatasetUnavailable`. Explicit `root` takes
-priority over `COMP3314_DATA_ROOT`, the ignored local pointer and checkout data.
-Most image loaders use grayscale pixels, declared resizing, vectorization and
-scaling. Binary Alphadigits retains 0/1 values; USPS retains its native [-1,1]
-range. There is no augmentation or learned neural representation.
+`X` is a float64 sample-by-feature matrix and `y` contains integer class labels.
+Unavailable strict datasets raise `DatasetUnavailable`; an explicit candidate
+version is never silently returned under a strict historical name. No neural
+features or augmentation are used. Image preparation is source-specific;
+Binary Alphadigits keeps binary values and USPS keeps its native `[-1,1]` range.
 
-## Sources and versions
+## Sources and explicit versions
 
-| Dataset | Available explicit version | Samples/classes | Features | Qualification |
+| Benchmark | Explicit version | Samples / classes | Features | Scientific qualification |
 |---|---|---:|---:|---|
-| ORL | `att92`; default `olivetti` is separate | 400/40 | 1024 | AT&T native 92x112 and Olivetti native 64x64 are distinct preparation sources |
-| JAFFE | `zenodo` | 213/10 | 676 | Official release; bilinear interpolation is our choice |
-| YaleB | `dengcai32`, `cropped2414` and resize alternatives | 2414/38 | 1024 | Source and interpolation uncertainty remain separate |
-| USPS | `libsvm` | 9298/10 | 256 | All 7291 training rows followed by all 2007 test rows |
-| AR | `lzuf_superset1680`; explicit candidate manifests | 1680/120 parent; 840/120 candidates | 1024 | Strict original 840-image identity remains unverified |
-| UMIST | `lzuf574`, `precropped575`, `roweis575`, `figshare575`, `zenodo3634017` | Version-specific | Version-specific | Dedup564 and omission candidates do not prove historical membership |
-| BinAlpha | `binaryalphadigs36`, `letters26x30_seed0` | 1404/36 parent; 780/26 candidate | 320 | Historical parent and sample indices unverified |
-| MSRA | `MSRA25_EBSA_16x16` | 1799/12 | 256 | Native 16x16 adapted resolution; strict MSRA50 remains unavailable |
+| [ORL](orl/README.md) | `att92`; default `olivetti` is separate | 400 / 40 | 1024 | Native 112×92 PGM and 64×64 MAT are distinct preparations |
+| [JAFFE](jaffe/README.md) | `zenodo` | 213 / 10 | 676 | Official source; bilinear 26×26 interpolation is explicit |
+| [YaleB](yaleb/README.md) | `dengcai32`, `cropped2414` and resize alternatives | 2414 / 38 | 1024 | Source and interpolation alternatives remain separate |
+| [USPS](usps/README.md) | `libsvm` | 9298 / 10 | 256 | Full training file followed by full test file |
+| [AR](ar/README.md) | `lzuf_superset1680`; manifest-defined candidates | 1680 / 120 parent; 840 / 120 candidates | 1024 | Historical 840-image membership and pixel geometry unverified |
+| [UMIST](umist/README.md) | `lzuf574`, `precropped575`, `roweis575`, `figshare575`, `zenodo3634017` | Source-specific | Source-specific | Deduplication/omission hypotheses do not identify historical membership |
+| [BinAlpha](binalpha/README.md) | `binaryalphadigs36`, `letters26x30_seed0` | 1404 / 36 parent; 780 / 26 candidate | 320 | Parent identity and paper's selected indices unverified |
+| [MSRA](msra50/README.md) | `MSRA25_EBSA_16x16` | 1799 / 12 | 256 | Native16 adaptation; historical native32 source unresolved |
 
-The default ORL loader still returns the Olivetti preparation and the default
-YaleB loader still returns Deng Cai's matrix. Use explicit versions for other
-sources. Strict AR, UMIST, BinAlpha and MSRA50 defaults do not silently return
-inferred substitutes.
+Default ORL means Olivetti and default YaleB means DengCai32. Strict AR, UMIST,
+BinAlpha and MSRA50 defaults reject inferred substitutes. Use the exact version
+and sample manifest stated by an experiment. The [candidate catalogue](../configs/subset_search/candidate_catalogue.json)
+records selected/excluded original rows, quotas, ordering and aliases. Each
+changed subset rebuilds its own graphs and representation.
 
-Each package README gives full file hashes, identity and licensing details.
-Earlier source investigations remain in
-[Round 1](../docs/repair_round1_dataset_recovery.md),
-[Round 2](../docs/round2_source_of_truth.md),
-[the request log](../docs/round2_missing_resources.md),
-[the acquisition matrix](../docs/resource_acquisition_matrix.md) and
-[Task 1](../docs/task1_resource_completion.md).
-The [paper protocol](protocols/original_paper.yaml) separates explicit statements
-from assumptions. The paper's combination of “50 repetitions,” “best objective”
-and reported mean/SD remains ambiguous. Bandwidth, G initialization,
-K-means `n_init` and the dimension-grid step are not fully specified by the paper.
+## Preparation and terms
+
+Follow [deterministic data preparation](../docs/data.md#deterministic-preparation)
+for ORL and YaleB; the shared preparation command verifies the archive identity
+and creates the three declared interpolation versions. MSRA has a pinned
+retrieval command. Each dataset README lists its expected paths, hashes and
+source-specific transformations.
+
+Provider conditions remain separate from the project's software license. JAFFE
+prohibits redistribution; YaleB restricts redistribution of its images; AR has
+its own access/use conditions. Other mirrors do not override original terms.
+Raw archives and private matrices are excluded from Git. Preserve attribution
+and verify expected file hashes before loading an acquired source.
+
+The [paper protocol map](protocols/original_paper.yaml) separates explicit paper
+statements from unspecified settings. In particular, source membership,
+bandwidth, initialization and the reported SD hierarchy cannot all be inferred
+from a close ACC/NMI match.

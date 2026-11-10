@@ -1,86 +1,71 @@
 # Extended Yale B
 
-**Current status, 2026-11-10:** Deng Cai32 and cropped2414 are separate full
-2,414-image, 38-identity source versions. The catalogue retains nearest,
-bilinear and bicubic preparation alternatives and Y0-Y3 factors without deleting
-difficult illumination examples. Source membership, normalization and resize
-choices remain distinct. See [source recovery](../../docs/submission_refresh/source_recovery.md)
-and [current campaign records](../../results/subset_search/).
+DengCai32 and cropped2414 are separate 2,414-image, 38-identity source versions.
+They are sensitivities of one benchmark, not independent datasets. The default
+`load_dataset("YaleB")` returns Deng Cai's matrix; an explicit cropped version
+uses the documented archive/preparation below.
 
-The default `load_dataset("YaleB")` still returns Deng Cai's `YaleB_32x32.mat`.
-This identifies the source matrix; it does not claim pixel identity with the
-cropped archive or the SSC authors' input.
+## Sources and membership
 
-## Source, paper and preparation
-
-Extended Yale Face Database B is attributed to Georghiades et al. (TPAMI 2001),
-with cropped images described by Lee et al. (TPAMI 2005). Deng Cai's page states
-that its 32x32 matrix was derived by reducing UCSD cropped images. Chang et al.
-specify 2,414 near-frontal images from 38 people, resized to 32x32. They do not
-state whether ambient images were removed, the interpolation kernel, or use
-of Deng Cai's MAT file.
+Extended Yale B is attributed to Georghiades et al. (TPAMI 2001), with cropped
+images described by Lee et al. (TPAMI 2005). [Deng Cai's matrix](http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat)
+is described as reduced UCSD cropped images. The paper does not identify its
+interpolation, ambient-image convention or use of that MAT file. Matching class
+histograms does not establish pixel/row alignment between source versions.
 
 | Version | Rows | Preparation |
 |---|---:|---|
-| Default / `dengcai32` | 2414 | Already 32x32; source resize kernel unknown |
-| `cropped2414` / `cropped2414_bilinear` | 2414 | Exclude 38 Ambient images from 2452 PGM images, then bilinear 32x32 |
-| `cropped2414_nearest` / `cropped2414_bicubic` | 2414 | Same membership and native images; alternate resize kernels |
+| Default / `dengcai32` | 2414 | Supplied 32×32 matrix; no second resize |
+| `cropped2414` / `cropped2414_bilinear` | 2414 | Non-ambient native 192×168 images → bilinear 32×32 |
+| `cropped2414_nearest` / `cropped2414_bicubic` | 2414 | Same membership with named resize kernels |
 
-The cropped loader keeps non-Ambient PGM images, sorted by subject number and
-then filename. Subject yaleB14 is absent. Eighteen `.pgm.bad` files are excluded
-as sidecars. All remaining native images have array shape `(192,168)`.
-Pixels are resized to 32x32, divided by 255 and flattened in C order. Deng Cai's
-matrix is divided by 255 without another resize. Class-count histograms agree
-with Deng Cai's `gnd`; this does not establish pixel-by-pixel alignment.
+The cropped archive has 2,452 PGM images, including 38 Ambient images. Preparation
+retains the 2,414 non-ambient `.pgm` files in sorted subject/filename order;
+`.pgm.bad` sidecars are not image rows. Subject yaleB14 is absent. Labels follow
+sorted subject codes. Native arrays have shape `(192,168)`, are converted to
+uint8 grayscale and resized to 32×32. The loader divides by 255 and flattens in
+C order. DengCai32 is divided by 255 without resizing.
 
-## File integrity and terms
+## Files and preparation
 
-| File | Bytes | SHA256 |
+Paths below are beneath `yaleb/data` in the independent data root.
+
+| File | Bytes | Expected SHA-256 |
 |---|---:|---|
-| `data/YaleB_32x32.mat` | 2214688 | `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99` |
-| `data/cropped_wayback/CroppedYale_wayback_20220127.zip` | 58493820 | `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573` |
-| Each prepared nearest/bilinear/bicubic uint8 NPY | 2472064 | See `manifest_cropped.yaml` |
+| `YaleB_32x32.mat` | 2214688 | `3fbbda4eb781b9bb28025189677b6727706e114eb0215bbfd718f1f4fcb54b99` |
+| `cropped_wayback/CroppedYale_wayback_20220127.zip` | 58493820 | `8bbabf3836d077d60626c9ee3c54c2d2851a8d2c15c8b7e13b9bc162e86ea573` |
 
-The source is for research, with credit to Georghiades et al. (2001) and Lee
-et al. (2005) for cropped experiments. Yale restricts inclusion of the images
-in another public redistribution database. Raw images and archives remain
-outside Git.
+Use the [recorded UCSD archive](https://web.archive.org/web/20220127084451id_/http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip)
+for the cropped preparation, then run from the checkout root:
+
+```bash
+python -m benchmarks.prepare --dataset YaleB_cropped2414 --data-root /path/to/benchmarks --archive /path/to/benchmarks/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip
+```
+
+This writes three uint8 interpolation arrays and integer labels under
+`yaleb/data/cropped_wayback/processed/`, recording source names and array hashes.
+The explicit cropped loader reads those arrays; each image array has shape
+`(2414,32,32)`. Expected array hashes are in
+[the cropped manifest](manifest_cropped.yaml); [the matrix manifest](manifest.yaml)
+keeps DengCai32 separate.
 
 ```python
 from pathlib import Path
 from benchmarks import load_dataset
-X, y, metadata = load_dataset("YaleB", root=Path("/path/to/benchmarks/yaleb/data"),
-                             version="cropped2414")
-assert X.shape == (2414, 1024)
+
+X, y, metadata = load_dataset(
+    "YaleB", root=Path("/path/to/benchmarks/yaleb/data"), version="cropped2414"
+)
 ```
 
-Run `python -m pytest benchmarks/yaleb/test_yaleb_versions.py` for version and
-preparation checks. Verified source and implemented preprocessing do not imply
-that all unspecified paper settings were recovered.
+The returned shape is `(2414,1024)`. All declared interpolation versions preserve
+membership; no difficult illumination examples are silently removed. Y0–Y3
+normalization factors are separate from source/resize choices.
 
-## Historical recovery and experiment notes (2026-10-21)
+## Terms
 
-Deng Cai's MAT HEAD returned HTTP 200 with Content-Length 2,214,688. The live
-UCSD zip returned 404, while Wayback capture `20220127084451id_` returned 200.
-Task 1 and Strict URL audits reused the existing files and found unchanged
-hashes. The cropped archive has 2,452 PGM images, including 2,414 non-Ambient
-images. Prepared-array hashes are in the cropped manifest. Its matrix status
-was `COMPLETE_WITH_UNSPECIFIED_SETTINGS`.
-
-Most Phase 1 and repair_round1 YaleB jobs used `dengcai32`, with six completed
-jobs and separately retained failures. repair_round1 D01 used `cropped2414`,
-with one completed and one failed job. Round 2 ran ten trials, not fifty:
-
-| Source/method | Historical run ID | ACC mean +/- SD (%) |
-|---|---|---:|
-| Deng Cai SC | `20261021_161602__ROUND2__YALEB__D01_DENGCAI32_SC__6411988e` | 20.1 +/- 1.2 |
-| Deng Cai E8 | `20261021_161603__ROUND2__YALEB__D08_DENGCAI32_E8__27f746d1` | 19.5 +/- 1.5 |
-| Cropped SC | `20261021_161625__ROUND2__YALEB__D01_CROPPED2414_SC__d1a360fb` | 18.1 +/- 1.3 |
-| Cropped E8 | `20261021_161626__ROUND2__YALEB__D08_CROPPED2414_E8__5fb5af8b` | 17.4 +/- 1.1 |
-
-Cropped input did not improve that earlier controlled block. Those limited
-runs do not exhaust source/preprocessing explanations. See
-[Round 2 source records](../../docs/round2_source_of_truth.md),
-[the Deng Cai manifest](manifest.yaml) and [the cropped manifest](manifest_cropped.yaml).
-Earlier v1/v2 measurements remain historical, and LLC results predating the
-Procrustes correction retain `PRE_FIX_LEGACY`.
+Credit Georghiades et al. and Lee et al. for cropped experiments. The source is
+for research and restricts inclusion of images in another public redistribution
+database. Keep raw archives/images outside the code repository. See
+[data setup](../../docs/data.md), [experimental protocol](../../docs/experimental_protocol.md)
+and [identity limitations](../../docs/limitations.md).

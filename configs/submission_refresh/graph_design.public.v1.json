@@ -1,0 +1,2897 @@
+{
+  "configurations": [
+    {
+      "configuration_id": "31a61f36bb3d57b2755368c14cd2898e3c2a60e3e5e13d1590e980f6069c3606",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G1"
+    },
+    {
+      "configuration_id": "7ebfc833a5648c01264d4e5ba671b51bafa60ece91a050c7b3a7c1e126d5a347",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G1"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "ab5575fc7da7fa1302f65017f323cf6b37fd8a8390218ba5c8cafe5e17007758",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "4c66aa1326fd2bde5cbd18c7f4df69cc8011a5000b1c39d149e57019d0c5b9ce",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "b72db96793556de7b4974fb25e40ace8ff74368ae4810cbea9ce59870bb54753",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "3ade8a043b966af4971fe75a104087ff65a8e46754fd338ccb2b7eacf0467ad0",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "ed513380827a8f074f74d6014eac2088b262735e3aa9f166d8042fb76535dbbc",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "56e28a55ae2a73d8fb26354abe7297944c15f9f60aee7cd1efcde5851f0d10b2",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "3f26a0cc87a46a0998f9d13d8f05a5b44fb12ce6acdb29b5fd443ed829212a9d",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "800b34ca8dfa3fcc116c6b21b45c4e3d4198374003acaf9b2ff186208664869c",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "6aca4e8ebc1f0d67b79100bc03ff0b3a643875ddf6791574729a65d7d85d8836",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "bea51c4bccf4645d10eb45a2b2876ea626d7893275dae247f417faa3be438316",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "c2145e15655be17372f96dd4ccd191b33c38ce3049e4a239ee42319066506597",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "9bc495720b5d0e8936709596bea3a9c629ed81d13282f5046ef56feb7c8873d9",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "2767ca05e4bbed692f5400144a6081eb46a3c3e1df171d89a168bccb1b2ac708",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "d6456e297a9c86093f86da3a0581366dbc29c639ddbaf056907cc5a007671d91",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "c659b2ef4be3def58783336e5e798710d053d95bd6d1969db06e6e61de0e3663",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "c8a2a50c11a81a063854a3753e3fe73f968a1d105452c11b722a2f793dd5874c",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "33035dc571241bec25161bd1224ec86585738bf47aaae5a41b03212082a39401",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "b6448375a219d58330c0527799ca0b650b251c46e62d495f834933aec62a1981",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "8022d971a8573a558a4aea4a9d7860cbf1dad81d2536579e52d66bb087b73a86",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "fe0eda5dab93883ea0e1b8ea349d07f25b48f31c9ad3e88fcebbd8d22c6af7b7",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "4f13f60d6922bea596dafc1cfa6491faa115929c835dd7e48362baa2ca4f0451",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "54490ca81a5628ccded8b2dd451bd6d8ba6607c305abe30476361c2c404efbab",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "51e6e56f26135ee0267b435c6bb0d78f95f132a9adde23e8bc4c93e4e94f1a73",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "dac7d182fc4801812464f4757f25c23a558b5c35f62b557bdc95e3f0a9cba0d3",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "c15a6a5aecf33b4b6693d11657cfb16ec62caf026efc4c97938d7326b919e0e4",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "38a4e6a8674ba9a952f2b2e42cffcf8ca534fa63dd2f264703db0474708c110b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "df70701b85e845a04a7e45cf9e9ae3761fe556cbe486859d7fefd25bce86ce73",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "47e408033c5a81b873ecffcf0f125c0fd1311e0033c1a7c7b05a2879b63a8560",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "6e049152d18b66b5791da988c8b92266cd35d0c7228943752394ca43f9f4ffca",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "8eb5f8ca3fd2e247bc201f544befe688750c2a8ffe8b9b9cb3ba153e4c57ad47",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "6d31b2c7ce01d18550e024ae9cb1cbf22cdc79c57be389788acaa81e0f07efff",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "726950f34010262772afeea7d0f98b3573ecdab289c694bc9e112330e8e07ba6",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "96d5d7a5dd3c8cdc31eea86a50a375b25d3cefa3535ada430d4e16a4e38acbb7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "41aaaa6af3bc82cc25156b0f48baee22021937d7b6a1ea33c9aed551f3b49022",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "44d2301a73d0d01eed9da49d03bc402a494016b0e1f6581c46d384c30bd61546",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "13f969c8ae7619d0f70d5bef2bdd083a07e616cb95fc4a9b869b525826bdae66",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "bbf79419cca2ee793b4fa0e985320efb95d76eaa39e07db76b5b3f16e8b98526",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "2f17be351cccb625d410f33b980205daa48b933c6f6ab7672cc3f613d6b1c376",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "c9f8661fdbfeaa31bd9adeaff481fe93db665b0edeb39c007749940f8dac9d15",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "cee9290ca6922da994fbb86d0f1747d83364edc38776553c37488f7a4c3dc600",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "19aa2455988f0c4007905cfc974453047e9d3e8aa5ba6b6e64a3c3b98c0a2e8e",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "7e36e1e9f6dbed9e9395b1163bf9ce01e4564f89e4c4b7e126f11074967dca78",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "62756916138b88f0cc7d3b55e88895d1b85546c68a0844a8db5fcbaea5a2ec39",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "d2d17991b693710f9fd6ef0d49e257758afc0af27aa1d19082729cf57a02c454",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "28b4967904481e4053c9f01c8747725505d13f69464be9f154861293f91b2b7f",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "F0",
+      "configuration_id": "b81c409a141654ac4e466b65a9ac229e2e62d4db8697b7dc102011f422aa9e48",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "3d18fa2aa11e68986ca17805d529aacf616fb232e7f2b299433ac58b7f0dd7bf",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "graph": "W0",
+      "phase": "G2"
+    },
+    {
+      "anchor": "U",
+      "configuration_id": "634b9641d3d19710114bca0a3c4513e7852cb716803eeb455cc4c2fac039c193",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "graph": "Wa",
+      "phase": "G2"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "7243e7ce0692f221c6b8131c7da009642093a60f090fcc7e4aad7401ff040f46",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "be8271dcdb1b8774387be54346026d89e1cdfd5e39dd0d9683777612c368b22a",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "847bb6d087174cd24f5396155963fae31649ecda0b8a2e537656dfe999d461a4",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "915edc0e713a3a247c3190f43b5c42ec1a0de8f7955a1e39dbe7492919a67dbb",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "a192c78ef88d7f13768780d50e2fcb91a3b1b512b87930e20b480ab11455797b",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "7c03ab3134ecf1071b25cc7da61070be849e4ea00b9b1101f2c20699dbf29028",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "060c0f90266c385c71f06c5550a9ec6dde1b0d84b3ca46931aec12a5e6f009c9",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "7d955d2ea095cd6d95328a1c0490458472a5866ec01b42fa654ae054c26fb6d5",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "ece91efe64e5386bc8055f1ada0f6d39d93659f4dff5088b17a6239d72abec5e",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "ec9072adfee58462a6c49d95776a2c397b623c4d5c5e1d484db0a0e6b19eea4f",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "c90211a56e911a3e82bd16bbc07d72773b06175fbe1f8f2375249ba6c03f8835",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "4d8949ba6c19230bb17d6161273a3a146da0043863fc5a51633f733b7e2a076b",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "bc790021893dd14b891a529b48b95d596272ac3197a6e662e8eb81f9eb06e077",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "77422f7381cd11dbe8d79bd8fbeb732a52c4f2ab4d55c24ee93a91aaf7718ba3",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "f3824309a1cf01749c6af5ddea0af161a68845033ca6742fddb6345b3a850df4",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "e800bd8b7e385ed020694dbf88281f600e42549eecece495bf133d56245a7eff",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "8e0e47b243eed3579d9b209ca71cfd1d632cbb18fba109b39a741191444b7a4a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "d71fc49ee23e64e576f943336f088a8c88c064372c2858923f17a7aad7206e05",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "0585eb858101026674dca31097676ff4ec344f3b8ad01b65e23beb6e6a121b70",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "778fff318b18492f2909c72e366a190f9ff84bd0365b3e3e730d6e4c59b7c87b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "4910110dfe4f493335c9b6f4607af706e1029d831e9d7098a0676aa5532c79ca",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "2ab3e73569d53feb637192ea48bae1debe9ecf666a15e304cced4c220864c7aa",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "e6ac02cb847c5cee82657b37b921bf501d09ae5025702f97c7e0d641248081cc",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "1e10a94ee14c4e21cfc0b01c86beec2bbbcbe45bbb3b06d384ecd0de7c98cb99",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "02b33cdba3ea82ffc7c23918f6f5dfb2377f4e5139845ba5b4da5bdcbd98b09f",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "7b5824c49dc9aade3aa48753a4eda5eedef35b54185431a9b774d25c330d4f33",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "56d05026c958831bc3081130698d28970b414a01e3641d4894ce4aefe6cf2f4c",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "75653b3d50344ca22aac27b8adfbda70e30b22c6ddfa256b4d5c130dab3fa17f",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "2a4fb68db5da7e260363a1582c02e11902e8c0a7430491e29411ad849bc21dd3",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "815fdc4006b59301ff34c1853bc19c9996f2538c2ea0b63a24b8acb0f389cc23",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "00483601908b184aaf978c151f442ee8c1146cf553a5f0b2b1440d9a103edd53",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "485a5d54f61275bcef9e487d6be743ff89af9c5b364c7241dc0253af5fe4cd47",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "3c14d9a6c6530a7bce3da8c1504d4e30320946688012166e2b1c5cfff53b5cae",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "b6a9defd723d5fa30ace64f02f510c4d5da52fb688beb93e21341e23be0d7c4c",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "f82e38aa861c0fd4a34ac5eca1062fd37be46bf6dbbb8122dc877a8b143dbc02",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "1caeb26decfd85741ba7ba5e5cb01b49d1f9321558708d07953285a24b3abde0",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "40b5bb74a4f945e18df92aa0d4bbb08ab564cb9612e49abcb47f85409ad07639",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "6eda849db4be9ef97932fb42bc7380e40bbdec2c7453b282eeb8db97c1217da2",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "dee2edb0401a57bfde47974b07037fb882b14a803f166fbaa41044d64d815d77",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "3c09763156d9860a21b19a5d974a9b90c9653028616ed07b5c40522e3647c3bc",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "8667636d93a392810713fcf310b1dbcc628ada35f0525cb717ec3ea24df2e1f4",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "8b8f58c9e7be8328696c3ac89540b42f8341524b0be652f0b7838b765f961582",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "05c151d726568a17d10473d402fb6c16c857d7411b14d2d4484ab0941e4f97a3",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "db928c4f10894ee2d0c8e9b995c4ab752cb1ce5680ea69fdf6e019f1ac567237",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "07746da766bcf703298a936d6677e7a71e3d481b82c7e159df4ff2530e9b8ed0",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "6a60f809439af855e77a5d7b7bb69e027a50070174cad8fe75d2943e5bf04fcc",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "dcb89363213d494c890dab75db6d59e9528cdd08486f26b24c15fcc3b777fff8",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "6eb89dbb2c2dc002316ddf30c7cb9447aeab33a7544f15675a81538d156762de",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "1072752889635adecec1cdbb4edb78e67e15f873df8047f011eee7f4a476d803",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "cff868bf9ab306af37acfff606368124335d715ee39d0b0adee45948ea4323d2",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "938896c3a70d76c5dd56e2e64061a11c8e43088e128471b83e3ac511a33b332e",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "89dccad5b481bf7893855bd207073c0ac44ce62a280d1abb54d871708c636c48",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "f122c84ed8cca4c2b0c830e03dd18ef1c64b2af4d70804397b12b062817e0652",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "b431ac83c0b5b52aa27a1f56de71de7915d38241e380f2c3d1e98bde0918a458",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "1c334ccb422bd92bacf572999bece9f02427f2d908e1a618cd78967e7c95934d",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "726dcb76beea12233c639994d7820893786eed1024bf1360d33bafa5f8f366f6",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "123f9c308301894de2c968d16ec49ee340d81434aaab636b2af1874359600620",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "bcc1dfac288491a1143f3e2bdf1e21ec44c5a252a37f2e96dfdf3bad4232102f",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "51cfa72b41198d24fa91d9b0b2654c825d11299740e8d16c957c8b4b5d9ef215",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "e325ff90c5a7f04513ac4ef18471affa6865e6da781f95a90f996990bfa8d37d",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "572600dd3d92c75b31ae7fa04703ce8db590f7d9b71650de287c8d35daf42226",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "4bd1a6925350f4b8bbdec3a2e5b04427f5b2e197de031dc1a740ad702f3f116e",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "b9106f3b86f310f89f3747aa3f09757ec4ad54336fe9492f2794dcfa3e8a2744",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "1dbf26c5c6ec9c223ae8c21dacf599523fa3f66e054133df0d6e8fb1c18cc158",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "3a190f153496d929cdfe1e28e49d1d9a85f5bffde84b4422aaf5243e337566ea",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "691f30bb578e6fba05cf3fc407faa4c7de888ef51a9df0f04078587a25b48a94",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "8c748848875037f701d566cbc5ae3f4983f1f95848d6490c4903c8b5270fb7cc",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "d02f5251ce1789de0a6116403852a02165a63775555614615dc5a8076a9df52b",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "80f8eadbc2d0336e7aea511aa9c6c716065779f8d76a064ba375fd50306e5328",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "b035b1c3580ef01bd94e8f6deebd238ec7dd6da48078eeb3dd807205f7872462",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "73fbab3df7b662f9733282196a575798857cbad40635e56474ce9648531d4f9b",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "a1558208dd6df337dd4946e8c7b13af0deb08e3b19ec44cac1cb2387a87e6299",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "7285b097e1ed59b24202d1d5fa6bed52412ba4903b576ac630fab7ddc3dfda99",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "f56dd5518f346759a8ef6b8e0ea21cde63c12e1556a717ab60a99ca12470469c",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "78a85895fedd2c26ba0e17bf7c88f1a6f51ebe9794e9545f4c5f741339d95efd",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "961d1eb3ca92511daa3f330fc2c301cd0b644b3efb828767a6de23ced2792277",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "e8c590635753d8bffbc67ec47b0d88b0db12c2d69fe7cfa84dd54c1b6a751a8b",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "866fdb59f9ad91bd2187fa1e08386392a7656894b140e517357d1ec2dcfab543",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "1a8a64eb191cecdb9604a0e177bbf30c76c3107d08d503b22bc1300218ceda41",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "8080346f07c91f5f0d5f7ab4765d06ab0e32070aeba69c920aeb36df2566de12",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "679803084ebd8d05c22fa278a6c20d611728b0fa97be88eec8753cf994d1d750",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "687f45c9b65e4b951eb93d5a2071ebe23f17d3aa2547cfc13ed48c50f10a0481",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "5217fa85590bbdd31b75d7a8aa061392e4818410df6570cdef571e10676a38ff",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "c3e2688431fcba5ae598410f414bcbe1b407cbbc828c576dc8349fb772f240e2",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "72e202cd100d673b3fb05c38a8940a4cdfc654c8de05541bcf3424c992eb7470",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "139c325c7c55c73d8873bf8a271fc9c97fdb94c3abf37c3d13fd0db0b7935084",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "2ab13802a9e104bcdfa3f196cbb7681e1af3c862ea527d3ff877b49351b3daa4",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "0b275be3f91ec5399df2ef5f264487ca3235d4c3803ae1b507e0793b14506a8e",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "a59f83ddcc6e15146f2857a73749a50bb4617357e5be580c7dde2187a60ac202",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "1b5e97e1773afe1f9d4a08f83924311b9df5d0cb7b521a989dd4527f315b2237",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "34fff39df5686d5c58bb1e72cf7a79fd7a9f12b49bd3b3b317ef743816a07c65",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "204eeeaa0ca4ca8432266b99afb9b84b57d758acba5698605c748070e276c948",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "1f01c386a2180d28222ffbd704d7d1281b1d2263c0b896966ab57ea140de9710",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "ee7f9ddaff3d976f913f58fd6362470b3b841fc5bfcb3397c78ec20b3a17fa79",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "fa09dbf3cb237c08e53781a7dfa6c3622419c1f9fbc8f9f4102c6280907ef107",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "add",
+      "configuration_id": "efe614c5635c9da7ecb236a151d1af97197a2874cca9ba5b9e36d58ec4c71058",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "8aa09b8097706c1db98b162680aa96ef86f1f2697be2b268e4747427bdb156eb",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "e958d85728786139f1dabe60cd5619583e6166cef679be2ae0df383ed1570fdd",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "3ec0274f77c3733cb911558521e8082d9e2e2c1df9c8d2fbd8a366433f8aeb1c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "fd0e27f0659fcfb78f18351d5d68587dc3b74c0a2d6b5fd768d41136074942e7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_400",
+      "configuration_id": "a467d77f70e4a15f42f50dc7b094a8d527900273e9c0c7c223dafe3689ce31e7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "930054384972d8216ce50c8c320c5eef9ff83b31ed54e695f159c164eb3554be",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "19455858bc6c875694e9ad7db0c49df143a2061cbb321a17d046ccb050364f17",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "76760e5eb664c1f894d5a0900f2e4cc0b8505a84ae66fc4c05a5334dfd4200c2",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "75a706b6152232b8997b64b8c1bf0d60cdf4807887b344dc282b1ad8bc910c3c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_401",
+      "configuration_id": "7cdfc205b74e3595b07e2b34ca12b43b680eae0c4fe27bcc3a3d85dbda45b3dd",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "9effe39b14bf8c7ea0ed835896aacba97fc5a0ea3e7e4e25539e5499fbea6dd4",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "44c6527055cbbbc514f4c6ee47f977142a7d4064f10fe326fe73608b3aeb6158",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "3e22ffd8c855e4dfb757d5952f4c99847cc4741c02f38fa56ddce3daf26b57a5",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "c9ffb3d9554cb9e94981aa219f320cf12f6b682a67c0f08a5f34e609f56d083f",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "blind_402",
+      "configuration_id": "f181020213fc214f9352aa5e42ebaed019f4d77191cf22d15bac67628dcf08f7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "11ef01f6502276a680e5fdd774fd8d6394ac58a97b18842ef2c88df22e6ad06c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "8f51450adf65f3c31750985e088c320713a7b08fa4ffde39e4b49f064ad02e5c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "772a8e051b578969ee087fba3a91228197a98af5be001ac86e0b18430caa2477",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "13563810645bc5faf7346de17cc0904bcbb2eaf35ba65f962f7a0c2da2edf4a7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "both",
+      "configuration_id": "e4b214844374f1bb96e96e8e832e828eddca2f78ce2eb22d82d89149bf686f7b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "a2c8621dcc7b9a078716f34679eedd5940b2484fb3bb87a4f2eb638bf4ef5412",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "4230fa0dfecbd4b2fde66e199a32aea3413d5a651830d140478f2ab16d8ed7ef",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "3b82f1c602f39fe3fb0c13f05205b5b191fedfb05fb034bb65dde902292a139c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "7c8ba22dd515997b6a6c342eab2019fc0c01a21708c0b1245b8f192e5d63e656",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "delete",
+      "configuration_id": "e0b572b418cc51cb2a22957b8c34ec7c7b48329770d874e82b5af8587a63e56f",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "93ffaf10267e32a066aad8c7ecd10f4d086bfaf513e4000c63227611c80a6d94",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "5ca94bfefdb1932fc03bd45a89fdc650472d258f0dbab77dea3948f3e810131c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "e7fb70c92d34b643df062585f5f51e967aef414f1da9da43dbc9b39287dcc495",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "2055f624381cee8e2d20c0f1c9a92572a4b71d242656563b02703146e33a450d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_400",
+      "configuration_id": "6399c9b908914acfa9467a486cdfe4e3f5bd691d4577789a3c9451e4abb12dc0",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "1a67040e4d7117acc2832942d31b3685ac24bac1d065d2e8b3d84e60fd9a5f76",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "693ee18970087f314c445301940190ec1f1e7bbc5e2940918cc844f19348c301",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "24c203464787cfbb74bcbf255ae38aafa75e1b562e775b53c88ba0671168ad78",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "ce7712645b5e35386614ca04487959c6eabbb546b2799a69debce5cee9a910f7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_401",
+      "configuration_id": "32e5b12bc147243a24ade7cda5b2128ad6521f1604a8f1e6b32ca70229469e5a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "063d7e1072d988eeb9199e76eb08ba2369102873e94034a2d5efd709abb0a66a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "a56f8d2084d6ff5de514dc0e036042752458a6a1f1cb4d4ee303dd61a6410613",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "ab2181ddd3066e5488511e3663fe001ce80caa96499baf3c09f505836e1b9602",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "40302794b911fa914b9a31ec6c79683184f29d51822368f39a4d6c30e8a6920b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "fully_random_402",
+      "configuration_id": "98164abc63453ddd5328db0457fdb65932d9af8538cfda3d8727eeec3ca8fcc8",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "94793988b81759a93faec85651b044b805c32fd16b69896033ab5b6db89122f9",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "122cc056e8f7e0fba0aa8566a7be5db426fd28fefe2df07cf24f3c4df71b9c3b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "29376e562e6c90d28b4f2a7815168b54a6fc89668d8a5b634590393030084153",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "b3283ec464bc776637d46274f9a83652395530000c78306628bdeccd14bdadd0",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "none",
+      "configuration_id": "2ab2ed06f7723839e6f9f2095d202223a9659cb8a4f64375388b3fcccecd6f0e",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "4f1e83bb87e578f7b2a25acccac7e909511017f1bf765e700726da792e16b338",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "28e2149c9d02972d3f6a36bc70a3b634ffd5e5f132fe1c6bfdc408628c7b2cd2",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "f0018dab1c034add340060df42c4833ca503be32c09d0b104dad7c2ca5737424",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "cc034db335eb63520558cb2b0b6d2bad4864bf4f85fd238c144e63ba02ad0f06",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_400",
+      "configuration_id": "4d93ec0f7cfc398e756cf6f1be14bf2acde9ecd053bc4b6d1cfb948aaef27b08",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "757a901516f504c7a2368156bb1c7121a00417060b1587151ef641116fce6cab",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "bae2f2a32013311c2cfc79bb3bcec867bb1aadc045c8d4548c7d244182acc5ac",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "3db8489e2d25b4dacee1d9f89e9f3966fa2c157ec79ebfe03e97b867afda8a0b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "31adcab056a854031f1a86c3cdbe094c219c4dadce3403f4daee04146668d519",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_401",
+      "configuration_id": "33a7a4efd2b4ed9688c516ce23a3428644a5bd0c6652f39878f7bc2735679a97",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "8b92a607dc94f5acb5294d54ed4ce77e3ce0d43c83fd1146f584c88bf29bfa2a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "1c822f8de8311fd36dc8a912b1f8e93e2f625c66043e9cdbc6e3e1e3eca305f6",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "ace6ff9139fd7f5cdb5a0406509b310360434d458e06dc90b36f932f647bc8e4",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "ea527c80e62969f889b2a144a77a1c025bca354a7c7f7660ca797846221b7024",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.15,
+      "arm": "same_class_random_402",
+      "configuration_id": "225b1634031b446f303ec3ac38aef77172f6af1d3231cd7f92bf0b91e5685e28",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "2241ea46284fd103ef4ad6795ed84691c1f2f452b40a59d85ea1753d3748a643",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "de9781cddca013a25173fa5c5dd365edcd07aaf25259f89eaf2d7280bedea875",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "bb950ddee1b188369d045ef4331014930683f7e49dacb73c5429c917acc86064",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "ea65733e70e43a7c5f761ed16a21878e560aee438541addf8bc37a76edbe96d6",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "6c8a747f66fa23d7c9aab9b9d619bee92bdf4439cc0f63f41fd484b2b722e3a7",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "eec0f2f55f6d163d7d2376cc039d51a8e5598b9c7ac0ab7494d985062210778c",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "2658752b40fb231cd4b09a63b7b396c61518cee6b31b9b76fa860d42d29e51cf",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "2ff1bd9efd2f1356add4288c9efc9fca609161cac68ae35c21ce52c963fce6ae",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "20726a665758065287a8d0a3c0b99015cee75adf6315d7980cc133e3146cfc16",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "ad5d012b89f021892df2ac5c707f9e993a7e1df6e6ea0315301520398f114e49",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "d1e19bf2b496865d432d69a46487bec347701edeb0568bc3f15858c908cb26a8",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "524b90daca672545fd3b12b7acbfa18e1a6322084fdc88834a1e82069d9b1349",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "0d78bf21f974f16db3fb6e37bae03ccfa66253c9025ed198a035e23b4ea053b3",
+      "dataset": "ORL_att92",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "f2859c9e4f72ae300e95da4c7579859eccc8b58fa1b0a230104da9afc33b6edf",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "43d8bed0168b325723a765949d785e1e1d5a95794d0149d66c250dbfea6271a7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "08f3c1ba50c27a4591d6b8eefd982e81c6d07227be6efbd67f69aff4e6994994",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "f924f0911e07c46ff10679d0eec8232fc064da3cd73f811d794b0e4f50832aff",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "adfa50b890b212cf0db5934d1959c9b395395b379b6e2d96529dc63d52b82f6c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "b905681029b6e870122b48227f6e06ffd49f828a5d443a8fa2ea6bb0cb1a77b6",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "25308437bd3c6a466bfa14d3ff2e221a1d049d65094cbce7bf358699b9ab6676",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "0f61a5129cca6f62a69c24239cee78a1210a77586ba919a723d93f70d44cb09e",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "3f1577528271b8e35276b7f88a964d52aea419f23eea49267c9a9fd15556a97d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "a3438cac0f89e6230280f92b4ea257334daa89985bc32aed7bf635786a69ed94",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "3cb91639ccf187e16945a577a99de7d5a8e3e03b456f9ac62a645bb0796288ee",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "6315a616a012947b984eb4a61aa19667794c41330d8fc9ab245aa37d51c49d3a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "dae859fd13cfadbf8137eacfa6e80d3c937c31f3d9621cd09c664b83c6afa673",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "89c58ed354197313a095bd7803c20cd462688dff70f31a393820a747bd5b3ff5",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "fac9254db0f1b5f799ecd2c56807f34b988a22fc9aa458a977e535781bd1cc65",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "a3fdcbd5b5927c20544a61b5b4fb23c3704cf48730084a587054f50d56f08108",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "f67d301f8d8cbcea69a3d4ae7d8546757a56ba14c9e059196d960f042ef1bd65",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "0d1344201867451dbd5c1b16d1b5592bc7bde21be6c566f53b32ddf6d1479e73",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "21a855301a1b6c15390f00c8c9ead53b0f95a03abcf241bbfaa184707941bc56",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "8ab0ee5b93ea42a916215e2788ed1287a6103bbf8c58d0a64f9061a931867c5d",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "4bdf52eebe9c15f8f04f599fee68241e9dac00d06d3bbbf886a9c5dc14e07340",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "e09e762912b0c502b27c58a1c45acc5050b9338543977a2e1bcf19231e7bcabc",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "710bb3244d7552082d00e2ca8ecb7ba7bc7c822ac10490983b19dc701ce9c240",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "2900597734d22b7b04f05bde9c70dac50e19aec092bf2d35cda1ad340268a3af",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "1c9ca1525b61c259c52d73d1f317c8d78c212157382eb661017647e2c29c301c",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "e6b11c7fe8ff6538f8917b5e0f58628e606f935cb5e2e0d95f3f9e2da10d226e",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "831769d3ec2ecbf324f53ee88ed098a9a23dd2f5204f3c9918873267b61f02a1",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "50e73d6ae7ccb92d33093c36b1e0d0cbd1a366fcf1631ee5cea53fd7dd0e1443",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "9092db51804c4d46e4d6bf2734458379396e1175feeb0bd6b092f79586319a0b",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "2ed403c0b373437b2823db2304136e81d3b2bca51e8bc9b22f4df75c2657b18e",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "4a10e8d8cfbcec6a16bd5aa0e7566d6f517c1fb2d1877233fd12cd87f283cb25",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "57b17a0c728133d70d156a0bf753d620051b5dd250ad528c11b3ed8babb0d2fd",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "c0e8fd728ba0a9c0812d9afc1cfbb51f1255d685e10abc14db4cf70b3ea1e8d7",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "14ef996c25c06d107f9d857dea9b17d2bb150ada01040c47eec102071caae99b",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "5e55f471afc013842a8482bcc4bb6e16b6f51cb44dc35d5418dc2e13fb387ed8",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "37f1365e99bbe3758aa41bf0246869b90c5edae15cdff2830872de2303ab4512",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "c5a462f9b5567d5f8dae70d0d49223a370eaaa5a97e0567b15f0291fd4a729e4",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "85ab2e66411af4a830fe768f91723274637d98f304551badb9685cbda5f22022",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "c803704f6dda93ad6d98de0e89afb161903620bb189a5567f5da49f8355de359",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "702616d47169034b88afaaba787b6599b176d861bd3811782931e5fed318f526",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "f59ee5d9afd1ce6b1315c378b566261f6cbef3e8dae58ee2649d925888b7a77c",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "d61627d977f45e4fd6802fb6250be655e87cfa43e176bd377a20537b0f7c548a",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "3ae2eb5e1f988ff38fd1e3a507a369b0de1e75e401df041e78d96aceb1277413",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "1ceb7f3855d80f240943d1ca059605c6be085ffa80963eb0c69ed91537c46868",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "817bd7f6d8c8b4d652c79a6c032896d329571e45a6f77ee16e64da89af7451ab",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "e7ef28449649ef3bac26ce5d2eb62b9994f6e35c6680c684615f6084bccf881b",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "ea31cc2613e80b5fc01bdb1c71d2ca7eeb57f467dbdbd21df9b70ecc82267d73",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "2c3c50753d50a708626c32c5ca033670a43d470dcd360173cb8599f8d6c30a01",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "4bae48642f5c64deec9ab8d24334ec7b52f480dcdc8f4b833dc5d230970dad20",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "be78736e83052c36c8a87939a624f87020cbae3674d483cda18673e6c5746c9e",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "d811b28cff5f67b631081b45b36a05f273323dbd2b2d72e15df3f3faf221fe6c",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "bc40f729c787d408dcd63de2afa423861999bed20c5ee2bd7a0f9110bcb2e42c",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "eb26f9bc14f4edd4902d632165d49a669ebe432cc2937ade69fe41b2218f6219",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "edf5f8c5610c19e4dd0ecc91691c3b0b4cb8a8549f6021c3412513b16a0a86ea",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "619b421aaaf8076da52a0ad6f6f0c8cea961aa7ec5d67396dd9a1add82816e79",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "2ad6992d9e1abd07fb73920ff1a021bb036230408f06772d90135225a0fe597b",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "a5e248a4a99e1c3420f42547cf77f37236488c65dba38ee51a5da330d98ec6df",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "e4020a6bb6e974efcba5d4895c4399fb4f828a0c0ec823637b662d7354a401e1",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "3e8d8eaf28481575d7cca7106c81b7309ff7c71f7b716132224ca6f910537169",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "0acb8ab65b2180a6df6b2a92f4e5ff2508c5562151c1e4fa32e7d6f26ec2b830",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "71439bc4f9c21c9bada457174f5f43f1ba6e617930a83045726986337694fb7b",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "5ab605fb8697ea61e639a81f7d9a9ce2992840af853fbe2f018a5e719c315861",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "694b2cbf582a9119da8cfacf9f54724677cd0f3c5f76ed4e927d2d18866db811",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "93e99745666e6438112d6af90297e1ccf784c49f45cc1a3e993f7c4c4dc7f5cd",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "e709eed0ebe4b07cf27299fc80004ea7ab5e4e22c2cf63aa057edeb18b402aa4",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "1844941d237ed3b8e88e3309f3da65c95fd72dad90b799942a41cfacf4cee299",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "d17051a580dc4660015235138317d24a88e6da56c4bcbefcdb9597a1147991c3",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "35e0beb305cd96b184038d0b4c426aaf82dfce5db589e920ccdbce26d8153210",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "6429b809282178d3b4db26496ad6224eadadc4d71c6b1d57e7038c3e99f2aa98",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "30d67377d1adc09708cce0c48a9b00de408e172cef41e5c29508bc0ee1457ab6",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "9de4de4f0e10f4a7cafc2e3ee9df51935443349bc30302d39f717c32503759da",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "871004d2f7cbfd6c4ff64173ba9781e992fc7c928fedf2f9f0442dc9d36cc29a",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "48e930fa496c0457948c99d3db8984ae1fea5b564addbc3f538fe921dea61f8d",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "8035493287e385bca4a7c07708ef2c013a14eadd5cf419002bae31168266e743",
+      "dataset": "ORL_att92",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "eda3d77b46e0186761d4b94984695fb2a1df40ab7c48320be63b4dcdb15a57ff",
+      "dataset": "ORL_att92",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "20ffb25c5423e08d712f7dbd3b4e060198c3aa9258ac78798e6905a02ce7b7cb",
+      "dataset": "ORL_att92",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "233ba3561622add27d4cbd1ceb5d99f0500852ca50f7ada50ca657f659f4aa85",
+      "dataset": "ORL_att92",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "4aba57925d059dcfe68e2d1690c4fdfb3e2dd471d9563650613bbfcf67f6035b",
+      "dataset": "ORL_att92",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "bace8a911ecf1c9dcfa0f136f7abf64a4fe00fc929a2a46eb9a84f7b8c874d70",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "4565013c3c9a6801fcffe04aa95cbace06839264b793cd06cdb72aa5e3d7b512",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "898b20ca9ed5729fcfa58fa60adb4d61018aeb3c999d45fcb20c746cb44bc6a7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "9ea77dbcdb5da85c25981f61223c230076d5e03bb2172dd3bef70b72e4ac2ebb",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "add",
+      "configuration_id": "f6300558aa5ae9c5e89d4744c059f5767b6a88eb3d5926c6b94663154b552344",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "a7c120e4cb8b4465a774a6896a808fc18ee7f344e2bb62d7f612f3aac9b8f2b7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "fea013f989674d0d50c2d9956b6730a6c54115c017d353df177f3eee40219019",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "5d21404746504dfd794157c59785fc5f4573499375aaaab93af7b3585ac8d01c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "5050d3179df29ecca81b472aad86fac79abf94e7679a1429d7f8773379cb46bb",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_400",
+      "configuration_id": "62b7f5ce58c0f9935bd9e42eaa89fb30376a9bedb7c1d7def2739c089670d13d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "09906190913ab1ded74b2e1ca891607d80d0c276558e450906a14e1eb9e08684",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "2a0ee4b9dd225515c623607ea327ecae8fa4c3907a6e183d875491f9a0e6ccbf",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "af6cbd51cfeec7c76ac7df8eefa46f913d198f0d1145522293dc2b486dbef9f1",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "9231a9695d40ce64c9a6b6e1e1af6cd20867def56b5b5f4242c8473817dd1304",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_401",
+      "configuration_id": "78014490cf3ba1f4799014ddd8d9fe9d2621ca878310bc114ee77ba360c53923",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "48304551e599d393ba598f1f4a33324ebbad528847667f5998f44cbdc099c002",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "df1dc2c3b38b20297d281fc292e89ae2be2c3fbcfcb7b9020091684c7d6d34f3",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "ee2f1d071cd102d7a1997a1015fd034cfc74b77b10e0853b1e51340aa809f4ff",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "8ba678683dd5e74703199b5fcf4d841740947174c350087e861ae37500e709f8",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "blind_402",
+      "configuration_id": "ba162e23333f283133e97fbfeb459101ab9db7c5c08560cd96599670154ee63c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "8146626667766b5fb535b590bf4492067245fe3ff98d285a6842ef0c9a412536",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "d7189d73c7a63b6d3490b2cfa7f894a6ee5cf2f5dc4621770cf2a534632dacc2",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "92d508518363ad09c9fbaaf140b63a7ea86236e295257a4a35b8a5b288a03a3e",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "51480ddd509c35d475fa06237d9e35d3b8851bc036f468d4c1149330cd0c3349",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "both",
+      "configuration_id": "86a91c6d78753483749cf6b8a0c24f623aa112104d667b448642c749824f1c01",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "b5e4a93fd096927929e61d896325603d192d04b7cdde63b5cac3d1808d26e5d7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "0e467cf539a3b30191b02d5960c0e63fd00bba49dc836ddd37d0de020a9d13f0",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "a50730d328e20d2a1104ab37186738a4e0936c3f60d0cff703c4f415654cca98",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "77b3b7c1254c774ad0b289c68907e94df3e6975e4f944f247f5dbca15afdb3ec",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "delete",
+      "configuration_id": "4000544956d8219663e58f41a411aabc36f7fc3ea123ff7a9f126b747c2f4d88",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "f7a0d68f600b36a5809e758eacda1d9f27dbe01099bb251bac1dbf392b328a2a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "83d17f952bf0cc005a8efe55443a1ddc1a358ad6ce8a29bb73d27056f8eff83b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "6543a1609d58816567a5cf5d7fadeef47f0a45e2177cadcb680ea0c0c5056fe1",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "50123f7b1f30c8c50b2e3edfa2d10384c707b85b891c1810f5a7586313f884fb",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_400",
+      "configuration_id": "11050dd3b54a212902aea641ef69c7d89988eca79918a66605100fa2e70b89e2",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "3a00c5d70999f54bbbcc2580bb9ae84b54b413b8ee6946a27ded1c69b93ea948",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "aea9fdefbead147e70f2f52c84fd94f9397b3fa41b2c85369aa3d9a0bbafa5a1",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "d0bca8b5220ece166a981bc6efeec1ff595642dd72173324fe9225ad9a1c39c9",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "ac1112e24ba268dcd8404f557b5f6d95086b661e86ce8f2ab4d507ffb073ac9f",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_401",
+      "configuration_id": "5590fa9c7d110759ccb6060f4798999e7728b66c897ce8193039238f5069f02c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "7c33fb8e18619227470ea98cc462b74a3ca489d44b0eea69a27c0ec779df208d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "ba855694c32ffa647d248f06da955a77f5b5555e2fd4a4e4dff41b768862874d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "af2a4408cb94396300fe7f69ebf4058074a87b21dede22c08c330b9cc1733480",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "4274eb78580779cf2eef290d2ac34dc6fbe12dc9b840e426d3d29364a39669a0",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "fully_random_402",
+      "configuration_id": "b63de757976c2cae4194241d4176edbb33630a3c3a9b16fe7ecea0edb28c50a3",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "cb33ced10ba8fbc3146299ba478c2d21ddaad7070bea1b320c858060431e889b",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "784661043630b30d54678f7cae0f404a36ad5640f13ba437673e3c3d4461cad9",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "d4da16450660fea247863f24626859e08365aaea96e4065b51fdaf642a39cfdc",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "4091ab49e50692e91fb0e56f633f0195410321574c87c826f80ec6c8d24995e6",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "none",
+      "configuration_id": "b31c96889fb30e5d374062d90db6c90369eab2d5ffbca8cb2e933fce846d620d",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "a6ce15b0cbc26989e8f1985f216bb4fc1f06a21f996e97aaff3268a6d1c5acee",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "74d0832ad0782db1370386a51c32fbf5a3d47881beb5242f51c3d0cd238ef1d5",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "83f06379d89d3711c1897037057712dd016e32f8b853e6b500f80862334054f9",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "8cdd851964a6653948ed8af38b37bef10e440bb4f5bc5f88092282adb1d5d482",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_400",
+      "configuration_id": "c2aad7651be0b6f52a8e624be9ef0de9629e02bbe9ff5ee1d62466a5c42261d1",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "2e9568834900ebfdcf7648c19fa165d3f38db2e0976a207d0396dad8e01c869e",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "327940c9c04d10f061e3f3bbbf3792cb657e4b9092f38960177df2a8b9b89e3c",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "1647a01edb29be260de5ee5538aeefcb2cb87693fe74adf9e51bb88c1df7e65a",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "9098adc1df0ee313e6f4caf001e98f307ded1ff236a5043666c930fba77a7b35",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_401",
+      "configuration_id": "649ef3975d832053da7fff9f8982ddc295a13ac9b566185d4ca899b831d6d4a7",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "7f324f3abfa2ca082db2b51f9c519add899f125db74474abc77c5d36038215e0",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "155710e048f08be41d02e1e46a2cfb96436b37a236fd81470d6d073cfe9deec1",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 0.001,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "932141fcae8b54c97a5c683ded5ac2d05005cae510703cd6d7d18b1fcaa72177",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "f3084bc7ffe1287573877835350d57bcee422b9cfc447ea7650e2c483fa75046",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 10.0,
+      "phase": "G3"
+    },
+    {
+      "addition_fraction": 0.05,
+      "arm": "same_class_random_402",
+      "configuration_id": "da48984a9e72dcad060b33a552772a716ced85c08dd4553df701ce9b285354eb",
+      "dataset": "YaleB_cropped2414",
+      "gamma": 1000000.0,
+      "phase": "G3"
+    }
+  ],
+  "schema": "public-scientific-graph-design-v1"
+}

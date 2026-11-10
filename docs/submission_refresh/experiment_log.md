@@ -43,3 +43,50 @@ The broad subset launch controller was drained to prioritize remaining mandatory
 ## 2026-11-10: historical repeatability availability correction
 
 The first joint-history/repeatability integration rebuild exposed72 historical rows with no native-objective assignment. Their complete mean/sample-SD batches remain valid; unavailable native endpoints must remain unavailable instead of being parsed as seeds. The corrected parser handles this explicitly, rejects partially missing native records and adds a regression case. Focused validation v4 passed156 tests with one expected no-data skip; the full no-data joint-history/repeatability rebuild then passed with unchanged source/configuration files. The failed integration attempt remains charged and visible. The validated historical view retains112 multi-batch configurations /1120 batches, both metrics, exact disjoint seeds and separate native-assignment availability.
+
+## 2026-11-10 09:40 UTC: mandatory endpoints, USPS continuations and validation records
+
+The interim mandatory-baseline aggregation now contains 190 completed endpoints,
+each with all 50 declared seeds, in
+`results/submission_refresh/baseline_diagnostics.csv`. This is an execution count,
+not a claim that all historical methods or source identities were recovered.
+The separate coverage manifest retains 241 configuration declarations, including
+223 completed declarations, two original timeouts, one original failed point and
+15 declarations not run after that failed block. Declaration, alias and
+continuation coverage is distinct from the 190 scalar endpoints; original
+failures are not removed or merged through successful-seed filtering.
+
+The two fixed same-F/W USPS warm restarts completed and were then evaluated with
+the same 50 greedy K-means++/Lloyd seeds. Gamma 1 reached a feasible relative gap
+of 0.000009999619 after 82,800 updates and 269.399 full-attempt CPU seconds. Its
+best returned G is the saved gamma 1 IRLS diagnostic point, now supported by an
+improved dual bound. ACC/NMI are 65.564/80.228 percent, compared with same-F SC
+65.597/80.315 percent: changes of -0.033/-0.086 percentage points. Gamma 1000
+reached 300,000 updates and 811.375 full-attempt CPU seconds with gap 0.341771746,
+so it remains uncertified. Its fused saved point has ACC/NMI 16.703/0.000 percent;
+this does not establish that fusion is optimal. Both original IRLS300 audit
+attempts remain incomplete as fits (gamma 1 CPU limit; gamma 1000 failure), even
+though saved points have complete rounding evaluations. The original ten stages,
+two additional attempts and their failures remain separate from locked subset
+winners. Full means, sample SDs, objectives and qualifications are documented in
+`usps_continuations.md` and the exported USPS CSVs.
+
+Focused validation v5 passed 165 tests with one expected no-data integration
+skip. V6 passed 196 tests with the same expected skip. Both status records report
+unchanged scientific source/configuration inventories during their checks;
+these outcomes do not certify source edits made afterward or replace isolated
+fresh-checkout acceptance. The first real scalar roundtrip harness failed before
+the rebuild could run because its direct script invocation could not import
+`experiments`. Its failed record and charged cost remain preserved. The parent
+corrected the harness import path and scheduled a distinct v2 attempt; no terminal
+v2 outcome was present at this entry's timestamp. No scientific run or test was
+launched for this documentation update. Experiments, final aggregation, report
+validation and authorized publication remain in progress.
+
+## 2026-11-10: final helper validation and actual scalar recovery
+
+Focused validation v7 passed 220 tests with one expected no-data integration skip. The corrected actual scalar round-trip v2 reproduced all 190 completed baseline endpoints and the USPS/inventory views while matrix loading, external object-store access and Git commands were blocked in the rebuild. Its original import-failed v1 remains preserved.
+
+After the graph-report, archive, language-audit, optional-cohort and scheduler-resume helpers were completed, focused v8 passed 261 tests and found one TeX-formatting expectation mismatch. The generated breakable status was correct; the assertion was corrected without changing fitting or scalar derivation. Focused v9 then passed 262 tests with one expected no-data integration skip. The actual scalar round-trip v3 also passed, preserving the same 190 baseline configurations and exact USPS/inventory exports. These checks identify their recorded source snapshots; they do not claim a later commit or the final published checkout was tested before it existed.
+
+No optional AR cohort has been frozen or executed, and no graph/EnSC benchmark fit has been launched at this entry. The primary 1,202-input campaign remains active. Later graph evidence, full release aggregation, archive export/recovery, report rendering and publication are still pending.

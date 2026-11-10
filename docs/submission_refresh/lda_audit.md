@@ -74,3 +74,103 @@ unsupervised state and timing, and do not invoke ACC/NMI or select configuration
 Profile artifacts are explicitly ineligible. Actual benchmark coverage, statuses
 and CPU costs are recorded by the shared campaign rather than inferred from these
 small checks.
+
+## Complete benchmark findings, 10 November 2026
+
+The current [baseline diagnostics](../../results/submission_refresh/baseline_diagnostics.csv)
+and [seed coverage](../../results/submission_refresh/baseline_seed_coverage.csv)
+contain complete seeds 0–49 for each result discussed here. Their `source_record`
+paths identify the saved scalar trials and fit diagnostics in the recoverable
+external store. The five sources are ORL att92, JAFFE, YaleB cropped2414, full USPS
+and native MSRA25 EBSA16. They are current source/settings experiments, not newly
+established historical identities. Means and sample SDs remain in the CSV; the
+contrasts below are descriptive differences of complete matched-seed means, not
+new confidence intervals or significance tests.
+
+### Existing implementation: 30, 100 and 300 updates
+
+All 15 dataset/limit configurations completed 50 seeds, with no recorded LDA
+update failures. The three limits were compared on matched external seed indices.
+At limit 100, all 50 fits on every source reached `LABELS_STABLE`; their ACC/NMI
+pairs are identical to limit 300 for every seed. Raising the cap to 300 therefore
+adds no metric improvement in this block.
+
+| Source | At the 30-update cap | Change in mean ACC/NMI from 30 to 100 (pp) |
+|---|---|---:|
+| ORL att92 | 50 label-stable fits | 0.000 / 0.000 |
+| JAFFE | 50 label-stable fits | 0.000 / 0.000 |
+| YaleB cropped2414 | 50 label-stable fits | 0.000 / 0.000 |
+| MSRA25 EBSA16 | 49 label-stable; one reached the cap | +0.006 / +0.020 |
+| USPS | 12 label-stable; 38 reached the cap | -0.323 / -0.363 |
+
+Only one MSRA seed and the 38 capped USPS seeds change their ACC/NMI pair between
+30 and 100. The USPS decline shows that further algorithmic convergence need not
+improve label metrics. YaleB remains about 9.672% ACC and 13.416% NMI at all three
+limits; an inadequate outer cap does not explain that result in this tested
+implementation. Equal endpoint metrics alone do not prove equal trajectories or
+authorize arbitrary prefix reuse. The timer-interrupted YaleB attempt remains
+separate; complete whole-fit checkpoints were adopted only through the recorded
+source/environment/input verification.
+
+### Pinned reference: actual update failures and returned state
+
+All five reference configurations have 50 evaluated executions, but their
+scientific status differs:
+
+- **JAFFE:** all 50 fits have zero successful LDA updates and are labelled
+  `DEGENERATED_TO_PCA_KMEANS`. Across them, 625 updates record `LinAlgError`.
+  Source NMI stopping occurs in every fit, despite the failed LDA updates.
+- **ORL:** all 50 fits likewise have zero successful LDA updates, with 15,000
+  `LinAlgError` updates in total; every fit reaches the 300-update cap. Their
+  retained PCA projections and repeated inner K-means runs must not be described
+  as successful discriminant learning.
+- **MSRA25 EBSA16, USPS and YaleB cropped2414:** all 50 fits on each source perform
+  successful LDA updates, report no update failures and stop at source NMI
+  stability. Singular-update failure is therefore not the observed YaleB
+  mechanism in these records.
+
+Every completed benchmark reference record reports a consistent returned state.
+The source's one-update-ahead rotation behavior is demonstrated by the separate
+cap regression fixture; it was not observed as an inconsistent return in these
+250 benchmark fits. In particular, ORL's cap was reached with every LDA update
+failing, so its unchanged rotation does not exhibit that discrepancy. The audit
+keeps both actual-used and source-returned projections and retains the scoped
+PCA determinism modification. It does not silently repair the pinned reference
+or use its respectable degenerate-case scores as proof of working LDA.
+
+### Ridge adaptation and matched SC controls
+
+The separately named adaptation and each of its four output/control endpoints
+completed 50 external seeds on all five sources. The direct learned-label result
+uses the method's ten-start inner K-means. Downstream SC and its raw/PCA controls
+use one RANDOM Lloyd start per matched external seed. Thus direct learned labels
+versus downstream SC measure the complete prescribed pipeline change; they do
+not isolate a change in spectral geometry from a change in rounding budget.
+
+| Source | Adapted SC minus raw SC: ACC/NMI (pp) | Adapted SC minus PCA_p0 SC: ACC/NMI (pp) |
+|---|---:|---:|
+| ORL att92 | -6.990 / -4.815 | -6.250 / -4.465 |
+| JAFFE | -9.146 / -9.291 | -9.615 / -9.292 |
+| YaleB cropped2414 | +17.508 / +23.676 | +18.103 / +24.205 |
+| USPS | -3.949 / -13.837 | -4.991 / -14.416 |
+| MSRA25 EBSA16 | -5.531 / -8.114 | -5.937 / -8.159 |
+
+YaleB is the clear positive control-relative case: adapted SC reaches
+35.848% ACC / 50.579% NMI, while directly clustering the learned representation
+reaches 42.119% / 51.323%. It nevertheless has 32 capped fits and only 18
+partition-stable fits at 300 updates. All fits on the other four sources reach
+partition stability, and no adapted update failures are recorded. The adaptation
+is neither uniformly converged nor uniformly beneficial.
+
+The lower-dimensional PCA_r control also matters: adapted SC improves both means
+over it on JAFFE and MSRA16, loses both on ORL, and raises USPS ACC by 1.860 pp
+while lowering NMI by 4.876 pp. A positive ACC comparison to one weaker control
+cannot replace the raw/PCA_p0 comparisons or conceal the NMI loss. Downstream SC
+lowers both means relative to the direct learned-label endpoint on every source
+under the declared differing rounding rules.
+
+These are upstream baseline/adaptation findings, not evidence of beneficial SSC
+shrinkage or recovered historical LDA-SC. Cross-subspace native-objective
+selection remains unavailable. The matched SLPS k=5/k=7 findings are summarized
+in [research findings](research_findings.md); final subset and graph conclusions
+remain pending.

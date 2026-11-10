@@ -258,33 +258,16 @@ def run_evaluation(task,data_root,artifact_root):
 
 def export_evaluation(artifact_root,output):
     """Export verified small evaluation records; no arrays, fits or re-selection."""
+    from .scalar_views import collect_usps_metadata,derive_usps_views,write_usps_views
     root=Path(artifact_root);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    rows=[];trials=[];seen=set()
-    for path in sorted((root/'usps_audit/evaluation').glob('*/*/*.json')):
-        if path.name=='evaluation_manifest.json':continue
-        record=json.loads(path.read_text())
-        if record.get('dataset')!='USPS' or not record.get('config_id'):continue
-        if record.get('n_samples')!=9298 or record.get('n_classes')!=10:raise ValueError('non-full-USPS evaluation cannot be published')
-        if record['config_id'] in seen:raise ValueError('duplicate USPS evaluation configuration; select an explicit provenance generation')
-        seen.add(record['config_id']);summary=record.get('summary',{})
-        if record.get('status')=='COMPLETED':
-            summary=summarize(record['trials'])
-        row={k:v for k,v in record.items() if k not in ['trials','summary','objects','audit_metadata']}
-        audit=record.get('audit_metadata',{});linear=audit.get('linear_checks',{})
-        row.update(fit_cpu_seconds=audit.get('cpu_seconds'),fit_wall_seconds=audit.get('wall_seconds'),
-                   cg_calls=linear.get('cg_calls'),cg_failures=linear.get('cg_failures'),
-                   cg_max_relative_residual=linear.get('cg_max_relative_residual'),
-                   final_linear_relative_residual=linear.get('relative_linear_residual'))
-        row.update({k:v for k,v in summary.items() if k!='native_best'})
-        row['source_record']=str(path.relative_to(root));row['native_best']=summary.get('native_best')
-        rows.append(row)
-        trials.extend({'config_id':record['config_id'],'name':record['name'],**trial} for trial in record.get('trials',[]))
-    from experiments.subset_search.aggregate import write_csv
+    metadata=collect_usps_metadata(root);derived=derive_usps_views(metadata)
+    names=['usps_solver_evaluation.csv','usps_solver_evaluation_trials.csv.gz']
+    selected={'tables':{name:rows for name,rows in derived['tables'].items() if name in names},
+              'trial_tables':{name:rows for name,rows in derived['trial_tables'].items() if name in names}}
     # Stage both public files, then replace their final paths.
     with tempfile.TemporaryDirectory(prefix='.usps-evaluation-',dir=out) as tmp:
-        tmp=Path(tmp);write_csv(tmp/'usps_solver_evaluation.csv',rows or [{'status':'NOT_EVALUATED_NO_RECORDS'}])
-        buffer=io.StringIO();fields=['config_id','name','seed','acc','nmi','inertia','iterations','warning']
-        writer=csv.DictWriter(buffer,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(trials)
-        (tmp/'usps_solver_evaluation_trials.csv.gz').write_bytes(gzip.compress(buffer.getvalue().encode(),mtime=0))
-        for name in ['usps_solver_evaluation.csv','usps_solver_evaluation_trials.csv.gz']:os.replace(tmp/name,out/name)
-    return {'configurations':len(rows),'trials':len(trials),'source_records_recoverable':True}
+        tmp=Path(tmp);write_usps_views(selected,tmp)
+        for name in names:os.replace(tmp/name,out/name)
+    return {'configurations':len(metadata['original_evaluations']),
+            'trials':len(derived['trial_tables']['usps_solver_evaluation_trials.csv.gz']),
+            'source_records_recoverable':True}

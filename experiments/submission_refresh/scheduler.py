@@ -41,7 +41,13 @@ def _execute(task,data_root,artifact_root):
         elif task['kind']=='validation':
             from .validation_jobs import run_validation
             r=run_validation(task,data_root,artifact_root)
+        elif task['kind']=='archive':
+            from .archive_jobs import run_archive
+            r=run_archive(task,data_root,artifact_root)
         else:raise ValueError(task['kind'])
+        if task['kind'] in ['graph','ensc']:
+            from .scheduler_resume import capture_execution
+            r['scheduler_resume_identity']=capture_execution(task,r,artifact_root)
     except BaseException as exc:
         import traceback
         r={'task':task,'status':'TIMEOUT' if isinstance(exc,TimeoutError) else 'INTERRUPTED' if isinstance(exc,KeyboardInterrupt) else 'FAILED_CONTROLLER','error':repr(exc),'traceback':traceback.format_exc(),'cpu_seconds':time.process_time()-started,'scientific_outputs':'Existing checkpoints are preserved; no complete-result claim is made'}
@@ -49,7 +55,7 @@ def _execute(task,data_root,artifact_root):
     atomic_json(Path(artifact_root)/'task_status'/(task['run_id']+'.json'),r)
 
 def run(tasks,data_root,artifact_root):
-    os.environ.update(THREAD_ENV);ledger=ResourceLedger(artifact_root);ctx=mp.get_context('spawn');pending=list(tasks);active=[]
+    os.environ.update(THREAD_ENV);ledger=ResourceLedger(artifact_root);ctx=mp.get_context('spawn');pending=list(tasks);active=[];resume_validator=None
     while pending or active:
         for p,t,start in active[:]:
             if not p.is_alive() or time.monotonic()-start>t['cpu_limit']*2+60:
@@ -77,6 +83,10 @@ def run(tasks,data_root,artifact_root):
                     expected=scientific_cache_identity(t['candidate'],data_root,profile=t.get('profile',False))
                     if previous.get('cache_identity')!=expected:
                         raise ValueError('existing subset execution identity differs; preserve it and use a new run ID/artifact root')
+                elif t['kind'] in ['graph','ensc']:
+                    from .scheduler_resume import ResumeValidator
+                    if resume_validator is None:resume_validator=ResumeValidator(data_root,artifact_root)
+                    resume_validator.validate(t,previous)
                 pending.pop(0);continue
             if not ledger.reserve(t['run_id'],t['cpu_limit'],t.get('phase','experiment')):break
             pending.pop(0);p=ctx.Process(target=_execute,args=(t,str(data_root),str(artifact_root)));p.start();active.append((p,t,time.monotonic()));print('START',t['run_id'],flush=True)
@@ -88,4 +98,9 @@ def run(tasks,data_root,artifact_root):
             break
         atomic_json(Path(artifact_root)/'queues'/(__import__('hashlib').sha256(str([t['run_id'] for t in tasks]).encode()).hexdigest()[:20]+'.json'),{'pending':[t['run_id'] for t in pending],'active':[{'run_id':t['run_id'],'pid':p.pid} for p,t,_ in active],'updated_unix':time.time()})
         if active:time.sleep(.5)
-    return {'not_launched':[t['run_id'] for t in pending],'ledger':ledger.state()}
+    return {'not_launched':[t['run_id'] for t in pending],'ledger':ledger.state(),
+        'resume_metadata_validation':{'tasks':resume_validator.validated if resume_validator else 0,
+            'controller_cpu_seconds':resume_validator.cpu_seconds+resume_validator.child_cpu_seconds if resume_validator else 0.,
+            'own_controller_cpu_seconds':resume_validator.cpu_seconds if resume_validator else 0.,
+            'git_child_cpu_seconds':resume_validator.child_cpu_seconds if resume_validator else 0.,
+            'scope':'Current fixed-data/source metadata checks only; no scientific fit or array replacement'}}

@@ -49,33 +49,22 @@ def _register_scientific_tree(store,artifacts):
 
 
 def _ensc_extension_metadata(gate,store,output):
-    """Reflect actual conditional execution without filling unqualified metrics."""
-    from .ensc_campaign import DATASETS,aggregate_ensc
-    result=dict(gate);formal=[]
-    for path in sorted((store.root/'ensc_jobs').glob('*/status.json')):
-        status=json.loads(path.read_text());task=status.get('task',{})
-        if not task.get('profile') and task.get('dataset') in DATASETS:formal.append(str(path.relative_to(store.root)))
-    result.update(G4_G5_implementation_status='PREPARED; execution requires the fixed G3 gate and current backend validation',
-        ensc_formal_job_records=formal,four_benchmark_ACC_gain_pp=None,four_benchmark_NMI_gain_pp=None,
-        four_benchmark_NMI_gain_vs_SC_pp=None,four_benchmark_NMI_gain_vs_SSC_pp=None)
-    macro=aggregate_ensc(store.root,output) if formal else None
-    if not result.get('promotion_passed'):
-        result['G4_G5_status']='NOT_RUN_GATE_NOT_PASSED'
-        if macro is not None:result['ensc_records_not_qualified_by_current_G3_gate']=True
-        return result
-    if macro is None:
-        result['G4_G5_status']='TRIGGERED_NOT_RUN'
-        return result
-    result.update(G4_G5_status=macro['status'],ensc_four_benchmark_conclusion=macro)
-    statuses=macro.get('dataset_status',[])
-    qualified=macro.get('status')=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS' and len(statuses)==len(DATASETS) and {row.get('dataset') for row in statuses}==set(DATASETS) and all(row.get('qualified') is True for row in statuses)
-    if qualified:
-        for field in ['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']:
-            result[field]=macro.get(field)
-        result['practical_target_met']=macro.get('practical_target_met')
-    # A single NMI value would conceal which fair baseline was used.
-    result['NMI_contrast_definition']='Separate macro-average NMI contrasts against fair SC and fair original SSC; the legacy undifferentiated NMI field stays unavailable.'
-    return result
+    from .ensc_campaign import collect_ensc_metadata,derive_ensc_metadata,write_ensc_views,apply_ensc_gate
+    derived=derive_ensc_metadata(collect_ensc_metadata(store.root))
+    if derived['formal_job_records']:write_ensc_views(derived,output)
+    return apply_ensc_gate(gate,derived)
+
+
+def _casebook_summary(record_path,casebook,task_result):
+    """Preserve matched G1 task scalars alongside the casebook evidence."""
+    sc=task_result.get('sc_solution',{}) or {};ssc=task_result.get('ssc_solution',{}) or {}
+    return {'record':record_path,'dataset':task_result.get('task',{}).get('dataset'),
+        **{key:value for key,value in casebook.items() if key!='objects'},
+        'upstream_A_diagnostics':task_result.get('upstream_A_diagnostics'),
+        'shrinkage_W0_diagnostics':task_result.get('shrinkage_W0_diagnostics'),
+        'sc_summary':sc.get('summary'),'ssc_summary':ssc.get('summary'),
+        'sc_solver_status':sc.get('solver',{}).get('status'),'ssc_solver_status':ssc.get('solver',{}).get('status'),
+        'sc_certified':sc.get('solver',{}).get('certified'),'ssc_certified':ssc.get('solver',{}).get('certified')}
 
 
 def aggregate(artifact_root,output):
@@ -90,7 +79,8 @@ def aggregate(artifact_root,output):
                 row={'dataset':r.get('dataset'),'method':r['method'],'config_id':r['config_id'],'status':r.get('status'),'n_trials':len(r['trials']),'max_iter':r.get('max_iter'),'native_best_status':r.get('native_best_status'),'source_record':str(path.relative_to(store.root))}
                 if complete:row.update({k:v for k,v in summarize(r['trials'],objective=None).items() if k!='native_best'})
                 if r.get('diagnostics'):
-                    diagnostics=r['diagnostics'];row['termination_counts']=dict(Counter(d.get('termination_reason',d.get('status','unknown')) for d in diagnostics));row['update_failures_total']=sum(d.get('lda_update_failures',0) for d in diagnostics);row['no_successful_lda_update_runs']=sum(d.get('lda_update_successes',0)==0 for d in diagnostics)
+                    from .scalar_evidence import _diagnostic_summary,diagnostic_view
+                    row.update(diagnostic_view(_diagnostic_summary(r['diagnostics'])))
                 baseline.append(row)
     for path in sorted((store.root/'task_status').glob('*.json')):
         r=json.loads(path.read_text());task=r.get('task',{});coverage.append({'run_id':path.stem,'status':r['status'],'dataset':task.get('dataset',r.get('candidate_id')),'kind':task.get('kind'),'phase':task.get('phase'),'cpu_seconds':r.get('cpu_seconds'),'error':r.get('error')})
@@ -110,11 +100,15 @@ def aggregate(artifact_root,output):
         provenance=_gate_input_identity(store,ds,scientific_records)
         gates[ds]={**gate_dataset(primary),'input_provenance':provenance}
     for path in sorted((store.root/'graph_jobs').glob('*/*/casebook.json')):
-        r=json.loads(path.read_text());case_summaries.append({'record':str(path.relative_to(store.root)),**{k:v for k,v in r.items() if k!='objects'}})
+        r=json.loads(path.read_text())
         case_path=path.parent/'error_cases.csv'
         if not case_path.is_file():raise ValueError('full scientific casebook table is unavailable')
         task_path=store.root/'task_status'/(path.parents[1].name+'.json')
-        task_record=json.loads(task_path.read_text()) if task_path.is_file() else {}
+        local_task_path=path.parent/'status.json'
+        # Prefer the status beside this exact source-version casebook. A later
+        # controller attempt may have replaced the shared task-status record.
+        task_record=json.loads(local_task_path.read_text()) if local_task_path.is_file() else json.loads(task_path.read_text()) if task_path.is_file() else {}
+        case_summaries.append(_casebook_summary(str(path.relative_to(store.root)),r,task_record))
         case_hash=digest(case_path)
         with case_path.open(newline='') as stream:
             for row in csv.DictReader(stream):
@@ -146,5 +140,7 @@ def aggregate(artifact_root,output):
     atomic_json(out/'artifact_manifest.json',{'store':'independent-data/scientific-artifacts/refresh-20261110 (outside Git)','records':artifacts,'extra_files':raw_scientific_files,'definitions':{'objective_graph':'parent representation W for original SSC; graph_objects.fitted_W for interventions','IRLS_objects_fitted_W':'surrogate recomputed at returned G; not a claim to be the last linear-system weight matrix','dual_q':'only certified solver graph duals; IRLS weights are not dual variables'},'regenerate':'python -m experiments.submission_refresh run --config configs/submission_refresh/campaign.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume'})
     from .coverage import baseline_coverage
     baseline_coverage(artifact_root,out)
+    from .graph_coverage import build_graph_coverage
+    build_graph_coverage(artifact_root,out,root=ROOT)
     state=ResourceLedger(artifact_root).state();state['charged_cpu_core_hours']=sum(e['charged_cpu_seconds'] for e in state['entries'])/3600;state['aggregation_this_invocation_cpu_seconds']=time.process_time()-start;atomic_json(out/'resource_usage.json',state)
     return {'baseline_configurations':len(baseline),'graph_configurations':len(graphrows),'promotion':gate['decision']}

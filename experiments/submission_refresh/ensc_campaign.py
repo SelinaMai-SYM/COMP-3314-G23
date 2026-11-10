@@ -5,6 +5,8 @@ CPU reservations, workers and deadlines. Source and backend validation are
 required even for label-blind runtime profiles on real benchmark inputs.
 """
 from __future__ import annotations
+import ast
+import hashlib
 import json
 import math
 import resource
@@ -34,6 +36,104 @@ DATASETS=('ORL_att92','JAFFE','YaleB_cropped2414','USPS')
 K_VALUES={'ORL_att92':40,'JAFFE':10,'YaleB_cropped2414':38,'USPS':10}
 GRAPH_GAMMAS=(.001,1.,10.,1000.,1000000.)
 ORIGINAL_GAMMAS=(1e-6,.001,.01,.1,.3,1.,3.,10.,30.,100.,300.,1000.,10000.,100000.,1000000.)
+
+
+def _adapter_behavior(scope,source_text=None,*,external_sources=None):
+    """Fingerprint actual local fitting helpers, excluding editorial views."""
+    functions={'input':{'_inputs'},'construction':{'_inputs','_coefficient_graph',
+        '_wider_graph','_random_graph','_native_spectral','_movement','_matched_movement',
+        'intended_configurations','run_ensc'}}
+    constants={'input':{'DATASETS','K_VALUES'},
+        'construction':{'DATASETS','K_VALUES','GRAPH_GAMMAS','ORIGINAL_GAMMAS'}}
+    if scope not in functions:raise ValueError('unknown EnSC adapter behavior scope')
+    tree=ast.parse(Path(__file__).read_text() if source_text is None else source_text)
+    class WithoutDocstrings(ast.NodeTransformer):
+        def _strip(self,node):
+            self.generic_visit(node)
+            if node.body and isinstance(node.body[0],ast.Expr) and isinstance(node.body[0].value,ast.Constant) and isinstance(node.body[0].value.value,str):
+                node.body=node.body[1:] or [ast.Pass()]
+            return node
+        visit_FunctionDef=_strip
+        visit_AsyncFunctionDef=_strip
+        visit_ClassDef=_strip
+    def bindings(parsed,selected,root_names):
+        used={node.id for item in selected for node in ast.walk(item) if isinstance(node,ast.Name) and isinstance(node.ctx,ast.Load)}|set(root_names)
+        result=[]
+        for node in parsed.body:
+            if isinstance(node,ast.Import):
+                names={item.asname or item.name.split('.')[0] for item in node.names}
+            elif isinstance(node,ast.ImportFrom):
+                names={item.asname or item.name for item in node.names}
+            elif isinstance(node,(ast.Assign,ast.AnnAssign,ast.AugAssign)):
+                targets=node.targets if isinstance(node,ast.Assign) else [node.target]
+                names={item.id for target in targets for item in ast.walk(target) if isinstance(item,ast.Name)}
+            else:continue
+            if names&used:result.append(ast.dump(node,include_attributes=False))
+        return result
+    tree=WithoutDocstrings().visit(tree);nodes={}
+    selected=[]
+    for node in tree.body:
+        if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name in functions[scope]:
+            nodes[node.name]=ast.dump(node,include_attributes=False);selected.append(node)
+        elif isinstance(node,ast.Assign):
+            for target in node.targets:
+                if isinstance(target,ast.Name) and target.id in constants[scope]:
+                    nodes[target.id]=ast.dump(node,include_attributes=False);selected.append(node)
+    required=functions[scope]|constants[scope]
+    if set(nodes)!=required:raise ValueError('incomplete recorded EnSC fitting-helper behavior: '+', '.join(sorted(required-set(nodes))))
+    nodes['module_fitting_bindings']=bindings(tree,selected,functions[scope])
+    external={'experiments/submission_refresh/baselines.py':{'load'}}
+    if scope=='construction':external['experiments/subset_search/runner.py']={'round_embedding'}
+    for path,names in external.items():
+        if external_sources is not None and not isinstance(external_sources.get(path),str):
+            raise ValueError('recorded EnSC fitting-helper source unavailable: '+path)
+        text=external_sources[path] if external_sources is not None else (ROOT/path).read_text()
+        parsed=WithoutDocstrings().visit(ast.parse(text));found={};selected_external=[]
+        for node in parsed.body:
+            if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name in names:
+                found[path+':'+node.name]=ast.dump(node,include_attributes=False);selected_external.append(node)
+        if len(found)!=len(names):raise ValueError('incomplete recorded external EnSC fitting-helper behavior: '+path)
+        found[path+':module_fitting_bindings']=bindings(parsed,selected_external,names)
+        nodes.update(found)
+    result={'schema':'ensc-local-fitting-behavior-v1','scope':scope,'nodes':nodes}
+    return {**result,'fingerprint':identity(result)}
+
+
+def _construction_source():
+    """Keep shared SSC source identity, and separately bind EnSC construction."""
+    source=scientific_source_record(include_ensc=True);base=source['implementation_hash']
+    behavior=_adapter_behavior('construction')
+    constants={'DATASETS':DATASETS,'K_VALUES':K_VALUES,'GRAPH_GAMMAS':GRAPH_GAMMAS,
+        'ORIGINAL_GAMMAS':ORIGINAL_GAMMAS,'rounding':GREEDY,'source_revision':SOURCE_REVISION}
+    fingerprint=identity({'schema':'ensc-construction-source-v1','graph_backend_source':base,
+        'local_fitting_behavior':behavior['fingerprint'],'effective_constants':constants})
+    return {**source,'graph_backend_source_fingerprint':base,'adapter_fitting_behavior':behavior,
+        'effective_construction_constants':constants,'implementation_hash':fingerprint,
+        'scientific_source_fingerprint':fingerprint,
+        'cache_fingerprint_scope':'Graph/backend behavior plus EnSC input, coefficient, native-spectral and control-construction helpers/constants; excludes unrelated scalar/reporting views and docstrings/comments.'}
+
+
+def _g3_input_compatibility(meta,store,current_behavior):
+    """Require actual recorded adapter bytes or verified archived fitting AST."""
+    module='experiments/submission_refresh/ensc_campaign.py';source=meta.get('source') or {}
+    paths=[module,'experiments/submission_refresh/baselines.py']
+    recorded={path:source.get('source_files',{}).get(path) for path in paths}
+    current={path:digest(Path(__file__) if path==module else ROOT/path) for path in paths}
+    if recorded==current:
+        return {'mode':'IDENTICAL_RECORDED_SOURCE_BYTES','recorded_source_sha256':recorded,
+            'input_adapter_fingerprint':current_behavior['fingerprint']}
+    reference=source.get('source_archive')
+    if not all(recorded.values()) or not isinstance(reference,dict) or reference.get('kind')!='json':
+        raise ValueError('Saved G3 input has incompatible or unverifiable EnSC input-adapter source; preserve it and freeze a compatible source/input track before G4')
+    archive=store.get(reference)
+    if not isinstance(archive,dict) or any(not isinstance(archive.get(path),str)
+        or hashlib.sha256(archive[path].encode()).hexdigest()!=recorded[path] for path in paths):
+        raise ValueError('Saved G3 EnSC source archive does not match its recorded source bytes')
+    previous=_adapter_behavior('input',archive[module],external_sources=archive)
+    if previous['fingerprint']!=current_behavior['fingerprint']:
+        raise ValueError('Saved G3 input has incompatible EnSC input-adapter fitting behavior; do not substitute a new F0 for the gated input')
+    return {'mode':'VERIFIED_ARCHIVED_FITTING_AST','recorded_source_sha256':recorded,
+        'input_adapter_fingerprint':current_behavior['fingerprint'],'source_archive':reference}
 
 
 def _authorization(task):
@@ -73,26 +173,37 @@ def _inputs(dataset,data_root,store,source):
     """Reuse a matching full G3 input, never a retrospectively chosen subset."""
     from .baselines import load
     X,y,data_meta=load(dataset,data_root);X=np.asarray(X,dtype=float);y=np.asarray(y)
-    refs={'X':store.put(X),'y':store.put(y)};matches=[]
+    refs={'X':store.put(X),'y':store.put(y)};matches=[];input_behavior=_adapter_behavior('input')
     for path in sorted((store.root/'graph_inputs'/dataset).glob('*/representation.json')):
         meta=json.loads(path.read_text())
         if all(meta['objects'][name]['sha256']==refs[name]['sha256'] for name in ['X','y']) and meta.get('input_preparation')=='Y0' and meta.get('K')==K_VALUES[dataset] and meta.get('source',{}).get('implementation_hash')==source['implementation_hash']:
-            matches.append((path,meta))
-    if len({m['objects']['F0']['sha256'] for _,m in matches})>1:
+            compatibility=_g3_input_compatibility(meta,store,input_behavior)
+            matches.append((path,meta,compatibility))
+    if len({m['objects']['F0']['sha256'] for _,m,_ in matches})>1:
         raise ValueError('multiple distinct full F0 artifacts exist; freeze an explicit input record before G4')
     if matches:
-        path,meta=matches[0]
-        return path.parent,meta,{name:store.get(ref) for name,ref in meta['objects'].items()}
-    key=identity({'dataset':dataset,'X':refs['X'],'y':refs['y'],'source':source['implementation_hash'],'k':5,'prep':'Y0'})
+        path,meta,compatibility=matches[0]
+        returned={**meta,'ensc_input_adapter_fingerprint':input_behavior['fingerprint'],
+            'ensc_G3_input_reuse_provenance':compatibility}
+        return path.parent,returned,{name:store.get(ref) for name,ref in meta['objects'].items()}
+    key=identity({'dataset':dataset,'X':refs['X'],'y':refs['y'],'source':source['implementation_hash'],
+        'k':5,'K':K_VALUES[dataset],'prep':'Y0','input_adapter_fingerprint':input_behavior['fingerprint']})
     folder=store.root/'ensc_inputs'/dataset/key;path=folder/'representation.json'
     if path.exists():
-        meta=json.loads(path.read_text());return folder,meta,{name:store.get(ref) for name,ref in meta['objects'].items()}
+        meta=json.loads(path.read_text())
+        if (meta.get('ensc_input_adapter_fingerprint')!=input_behavior['fingerprint']
+            or meta.get('source',{}).get('implementation_hash')!=source['implementation_hash']
+            or meta.get('K')!=K_VALUES[dataset] or meta.get('input_preparation')!='Y0'
+            or any(meta.get('objects',{}).get(name)!=refs[name] for name in ['X','y'])):
+            raise ValueError('Cached EnSC input adapter/data/source identity mismatch; preserve the original artifact')
+        return folder,meta,{name:store.get(ref) for name,ref in meta['objects'].items()}
     F0,info=spectral_embedding(X,K_VALUES[dataset],k=5);A,Ainfo=knn_affinity(X,k=5);W0,Winfo=knn_affinity(F0,k=5)
     U=row_unit(F0);Wa=angular_graph(U)
     arrays={'X':X,'y':y,'A':A,'F0':F0,'U':U,'W0':W0,'Wa_raw':Wa}
     meta={'dataset':dataset,'K':K_VALUES[dataset],'input_preparation':'Y0',
           'input_membership':'full_preregistered_confirmation_benchmark_not_subset_winner',
           'historical_F_identity':'new recovered current artifact; not a historical missing F claim',
+          'ensc_input_adapter_fingerprint':input_behavior['fingerprint'],
           'objects':{name:store.put(value) for name,value in arrays.items()},'source':source,
           'input_metadata':data_meta,'spectral_info':info,'A_info':Ainfo,'W0_info':Winfo}
     atomic_json(path,meta);return folder,meta,arrays
@@ -100,18 +211,18 @@ def _inputs(dataset,data_root,store,source):
 
 def _coefficient_graph(X,tau,store,source,*,profile_rows=None):
     """Each completed independent row is a resumable, label-free checkpoint."""
-    import ast
-    tree=ast.parse(Path(__file__).read_text())
-    node=next(item for item in tree.body if isinstance(item,ast.FunctionDef) and item.name=='_coefficient_graph')
-    if node.body and isinstance(node.body[0],ast.Expr) and isinstance(node.body[0].value,ast.Constant) and isinstance(node.body[0].value.value,str):node.body=node.body[1:]
-    adapter_behavior=identity(ast.dump(node,include_attributes=False))
+    adapter_behavior=_adapter_behavior('construction')['fingerprint']
     unit=row_unit(X);xref=store.put(unit)
     parameters={'input':xref,'tau':tau,'source_gamma':50.,'n_nonzero':50,'support_size':100,'max_outer':40,
                 'backend_source':digest(ROOT/'method_extension/submission_refresh/ensc.py'),
-                'source_revision':SOURCE_REVISION,'environment':source['environment'],'adapter_fitting_behavior':adapter_behavior}
+                'source_revision':SOURCE_REVISION,'environment':source['environment'],'adapter_fitting_behavior':adapter_behavior,
+                'construction_source_fingerprint':source['implementation_hash']}
     folder=store.root/'ensc_coefficients'/identity(parameters);result_path=folder/'graph.json'
     if result_path.exists() and profile_rows is None:
-        record=json.loads(result_path.read_text());return {**record,'arrays':{name:store.get(ref) for name,ref in record['objects'].items()}}
+        record=json.loads(result_path.read_text())
+        if record.get('parameters')!=parameters or record.get('source',{}).get('implementation_hash')!=source['implementation_hash']:
+            raise ValueError('Cached EnSC coefficient construction context mismatch; preserve the original artifact')
+        return {**record,'arrays':{name:store.get(ref) for name,ref in record['objects'].items()}}
     rows=[];cols=[];data=[];alphas=[];diagnostics=[];timings=[]
     count=min(len(unit),int(profile_rows)) if profile_rows is not None else len(unit)
     for i in range(count):
@@ -270,11 +381,12 @@ def _select(records):
 
 def _resume_context(definition,graph,anchor,meta,store,source,construction_source,graph_metadata):
     ensc=definition['graph'].startswith('S_tau')
-    return {'schema':'G4-resume-context-v1','definition':definition,
+    return {'schema':'G4-resume-context-v2','definition':definition,
         'anchor':None if anchor is None else store.put(anchor),'graph':store.put(graph),'graph_shape':list(graph.shape),'graph_nnz':int(graph.nnz),
         'input_objects':{key:meta['objects'][key] for key in ['X','y','F0','U']},
         'scientific_source_fingerprint':source['implementation_hash'],
-        'construction_source_fingerprint':construction_source['implementation_hash'] if ensc else None,
+        'construction_source_fingerprint':construction_source['implementation_hash'],
+        'input_adapter_fingerprint':meta.get('ensc_input_adapter_fingerprint'),
         'backend_source_sha256':digest(ROOT/'method_extension/submission_refresh/ensc.py') if ensc else None,
         'environment':source['environment'],'graph_metadata_fingerprint':identity(graph_metadata),
         'rounding':{'initialization':GREEDY,'n_init':1,'seeds':list(range(50))}}
@@ -319,7 +431,7 @@ def run_ensc(task,data_root,artifact_root):
     if task.get('cpu_limit') is not None:install_cpu_limit(task['cpu_limit'])
     try:
         result['authorization']=_authorization(task)
-        source=scientific_source_record();construction_source=scientific_source_record(include_ensc=True)
+        source=scientific_source_record();construction_source=_construction_source()
         result['source']=construction_source
         with threadpool_limits(limits=1):
             input_folder,meta,a=_inputs(task['dataset'],data_root,store,source)
@@ -379,61 +491,87 @@ def run_ensc(task,data_root,artifact_root):
     return result
 
 
-def aggregate_ensc(artifact_root,output):
-    """Collect all fixed benchmarks; incomplete four-way conclusions stay NA."""
-    from .aggregate import write_csv
+def collect_ensc_metadata(artifact_root):
+    """Collect compact formal jobs/configurations without dereferencing arrays."""
+    root=Path(artifact_root);jobs=[];records=[]
+    for folder in sorted((root/'ensc_jobs').glob('*')):
+        path=folder/'status.json'
+        if not path.is_file():continue
+        original=json.loads(path.read_text());task=original.get('task',{})
+        if task.get('profile') or task.get('dataset') not in DATASETS:continue
+        relative=str(path.relative_to(root))
+        jobs.append({'record_path':relative,'record_sha256':digest(path),
+            'record':{key:value for key,value in original.items() if key not in ['records','selection']}})
+        for config in sorted((folder/'records').glob('*.json')):
+            records.append({'record_path':str(config.relative_to(root)),'record_sha256':digest(config),
+                'job_record_path':relative,'record':json.loads(config.read_text())})
+    return {'schema':'ensc-scalar-metadata-v1','conditional_status':'FORMAL_JOBS_RECORDED' if jobs else 'NOT_RUN',
+        'jobs':jobs,'records':records}
+
+
+def derive_ensc_metadata(evidence):
+    """Pure G4/G5 tables and macro conclusion from saved scalar metadata.
+
+    No matrices, data root, artifact store or Git objects are accessed. Complete
+    seed sets and every source/input/resume identity are checked before output.
+    """
     from experiments.next_round.evaluate import paired
-    store=ArtifactStore(artifact_root);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    by_dataset={dataset:{} for dataset in DATASETS};metadata={};coverage=[];provenance={dataset:{} for dataset in DATASETS}
-    for folder in sorted((store.root/'ensc_jobs').glob('*')):
-        status_path=folder/'status.json'
-        if not status_path.exists():continue
-        status=json.loads(status_path.read_text());task=status.get('task',{})
-        if task.get('profile'):continue
-        dataset=task.get('dataset')
-        if dataset not in DATASETS:continue
-        for path in sorted((folder/'records').glob('*.json')):
-            row=json.loads(path.read_text());key=row['config_id'];context=row.get('resume_context')
-            if not isinstance(context,dict) or context.get('schema')!='G4-resume-context-v1':raise ValueError('G4 aggregation requires verified per-configuration resume contexts')
-            definition=next((item for item in intended_configurations(dataset) if item['config_id']==key),None)
-            if definition is None or row.get('dataset')!=dataset or context.get('definition')!=definition:
-                raise ValueError('G4 record is outside its fixed benchmark/configuration context')
-            inputs=context.get('input_objects',{})
-            if not all(isinstance(inputs.get(name),dict) and inputs[name].get('sha256') for name in ['X','y','F0','U']):raise ValueError('G4 common exact input object identities are unavailable')
-            common={name:context.get(name) for name in ['input_objects','scientific_source_fingerprint','environment','rounding']}
-            if not common['scientific_source_fingerprint'] or not isinstance(common['environment'],dict) or not isinstance(common['rounding'],dict):
-                raise ValueError('G4 common scientific source/environment/rounding context is unavailable')
-            track=provenance[dataset]
-            if 'common_context'in track and track['common_context']!=common:
-                raise ValueError('G4 benchmark records mix exact inputs or scientific source contexts across job folders')
-            track['common_context']=common
-            if context.get('construction_source_fingerprint') is not None:
-                construction={name:context.get(name) for name in ['construction_source_fingerprint','backend_source_sha256']}
-                if 'construction_context'in track and track['construction_context']!=construction:
-                    raise ValueError('G4 benchmark records mix scientific EnSC construction sources across job folders')
-                track['construction_context']=construction
-            graph_context={name:context.get(name) for name in ['graph','graph_shape','graph_nnz','graph_metadata_fingerprint','construction_source_fingerprint','backend_source_sha256']}
-            graphs=track.setdefault('graphs',{})
-            if definition['graph'] in graphs and graphs[definition['graph']]!=graph_context:
-                raise ValueError('G4 benchmark records mix graph construction/resume contexts across job folders')
-            graphs[definition['graph']]=graph_context
-            if definition['anchor']!='native_spectral' and context.get('anchor')!=inputs[definition['anchor']]:
-                raise ValueError('G4 configuration anchor differs from its common exact input object')
-            actual_source=row.get('source',{}).get('implementation_hash')
-            expected_source=context.get('construction_source_fingerprint') if definition['anchor']=='native_spectral' else context['scientific_source_fingerprint']
-            if row.get('status')=='COMPLETED' and actual_source!=expected_source:raise ValueError('G4 actual scientific source differs from its resume context')
-            track.setdefault('job_status_records',[])
-            status_record=str(status_path.relative_to(store.root))
-            if status_record not in track['job_status_records']:track['job_status_records'].append(status_record)
-            if key in by_dataset[dataset]:
-                old=by_dataset[dataset][key]
-                if old.get('resume_context')!=context or identity(old.get('source',{}))!=identity(row.get('source',{})):
-                    raise ValueError('repeated G4 configurations have distinct source/resume identities; keep separate labelled tracks')
-                if old.get('objects',{}).get('G')!=row.get('objects',{}).get('G') or old.get('trials')!=row.get('trials'):
-                    raise ValueError('distinct repeated G4 scientific outputs require separate labelled source tracks')
-            else:by_dataset[dataset][key]=row
-        metadata[dataset]=status
-    selections=[];contrasts=[];dataset_status=[]
+    if evidence.get('schema')!='ensc-scalar-metadata-v1':raise ValueError('unsupported EnSC scalar metadata schema')
+    jobs=evidence.get('jobs',[]);entries=evidence.get('records',[])
+    if not jobs and (entries or evidence.get('conditional_status')!='NOT_RUN'):
+        raise ValueError('empty conditional EnSC evidence must be declared NOT_RUN')
+    if jobs and evidence.get('conditional_status')!='FORMAL_JOBS_RECORDED':raise ValueError('formal EnSC jobs cannot be declared NOT_RUN')
+    job_map={job['record_path']:job['record'] for job in jobs}
+    if len(job_map)!=len(jobs):raise ValueError('duplicate EnSC job metadata key')
+    by_dataset={dataset:{} for dataset in DATASETS};coverage=[];provenance={dataset:{} for dataset in DATASETS}
+    for entry in entries:
+        status=job_map.get(entry.get('job_record_path'))
+        if not isinstance(status,dict):raise ValueError('EnSC configuration has no declared formal job metadata')
+        task=status.get('task',{});dataset=task.get('dataset')
+        if task.get('profile') or dataset not in DATASETS:raise ValueError('nonformal EnSC job entered scalar derivation')
+        row=dict(entry['record']);key=row['config_id'];context=row.get('resume_context')
+        if row.get('status')=='COMPLETED':
+            row['trials']=sorted(row['trials'],key=lambda trial:int(trial['seed']))
+            row['summary']=summarize(row['trials'])
+        if not isinstance(context,dict) or context.get('schema')!='G4-resume-context-v1':raise ValueError('G4 aggregation requires verified per-configuration resume contexts')
+        definition=next((item for item in intended_configurations(dataset) if item['config_id']==key),None)
+        if definition is None or row.get('dataset')!=dataset or context.get('definition')!=definition:
+            raise ValueError('G4 record is outside its fixed benchmark/configuration context')
+        inputs=context.get('input_objects',{})
+        if not all(isinstance(inputs.get(name),dict) and inputs[name].get('sha256') for name in ['X','y','F0','U']):raise ValueError('G4 common exact input object identities are unavailable')
+        common={name:context.get(name) for name in ['input_objects','scientific_source_fingerprint','environment','rounding']}
+        if not common['scientific_source_fingerprint'] or not isinstance(common['environment'],dict) or not isinstance(common['rounding'],dict):
+            raise ValueError('G4 common scientific source/environment/rounding context is unavailable')
+        track=provenance[dataset]
+        if 'common_context'in track and track['common_context']!=common:
+            raise ValueError('G4 benchmark records mix exact inputs or scientific source contexts across job folders')
+        track['common_context']=common
+        if context.get('construction_source_fingerprint') is not None:
+            construction={name:context.get(name) for name in ['construction_source_fingerprint','backend_source_sha256']}
+            if 'construction_context'in track and track['construction_context']!=construction:
+                raise ValueError('G4 benchmark records mix scientific EnSC construction sources across job folders')
+            track['construction_context']=construction
+        graph_context={name:context.get(name) for name in ['graph','graph_shape','graph_nnz','graph_metadata_fingerprint','construction_source_fingerprint','backend_source_sha256']}
+        graphs=track.setdefault('graphs',{})
+        if definition['graph'] in graphs and graphs[definition['graph']]!=graph_context:
+            raise ValueError('G4 benchmark records mix graph construction/resume contexts across job folders')
+        graphs[definition['graph']]=graph_context
+        if definition['anchor']!='native_spectral' and context.get('anchor')!=inputs[definition['anchor']]:
+            raise ValueError('G4 configuration anchor differs from its common exact input object')
+        actual_source=row.get('source',{}).get('implementation_hash')
+        expected_source=context.get('construction_source_fingerprint') if definition['anchor']=='native_spectral' else context['scientific_source_fingerprint']
+        if row.get('status')=='COMPLETED' and actual_source!=expected_source:raise ValueError('G4 actual scientific source differs from its resume context')
+        track.setdefault('job_status_records',[])
+        status_record=entry['job_record_path']
+        if status_record not in track['job_status_records']:track['job_status_records'].append(status_record)
+        if key in by_dataset[dataset]:
+            old=by_dataset[dataset][key]
+            if old.get('resume_context')!=context or identity(old.get('source',{}))!=identity(row.get('source',{})):
+                raise ValueError('repeated G4 configurations have distinct source/resume identities; keep separate labelled tracks')
+            if old.get('objects',{}).get('G')!=row.get('objects',{}).get('G') or old.get('trials')!=row.get('trials'):
+                raise ValueError('distinct repeated G4 scientific outputs require separate labelled source tracks')
+        else:by_dataset[dataset][key]=row
+    selections=[];contrasts=[];dataset_status=[];locked_dataset_status=[]
     for dataset in DATASETS:
         records=list(by_dataset[dataset].values());selected=_select(records)
         for definition in intended_configurations(dataset):
@@ -458,11 +596,23 @@ def aggregate_ensc(artifact_root,output):
                  'complete_records':sum(r['status']=='COMPLETED' for r in records),'intended_records':44,
                  'missing_required_configurations':selected['missing_required_configurations'],'invalid_required_configurations':selected['invalid_required_configurations'],
                  'input_and_source_provenance':provenance[dataset],
+                 'proposed_config_id':proposed['config_id'] if proposed else None,
+                 'fair_SC_config_id':sc['config_id'] if sc else None,'fair_SSC_config_id':ssc['config_id'] if ssc else None,
                  'ACC_gain_vs_stronger_fair_baseline_pp':None,'NMI_gain_vs_SC_pp':None,'NMI_gain_vs_SSC_pp':None}
         if all(v is not None for v in [proposed,sc,ssc]):
             summary.update(ACC_gain_vs_stronger_fair_baseline_pp=proposed['acc_mean']-max(sc['acc_mean'],ssc['acc_mean']),
                            NMI_gain_vs_SC_pp=proposed['nmi_mean']-sc['nmi_mean'],NMI_gain_vs_SSC_pp=proposed['nmi_mean']-ssc['nmi_mean'])
             summary['ACC_loss_exceeds_1pp']=summary['ACC_gain_vs_stronger_fair_baseline_pp'] < -1.
+        locked_qualified=qualified and operating is not None and operating.get('status')=='COMPLETED' and operating.get('gamma')==1. and operating.get('family')=='S_tau0.95' and operating.get('solver',{}).get('certified') is True
+        locked_summary={'dataset':dataset,'qualified':bool(locked_qualified),'comparison_status':selected['comparison_validity'],
+            'proposed_config_id':operating['config_id'] if operating else None,
+            'fair_SC_config_id':summary['fair_SC_config_id'],'fair_SSC_config_id':summary['fair_SSC_config_id'],
+            'ACC_gain_vs_stronger_fair_baseline_pp':None,'NMI_gain_vs_SC_pp':None,'NMI_gain_vs_SSC_pp':None,'ACC_loss_exceeds_1pp':None}
+        if locked_qualified:
+            locked_summary.update(ACC_gain_vs_stronger_fair_baseline_pp=operating['summary']['acc_mean']-max(sc['acc_mean'],ssc['acc_mean']),
+                NMI_gain_vs_SC_pp=operating['summary']['nmi_mean']-sc['nmi_mean'],NMI_gain_vs_SSC_pp=operating['summary']['nmi_mean']-ssc['nmi_mean'])
+            locked_summary['ACC_loss_exceeds_1pp']=locked_summary['ACC_gain_vs_stronger_fair_baseline_pp'] < -1.
+        locked_dataset_status.append(locked_summary)
         for track,new in [('capability',proposed),('locked_label_free_gamma1',operating)]:
             if new is None or new['status']!='COMPLETED':continue
             for control_name in ['fair_sc','original_ssc','native_ensc_S_tau0.95','Wa','S_tau1','wider_knn','random_count_mass_seed400']:
@@ -474,15 +624,71 @@ def aggregate_ensc(artifact_root,output):
                         'qualification':'Conditional paired-rounding interval; capability selection used these same seeds, so this is not an unbiased interval for selection/generalization'})
         dataset_status.append(summary)
     complete=all(r['qualified'] for r in dataset_status)
-    macro={'status':'COMPLETE_CERTIFIED_FOUR_BENCHMARKS' if complete else 'INCOMPLETE_FOUR_BENCHMARK_COMPARISON',
+    macro={'status':'NOT_RUN' if not jobs and not entries else 'COMPLETE_CERTIFIED_FOUR_BENCHMARKS' if complete else 'INCOMPLETE_FOUR_BENCHMARK_COMPARISON',
            'four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_vs_SC_pp':None,'four_benchmark_NMI_gain_vs_SSC_pp':None,
            'practical_target_met':None,'dataset_status':dataset_status,'primary_family':'S_tau0.95',
            'equal_dataset_weights':True,'datasets':list(DATASETS),'same_development_and_confirmation_benchmarks_seen_during_design':True}
-    if complete:
-        macro.update(four_benchmark_ACC_gain_pp=float(np.mean([r['ACC_gain_vs_stronger_fair_baseline_pp'] for r in dataset_status])),
-                     four_benchmark_NMI_gain_vs_SC_pp=float(np.mean([r['NMI_gain_vs_SC_pp'] for r in dataset_status])),
-                     four_benchmark_NMI_gain_vs_SSC_pp=float(np.mean([r['NMI_gain_vs_SSC_pp'] for r in dataset_status])))
-        macro['practical_target_met']=(macro['four_benchmark_ACC_gain_pp']>=2 and macro['four_benchmark_NMI_gain_vs_SC_pp']>=0 and macro['four_benchmark_NMI_gain_vs_SSC_pp']>=0)
-    write_csv(out/'ensc_execution_coverage.csv',coverage);write_csv(out/'ensc_capability_and_operating_point.csv',selections)
-    write_csv(out/'ensc_paired_contrasts.csv',contrasts);atomic_json(out/'ensc_four_benchmark_conclusion.json',macro)
-    return macro
+    def macro_values(rows,qualified):
+        values={'four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_vs_SC_pp':None,
+            'four_benchmark_NMI_gain_vs_SSC_pp':None,'practical_target_met':None}
+        if qualified:
+            values.update(four_benchmark_ACC_gain_pp=float(np.mean([r['ACC_gain_vs_stronger_fair_baseline_pp'] for r in rows])),
+                four_benchmark_NMI_gain_vs_SC_pp=float(np.mean([r['NMI_gain_vs_SC_pp'] for r in rows])),
+                four_benchmark_NMI_gain_vs_SSC_pp=float(np.mean([r['NMI_gain_vs_SSC_pp'] for r in rows])))
+            values['practical_target_met']=(values['four_benchmark_ACC_gain_pp']>=2 and values['four_benchmark_NMI_gain_vs_SC_pp']>=0 and values['four_benchmark_NMI_gain_vs_SSC_pp']>=0)
+        return values
+    macro.update(macro_values(dataset_status,complete))
+    locked_complete=all(row['qualified'] for row in locked_dataset_status)
+    if not locked_complete:
+        for row in locked_dataset_status:
+            for field in ['ACC_gain_vs_stronger_fair_baseline_pp','NMI_gain_vs_SC_pp','NMI_gain_vs_SSC_pp','ACC_loss_exceeds_1pp']:row[field]=None
+    locked_macro={'status':'NOT_RUN' if not jobs and not entries else 'COMPLETE_CERTIFIED_FOUR_BENCHMARKS' if locked_complete else 'INCOMPLETE_FOUR_BENCHMARK_COMPARISON',
+        'track':'locked_label_free_gamma1','fixed_parameters':{'tau':.95,'source_gamma':50,'SSC_gamma':1},
+        'equal_dataset_weights':True,'primary_family':'S_tau0.95','datasets':list(DATASETS),
+        'dataset_status':locked_dataset_status,'baseline_selection':'Same fair SC and original SSC capability configurations as the top-level capability track; no baseline or operating-point reselection.',
+        **macro_values(locked_dataset_status,locked_complete)}
+    macro['locked_label_free_operating_point']=locked_macro
+    macro['parameter_selection_gap']=bool(macro['practical_target_met'] and not locked_macro['practical_target_met']) if jobs and complete and locked_complete else None
+    return {'schema':'derived-ensc-scalar-views-v1','formal_job_records':sorted(job_map),
+        'tables':{'ensc_execution_coverage.csv':coverage,'ensc_capability_and_operating_point.csv':selections,
+                  'ensc_paired_contrasts.csv':contrasts},'macro':macro}
+
+
+def write_ensc_views(derived,output):
+    from .aggregate import write_csv
+    out=Path(output);out.mkdir(parents=True,exist_ok=True)
+    for name,rows in derived['tables'].items():write_csv(out/name,rows or [{'status':'NOT_RUN'}])
+    atomic_json(out/'ensc_four_benchmark_conclusion.json',derived['macro'])
+
+
+def apply_ensc_gate(gate,derived):
+    """Pure integration of actual conditional execution and qualified metrics."""
+    result=dict(gate);formal=derived['formal_job_records'];macro=derived['macro']
+    result.update(G4_G5_implementation_status='PREPARED; execution requires the fixed G3 gate and current backend validation',
+        ensc_formal_job_records=formal,four_benchmark_ACC_gain_pp=None,four_benchmark_NMI_gain_pp=None,
+        four_benchmark_NMI_gain_vs_SC_pp=None,four_benchmark_NMI_gain_vs_SSC_pp=None,
+        locked_label_free_operating_point=None,parameter_selection_gap=None)
+    if not result.get('promotion_passed'):
+        result['G4_G5_status']='NOT_RUN_GATE_NOT_PASSED'
+        if formal:result['ensc_records_not_qualified_by_current_G3_gate']=True
+        return result
+    if not formal:
+        result['G4_G5_status']='TRIGGERED_NOT_RUN'
+        return result
+    result.update(G4_G5_status=macro['status'],ensc_four_benchmark_conclusion=macro,
+        locked_label_free_operating_point=macro.get('locked_label_free_operating_point'),parameter_selection_gap=macro.get('parameter_selection_gap'))
+    statuses=macro.get('dataset_status',[])
+    qualified=macro.get('status')=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS' and len(statuses)==len(DATASETS) and {row.get('dataset') for row in statuses}==set(DATASETS) and all(row.get('qualified') is True for row in statuses)
+    if qualified:
+        for field in ['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']:
+            result[field]=macro.get(field)
+        result['practical_target_met']=macro.get('practical_target_met')
+    result['NMI_contrast_definition']='Separate macro-average NMI contrasts against fair SC and fair original SSC; the legacy undifferentiated NMI field stays unavailable.'
+    return result
+
+
+def aggregate_ensc(artifact_root,output):
+    """Thin live collector using the same pure derivation as no-data rebuilds."""
+    derived=derive_ensc_metadata(collect_ensc_metadata(artifact_root))
+    write_ensc_views(derived,output)
+    return derived['macro']

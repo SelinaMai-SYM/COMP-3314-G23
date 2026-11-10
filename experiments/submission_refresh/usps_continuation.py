@@ -234,40 +234,60 @@ def run_rounding(task,data_root,artifact_root):
     return result
 
 
+def numerical_reference_input_identity(artifact_root):
+    """Compare recorded current F/W content addresses without loading arrays.
+
+    This is an input-reference identity view, not a new solver certificate or
+    an assertion that historical missing arrays have been recovered.
+    """
+    root=Path(artifact_root);sources={}
+    paths={'numerical_audit':'usps_audit/frozen_pair.json',
+           'subset_search':'subset/USPS/representation.json'}
+    for name,relative in paths.items():
+        path=root/relative
+        if not path.is_file():
+            sources[name]={'path':relative,'available':False,'sha256':None,'objects':None}
+            continue
+        record=json.loads(path.read_text());objects={}
+        for field in ['F','W']:
+            ref=record.get('objects',{}).get(field)
+            if not isinstance(ref,dict):raise ValueError('USPS input-reference metadata missing '+field)
+            sha=ref.get('sha256');objpath=Path(str(ref.get('path','')))
+            if (not isinstance(sha,str) or len(sha)!=64 or any(c not in '0123456789abcdef' for c in sha)
+                    or not ref.get('kind') or objpath.is_absolute() or '..' in objpath.parts
+                    or not objpath.parts or objpath.parts[0]!='objects' or objpath.stem!=sha):
+                raise ValueError('invalid USPS F/W content-addressed reference')
+            objects[field]=dict(ref)
+        sources[name]={'path':relative,'available':True,'sha256':digest(path),'objects':objects}
+    available=all(source['available'] for source in sources.values())
+    same=(sources['numerical_audit']['objects']==sources['subset_search']['objects']) if available else None
+    return {'schema':'usps-numerical-reference-input-identity-v1','benchmark':'USPS',
+        'subset_candidate_id':'USPS','sources':sources,
+        'status':('MATCHING_RECORDED_CURRENT_F_W_OBJECTS' if same else 'DIFFERENT_RECORDED_CURRENT_F_W_OBJECTS') if available else 'UNAVAILABLE_CURRENT_INPUT_REFERENCE_COMPARISON',
+        'same_current_F_W_content_addresses':same,'arrays_loaded_for_this_view':False,
+        'historical_missing_F_G_identity_established':False,
+        'certificate_transferred_to_locked_IRLS_G':False,
+        'numerical_reference_exports':['usps_continuation_audit.csv','usps_continuation_evaluation.csv'],
+        'scope':'Exact recorded current F/W object references only; no historical-array identity or closest-search claim. Each numerical certificate applies only to its own saved continuation G. Matching F/W does not certify a different historical-style IRLS G.'}
+
+
 def export_results(artifact_root,output):
     """Read-only scalar export of separate continuation fits and roundings."""
-    import csv,gzip,io,os,tempfile
-    from experiments.subset_search.aggregate import write_csv
-    from .selection import summarize
+    import os,tempfile
+    from .scalar_views import collect_usps_metadata,derive_usps_views,write_usps_views
     root=Path(artifact_root);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    fits=[];roundings=[];trials=[];seen=set()
-    for path in sorted((root/'usps_continuations').glob('*/result.json')):
-        record=json.loads(path.read_text());task=record.get('task',{});solver=record.get('solver',{})
-        fits.append({'run_id':task.get('run_id'),'gamma_effective':task.get('gamma'),'status':record.get('status'),
-            'solver_status':solver.get('status'),'certified':solver.get('certified'),'primal':solver.get('primal'),
-            'dual':solver.get('dual'),'relative_gap':solver.get('gap'),'iterations':solver.get('iterations'),
-            'max_iter':record.get('max_iter',task.get('max_iter')),'cpu_seconds':record.get('cpu_seconds'),
-            'initialization':record.get('initialization'),'provenance':record.get('provenance'),
-            'arrays_sha256':record.get('arrays_sha256'),'source_record':str(path.relative_to(root)),
-            'qualification':record.get('qualification'),'error':record.get('error')})
-    for path in sorted((root/'usps_continuation_evaluation').glob('*/*/*.json')):
-        if path.name=='evaluation_manifest.json':continue
-        record=json.loads(path.read_text())
-        if not record.get('config_id'):continue
-        if record['config_id'] in seen:raise ValueError('duplicate separate continuation evaluation configuration')
-        seen.add(record['config_id']);summary=record.get('summary',{})
-        if record.get('status')=='COMPLETED':summary=summarize(record['trials'])
-        row={key:value for key,value in record.items() if key not in ['trials','summary','objects','audit_metadata']}
-        row.update({key:value for key,value in summary.items() if key!='native_best'})
-        row.update(native_best=summary.get('native_best'),source_record=str(path.relative_to(root)))
-        roundings.append(row);trials.extend({'config_id':record['config_id'],'name':record['name'],**trial} for trial in record.get('trials',[]))
+    input_identity=numerical_reference_input_identity(root)
+    metadata=collect_usps_metadata(root);derived=derive_usps_views(metadata)
+    names=['usps_continuation_audit.csv','usps_continuation_evaluation.csv','usps_continuation_trials.csv.gz']
+    selected={'tables':{name:rows for name,rows in derived['tables'].items() if name in names},
+              'trial_tables':{name:rows for name,rows in derived['trial_tables'].items() if name in names}}
     with tempfile.TemporaryDirectory(prefix='.usps-continuations-',dir=out) as temporary:
         temporary=Path(temporary)
-        write_csv(temporary/'usps_continuation_audit.csv',fits or [{'status':'NOT_RUN'}])
-        write_csv(temporary/'usps_continuation_evaluation.csv',roundings or [{'status':'NOT_EVALUATED'}])
-        buffer=io.StringIO();fields=['config_id','name','seed','acc','nmi','inertia','iterations','warning']
-        writer=csv.DictWriter(buffer,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(trials)
-        (temporary/'usps_continuation_trials.csv.gz').write_bytes(gzip.compress(buffer.getvalue().encode(),mtime=0))
-        for name in ['usps_continuation_audit.csv','usps_continuation_evaluation.csv','usps_continuation_trials.csv.gz']:
+        write_usps_views(selected,temporary)
+        atomic_json(temporary/'usps_numerical_reference_input_identity.json',input_identity)
+        for name in names+['usps_numerical_reference_input_identity.json']:
             os.replace(temporary/name,out/name)
-    return {'fit_records':len(fits),'rounding_records':len(roundings),'rounding_trials':len(trials)}
+    return {'fit_records':len(metadata['continuation_fits']),
+            'rounding_records':len(metadata['continuation_evaluations']),
+            'rounding_trials':len(derived['trial_tables']['usps_continuation_trials.csv.gz']),
+            'current_input_identity_status':input_identity['status']}

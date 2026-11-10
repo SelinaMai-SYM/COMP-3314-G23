@@ -9,6 +9,7 @@ from experiments.submission_refresh.core import ROOT,ArtifactStore,ResourceLedge
 from experiments.submission_refresh.selection import distances,rank,summarize
 from .runner import GAMMAS,INITS,round_embedding
 from .markdown import benchmark_markdown
+from .certified_status import certified_search_status
 
 def write_csv(path,rows,fields=None):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -250,6 +251,9 @@ def _aggregate(artifact_root,output):
     reference_ids=yaml.safe_load((ROOT/'configs/subset_search/protocol.yaml').read_text())['reference_candidates']
     candidate_pools={b:{c['pool'] for c in cat['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in reference_ids}
     write_csv(out/'reference_contrasts.csv',reference_contrasts(summaries,fixed,reference_ids,candidate_pools))
+    certified_pools={b:{c['pool'] for c in cat['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in {c['benchmark'] for c in cat['candidates']}}
+    certified_status=certified_search_status(summaries,certified_pools)
+    write_csv(out/'certified_search_status.csv',certified_status)
     atomic_json(out/'winner_lock.json',{'version':1,'catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json'),'selection_rule_sha256':digest(ROOT/'configs/submission_refresh/selection.yaml'),'winners':winners,'no_reselection_after_confirmation':True})
     atomic_json(out/'artifact_manifest.json',{'store':'external independent-data/scientific-artifacts/refresh-20261110','object_format':'verified content-addressed npz/npy/json','records':refs,'regeneration':'python -m experiments.subset_search run --config configs/subset_search/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume','source_catalogue_sha256':digest(ROOT/'results/subset_search/candidate_catalogue.json')})
     with (out/'completion_records.json.gz').open('wb') as handle:handle.write(gzip.compress((json.dumps({'schema':'subset-completion-evidence-v1','records':completion_audit},sort_keys=True)+'\n').encode(),mtime=0))
@@ -261,7 +265,7 @@ def _aggregate(artifact_root,output):
         'candidate_completion_definition':'complete_unique_candidates counts inputs with any complete SSC configuration; full-grid counts are separate; aliases never multiply independent inputs',
         'cpu_aggregation_seconds':time.process_time()-start})
     for b in paper['datasets']:
-        (out/(b+'.md')).write_text(benchmark_markdown(b,winners,paper))
+        (out/(b+'.md')).write_text(benchmark_markdown(b,winners,paper,certified_status))
     return winners
 
 def aggregate(artifact_root,output):

@@ -76,6 +76,10 @@ def test_current_release_fresh_copy_needs_no_data_artifacts_or_git(scalar_fixtur
     native=next(r for r in rows if r['endpoint']=='native_best_of_50')
     assert native['acc_sd']==native['nmi_sd']==native['delta_acc_sd_pp']==native['delta_nmi_sd_pp']==''
     assert int(native['n'])==1
+    assert result['certified_search_availability_recomputed']
+    assert (rebuilt/'certified_search_status.csv').read_bytes()==(output/'certified_search_status.csv').read_bytes()
+    statuses=list(csv.DictReader((rebuilt/'certified_search_status.csv').open()))
+    assert len(statuses)==2 and all(r['historical_complete_configurations']=='2' and not r['certified_closest_config_id'] for r in statuses)
     # A verified previous output can be replaced without leaving a stale backup.
     assert release.rebuild(fresh/'configs/subset_search/release_manifest.json',rebuilt)['ok']
     assert not rebuilt.with_name(rebuilt.name+'.previous').exists()
@@ -86,6 +90,18 @@ def test_hash_mismatch_fails_before_output_write(scalar_fixture,tmp_path):
     (output/'trials.csv.gz').write_bytes(b'not the frozen input')
     destination=tmp_path/'must remain absent'
     with pytest.raises(ValueError,match='hash mismatch'):
+        release.rebuild(manifest,destination)
+    assert not destination.exists()
+
+
+def test_certified_search_status_cannot_gain_a_winner_even_with_updated_file_hash(scalar_fixture,tmp_path):
+    root,output,manifest=scalar_fixture
+    path=output/'certified_search_status.csv';rows=list(csv.DictReader(path.open()))
+    rows[0]['certified_closest_config_id']='a-different-certified-G'
+    write_csv(path,rows)
+    data=json.loads(manifest.read_text());data['inputs']['certified_search_status'].update(sha256=digest(path),bytes=path.stat().st_size)
+    manifest.write_text(json.dumps(data));destination=tmp_path/'must not be authored'
+    with pytest.raises(ValueError,match='certified-search availability scope/status mismatch'):
         release.rebuild(manifest,destination)
     assert not destination.exists()
 

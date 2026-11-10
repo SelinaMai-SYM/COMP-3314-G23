@@ -2,28 +2,27 @@ from __future__ import annotations
 import argparse,json
 from pathlib import Path
 from experiments.submission_refresh.core import atomic_json,identity
+from experiments.submission_refresh.config_contract import require_frozen_config,require_cohort,require_profile_ids
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('phase',choices=['catalogue','profile','freeze','run','aggregate','confirm','complete-failed']);p.add_argument('--config',default='configs/subset_search/protocol.yaml');p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--output',default='results/subset_search');p.add_argument('--candidates',nargs='*');p.add_argument('--cohort',default='configs/subset_search/executable_cohort.json');args=p.parse_args()
-    import yaml
-    protocol=yaml.safe_load(Path(args.config).read_text())
-    if protocol.get('version')!='subset-search-20261110-v1' or list(map(float,protocol.get('gamma_nominal',[])))!=[1e-6,1e-3,1.,1e3,1e6] or protocol.get('solver',{}).get('max_iter')!=300:
-        raise ValueError('config does not match the preregistered historical-style protocol')
+    require_frozen_config(args.config,'subset')
     if args.phase=='catalogue':
         from .catalogue import build_catalogue
         build_catalogue(Path(args.data_root),Path(args.output));return
     cat=json.loads(Path(args.output,'candidate_catalogue.json').read_text());candidates=cat['candidates']
     if args.phase=='freeze':
         cohort=json.loads(Path(args.cohort).read_text())
-        from experiments.submission_refresh.core import digest
-        if cohort['catalogue_sha256']!=digest(Path(args.output)/'candidate_catalogue.json'):raise ValueError('frozen cohort catalogue mismatch')
+        require_cohort(cohort,cat,Path(args.output)/'candidate_catalogue.json',allow_empty=True)
         print(json.dumps({'frozen_candidate_count':len(cohort['candidate_ids']),'cohort':args.cohort,'score_based_changes_allowed':False}));return
     if args.phase=='profile':
         if not args.candidates:raise ValueError('explicit candidate IDs required for blind profile')
+        require_profile_ids(args.candidates,cat)
         chosen=[c for c in candidates if c['candidate_id'] in args.candidates]
         tasks=[{'run_id':'profile-'+identity(c)[:20],'kind':'subset','candidate':c,'profile':True,'cpu_limit':1800,'phase':'profile'} for c in chosen]
     elif args.phase=='run':
-        cohort=json.loads(Path(args.cohort).read_text());chosen=[c for c in candidates if c['candidate_id'] in cohort['candidate_ids']]
+        cohort=json.loads(Path(args.cohort).read_text());require_cohort(cohort,cat,Path(args.output)/'candidate_catalogue.json')
+        chosen=[c for c in candidates if c['candidate_id'] in cohort['candidate_ids']]
         order_path=Path(args.cohort).with_name(Path(args.cohort).stem+'_order.json')
         if order_path.exists():
             order=json.loads(order_path.read_text())['candidate_ids']
@@ -31,9 +30,10 @@ def main():
             positions={cid:i for i,cid in enumerate(order)};chosen.sort(key=lambda c:positions[c['candidate_id']])
         tasks=[{'run_id':'subset-'+identity(c)[:20],'kind':'subset','candidate':c,'cpu_limit':cohort.get('per_candidate_limits',{}).get(c['candidate_id'],cohort['cpu_limit_per_candidate']),'phase':'subset'} for c in chosen]
     elif args.phase=='complete-failed':
+        cohort=json.loads(Path(args.cohort).read_text());require_cohort(cohort,cat,Path(args.output)/'candidate_catalogue.json')
         from experiments.submission_refresh.core import ArtifactStore
         from .complete_failed import _cpu_used
-        store=ArtifactStore(args.artifact_root);cohort=json.loads(Path(args.cohort).read_text());tasks=[]
+        store=ArtifactStore(args.artifact_root);tasks=[]
         for c in candidates:
             if c['candidate_id'] not in cohort['candidate_ids']:continue
             folder=store.root/'subset'/c['candidate_id'];statuspath=folder/'status.json'

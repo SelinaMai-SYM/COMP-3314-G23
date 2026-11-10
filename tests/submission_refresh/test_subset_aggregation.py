@@ -100,6 +100,10 @@ def test_aggregate_and_no_data_rebuild_preserve_native_and_fixed_endpoints(tiny_
     assert (rebuilt/'reference_contrasts.csv').exists()
     assert (rebuilt/'fixed_protocol_family_distributions.csv').exists()
     assert (rebuilt/'matched_sc_contrasts.csv').exists()
+    assert (rebuilt/'certified_search_status.csv').read_bytes()==(out/'certified_search_status.csv').read_bytes()
+    statuses=read('certified_search_status.csv')
+    assert len(statuses)==2 and all(r['historical_complete_configurations']=='2' for r in statuses)
+    assert all(r['status']=='UNAVAILABLE_NO_COMPARABLE_CERTIFIED_SEARCH_COVERAGE' and r['certified_closest_config_id']=='' for r in statuses)
     assert (rebuilt/'YaleB.md').read_bytes()==(out/'YaleB.md').read_bytes()
 
 

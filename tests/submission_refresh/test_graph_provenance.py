@@ -55,12 +55,14 @@ def test_extension_gate_reports_actual_ensc_status_and_separate_qualified_NMI(tm
     macro={'status':'COMPLETE_CERTIFIED_FOUR_BENCHMARKS','four_benchmark_ACC_gain_pp':2.3,
         'four_benchmark_NMI_gain_vs_SC_pp':.4,'four_benchmark_NMI_gain_vs_SSC_pp':.2,'practical_target_met':True,
         'dataset_status':[{'dataset':name,'qualified':True} for name in ensc_campaign.DATASETS]}
-    def collect(artifact_root,output):calls.append(str(artifact_root));return macro
-    monkeypatch.setattr(ensc_campaign,'aggregate_ensc',collect)
+    derived={'formal_job_records':[],'macro':macro}
+    monkeypatch.setattr(ensc_campaign,'collect_ensc_metadata',lambda artifact_root:{})
+    monkeypatch.setattr(ensc_campaign,'derive_ensc_metadata',lambda evidence:derived)
+    monkeypatch.setattr(ensc_campaign,'write_ensc_views',lambda result,output:calls.append(str(output)))
     gate={'promotion_passed':True,'decision':'PASSED'}
     before=refresh._ensc_extension_metadata(gate,store,tmp_path/'out')
     assert before['G4_G5_status']=='TRIGGERED_NOT_RUN' and not calls
-    atomic_json(store.root/'ensc_jobs/formal/status.json',{'task':{'dataset':'ORL_att92'},'status':'COMPLETED'})
+    derived['formal_job_records']=['ensc_jobs/formal/status.json']
     complete=refresh._ensc_extension_metadata(gate,store,tmp_path/'out')
     assert complete['G4_G5_status']==macro['status'] and len(calls)==1
     assert complete['four_benchmark_ACC_gain_pp']==2.3

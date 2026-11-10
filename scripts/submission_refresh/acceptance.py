@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 
 THREADS = {name: '1' for name in ['OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS',
     'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS', 'BLIS_NUM_THREADS']}
-CLEAR = ['PYTHONPATH', 'COMP3314_DATA_ROOT', 'PYTHONHOME', 'VIRTUAL_ENV',
+CLEAR = ['PYTHONPATH', 'COMP3314_DATA_ROOT', 'COMP3314_ARTIFACT_ROOT', 'PYTHONHOME', 'VIRTUAL_ENV',
     'PYTHONSTARTUP', 'PYTHONUSERBASE', 'PIP_TARGET', 'PIP_PREFIX', 'PIP_USER',
     'PIP_TRUSTED_HOST', 'PIP_NO_VERIFY', 'PIP_REQUIREMENT', 'PIP_CONSTRAINT',
     'PIP_EXTRA_INDEX_URL', 'PIP_FIND_LINKS', 'PIP_NO_INDEX',
@@ -126,9 +126,9 @@ def junit_results(path):
         'testcases': cases, 'reported_suites': [dict(node.attrib) for node in tree.getroot().iter() if tag(node) == 'testsuite']}
 
 
-def descendants(root):
+def descendants(root, ps_path, environment):
     """Keep children in the scheduler's process group, and sample the tree."""
-    raw = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,time=,rss='], text=True)
+    raw = subprocess.check_output([ps_path, '-axo', 'pid=,ppid=,time=,rss='], text=True, env=environment)
     rows = {}
     for line in raw.splitlines():
         fields = line.split()
@@ -187,6 +187,9 @@ class Acceptance:
         # from ordinary system locations, not an inherited worktree/venv bin.
         self.env['PATH'] = os.pathsep.join(['/usr/bin', '/bin', '/usr/sbin', '/sbin',
             '/Library/TeX/texbin', '/opt/homebrew/bin', '/usr/local/bin'])
+        self.ps_path = shutil.which('ps', path=self.env['PATH'])
+        if not self.ps_path or not Path(self.ps_path).is_absolute():
+            raise ValueError('an absolute system ps executable is required for acceptance accounting')
         self.result = {'schema': 'fresh-checkout-acceptance-v1', 'status': 'RUNNING',
             'started_at_utc': utc(), 'repository': self.repository, 'branch': args.branch,
             'expected_commit': args.expected_commit.lower(), 'observed_commit': None,
@@ -200,6 +203,7 @@ class Acceptance:
             'environment_clear_policy': sorted(CLEAR) + ['GIT_CONFIG_KEY_*', 'GIT_CONFIG_VALUE_*'],
             'preserved_git_ca_environment_keys': [name for name in ['GIT_SSL_CAINFO', 'GIT_SSL_CAPATH'] if name in self.env],
             'clone_tls_verification': 'command-local git -c http.sslVerify=true; global configuration is not modified',
+            'process_monitor_executable': self.ps_path,
             'commands': [], 'checks': [],
             'max_sampled_tree_rss_bytes': 0, 'no_publication_actions': True,
             'visual_review_passed': False, 'visual_review_status': 'SEPARATE_REVIEW_REQUIRED',
@@ -241,7 +245,7 @@ class Acceptance:
                     stdout=stream, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
                 checkpoint = time.perf_counter()
                 while process.poll() is None:
-                    known, live_cpu, rss = descendants(os.getpid())
+                    known, live_cpu, rss = descendants(os.getpid(), self.ps_path, self.env)
                     self.result['max_sampled_tree_rss_bytes'] = max(self.result['max_sampled_tree_rss_bytes'], rss)
                     self.check_budget(live_cpu)
                     if time.perf_counter() - checkpoint >= 5:
@@ -256,7 +260,7 @@ class Acceptance:
         except BaseException as exc:
             entry.update(status='TIMEOUT' if isinstance(exc, BudgetExceeded) else 'FAILED', error=repr(exc))
             if process is not None:
-                try: current, _, _ = descendants(os.getpid())
+                try: current, _, _ = descendants(os.getpid(), self.ps_path, self.env)
                 except (OSError, subprocess.SubprocessError): current = known
                 # Never signal the scheduler or this runner. Keep descendants
                 # in the outer scheduler's process group for its accounting.
@@ -394,7 +398,8 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
         junit = self.products / 'focused-regressions.xml'
         arguments[index + 1] = str(junit)
         self.check('focused-v4-no-unresolved-placeholders', not any('{' in value or '}' in value for value in arguments))
-        self.check('focused-no-data-environment', 'COMP3314_DATA_ROOT' not in self.env and 'PYTHONPATH' not in self.env)
+        self.check('focused-no-data-environment', all(key not in self.env for key in
+            ['COMP3314_DATA_ROOT', 'COMP3314_ARTIFACT_ROOT', 'PYTHONPATH']))
         self.result['focused_selection'] = {'config': str(config.relative_to(self.checkout)),
             'sha256': sha(config), 'task_run_id': matches[0]['run_id'],
             'qualification': 'The committed v4 pytest selection is reused verbatim except its fresh JUnit output path.'}
@@ -402,6 +407,8 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
             expected_integration_skip=True)
 
     def no_data_rebuilds(self):
+        self.check('no-inherited-data-or-artifact-root', all(key not in self.env for key in
+            ['COMP3314_DATA_ROOT', 'COMP3314_ARTIFACT_ROOT', 'PYTHONPATH']))
         self.run('synthetic', [self.python, '-m', 'experiments.v3_reproduction', 'smoke', '--dataset', 'synthetic'])
         historical = self.products / 'historical rebuild'
         joint = self.products / 'joint historical rebuild'
@@ -440,7 +447,7 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
             committed = self.checkout / 'results/subset_search' / name
             self.check('subset-markdown-parity-' + benchmark, committed.is_file()
                 and committed.read_bytes() == (current / name).read_bytes())
-        self.result['no_data_checks_environment'] = {'PYTHONPATH': None, 'COMP3314_DATA_ROOT': None,
+        self.result['no_data_checks_environment'] = {'PYTHONPATH': None, 'COMP3314_DATA_ROOT': None, 'COMP3314_ARTIFACT_ROOT': None,
             'data_root_argument_supplied': False, 'external_artifact_argument_supplied': False,
             'scope': 'Commands use committed scalar release inputs; independent data is supplied only to the later real-data smoke.'}
 
@@ -471,14 +478,27 @@ raise SystemExit(pytest.main(["-q","tests/submission_refresh/test_candidates.py"
         tools = {name: shutil.which(name, path=self.env['PATH']) for name in
             ['make', 'pdflatex', 'bibtex', 'pdfinfo', 'pdftotext', 'pdftoppm']}
         self.check('report-tools-present', all(tools.values()), tools=tools)
+        report = self.checkout / 'report/Group_23.pdf'
+        self.check('committed-report-present', report.is_file()
+            and self.before.get('report/Group_23.pdf') is not None)
+        self.check('committed-report-unchanged-before-compile', sha(report) == self.before['report/Group_23.pdf'])
+        committed_text_path = self.products / 'committed-report-text.txt'
+        self.run('committed-pdf-text', [tools['pdftotext'], '-layout', report, committed_text_path])
+        committed_text = committed_text_path.read_text()
+        self.check('committed-report-text-nonempty', bool(committed_text.strip()))
+        self.result['committed_report_text_sha256'] = sha(committed_text_path)
         self.run('compile-report', [tools['make'], '-C', 'report', 'all', 'PYTHON=' + str(self.python),
             'REPORT_DATE=' + self.args.report_date])
-        report = self.checkout / 'report/Group_23.pdf'
         info = self.run('pdf-info', [tools['pdfinfo'], report], capture=True)
         (self.products / 'report-pdfinfo.txt').write_text(info)
         text_path = self.products / 'report-text.txt'
         self.run('pdf-text', [tools['pdftotext'], '-layout', report, text_path])
         text = text_path.read_text()
+        normalize_whitespace = lambda value: ' '.join(value.split())
+        self.check('committed-and-regenerated-pdf-text-parity',
+            normalize_whitespace(committed_text) == normalize_whitespace(text),
+            committed_text_sha256=sha(committed_text_path), regenerated_text_sha256=sha(text_path),
+            comparison='case-sensitive exact text after whitespace normalization; binary PDF metadata may differ')
         pages = text.split('\f')
         if pages and not pages[-1].strip(): pages.pop()
         main = (self.checkout / 'report/main.tex').read_text()
@@ -524,9 +544,11 @@ raise SystemExit(pytest.main(["-q","tests/submission_refresh/test_candidates.py"
             'main_pages': main_pages, 'total_pages': len(pages),
             'main_page_source': 'compiled main_end label; references excluded',
             'appendix_first_page': appendix_page, 'compiled_aux_sha256': sha(aux),
+            'committed_text_sha256': sha(committed_text_path),
+            'committed_and_regenerated_text_match': True,
             'text_sha256': sha(text_path), 'rendered_pages': {str(p.relative_to(self.output)): sha(p) for p in images},
             'visual_review_status': 'SEPARATE_REVIEW_REQUIRED',
-            'binary_pdf_equality_required': False, 'binary_pdf_note': 'TeX PDF creation metadata may differ; generated table sources are checked separately.'}
+            'binary_pdf_equality_required': False, 'binary_pdf_note': 'TeX PDF creation metadata may differ; committed/regenerated text parity and generated table sources are checked.'}
         for name, before in self.before.items():
             if name.startswith('report/tables/refresh_') and name.endswith('.tex'):
                 self.check('report-table-parity-' + Path(name).name, sha(self.checkout / name) == before)

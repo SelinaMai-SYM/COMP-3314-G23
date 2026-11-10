@@ -39,6 +39,7 @@ OPTIONAL_FILES={
     'confirmation_seed_namespace':'confirmation_seed_namespace.json',
     'matched_sc':'matched_sc_summary.csv', 'matched_sc_contrasts':'matched_sc_contrasts.csv',
     'reference_contrasts':'reference_contrasts.csv', 'family_distributions':'fixed_protocol_family_distributions.csv', 'resource_usage':'resource_usage.json',
+    'certified_search_status':'certified_search_status.csv',
 }
 
 
@@ -143,7 +144,7 @@ def _read_trials(path,metadata):
     return summaries,count
 
 
-def _reconstruct(trial_path,metadata,paper,reference_ids=None,candidate_pools=None):
+def _reconstruct(trial_path,metadata,paper,reference_ids=None,candidate_pools=None,certified_pools=None):
     summaries,count=_read_trials(trial_path,metadata)
     mean_rows=[];native_rows=[];fixed=[]
     for raw in metadata:
@@ -174,10 +175,12 @@ def _reconstruct(trial_path,metadata,paper,reference_ids=None,candidate_pools=No
             winners.append(winner)
             top.extend({**r,'rank':i+1} for i,r in enumerate(ordered[:10]))
     from experiments.subset_search.aggregate import fixed_distributions,family_distributions,reference_contrasts
+    from experiments.subset_search.certified_status import certified_search_status
     return {'joint_search_summary.csv':mean_rows,'native_best_summary.csv':native_rows,
             'fixed_protocol_summary.csv':fixed,'closest_matches.csv':winners,
             'top_matches.csv':top,'fixed_protocol_distribution.csv':fixed_distributions(fixed),
             'fixed_protocol_family_distributions.csv':family_distributions(fixed),
+            'certified_search_status.csv':certified_search_status(mean_rows,certified_pools if certified_pools is not None else candidate_pools),
             'reference_contrasts.csv':reference_contrasts(mean_rows,fixed,reference_ids or {},candidate_pools)},count
 
 
@@ -279,6 +282,8 @@ def _verify_derived(role,actual,path):
         key_fields=['benchmark','target_pool','reference_candidate','contrast'];numeric=['acc_mean','nmi_mean','D_max','D_mean','eligible_configurations_in_contrast']
     elif role=='matched_sc_contrasts':
         key_fields=['config_id','endpoint'];numeric=['ssc_acc','ssc_nmi','sc_acc','sc_nmi','delta_acc_pp','delta_nmi_pp']
+    elif role=='certified_search_status':
+        key_fields=['benchmark','pool','endpoint'];numeric=['historical_complete_configurations','historical_complete_canonical_configurations','historical_complete_unique_inputs','rounding_starts_per_complete_configuration','comparable_certified_search_configurations']
     else:return
     def normalize(value):return '' if value is None else str(value)
     def mapping(rows):
@@ -291,6 +296,10 @@ def _verify_derived(role,actual,path):
         old=right[key]
         if role=='reference_contrasts' and normalize(row.get('config_id'))!=normalize(old.get('config_id')):
             raise ValueError('reference contrast selected a different configuration')
+        if role=='certified_search_status':
+            for field in ['search_track','certified_closest_config_id','status','certificate_transfer_allowed','scope']:
+                if normalize(row.get(field))!=normalize(old.get(field)):
+                    raise ValueError('certified-search availability scope/status mismatch: '+field)
         for field in numeric:
             a=row.get(field);b=old.get(field)
             if a in [None,''] and b in [None,'']:continue
@@ -317,7 +326,8 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
     compatibility_path=ROOT/'configs/subset_search/compatibility.yaml'
     if compatibility_path.exists():_verify_compatibility(metadata,{c['candidate_id']:c for c in catalogue['candidates']},yaml.safe_load(compatibility_path.read_text()))
     candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
-    rebuilt,trial_count=_reconstruct(output/'trials.csv.gz',metadata,paper,protocol.get('reference_candidates',{}),candidate_pools)
+    certified_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in {c['benchmark'] for c in catalogue['candidates']}}
+    rebuilt,trial_count=_reconstruct(output/'trials.csv.gz',metadata,paper,protocol.get('reference_candidates',{}),candidate_pools,certified_pools)
     recomputed={r['config_id']:r for r in rebuilt['joint_search_summary.csv']}
     for row in original:
         for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd']:
@@ -327,7 +337,7 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
         from experiments.subset_search.aggregate import matched_sc_contrasts
         sc=_matched_sc_rows(output/'matched_sc_summary.csv');_verify_matched_sources(metadata,sc)
         rebuilt['matched_sc_contrasts.csv']=matched_sc_contrasts(rebuilt['closest_matches.csv'],sc)
-    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts']:
+    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts','certified_search_status']:
         if (output/OPTIONAL_FILES[role]).is_file():_verify_derived(role,rebuilt[OPTIONAL_FILES[role]],output/OPTIONAL_FILES[role])
     source_records={};source_status='SOURCE_OBJECT_REFERENCES_ONLY'
     if artifact_root is not None:
@@ -378,6 +388,7 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
         path=output/name
         if path.is_file():_validate_light_csv(role,path)
     output.relative_to(ROOT);manifest_path.relative_to(ROOT)
+    _write_csv(output/'certified_search_status.csv',rebuilt['certified_search_status.csv'])
     inventory=output/'configuration_inventory.csv';_write_csv(inventory,metadata)
     sources=output/'source_records.json.gz'
     payload=(json.dumps({'schema':'deduplicated-scientific-source-records-v1','status':source_status,'records':source_records},sort_keys=True,indent=2)+'\n').encode()
@@ -398,7 +409,7 @@ def freeze(output=Path('results/subset_search'),manifest_path=None,artifact_root
               'counts':{'trials':trial_count,'complete_configurations_including_aliases':len(metadata),
                         'canonical_configurations':len({r['canonical_config_id'] for r in metadata})},
               'expected_selections':_selection_view(selected),'source_identity_status':source_status,
-              'scope':'Current SSC subset mean/sample-SD and native-best endpoints; historical release remains separate',
+              'scope':'Current SSC subset historical-style mean/sample-SD and native-best endpoints plus separate certified-search availability; no certified closest winner inferred; historical release remains separate',
               'no_external_objects_required_for_rebuild':True,'no_git_history_required_for_rebuild':True}
     atomic_json(manifest_path,manifest)
     return manifest
@@ -452,7 +463,8 @@ def load(manifest_path):
     for role,path in paths.items():_validate_light_csv(role,path)
     paper=yaml.safe_load(paths['paper'].read_text());protocol=yaml.safe_load(paths['protocol'].read_text())
     candidate_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in protocol.get('reference_candidates',{})}
-    tables,count=_reconstruct(paths['trials'],metadata,paper,protocol.get('reference_candidates',{}),candidate_pools)
+    certified_pools={b:{c['pool'] for c in catalogue['candidates'] if c['benchmark']==b and c['pool']!='diagnostic'} for b in {c['benchmark'] for c in catalogue['candidates']}}
+    tables,count=_reconstruct(paths['trials'],metadata,paper,protocol.get('reference_candidates',{}),candidate_pools,certified_pools)
     if count!=manifest['counts']['trials'] or len(metadata)!=manifest['counts']['complete_configurations_including_aliases']:
         raise ValueError('release counts disagree')
     if len({r['canonical_config_id'] for r in metadata})!=manifest['counts']['canonical_configurations']:
@@ -462,7 +474,7 @@ def load(manifest_path):
         from experiments.subset_search.aggregate import matched_sc_contrasts
         sc=_matched_sc_rows(paths['matched_sc']);_verify_matched_sources(metadata,sc)
         tables['matched_sc_contrasts.csv']=matched_sc_contrasts(tables['closest_matches.csv'],sc)
-    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts']:
+    for role in ['family_distributions','reference_contrasts','matched_sc_contrasts','certified_search_status']:
         if role in paths:_verify_derived(role,tables[OPTIONAL_FILES[role]],paths[role])
     return root,manifest,paths,tables
 
@@ -488,11 +500,12 @@ def rebuild(manifest_path,output):
         from experiments.subset_search.markdown import benchmark_markdown
         paper=yaml.safe_load(paths['paper'].read_text())
         for benchmark in paper.get('datasets',sorted({r['benchmark'] for r in tables['joint_search_summary.csv']})):
-            (temporary/(benchmark+'.md')).write_text(benchmark_markdown(benchmark,tables['closest_matches.csv'],paper))
+            (temporary/(benchmark+'.md')).write_text(benchmark_markdown(benchmark,tables['closest_matches.csv'],paper,tables['certified_search_status.csv']))
         validation={'schema':SCHEMA,'ok':True,**manifest['counts'],'source_identity_status':manifest['source_identity_status'],
                     'compressed_trials_sha256':manifest['inputs']['trials']['sha256'],
                     'uncompressed_trials_sha256':manifest['inputs']['trials']['uncompressed_sha256'],
                     'selection_recomputed_and_matches':True,'external_data_read':False,'external_artifact_read':False,'git_history_read':False}
+        validation['certified_search_availability_recomputed']=True
         atomic_json(temporary/'validation.json',validation)
         atomic_json(temporary/'output_hashes.json',{p.name:digest(p) for p in sorted(temporary.iterdir()) if p.is_file()})
         if output.exists():

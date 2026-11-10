@@ -72,9 +72,12 @@ independent CVXPY/CLARABEL convex problems, compare active/full dictionary
 solutions, check truncation and row normalization, and check self exclusion and
 zero-affinity handling. They contain no real benchmark labels.
 
-**Current validation status: focused validation v1 found a small-support
-implementation defect; the repair awaits revalidation.** Tests must pass
-before any G4 benchmark fit. An inner KKT check does not certify the downstream
+**Current backend validation: focused validation v2 passed all five pinned
+backend checks after the small-support repair.** The original v1 failure remains
+preserved. The exact tested source, test file, JUnit and log hashes are recorded
+in [the backend validation record](../../results/submission_refresh/ensc_backend_validation.json).
+This verifies the backend implementation; G4 still requires the separate fixed
+G3 gate. An inner KKT check does not certify the downstream
 clustering result, and a top 50 truncated coefficient row is not claimed to be
 the untruncated elastic-net optimizer. No additional parameter grid is introduced.
 

@@ -30,7 +30,7 @@ def _metric(row, name, paper=False):
     return _number(mean) + ' +/- ' + _number(sd)
 
 
-def benchmark_markdown(benchmark, winners, paper):
+def benchmark_markdown(benchmark, winners, paper, certified_status=None):
     """Render all four pool/endpoint slots without data or artifact access."""
     selected = [row for row in winners if row['benchmark'] == benchmark]
     keys = {(row['pool'], row['endpoint']): row for row in selected}
@@ -67,5 +67,15 @@ def benchmark_markdown(benchmark, winners, paper):
         # Content values are escaped once by the table-cell writer.
         values = [row['pool'] + ' / ' + row['endpoint'], source, settings, solver, provenance]
         text.append('| ' + ' | '.join(_cell(value) if i == 0 else str(value) for i, value in enumerate(values)) + ' |')
-    text += ['', 'Complete configurations, every failed/timeout/unrun point, and matched-SC coverage remain in the authoritative CSV records. These tables are generated from those records; no score is hand copied. Certification audits remain separate from the locked finite-iteration search outputs.', '']
+    text += ['', 'Complete configurations, every failed/timeout/unrun point, and matched-SC coverage remain in the authoritative CSV records. These tables are generated from those records; no score is hand copied. Certification audits remain separate from the locked finite-iteration search outputs.', '',
+        '## Separate certified-search availability', '',
+        'The historical-style closest rows above are not certified optima. No comparable certified subset-search track was executed, so no certified closest winner is selected. The numerical USPS continuation is a separately saved output; its certificate cannot be transferred to an IRLS G, even where the recorded F/W inputs match.', '']
+    status_rows=[r for r in (certified_status or []) if r['benchmark']==benchmark]
+    if status_rows:
+        text += ['| Pool / endpoint | Historical complete configurations (including aliases / canonical) | Unique complete inputs | Certified closest | Status |', '|---|---:|---:|---|---|']
+        for row in status_rows:
+            values=[row['pool']+' / '+row['endpoint'],str(row['historical_complete_configurations'])+' / '+str(row['historical_complete_canonical_configurations']),row['historical_complete_unique_inputs'],row.get('certified_closest_config_id') or 'UNAVAILABLE',row['status']]
+            text.append('| '+' | '.join(map(_cell,values))+' |')
+    else:text.append('The certified-search availability view has not been supplied; no certified winner or coverage count is inferred.')
+    text += ['', 'Machine-readable availability is in `certified_search_status.csv`; same-input numerical-audit references remain in `../submission_refresh/usps_numerical_reference_input_identity.json` and the separate USPS audit/continuation tables.', '']
     return '\n'.join(text)

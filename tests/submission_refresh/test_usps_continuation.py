@@ -7,6 +7,7 @@ from scipy import sparse
 from experiments.submission_refresh.core import ArtifactStore,atomic_json,digest,ResourceLedger,ROOT
 from experiments.submission_refresh.usps_continuation import (
     warm_initialization,new_attempt_folder,assert_originals_unchanged,remaining_capacity,load_problem)
+from experiments.submission_refresh.usps_continuation import numerical_reference_input_identity,export_results
 from experiments.submission_refresh.usps_evaluate import pair_identity
 
 
@@ -78,3 +79,41 @@ def test_fixed_two_attempts_and_separate_rounding_queues():
     assert all(task['cpu_limit']<=1800 and task['max_iter']==300000 and task['phase']=='mandatory_usps' for task in fits)
     assert rounding['continuation_run_ids']==[task['run_id'] for task in fits]
     assert rounding['cpu_limit']<=900 and rounding['kind']=='usps_continuation_evaluate'
+
+
+def _input_metadata(root,*,different=False):
+    def ref(letter,kind):
+        sha=letter*64
+        return {'sha256':sha,'path':'objects/'+sha[:2]+'/'+sha+'.npz','kind':kind,'bytes':17}
+    audit={'objects':{'F':ref('a','compressed_array'),'W':ref('b','sparse'),
+                      'y':{'path':'must-never-be-read'}}}
+    subset={'objects':dict(audit['objects'])}
+    if different:subset['objects']['W']=ref('c','sparse')
+    atomic_json(root/'usps_audit/frozen_pair.json',audit)
+    atomic_json(root/'subset/USPS/representation.json',subset)
+    return audit,subset
+
+
+@pytest.mark.parametrize('different',[False,True])
+def test_reference_identity_compares_current_input_refs_only_without_loading_arrays(tmp_path,monkeypatch,different):
+    audit,subset=_input_metadata(tmp_path,different=different)
+    monkeypatch.setattr(np,'load',lambda *a,**k:pytest.fail('metadata view loaded arrays'))
+    result=numerical_reference_input_identity(tmp_path)
+    assert result['same_current_F_W_content_addresses'] is (not different)
+    assert result['sources']['numerical_audit']['objects']=={k:audit['objects'][k] for k in ['F','W']}
+    assert result['sources']['subset_search']['sha256']==digest(tmp_path/'subset/USPS/representation.json')
+    assert not result['arrays_loaded_for_this_view'] and not result['certificate_transferred_to_locked_IRLS_G']
+    assert not result['historical_missing_F_G_identity_established']
+    assert 'not certify a different historical-style IRLS G' in result['scope']
+
+
+def test_reference_identity_missing_is_unknown_and_malformed_refs_fail_before_export(tmp_path):
+    result=numerical_reference_input_identity(tmp_path)
+    assert result['same_current_F_W_content_addresses'] is None
+    assert result['status']=='UNAVAILABLE_CURRENT_INPUT_REFERENCE_COMPARISON'
+    audit,_=_input_metadata(tmp_path);audit['objects']['F']['sha256']='not-a-hash'
+    atomic_json(tmp_path/'usps_audit/frozen_pair.json',audit)
+    output=tmp_path/'exports';output.mkdir();(output/'sentinel').write_text('preserve')
+    with pytest.raises(ValueError,match='invalid USPS F/W content-addressed reference'):
+        export_results(tmp_path,output)
+    assert sorted(p.name for p in output.iterdir())==['sentinel']

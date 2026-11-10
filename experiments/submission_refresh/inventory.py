@@ -12,6 +12,26 @@ from .core import ROOT, atomic_json, digest
 SCHEMA = 'corrected-source-inventory-v2'
 INITIAL = 'results/subset_search/source_inventory.csv'
 AUDIT = 'results/submission_refresh/source_audit/source_version_audit.json'
+OUTPUT_NAMES = ('dataset_inventory.csv', 'dataset_inventory.v2.csv', 'dataset_inventory_manifest.json')
+
+
+def _validate_output_targets(output, evidence):
+    """Protect actual replacement leaves, allowing their evidence parent."""
+    for path in [output, *output.parents]:
+        if path.exists() and not path.is_dir():
+            raise ValueError('inventory output must be a directory, not a file')
+    protected = {path.resolve() for path in evidence}
+    resolved = []
+    for name in OUTPUT_NAMES:
+        target = output / name
+        actual = target.resolve()
+        if actual in protected or any(target.exists() and source.exists() and target.samefile(source) for source in evidence):
+            raise ValueError('inventory output target would replace source evidence: ' + name)
+        if target.exists() and not target.is_file():
+            raise ValueError('inventory output target must be a regular file: ' + name)
+        resolved.append(actual)
+    if len(set(resolved)) != len(resolved):
+        raise ValueError('inventory output targets resolve to the same file')
 
 
 def _inside(root, relative):
@@ -131,8 +151,8 @@ def build_inventory(output, root=ROOT):
     if any(digest(root / name) != sha for name, sha in hashes.items()):
         raise ValueError('source inventory input changed during validation')
     output = Path(output).resolve()
-    if any(path == output or output in path.parents for path in [root / name for name in hashes]):
-        raise ValueError('inventory output would replace source evidence')
+    evidence = [root / name for name in hashes]
+    _validate_output_targets(output, evidence)
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix='.inventory-', dir=output.parent))
     try:
@@ -150,7 +170,8 @@ def build_inventory(output, root=ROOT):
             'external_data_read': False, 'external_artifacts_read': False, 'git_history_read': False}
         atomic_json(temporary / 'dataset_inventory_manifest.json', manifest)
         output.mkdir(parents=True, exist_ok=True)
-        for path in temporary.iterdir(): os.replace(path, output / path.name)
+        _validate_output_targets(output, evidence)
+        for name in OUTPUT_NAMES: os.replace(temporary / name, output / name)
         return manifest
     finally:
         shutil.rmtree(temporary)

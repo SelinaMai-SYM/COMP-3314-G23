@@ -81,5 +81,11 @@
   "protocol_sha256": "70db74af3244a323c26f356e2d0c2fa129a4091562897f82909b199860aab989",
   "qualification": "aggregate._gate_input_identity and fixed gate calculation completed before build_inventory rejected its output directory. Only the verified G3 evidence is promoted; whole aggregation success is not claimed. The queued v2 independently reruns inventory tests and complete aggregation. Full362graphscopecontinues.",
   "qualifying_dataset": "ORL_att92",
-  "schema": "immutable-G3-promotion-evidence-v1"
+  "schema": "immutable-G3-promotion-evidence-v1",
+  "subsequent_full_aggregation_validation": {
+    "canonical_inventory_regressions_passed": 7,
+    "original_gate_file_unchanged": true,
+    "passed": true,
+    "run_id": "validation-G3-promotion-aggregation-v2"
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "current_runtime": "Use the frozen campaign queues and documented explicit data/artifact-root interfaces; source snapshots record how these particular allocations were frozen.",
+  "programs": [
+    {
+      "path": "docs/submission_refresh/planning_sources/freeze_graph_scope.py.txt",
+      "role": "Exact one-off cost-freeze source; historical execution evidence, not a generic runtime entrypoint",
+      "sha256": "92b3c951a59c5d0ce75b3b99bc3d88a806ef09d7adc6a6c0a21d6c26d6ba75bc"
+    },
+    {
+      "path": "docs/submission_refresh/planning_sources/freeze_ensc_scope.py.txt",
+      "role": "Exact one-off cost-freeze source; historical execution evidence, not a generic runtime entrypoint",
+      "sha256": "6ff44e6cd3835ea984f8584c6e65ea7102b54ffa8abf35c1555cb78c4d8b4d03"
+    }
+  ],
+  "schema": "cost-freeze-source-evidence-v1"
+}

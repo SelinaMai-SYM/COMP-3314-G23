@@ -1,0 +1,119 @@
+{
+  "allocation_rule": "600-second minimum per benchmark; remaining available normal allowance proportional to blind cost proxy; round down to60seconds; order by decreasing blind cost. No metric reads.",
+  "cost_proxy": "Twice coefficient-row extrapolation plus 30000-step solver cost scaled by structural edge bounds (15 original,5 angular,20 dense,6 possiblemovementfits),44*50*.05 rounding seconds and120 native/preparation seconds. This is a scheduling proxy,not a guaranteed runtime.",
+  "executed_cohort": "All44unchangedconfigurationsoneachofthefourfullbenchmarks,withprespecifiedwhole-jobCPUcaps;timeouts/unrunpointsremainexplicitandcannotformacompletecomparison",
+  "four_benchmark_macro_remains_NA_until_all_required_controls_qualified": true,
+  "frozen_before_formal_performance": true,
+  "gate_file": "configs/submission_refresh/G3_promotion_gate.json",
+  "gate_sha256": "f46d975e66ed267fb8bc07e5d1598cf5bf9001c5a0bb591558eb6279d8883825",
+  "intended_configurations": 176,
+  "intended_datasets": 4,
+  "ledger_snapshot": {
+    "active": {
+      "complete-15c0f56cdc9019f1d9f8": {
+        "phase": "subset",
+        "seconds": 5253.391388,
+        "timestamp": 1794311424.6994402
+      },
+      "graph-f6300558aa5ae9c5e89d": {
+        "phase": "G3",
+        "seconds": 1920,
+        "timestamp": 1794311908.1417012
+      }
+    },
+    "active_reserved_seconds": 7173.391388,
+    "administrative_CPU_buffer": 300.0,
+    "charged_seconds": 38771.706228,
+    "final_reserve_seconds": 7200,
+    "normal_available_after_provision": 63769,
+    "pending_completion_ids": [
+      "complete-4453b87f4172ca84022e"
+    ],
+    "protected_independent_completion_seconds": 1923.32788,
+    "protected_remaining_graph_estimate": 10461.723891049722
+  },
+  "profiles": [
+    {
+      "K": 40,
+      "PDHG_30000_CPU_extrapolation": 9.608441000000001,
+      "angular_edge_upper_ratio": 1.6433853738701725,
+      "coefficient_CPU_extrapolation": 80.6802666666667,
+      "committed_profile_copy": "configs/submission_refresh/ensc_cost_profiles/ensc-profile-ORL_att92-v1.json",
+      "committed_profile_sha256": "dcb3d40fea1df3de117786beee1002e6eb95e3e48c7a2459b4388640378f3897",
+      "conservative_full_design_CPU_proxy": 7625.290302662833,
+      "construction_fingerprint": "379bcac46ded389e333fc7a0490c1cceee8bab79c5cd327286118406012f3283",
+      "dataset": "ORL_att92",
+      "dense_edge_upper_ratio": 16.76253081347576,
+      "evaluation": "NOT_COMPUTED",
+      "frozen_job_CPU_limit": 4020,
+      "input_record": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/graph_inputs/ORL_att92/26061d5eb6020b5a8aee794bf39b8647bf536b620a7d1682d4da7ada6eb522e7/representation.json",
+      "n": 400,
+      "original_undirected_edges": 1217.0,
+      "profile_path": "task_status/ensc-profile-ORL_att92-v1.json",
+      "profile_sha256": "dcb3d40fea1df3de117786beee1002e6eb95e3e48c7a2459b4388640378f3897"
+    },
+    {
+      "K": 10,
+      "PDHG_30000_CPU_extrapolation": 2.576938582677165,
+      "angular_edge_upper_ratio": 1.6259541984732824,
+      "coefficient_CPU_extrapolation": 24.848509000000035,
+      "committed_profile_copy": "configs/submission_refresh/ensc_cost_profiles/ensc-profile-JAFFE-v1.json",
+      "committed_profile_sha256": "f19e6aa92ed76c75d84b02461c89d5a110a084e91ce0b5a269a5987273877092",
+      "conservative_full_design_CPU_proxy": 2369.3417954959423,
+      "construction_fingerprint": "379bcac46ded389e333fc7a0490c1cceee8bab79c5cd327286118406012f3283",
+      "dataset": "JAFFE",
+      "dense_edge_upper_ratio": 16.58473282442748,
+      "evaluation": "NOT_COMPUTED",
+      "frozen_job_CPU_limit": 1620,
+      "input_record": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/ensc_inputs/JAFFE/770a127e4ef978e88e695899e1462c0eef6fef388caf209ce3054e5254324a00/representation.json",
+      "n": 213,
+      "original_undirected_edges": 655.0,
+      "profile_path": "task_status/ensc-profile-JAFFE-v1.json",
+      "profile_sha256": "f19e6aa92ed76c75d84b02461c89d5a110a084e91ce0b5a269a5987273877092"
+    },
+    {
+      "K": 38,
+      "PDHG_30000_CPU_extrapolation": 74.78712074688796,
+      "angular_edge_upper_ratio": 1.516903355536006,
+      "coefficient_CPU_extrapolation": 770.3669453333334,
+      "committed_profile_copy": "configs/submission_refresh/ensc_cost_profiles/ensc-profile-YaleB_cropped2414-v1.json",
+      "committed_profile_sha256": "657a60490f7e3980d67291e64b26853403f5d012f98cab4e1c25333f78bdd871",
+      "conservative_full_design_CPU_proxy": 52561.73374618125,
+      "construction_fingerprint": "379bcac46ded389e333fc7a0490c1cceee8bab79c5cd327286118406012f3283",
+      "dataset": "YaleB_cropped2414",
+      "dense_edge_upper_ratio": 15.472414226467261,
+      "evaluation": "NOT_COMPUTED",
+      "frozen_job_CPU_limit": 24420,
+      "input_record": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/graph_inputs/YaleB_cropped2414/5d150a617d9e9b424666eb43aa9700d0c6caba7da08079a0136cc0890bfd5e4e/representation.json",
+      "n": 2414,
+      "original_undirected_edges": 7957.0,
+      "profile_path": "task_status/ensc-profile-YaleB_cropped2414-v1.json",
+      "profile_sha256": "657a60490f7e3980d67291e64b26853403f5d012f98cab4e1c25333f78bdd871"
+    },
+    {
+      "K": 10,
+      "PDHG_30000_CPU_extrapolation": 101.21514606741572,
+      "angular_edge_upper_ratio": 1.527417288169005,
+      "coefficient_CPU_extrapolation": 1597.5885586666761,
+      "committed_profile_copy": "configs/submission_refresh/ensc_cost_profiles/ensc-profile-USPS-v1.json",
+      "committed_profile_sha256": "a0b169443ddffab0ec8ca03a8be20bd31f69746efa7a2866d788c9ff9a80f98c",
+      "conservative_full_design_CPU_proxy": 72528.07857403613,
+      "construction_fingerprint": "379bcac46ded389e333fc7a0490c1cceee8bab79c5cd327286118406012f3283",
+      "dataset": "USPS",
+      "dense_edge_upper_ratio": 15.579656339323849,
+      "evaluation": "NOT_COMPUTED",
+      "frozen_job_CPU_limit": 33540,
+      "input_record": "/Users/grantwright/Desktop/COMP 3314/COMP 3314 GP/independent-data/scientific-artifacts/refresh-20261110/ensc_inputs/USPS/93dd4344230d02fc1a7f1954898fd67cad798347c70f00a3505762c5946449ab/representation.json",
+      "n": 9298,
+      "original_undirected_edges": 30437.0,
+      "profile_path": "task_status/ensc-profile-USPS-v1.json",
+      "profile_sha256": "a0b169443ddffab0ec8ca03a8be20bd31f69746efa7a2866d788c9ff9a80f98c"
+    }
+  ],
+  "profiles_and_caps_are_not_performance_results": true,
+  "queue_path": "configs/submission_refresh/ensc_formal_queue.json",
+  "queue_sha256": "0c4df97f0349c7614e9252fb48c1c1cb2ded88777c8db3c68380ce46dea7701b",
+  "schema": "ensc-cost-scope-freeze-v1",
+  "score_based_scope_selection": false,
+  "total_job_caps": 63600
+}

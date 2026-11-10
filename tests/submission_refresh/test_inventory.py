@@ -4,7 +4,7 @@ import json
 import pytest
 
 from experiments.submission_refresh.core import digest
-from experiments.submission_refresh.inventory import AUDIT, INITIAL, build_inventory
+from experiments.submission_refresh.inventory import AUDIT, INITIAL, OUTPUT_NAMES, build_inventory
 
 
 @pytest.fixture
@@ -62,3 +62,47 @@ def test_corrupt_duplicate_evidence_fails_before_replacing_output(audited_invent
     with pytest.raises(ValueError, match='duplicate map missing/hash mismatch'):
         build_inventory(out, root)
     assert previous.read_text() == 'preserved prior inventory\n'
+
+
+def test_canonical_output_parent_preserves_all_nested_source_audit_inputs(audited_inventory):
+    root, initial, duplicate = audited_inventory
+    evidence = [initial, root / AUDIT, duplicate]
+    before = {path: digest(path) for path in evidence}
+    output = root / 'results/submission_refresh'
+    manifest = build_inventory(output, root)
+    assert all((output / name).is_file() for name in OUTPUT_NAMES)
+    assert {path: digest(path) for path in evidence} == before
+    assert (output / 'source_audit/source_duplicate_maps').is_dir()
+    assert manifest['input_hashes'] == {str(path.relative_to(root)): sha for path, sha in before.items()}
+
+
+@pytest.mark.parametrize('target_name', OUTPUT_NAMES)
+def test_any_output_symlink_to_source_is_rejected_before_other_replacements(audited_inventory, target_name):
+    root, initial, duplicate = audited_inventory
+    output = root / 'results/submission_refresh'
+    evidence = [initial, root / AUDIT, duplicate]
+    before = {path: digest(path) for path in evidence}
+    originals = {}
+    for name in OUTPUT_NAMES:
+        target = output / name
+        if name == target_name:
+            target.symlink_to(root / AUDIT)
+        else:
+            originals[name] = ('prior output: ' + name + '\n').encode()
+            target.write_bytes(originals[name])
+    with pytest.raises(ValueError, match='target would replace source evidence'):
+        build_inventory(output, root)
+    assert (output / target_name).is_symlink()
+    assert {path: digest(path) for path in evidence} == before
+    assert all((output / name).read_bytes() == raw for name, raw in originals.items())
+
+
+def test_file_as_output_directory_is_rejected_without_replacement(audited_inventory, tmp_path):
+    root, initial, duplicate = audited_inventory
+    output = tmp_path / 'file instead of directory'
+    output.write_text('preserve existing file\n')
+    before = {path: digest(path) for path in [initial, root / AUDIT, duplicate]}
+    with pytest.raises(ValueError, match='output must be a directory'):
+        build_inventory(output, root)
+    assert output.read_text() == 'preserve existing file\n'
+    assert {path: digest(path) for path in before} == before

@@ -1,0 +1,33 @@
+from pathlib import Path
+import collections,hashlib,json,math,signal,time
+from experiments.submission_refresh.core import ROOT,ArtifactStore,ResourceLedger,atomic_json,digest,install_cpu_limit
+from experiments.v3_reproduction.provenance import fingerprint_matrix
+r=ROOT;a=r.parent/'independent-data/scientific-artifacts/refresh-20261110';ledger=ResourceLedger(a);rid='graph-cost-scope-freeze-v1'
+if not ledger.reserve(rid,30,'aggregation'):raise RuntimeError('No shared metadata slot')
+status='FAILED'
+try:
+ install_cpu_limit(max(1,25-time.process_time()))
+ assert not list((a/'graph_records').glob('*/*/*.json')),'Cannot freeze scope after graph metrics'
+ target=r/'configs/submission_refresh/graph_cost_freeze.json';assert not target.exists()
+ queue=r/'configs/submission_refresh/graph_queue.json';tasks=json.loads(queue.read_text())['tasks'];assert len(tasks)==362 and len({t['run_id'] for t in tasks})==362
+ store=ArtifactStore(a);costs=[];copies=[]
+ for dataset,cid in [('ORL_att92','ORL_att92'),('YaleB_cropped2414','YaleB_cropped2414_Y0')]:
+  p=a/'task_status'/('graph-profile-'+dataset+'.json');v=json.loads(p.read_text());assert v['status']=='PROFILE_ONLY_INELIGIBLE' and v['evaluation']=='NOT_COMPUTED'
+  old=a/'subset'/cid/'profile.json';b=json.loads(old.read_text());assert b['status']=='PROFILE_ONLY_INELIGIBLE'
+  meta=json.loads(Path(v['input_record']).read_text());X,y=[store.get(meta['objects'][n]) for n in ['X','y']]
+  assert fingerprint_matrix(X,y)==b['candidate']['fingerprint'],'Blind rounding profile does not match fixed graph data'
+  rounding=float(b['rounding_cpu_per_seed']);n=sum(t['dataset']==dataset for t in tasks);assert n==181
+  estimate=2*(n*float(v['cpu_seconds'])+n*50*4*rounding+120)
+  costs.append({'dataset':dataset,'tasks':n,'profile_cpu_seconds':v['cpu_seconds'],'fit_cpu_seconds':v['fit_cpu_seconds'],'rounding_cpu_per_seed_random':rounding,'estimated_cpu_seconds':estimate,'input_fingerprint':b['candidate']['fingerprint'],'profile_record':str(p.relative_to(a)),'profile_sha256':digest(p),'rounding_profile_record':str(old.relative_to(a)),'rounding_profile_sha256':digest(old),'evaluation':'NOT_COMPUTED','source_fingerprint':v['source']['implementation_hash']})
+  for src,label in [(p,dataset+'-graph-profile.json'),(old,dataset+'-rounding-profile.json')]:copies.append((src,r/'configs/submission_refresh/graph_cost_profiles'/label))
+ state=ledger.state();used=sum(e['charged_cpu_seconds'] for e in state['entries']);reserved=sum(v['seconds'] for v in state['active'].values());cohort=json.loads((r/'configs/subset_search/executable_cohort.json').read_text());extra=0.;provision=[]
+ for p in (a/'task_status').glob('subset-*.json'):
+  v=json.loads(p.read_text())
+  if v.get('status')!='FAILED' or not v.get('candidate_id'):continue
+  cid=v['candidate_id'];cap=float(cohort.get('per_candidate_limits',{}).get(cid,cohort['cpu_limit_per_candidate']));charged=max([float(v.get('cpu_seconds',0))]+[float(e['charged_cpu_seconds']) for e in state['entries'] if e['run_id']==p.stem]);remaining=max(0,cap-charged);extra+=remaining;provision.append({'candidate_id':cid,'original_cap':cap,'charged_original_cpu_seconds':charged,'protected_remaining_original_cpu_seconds':remaining})
+ available=state['limit_seconds']-state['reserve_seconds']-used-reserved-extra;estimated=sum(c['estimated_cpu_seconds'] for c in costs);assert estimated<=available,(estimated,available)
+ result={'schema':'graph-cost-scope-freeze-v1','frozen_before_formal_graph_metrics':True,'score_based_scope_selection':False,'full_intended_design_selected':True,'selected_tasks':362,'selected_run_ids':[t['run_id'] for t in tasks],'queue_path':str(queue.relative_to(r)),'queue_sha256':digest(queue),'cost_formula':'2 * (181 * blind graph profile total CPU + 181 * 50 * 4 * blind RANDOM rounding CPU per seed + 120 seconds casebook allowance), per dataset','cost_qualification':'Scheduling estimate with fixed safety multipliers, not a worst-case guarantee. Actual shared reservations and task caps remain binding.','datasets':costs,'estimated_total_cpu_seconds':estimated,'shared_ledger_snapshot':{'limit_seconds':state['limit_seconds'],'final_reserve_seconds':state['reserve_seconds'],'charged_cpu_seconds':used,'active_reserved_cpu_seconds':reserved,'active':state['active'],'protected_independent_missing_points':provision,'remaining_normal_cpu_after_provision':available},'profile_evidence':[]}
+ for src,dst in copies:dst.parent.mkdir(parents=True,exist_ok=True);dst.write_bytes(src.read_bytes());result['profile_evidence'].append({'path':str(dst.relative_to(r)),'sha256':digest(dst)})
+ atomic_json(target,result);atomic_json(a/'queues/graph_cost_freeze.json',result);status='COMPLETED';print(json.dumps({'selected_tasks':362,'estimated_cpu_hours':estimated/3600,'available_after_subset_provision_hours':available/3600}))
+finally:
+ signal.setitimer(signal.ITIMER_PROF,0);ledger.finish(rid,time.process_time(),status)

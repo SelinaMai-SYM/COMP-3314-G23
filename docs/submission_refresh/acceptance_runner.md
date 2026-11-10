@@ -1,5 +1,7 @@
 # Exact-commit isolated acceptance
 
+Report prerequisites are `make`, `bash`, `mktemp`, `pdflatex`, `bibtex`, `pdfinfo`, `pdftotext`, `pdftoppm` and `pdftocairo` on the controlled PATH. The shell, temporary-directory and Poppler conversion tools are also needed when the two-graph figure is rebuilt.
+
 `scripts/submission_refresh/acceptance.py` is prepared for the final validation slot. It has not yet been run. Use the existing shared validation scheduler so its CPU is charged to the campaign and it occupies one of the two worker slots. Both the scheduler task and the runner are capped at 900 CPU seconds and 1800 wall seconds; a cap or command failure is a failed/incomplete check, never a pass. No publication action is implemented.
 
 The runner requires explicit `--repository`, `--branch`, `--expected-commit`, `--data-root` and `--output` arguments. `--expected-commit` is a full commit SHA, not a branch name. It verifies the actual cloned HEAD before installing anything and verifies that the committed acceptance script matches the script being executed. The output must be new or empty and external to the source and data directories; failed evidence is retained. The source commit must therefore include the prepared runner before acceptance starts. `--real-candidate-replay` explicitly enables the additional real-parent candidate integration check; leave it unset if those private parents are unavailable, and retain the resulting NOT_REQUESTED status.

@@ -510,7 +510,7 @@ raise SystemExit(pytest.main(["-q","tests/submission_refresh/test_candidates.py"
 
     def report(self):
         tools = {name: shutil.which(name, path=self.env['PATH']) for name in
-            ['make', 'pdflatex', 'bibtex', 'pdfinfo', 'pdftotext', 'pdftoppm']}
+            ['make', 'bash', 'mktemp', 'pdflatex', 'bibtex', 'pdfinfo', 'pdftotext', 'pdftoppm', 'pdftocairo']}
         self.check('report-tools-present', all(tools.values()), tools=tools)
         report = self.checkout / 'report/Group_23.pdf'
         self.check('committed-report-present', report.is_file()

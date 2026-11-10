@@ -28,11 +28,15 @@ def _gate_input_identity(store,dataset,records):
 
 
 def _register_scientific_tree(store,artifacts):
-    """Register graph/EnSC inputs, pools, continuations and byte-exact raw files."""
+    """Register graph/EnSC, continuation and confirmation recovery evidence.
+
+    Confirmation JSON includes the frozen seed namespace and nested prediction
+    object references; raw companion files retain their exact bytes and hashes.
+    """
     extra=[]
     for name in ['graph_inputs','graph_solutions','graph_jobs','graph_records',
                  'ensc_inputs','ensc_coefficients','ensc_jobs',
-                 'usps_continuations','usps_continuation_evaluation']:
+                 'usps_continuations','usps_continuation_evaluation','confirmation']:
         for path in sorted((store.root/name).rglob('*')):
             if not path.is_file() or path.name.startswith('.'):continue
             relative=str(path.relative_to(store.root))

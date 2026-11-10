@@ -533,13 +533,18 @@ def derive_ensc_metadata(evidence):
         if row.get('status')=='COMPLETED':
             row['trials']=sorted(row['trials'],key=lambda trial:int(trial['seed']))
             row['summary']=summarize(row['trials'])
-        if not isinstance(context,dict) or context.get('schema')!='G4-resume-context-v1':raise ValueError('G4 aggregation requires verified per-configuration resume contexts')
+        if not isinstance(context,dict) or context.get('schema') not in ['G4-resume-context-v1','G4-resume-context-v2']:
+            raise ValueError('G4 aggregation requires verified per-configuration resume contexts')
+        if context['schema']=='G4-resume-context-v2' and (not isinstance(context.get('input_adapter_fingerprint'),str)
+            or not context['input_adapter_fingerprint'] or not context.get('construction_source_fingerprint')):
+            raise ValueError('G4 v2 resume context requires input-adapter and construction identities')
         definition=next((item for item in intended_configurations(dataset) if item['config_id']==key),None)
         if definition is None or row.get('dataset')!=dataset or context.get('definition')!=definition:
             raise ValueError('G4 record is outside its fixed benchmark/configuration context')
         inputs=context.get('input_objects',{})
         if not all(isinstance(inputs.get(name),dict) and inputs[name].get('sha256') for name in ['X','y','F0','U']):raise ValueError('G4 common exact input object identities are unavailable')
         common={name:context.get(name) for name in ['input_objects','scientific_source_fingerprint','environment','rounding']}
+        common.update(resume_context_schema=context['schema'],input_adapter_fingerprint=context.get('input_adapter_fingerprint'))
         if not common['scientific_source_fingerprint'] or not isinstance(common['environment'],dict) or not isinstance(common['rounding'],dict):
             raise ValueError('G4 common scientific source/environment/rounding context is unavailable')
         track=provenance[dataset]
@@ -547,10 +552,19 @@ def derive_ensc_metadata(evidence):
             raise ValueError('G4 benchmark records mix exact inputs or scientific source contexts across job folders')
         track['common_context']=common
         if context.get('construction_source_fingerprint') is not None:
-            construction={name:context.get(name) for name in ['construction_source_fingerprint','backend_source_sha256']}
+            construction={'construction_source_fingerprint':context['construction_source_fingerprint']}
             if 'construction_context'in track and track['construction_context']!=construction:
                 raise ValueError('G4 benchmark records mix scientific EnSC construction sources across job folders')
             track['construction_context']=construction
+        backend=context.get('backend_source_sha256')
+        if definition['graph'].startswith('S_tau'):
+            if not isinstance(backend,str) or not backend or not context.get('construction_source_fingerprint'):
+                raise ValueError('G4 EnSC graph requires a recorded backend/construction identity')
+            if 'ensc_backend_source_sha256'in track and track['ensc_backend_source_sha256']!=backend:
+                raise ValueError('G4 benchmark records mix EnSC backend sources across graph families')
+            track['ensc_backend_source_sha256']=backend
+        elif backend is not None:
+            raise ValueError('G4 non-EnSC control must not claim an EnSC backend identity')
         graph_context={name:context.get(name) for name in ['graph','graph_shape','graph_nnz','graph_metadata_fingerprint','construction_source_fingerprint','backend_source_sha256']}
         graphs=track.setdefault('graphs',{})
         if definition['graph'] in graphs and graphs[definition['graph']]!=graph_context:

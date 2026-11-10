@@ -104,6 +104,40 @@ def aux_label_page(text, label):
     return int(page.strip())
 
 
+def report_main_boundaries(source,auxiliary):
+    """Count flushed main floats before references, using compiled markers."""
+    # Ignore TeX comments, preserving escaped percent signs in ordinary text.
+    lines=[]
+    for line in source.splitlines():
+        for index,char in enumerate(line):
+            if char!='%':continue
+            before=index-1
+            while before>=0 and line[before]=='\\':before-=1
+            if (index-before-1)%2==0:
+                line=line[:index];break
+        lines.append(line)
+    source='\n'.join(lines)
+    def marker(label):
+        matches=list(re.finditer(r'\\label\s*\{\s*'+re.escape(label)+r'\s*\}',source))
+        if len(matches)!=1:raise ValueError('expected exactly one report source marker: '+label)
+        return matches[0]
+    body=marker('main_end');references=marker('references_start')
+    bibliography=re.search(r'\\bibliography\s*\{',source)
+    appendix=re.search(r'\\appendix\b',source)
+    clearpages=list(re.finditer(r'\\clearpage\b',source))
+    if (bibliography is None or appendix is None or not body.start()<references.start()<bibliography.start()<appendix.start()
+        or not any(body.end()<=clear.start()<references.start() for clear in clearpages)):
+        raise ValueError('report source must order main_end, main clearpage, references_start, bibliography, appendix')
+    body_page=aux_label_page(auxiliary,'main_end')
+    references_page=aux_label_page(auxiliary,'references_start')
+    main_pages=references_page-1
+    if not 0<body_page<=main_pages:
+        raise ValueError('compiled main_end must precede references_start and fit inside the flushed main pages')
+    return {'main_pages':main_pages,'body_end_page':body_page,'references_start_page':references_page,
+        'within_four_page_limit':main_pages<=4,
+        'main_page_source':'compiled references_start page minus one; includes flushed main floats, excludes references'}
+
+
 def junit_results(path):
     """Record actual testcase outcomes; do not infer counts from console prose."""
     tree = ET.parse(path)
@@ -508,19 +542,16 @@ raise SystemExit(pytest.main(["-q","tests/submission_refresh/test_candidates.py"
         heading = normalize(appendix.group(1))
         boundaries = [i for i, page in enumerate(pages) if heading in normalize(page)]
         self.check('appendix-boundary-found-once', len(boundaries) == 1, pages=[i + 1 for i in boundaries])
-        main_markers = list(re.finditer(r'\\label\s*\{\s*main_end\s*\}', main))
-        bibliography = re.search(r'\\bibliography\s*\{', main)
-        self.check('main-end-marker-before-references', len(main_markers) == 1
-            and bibliography is not None and main_markers[0].start() < bibliography.start() < appendix.start())
         aux = self.checkout / 'report/main.aux'
-        main_pages = aux_label_page(aux.read_text(), 'main_end')
+        main_boundary = report_main_boundaries(main,aux.read_text())
+        main_pages = main_boundary['main_pages']
+        self.check('main-and-references-source-order',True,**main_boundary)
         appendix_page = boundaries[0] + 1
         page_count = re.search(r'^Pages:\s+(\d+)\s*$', info, re.M)
         self.check('four-page-main-limit', page_count is not None and int(page_count.group(1)) == len(pages)
-            and 0 < main_pages <= 4, main_pages=main_pages, total_pages=len(pages),
-            main_page_source='compiled main.aux newlabel{main_end} page field', references_excluded=True,
+            and main_boundary['within_four_page_limit'], **main_boundary,total_pages=len(pages),references_excluded=True,
             aux_sha256=sha(aux))
-        self.check('appendix-follows-main', main_pages < appendix_page <= len(pages),
+        self.check('appendix-follows-main', main_boundary['references_start_page']<=appendix_page<=len(pages),
             appendix_first_page=appendix_page, main_end_page=main_pages,
             intervening_preappendix_pages=appendix_page - main_pages - 1)
         self.check('preprint-template-retained', r'\usepackage[preprint]{neurips_2026}' in main)
@@ -542,7 +573,8 @@ raise SystemExit(pytest.main(["-q","tests/submission_refresh/test_candidates.py"
         self.result['report'] = {'compiled_pdf_sha256': sha(report),
             'committed_pdf_sha256': self.before.get('report/Group_23.pdf'),
             'main_pages': main_pages, 'total_pages': len(pages),
-            'main_page_source': 'compiled main_end label; references excluded',
+            'main_page_source': main_boundary['main_page_source'],
+            'body_end_page':main_boundary['body_end_page'],'references_start_page':main_boundary['references_start_page'],
             'appendix_first_page': appendix_page, 'compiled_aux_sha256': sha(aux),
             'committed_text_sha256': sha(committed_text_path),
             'committed_and_regenerated_text_match': True,

@@ -124,7 +124,9 @@ def export(artifact_root,output):
     output=Path(output).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     descriptor,name=tempfile.mkstemp(prefix='.scientific-export-',suffix='.tar.gz',dir=output.parent);os.close(descriptor);tmp=Path(name)
     try:
-        with tarfile.open(tmp,'w:gz') as stream:
+        # Array objects already use compressed NPZ. A fast outer gzip pass
+        # keeps archive packaging within the shared finalization allowance.
+        with tarfile.open(tmp,'w:gz',compresslevel=1) as stream:
             for ref in objects.values():stream.add(store.root/ref['path'],arcname=ref['path'])
             for ref in extra:stream.add(store.root/ref['relative_path'],arcname=ref['relative_path'])
             stream.add(store.root/manifest_ref['path'],arcname='EXPORT_MANIFEST.json')

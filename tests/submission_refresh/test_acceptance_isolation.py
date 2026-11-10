@@ -46,3 +46,37 @@ def test_process_monitor_uses_explicit_absolute_binary_and_clean_environment(mon
     assert observed['argv'][0]=='/absolute/system/ps'
     assert observed['kwargs']['env'] is environment
     assert children==[101] and cpu==.02 and rss==3000*1024
+
+
+REPORT_SOURCE=r'''
+\section{Conclusion}
+Body ends here. \label{main_end}
+\clearpage
+\label{references_start}
+\bibliographystyle{plainnat}\bibliography{references}
+\clearpage\appendix
+\section{Evidence}
+'''
+
+
+@pytest.mark.parametrize('body_page,references_page,expected_main,passes',[
+    (4,6,5,False), # A queued main float occupies page five.
+    (3,5,4,True),  # A queued main float occupies page four.
+])
+def test_main_float_spill_is_counted_before_references(acceptance_module,body_page,references_page,expected_main,passes):
+    auxiliary=(r'\newlabel{main_end}{{5}{'+str(body_page)+r'}{Conclusion {nested title}}{section.5}{}}'+'\n'
+        +r'\newlabel{references_start}{{5}{'+str(references_page)+r'}{Conclusion}{section.5}{}}')
+    boundary=acceptance_module.report_main_boundaries(REPORT_SOURCE,auxiliary)
+    assert boundary['body_end_page']==body_page
+    assert boundary['main_pages']==expected_main
+    assert boundary['within_four_page_limit'] is passes
+
+
+@pytest.mark.parametrize('source',[
+    REPORT_SOURCE.replace('\\clearpage\n\\label{references_start}','\\label{references_start}\n\\clearpage',1),
+    REPORT_SOURCE.replace('\\label{references_start}','% \\label{references_start}',1),
+    REPORT_SOURCE.replace('\\label{main_end}','\\label{main_end}\\label{main_end}',1),
+])
+def test_main_reference_markers_require_valid_source_order(acceptance_module,source):
+    auxiliary=r'\newlabel{main_end}{{5}{3}}'+'\n'+r'\newlabel{references_start}{{5}{5}}'
+    with pytest.raises(ValueError):acceptance_module.report_main_boundaries(source,auxiliary)

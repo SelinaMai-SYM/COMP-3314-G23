@@ -3,8 +3,12 @@ import csv
 import gzip
 import hashlib
 import importlib.util
+import json
+import os
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import pytest
 from experiments.submission_refresh import reporting
 
@@ -117,3 +121,29 @@ def test_large_metadata_cells_work_in_both_readers_without_changing_global_limit
     assert reporting.read_csv(committed)[0]['metadata']==payload
     assert acceptance.compare_csv(committed,rebuilt)['committed_sha256']==digest(archive)
     assert csv.field_size_limit()==previous
+
+
+def test_direct_report_script_uses_own_sibling_helper_under_isolated_python(tmp_path):
+    checkout=tmp_path/'uninstalled checkout with spaces';package=checkout/'experiments/submission_refresh'
+    package.mkdir(parents=True);report=checkout/'report';report.mkdir()
+    project=Path(__file__).resolve().parents[2]
+    for filename in ['reporting.py','csv_transport.py']:
+        shutil.copyfile(project/'experiments/submission_refresh'/filename,package/filename)
+    # Deliberately omit package __init__ files and an editable installation.
+    # No joint-search input is supplied, so figure() exits before scientific or
+    # plotting imports. A plain global/cwd fallback must never be consulted.
+    (report/'csv_transport.py').write_text("raise AssertionError('wrong helper imported')\n")
+    historical={'benchmark':'ORL','method':'ssc','endpoint':'mean_sample_sd_50',
+        'acc_mean':42.,'acc_sd':1.2,'nmi_mean':81.,'nmi_sd':2.3,
+        'solver_status_current_audit':'ITERATE_CONVERGED_UNCERTIFIED'}
+    logical=write_csv(checkout/'results/submission_refresh/joint_metric_selection.csv',[historical])
+    archive=packed(logical)
+    environment={key:value for key,value in os.environ.items() if key not in ['PYTHONPATH','PYTHONHOME','COMP3314_DATA_ROOT','COMP3314_ARTIFACT_ROOT']}
+    completed=subprocess.run([sys.executable,'-I',str(package/'reporting.py'),'--root','..','--date','2026-11-10'],
+        cwd=report,env=environment,text=True,capture_output=True,timeout=30)
+    assert completed.returncode==0,completed.stdout+'\n'+completed.stderr
+    assert r'42.00 $\pm$ 1.20' in (report/'tables/refresh_main.tex').read_text()
+    manifest=json.loads((checkout/'results/submission_refresh/report_input_manifest.json').read_text())
+    assert manifest['inputs']['historical']['path']=='results/submission_refresh/joint_metric_selection.csv.gz'
+    assert manifest['inputs']['historical']['sha256']==digest(archive)
+    assert not (report/'figures').exists()

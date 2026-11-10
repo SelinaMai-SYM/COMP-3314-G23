@@ -7,7 +7,27 @@ from __future__ import annotations
 import argparse,csv,hashlib,json,math
 from collections import Counter,defaultdict
 from pathlib import Path
-from .csv_transport import resolve_csv,open_csv
+if __package__:
+    from .csv_transport import resolve_csv,open_csv
+else:
+    # Makefile invokes this file directly, including in an uninstalled checkout.
+    # Resolve the sibling explicitly: never import an old global project copy or
+    # add a checkout to sys.path/PYTHONPATH to make the script work.
+    import importlib.util
+    import sys
+    _transport_path=Path(__file__).resolve().with_name('csv_transport.py')
+    _transport_name='comp3314_report_csv_transport_'+hashlib.sha256(str(_transport_path).encode()).hexdigest()[:16]
+    _transport_spec=importlib.util.spec_from_file_location(_transport_name,_transport_path)
+    if _transport_spec is None or _transport_spec.loader is None:
+        raise ImportError('Cannot load own-checkout CSV transport: '+str(_transport_path))
+    _transport_module=importlib.util.module_from_spec(_transport_spec)
+    sys.modules[_transport_name]=_transport_module
+    try:_transport_spec.loader.exec_module(_transport_module)
+    except BaseException:
+        sys.modules.pop(_transport_name,None)
+        raise
+    resolve_csv=_transport_module.resolve_csv
+    open_csv=_transport_module.open_csv
 
 BENCHMARKS=['AR','JAFFE','ORL','UMIST','BinAlpha','MSRA50','YaleB','USPS']
 ENDPOINTS=['mean_sample_sd_50','native_best_of_50']

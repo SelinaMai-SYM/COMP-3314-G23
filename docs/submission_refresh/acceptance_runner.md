@@ -61,6 +61,15 @@ unavailable. Prepared metadata fixtures exercise these rules without any model
 fit, plotting or scientific-object access; final validation status is recorded
 by the shared scheduler rather than inferred from their existence.
 
+The Makefile also invokes `reporting.py` directly from `report/`, without
+requiring an editable project installation. In this mode the script loads only
+its own sibling `csv_transport.py` by explicit file path; it does not modify
+`sys.path` or use a global project-package fallback. A separate prepared fixture
+copies just those two files into a checkout with spaces and invokes the direct
+script with isolated Python (`-I`) and a tiny gzip metadata input. Its no-search
+fixture needs no scientific or plotting imports. This complements package-import
+tests, which alone cannot verify the direct Makefile entrypoint.
+
 Report checks compile the preprint, check the four author identities and preserve the two-graph source. `references_start` follows the main `clearpage` and precedes the bibliography. Its compiled page minus one counts every main page, including pending floats flushed by that clearpage; this value must be at most four. `main_end` must fall within those pages, with valid source ordering of both labels, clearpage, bibliography and appendix. The parser accepts ordinary and hyperref label records with balanced nested braces and rejects missing/duplicate/nonnumeric labels. References remain excluded; the unique PDF-text appendix boundary is checked separately. Thus a body ending on page four with a main float on page five fails even when references start on page six. The runner also checks undefined references/citations and PDF text flags, compares regenerated table sources, and renders every PDF page. **Visual review, natural-English review, external/live links, sole remote head/default branch and publication remain separate checks.** The runner explicitly leaves visual review unapproved.
 
 Before compiling, the runner verifies the committed `Group_23.pdf` still has its checkout inventory hash and extracts it with `pdftotext -layout` to `acceptance outputs/committed-report-text.txt`. It extracts regenerated text with the same command and requires case-sensitive equality after whitespace normalization, recording both text hashes. A stale committed PDF therefore fails even if current sources compile. Differences only in PDF binary metadata remain allowed; the root workflow still visually inspects every page of the committed final PDF.

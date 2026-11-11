@@ -10,7 +10,10 @@ def complete_row(candidate='A',alias=None,pool='specification_compatible'):
             'initialization':'RANDOM','endpoint':'mean_sample_sd_50'}
 
 
-def test_availability_preserves_alias_counts_empty_pools_and_both_endpoints():
+@pytest.mark.parametrize('public',[False,True])
+def test_availability_preserves_alias_counts_empty_pools_and_both_endpoints(monkeypatch,public):
+    from experiments.subset_search import markdown
+    monkeypatch.setattr(markdown,'_public_mode',lambda:public)
     rows=[complete_row(),complete_row('alias','A'),complete_row('diagnostic',pool='diagnostic')]
     result=certified_search_status(rows,{'ORL':{'specification_compatible','adapted'},'USPS':{'specification_compatible'}})
     assert len(result)==6
@@ -21,7 +24,11 @@ def test_availability_preserves_alias_counts_empty_pools_and_both_endpoints():
     assert all(r['historical_complete_configurations']==2 and r['historical_complete_canonical_configurations']==1 and r['historical_complete_unique_inputs']==1 for r in orl)
     assert all(r['historical_complete_configurations']==0 for r in result if r['pool']=='adapted' or r['benchmark']=='USPS')
     text=benchmark_markdown('ORL',[],{},result)
-    assert UNAVAILABLE in text and 'cannot be transferred to an IRLS G' in text
+    if public:
+        assert 'Comparable certified subset-search coverage is unavailable' in text
+        assert 'its certificate does not certify a finite-iteration IRLS output' in text
+    else:
+        assert UNAVAILABLE in text and 'cannot be transferred to an IRLS G' in text
     assert '2 / 1' in text and 'certified_search_status.csv' in text
 
 

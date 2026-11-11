@@ -376,9 +376,9 @@
       "sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973"
     },
     "reference_contrasts": {
-      "bytes": 69855,
+      "bytes": 71289,
       "path": "results/subset_search/reference_contrasts.csv",
-      "sha256": "f08c21a2eb0edc28910bc4ee1c58c53c052369dc458d671b321f2177437e9a09"
+      "sha256": "c81a93358d721dac07338858c623e68e3ea08a957402feca99ab39087df4a446"
     },
     "resource_usage": {
       "bytes": 699,

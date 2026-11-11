@@ -6,12 +6,13 @@ import numpy as np
 from experiments.subset_search.runner import round_embedding
 from experiments.v2_kmeans_protocol.kmeans_trials import GREEDY
 from experiments.submission_refresh.selection import summarize
-from experiments.submission_refresh.core import atomic_json,identity
-from .inputs import load_locked
+from experiments.submission_refresh.core import atomic_json,identity,digest
+from .inputs import load_locked,datasets_lock_path
 
 
 def evaluate(record,config,artifact_root):
     specification,lock,store=load_locked(config,artifact_root);entry=lock['datasets'][record['benchmark']];point_id=record['point_id'];target=store.root/'evaluations'/f'{point_id}.json'
+    if record['source_fingerprint']!=lock['source_fingerprint'] or record['input_registration_sha256']!=digest(datasets_lock_path(store.root)) or record['candidate_id']!=entry['candidate_id']:raise ValueError('evaluation input/source registration mismatch')
     if target.exists():
         saved=json.loads(target.read_text())
         if saved['Q_object']!=record['objects']['Q'] or saved['protocol_sha256']!=lock['protocol_sha256']:raise ValueError('rounding identity changed')

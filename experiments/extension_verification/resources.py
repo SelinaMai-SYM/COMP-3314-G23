@@ -76,7 +76,7 @@ def run_command(artifact_root,run_id,argv,*,cpu_limit,wall_limit,phase='validati
     folder.mkdir(parents=True);start=time.perf_counter();initial=native_usage(os.getpid())
     record={'run_id':run_id,'command':argv,'status':'RUNNING','cpu_limit':cpu_limit,
             'wall_limit':wall_limit,'phase':phase,'samples':[],'accounting':'native own/reaped-child CPU; conservative reservation on unavailable terminal counter'}
-    process=None;max_rss=0;code=None;reason=None;complete=True;measured=0.
+    process=None;max_rss=0;code=None;reason=None;complete=True;measured=0.;last_reliable_wall=0.;last_reliable_cpu=0.
     atomic_json(folder/'status.json',record)
     environment=os.environ.copy();environment.update(THREAD_ENV);environment['PYTHONDONTWRITEBYTECODE']='1';environment['MPLBACKEND']='Agg'
     try:
@@ -86,7 +86,12 @@ def run_command(artifact_root,run_id,argv,*,cpu_limit,wall_limit,phase='validati
                 live,rss,available=_group_usage(process.pid);own=native_usage(os.getpid())
                 reaped=0. if own is None or initial is None else max(0.,own[1]-initial[1])
                 measured=time.process_time()+reaped+live
-                enforcement=measured if available and own is not None else max(measured,(time.perf_counter()-start)*os.cpu_count())
+                elapsed=time.perf_counter()-start
+                if process.poll() is not None:break
+                if available and own is not None:
+                    last_reliable_wall=elapsed;last_reliable_cpu=max(last_reliable_cpu,measured);enforcement=measured
+                else:
+                    enforcement=max(measured,last_reliable_cpu+(elapsed-last_reliable_wall)*os.cpu_count())
                 max_rss=max(max_rss,rss);complete=complete and available
                 if len(record['samples'])<3 or time.perf_counter()-start-record['samples'][-1]['wall_seconds']>15:
                     record['samples'].append({'wall_seconds':time.perf_counter()-start,'CPU_seconds':measured,'RSS_bytes':rss,'native_available':available})

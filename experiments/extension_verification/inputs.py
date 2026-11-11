@@ -23,9 +23,22 @@ def source_files():
     files=list((ROOT/'SSC_method').glob('*.py'))+list((ROOT/'method_extension/extension_verification').glob('*.py'))
     files += [p for p in (ROOT/'benchmarks').rglob('*.py') if not p.name.startswith('test')]
     files += [ROOT/'method_extension/next_round/certified_solver/solver.py',ROOT/'method_extension/next_round/certified_solver/__init__.py',ROOT/'experiments/subset_search/catalogue.py',ROOT/'experiments/v3_reproduction/provenance.py',ROOT/'experiments/submission_refresh/core.py',ROOT/'experiments/v2_kmeans_protocol/kmeans_trials.py',ROOT/'experiments/v2_kmeans_protocol/metrics.py',ROOT/'experiments/v2_kmeans_protocol/vanilla_kmeanspp.py']
-    files += [ROOT/'experiments/extension_verification'/name for name in ['inputs.py','worker.py','evaluation.py','gates.py','statistics.py','resources.py','campaign.py']]
+    files += [ROOT/'experiments/extension_verification'/name for name in ['inputs.py','worker.py','evaluation.py','gates.py','statistics.py','resources.py','campaign.py','identity.py']]
     if any(not p.is_file() for p in files):raise ValueError('complete campaign source is required before freezing')
     return {str(p.relative_to(ROOT)):digest(p) for p in sorted(set(files))}
+
+
+def runtime_environment():
+    return {'python':sys.version.split()[0],'platform':platform.platform(),'packages':{p:importlib.metadata.version(p) for p in ['numpy','scipy','scikit-learn','cvxpy','threadpoolctl']},'threads_per_worker':1,'precision':'float64'}
+
+
+def source_context(hashes=None,environment=None):
+    return identity({'source_files':source_files() if hashes is None else hashes,'environment':runtime_environment() if environment is None else environment})
+
+
+def datasets_lock_path(artifact_root):
+    local=Path(artifact_root)/'registration/datasets.lock.json'
+    return local if local.is_file() else ROOT/'configs/extension_verification/datasets.lock.json'
 
 
 def protocol(config):
@@ -37,18 +50,18 @@ def protocol(config):
 
 
 def load_locked(config,artifact_root,*,check_code=True):
-    specification,sha=protocol(config);path=ROOT/'configs/extension_verification/datasets.lock.json'
+    specification,sha=protocol(config);path=datasets_lock_path(artifact_root)
     if not path.is_file():raise ValueError('freeze reference inputs before running or evaluating')
     lock=json.loads(path.read_text())
     if lock['protocol_sha256']!=sha:raise ValueError('data/protocol identity mismatch')
-    if check_code and lock['source_files']!=source_files():raise ValueError('frozen scientific code changed; retain old attempts and qualify a new source identity')
+    if check_code and (lock['source_files']!=source_files() or lock['environment']!=runtime_environment() or lock['source_fingerprint']!=source_context()):raise ValueError('frozen scientific code or environment changed; retain old attempts and qualify a new registration')
     store=ArtifactStore(artifact_root);marker=store.root/'freeze.json'
     if not marker.is_file() or json.loads(marker.read_text())['datasets_lock_sha256']!=digest(path):raise ValueError('artifact root lacks the exact frozen input registration')
     return specification,lock,store
 
 
 def freeze(config,data_root,artifact_root):
-    specification,sha=protocol(config);store=ArtifactStore(artifact_root);target=ROOT/'configs/extension_verification/datasets.lock.json';hashes=source_files()
+    specification,sha=protocol(config);store=ArtifactStore(artifact_root);target=store.root/'registration/datasets.lock.json';hashes=source_files()
     if target.exists():
         _,lock,_=load_locked(config,artifact_root)
         for entry in lock['datasets'].values():
@@ -58,7 +71,7 @@ def freeze(config,data_root,artifact_root):
         return lock
     catalogue=json.loads((ROOT/'results/subset_search/candidate_catalogue.json').read_text());lookup={c['candidate_id']:c for c in catalogue['candidates']};datasets={}
     snapshot=store.put({name:(ROOT/name).read_text() for name in hashes})
-    environment={'python':sys.version.split()[0],'platform':platform.platform(),'packages':{p:importlib.metadata.version(p) for p in ['numpy','scipy','scikit-learn','cvxpy','threadpoolctl']},'threads_per_worker':1}
+    environment=runtime_environment()
     for benchmark in specification['inputs']['dataset_order']:
         definition=specification['inputs']['references'][benchmark];candidate=lookup[definition['candidate_id']];manifest=_manifest(candidate);X,y,meta=materialize(candidate,Path(data_root),verify=True);X=np.asarray(X,dtype=np.float64);y=np.asarray(y,dtype=np.int64)
         if list(X.shape)!=[definition['n'],definition['features']] or len(np.unique(y))!=definition['K']:raise ValueError('reference dimensions/class count differ')
@@ -78,7 +91,7 @@ def freeze(config,data_root,artifact_root):
         entry={'benchmark':benchmark,**definition,'role':'development' if benchmark in ['ORL','YaleB'] else 'confirmation','historical_identity':'UNVERIFIED','sample_manifest_path':candidate['manifest_path'],'sample_manifest_sha256':candidate['manifest_sha256'],'input_fingerprint':manifest['fingerprint'],'source_files':manifest['source_files'],'original_row_ids':ids.tolist(),'source_url':manifest['source_url'],'objects':objects,'random_hinges':random,'gamma_references':references,'graph_preparation':{'A0':Ainfo,'W0':Winfo,'spectral_solver':eigenmethod,'eigenvalues':values.tolist(),'spectral_seed':20261108},'label_free_diagnostics':diagnostics,'triplet_construction_precedes_semantic_label_audit':True}
         datasets[benchmark]=entry;atomic_json(store.root/'inputs'/f'{benchmark}.json',entry)
         print('FROZEN_INPUT',benchmark,definition['candidate_id'],X.shape,diagnostics['selected_triplets'],flush=True)
-    result={'schema':'ssc-refinement-input-lock-v1','protocol_sha256':sha,'source_files':hashes,'source_snapshot':snapshot,'source_fingerprint':identity(hashes),'environment':environment,'datasets':datasets}
+    result={'schema':'ssc-refinement-input-lock-v2','protocol_sha256':sha,'source_files':hashes,'source_snapshot':snapshot,'source_fingerprint':source_context(hashes,environment),'code_fingerprint':identity(hashes),'environment':environment,'datasets':datasets}
     atomic_json(target,result);atomic_json(ROOT/'configs/extension_verification/protocol.lock.json',{'schema':'ssc-refinement-protocol-lock-v1','protocol_sha256':sha,'version':specification['version'],'definitions_frozen_before_new_scores':True})
-    atomic_json(store.root/'freeze.json',{'protocol_sha256':sha,'datasets_lock_sha256':digest(target),'source_fingerprint':result['source_fingerprint'],'source_snapshot':snapshot,'input_count':8,'no_extension_scores_computed':True})
+    atomic_json(store.root/'freeze.json',{'protocol_sha256':sha,'datasets_lock_sha256':digest(target),'source_fingerprint':result['source_fingerprint'],'source_snapshot':snapshot,'input_count':8,'registration_precedes_scores_under_this_source_context':True})
     return result

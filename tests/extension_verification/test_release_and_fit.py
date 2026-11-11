@@ -5,17 +5,21 @@ from unittest.mock import patch
 import numpy as np
 import pytest
 from scipy import sparse
-from experiments.submission_refresh.core import ArtifactStore,atomic_json,digest
+from experiments.submission_refresh.core import ArtifactStore,atomic_json,digest,identity
 from experiments.submission_refresh.selection import summarize
-from experiments.extension_verification.worker import fit
+from experiments.extension_verification.worker import fit,recover_checkpoint
+from experiments.extension_verification.identity import fit_key
 from experiments.extension_verification.reporting import rebuild
 
 
 def test_saved_fit_has_exact_recomputable_certificate_without_labels(tmp_path):
     store=ArtifactStore(tmp_path/'objects');H=np.array([[0.,0.],[4.,0.]])
     entry={'objects':{'F0':store.put(H),'W0':store.put(sparse.csr_matrix([[0.,1.],[1.,0.]]))},'candidate_id':'synthetic','n':2,'K':2,'role':'synthetic','qualification':'synthetic'}
-    lock={'datasets':{'synthetic':entry},'source_fingerprint':'fixture','protocol_sha256':'fixture','source_snapshot':store.put({'synthetic':True})}
+    lock={'datasets':{'synthetic':entry},'source_fingerprint':'fixture','protocol_sha256':'fixture','source_snapshot':store.put({'synthetic':True}),'environment':{'synthetic':True}}
     task={'benchmark':'synthetic','panel':'original','kind':'relative','gamma':.8,'parameters':{'eta':.25},'fit_id':'synthetic-fit','attempt_id':'attempt1','iteration_ceiling':30000,'cpu_allowance':60,'source_fingerprint':'fixture','protocol_sha256':'fixture'}
+    lockfile=store.root/'registration/datasets.lock.json';atomic_json(lockfile,lock)
+    task.update(anchor_sha256=entry['objects']['F0']['sha256'],W0_sha256=entry['objects']['W0']['sha256'],input_registration_sha256=digest(lockfile),environment_fingerprint=identity(lock['environment']))
+    task['fit_id']=fit_key(task)
     with patch('experiments.extension_verification.worker.load_locked',return_value=({},lock,store)):
         record=fit(task,'unused',store.root)
     from method_extension.extension_verification.convex import Problem

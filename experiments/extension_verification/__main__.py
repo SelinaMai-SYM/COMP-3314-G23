@@ -33,17 +33,17 @@ def main():
         from .inputs import freeze
         lock=freeze(args.config,args.data_root,args.artifact_root);print(json.dumps({'input_count':len(lock['datasets']),'source_fingerprint':lock['source_fingerprint']}))
     elif args.command=='verify':
-        from .inputs import source_files
+        from .inputs import source_files,source_context
         import pytest
         class Count:
             tests=0
             def pytest_collection_finish(self,session):self.tests=len(session.items)
         count=Count();code=pytest.main([str(ROOT/'tests/extension_verification'),'-q'],plugins=[count])
-        atomic_json(Path(args.artifact_root)/'verification.json',{'passed':code==0,'tests':count.tests,'pytest_exit_code':int(code),'source_fingerprint':identity(source_files()),'independent_reference':'CVXPY / CLARABEL and analytic small graphs'})
+        atomic_json(Path(args.artifact_root)/'verification.json',{'passed':code==0,'tests':count.tests,'pytest_exit_code':int(code),'source_fingerprint':source_context(),'independent_reference':'CVXPY / CLARABEL and analytic small graphs'})
         if code:raise SystemExit(code)
     elif args.command=='run':
         from .campaign import run
-        result=run(args.config,args.artifact_root,args.phase);print(json.dumps(result))
+        result=run(args.config,args.artifact_root,args.phase);print(json.dumps({'status':result['run_status'],'completed_stages':result['stages']}))
     elif args.command=='diagnostics':
         from .diagnostics import compute
         result=compute(args.config,args.artifact_root);print(json.dumps({'saved_points':len(result['points'])}))

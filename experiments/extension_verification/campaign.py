@@ -7,11 +7,12 @@ import subprocess
 import sys
 import time
 import numpy as np
-from experiments.submission_refresh.core import ResourceLedger,atomic_json,identity,ROOT
+from experiments.submission_refresh.core import ResourceLedger,atomic_json,identity,digest,ROOT
 from method_extension.extension_verification.convex import rowunit,row_norm
-from .inputs import load_locked
+from .inputs import load_locked,datasets_lock_path
 from .gates import radial_geometry,radial_gate,semantic_gate
 from .statistics import transitions
+from .identity import fit_key
 
 
 class BudgetExhausted(RuntimeError):pass
@@ -43,14 +44,14 @@ class Campaign:
         status=self.root/'command_jobs'/run_id/'status.json'
         if status.exists():
             value=json.loads(status.read_text())
-            if value['status']=='COMPLETED':return value
+            if value['status']=='COMPLETED' or run_id.startswith('fit-') and value.get('stop_reason') in ['CPU_LIMIT','WALL_LIMIT']:return value
             raise RuntimeError('A failed immutable command needs its recorded continuation identity: '+run_id)
         command=[sys.executable,'-m','experiments.extension_verification.resources','--artifact-root',str(self.root),'--run-id',run_id,'--cpu-limit',str(cpu_limit),'--wall-limit',str(2*cpu_limit+120),'--phase',phase,'--cwd',str(ROOT),'--',*argv]
         while True:
             result=subprocess.run(command,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
             if status.exists():
                 record=json.loads(status.read_text())
-                if record['status']=='COMPLETED':return record
+                if record['status']=='COMPLETED' or run_id.startswith('fit-') and record.get('stop_reason') in ['CPU_LIMIT','WALL_LIMIT']:return record
                 raise RuntimeError('Bounded worker failed: '+str(status.parent/'command.log'))
             state=self.ledger.state()
             if result.returncode and state['active']:time.sleep(.5);continue
@@ -58,8 +59,8 @@ class Campaign:
             raise RuntimeError('Worker ended without a command receipt')
 
     def definition(self,benchmark,panel,method,kind,gamma,parameters=None,*,purpose='primary',primary=False):
-        entry=self.lock['datasets'][benchmark];base={'benchmark':benchmark,'panel':panel,'kind':kind,'gamma':float(gamma),'parameters':parameters or {},'source_fingerprint':self.lock['source_fingerprint'],'protocol_sha256':self.lock['protocol_sha256'],'anchor_sha256':entry['objects']['F0' if panel=='original' else 'U']['sha256'],'W0_sha256':entry['objects']['W0']['sha256']}
-        fit_id=identity(base);return {**base,'fit_id':fit_id,'point_id':identity({'fit_id':fit_id,'method':method}),'method':method,'purposes':[purpose],'primary':primary}
+        entry=self.lock['datasets'][benchmark];base={'benchmark':benchmark,'panel':panel,'kind':kind,'gamma':float(gamma),'parameters':parameters or {},'source_fingerprint':self.lock['source_fingerprint'],'protocol_sha256':self.lock['protocol_sha256'],'anchor_sha256':entry['objects']['F0' if panel=='original' else 'U']['sha256'],'W0_sha256':entry['objects']['W0']['sha256'],'input_registration_sha256':digest(datasets_lock_path(self.root)),'environment_fingerprint':identity(self.lock['environment'])}
+        fit_id=fit_key(base);return {**base,'fit_id':fit_id,'point_id':identity({'fit_id':fit_id,'method':method}),'method':method,'purposes':[purpose],'primary':primary}
 
     def point_path(self,point_id):return self.root/'points'/f'{point_id}.json'
 
@@ -70,36 +71,54 @@ class Campaign:
         atomic_json(path,record)
         return record
 
+    def _recover(self,task,*,finalize=False):
+        from .worker import recover_checkpoint,fit
+        name='recover-'+task['attempt_id']+('-final' if finalize else '')
+        receipt=self.root/'recovery_records'/f'{name}.json'
+        if receipt.exists():
+            saved=json.loads(receipt.read_text())
+            if saved['fit_id']!=task['fit_id'] or saved['source_fingerprint']!=task['source_fingerprint']:raise ValueError('recovery context changed')
+            self.store.get(saved['checkpoint']);return saved['checkpoint'],saved['record']
+        while not self.ledger.reserve(name,120,'aggregation'):
+            if not self.ledger.state()['active']:raise BudgetExhausted('Cannot reserve checkpoint verification')
+            time.sleep(.5)
+        start=time.process_time();status='FAILED'
+        try:
+            checkpoint=recover_checkpoint(self.root,task)
+            if not finalize:
+                atomic_json(receipt,{'fit_id':task['fit_id'],'source_fingerprint':task['source_fingerprint'],'checkpoint':checkpoint,'record':None});status='COMPLETED';return checkpoint,None
+            state=self.store.get(checkpoint)
+            resumed={**task,'attempt_id':task['attempt_id']+'-finite-recovery','checkpoint':checkpoint,'scheduled_iteration_ceiling':task['iteration_ceiling'],'iteration_ceiling':state['iterations_total'],'cpu_allowance':60.}
+            record=fit(resumed,self.config,self.root);record['recovery_qualification']='Verified saved checkpoint; no additional optimization iterations';record['additional_optimization_iterations']=0
+            atomic_json(receipt,{'fit_id':task['fit_id'],'source_fingerprint':task['source_fingerprint'],'checkpoint':checkpoint,'record':record});status='COMPLETED';return checkpoint,record
+        finally:self.ledger.finish(name,time.process_time()-start,status,scope='Checkpoint verification/serialization; no optimization beyond declared iteration/CPU ceilings')
+
     def fitted(self,definition):
-        folder=self.root/'fits'/definition['fit_id'];latest=folder/'result.json';record=json.loads(latest.read_text()) if latest.exists() else None
+        folder=self.root/'fits'/definition['fit_id'];latest=folder/'result.json';record=None;checkpoint=None;last_task=None;charged=0.
         ceilings=list(zip([30000,60000,120000],[1800,3600,7200]))
         if not definition['primary']:ceilings=ceilings[:1]
-        charged=0.;previous_checkpoint=None
         for stage,(iterations,cpu_ceiling) in enumerate(ceilings,1):
-            run_id='fit-'+definition['fit_id']+'-'+str(stage);receipt=self.root/'command_jobs'/run_id/'status.json'
+            run_id='fit-'+definition['fit_id']+'-'+str(stage);receipt=self.root/'command_jobs'/run_id/'status.json';task_path=self.root/'fit_tasks'/f'{run_id}.json'
             if receipt.exists():
-                status=json.loads(receipt.read_text());charged+=status['charged_CPU_seconds']
-                result=folder/'attempts'/run_id/'result.json'
-                if result.exists():record=json.loads(result.read_text());previous_checkpoint=record['checkpoint']
-                elif status['status']!='COMPLETED':raise RuntimeError('Numerical worker failed before a saved feasible endpoint; inspect '+str(receipt.parent/'command.log'))
-                if record is not None and record['solver']['certified']:break
-                continue
+                status=json.loads(receipt.read_text());task=json.loads(task_path.read_text())
+            else:
+                allowance=cpu_ceiling-charged
+                if allowance<30:break
+                task={**definition,'attempt_id':run_id,'iteration_ceiling':iterations,'cumulative_cpu_ceiling':cpu_ceiling,'prior_charged_CPU_seconds':charged,'cpu_allowance':allowance,'checkpoint':checkpoint};atomic_json(task_path,task)
+                status=self._command(run_id,[sys.executable,'-m','experiments.extension_verification.worker','--task',str(task_path),'--config',self.config,'--artifact-root',str(self.root)],allowance,definition['method'])
+            last_task=task;charged+=status['charged_CPU_seconds'];result=folder/'attempts'/run_id/'result.json'
+            if result.exists():record=json.loads(result.read_text());checkpoint=record['checkpoint']
+            elif status.get('stop_reason') in ['CPU_LIMIT','WALL_LIMIT']:
+                checkpoint,record=self._recover(task,finalize=stage==len(ceilings))
+            else:raise RuntimeError('Numerical worker failed without a final endpoint: '+str(receipt.parent/'command.log'))
             if record is not None:
-                if record['source_fingerprint']!=definition['source_fingerprint']:raise ValueError('cached fit source differs')
+                if record['source_fingerprint']!=definition['source_fingerprint'] or record['input_registration_sha256']!=definition['input_registration_sha256']:raise ValueError('cached fit context differs')
                 if record['solver']['certified']:break
-                previous_checkpoint=record['checkpoint']
-            allowance=cpu_ceiling-charged
-            if allowance<30:break
-            task={**definition,'attempt_id':run_id,'iteration_ceiling':iterations,'cumulative_cpu_ceiling':cpu_ceiling,'prior_charged_CPU_seconds':charged,'cpu_allowance':allowance,'checkpoint':previous_checkpoint}
-            task_path=self.root/'fit_tasks'/f'{run_id}.json';atomic_json(task_path,task)
-            status=self._command(run_id,[sys.executable,'-m','experiments.extension_verification.worker','--task',str(task_path),'--config',self.config,'--artifact-root',str(self.root)],allowance,definition['method'])
-            charged+=status['charged_CPU_seconds'];record=json.loads(latest.read_text());record['cumulative_charged_fit_CPU_seconds']=charged;atomic_json(latest,record)
-            previous_checkpoint=record['checkpoint']
-            if record['solver']['certified']:break
+        if record is None and last_task is not None and checkpoint is not None:checkpoint,record=self._recover(last_task,finalize=True)
         if record is None:raise RuntimeError('No finite fit output')
         for ref in record['objects'].values():self.store.get(ref)
         record.update(point_id=definition['point_id'],method=definition['method'],purposes=definition['purposes'],primary=definition['primary'],cumulative_charged_fit_CPU_seconds=charged)
-        return self.register(record)
+        atomic_json(latest,record);return self.register(record)
 
     def parallel(self,definitions):
         pending=iter(definitions);results=[]
@@ -120,7 +139,7 @@ class Campaign:
     def transform(self,benchmark,panel,method,G,*,gamma=0.,parameters=None,purpose='primary_control',source_point=None,primary=False):
         entry=self.lock['datasets'][benchmark];G=np.asarray(G,dtype=float);Q=G.copy() if panel=='original' else rowunit(G);objects={'G':self.store.put(G),'Q':self.store.put(Q)}
         H=self.store.get(entry['objects']['F0' if panel=='original' else 'U']);movement=float(row_norm(G-H).sum()/max(float(row_norm(H).sum()),1e-12))
-        base={'benchmark':benchmark,'panel':panel,'method':method,'kind':'deterministic_control','gamma':float(gamma),'parameters':parameters or {},'G_sha256':objects['G']['sha256'],'source_point':source_point,'source_fingerprint':self.lock['source_fingerprint'],'protocol_sha256':self.lock['protocol_sha256']};record={**base,'point_id':identity(base),'candidate_id':entry['candidate_id'],'n':entry['n'],'K':entry['K'],'role':entry['role'],'qualification':entry['qualification'],'objects':objects,'solver':{'status':'DETERMINISTIC_REFERENCE','certified':None,'numerically_active':movement>1e-6,'normalized_L21_movement':movement},'output_normalization':'none' if panel=='original' else 'rowunit','purposes':[purpose],'primary':primary,'labels_loaded_for_fitting':False}
+        base={'benchmark':benchmark,'panel':panel,'method':method,'kind':'deterministic_control','gamma':float(gamma),'parameters':parameters or {},'G_sha256':objects['G']['sha256'],'source_point':source_point,'source_fingerprint':self.lock['source_fingerprint'],'protocol_sha256':self.lock['protocol_sha256'],'input_registration_sha256':digest(datasets_lock_path(self.root)),'environment_fingerprint':identity(self.lock['environment'])};record={**base,'point_id':identity(base),'candidate_id':entry['candidate_id'],'n':entry['n'],'K':entry['K'],'role':entry['role'],'qualification':entry['qualification'],'objects':objects,'solver':{'status':'DETERMINISTIC_REFERENCE','certified':None,'numerically_active':movement>1e-6,'normalized_L21_movement':movement},'output_normalization':'none' if panel=='original' else 'rowunit','purposes':[purpose],'primary':primary,'labels_loaded_for_fitting':False}
         return self.register(record)
 
     def round(self,record):
@@ -249,7 +268,7 @@ def run(config,artifact_root,phase='all'):
         if phase=='all':
             for method in methods.values():method()
         else:methods[phase]()
-        campaign.state['run_status']='COMPLETED'
+        campaign.state['run_status']='COMPLETED' if all(campaign.state['stages'].get(name)=='COMPLETED' for name in ['E1','E2_gate','E2','E3_gate','E3','controls']) else 'PHASE_COMPLETED'
     except BudgetExhausted as exc:campaign.state.update(run_status='STOPPED_SHARED_BUDGET',stop_reason=str(exc))
     except BaseException as exc:
         campaign.state.update(run_status='FAILED_REQUIRES_INVESTIGATION',stop_reason=repr(exc));campaign.save();raise

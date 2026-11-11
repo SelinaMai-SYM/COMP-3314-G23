@@ -1,0 +1,11 @@
+{
+  "archive_id": "comp3314-scientific-artifacts-20261110-v1",
+  "archive_sha256": "892541b9074655c5e162062a30585a400e659034cd4b19cf6c27e484e016006d",
+  "logical_records": 119028,
+  "original_manifest_sha256": "27aeb04e6ace4923f80b5040a5cec117e5b1f6bebfdb515684eb667022aa9805",
+  "qualification": "The verified private archive retains the complete original logical-record and object inventory.",
+  "recovered_extra_files": 20030,
+  "recovered_objects": 573980,
+  "recovery_command": "python -m experiments.submission_refresh.export_artifacts recover --archive ARCHIVE --output ARTIFACT_ROOT",
+  "schema": "public-scientific-artifact-manifest-v1"
+}

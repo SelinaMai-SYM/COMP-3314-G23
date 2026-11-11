@@ -164,7 +164,7 @@ USPS & SSC & 75.50 $\pm$ 1.90 & 73.87 $\pm$ 7.53 & 79.80 $\pm$ 1.60 & 82.84 $\pm
 
 \subsection{Native-objective-selected endpoint}
 
-Within one fixed G, native K-means SSE selects one of50 assignments. This is a single assignment with no across-run SD. It does not compete with the mean endpoint. Full method-specific endpoint records are in \texttt{results/submission\_refresh/endpoint\_comparison.csv}; LDA cross-subspace native selection is unavailable.
+Within one fixed G, native K-means SSE selects one of 50 assignments. This is a single assignment with no across-run SD. It does not compete with the mean endpoint. Full method-specific endpoint records are in \texttt{results/submission\_refresh/endpoint\_comparison.csv}; LDA cross-subspace native selection is unavailable.
 
 \begingroup\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{longtable}{lrrrrrc}
@@ -190,7 +190,7 @@ USPS & 79.62 & 85.38 & 5.58 & 4.85 & 38 & I \\
 
 \subsection{Separate historical repeatability batches}
 
-Existing multi-batch records are a separate endpoint. Each batch contains50 disjoint rounding seeds on its fixed input. The following ranges describe variation of batch means and native-selected assignments, without treating a single native assignment as having a within-batch SD. They are not independent datasets, and are not new campaign measurements. All methods and exact configuration IDs are preserved in \texttt{historical\_repeatability\_batches.csv} and its summary/manifest. LDA source-native selection remains diagnostic only.
+Existing multi-batch records are a separate endpoint. Each batch contains 50 disjoint rounding seeds on its fixed input. The following ranges describe variation of batch means and native-selected assignments, without treating a single native assignment as having a within-batch SD. They are not independent datasets, and are not new campaign measurements. All methods and exact configuration IDs are preserved in \texttt{historical\_repeatability\_batches.csv} and its summary/manifest. LDA source-native selection remains diagnostic only.
 
 \begingroup\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{longtable}{p{4.0cm}rrrrr}
@@ -236,11 +236,148 @@ YaleB\_\allowbreak dengcai32 / E8 / gamma=1e+00 / G & 10 & 25.31--25.46 & 31.24-
 
 \subsection{Dataset-subset matching: both endpoints and eligibility pools}
 
-Final SSC source/subset matching and locked-winner confirmation are reserved for the completed, validated scalar release. This edition presents the method, historical reconstruction and completed baseline, numerical and graph studies. No partial subset winner, performance average or confirmation result is reported.
+The following rows use complete evaluated configurations only. Paper values are fixed SSC targets. R/V/G denote random, vanilla K-means++ and sklearn greedy K-means++; each is one Lloyd start. Specification-compatible dimensions/counts do not establish historical pixel identity. Adapted rows retain explicit source/resolution/preparation differences. Diagnostic parents cannot win either pool.
+
+\paragraph{Mean/sample-SD over 50 fixed-G roundings}
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{1.6cm}p{3.3cm}rrrrr}
+\toprule
+Data / pool & Selected candidate & Paper ACC & Our ACC & Paper NMI & Our NMI & $D_{\max}$ \\
+\midrule
+\endfirsthead
+\toprule
+Data / pool & Selected candidate & Paper ACC & Our ACC & Paper NMI & Our NMI & $D_{\max}$ \\
+\midrule\endhead
+AR / compatible & \scriptsize AR\_\allowbreak common\_\allowbreak mask0092 & 51.30 $\pm$ 1.50 & 51.21 $\pm$ 2.00 & 73.20 $\pm$ 1.40 & 72.94 $\pm$ 1.05 & 0.26 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=840$; Y0, E13, $\gamma=1000$, G; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-0.09$ pp; $\Delta_{\rm NMI}=-0.26$ pp; $D_{\rm mean}=0.18$; UNVERIFIED. $\Delta_{\rm SD,ACC}=0.50$ pp; $\Delta_{\rm SD,NMI}=-0.35$ pp.} \\
+JAFFE / compatible & \scriptsize JAFFE & 81.20 $\pm$ 1.60 & 74.75 $\pm$ 8.37 & 84.30 $\pm$ 1.60 & 85.60 $\pm$ 4.32 & 6.45 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=213$; Y0, E13, $\gamma=1e+06$, R; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-6.45$ pp; $\Delta_{\rm NMI}=1.30$ pp; $D_{\rm mean}=3.87$; documented source; no pixel identity proof. $\Delta_{\rm SD,ACC}=6.77$ pp; $\Delta_{\rm SD,NMI}=2.72$ pp.} \\
+ORL / compatible & \scriptsize ORL\_\allowbreak att92 & 76.00 $\pm$ 1.60 & 74.63 $\pm$ 0.64 & 88.60 $\pm$ 1.50 & 89.71 $\pm$ 0.23 & 1.37 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=400$; Y0, E8, $\gamma=1000$, V; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-1.37$ pp; $\Delta_{\rm NMI}=1.11$ pp; $D_{\rm mean}=1.24$; documented source; no pixel identity proof. $\Delta_{\rm SD,ACC}=-0.96$ pp; $\Delta_{\rm SD,NMI}=-1.27$ pp.} \\
+UMIST / compatible & \scriptsize UMIST\_\allowbreak LZUFE574\_\allowbreak stratified\_\allowbreak seed079 & 71.10 $\pm$ 1.80 & 69.97 $\pm$ 2.27 & 84.10 $\pm$ 1.50 & 85.17 $\pm$ 1.00 & 1.13 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=564$; Y0, E13, $\gamma=1000$, G; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-1.13$ pp; $\Delta_{\rm NMI}=1.07$ pp; $D_{\rm mean}=1.10$; UNVERIFIED. $\Delta_{\rm SD,ACC}=0.47$ pp; $\Delta_{\rm SD,NMI}=-0.50$ pp.} \\
+BinAlpha / adapted & \scriptsize BinAlpha\_\allowbreak first30 & 49.40 $\pm$ 1.30 & 50.13 $\pm$ 1.39 & 64.10 $\pm$ 1.40 & 61.94 $\pm$ 1.07 & 2.16 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=780$; Y0, E8, $\gamma=1$, G; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=0.73$ pp; $\Delta_{\rm NMI}=-2.16$ pp; $D_{\rm mean}=1.44$; UNVERIFIED. $\Delta_{\rm SD,ACC}=0.09$ pp; $\Delta_{\rm SD,NMI}=-0.33$ pp.} \\
+BinAlpha / compatible & \scriptsize BinAlpha\_\allowbreak random\_\allowbreak seed057 & 49.40 $\pm$ 1.30 & 49.54 $\pm$ 2.71 & 64.10 $\pm$ 1.40 & 63.46 $\pm$ 1.04 & 0.64 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=780$; Y0, E8, $\gamma=1e+06$, R; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=0.14$ pp; $\Delta_{\rm NMI}=-0.64$ pp; $D_{\rm mean}=0.39$; UNVERIFIED. $\Delta_{\rm SD,ACC}=1.41$ pp; $\Delta_{\rm SD,NMI}=-0.36$ pp.} \\
+MSRA50 / adapted & \scriptsize MSRA25\_\allowbreak EBSA\_\allowbreak 16x16 & 63.20 $\pm$ 1.10 & 49.25 $\pm$ 4.38 & 72.20 $\pm$ 1.40 & 61.50 $\pm$ 3.89 & 13.95 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=1799$; Y0, E13, $\gamma=1e+06$, V; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-13.95$ pp; $\Delta_{\rm NMI}=-10.70$ pp; $D_{\rm mean}=12.32$; UNVERIFIED. $\Delta_{\rm SD,ACC}=3.28$ pp; $\Delta_{\rm SD,NMI}=2.49$ pp.} \\
+YaleB / compatible & \scriptsize YaleB\_\allowbreak cropped2414\_\allowbreak nearest\_\allowbreak Y3 & 49.80 $\pm$ 1.60 & 44.24 $\pm$ 0.82 & 46.80 $\pm$ 1.30 & 52.61 $\pm$ 0.36 & 5.81 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=2414$; Y3, E13, $\gamma=1000$, G; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-5.56$ pp; $\Delta_{\rm NMI}=5.81$ pp; $D_{\rm mean}=5.68$; documented source; no pixel identity proof. $\Delta_{\rm SD,ACC}=-0.78$ pp; $\Delta_{\rm SD,NMI}=-0.94$ pp.} \\
+USPS / compatible & \scriptsize USPS & 75.50 $\pm$ 1.90 & 66.26 $\pm$ 1.70 & 79.80 $\pm$ 1.60 & 80.86 $\pm$ 1.20 & 9.24 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=9298$; Y0, E13, $\gamma=1$, G; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-9.24$ pp; $\Delta_{\rm NMI}=1.06$ pp; $D_{\rm mean}=5.15$; documented source; no pixel identity proof. $\Delta_{\rm SD,ACC}=-0.20$ pp; $\Delta_{\rm SD,NMI}=-0.40$ pp.} \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+\paragraph{Single native-best assignment among 50 fixed-G roundings}
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{1.6cm}p{3.3cm}rrrrr}
+\toprule
+Data / pool & Selected candidate & Paper ACC & Our ACC & Paper NMI & Our NMI & $D_{\max}$ \\
+\midrule
+\endfirsthead
+\toprule
+Data / pool & Selected candidate & Paper ACC & Our ACC & Paper NMI & Our NMI & $D_{\max}$ \\
+\midrule\endhead
+AR / compatible & \scriptsize AR\_\allowbreak common\_\allowbreak mask3306 & 51.30 $\pm$ 1.50 & 51.19 & 73.20 $\pm$ 1.40 & 73.34 & 0.14 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=840$; Y0, E8, $\gamma=1$, R; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-0.11$ pp; $\Delta_{\rm NMI}=0.14$ pp; $D_{\rm mean}=0.12$; UNVERIFIED.} \\
+JAFFE / compatible & \scriptsize JAFFE & 81.20 $\pm$ 1.60 & 95.31 & 84.30 $\pm$ 1.60 & 94.09 & 14.11 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=213$; Y0, E8, $\gamma=1e+06$, R; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=14.11$ pp; $\Delta_{\rm NMI}=9.79$ pp; $D_{\rm mean}=11.95$; documented source; no pixel identity proof.} \\
+ORL / compatible & \scriptsize ORL\_\allowbreak att92 & 76.00 $\pm$ 1.60 & 75.00 & 88.60 $\pm$ 1.50 & 88.60 & 1.00 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=400$; Y0, E8, $\gamma=0.001$, V; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-1.00$ pp; $\Delta_{\rm NMI}=0.00$ pp; $D_{\rm mean}=0.50$; documented source; no pixel identity proof.} \\
+UMIST / compatible & \scriptsize UMIST\_\allowbreak LZUFE574\_\allowbreak stratified\_\allowbreak seed022 & 71.10 $\pm$ 1.80 & 70.92 & 84.10 $\pm$ 1.50 & 84.36 & 0.26 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=564$; Y0, E8, $\gamma=0.001$, R; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-0.18$ pp; $\Delta_{\rm NMI}=0.26$ pp; $D_{\rm mean}=0.22$; UNVERIFIED.} \\
+BinAlpha / adapted & \scriptsize BinAlpha\_\allowbreak first30 & 49.40 $\pm$ 1.30 & 48.33 & 64.10 $\pm$ 1.40 & 62.97 & 1.13 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=780$; Y0, E8, $\gamma=1000$, G; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-1.07$ pp; $\Delta_{\rm NMI}=-1.13$ pp; $D_{\rm mean}=1.10$; UNVERIFIED.} \\
+BinAlpha / compatible & \scriptsize BinAlpha\_\allowbreak random\_\allowbreak seed055 & 49.40 $\pm$ 1.30 & 49.36 & 64.10 $\pm$ 1.40 & 64.11 & 0.04 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=780$; Y0, E13, $\gamma=1000$, V; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-0.04$ pp; $\Delta_{\rm NMI}=0.01$ pp; $D_{\rm mean}=0.03$; UNVERIFIED.} \\
+MSRA50 / adapted & \scriptsize MSRA25\_\allowbreak EBSA\_\allowbreak 16x16 & 63.20 $\pm$ 1.10 & 56.25 & 72.20 $\pm$ 1.40 & 64.57 & 7.63 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=1799$; Y0, E8, $\gamma=1000$, R; ITERATE\_CONVERGED\_UNCERTIFIED; $\Delta_{\rm ACC}=-6.95$ pp; $\Delta_{\rm NMI}=-7.63$ pp; $D_{\rm mean}=7.29$; UNVERIFIED.} \\
+YaleB / compatible & \scriptsize YaleB\_\allowbreak cropped2414\_\allowbreak nearest\_\allowbreak Y3 & 49.80 $\pm$ 1.60 & 44.74 & 46.80 $\pm$ 1.30 & 52.28 & 5.48 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=2414$; Y3, E13, $\gamma=1000$, V; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-5.06$ pp; $\Delta_{\rm NMI}=5.48$ pp; $D_{\rm mean}=5.27$; documented source; no pixel identity proof.} \\
+USPS / compatible & \scriptsize USPS & 75.50 $\pm$ 1.90 & 65.63 & 79.80 $\pm$ 1.60 & 81.17 & 9.87 \\
+\multicolumn{7}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize $n=9298$; Y0, E8, $\gamma=1$, V; MAX\_ITER\_REACHED; $\Delta_{\rm ACC}=-9.87$ pp; $\Delta_{\rm NMI}=1.37$ pp; $D_{\rm mean}=5.62$; documented source; no pixel identity proof.} \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+\subsection{Separate certified-search availability}
+
+The closest subset matches above belong to the locked finite historical-style IRLS track. A complete 50-start execution does not establish optimality. No comparable certified subset-search track was executed, so no certified closest winner is selected. Separate numerical references, including a continuation on the current USPS input, cannot transfer a certificate to a different saved G. Counts below describe the historical-style coverage only; native rows summarize the same 50-start configuration pool but select one assignment, with no across-run SD.
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{lllp{3.1cm}rl}
+\caption{Explicit availability by intended eligible pool and endpoint. Every row has machine status UNAVAILABLE\_NO\_COMPARABLE\_CERTIFIED\_SEARCH\_COVERAGE in certified\_search\_status.csv; no winner is fabricated. Aliases are shown in the complete count and removed in the canonical count.}\label{tab:certified-search-status}\\
+\toprule
+Data & Pool & Endpoint & Complete / canonical configs & Unique inputs & Certified closest \\
+\midrule
+\endfirsthead
+\toprule
+Data & Pool & Endpoint & Complete / canonical configs & Unique inputs & Certified closest \\
+\midrule\endhead
+AR & Compatible & Mean & 41640 / 41520 & 1384 & Unavailable \\
+AR & Compatible & Native & 41640 / 41520 & 1384 & Unavailable \\
+BinAlpha & Adapted & Mean & 60 / 60 & 2 & Unavailable \\
+BinAlpha & Adapted & Native & 60 / 60 & 2 & Unavailable \\
+BinAlpha & Compatible & Mean & 3000 / 3000 & 100 & Unavailable \\
+BinAlpha & Compatible & Native & 3000 / 3000 & 100 & Unavailable \\
+JAFFE & Compatible & Mean & 30 / 30 & 1 & Unavailable \\
+JAFFE & Compatible & Native & 30 / 30 & 1 & Unavailable \\
+MSRA50 & Adapted & Mean & 30 / 30 & 1 & Unavailable \\
+MSRA50 & Adapted & Native & 30 / 30 & 1 & Unavailable \\
+ORL & Compatible & Mean & 30 / 30 & 1 & Unavailable \\
+ORL & Compatible & Native & 30 / 30 & 1 & Unavailable \\
+UMIST & Compatible & Mean & 31980 / 28980 & 966 & Unavailable \\
+UMIST & Compatible & Native & 31980 / 28980 & 966 & Unavailable \\
+USPS & Compatible & Mean & 18 / 18 & 1 & Unavailable \\
+USPS & Compatible & Native & 18 / 18 & 1 & Unavailable \\
+YaleB & Compatible & Mean & 480 / 480 & 16 & Unavailable \\
+YaleB & Compatible & Native & 480 / 480 & 16 & Unavailable \\
+\bottomrule
+\end{longtable}
+\endgroup
+
 
 \subsection{Additional rounding on locked winners}
 
-Final locked-winner confirmation is reserved; no stability result is reported.
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{llrrrrl}
+\toprule
+Data & Endpoint & Select ACC & Select NMI & Confirm ACC & Confirm NMI & Status \\
+\midrule
+\endfirsthead
+\toprule
+Data & Endpoint & Select ACC & Select NMI & Confirm ACC & Confirm NMI & Status \\
+\midrule\endhead
+AR & mean & 51.21 & 72.94 & 51.14 $\pm$ 1.91 & 72.88 $\pm$ 1.03 & COMPLETED \\
+BinAlpha & mean & 50.13 & 61.94 & 50.14 $\pm$ 1.37 & 62.03 $\pm$ 1.02 & COMPLETED \\
+BinAlpha & mean & 49.54 & 63.46 & 49.26 $\pm$ 2.81 & 63.36 $\pm$ 1.14 & COMPLETED \\
+JAFFE & mean & 74.75 & 85.60 & 73.96 $\pm$ 11.26 & 84.88 $\pm$ 5.91 & COMPLETED \\
+MSRA50 & mean & 49.25 & 61.50 & 49.67 $\pm$ 4.06 & 61.38 $\pm$ 3.82 & COMPLETED \\
+ORL & mean & 74.63 & 89.71 & 74.51 $\pm$ 0.69 & 89.64 $\pm$ 0.26 & COMPLETED \\
+UMIST & mean & 69.97 & 85.17 & 70.60 $\pm$ 2.13 & 85.51 $\pm$ 0.85 & COMPLETED \\
+USPS & mean & 66.26 & 80.86 & 65.69 $\pm$ 2.77 & 79.73 $\pm$ 2.37 & COMPLETED \\
+YaleB & mean & 44.24 & 52.61 & 44.37 $\pm$ 0.83 & 52.72 $\pm$ 0.38 & COMPLETED \\
+AR & native & 51.19 & 73.34 & 51.67 & 77.42 & COMPLETED \\
+BinAlpha & native & 48.33 & 62.97 & 49.62 & 63.10 & COMPLETED \\
+BinAlpha & native & 49.36 & 64.11 & 50.77 & 64.58 & COMPLETED \\
+JAFFE & native & 95.31 & 94.09 & 95.31 & 94.09 & COMPLETED \\
+MSRA50 & native & 56.25 & 64.57 & 46.08 & 62.82 & COMPLETED \\
+ORL & native & 75.00 & 88.60 & 76.50 & 89.86 & COMPLETED \\
+UMIST & native & 70.92 & 84.36 & 60.82 & 79.17 & COMPLETED \\
+USPS & native & 65.63 & 81.17 & 65.63 & 81.17 & COMPLETED \\
+YaleB & native & 44.74 & 52.28 & 43.37 & 51.63 & COMPLETED \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+Additional seeds check rounding on the same samples and saved G. Winners are not reselected. These intervals/SD do not establish historical identity, unseen-data generalization or label-free model selection.
 
 \subsection{Baseline comparisons}
 
@@ -502,8 +639,8 @@ Uniform & 1000 & 267.96 & 87.328 & 0.674 & U & 154.2 & MAX\_\allowbreak ITER\_\a
 Diagonal & 1000 & 267.96 & 86.357 & 0.678 & U & 142.7 & MAX\_\allowbreak ITER\_\allowbreak REACHED \\
 Flow & 1000 & 267.96 & 1.6424e-13 & 1 & U & 11.3 & INCOMPLETE\_\allowbreak LINEAR\_\allowbreak SOLVE \\
 Warm restart & 1000 & 267.96 & 120.26 & 0.551 & U & 136.5 & MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-Extra restart & 1 & 13.577 & 13.577 & 1e-05 & C & -- & PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-Extra restart & 1000 & 267.96 & 176.38 & 0.342 & U & -- & MAX\_\allowbreak ITER\_\allowbreak REACHED \\
+Extra restart & 1 & 13.577 & 13.577 & 1e-05 & C & 269.4 & PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
+Extra restart & 1000 & 267.96 & 176.38 & 0.342 & U & 811.4 & MAX\_\allowbreak ITER\_\allowbreak REACHED \\
 \bottomrule
 \end{longtable}
 \endgroup
@@ -977,8 +1114,83 @@ USPS & 44/44 & -2.76 & -3.12 & -1.02 & unqualified / INCOMPLETE\_\allowbreak OR\
 
 \subsection{Coverage, solver qualification and cost}
 
-Computational cost is unavailable.
+Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. 2482 unique inputs yielded 74436 complete SSC input/configuration pairs; 2480 inputs completed all 30 SSC points and 2480 completed all 30 SSC plus three matched-SC points.
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{lrrrr}
+\toprule
+Data & Intended aliases & Unique inputs & Measured inputs & Complete configurations \\
+\midrule
+\endfirsthead
+\toprule
+Data & Intended aliases & Unique inputs & Measured inputs & Complete configurations \\
+\midrule\endhead
+AR & 3537 & 3533 & 1385 & 41670 \\
+JAFFE & 1 & 1 & 1 & 30 \\
+ORL & 1 & 1 & 1 & 30 \\
+UMIST & 1073 & 971 & 971 & 32190 \\
+BinAlpha & 104 & 104 & 104 & 3120 \\
+MSRA50 & 1 & 1 & 1 & 30 \\
+YaleB & 16 & 16 & 16 & 480 \\
+USPS & 3 & 3 & 3 & 66 \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{9cm}r}
+\toprule
+Execution status & Intended combinations \\
+\midrule
+\endfirsthead
+\toprule
+Execution status & Intended combinations \\
+\midrule\endhead
+COMPLETED & 74436 \\
+COMPLETED\_\allowbreak ALIAS & 3180 \\
+FAILED\_\allowbreak COMPLETION\_\allowbreak PRESERVED & 18 \\
+FAILED\_\allowbreak ORIGINAL\_\allowbreak PRESERVED & 6 \\
+NOT\_\allowbreak RUN & 64440 \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+
+The recorded scientific-campaign charge is 31.4130 CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most 2 single-thread workers and an aggregate RSS target of 8.0 GiB. Per-fit measured costs and numerical qualifications are reported separately from clustering performance.
+
+\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{lr}
+\toprule
+Experiment group & CPU seconds \\
+\midrule
+\endfirsthead
+\toprule
+Experiment group & CPU seconds \\
+\midrule\endhead
+G1 & 50.6 \\
+G2 & 1028.5 \\
+G3 & 3535.9 \\
+G4\_\allowbreak G5 & 8427.0 \\
+G4\_\allowbreak profile & 150.4 \\
+aggregation & 3786.8 \\
+confirmation & 11.7 \\
+mandatory\_\allowbreak baseline & 6852.2 \\
+mandatory\_\allowbreak repair & 2269.9 \\
+mandatory\_\allowbreak usps & 3840.2 \\
+mandatory\_\allowbreak usps\_\allowbreak evaluation & 11.3 \\
+profile & 838.8 \\
+subset & 81380.5 \\
+validation & 902.9 \\
+\bottomrule
+\end{longtable}
+\endgroup
+
 
 \paragraph{Graph criterion.} Oracle intervention criterion: PASSED. A formal four-benchmark performance conclusion requires complete, qualified controls on all four datasets.
+
+\begin{figure}[p]\centering\includegraphics[width=\linewidth,height=.86\textheight,keepaspectratio]{figures/subset_acc_nmi.pdf}
+
+\caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}
 
 \paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: 2026-11-10.

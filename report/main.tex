@@ -14,7 +14,7 @@ Spectral Shrunk Clustering (SSC) refines a spectral representation through a con
 \end{abstract}
 
 \section{What SSC optimizes}
-Spectral clustering (SC) represents samples using graph-Laplacian eigenvectors and then applies K-means. Chang et al.~\citep{chang2015ssc} argue that directly clustering the initial spectral coordinates can be unreliable, and propose learning \emph{shrunk patterns} that preserve their anchors while contracting neighboring representations. Their contribution is a convex representation-refinement formulation, relaxation of an orthogonality constraint in this stage, and an iterative algorithm with clustering experiments. SSC here means Spectral Shrunk Clustering, rather than Sparse Subspace Clustering.
+Spectral clustering (SC) represents samples using graph-Laplacian eigenvectors and then applies K-means. \citet{chang2015ssc} argue that directly clustering the initial spectral coordinates can be unreliable, and propose learning \emph{shrunk patterns} that preserve their anchors while contracting neighboring representations. Their contribution is a convex representation-refinement formulation, relaxation of an orthogonality constraint in this stage, and an iterative algorithm with clustering experiments. SSC here means Spectral Shrunk Clustering, rather than Sparse Subspace Clustering.
 
 The input-space affinity $A$ determines $L_A=I-D_A^{-1/2}AD_A^{-1/2}$. The $c$ smallest eigenvectors form $F\in\mathbb R^{n\times c}$. A second affinity $W$ is constructed from $F$ and controls refinement (Figure~\ref{fig:two}). With each undirected edge stored once in incidence matrix $B$, Equation~8 is
 \begin{equation}
@@ -43,7 +43,7 @@ We rank by $D_{\max}$, then $D_{\mathrm{mean}}$, with a $10^{-12}$ tolerance and
 \input{tables/refresh_main}
 
 \subsection{Dataset-subset uncertainty and retrospective numerical matching}
-Original sample indices were unavailable. Final jointly selected source/subset results and locked-selection rounding are reserved for the final subset release; no partial subset winner is reported here. \textbf{Such matching is retrospective, not label-free selection or an unbiased superiority test.} Exact manifests support replay, not historical identity. Changed membership rebuilds $A,F,W,G$; source, resize, normalization and eligibility pools remain distinct (Appendix~\ref{app:protocol-details}).
+Original sample indices were unavailable. Final source/subset matches and locked-selection rounding are reported separately from the historical and method-comparison endpoints. \textbf{Such matching is retrospective, not label-free selection or an unbiased superiority test.} Exact manifests support replay, not historical identity. Changed membership rebuilds $A,F,W,G$; source, resize, normalization and eligibility pools remain distinct (Appendix~\ref{app:protocol-details}).
 
 \input{tables/refresh_coverage}
 

@@ -1,4 +1,6 @@
 {
+  "archive_receipt": "results/submission_refresh/public_archive_receipt.v1.json",
+  "archive_receipt_sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973",
   "files": [
     {
       "candidate_count": 2482,
@@ -45,13 +47,8 @@
   ],
   "optional_candidate_count": 1280,
   "primary_candidate_count": 1202,
-  "publication_stage": {
-    "presentation": "public-scientific",
-    "schema": "public-publication-stage-v1",
-    "stage": "methods-and-completed-studies"
-  },
   "schema": "public-scientific-cohort-projections-v1",
-  "scope": "Frozen scientific declarations only; no current search scores, completion claims or archive verification are inferred.",
+  "scope": "Frozen scientific declarations; original cost/profiling evidence is retained in the verified archive.",
   "score_values_read": false,
   "union_candidate_count": 2482
 }

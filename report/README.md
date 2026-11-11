@@ -8,8 +8,8 @@ The University of Hong Kong, COMP3314 Machine Learning.
 
 The [report PDF](Group_23.pdf) presents the SSC formulation, historical paper
 reconstruction, numerical certificates, baseline comparisons and graph mechanism
-experiments. Final source/subset matches and locked-selection rounding are
-explicitly reserved, without partial winners. The NeurIPS 2026 preprint format has at most four main-text
+experiments. Final source/subset matches and locked-selection rounding retain
+their separate endpoints, eligibility pools and coverage qualifications. The NeurIPS 2026 preprint format has at most four main-text
 pages; references and the detailed scientific appendix are separate. The appendix
 contains full endpoint/coverage qualifications rather than treating unavailable
 results as zeros.
@@ -25,7 +25,7 @@ make -C report
 
 The build requires `make`, Bash, TeX Live with `pdflatex`, BibTeX, `standalone`,
 TikZ and AMS math, plus Poppler's `pdftocairo` for figure conversion. It regenerates
-tables from the historical and completed flat scalar records and writes
+tables from the historical and final scalar-release records and writes
 `report/Group_23.pdf`. Raw image
 archives and model fitting are not required.
 
@@ -46,8 +46,9 @@ bash scripts/build_ssc_pipeline.sh
 The input graph A and shrinkage graph W retain their distinct roles in both the
 diagram and code. Generated report tables share the authoritative records used
 by the [combined benchmark tables](../results/submission_refresh/per_benchmark/).
-Final subset/scientific-archive rebuild interfaces require the corresponding
-published final manifests; see [release availability](../docs/reproducibility.md#final-release-interfaces).
+Final subset and scientific-evidence rebuilds use the published manifests;
+see [scalar-release rebuilding](../docs/reproducibility.md#rebuild-final-scalar-releases)
+and the artifact-availability statement in that guide.
 See [methods](../docs/methods.md), [experimental protocol](../docs/experimental_protocol.md),
 [data](../docs/data.md), [reproducibility](../docs/reproducibility.md),
 [results](../docs/results.md) and [limitations](../docs/limitations.md).

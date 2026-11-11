@@ -6,12 +6,16 @@
 \toprule
 Data & Paper ACC & Our ACC & Paper NMI & Our NMI & $D_{\max}$ & Fit \\
 \midrule
-ORL & 76.00 $\pm$ 1.60 & 74.63 $\pm$ 0.64 & 88.60 $\pm$ 1.50 & 89.71 $\pm$ 0.23 & 1.37 & I \\
+AR & 51.30 $\pm$ 1.50 & 51.21 $\pm$ 2.00 & 73.20 $\pm$ 1.40 & 72.94 $\pm$ 1.05 & 0.26 & T \\
 JAFFE & 81.20 $\pm$ 1.60 & 74.75 $\pm$ 8.37 & 84.30 $\pm$ 1.60 & 85.60 $\pm$ 4.32 & 6.45 & T \\
-YaleB & 49.80 $\pm$ 1.60 & 42.64 $\pm$ 0.61 & 46.80 $\pm$ 1.30 & 52.19 $\pm$ 0.31 & 7.16 & T \\
-USPS & 75.50 $\pm$ 1.90 & 73.87 $\pm$ 7.53 & 79.80 $\pm$ 1.60 & 82.84 $\pm$ 3.96 & 3.04 & I \\
+ORL & 76.00 $\pm$ 1.60 & 74.63 $\pm$ 0.64 & 88.60 $\pm$ 1.50 & 89.71 $\pm$ 0.23 & 1.37 & I \\
+UMIST & 71.10 $\pm$ 1.80 & 69.97 $\pm$ 2.27 & 84.10 $\pm$ 1.50 & 85.17 $\pm$ 1.00 & 1.13 & T \\
+BinAlpha & 49.40 $\pm$ 1.30 & 49.54 $\pm$ 2.71 & 64.10 $\pm$ 1.40 & 63.46 $\pm$ 1.04 & 0.64 & I \\
+MSRA50$^\dagger$ & 63.20 $\pm$ 1.10 & 49.25 $\pm$ 4.38 & 72.20 $\pm$ 1.40 & 61.50 $\pm$ 3.89 & 13.95 & T \\
+YaleB & 49.80 $\pm$ 1.60 & 44.24 $\pm$ 0.82 & 46.80 $\pm$ 1.30 & 52.61 $\pm$ 0.36 & 5.81 & T \\
+USPS & 75.50 $\pm$ 1.90 & 66.26 $\pm$ 1.70 & 79.80 $\pm$ 1.60 & 80.86 $\pm$ 1.20 & 9.24 & I \\
 \bottomrule
 \end{tabular}
 \endgroup
-\caption{Historical SSC scalar records, reselected jointly by $D_{\max}$ then $D_{\rm mean}$; this is a retrospective match, not label-free selection. Means $\pm$ sample SD use one configuration and all 50 seeds. I: iterate stopping without a gap certificate; T: iteration cap. None of these historical $G$ arrays is recoverable, so current solver audits cannot certify their exact outputs. Settings and source versions appear in the appendix.}\label{tab:refresh-main}
+\caption{Closest evaluated SSC reconstructions under joint $D_{\max}$/$D_{\rm mean}$ matching. This is retrospective numerical selection using labels and paper targets; historical subset identity remains unverified. Means $\pm$ sample SD use one configuration and all 50 seeds. Compatible-pool winners are shown where available; $\dagger$ marks a separately selected adaptation. I: iterate stopping without a gap certificate; T: iteration cap; U: other uncertified state. Exact candidate IDs, counts, signed differences, settings and both pools appear in the appendix. Historical selections are retained separately.}\label{tab:refresh-main}
 \end{table}

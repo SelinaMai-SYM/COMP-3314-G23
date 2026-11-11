@@ -34,21 +34,13 @@ contain historical and newly measured endpoints for
 [USPS](../results/submission_refresh/per_benchmark/USPS.md).
 
 <!-- BEGIN SUBSET RESULTS -->
+
 ### Final source/subset results
 
-The final source/subset comparison is reserved for the versioned subset release.
-This edition reports the historical selections and completed method comparisons;
-it does not publish partial subset winners.
+The frozen release contains 74,436 complete physical SSC configurations and 3,721,800 scalar rounding trials. The catalogue also retains aliases and unevaluated hypotheses; a complete configuration requires all 50 declared seeds. Source/subset coverage is recorded in the [configuration coverage](../results/subset_search/execution_coverage.csv) and [fixed-protocol distributions](../results/subset_search/fixed_protocol_family_distributions.csv).
 
-| Result | Availability |
-|---|---|
-| Joint source/subset matches in compatible and adapted pools | Reserved for the final subset release |
-| Separate mean/sample-SD and native-best endpoints | Reserved for the final subset release |
-| Additional rounding on locked selections | Reserved for the final subset release |
+The [locked matches](../results/subset_search/closest_matches.csv) keep compatible and adapted pools, mean endpoints and native-best endpoints separate. Additional rounding completed for 18 of 18 locked winners, using the first unused 50-seed block at or above 1,000,000 without reselection. See [confirmation](../results/subset_search/rounding_confirmation.csv). These comparisons measure conditional rounding stability on the same fixed samples and representations; they do not identify historical membership or estimate unseen-data generalization.
 
-The final tables must retain complete seed sets, exact membership, numerical
-qualifications and failed or unevaluated configurations. A selected subset will
-remain a retrospective numerical match, not an identified historical dataset.
 <!-- END SUBSET RESULTS -->
 
 Exact AR/UMIST/BinAlpha historical membership remains unresolved. The available

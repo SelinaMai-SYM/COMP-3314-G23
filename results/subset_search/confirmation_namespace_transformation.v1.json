@@ -1,0 +1,10 @@
+{
+  "archive_id": "comp3314-scientific-artifacts-20261110-v1",
+  "original_historical_inventory_sha256": "28ed56c12f57ad8b978f91c66f2ddc249f699dee32a0fd44d6e5811b1bdef01f",
+  "original_namespace_sha256": "70db5fa46785e01f8c06b36107262acf140f7b2aff1f5b8786e5f4e84ccb2484",
+  "public_namespace_sha256": "bc3fea84fa6f4555f696b837fad426fb0b4cfe27fa8a8725913062092784a8eb",
+  "public_seed_proof_sha256": "8c4444eac0596590b993002634e9ae3ee387f7bd74f4c562c7020a381a4d9c63",
+  "schema": "public-confirmation-namespace-transformation-v1",
+  "seed_block_unchanged": true,
+  "winner_lock_unchanged": true
+}

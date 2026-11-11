@@ -74,10 +74,10 @@ targets; they do not identify historical sample membership or provide label-free
 parameter selection. Scientific restrictions and negative findings are retained
 in [limitations](docs/limitations.md).
 
-Final source/subset selections and additional rounding are reserved for the
-versioned subset release; [the results page](docs/results.md) contains their
-dedicated section. Scientific-archive availability is documented separately
-in the [reproducibility guide](docs/reproducibility.md#archive-availability).
+Final source/subset selections and additional-rounding outcomes are reported
+in [the results summary](docs/results.md), with separate statistical endpoints,
+eligibility pools and numerical qualifications. Scientific-archive availability is documented separately
+in the [reproducibility guide](docs/reproducibility.md#verified-archive-and-regeneration).
 
 See [theory](docs/theory.md) for derivations,
 [reproducibility](docs/reproducibility.md) for release interfaces and

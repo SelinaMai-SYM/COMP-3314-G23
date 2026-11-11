@@ -6,7 +6,7 @@ never regenerates or substitutes an embedding during a statistical rebuild.
 """
 from __future__ import annotations
 import argparse
-from collections import defaultdict
+from collections import defaultdict, Counter
 import csv
 import gzip
 import hashlib
@@ -749,6 +749,26 @@ def load(manifest_path):
     return root,manifest,paths,tables
 
 
+def coverage_summary(paths,tables):
+    """Derive input/grid coverage from the same hash-validated scalar records."""
+    catalogue=json.loads(paths['catalogue'].read_text())
+    summaries=tables['joint_search_summary.csv']
+    ssc_counts=Counter(row['candidate_id'] for row in summaries if not row.get('alias_of'))
+    sc_rows=_matched_sc_rows(paths['matched_sc']) if 'matched_sc' in paths else []
+    sc_counts=Counter(row['candidate_id'] for row in sc_rows if not row.get('alias_of'))
+    if 'coverage' in paths:
+        statuses=Counter(row['status'] for row in _csv_rows(paths['coverage']))
+    else:
+        statuses=Counter('COMPLETED_ALIAS' if row.get('alias_of') else 'COMPLETED' for row in summaries)
+    return {'intended_candidates':len(catalogue['candidates']),
+        'unique_catalogue_inputs':len({row.get('alias_of') or row['candidate_id'] for row in catalogue['candidates']}),
+        'status_counts':dict(statuses),'complete_unique_configurations':sum(ssc_counts.values()),
+        'complete_unique_candidates':len(ssc_counts),
+        'inputs_with_complete_30point_ssc_grid':sum(count==30 for count in ssc_counts.values()),
+        'inputs_with_complete_30point_ssc_and_3matched_sc_grid':sum(count==30 and sc_counts[key]==3 for key,count in ssc_counts.items()),
+        'candidate_completion_definition':'complete_unique_candidates counts inputs with any complete SSC configuration; full-grid counts are separate; aliases never multiply independent inputs'}
+
+
 def rebuild(manifest_path,output):
     """Validate every input and endpoint before atomically replacing known output."""
     root,manifest,paths,tables=load(manifest_path)
@@ -764,6 +784,7 @@ def rebuild(manifest_path,output):
     output.parent.mkdir(parents=True,exist_ok=True);temporary=Path(tempfile.mkdtemp(prefix='.rebuild-current-',dir=output.parent))
     try:
         for name,rows in tables.items():_write_csv(temporary/name,rows)
+        atomic_json(temporary/'coverage_summary.json',coverage_summary(paths,tables))
         shutil.copy2(paths['source_records'],temporary/'source_records.json.gz')
         for role,name in [('public_archive_receipt','public_archive_receipt.v1.json'),
                           ('source_registry_transformation','source_registry_transformation.v1.json')]:

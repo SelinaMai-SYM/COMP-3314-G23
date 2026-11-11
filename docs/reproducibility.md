@@ -1,7 +1,7 @@
 # Reproducibility and usage
 
-The repository provides source code, exact parameter configurations, the
-historical scalar release, completed flat statistical records and report sources.
+The repository provides source code, exact parameter configurations,
+historical and final scalar releases, artifact identities and report sources.
 Rebuilding published statistical tables is separate from fitting models on
 provider data. Technical module names
 such as `v3_reproduction` and `submission_refresh` are stable interfaces, not
@@ -24,8 +24,8 @@ installation. [Data setup](data.md) describes the independent data directory.
 ## Rebuild published scalar results
 
 These commands rebuild the historical release and joint historical selection,
-then generate report tables from the completed flat CSV/JSON records in this
-edition. They require neither image archives nor a scientific artifact root:
+then generate report tables from the published scalar records. They require
+neither image archives nor a scientific artifact root:
 
 ```bash
 python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output local/rebuilt_historical
@@ -33,16 +33,16 @@ python -m experiments.submission_refresh rebuild --config configs/submission_ref
 python experiments/submission_refresh/reporting.py --root .
 ```
 
-Historical reconstruction, completed baseline/numerical/graph comparisons and
-final subset results are distinct views. The first two are published here; final
-subset selections and their locked-rounding results have a
-[reserved section](results.md#final-sourcesubset-results). The report generator
-uses available completed records and preserves that reservation.
+Historical reconstruction, baseline/numerical/graph comparisons and final
+source/subset selections remain distinct views. The [results](results.md)
+retain separate eligibility pools, endpoints and locked-rounding outcomes.
+The report generator reads the authoritative scalar records without selecting
+new configurations or changing numerical qualifications.
 
 A historical rebuild validates primary keys, hashes, complete seed groups and
 selection consistency before replacing its own recognized output. It does not
 read old Git objects or substitute a regenerated embedding for a saved
-measurement. Flat report generation preserves the supplied metrics and
+measurement. Report generation preserves the supplied metrics and
 qualifications; it is not a fresh model fit or independent optimality audit.
 
 Large CSVs may be committed solely as `.csv.gz`. Supported readers resolve the
@@ -51,21 +51,21 @@ record actual stored-file hashes; release manifests retain uncompressed
 identities where required. Lossless transport does not change metrics or
 selection, and rebuilt outputs may be ordinary CSV.
 
-## Final release interfaces
+## Rebuild final scalar releases
 
-The final subset/scalar-evidence release manifests are not supplied as completed
-releases in this edition. The following interfaces are reserved for use with
-their published, hash-verified final manifests; they are not current setup or
-rebuild steps:
+The final subset and scientific-evidence manifests bind the exact published
+scalar inputs. These commands rebuild their statistical views without image
+data, model fitting, an external object store or old Git objects:
 
 ```bash
 python -m experiments.submission_refresh.current_release rebuild --release-manifest configs/subset_search/release_manifest.json --output local/rebuilt_subsets
 python -m experiments.submission_refresh rebuild-evidence --config configs/submission_refresh/campaign.yaml --release-manifest configs/submission_refresh/evidence_manifest.json --output local/rebuilt_methods
 ```
 
-Each final release must identify its exact statistical inputs, source/parameter
-inventory, trials and coverage. A public presentation marker or flat table is
-not a substitute for a final release manifest.
+The final releases identify their statistical inputs, source/parameter
+inventories, trials and coverage. Manifest hashes distinguish original records
+from public projections, including compressed and uncompressed identities
+where declared.
 
 ## Synthetic example and experiments
 
@@ -88,9 +88,9 @@ bound the evaluated design, and coverage records distinguish complete,
 unsuccessful and unevaluated configurations. A complete endpoint requires every
 declared seed.
 
-Aggregation of a complete local scientific store is a separate source-data
-operation. Final published subset/scalar releases must bind those outputs to
-their final manifests before their reserved rebuild interfaces apply.
+Aggregation of a local scientific store is separate from scalar rebuilding.
+The published final manifests bind the released statistical views; rebuilding
+those views does not load scientific arrays or rerun models.
 
 See [experimental protocol](experimental_protocol.md) before interpreting a
 mean, native-best endpoint, oracle match or certified objective.
@@ -98,30 +98,13 @@ mean, native-best endpoint, oracle match or certified objective.
 ## Scientific artifacts
 
 <!-- BEGIN ARTIFACT AVAILABILITY -->
-### Archive availability
 
-This edition publishes scalar records, source/configuration identities and data
-preparation instructions. A downloadable scientific matrix/checkpoint archive
-and its final recovery receipt are reserved for the final artifact release.
-No archive download or completed recovery is claimed here.
+### Verified archive and regeneration
 
-The final availability statement must provide a distributable location and
-verified member manifest, or an exact regeneration procedure where provider
-terms restrict redistribution. Scientific artifacts include representations,
-graphs, predictions, duals, projections and checkpoints. Their content-addressed
-identities remain distinct from the scalar tables.
+The complete scientific archive is retained outside Git because it includes provider-restricted source-derived arrays. Its [verified public receipt](../results/submission_refresh/public_archive_receipt.v1.json) identifies the recovered bytes and object inventory. The committed public source/record projections retain separate original and public-payload hashes. Scalar rebuilding requires no private archive.
 
-The exporter/recovery interfaces below are reserved for a complete local store
-and its final verified archive; they are not current download instructions:
+To regenerate arrays, obtain the exact provider files and prepared parent versions in [data setup](data.md), use the committed candidate manifests, and run the baseline and subset commands above with independent data/artifact roots. The additional fixed graph and EnSC designs are declared in `configs/submission_refresh/graph_queue.json` and `configs/submission_refresh/ensc_formal_queue.json`; pass each file to the same experiment command with `--queue`. Their oracle diagnostic and coefficient-validation qualifications are part of the protocol. Restricted data availability and source-identity limitations remain explicit rather than being replaced by inferred substitutes.
 
-```bash
-python -m experiments.submission_refresh.export_artifacts export --artifact-root ARTIFACT_ROOT --archive ARTIFACT_ARCHIVE.tar.gz
-python -m experiments.submission_refresh.export_artifacts recover --archive ARTIFACT_ARCHIVE.tar.gz --output RECOVERED_ARTIFACT_ROOT
-```
-
-Recovery verifies member paths, declared members, sizes and hashes. Provider-data
-conditions also apply to derived artifacts. Historical rebuilding and completed
-flat report generation above require no such archive.
 <!-- END ARTIFACT AVAILABILITY -->
 
 ## Source quality and report

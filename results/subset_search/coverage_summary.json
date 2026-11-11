@@ -1,0 +1,16 @@
+{
+  "candidate_completion_definition": "complete_unique_candidates counts inputs with any complete SSC configuration; full-grid counts are separate; aliases never multiply independent inputs",
+  "complete_unique_candidates": 2482,
+  "complete_unique_configurations": 74436,
+  "inputs_with_complete_30point_ssc_and_3matched_sc_grid": 2480,
+  "inputs_with_complete_30point_ssc_grid": 2480,
+  "intended_candidates": 4736,
+  "status_counts": {
+    "COMPLETED": 74436,
+    "COMPLETED_ALIAS": 3180,
+    "FAILED_COMPLETION_PRESERVED": 18,
+    "FAILED_ORIGINAL_PRESERVED": 6,
+    "NOT_RUN": 64440
+  },
+  "unique_catalogue_inputs": 4630
+}

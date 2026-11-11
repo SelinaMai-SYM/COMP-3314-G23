@@ -760,14 +760,14 @@ def generate(root: Path,date: str='2026-11-10'):
     appendix.append(table(['Data','Method','Paper ACC','Our ACC','Paper NMI','Our NMI',r'$D_{\max}$'],hist_rows,'llrrrrr',
                            'Joint closest historical mean/sample-SD endpoint; unavailable cells are not filled with adapted measurements.','tab:historical-joint',long=True))
     appendix += [r'\subsection{Native-objective-selected endpoint}',
-                 r'Within one fixed G, native K-means SSE selects one of50 assignments. This is a single assignment with no across-run SD. It does not compete with the mean endpoint. Full method-specific endpoint records are in \texttt{results/submission\_refresh/endpoint\_comparison.csv}; LDA cross-subspace native selection is unavailable.']
+                 r'Within one fixed G, native K-means SSE selects one of 50 assignments. This is a single assignment with no across-run SD. It does not compete with the mean endpoint. Full method-specific endpoint records are in \texttt{results/submission\_refresh/endpoint\_comparison.csv}; LDA cross-subspace native selection is unavailable.']
     native_rows=[]
     for benchmark in BENCHMARKS:
         row=next((r for r in hist_endpoints if r.get('benchmark')==benchmark and r.get('method')=='ssc' and r.get('endpoint')=='native_best_of_50'),{})
         native_rows.append([benchmark,metric(row,'acc',native=True),metric(row,'nmi',native=True),number(row.get('D_max')),number(row.get('D_mean')),escape(value(row,'selected_seed',default='--')),status_abbreviation(row)])
     appendix.append(table(['SSC data','ACC','NMI',r'$D_{\max}$',r'$D_{\rm mean}$','Seed','Fit'],native_rows,'lrrrrrc',long=True))
     appendix += [r'\subsection{Separate historical repeatability batches}',
-                 r'Existing multi-batch records are a separate endpoint. Each batch contains50 disjoint rounding seeds on its fixed input. The following ranges describe variation of batch means and native-selected assignments, without treating a single native assignment as having a within-batch SD. They are not independent datasets, and are not new campaign measurements. All methods and exact configuration IDs are preserved in \texttt{historical\_repeatability\_batches.csv} and its summary/manifest. LDA source-native selection remains diagnostic only.']
+                 r'Existing multi-batch records are a separate endpoint. Each batch contains 50 disjoint rounding seeds on its fixed input. The following ranges describe variation of batch means and native-selected assignments, without treating a single native assignment as having a within-batch SD. They are not independent datasets, and are not new campaign measurements. All methods and exact configuration IDs are preserved in \texttt{historical\_repeatability\_batches.csv} and its summary/manifest. LDA source-native selection remains diagnostic only.']
     repeatability=read_csv(names['repeatability'])
     repeat_rows=[]
     for row in repeatability:

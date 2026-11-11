@@ -475,6 +475,9 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
             for name in files:
                 details = compare_csv(self.checkout / committed / name, rebuilt / name,transport_root=self.checkout)
                 self.check('csv-parity-' + rebuilt.name + '-' + name, True, **details)
+        committed_coverage=json.loads((self.checkout/'results/subset_search/coverage_summary.json').read_text())
+        rebuilt_coverage=json.loads((current/'coverage_summary.json').read_text())
+        self.check('subset-coverage-summary-parity',committed_coverage==rebuilt_coverage)
         for benchmark in BENCHMARKS:
             name = benchmark + '.md'
             committed = self.checkout / 'results/subset_search' / name

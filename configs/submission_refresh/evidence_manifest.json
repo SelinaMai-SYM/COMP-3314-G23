@@ -1,0 +1,209 @@
+{
+  "archive_receipt_file": "results/submission_refresh/public_archive_receipt.v1.json",
+  "baseline_file": "results/submission_refresh/baseline_records.jsonl.gz",
+  "baseline_records": 190,
+  "checkout_root_relative": "../..",
+  "current_scalar_counts": {
+    "ensc_configurations": 176,
+    "ensc_jobs": 4,
+    "usps_continuation_evaluations": 3,
+    "usps_continuation_fits": 2,
+    "usps_evaluation_jobs": 2,
+    "usps_original_audit": 12,
+    "usps_original_evaluations": 11
+  },
+  "current_scalar_file": "results/submission_refresh/current_scalar_records.jsonl.gz",
+  "display_units": "percent; differences in percentage points",
+  "files": {
+    "configs/submission_refresh/graph_design.public.v1.json": {
+      "bytes": 87680,
+      "sha256": "f008fbd6d512a654b59aeef2b7deb32eadf3f743a46885381802c4d2a797e953"
+    },
+    "configs/submission_refresh/selection.yaml": {
+      "bytes": 592,
+      "sha256": "00a58debec99d983b1257efd5f7485b01e3ef15f3a29867afe27ed08850faae1"
+    },
+    "configs/v3/paper_reference.yaml": {
+      "bytes": 7022,
+      "sha256": "ef0b2af8faf4d1bf02517686a61dbcf1047337e9cb30983a8307536a22259e63"
+    },
+    "results/submission_refresh/baseline_coverage_manifest.json": {
+      "bytes": 753,
+      "sha256": "180640bab46424937995cfd68903d700fc2d5b510605f99aa70852ab85e66ab8"
+    },
+    "results/submission_refresh/baseline_execution_coverage.csv": {
+      "bytes": 137500,
+      "sha256": "8104627ca110b8bf3d57bb1f8ad1a218647c87ce00d2e906f0c6000c9d41f3a4"
+    },
+    "results/submission_refresh/baseline_records.jsonl.gz": {
+      "bytes": 296490,
+      "sha256": "6e9c881b786131c39dfafa125b164a422275c9f2c157f490c2cdc05216f81dc1",
+      "uncompressed_sha256": "fc6361e02d384096fcb5b8380101a3a289400b6b8c2dd94385ca92a4ff990492"
+    },
+    "results/submission_refresh/baseline_seed_coverage.csv": {
+      "bytes": 5468829,
+      "sha256": "342ec2902c1dfbdd00ff3b995f781b7199bc8a3d914809a71443ccf42523cc98"
+    },
+    "results/submission_refresh/casebook_summary.csv": {
+      "bytes": 362735,
+      "sha256": "98aaabde33171622aeade40d08dc27eea9953e58c5cb9efbc077fe628f64fab8"
+    },
+    "results/submission_refresh/current_scalar_records.jsonl.gz": {
+      "bytes": 12959433,
+      "sha256": "e295a9d042eb4eded1098cbca5fa20e8f77b08e56baf37041226cdf854baceba",
+      "uncompressed_sha256": "96df1da8eee9d5bc896d272e62e45ccdd2990502a6b128fd69bd0c06bfb0d78c"
+    },
+    "results/submission_refresh/error_cases.csv": {
+      "bytes": 948816,
+      "sha256": "4e69191d51d9e9fcc12106830e21a9d0b62b4d25543729eadca94a99f664a2a9"
+    },
+    "results/submission_refresh/execution_coverage.csv": {
+      "bytes": 429481,
+      "sha256": "bdefb53c0261d6f9830e1afa83273e4377b179d91078257dfb796fc84138084f"
+    },
+    "results/submission_refresh/graph_coverage_manifest.json": {
+      "bytes": 503,
+      "sha256": "30f11035693a3318a19d9118569a6eaa256b1f8afe44dbe8e2ab71537c035a04"
+    },
+    "results/submission_refresh/graph_execution_coverage.csv": {
+      "bytes": 676047,
+      "sha256": "ada523eeeff1ee52ba68c1f842eb8c7381cd4dc20d13d5dd4867b78c7e6a1803"
+    },
+    "results/submission_refresh/graph_records.jsonl.gz": {
+      "bytes": 8084012,
+      "sha256": "93854facfe97b382a0e122f06983e24d0113f6da6727da6b7e5d8a1526772885",
+      "uncompressed_sha256": "efaeb8143a8530809e092ec7496b3075759ccd54b8706eb520ae23459dae3694"
+    },
+    "results/submission_refresh/public_archive_receipt.v1.json": {
+      "bytes": 1345,
+      "sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973"
+    },
+    "results/submission_refresh/public_projection.v1.json": {
+      "bytes": 236706,
+      "sha256": "c452d8fed2ebd7138181a258477985a6c75020fce7dd45ea82106e2f9f580251"
+    },
+    "results/submission_refresh/resource_usage.json": {
+      "bytes": 730,
+      "sha256": "38b7cfd94add096703c8992afe68c0b1e3bc441c879e1ba91cf89b3dbb26b5c2"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/AR_LZUFE1680.json": {
+      "bytes": 31860,
+      "sha256": "e13860b8a734ccc09ad302d0c7afb77bd89b063707111370949c7d2c74a2a8f3"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/BinAlpha_parent36.json": {
+      "bytes": 33988,
+      "sha256": "590531aac487b3bb3f48b11e509a4cbc70f6891e1823f8245626ef7e38cc04f4"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/JAFFE.json": {
+      "bytes": 4092,
+      "sha256": "b9b472a5b336f7ee11e9fd7dbd19a92b0c746f2dfe2bbb395bdd644288410d59"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/MSRA25_EBSA_16x16.json": {
+      "bytes": 36637,
+      "sha256": "6217cbdd47eaffab3177210a956f47582c4134cb417fd4fc6e7454b7eb6ac7d2"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/ORL_att92.json": {
+      "bytes": 7458,
+      "sha256": "56ebb385847d5826c551089e4e21989a3147f3c46056022dfb957c11e7e23018"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Figshare575.json": {
+      "bytes": 12433,
+      "sha256": "37503750b09d6a2c09700c94ce74fd5497b2a0873a4ed8dbd097392cde92dc08"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_LZUFE574.json": {
+      "bytes": 12415,
+      "sha256": "c47b876ca9a27a6b065de8d3280918b4a949579488afa57183dbbb1986d236bb"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Roweis575.json": {
+      "bytes": 12433,
+      "sha256": "37503750b09d6a2c09700c94ce74fd5497b2a0873a4ed8dbd097392cde92dc08"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Wayback575.json": {
+      "bytes": 12433,
+      "sha256": "37503750b09d6a2c09700c94ce74fd5497b2a0873a4ed8dbd097392cde92dc08"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Wayback_dedup565.json": {
+      "bytes": 10428,
+      "sha256": "17f6ecfe4e2466accf0a6cc5a4d5ee3c825ef6ed3ac139baee70100a887ec297"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Zenodo575_28x23.json": {
+      "bytes": 12433,
+      "sha256": "37503750b09d6a2c09700c94ce74fd5497b2a0873a4ed8dbd097392cde92dc08"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/USPS.json": {
+      "bytes": 184220,
+      "sha256": "bfadb25c55a9fd3170acef3c01e95167ec402c4c795e14b48700cbe43e71b634"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414.json": {
+      "bytes": 46540,
+      "sha256": "dbe62311d271d4cd976cd092baac04101b16f7dcad30110f224ef0bc296624d6"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414_bicubic.json": {
+      "bytes": 46540,
+      "sha256": "dbe62311d271d4cd976cd092baac04101b16f7dcad30110f224ef0bc296624d6"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414_nearest.json": {
+      "bytes": 46540,
+      "sha256": "dbe62311d271d4cd976cd092baac04101b16f7dcad30110f224ef0bc296624d6"
+    },
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_dengcai32.json": {
+      "bytes": 46540,
+      "sha256": "dbe62311d271d4cd976cd092baac04101b16f7dcad30110f224ef0bc296624d6"
+    },
+    "results/submission_refresh/source_audit/source_version_audit.json": {
+      "bytes": 449402,
+      "sha256": "ddf6e6de554a1b417a7050d28c3469448c0dda0d06096a97e119c19e29ccf749"
+    },
+    "results/submission_refresh/usps_numerical_reference_input_identity.json": {
+      "bytes": 2279,
+      "sha256": "d63a406a2d54d958a799738da76c78c6ee03362c1952cabf5bc539b196c3d988"
+    },
+    "results/subset_search/source_inventory.csv": {
+      "bytes": 3636,
+      "sha256": "323ae13d56de8125955a933bf03c1fcf1b78d9e3b889fb2e1ecc34ec03e9473a"
+    }
+  },
+  "full_campaign_coverage_required": true,
+  "graph_file": "results/submission_refresh/graph_records.jsonl.gz",
+  "graph_records": 360,
+  "input_metric_units": "unit interval",
+  "inventory_inputs": [
+    "results/subset_search/source_inventory.csv",
+    "results/submission_refresh/source_audit/source_version_audit.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/AR_LZUFE1680.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_LZUFE574.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Wayback575.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Wayback_dedup565.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Roweis575.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Figshare575.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/UMIST_Zenodo575_28x23.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/BinAlpha_parent36.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_dengcai32.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414_nearest.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/YaleB_cropped2414_bicubic.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/USPS.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/MSRA25_EBSA_16x16.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/ORL_att92.json",
+    "results/submission_refresh/source_audit/source_duplicate_maps/JAFFE.json"
+  ],
+  "original_evidence_manifest_sha256": "b12d411526d7de480c60fac8cf2706b2874f64fb4d196ec0b24ea4191e226695",
+  "paper_file": "configs/v3/paper_reference.yaml",
+  "projection_file": "results/submission_refresh/public_projection.v1.json",
+  "schema": "submission-scalar-evidence-public-v1",
+  "selection_file": "configs/submission_refresh/selection.yaml",
+  "supplementary_files": [
+    "results/submission_refresh/baseline_coverage_manifest.json",
+    "results/submission_refresh/baseline_execution_coverage.csv",
+    "results/submission_refresh/baseline_seed_coverage.csv",
+    "results/submission_refresh/casebook_summary.csv",
+    "results/submission_refresh/error_cases.csv",
+    "results/submission_refresh/execution_coverage.csv",
+    "results/submission_refresh/graph_coverage_manifest.json",
+    "results/submission_refresh/graph_execution_coverage.csv",
+    "results/submission_refresh/public_archive_receipt.v1.json",
+    "results/submission_refresh/public_projection.v1.json",
+    "results/submission_refresh/resource_usage.json",
+    "results/submission_refresh/usps_numerical_reference_input_identity.json"
+  ]
+}

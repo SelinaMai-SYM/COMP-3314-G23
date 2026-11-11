@@ -22,18 +22,18 @@
       "sha256": "cb82240d9f23ab781001b2c73b89ed6c6ef95f852175e8dac5cdd83cae449472"
     },
     "certified_search_status": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/certified_search_status.csv",
       "path": "results/subset_search/certified_search_status.csv",
-      "sha256": null,
-      "transport": null
+      "sha256": "4b0a787a07c2c1c086e95c89bd5e462a79224329851ee6445ff813b351a96b15",
+      "transport": "plain"
     },
     "closest": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/closest_matches.csv",
       "path": "results/subset_search/closest_matches.csv",
-      "sha256": null,
-      "transport": null
+      "sha256": "b9bcd515149d879d10f6fde565c489ce1e9d487ba842d12352825fd175ca1456",
+      "transport": "plain"
     },
     "cohort": {
       "available": true,
@@ -42,17 +42,17 @@
       "sha256": "495b7bfe0495ac821b73a6b7ce0680dd193df7d592098a3c1e6eb0918e09bc2c"
     },
     "confirmation": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/rounding_confirmation.csv",
       "path": "results/subset_search/rounding_confirmation.csv",
-      "sha256": null,
-      "transport": null
+      "sha256": "3e5cdfb8513e1d0ebbd2c0c273c7f37fbe816a976cbe6bc2a7d4c85943cb656c",
+      "transport": "plain"
     },
     "coverage": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/coverage_summary.json",
       "path": "results/subset_search/coverage_summary.json",
-      "sha256": null
+      "sha256": "584ead8ae9025d31aa93454a77af60c41f9f53e999cc21f70064a52b069a436b"
     },
     "ensc_capability": {
       "available": true,
@@ -67,26 +67,32 @@
       "path": "results/submission_refresh/ensc_four_benchmark_conclusion.json",
       "sha256": "906bf9e9b2573f2ae9512ec07262ddcb1717a6303943bcd4b21325ed481f30dc"
     },
+    "evidence_manifest": {
+      "available": true,
+      "logical_path": "configs/submission_refresh/evidence_manifest.json",
+      "path": "configs/submission_refresh/evidence_manifest.json",
+      "sha256": "87be0cacb1f0f8ec9c9cdbc57c8a6a9e7973bb4ab9ea70e9d0532f14bbc477b6"
+    },
     "execution": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/execution_coverage.csv",
       "path": "results/subset_search/execution_coverage.csv",
-      "sha256": null,
-      "transport": null
+      "sha256": "6066795a265aafe73abcda09cb54ad9e471d61338046a31c33950b7fca4d2fa6",
+      "transport": "plain"
     },
     "extension": {
       "available": true,
       "logical_path": "results/submission_refresh/extension_results.csv",
       "path": "results/submission_refresh/extension_results.csv",
-      "sha256": "5d2de88e8c5e47d4f686c2c06d048a795b9e6716831dcf9051583dfd21ad1a74",
+      "sha256": "f63a01fe52344a177fd321210761e7fb6ef259d272e09fdfe6d06482e0bc490d",
       "transport": "plain"
     },
     "fixed": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/fixed_protocol_summary.csv",
       "path": "results/subset_search/fixed_protocol_summary.csv",
-      "sha256": null,
-      "transport": null
+      "sha256": "96070a0970dfd1baec3e23a845ee80ca27abfd5a5ff4e11ca6f232081a94d78a",
+      "transport": "plain"
     },
     "gate": {
       "available": true,
@@ -98,13 +104,13 @@
       "available": true,
       "logical_path": "results/submission_refresh/graph_coverage_manifest.json",
       "path": "results/submission_refresh/graph_coverage_manifest.json",
-      "sha256": "0578cb47774c010545898a2005a211feaf9fee15681010642cf7942d50774208"
+      "sha256": "30f11035693a3318a19d9118569a6eaa256b1f8afe44dbe8e2ab71537c035a04"
     },
     "graph_diagnostics": {
       "available": true,
       "logical_path": "results/submission_refresh/graph_diagnostics.csv",
       "path": "results/submission_refresh/graph_diagnostics.csv",
-      "sha256": "374a565c44039eab7fbd940951f3497472f9fbbc6e93886b861ae1de629d4a2e",
+      "sha256": "df5df853547ae5daf9994179c5909cf0ef02d60af6f0f4e586da56d41fd20aed",
       "transport": "plain"
     },
     "graph_execution": {
@@ -149,30 +155,24 @@
       "transport": "plain"
     },
     "joint": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/joint_search_summary.csv",
-      "path": "results/subset_search/joint_search_summary.csv",
-      "sha256": null,
-      "transport": null
+      "path": "results/subset_search/joint_search_summary.csv.gz",
+      "sha256": "74d7f0e1f497a8532aae2238384947e692020c83d27061b23eb67506e48859fe",
+      "transport": "gzip"
     },
     "native": {
-      "available": false,
+      "available": true,
       "logical_path": "results/subset_search/native_best_summary.csv",
-      "path": "results/subset_search/native_best_summary.csv",
-      "sha256": null,
-      "transport": null
+      "path": "results/subset_search/native_best_summary.csv.gz",
+      "sha256": "e9c4b214a65ce6221f426dc9742b4f5ae07c75441833559937bc7daad321b4e5",
+      "transport": "gzip"
     },
     "paper": {
       "available": true,
       "logical_path": "results/submission_refresh/paper_reference_verification.json",
       "path": "results/submission_refresh/paper_reference_verification.json",
       "sha256": "41d6f22d62e99a0e6e7e3246d35639ef2a34b93a652a19434cd21564aadf88ee"
-    },
-    "publication_stage": {
-      "available": true,
-      "logical_path": "configs/submission_refresh/publication_stage.json",
-      "path": "configs/submission_refresh/publication_stage.json",
-      "sha256": "fbd22564b954736076744648c60ed30b4c90c03523f81b323ef495f2612f2144"
     },
     "repeatability": {
       "available": true,
@@ -188,16 +188,16 @@
       "sha256": "9431c133a3941a51e40ea7cb5850a3090b00419556c402b149ac7aeaf878a599"
     },
     "resource": {
-      "available": false,
+      "available": true,
       "logical_path": "results/submission_refresh/resource_usage.json",
       "path": "results/submission_refresh/resource_usage.json",
-      "sha256": null
+      "sha256": "38b7cfd94add096703c8992afe68c0b1e3bc441c879e1ba91cf89b3dbb26b5c2"
     },
     "usps_continuation_audit": {
       "available": true,
       "logical_path": "results/submission_refresh/usps_continuation_audit.csv",
       "path": "results/submission_refresh/usps_continuation_audit.csv",
-      "sha256": "62179642dfa709a98b5b357905760ce23b18b87540132ec4bdb5b2da2fe7504e",
+      "sha256": "2df484d41f940dd2c91d190db8ce931a4ae053999ecbeb6227402340a559ec55",
       "transport": "plain"
     },
     "usps_continuation_evaluation": {
@@ -231,7 +231,6 @@
     "report/tables/refresh_repairs.tex"
   ],
   "presentation": "public-scientific",
-  "publication_stage": "methods-and-completed-studies",
   "schema": "report-inputs-v1",
   "statistical_endpoints_separate": true
 }

@@ -28,6 +28,15 @@ OPTIONAL_LIGHT=['baseline_execution_coverage.csv','baseline_seed_coverage.csv','
 PUBLIC_SCHEMA='submission-scalar-evidence-public-v1'
 
 
+def _read_csv_rows(path):
+    """Read provenance-rich scalar rows without truncating large JSON fields."""
+    previous=csv.field_size_limit()
+    try:
+        csv.field_size_limit(max(previous,64*1024*1024))
+        with Path(path).open(newline='') as stream:return list(csv.DictReader(stream))
+    finally:csv.field_size_limit(previous)
+
+
 def _safe_path(root,relative):
     if not isinstance(relative,str) or Path(relative).is_absolute():raise ValueError('evidence paths must be checkout-relative')
     path=(root/relative).resolve()
@@ -192,7 +201,7 @@ def _validate_graph_coverage(csv_path,manifest_path,root,locked=None):
         if locked is not None and relative not in locked:raise ValueError('public graph design is not hash-locked')
         if digest(path)!=manifest.get('design_sha256'):raise ValueError('public graph design hash mismatch')
         definitions=json.loads(path.read_text()).get('configurations',[])
-        with csv_path.open(newline='') as stream:rows=list(csv.DictReader(stream))
+        rows=_read_csv_rows(csv_path)
         if len(definitions)!=362 or len(rows)!=362 or dict(Counter(row.get('phase') for row in rows))!=EXPECTED_PHASES:
             raise ValueError('public graph coverage must retain all 362 tasks')
         from .graph_coverage import SELECTORS
@@ -210,7 +219,7 @@ def _validate_graph_coverage(csv_path,manifest_path,root,locked=None):
     if locked is not None and queue_relative not in locked:raise ValueError('graph coverage queue is not hash-locked')
     if digest(queue_path)!=manifest.get('queue_sha256'):raise ValueError('graph coverage frozen queue hash mismatch')
     tasks=_validate_tasks(json.loads(queue_path.read_text()))
-    with csv_path.open(newline='') as stream:rows=list(csv.DictReader(stream))
+    rows=_read_csv_rows(csv_path)
     if len(rows)!=362 or dict(Counter(row.get('phase') for row in rows))!=EXPECTED_PHASES:raise ValueError('graph coverage CSV must retain all 362 tasks')
     expected={task['run_id']:task for task in tasks};actual={row.get('run_id'):row for row in rows}
     if len(actual)!=len(rows) or actual.keys()!=expected.keys():raise ValueError('graph coverage run IDs do not match the frozen design')
@@ -576,7 +585,7 @@ def project_existing_release(manifest_path,public_root,*,archive_receipt):
                 payload,_=_gzip_bytes(packet_roles[relative][0]);target.write_bytes(payload)
             elif relative in original.get('inventory_inputs',[]):shutil.copy2(path,target)
             elif path.suffix=='.csv':
-                with path.open(newline='') as stream:rows=list(csv.DictReader(stream))
+                rows=_read_csv_rows(path)
                 rows=public_coverage_rows(rows)
                 write_csv(target,rows or [{'status':'NO_RECORDED_SCIENTIFIC_ROWS'}])
             elif path.name=='resource_usage.json':atomic_json(target,final_resource_summary(json.loads(path.read_text())))

@@ -3,7 +3,7 @@
   "design_path": "configs/submission_refresh/graph_design.public.v1.json",
   "design_sha256": "f008fbd6d512a654b59aeef2b7deb32eadf3f743a46885381802c4d2a797e953",
   "intended_tasks": 362,
-  "original_coverage_manifest_sha256": "2c114a687cc4dff053df07adb4d876594d899ae04630441e85b6ddf32ddd6213",
+  "original_coverage_manifest_sha256": "eb65e9ef0e587a4f7e4ce182ccbb647148c94d4dcd7c3c07f5ed448ace836700",
   "phase_counts": {
     "G1": 2,
     "G2": 48,

@@ -41,9 +41,10 @@ def _object_reference(ref):
 
 def _validate_logical(logical,object_refs,extras):
     seen={};object_paths={ref['path'] for ref in object_refs};object_keys={(ref['path'],ref['sha256']) for ref in object_refs};extra_paths={ref['relative_path'] for ref in extras}
+    reserved_paths=object_paths|extra_paths
     for record in logical:
         name=_name(record.get('record',''));ref=record['object'];_object_reference(ref)
-        if name.startswith('objects/') or name in {'EXPORT_MANIFEST.json','RECOVERED_EXPORT.json'} or name in object_paths|extra_paths:
+        if name.startswith('objects/') or name in {'EXPORT_MANIFEST.json','RECOVERED_EXPORT.json'} or name in reserved_paths:
             raise ValueError('logical recovery path conflicts with a reserved scientific object')
         if name in seen and seen[name]!=ref['sha256']:raise ValueError('conflicting logical recovery paths')
         seen[name]=ref['sha256']
@@ -147,9 +148,10 @@ def recover(archive,output):
     try:
         with tarfile.open(archive) as stream:
             manifest,payload,manifest_path=_archive_manifest(stream);_verify(stream,manifest,payload,manifest_path)
+            members_by_name={member.name:member for member in stream.getmembers()}
             for ref in manifest['objects']+manifest['extra_files']:
                 name=ref.get('path',ref.get('relative_path'));target=tmp/name
-                source=stream.extractfile(name)
+                source=stream.extractfile(members_by_name[name])
                 target.parent.mkdir(parents=True,exist_ok=True)
                 with target.open('wb') as dest:shutil.copyfileobj(source,dest)
             # The manifest's own content-addressed object is deliberately not

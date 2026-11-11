@@ -380,3 +380,12 @@ dimension, filtering and shrinkage. Stable geometry can still cluster poorly,
 and large diffusion times can erase distinctions. The earlier heat results are
 secondary evidence; no new Huber, capped-fusion or heat grid forms the main
 submission comparison.
+
+## Independent refinement theory
+
+The current E1, E2 and E3 studies have distinct convex objectives, dual feasible
+sets and proximal maps. Their complete derivations and limiting cases are in
+[independent convex refinement objectives](extension_verification_theory.md).
+The geometric-median dispersion bound applies to E1's optimized G; it does not
+imply class preservation or ACC/NMI gains. E2's tangent/radius support function
+and E3's combined incidence/hinge node capacities are checked separately.

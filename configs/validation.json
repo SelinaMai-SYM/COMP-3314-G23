@@ -4,6 +4,7 @@
   "pytest_argv": [
     "-q",
     "tests/submission_refresh",
+    "tests/extension_verification",
     "tests/next_round",
     "tests/v2",
     "tests/v3/test_lda_math.py",

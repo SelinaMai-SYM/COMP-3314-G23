@@ -97,12 +97,10 @@ def _public_light_projections(manifest,output,stage,archive):
             with opener(source,'rt') as stream:raw=json.load(stream)
             if role=='resource_usage':public=final_resource_summary(raw)
             elif role=='artifact_manifest':
-                public={'schema':'public-scientific-artifact-manifest-v1','archive_id':archive['archive_id'],
-                    'archive_sha256':archive['archive_sha256'],'recovered_objects':archive['recovered_objects'],
-                    'recovered_extra_files':archive['recovered_extra_files'],
-                    'original_manifest_sha256':info['sha256'],'logical_records':len(raw.get('records',[])),
-                    'recovery_command':'python -m experiments.submission_refresh.export_artifacts recover --archive ARCHIVE --output ARTIFACT_ROOT',
-                    'qualification':'The verified private archive retains the complete original logical-record and object inventory.'}
+                public={'schema':'public-artifact-lineage-v2','archive_id':archive['archive_id'],
+                    'archive_sha256':archive['archive_sha256'],'original_manifest_sha256':info['sha256'],
+                    'scope':'HISTORICAL_RECOVERY_LINEAGE_ONLY',
+                    'qualification':'Opaque identity of the original verified private recovery; no current object inventory or artifact-package claim.'}
             else:
                 public=public_metadata_payload(raw)
                 def finalized(value):
@@ -130,7 +128,7 @@ def _public_light_projections(manifest,output,stage,archive):
                 public['public_projection_schema']='public-subset-completion-records-v1'
                 public['sha256_fields_identify_original_archived_files']=True
             name=Path(OPTIONAL_FILES[role]).name
-            name=name[:-8]+'.public.v1.json.gz' if name.endswith('.json.gz') else name[:-5]+'.public.v1.json'
+            name=('artifact_lineage.public.v2.json' if role=='artifact_manifest' else name[:-8]+'.public.v1.json.gz' if name.endswith('.json.gz') else name[:-5]+'.public.v1.json')
             temporary=stage/name;target=output/name
             if name.endswith('.gz'):
                 temporary.write_bytes(gzip.compress((json.dumps(public,sort_keys=True,indent=2)+'\n').encode(),mtime=0))

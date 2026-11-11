@@ -81,6 +81,16 @@ python -m experiments.extension_verification verify --config configs/extension_v
 python -m experiments.extension_verification run --config configs/extension_verification/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
 ```
 
+## Main findings
+
+At the locked operating points, E1 changes eight-input angular-panel ACC/NMI by
+**−0.008 / +0.008 percentage points** relative to matched ordinary SSC. It does
+not outperform interpolation on mean ACC. The original-geometry eight-input
+macro remains unavailable because the native-16 MSRA proxy is uncertified.
+E2 and E3 fail their predefined development mechanism gates, so their formal
+eight-input optimizations are not promoted. These results support a dispersion
+bound and reproducible negative findings, without a new accuracy-improvement claim.
+
 ## Report and results
 
 Read the [technical report](report/Group_23.pdf), [results summary](docs/results.md)

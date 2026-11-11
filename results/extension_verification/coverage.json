@@ -1,10 +1,27 @@
 {
   "extension_benchmark_pairs": 24,
   "primary_panel_rows": 32,
-  "run_status": "PENDING",
-  "stage_completion": {},
+  "run_status": "COMPLETED",
+  "stage_completion": {
+    "E1": "COMPLETED",
+    "E1_AR": "COMPLETED",
+    "E1_BinAlpha": "COMPLETED",
+    "E1_JAFFE": "COMPLETED",
+    "E1_MSRA50": "COMPLETED",
+    "E1_ORL": "COMPLETED",
+    "E1_UMIST": "COMPLETED",
+    "E1_USPS": "COMPLETED",
+    "E1_YaleB": "COMPLETED",
+    "E2": "COMPLETED",
+    "E2_gate": "COMPLETED",
+    "E3": "COMPLETED",
+    "E3_gate": "COMPLETED",
+    "controls": "COMPLETED"
+  },
   "status_counts": {
-    "PENDING": 32
+    "COMPLETED_CERTIFIED": 15,
+    "COMPLETED_UNCERTIFIED": 1,
+    "GATE_FAILED": 16
   },
   "stop_reason": null
 }

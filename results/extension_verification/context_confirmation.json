@@ -1,0 +1,22 @@
+{
+  "all_gate_decisions_unchanged": true,
+  "configurations": 130,
+  "identical_object_counts": {
+    "G": 130,
+    "Q": 130,
+    "centers": 130,
+    "predictions": 130
+  },
+  "maximum_trial_metric_difference": {
+    "acc": 0.0,
+    "inertia": 0.0,
+    "nmi": 0.0
+  },
+  "pooled_as_additional_trials": false,
+  "schema": "scientific-context-confirmation-v1",
+  "scope": "Identical registered numerical inputs, objectives and rounding under separate infrastructure identities; deterministic confirmation, not independent datasets",
+  "source_contexts": [
+    "59483f6f0f0823f1b7e1ea73ea977544d6f01b74802b1b6f973dae8a2e372fd2",
+    "3ba74a179c5d95bb7585a1f88d5ec9fff7b89897b71679531429b16ac1fa1cc6"
+  ]
+}

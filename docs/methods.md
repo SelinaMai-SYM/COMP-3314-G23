@@ -125,3 +125,27 @@ centered float64 input, SVD rank tolerance
 limit is 300, with partition-equivalence stopping. Downstream SC and raw/PCA
 controls use one RANDOM Lloyd start per matched external seed. This adaptation
 does not establish the identity of the paper's historical LDA-SC method.
+
+## Independent convex refinements
+
+The [three registered refinements](extension_verification_plan.md) preserve the
+unsquared fidelity and frozen W0. E1 replaces edge fusion with a relative stopping
+tube. E2 restricts motion to fixed tangent planes around unit anchors. E3 adds
+frozen unit-gradient relative-neighbor hinges. Their modules are independent and
+their fit interfaces accept no labels. Their [objectives, duals and bounds](extension_verification_theory.md)
+state exactly what numerical certification establishes.
+
+For example, E1 accepts an anchor matrix and its fixed sparse graph:
+
+```python
+from method_extension.extension_verification.relative_stopping import solve_relative
+
+fit = solve_relative(H, W0, gamma, eta=0.25, max_iter=30000, cpu_limit=1800)
+G = fit["G"]
+```
+
+The registered campaign records optimized G and the actual panel-specific Q,
+then applies the common rounding protocol. E1 has no performance promotion gate;
+E2 and E3 require their separate development mechanisms to pass before formal
+eight-input optimization. Inactive, uncertified, failed, gated and unrun endpoints
+remain distinct in the [results](extension_verification_results.md).

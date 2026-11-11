@@ -1,0 +1,24 @@
+{
+  "checkout_root_relative": ".",
+  "counts": {
+    "points": 130,
+    "primary_panel_rows": 32,
+    "trials": 6500
+  },
+  "derivation_source_files": {
+    "experiments/extension_verification/diagnostics.py": "70c7402cd8b6997af5d41239d1a48a3376bd626c15f42fef30c6fb3da98b56b2",
+    "experiments/extension_verification/reporting.py": "74edf571b3ec1b122dd576cbbf27659f74348c0ca4ab454904d3d01336059f25"
+  },
+  "files": {
+    "scalar_records.v1.json.gz": {
+      "bytes": 411481,
+      "sha256": "113303209a05e0979c4061cef8b4c4f5af3a1cc5ee142a99c95166fa48dc01df",
+      "uncompressed_sha256": "70021770b29f176ca294aeb7efd973f8113b5e597daace76eda8b3639f32fd97"
+    }
+  },
+  "packet_file": "scalar_records.v1.json.gz",
+  "protocol_sha256": "4ee56bcbe2ae32b86461022f54354d8b866caa66347f81b09e68c93efeb272f6",
+  "schema": "ssc-refinement-release-v1",
+  "scope": "Fixed reference inputs; no subset or performance-based parameter selection",
+  "source_fingerprint": "3ba74a179c5d95bb7585a1f88d5ec9fff7b89897b71679531429b16ac1fa1cc6"
+}

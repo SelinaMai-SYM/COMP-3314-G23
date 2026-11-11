@@ -87,7 +87,7 @@ def _verify(stream,manifest,payload,manifest_path):
         if handle is None or hashlib.file_digest(handle,'sha256').hexdigest()!=ref['sha256']:raise ValueError('corrupt archive object')
 
 
-def export(artifact_root,output):
+def export(artifact_root,output,manifest_paths=None):
     store=ArtifactStore(artifact_root);objects={};logical=[];input_manifests=[];declared_extra=[]
     def visit(value):
         for ref in references(value):
@@ -98,7 +98,7 @@ def export(artifact_root,output):
                 continue
             item=store.get(ref);objects[ref['sha256']]=ref
             if isinstance(item,(dict,list)):visit(item)
-    for name in ['results/submission_refresh/artifact_manifest.json','results/subset_search/artifact_manifest.json']:
+    for name in (manifest_paths or ['results/submission_refresh/artifact_manifest.json','results/subset_search/artifact_manifest.json','results/extension_verification/artifact_manifest.json']):
         path=ROOT/name
         if not path.exists():continue
         manifest=json.loads(path.read_text());visit(manifest)
@@ -169,7 +169,7 @@ def recover(archive,output):
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('phase',choices=['export','recover']);parser.add_argument('--artifact-root');parser.add_argument('--archive',required=True);parser.add_argument('--output');args=parser.parse_args()
-    if args.phase=='export':print(json.dumps(export(args.artifact_root,args.archive),indent=2))
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('phase',choices=['export','recover']);parser.add_argument('--artifact-root');parser.add_argument('--archive',required=True);parser.add_argument('--output');parser.add_argument('--manifest',action='append',dest='manifest_paths',help='Explicit checkout-relative scientific manifest; repeat to define archive scope');args=parser.parse_args()
+    if args.phase=='export':print(json.dumps(export(args.artifact_root,args.archive,args.manifest_paths),indent=2))
     else:recover(args.archive,args.output)
 if __name__=='__main__':main()

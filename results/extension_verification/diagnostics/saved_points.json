@@ -1,1 +1,2417 @@
-{}
+{
+  "affine_checks": [
+    {
+      "SC_point_id": "f3c2989dc23052099831c53b8ef569956edf839142c8759a9ae03f68c56478c5",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "USPS",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "15853c6393edd9bf7231e544b3edbaf6600b3a17f570bf20bfe5b34b45e01a97"
+    },
+    {
+      "SC_point_id": "0347f3f1b46d85b1615b71b934e04425d789f7bf6b2b82c8b7115b1a27b268c9",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "AR",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "1ef9d37daad9be4874d24844eef04ed8e283a29bae5dc320221f1870c4a5cbf1"
+    },
+    {
+      "SC_point_id": "5479005b62c58a4f495d9acc24cbe6ab62dca0ba6388a8a47302b677460e54e4",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "AR",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "2122c370c99755c986a6220721b1f005ea084d77ec26063a368fe19bbf66a2d1"
+    },
+    {
+      "SC_point_id": "0922f330152c7c9549ef79751a485f96486cc87b5290f319916f9b10b72c409d",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "YaleB",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "3973c62b062cda7928aaee24d2cda2c72d0e736cc38db838e2c7c6fd39d59aa9"
+    },
+    {
+      "SC_point_id": "e417a7054009d202d7451104f323159f09d87b6144e61c814898f49cbc6f38b3",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "BinAlpha",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "419239df8100093cdbcf3d7bbc15148c0d8e7ca34eac009fd9be15fd44519d34"
+    },
+    {
+      "SC_point_id": "bf8c708e4df590301a2a73e0883e71516632a1033f5c3dfe37f83a3a0726e4f4",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "ORL",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "46f390b3d1b2155dc2cb69bbb76cdefc8ccc2d01d0c38fd23bffea78c9b2101d"
+    },
+    {
+      "SC_point_id": "ee3fa8a9e4bad11505331c4123e0148651b637cae53ca78e608921432e52726c",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "MSRA50",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "4a201439fa3ebca34f09c45135fcf7f3b7948effaf9347f08d74b53d37eece00"
+    },
+    {
+      "SC_point_id": "8d1149ec240864d0744c755d8879feb8ecae189c6bf8d52828afe173f37eeb95",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "BinAlpha",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "6fd1ae6a020c36f2a3998cf18f584766340881c16028c78d794aed40f6299509"
+    },
+    {
+      "SC_point_id": "43c2afaf7fa46328b9b7b4f4ec51470724bf6b634729666683c8e8bef2092ff6",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "JAFFE",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "714ee18215dbd0325715f74062f1c068b2a38d6d35050a83678e46ed39270d7d"
+    },
+    {
+      "SC_point_id": "beacdd4beed5163b53cac1d2136c0510d50189a883e3ae460c80674fcb0fa486",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "YaleB",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "8e9c4bf7502b7dd456d1bd3938aeaa173af981b07e89da34bc755d1f847980f9"
+    },
+    {
+      "SC_point_id": "4a5e72a2b6d2fd61cdc6bd6ec9e13aaa4517677c686910a32ad8fc158d9688b6",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "UMIST",
+      "expected_scale_in_Q": 0.25,
+      "maximum_coordinate_error": 0.0,
+      "panel": "original",
+      "scaled_point_id": "a352295c8118cb25cb7a324cbfbe3cc540fa0286da6d8ef31ca474a0d8c87732"
+    },
+    {
+      "SC_point_id": "4e057b6de9c2077ff7afc736eb1a239b470a6ec5fd9bdac9c400938c36c6fc5a",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "UMIST",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "ae445281aad9b7c95411cceb7aed2c013d62e9a7e40ae0bd61b2b33a7fcfb570"
+    },
+    {
+      "SC_point_id": "2638f65fd4f49ff3244ddebbd4066a367d2296729d816d4177f93db43aaa120f",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "USPS",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "dbd115b113d8ee41d40cc83b17570b1fcecb342398dc787d4259275400f3010a"
+    },
+    {
+      "SC_point_id": "93495d2d4616d50a83d4cbf1c7e14f122f568ab94d7eb81e57de56c72c5969fc",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "JAFFE",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "e1fd83216f0c69440205ed5b2bbdd8c04f289ac0a3c6a2cfaf157246b44c6d4c"
+    },
+    {
+      "SC_point_id": "383e31e0bc3a75b92578dd957ba5bb72f0fb6674d3083ca6cb417f6629e5225e",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "MSRA50",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "e5d5447f62ec4f21c5348622c9972232c3e92811b95f27f4680d97bbf092c0af"
+    },
+    {
+      "SC_point_id": "e2be5ab104e8505c0ad8df167d92a6b85f0319852c0a426d58f8ac65af1161b1",
+      "all_50_partitions_equivalent": true,
+      "benchmark": "ORL",
+      "expected_scale_in_Q": 1.0,
+      "maximum_coordinate_error": 0.0,
+      "panel": "angular",
+      "scaled_point_id": "e811fc48c06053d96787cb5ea6ac83103430d5e3f858b343bc3a1cb0facafd56"
+    }
+  ],
+  "movement_matches": [
+    {
+      "absolute_difference": 0.003320036893772251,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.013832759850085655,
+      "control_point_id": null,
+      "nearest_declared_point_id": "e11baadc91313eddaba435a0d6ea16d5cdc5cdc3eff80cc554fa561febf286aa",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.010512722956313404,
+      "target_point_id": "030726dfeb64c3057cac5062956ecb9f3da4102a211258159697c46b754d9d47",
+      "tolerance": 0.0005256361478156702
+    },
+    {
+      "absolute_difference": 2.0013828883294195e-05,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.000102757669373169,
+      "control_point_id": null,
+      "nearest_declared_point_id": "fadedbbb7f35fec26c370fcb5b873d78f9d540e22884cebae5c9e8aee802c46f",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 8.27438404898748e-05,
+      "target_point_id": "1196dc71428949d86b152c9dc9a9be78e062bbcb437232da39e9499266a31f4d",
+      "tolerance": 4.13719202449374e-06
+    },
+    {
+      "absolute_difference": 0.0003576006892294604,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.004855923394746198,
+      "control_point_id": null,
+      "nearest_declared_point_id": "c5fc3633fcc354372227567f924b0014cb2bc852743394cdb972577985056c00",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.004498322705516738,
+      "target_point_id": "18fcd4aaf4ca960d66e9487545d236f0e3404be6fd2503a29f67d1c887cf4abd",
+      "tolerance": 0.0002249161352758369
+    },
+    {
+      "absolute_difference": 1.5150317826350386e-06,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 5.922119299848985e-06,
+      "control_point_id": null,
+      "nearest_declared_point_id": "08f387f262044bfd2c5c2cd220f08a91af60f01e60f23126f4ec56533f2dc331",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 4.407087517213946e-06,
+      "target_point_id": "45c66c75e3ee2f11eca394f1896c6ccbac94d39a71192908e995e6dd490fe1c1",
+      "tolerance": 1e-06
+    },
+    {
+      "absolute_difference": 0.00027120964067087693,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.0013626024233170143,
+      "control_point_id": null,
+      "nearest_declared_point_id": "024a0617c8ecf1936aa9f5a011dd13a0e1be9b833914e1bc6d956318c289d851",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0010913927826461374,
+      "target_point_id": "4d79899008ac421eb2b9524a35ca1cfca6181515092cee904bac13ec0cf08a5d",
+      "tolerance": 5.456963913230687e-05
+    },
+    {
+      "absolute_difference": 0.0002550626373912209,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.0042818808633801175,
+      "control_point_id": null,
+      "nearest_declared_point_id": "080239419e58397b2f403a17b787f42cb951bab6a8b7d2f8962f86ee03030398",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.004026818225988897,
+      "target_point_id": "816ee0e144f6874caecea1dd84ce84a37a0809feef6bbc4b4077044304be6f9e",
+      "tolerance": 0.00020134091129944483
+    },
+    {
+      "absolute_difference": 0.0013244723340840453,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.012595977330753568,
+      "control_point_id": null,
+      "nearest_declared_point_id": "e7421ddb2e6541cc78c44a581cf38baa0615a50579078da6b245bb785b376063",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.011271504996669523,
+      "target_point_id": "aabb18d9a404e5fb24b2f8b716e5321cc77a4cc33a91267e9b91bba2b334e4ff",
+      "tolerance": 0.0005635752498334761
+    },
+    {
+      "absolute_difference": 0.004301964108498563,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.018457990294237343,
+      "control_point_id": null,
+      "nearest_declared_point_id": "9ee1ebc61d20d5238e54245e1c344ed34d8b9a911258420803db1762aadc3c8d",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.01415602618573878,
+      "target_point_id": "bb7a3d3be0bc164c7f7360beff29fe38b24ce1856e25574a8809ac21749f2b48",
+      "tolerance": 0.000707801309286939
+    },
+    {
+      "absolute_difference": 0.00037673315988034353,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.001642896485001253,
+      "control_point_id": null,
+      "nearest_declared_point_id": "3c2547fa8a18db5224c1466cb02f34deb90cf97ce44fdb6ad7fca0b536777f1b",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0012661633251209094,
+      "target_point_id": "c843ecd9bb12c1fc5fbc3a48c1bf69da10b7e4efd7b8126465173cc30d2d57af",
+      "tolerance": 6.330816625604547e-05
+    },
+    {
+      "absolute_difference": 0.0009708646123569673,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.004702111079094586,
+      "control_point_id": null,
+      "nearest_declared_point_id": "6da864337346767121cfd1b322d5bc9673dd22919ce1e866a207d4bb85b871c9",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0037312464667376187,
+      "target_point_id": "c8d9d7566d495a8252be5773b62e2bf93af079802ac1819c5fac9a1add4aaf10",
+      "tolerance": 0.00018656232333688096
+    },
+    {
+      "absolute_difference": 0.0016775809330483058,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.008002578124630306,
+      "control_point_id": null,
+      "nearest_declared_point_id": "f4ebd40b6cba1d82713c2f3ed6d0da9eab1064568b8668910a6ef1e7b41d9cf7",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.006324997191582,
+      "target_point_id": "c95235e0159f4c1dc0c7b2e4bbb92e97a3c5d8af9eda2cfb9eaff6e97f7372a5",
+      "tolerance": 0.0003162498595791
+    },
+    {
+      "absolute_difference": 4.640214025384843e-05,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.0005682319586689987,
+      "control_point_id": null,
+      "nearest_declared_point_id": "b4c85ff1bc60bfb9d5c38c9eea91434a967d7ab2811fe5e90d1d0a042ef7d319",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0005218298184151502,
+      "target_point_id": "cb7f25c3c7bc2a7b103a48b56467bee5151f4c6ea41e82c8abdf697c36f130cf",
+      "tolerance": 2.6091490920757514e-05
+    },
+    {
+      "absolute_difference": 5.9867400965313484e-05,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.0008424609884944789,
+      "control_point_id": null,
+      "nearest_declared_point_id": "14bcddb98e87677bb0d6f80f5645c50b09313e557f861fb9e9a9ff12f75d4c8e",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0007825935875291654,
+      "target_point_id": "df51dd8362e5b2b2fcf449e1be0468bb77f1ec939be780f618f0aafea24efdbd",
+      "tolerance": 3.912967937645827e-05
+    },
+    {
+      "absolute_difference": 2.5682060235757696e-05,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.0003505449474604014,
+      "control_point_id": null,
+      "nearest_declared_point_id": "7216650e5b4b88ba0cee696259c3109d1e32941a006855c796e547c7175b84ef",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.0003248628872246437,
+      "target_point_id": "eff8c5d04c471c771e5a91ba454b36bcfb865c6e549b56bf4b58212e4051cdc2",
+      "tolerance": 1.6243144361232187e-05
+    },
+    {
+      "absolute_difference": 0.004705633166815642,
+      "added_search": false,
+      "angular_common_mask_count": null,
+      "control_movement": 0.02694232776420527,
+      "control_point_id": null,
+      "nearest_declared_point_id": "5ad3cfc7a7c5ab1d59c451aa4eb2d5d0b0b69e43c82e37e71f688e5a7eb89ccb",
+      "status": "UNAVAILABLE_TOLERANCE",
+      "target_movement": 0.02223669459738963,
+      "target_point_id": "f64b596e0b6bb305790996a83897b05b01cf36d7f14dca033558b4b5b46c4133",
+      "tolerance": 0.0011118347298694814
+    }
+  ],
+  "points": {
+    "024a0617c8ecf1936aa9f5a011dd13a0e1be9b833914e1bc6d956318c289d851": {
+      "G_norm_max": 1.0000004642851261,
+      "G_norm_min": 0.999507684651213,
+      "RMS_angle_degrees": 0.3073440328382836,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 542.8094490935429,
+          "upper": 542.8094493190978
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 542.8225030700637,
+          "upper": 542.822503296242
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.0013626024233170143,
+      "point_id": "024a0617c8ecf1936aa9f5a011dd13a0e1be9b833914e1bc6d956318c289d851"
+    },
+    "030726dfeb64c3057cac5062956ecb9f3da4102a211258159697c46b754d9d47": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "dispersion": {
+        "absolute_optimality_gap": 5.820706404691123e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 120.90697182139719,
+          "upper": 120.90697183380635
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 120.76557921594582,
+          "upper": 120.76557922915867
+        },
+        "possible_upper_margin": 90.53889448087342,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 90.53889446455828
+      },
+      "normalized_L21_movement": 0.010512722956313404,
+      "point_id": "030726dfeb64c3057cac5062956ecb9f3da4102a211258159697c46b754d9d47",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.12183378174304926,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 5.85335027309341,
+          "E1_primal": 6.2125430739357395,
+          "absolute_gap": 0.3591928008423295,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.057817353790156574,
+          "strictly_inside_stopping_tube_count": 201
+        },
+        "positive_edges": 1217,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 64,
+        "strictly_inside_stopping_tube_fraction": 0.05258833196384552
+      }
+    },
+    "0347f3f1b46d85b1615b71b934e04425d789f7bf6b2b82c8b7115b1a27b268c9": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 6.487449219283456e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.0,
+      "point_id": "0347f3f1b46d85b1615b71b934e04425d789f7bf6b2b82c8b7115b1a27b268c9"
+    },
+    "03f419a15cec774e1dd936fdb3aed1c9a4f5808b98ee29d452b98bd0bb6a3d60": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.995052790565042,
+      "RMS_angle_degrees": 2.097591394532843,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.022514531899835797,
+      "point_id": "03f419a15cec774e1dd936fdb3aed1c9a4f5808b98ee29d452b98bd0bb6a3d60"
+    },
+    "080239419e58397b2f403a17b787f42cb951bab6a8b7d2f8962f86ee03030398": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.8818151428976563,
+      "RMS_angle_degrees": 0.8466412549765987,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 2341.14144987219,
+          "upper": 2341.1414507026752
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 2339.928142412809,
+          "upper": 2339.9281433051374
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.0042818808633801175,
+      "point_id": "080239419e58397b2f403a17b787f42cb951bab6a8b7d2f8962f86ee03030398"
+    },
+    "08f387f262044bfd2c5c2cd220f08a91af60f01e60f23126f4ec56533f2dc331": {
+      "G_norm_max": 1.0000000000785678,
+      "G_norm_min": 0.9999999470922816,
+      "RMS_angle_degrees": 0.004831878654699412,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 1723.6039939171885,
+          "upper": 1723.6039945612085
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 1723.6039869041197,
+          "upper": 1723.6039875481556
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 5.922119299848985e-06,
+      "point_id": "08f387f262044bfd2c5c2cd220f08a91af60f01e60f23126f4ec56533f2dc331"
+    },
+    "0922f330152c7c9549ef79751a485f96486cc87b5290f319916f9b10b72c409d": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "0922f330152c7c9549ef79751a485f96486cc87b5290f319916f9b10b72c409d"
+    },
+    "0f27e649c9488a0750f6bb87cce203369fbc884d696737cac1a797367d6481fc": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9994067513567366,
+      "RMS_angle_degrees": 0.09244706743963887,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.00028411597933449944,
+      "point_id": "0f27e649c9488a0750f6bb87cce203369fbc884d696737cac1a797367d6481fc"
+    },
+    "0f2c3e30cf6333702cd951d684f3b53a8c2a7d20b2265d7572b7d9daafb8394b": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.5008618528321169,
+      "RMS_angle_degrees": 7.407862474226945,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.09007156658103926,
+      "point_id": "0f2c3e30cf6333702cd951d684f3b53a8c2a7d20b2265d7572b7d9daafb8394b"
+    },
+    "11814924ee96b9695bbc55e45afcf2ac897999f560dc73d490c9bfc824a97f37": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "11814924ee96b9695bbc55e45afcf2ac897999f560dc73d490c9bfc824a97f37"
+    },
+    "1196dc71428949d86b152c9dc9a9be78e062bbcb437232da39e9499266a31f4d": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.999983668354527,
+      "RMS_angle_degrees": 0.02953635678479612,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "dispersion": {
+        "absolute_optimality_gap": 9.965352186835919e-06,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 201.7851260115256,
+          "upper": 201.7851261979839
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 201.78564059396328,
+          "upper": 201.78564078045542
+        },
+        "possible_upper_margin": 151.3393692429262,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 151.33936900981948
+      },
+      "normalized_L21_movement": 8.27438404898748e-05,
+      "point_id": "1196dc71428949d86b152c9dc9a9be78e062bbcb437232da39e9499266a31f4d",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 2,
+        "inside_tube_weight_fraction": 0.007944378088522537,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 0.28547828116085966,
+          "E1_primal": 0.28682813440395416,
+          "absolute_gap": 0.001349853243094501,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.001349853243094501,
+          "strictly_inside_stopping_tube_count": 8
+        },
+        "positive_edges": 655,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 4,
+        "strictly_inside_stopping_tube_fraction": 0.0061068702290076335
+      }
+    },
+    "14bcddb98e87677bb0d6f80f5645c50b09313e557f861fb9e9a9ff12f75d4c8e": {
+      "G_norm_max": 0.09000054586967285,
+      "G_norm_min": 0.0013032565690161474,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 267.9597176325984,
+          "upper": 267.9597177677542
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 267.95781461375407,
+          "upper": 267.9578147490231
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.0008424609884944789,
+      "point_id": "14bcddb98e87677bb0d6f80f5645c50b09313e557f861fb9e9a9ff12f75d4c8e"
+    },
+    "15853c6393edd9bf7231e544b3edbaf6600b3a17f570bf20bfe5b34b45e01a97": {
+      "G_norm_max": 0.022500136467418212,
+      "G_norm_min": 0.0003258141422540369,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "15853c6393edd9bf7231e544b3edbaf6600b3a17f570bf20bfe5b34b45e01a97"
+    },
+    "18fcd4aaf4ca960d66e9487545d236f0e3404be6fd2503a29f67d1c887cf4abd": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "dispersion": {
+        "absolute_optimality_gap": 0.00014427328733290778,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 11,
+          "lower": 253.84779971375124,
+          "upper": 253.84779988741187
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 11,
+          "lower": 253.71570636344765,
+          "upper": 253.7157065525002
+        },
+        "possible_upper_margin": 190.25390089734972,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 190.25390066488202
+      },
+      "normalized_L21_movement": 0.004498322705516738,
+      "point_id": "18fcd4aaf4ca960d66e9487545d236f0e3404be6fd2503a29f67d1c887cf4abd",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.009628894380227945,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 14.42562481447872,
+          "E1_primal": 14.493326520468056,
+          "absolute_gap": 0.06770170598933589,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.004671233059831008,
+          "strictly_inside_stopping_tube_count": 140
+        },
+        "positive_edges": 7957,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 32,
+        "strictly_inside_stopping_tube_fraction": 0.004021616187005153
+      }
+    },
+    "1a2eab7d2e184ca897241c15ce4d15719ade81c2148cdda555a8c979c119d642": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "1a2eab7d2e184ca897241c15ce4d15719ade81c2148cdda555a8c979c119d642"
+    },
+    "1ef9d37daad9be4874d24844eef04ed8e283a29bae5dc320221f1870c4a5cbf1": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999992,
+      "RMS_angle_degrees": 6.487449219283456e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.75,
+      "point_id": "1ef9d37daad9be4874d24844eef04ed8e283a29bae5dc320221f1870c4a5cbf1"
+    },
+    "2122c370c99755c986a6220721b1f005ea084d77ec26063a368fe19bbf66a2d1": {
+      "G_norm_max": 0.1340216698643763,
+      "G_norm_min": 0.041923157933028726,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.75,
+      "point_id": "2122c370c99755c986a6220721b1f005ea084d77ec26063a368fe19bbf66a2d1"
+    },
+    "2638f65fd4f49ff3244ddebbd4066a367d2296729d816d4177f93db43aaa120f": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.930312903790265e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.0,
+      "point_id": "2638f65fd4f49ff3244ddebbd4066a367d2296729d816d4177f93db43aaa120f"
+    },
+    "2bfbea7dd27df29b1a0dd2e76145db7f9513eddec05c37743015a95c8c0de094": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9791978737062403,
+      "RMS_angle_degrees": 4.094050534467133,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.04521447818814197,
+      "point_id": "2bfbea7dd27df29b1a0dd2e76145db7f9513eddec05c37743015a95c8c0de094"
+    },
+    "2fca5a3635dbaa5caca980b77ed1b8b1068a2a098ed64a8c6dec80d2beaff315": {
+      "G_norm_max": 1.0000000000839928,
+      "G_norm_min": 0.5399358291675472,
+      "RMS_angle_degrees": 9.724101834103744,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.11705138271431179,
+      "point_id": "2fca5a3635dbaa5caca980b77ed1b8b1068a2a098ed64a8c6dec80d2beaff315"
+    },
+    "304e428b79a80643737bce98101e65c0dcdd40fe02004f2f2363e48428ad1e16": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999992905432066,
+      "RMS_angle_degrees": 0.003623909326570893,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 4.441589474886693e-06,
+      "point_id": "304e428b79a80643737bce98101e65c0dcdd40fe02004f2f2363e48428ad1e16"
+    },
+    "340d47ee65a4ce27ab0bc9471a1883274ae59139e31e7f9c24d6a122a27fb5bd": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "340d47ee65a4ce27ab0bc9471a1883274ae59139e31e7f9c24d6a122a27fb5bd"
+    },
+    "3448abe020c323a74ee14363eda72cd6970ed4b9f3d6ca98dbd70920c7fcda56": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "3448abe020c323a74ee14363eda72cd6970ed4b9f3d6ca98dbd70920c7fcda56"
+    },
+    "35cf22156cd4aa8190ac0493c73fa9e74bb039be0ee93418e017d68448231d23": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9805601970158588,
+      "RMS_angle_degrees": 3.035786803260138,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.03352392405768509,
+      "point_id": "35cf22156cd4aa8190ac0493c73fa9e74bb039be0ee93418e017d68448231d23"
+    },
+    "383e31e0bc3a75b92578dd957ba5bb72f0fb6674d3083ca6cb417f6629e5225e": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.574742930427293e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 0.0,
+      "point_id": "383e31e0bc3a75b92578dd957ba5bb72f0fb6674d3083ca6cb417f6629e5225e"
+    },
+    "3973c62b062cda7928aaee24d2cda2c72d0e736cc38db838e2c7c6fd39d59aa9": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.2499999999999999,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.75,
+      "point_id": "3973c62b062cda7928aaee24d2cda2c72d0e736cc38db838e2c7c6fd39d59aa9"
+    },
+    "3a65e76731bcfbd937b887bb51687029ceaff8bbf10db42375d967dff3c6ee3a": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "3a65e76731bcfbd937b887bb51687029ceaff8bbf10db42375d967dff3c6ee3a"
+    },
+    "3c2547fa8a18db5224c1466cb02f34deb90cf97ce44fdb6ad7fca0b536777f1b": {
+      "G_norm_max": 0.3308952301688796,
+      "G_norm_min": 0.02224480417516411,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 42.55252308457794,
+          "upper": 42.55252310304084
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 42.5465859528205,
+          "upper": 42.54658597179442
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.001642896485001253,
+      "point_id": "3c2547fa8a18db5224c1466cb02f34deb90cf97ce44fdb6ad7fca0b536777f1b"
+    },
+    "408466b8699370102d0d761620f806a24c3f2f728c23e173877bc08ea7d49a21": {
+      "G_norm_max": 0.5360866794575052,
+      "G_norm_min": 0.1676926317321149,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.01384349272067801,
+      "point_id": "408466b8699370102d0d761620f806a24c3f2f728c23e173877bc08ea7d49a21"
+    },
+    "419239df8100093cdbcf3d7bbc15148c0d8e7ca34eac009fd9be15fd44519d34": {
+      "G_norm_max": 0.09181622429723295,
+      "G_norm_min": 0.011672462913613693,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "419239df8100093cdbcf3d7bbc15148c0d8e7ca34eac009fd9be15fd44519d34"
+    },
+    "43c2afaf7fa46328b9b7b4f4ec51470724bf6b634729666683c8e8bef2092ff6": {
+      "G_norm_max": 0.3308952301688796,
+      "G_norm_min": 0.022244804175164112,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 0.0,
+      "point_id": "43c2afaf7fa46328b9b7b4f4ec51470724bf6b634729666683c8e8bef2092ff6"
+    },
+    "44023b440b4b46872295cd4d1319161746deebc166ef4c9a56e1ab5f2f5819e9": {
+      "G_norm_max": 1.0000000015213624,
+      "G_norm_min": 0.56772388087903,
+      "RMS_angle_degrees": 8.518320514713709,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.09996878165643241,
+      "point_id": "44023b440b4b46872295cd4d1319161746deebc166ef4c9a56e1ab5f2f5819e9"
+    },
+    "45c66c75e3ee2f11eca394f1896c6ccbac94d39a71192908e995e6dd490fe1c1": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999992612760594,
+      "RMS_angle_degrees": 0.0037029701223628988,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "dispersion": {
+        "absolute_optimality_gap": 9.991700631761802e-06,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 1723.6039939171885,
+          "upper": 1723.6039945612085
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 1723.6039958712913,
+          "upper": 1723.6039965153236
+        },
+        "possible_upper_margin": 1292.703008027727,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 1292.7030072226898
+      },
+      "normalized_L21_movement": 4.407087517213946e-06,
+      "point_id": "45c66c75e3ee2f11eca394f1896c6ccbac94d39a71192908e995e6dd490fe1c1",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.004660772110256829,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 0.44180671107373815,
+          "E1_primal": 0.44285915595204023,
+          "absolute_gap": 0.0010524448783020834,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.0010524448783020834,
+          "strictly_inside_stopping_tube_count": 43
+        },
+        "positive_edges": 5345,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 13,
+        "strictly_inside_stopping_tube_fraction": 0.0024321796071094482
+      }
+    },
+    "46f390b3d1b2155dc2cb69bbb76cdefc8ccc2d01d0c38fd23bffea78c9b2101d": {
+      "G_norm_max": 0.12963667222636446,
+      "G_norm_min": 0.02577891443228894,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "46f390b3d1b2155dc2cb69bbb76cdefc8ccc2d01d0c38fd23bffea78c9b2101d"
+    },
+    "4a201439fa3ebca34f09c45135fcf7f3b7948effaf9347f08d74b53d37eece00": {
+      "G_norm_max": 0.09957311691277251,
+      "G_norm_min": 0.0005006466374447339,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 0.75,
+      "point_id": "4a201439fa3ebca34f09c45135fcf7f3b7948effaf9347f08d74b53d37eece00"
+    },
+    "4a568fe4c4e830a6c77ec3ba62b1c480eb8df346968d23a643c0d95d7380a168": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9775205148987368,
+      "RMS_angle_degrees": 1.3223523899420637,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.006001933593472729,
+      "point_id": "4a568fe4c4e830a6c77ec3ba62b1c480eb8df346968d23a643c0d95d7380a168"
+    },
+    "4a5e72a2b6d2fd61cdc6bd6ec9e13aaa4517677c686910a32ad8fc158d9688b6": {
+      "G_norm_max": 0.3880311945488315,
+      "G_norm_min": 0.01539254830482909,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.0,
+      "point_id": "4a5e72a2b6d2fd61cdc6bd6ec9e13aaa4517677c686910a32ad8fc158d9688b6"
+    },
+    "4c145edf242482416dd609f87a7c4dc0ac754ab079cab34e4909fc79fee26dbc": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9399264513737153,
+      "RMS_angle_degrees": 0.4214114529075522,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0021409404316900583,
+      "point_id": "4c145edf242482416dd609f87a7c4dc0ac754ab079cab34e4909fc79fee26dbc"
+    },
+    "4c853719524435ae45788a6651a49feec73b862e1f08a57fe61f36b1917e42e2": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9106017407930562,
+      "RMS_angle_degrees": 0.6336265585145556,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0032114106475350877,
+      "point_id": "4c853719524435ae45788a6651a49feec73b862e1f08a57fe61f36b1917e42e2"
+    },
+    "4cd48ef608291540eb8ae3bcf94ef976ad4a1438eae2f6f6ced3ab161e351fa3": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848124,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.002427961697373099,
+      "point_id": "4cd48ef608291540eb8ae3bcf94ef976ad4a1438eae2f6f6ced3ab161e351fa3"
+    },
+    "4d79899008ac421eb2b9524a35ca1cfca6181515092cee904bac13ec0cf08a5d": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9995232772964258,
+      "RMS_angle_degrees": 0.24640110747842917,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "dispersion": {
+        "absolute_optimality_gap": 7.339605276879269e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 542.8094490935429,
+          "upper": 542.8094493190978
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 542.8165772536536,
+          "upper": 542.8165774797144
+        },
+        "possible_upper_margin": 407.11428860238146,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 407.11428831993186
+      },
+      "normalized_L21_movement": 0.0010913927826461374,
+      "point_id": "4d79899008ac421eb2b9524a35ca1cfca6181515092cee904bac13ec0cf08a5d",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.039237482540319724,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 7.341230049638259,
+          "E1_primal": 7.418576527378706,
+          "absolute_gap": 0.07734647774044667,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.010426053765839688,
+          "strictly_inside_stopping_tube_count": 122
+        },
+        "positive_edges": 1741,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 30,
+        "strictly_inside_stopping_tube_fraction": 0.01723147616312464
+      }
+    },
+    "4de26a3a51eb5ef1eeb12f844da1d49f9f730a957ff2c8a0701d99f987b5c4de": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "4de26a3a51eb5ef1eeb12f844da1d49f9f730a957ff2c8a0701d99f987b5c4de"
+    },
+    "4e057b6de9c2077ff7afc736eb1a239b470a6ec5fd9bdac9c400938c36c6fc5a": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999998,
+      "RMS_angle_degrees": 6.55046657640911e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.0,
+      "point_id": "4e057b6de9c2077ff7afc736eb1a239b470a6ec5fd9bdac9c400938c36c6fc5a"
+    },
+    "4f17adaa07ccff710a6beee6f219b83996f892afaa633ea60dac13407a1f51d0": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "4f17adaa07ccff710a6beee6f219b83996f892afaa633ea60dac13407a1f51d0"
+    },
+    "4f792747578bf14bf6c55461202dbfdf9489f1f1bfab68c67d49dbfd25bdf74c": {
+      "G_norm_max": 0.39829246765109005,
+      "G_norm_min": 0.0020025865497789357,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 20,
+          "lower": 122.08457121979683,
+          "upper": 122.08457130381514
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 20,
+          "lower": 122.08269606542848,
+          "upper": 122.08269614961539
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.00023042441960115717,
+      "point_id": "4f792747578bf14bf6c55461202dbfdf9489f1f1bfab68c67d49dbfd25bdf74c"
+    },
+    "50d8da841f5673094b7b2422357eec4671a91da0abc053099f2723fa758bed60": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "50d8da841f5673094b7b2422357eec4671a91da0abc053099f2723fa758bed60"
+    },
+    "5479005b62c58a4f495d9acc24cbe6ab62dca0ba6388a8a47302b677460e54e4": {
+      "G_norm_max": 0.5360866794575052,
+      "G_norm_min": 0.1676926317321149,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "normalized_L21_movement": 0.0,
+      "point_id": "5479005b62c58a4f495d9acc24cbe6ab62dca0ba6388a8a47302b677460e54e4"
+    },
+    "55fe3ca4ff1ca25cc4fde32bf1d7da51d766d81d0653c139b829e88146e49902": {
+      "G_norm_max": 0.3324424803208476,
+      "G_norm_min": 0.011861620124353078,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.09756412530856029,
+      "point_id": "55fe3ca4ff1ca25cc4fde32bf1d7da51d766d81d0653c139b829e88146e49902"
+    },
+    "594e907acd71ac27be3af403ba9f782cd49cdd6df494adc5ba09fcbc70a32102": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.003751146512421926,
+      "point_id": "594e907acd71ac27be3af403ba9f782cd49cdd6df494adc5ba09fcbc70a32102"
+    },
+    "59fe6309bbd63999483e67de64230d8a6b18b0bf69808db576d9c34760574ff9": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "59fe6309bbd63999483e67de64230d8a6b18b0bf69808db576d9c34760574ff9"
+    },
+    "5ad3cfc7a7c5ab1d59c451aa4eb2d5d0b0b69e43c82e37e71f688e5a7eb89ccb": {
+      "G_norm_max": 0.36726489718893185,
+      "G_norm_min": 0.04668985165445478,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 131.0944707747521,
+          "upper": 131.0944707917551
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 130.59923440506975,
+          "upper": 130.59923442945055
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.02694232776420527,
+      "point_id": "5ad3cfc7a7c5ab1d59c451aa4eb2d5d0b0b69e43c82e37e71f688e5a7eb89ccb"
+    },
+    "5c8f244667c2f0f932c7ff14692ad505fe6c9fa4514765549cef99a92d976877": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848124,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0036419425460596485,
+      "point_id": "5c8f244667c2f0f932c7ff14692ad505fe6c9fa4514765549cef99a92d976877"
+    },
+    "5cdac4c0734dcafabf21b2318452ddb95fd94f2d1be56ab75a4ace9c8c978d9d": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "5cdac4c0734dcafabf21b2318452ddb95fd94f2d1be56ab75a4ace9c8c978d9d"
+    },
+    "5df71d64ecb624e4e20a8bb71f0e259c16f3faa1abbe0b688aee06d0df316139": {
+      "G_norm_max": 0.33587297616954725,
+      "G_norm_min": 0.010313713370528695,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.07489901927520039,
+      "point_id": "5df71d64ecb624e4e20a8bb71f0e259c16f3faa1abbe0b688aee06d0df316139"
+    },
+    "63cb5842ec08f20acbbb9b9bcb7d50693a7eb2a0ce6d224439c4ccf09f7faad7": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9995303589486153,
+      "RMS_angle_degrees": 0.2305063984228814,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.0010219518174877612,
+      "point_id": "63cb5842ec08f20acbbb9b9bcb7d50693a7eb2a0ce6d224439c4ccf09f7faad7"
+    },
+    "63f5d9f3d6b17245dba24ab77b4ddf3d5b70234b4a8632733a2663314bfa05e1": {
+      "G_norm_max": 0.39829246765109005,
+      "G_norm_min": 0.0020025865497789357,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 0.00017281831470086827,
+      "point_id": "63f5d9f3d6b17245dba24ab77b4ddf3d5b70234b4a8632733a2663314bfa05e1"
+    },
+    "66303de45130c3bfd5ac82592bd3e1b61f82232723b4bd5dc360c90f1b037180": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999919593764708,
+      "RMS_angle_degrees": 0.027250875992569503,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 7.70682520298764e-05,
+      "point_id": "66303de45130c3bfd5ac82592bd3e1b61f82232723b4bd5dc360c90f1b037180"
+    },
+    "6da864337346767121cfd1b322d5bc9673dd22919ce1e866a207d4bb85b871c9": {
+      "G_norm_max": 0.3880311945488315,
+      "G_norm_min": 0.01539254830482909,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 14,
+          "lower": 95.85923629735841,
+          "upper": 95.85923634753308
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 14,
+          "lower": 95.80032692529136,
+          "upper": 95.80032697718046
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.004702111079094586,
+      "point_id": "6da864337346767121cfd1b322d5bc9673dd22919ce1e866a207d4bb85b871c9"
+    },
+    "6fd1ae6a020c36f2a3998cf18f584766340881c16028c78d794aed40f6299509": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999992,
+      "RMS_angle_degrees": 5.864342855226253e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.75,
+      "point_id": "6fd1ae6a020c36f2a3998cf18f584766340881c16028c78d794aed40f6299509"
+    },
+    "714ee18215dbd0325715f74062f1c068b2a38d6d35050a83678e46ed39270d7d": {
+      "G_norm_max": 0.0827238075422199,
+      "G_norm_min": 0.005561201043791028,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "714ee18215dbd0325715f74062f1c068b2a38d6d35050a83678e46ed39270d7d"
+    },
+    "7216650e5b4b88ba0cee696259c3109d1e32941a006855c796e547c7175b84ef": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9990358376140677,
+      "RMS_angle_degrees": 0.11654000239042155,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 8707.39956092891,
+          "upper": 8707.399567675275
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 8707.396640134943,
+          "upper": 8707.396646891826
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.0003505449474604014,
+      "point_id": "7216650e5b4b88ba0cee696259c3109d1e32941a006855c796e547c7175b84ef"
+    },
+    "784d78b0b68f11c21f46e9c22c1ee4537bab3ecf3779cb0fa07fc360120063b3": {
+      "G_norm_max": 1.0163007066646252,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 0.8362358976703935,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.004204690255871776,
+      "point_id": "784d78b0b68f11c21f46e9c22c1ee4537bab3ecf3779cb0fa07fc360120063b3"
+    },
+    "7b1be0660218daa43a468f242c7b2ae0788c125c06dfc7d5b23d21134c1e34e5": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9992076051414421,
+      "RMS_angle_degrees": 0.13868355126857945,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.00042617396900174924,
+      "point_id": "7b1be0660218daa43a468f242c7b2ae0788c125c06dfc7d5b23d21134c1e34e5"
+    },
+    "80ca4ef24988e47d797f6a8ad88abb030f8fce4dc7d50bc07d910fe15c306b5b": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "80ca4ef24988e47d797f6a8ad88abb030f8fce4dc7d50bc07d910fe15c306b5b"
+    },
+    "812c8d58ad8cd8902f1c22466ad10a4fcfc28af2ba572ca238948eb1fa459610": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "812c8d58ad8cd8902f1c22466ad10a4fcfc28af2ba572ca238948eb1fa459610"
+    },
+    "816ee0e144f6874caecea1dd84ce84a37a0809feef6bbc4b4077044304be6f9e": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.8818151428976561,
+      "RMS_angle_degrees": 0.7890063379892288,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "dispersion": {
+        "absolute_optimality_gap": 0.0012176473182989866,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 2341.14144987219,
+          "upper": 2341.1414507026752
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 2339.953352675602,
+          "upper": 2339.9533535659803
+        },
+        "possible_upper_margin": 1754.6692087452511,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 1754.6692076472518
+      },
+      "normalized_L21_movement": 0.004026818225988897,
+      "point_id": "816ee0e144f6874caecea1dd84ce84a37a0809feef6bbc4b4077044304be6f9e",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.009215400906805483,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 139.7915464010419,
+          "E1_primal": 140.18323109836155,
+          "absolute_gap": 0.39168469731964706,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.00279409094975715,
+          "strictly_inside_stopping_tube_count": 147
+        },
+        "positive_edges": 7957,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 32,
+        "strictly_inside_stopping_tube_fraction": 0.004021616187005153
+      }
+    },
+    "8691a75c6d9f83361e81f52eee6d4bdc6bf42b7f9580fe7e0972a56009b9703c": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "8691a75c6d9f83361e81f52eee6d4bdc6bf42b7f9580fe7e0972a56009b9703c"
+    },
+    "88dbec007b1e35432d027eccfcd069371a3e419494e324363d5395c6801756a6": {
+      "G_norm_max": 0.09000054586967285,
+      "G_norm_min": 0.0013032565690161476,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.0006318457413708594,
+      "point_id": "88dbec007b1e35432d027eccfcd069371a3e419494e324363d5395c6801756a6"
+    },
+    "8ac3ffca7619ccf05ba2cdd600022c1b7af846f9f3c07a7273e3d11316ffcf9c": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "8ac3ffca7619ccf05ba2cdd600022c1b7af846f9f3c07a7273e3d11316ffcf9c"
+    },
+    "8d1149ec240864d0744c755d8879feb8ecae189c6bf8d52828afe173f37eeb95": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.864342855226253e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.0,
+      "point_id": "8d1149ec240864d0744c755d8879feb8ecae189c6bf8d52828afe173f37eeb95"
+    },
+    "8e9c4bf7502b7dd456d1bd3938aeaa173af981b07e89da34bc755d1f847980f9": {
+      "G_norm_max": 0.0865870695211334,
+      "G_norm_min": 0.001719048845462031,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "8e9c4bf7502b7dd456d1bd3938aeaa173af981b07e89da34bc755d1f847980f9"
+    },
+    "8ec2a2d95664c59434ad578bf6a903acb9866e22f91e5c83af63095bc9a2e78f": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.8818151428976563,
+      "RMS_angle_degrees": 0.666636935217311,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0034152767437741188,
+      "point_id": "8ec2a2d95664c59434ad578bf6a903acb9866e22f91e5c83af63095bc9a2e78f"
+    },
+    "8f1fe8ea9727457a152d6b886b6f7dc155d593ffb4890718e17b3aae70403841": {
+      "G_norm_max": 0.3880311945488315,
+      "G_norm_min": 0.01539254830482909,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.003526583309320938,
+      "point_id": "8f1fe8ea9727457a152d6b886b6f7dc155d593ffb4890718e17b3aae70403841"
+    },
+    "93495d2d4616d50a83d4cbf1c7e14f122f568ab94d7eb81e57de56c72c5969fc": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999998,
+      "RMS_angle_degrees": 6.079457421724074e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 0.0,
+      "point_id": "93495d2d4616d50a83d4cbf1c7e14f122f568ab94d7eb81e57de56c72c5969fc"
+    },
+    "9648dcc093a32c555ec9784bef22dddb7c67ac45ac7f80f7fb3cd168e589f4d4": {
+      "G_norm_max": 0.33587321961491795,
+      "G_norm_min": 0.010293082694036781,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.07455465548813993,
+      "point_id": "9648dcc093a32c555ec9784bef22dddb7c67ac45ac7f80f7fb3cd168e589f4d4"
+    },
+    "9ae81f0cffacc64a954eb8a72cbe20fc5320cc99a7173fb462fbbe079f110665": {
+      "G_norm_max": 0.39829246765109005,
+      "G_norm_min": 0.0020025865497789357,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "dispersion": {
+        "absolute_optimality_gap": 1.0934745285351433e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 20,
+          "lower": 122.08457121979683,
+          "upper": 122.08457130381514
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 20,
+          "lower": 122.08334790559567,
+          "upper": 122.08334798974408
+        },
+        "possible_upper_margin": 91.56221611954017,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 91.56221601438718
+      },
+      "normalized_L21_movement": 0.00017651589906801155,
+      "point_id": "9ae81f0cffacc64a954eb8a72cbe20fc5320cc99a7173fb462fbbe079f110665",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.05514937372439163,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 0.3249469116572602,
+          "E1_primal": 0.3297924908105597,
+          "absolute_gap": 0.0048455791532995285,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.0048455791532995285,
+          "strictly_inside_stopping_tube_count": 301
+        },
+        "positive_edges": 5345,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 123,
+        "strictly_inside_stopping_tube_fraction": 0.02301216089803555
+      }
+    },
+    "9d075d6caae614fd0e8aa4962b759c4fcfd7bd847fc04e534952a801ada33706": {
+      "G_norm_max": 0.5178921534999624,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.08959228786539036,
+      "point_id": "9d075d6caae614fd0e8aa4962b759c4fcfd7bd847fc04e534952a801ada33706"
+    },
+    "9ee1ebc61d20d5238e54245e1c344ed34d8b9a911258420803db1762aadc3c8d": {
+      "G_norm_max": 0.5360866794575051,
+      "G_norm_min": 0.16769263173211488,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 4,
+          "lower": 309.4179709283867,
+          "upper": 309.41797120480885
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 5,
+          "lower": 309.17514798413777,
+          "upper": 309.1751479900205
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.018457990294237343,
+      "point_id": "9ee1ebc61d20d5238e54245e1c344ed34d8b9a911258420803db1762aadc3c8d"
+    },
+    "a224a595b673396aa8f221a78e3a7bd50a743a9e2b1267582f30d5ccf15c3e2e": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "a224a595b673396aa8f221a78e3a7bd50a743a9e2b1267582f30d5ccf15c3e2e"
+    },
+    "a352295c8118cb25cb7a324cbfbe3cc540fa0286da6d8ef31ca474a0d8c87732": {
+      "G_norm_max": 0.09700779863720788,
+      "G_norm_min": 0.0038481370762072724,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.7500000000000001,
+      "point_id": "a352295c8118cb25cb7a324cbfbe3cc540fa0286da6d8ef31ca474a0d8c87732"
+    },
+    "a743a5bdb5cd79fbf8a771e1ef8a0cfdaf09e217ba7e3033f1cf0c11b127f06a": {
+      "G_norm_max": 0.3324424803208476,
+      "G_norm_min": 0.011850738464941203,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.09708343347458077,
+      "point_id": "a743a5bdb5cd79fbf8a771e1ef8a0cfdaf09e217ba7e3033f1cf0c11b127f06a"
+    },
+    "a917962ee3e832ebdc533bf59910f9479823a2726a33b679fe3517c426e0118b": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9946377855696079,
+      "RMS_angle_degrees": 2.7634752790426953,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.029990593293422,
+      "point_id": "a917962ee3e832ebdc533bf59910f9479823a2726a33b679fe3517c426e0118b"
+    },
+    "aabb18d9a404e5fb24b2f8b716e5321cc77a4cc33a91267e9b91bba2b334e4ff": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9607878251162213,
+      "RMS_angle_degrees": 1.6594767715061647,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "dispersion": {
+        "absolute_optimality_gap": 0.0005953109781557941,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 759.6026301566216,
+          "upper": 759.6026303911153
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 758.5547048039056,
+          "upper": 758.5547051150576
+        },
+        "possible_upper_margin": 568.6546428868803,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 568.6546425171049
+      },
+      "normalized_L21_movement": 0.011271504996669523,
+      "point_id": "aabb18d9a404e5fb24b2f8b716e5321cc77a4cc33a91267e9b91bba2b334e4ff",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.021032918110910837,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 77.77842865115045,
+          "E1_primal": 78.42206190181444,
+          "absolute_gap": 0.6436332506639957,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.008207298240510863,
+          "strictly_inside_stopping_tube_count": 120
+        },
+        "positive_edges": 2523,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 25,
+        "strictly_inside_stopping_tube_fraction": 0.009908838684106223
+      }
+    },
+    "ac25f21e8f80471ee77f3493cedca68a91da052c49d203e1f84eacfc41f9df8b": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.007044677510815005,
+      "point_id": "ac25f21e8f80471ee77f3493cedca68a91da052c49d203e1f84eacfc41f9df8b"
+    },
+    "adc9e546abce1be0328a82ecc8194142a89fcf85f5a2fc8b292e0ca0bdaf5b25": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.006916379925042827,
+      "point_id": "adc9e546abce1be0328a82ecc8194142a89fcf85f5a2fc8b292e0ca0bdaf5b25"
+    },
+    "add9bbbc6666d4bb014a4d35a95d85492be2887a59e20dce62f1812c9c7ce2f1": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "add9bbbc6666d4bb014a4d35a95d85492be2887a59e20dce62f1812c9c7ce2f1"
+    },
+    "ae445281aad9b7c95411cceb7aed2c013d62e9a7e40ae0bd61b2b33a7fcfb570": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999994,
+      "RMS_angle_degrees": 6.55046657640911e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "normalized_L21_movement": 0.75,
+      "point_id": "ae445281aad9b7c95411cceb7aed2c013d62e9a7e40ae0bd61b2b33a7fcfb570"
+    },
+    "af2c9919fdc3436d9e20c686b7e7dce583014ec9cf51a6978107571bff0f2ac0": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "af2c9919fdc3436d9e20c686b7e7dce583014ec9cf51a6978107571bff0f2ac0"
+    },
+    "b4c85ff1bc60bfb9d5c38c9eea91434a967d7ab2811fe5e90d1d0a042ef7d319": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9990735003717884,
+      "RMS_angle_degrees": 0.18492419339474592,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 5,
+          "lower": 394.30334790271854,
+          "upper": 394.3033479198216
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 5,
+          "lower": 394.3025045966684,
+          "upper": 394.3025046137321
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.0005682319586689987,
+      "point_id": "b4c85ff1bc60bfb9d5c38c9eea91434a967d7ab2811fe5e90d1d0a042ef7d319"
+    },
+    "b5c713585952e964215c02bce5c6f024f8dc169fafdf65fd6e3ae8f5c0a22c74": {
+      "G_norm_max": 0.517854699270697,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.09283546762432703,
+      "point_id": "b5c713585952e964215c02bce5c6f024f8dc169fafdf65fd6e3ae8f5c0a22c74"
+    },
+    "b62883d6f73ca9e9a3d9874d98bd3e185f08d87ac717ac4393a4467137053042": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "b62883d6f73ca9e9a3d9874d98bd3e185f08d87ac717ac4393a4467137053042"
+    },
+    "b68890b21d467703294fc5e987eddc1fa6be1854836f58e98a8fd7abcbd5f317": {
+      "G_norm_max": 0.36726489718893185,
+      "G_norm_min": 0.04668985165445478,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.020206745823153953,
+      "point_id": "b68890b21d467703294fc5e987eddc1fa6be1854836f58e98a8fd7abcbd5f317"
+    },
+    "b7f5c0c3e1004791d3b7d7edf0c7c0f8244db6470756f39a412ad6417635b295": {
+      "G_norm_max": 0.3308952301688796,
+      "G_norm_min": 0.02224480417516411,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 0.0012321723637509394,
+      "point_id": "b7f5c0c3e1004791d3b7d7edf0c7c0f8244db6470756f39a412ad6417635b295"
+    },
+    "b85770895e2c6f6fcde451289945971e32567c3e1a8e038f0b47da5f80e266b7": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999996,
+      "RMS_angle_degrees": 6.709851891875676e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "b85770895e2c6f6fcde451289945971e32567c3e1a8e038f0b47da5f80e266b7"
+    },
+    "bb7a3d3be0bc164c7f7360beff29fe38b24ce1856e25574a8809ac21749f2b48": {
+      "G_norm_max": 0.5360866794575051,
+      "G_norm_min": 0.16769263173211488,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "dispersion": {
+        "absolute_optimality_gap": 0.00034594838703583264,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 4,
+          "lower": 309.4179709283867,
+          "upper": 309.41797120480885
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 4,
+          "lower": 309.16819970702187,
+          "upper": 309.1682000152157
+        },
+        "possible_upper_margin": 231.81405323150605,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 231.8140528542067
+      },
+      "normalized_L21_movement": 0.01415602618573878,
+      "point_id": "bb7a3d3be0bc164c7f7360beff29fe38b24ce1856e25574a8809ac21749f2b48",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.05216012625752789,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 35.514276027897026,
+          "E1_primal": 36.66788357764873,
+          "absolute_gap": 1.1536075497517047,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.031460979941992005,
+          "strictly_inside_stopping_tube_count": 236
+        },
+        "positive_edges": 2527,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 60,
+        "strictly_inside_stopping_tube_fraction": 0.02374356944994064
+      }
+    },
+    "bd50879910ed48c1f39a9b3a66b6baab781381aa417fdce9d35878a47b698a4e": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9991624377150219,
+      "RMS_angle_degrees": 0.0874005747350385,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.00026290871059530115,
+      "point_id": "bd50879910ed48c1f39a9b3a66b6baab781381aa417fdce9d35878a47b698a4e"
+    },
+    "bd67650cab09b55254be3a839920debef58a1e558bfe8bc6f59d3ec3809ee507": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9678299073253469,
+      "RMS_angle_degrees": 1.37644395061806,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.009446982998065175,
+      "point_id": "bd67650cab09b55254be3a839920debef58a1e558bfe8bc6f59d3ec3809ee507"
+    },
+    "beacdd4beed5163b53cac1d2136c0510d50189a883e3ae460c80674fcb0fa486": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848124,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "beacdd4beed5163b53cac1d2136c0510d50189a883e3ae460c80674fcb0fa486"
+    },
+    "bf8c708e4df590301a2a73e0883e71516632a1033f5c3dfe37f83a3a0726e4f4": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915576,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "bf8c708e4df590301a2a73e0883e71516632a1033f5c3dfe37f83a3a0726e4f4"
+    },
+    "c3e91659b203f8e06e4ee3e51c291a4cb886bf6ebaee74f8c65c0f5648cfdc5a": {
+      "G_norm_max": 0.5177455926612784,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0690606597490766,
+      "point_id": "c3e91659b203f8e06e4ee3e51c291a4cb886bf6ebaee74f8c65c0f5648cfdc5a"
+    },
+    "c5fc3633fcc354372227567f924b0014cb2bc852743394cdb972577985056c00": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 11,
+          "lower": 253.84779971375124,
+          "upper": 253.84779988741187
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 11,
+          "lower": 253.71235986171905,
+          "upper": 253.7123600507324
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.004855923394746198,
+      "point_id": "c5fc3633fcc354372227567f924b0014cb2bc852743394cdb972577985056c00"
+    },
+    "c6e8c7b5557480ff9904950db7aa4febb99e1f30ae52ec4e090292128f0e1a2e": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "c6e8c7b5557480ff9904950db7aa4febb99e1f30ae52ec4e090292128f0e1a2e"
+    },
+    "c843ecd9bb12c1fc5fbc3a48c1bf69da10b7e4efd7b8126465173cc30d2d57af": {
+      "G_norm_max": 0.3308952301688796,
+      "G_norm_min": 0.02224480417516411,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "dispersion": {
+        "absolute_optimality_gap": 9.38844204789735e-06,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 42.55252308457794,
+          "upper": 42.55252310304084
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 42.54714901301782,
+          "upper": 42.547149031858225
+        },
+        "possible_upper_margin": 31.90902764915579,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 31.90902762569966
+      },
+      "normalized_L21_movement": 0.0012661633251209094,
+      "point_id": "c843ecd9bb12c1fc5fbc3a48c1bf69da10b7e4efd7b8126465173cc30d2d57af",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.09629488993007347,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 0.5149787596022076,
+          "E1_primal": 0.5275945274455083,
+          "absolute_gap": 0.012615767843300651,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.012615767843300651,
+          "strictly_inside_stopping_tube_count": 62
+        },
+        "positive_edges": 655,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 25,
+        "strictly_inside_stopping_tube_fraction": 0.03816793893129771
+      }
+    },
+    "c8d9d7566d495a8252be5773b62e2bf93af079802ac1819c5fac9a1add4aaf10": {
+      "G_norm_max": 0.3880311945488315,
+      "G_norm_min": 0.01539254830482909,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 564,
+      "dispersion": {
+        "absolute_optimality_gap": 2.441364747785002e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 14,
+          "lower": 95.85923629735841,
+          "upper": 95.85923634753308
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 14,
+          "lower": 95.81130240714064,
+          "upper": 95.81130245868033
+        },
+        "possible_upper_margin": 71.84651779798821,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 71.84651773390485
+      },
+      "normalized_L21_movement": 0.0037312464667376187,
+      "point_id": "c8d9d7566d495a8252be5773b62e2bf93af079802ac1819c5fac9a1add4aaf10",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.07931502576307123,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 2.48640737086939,
+          "E1_primal": 2.5709008883037168,
+          "absolute_gap": 0.08449351743432665,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.03286533441204556,
+          "strictly_inside_stopping_tube_count": 175
+        },
+        "positive_edges": 1741,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 57,
+        "strictly_inside_stopping_tube_fraction": 0.032739804709936815
+      }
+    },
+    "c93a6528a499871ed8349ead174f3340132621616f2a0ad1cd70a7da119787ad": {
+      "G_norm_max": 0.5177455926966427,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.06655189000295902,
+      "point_id": "c93a6528a499871ed8349ead174f3340132621616f2a0ad1cd70a7da119787ad"
+    },
+    "c95235e0159f4c1dc0c7b2e4bbb92e97a3c5d8af9eda2cfb9eaff6e97f7372a5": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9757283090776052,
+      "RMS_angle_degrees": 1.3819044478377933,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "dispersion": {
+        "absolute_optimality_gap": 0.0007383239679086273,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 3,
+          "lower": 836.0927755844452,
+          "upper": 836.092775958529
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 3,
+          "lower": 835.6641985837285,
+          "upper": 835.6641992556622
+        },
+        "possible_upper_margin": 626.6417436835188,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 626.6417429180642
+      },
+      "normalized_L21_movement": 0.006324997191582,
+      "point_id": "c95235e0159f4c1dc0c7b2e4bbb92e97a3c5d8af9eda2cfb9eaff6e97f7372a5",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.032603197101792984,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 77.55642779024065,
+          "E1_primal": 78.55689948135705,
+          "absolute_gap": 1.0004716911164024,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.012735631086787382,
+          "strictly_inside_stopping_tube_count": 160
+        },
+        "positive_edges": 2527,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 36,
+        "strictly_inside_stopping_tube_fraction": 0.014246141669964385
+      }
+    },
+    "cb7f25c3c7bc2a7b103a48b56467bee5151f4c6ea41e82c8abdf697c36f130cf": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9990735003717482,
+      "RMS_angle_degrees": 0.17366377224490365,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "dispersion": {
+        "absolute_optimality_gap": 6.0267328697349853e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 5,
+          "lower": 394.30334790271854,
+          "upper": 394.3033479198216
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 5,
+          "lower": 394.3017133039209,
+          "upper": 394.30171332098405
+        },
+        "possible_upper_margin": 295.7259366126331,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 295.7259365912942
+      },
+      "normalized_L21_movement": 0.0005218298184151502,
+      "point_id": "cb7f25c3c7bc2a7b103a48b56467bee5151f4c6ea41e82c8abdf697c36f130cf",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.014623203698037565,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 6.249512360029385,
+          "E1_primal": 6.255899194348266,
+          "absolute_gap": 0.006386834318880652,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.0010209298648307307,
+          "strictly_inside_stopping_tube_count": 20
+        },
+        "positive_edges": 1217,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 8,
+        "strictly_inside_stopping_tube_fraction": 0.00657354149548069
+      }
+    },
+    "cc73c55cf96a9592f322df5d9e3be5b9684827a166e88142804dc623671af4b9": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.010374569887564241,
+      "point_id": "cc73c55cf96a9592f322df5d9e3be5b9684827a166e88142804dc623671af4b9"
+    },
+    "d198d8a8c419dbe1bc1eed6379b2c4c90644d6edf7d62de59c8f238e1e2dea85": {
+      "G_norm_max": 0.3463482780845336,
+      "G_norm_min": 0.006876195381848125,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.0,
+      "point_id": "d198d8a8c419dbe1bc1eed6379b2c4c90644d6edf7d62de59c8f238e1e2dea85"
+    },
+    "d919369ff3809c74ffc8c088ce2b41b22bc6690f4bef2a6b3646ed34f2415358": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "d919369ff3809c74ffc8c088ce2b41b22bc6690f4bef2a6b3646ed34f2415358"
+    },
+    "dbd115b113d8ee41d40cc83b17570b1fcecb342398dc787d4259275400f3010a": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999992,
+      "RMS_angle_degrees": 5.930312903790265e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.75,
+      "point_id": "dbd115b113d8ee41d40cc83b17570b1fcecb342398dc787d4259275400f3010a"
+    },
+    "df51dd8362e5b2b2fcf449e1be0468bb77f1ec939be780f618f0aafea24efdbd": {
+      "G_norm_max": 0.09000054586967285,
+      "G_norm_min": 0.0013032565690161474,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "dispersion": {
+        "absolute_optimality_gap": 3.576918371317461e-05,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 267.9597176325984,
+          "upper": 267.9597177677542
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 12,
+          "lower": 267.9592058180747,
+          "upper": 267.95920595327993
+        },
+        "possible_upper_margin": 200.96931231431404,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 200.96931214531983
+      },
+      "normalized_L21_movement": 0.0007825935875291654,
+      "point_id": "df51dd8362e5b2b2fcf449e1be0468bb77f1ec939be780f618f0aafea24efdbd",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.006578587570993483,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 3.581560412944011,
+          "E1_primal": 3.5939802810453982,
+          "absolute_gap": 0.012419868101387177,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.00345574186004564,
+          "strictly_inside_stopping_tube_count": 392
+        },
+        "positive_edges": 30437,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 85,
+        "strictly_inside_stopping_tube_fraction": 0.0027926536780891677
+      }
+    },
+    "e11baadc91313eddaba435a0d6ea16d5cdc5cdc3eff80cc554fa561febf286aa": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 120.90697182139719,
+          "upper": 120.90697183380635
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 120.76639202229987,
+          "upper": 120.76639203564082
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.013832759850085655,
+      "point_id": "e11baadc91313eddaba435a0d6ea16d5cdc5cdc3eff80cc554fa561febf286aa"
+    },
+    "e1fd83216f0c69440205ed5b2bbdd8c04f289ac0a3c6a2cfaf157246b44c6d4c": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999994,
+      "RMS_angle_degrees": 6.079457421724074e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "normalized_L21_movement": 0.75,
+      "point_id": "e1fd83216f0c69440205ed5b2bbdd8c04f289ac0a3c6a2cfaf157246b44c6d4c"
+    },
+    "e2be5ab104e8505c0ad8df167d92a6b85f0319852c0a426d58f8ac65af1161b1": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999999999999998,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "e2be5ab104e8505c0ad8df167d92a6b85f0319852c0a426d58f8ac65af1161b1"
+    },
+    "e417a7054009d202d7451104f323159f09d87b6144e61c814898f49cbc6f38b3": {
+      "G_norm_max": 0.3672648971889318,
+      "G_norm_min": 0.04668985165445477,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "normalized_L21_movement": 0.0,
+      "point_id": "e417a7054009d202d7451104f323159f09d87b6144e61c814898f49cbc6f38b3"
+    },
+    "e58dd109000889d8918e5befad7fdcdc8706c4e299056262ce7be81e53859bd0": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.5092169847826058,
+      "RMS_angle_degrees": 6.593009419074871,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 2414,
+      "normalized_L21_movement": 0.07789277525138612,
+      "point_id": "e58dd109000889d8918e5befad7fdcdc8706c4e299056262ce7be81e53859bd0"
+    },
+    "e5d5447f62ec4f21c5348622c9972232c3e92811b95f27f4680d97bbf092c0af": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999992,
+      "RMS_angle_degrees": 5.574742930427293e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 0.75,
+      "point_id": "e5d5447f62ec4f21c5348622c9972232c3e92811b95f27f4680d97bbf092c0af"
+    },
+    "e63c5d3d063887d1b1d45a192ff7a49a58ecd062b48c607f34e23ca4207c0466": {
+      "G_norm_max": 1.000518969389156,
+      "G_norm_min": 0.9999999999999997,
+      "RMS_angle_degrees": 0.18481044905417907,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0005680421866742918,
+      "point_id": "e63c5d3d063887d1b1d45a192ff7a49a58ecd062b48c607f34e23ca4207c0466"
+    },
+    "e7421ddb2e6541cc78c44a581cf38baa0615a50579078da6b245bb785b376063": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9607878251162213,
+      "RMS_angle_degrees": 1.840123889504959,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 759.6026301566216,
+          "upper": 759.6026303911153
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 6,
+          "lower": 758.5249026305061,
+          "upper": 758.5249029426495
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.012595977330753568,
+      "point_id": "e7421ddb2e6541cc78c44a581cf38baa0615a50579078da6b245bb785b376063"
+    },
+    "e811fc48c06053d96787cb5ea6ac83103430d5e3f858b343bc3a1cb0facafd56": {
+      "G_norm_max": 0.25000000000000006,
+      "G_norm_min": 0.24999999999999994,
+      "RMS_angle_degrees": 5.806288535313291e-07,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.75,
+      "point_id": "e811fc48c06053d96787cb5ea6ac83103430d5e3f858b343bc3a1cb0facafd56"
+    },
+    "e8e61d171e4a92bf7344fe1e1c689ad5c0369ec25ebed0e6d2ee04e02de253f9": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "e8e61d171e4a92bf7344fe1e1c689ad5c0369ec25ebed0e6d2ee04e02de253f9"
+    },
+    "eaea6d1fa88e4752e1af2397dd2a1182b02de5d30beddc705fde501de0355d17": {
+      "G_norm_max": 0.5185466889054579,
+      "G_norm_min": 0.10311565772915578,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.0,
+      "point_id": "eaea6d1fa88e4752e1af2397dd2a1182b02de5d30beddc705fde501de0355d17"
+    },
+    "ee3fa8a9e4bad11505331c4123e0148651b637cae53ca78e608921432e52726c": {
+      "G_norm_max": 0.39829246765109005,
+      "G_norm_min": 0.0020025865497789357,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 1799,
+      "normalized_L21_movement": 0.0,
+      "point_id": "ee3fa8a9e4bad11505331c4123e0148651b637cae53ca78e608921432e52726c"
+    },
+    "eff8c5d04c471c771e5a91ba454b36bcfb865c6e549b56bf4b58212e4051cdc2": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.999035837614068,
+      "RMS_angle_degrees": 0.10593795549365058,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "dispersion": {
+        "absolute_optimality_gap": 0.0008809001174228115,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 8707.39956092891,
+          "upper": 8707.399567675275
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 10,
+          "lower": 8707.396753978437,
+          "upper": 8707.396760735668
+        },
+        "possible_upper_margin": 6530.547751403557,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 6530.547742959736
+      },
+      "normalized_L21_movement": 0.0003248628872246437,
+      "point_id": "eff8c5d04c471c771e5a91ba454b36bcfb865c6e549b56bf4b58212e4051cdc2",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.00271003148028677,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 90.45978965110206,
+          "E1_primal": 90.6176311379448,
+          "absolute_gap": 0.15784148684274157,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.0017418407969908604,
+          "strictly_inside_stopping_tube_count": 176
+        },
+        "positive_edges": 30437,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 33,
+        "strictly_inside_stopping_tube_fraction": 0.0010842067220816769
+      }
+    },
+    "f3c2989dc23052099831c53b8ef569956edf839142c8759a9ae03f68c56478c5": {
+      "G_norm_max": 0.09000054586967285,
+      "G_norm_min": 0.0013032565690161476,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 9298,
+      "normalized_L21_movement": 0.0,
+      "point_id": "f3c2989dc23052099831c53b8ef569956edf839142c8759a9ae03f68c56478c5"
+    },
+    "f4ebd40b6cba1d82713c2f3ed6d0da9eab1064568b8668910a6ef1e7b41d9cf7": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.976834337414695,
+      "RMS_angle_degrees": 1.7659550570300941,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 840,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 3,
+          "lower": 836.0927755844452,
+          "upper": 836.092775958529
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 3,
+          "lower": 835.6633904265586,
+          "upper": 835.6633911369449
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.008002578124630306,
+      "point_id": "f4ebd40b6cba1d82713c2f3ed6d0da9eab1064568b8668910a6ef1e7b41d9cf7"
+    },
+    "f64b596e0b6bb305790996a83897b05b01cf36d7f14dca033558b4b5b46c4133": {
+      "G_norm_max": 0.36726489718893185,
+      "G_norm_min": 0.04668985165445478,
+      "RMS_angle_degrees": null,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 780,
+      "dispersion": {
+        "absolute_optimality_gap": 0.00016118078366389454,
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 131.0944707747521,
+          "upper": 131.0944707917551
+        },
+        "bound_status": "VERIFIED_BOUND",
+        "eta": 0.25,
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 130.65782827208878,
+          "upper": 130.6578282952616
+        },
+        "possible_upper_margin": 97.88437178235723,
+        "scope": "Optimized G before rounding normalization",
+        "verified_lower_margin": 97.88437175493367
+      },
+      "normalized_L21_movement": 0.02223669459738963,
+      "point_id": "f64b596e0b6bb305790996a83897b05b01cf36d7f14dca033558b4b5b46c4133",
+      "stopping_tubes": {
+        "coincident_anchor_edges": 0,
+        "inside_tube_weight_fraction": 0.04535723461248301,
+        "ordinary_SSC_output": {
+          "E1_cross_certificate": false,
+          "E1_dual_using_SSC_q": 16.372688575504554,
+          "E1_primal": 16.88572287757808,
+          "absolute_gap": 0.5130343020735246,
+          "all_edges_at_or_above_frozen_tolerances": false,
+          "qualification": "Cross-objective diagnostic only; neither replaces the primary E1 output nor qualifies an uncertified ordinary-SSC control",
+          "relative_gap": 0.030382726626099244,
+          "strictly_inside_stopping_tube_count": 246
+        },
+        "positive_edges": 2523,
+        "scope": "Supplementary label-free explanation on fixed saved outputs; does not select parameters or change primary eligibility",
+        "strictly_inside_stopping_tube_count": 54,
+        "strictly_inside_stopping_tube_fraction": 0.02140309155766944
+      }
+    },
+    "fadedbbb7f35fec26c370fcb5b873d78f9d540e22884cebae5c9e8aee802c46f": {
+      "G_norm_max": 1.0000000000000002,
+      "G_norm_min": 0.9999934906802134,
+      "RMS_angle_degrees": 0.03633452326787978,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 213,
+      "dispersion": {
+        "anchor": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 201.7851260115256,
+          "upper": 201.7851261979839
+        },
+        "output": {
+          "bound_method": "convex-hull ball support lower bound with zero-sum residual penalty",
+          "certified_interval": true,
+          "iterations": 8,
+          "lower": 201.78579288673288,
+          "upper": 201.78579307323406
+        },
+        "scope": "Optimized G before rounding normalization"
+      },
+      "normalized_L21_movement": 0.000102757669373169,
+      "point_id": "fadedbbb7f35fec26c370fcb5b873d78f9d540e22884cebae5c9e8aee802c46f"
+    },
+    "fe7900b20d76358cf64faff4b2f9eabe195eb3bb4a78e9e804d98340271557f0": {
+      "G_norm_max": 1.0000000000000004,
+      "G_norm_min": 0.9990685764525291,
+      "RMS_angle_degrees": 0.15013263027619944,
+      "angular_excluded_count": 0,
+      "angular_mask_count": 400,
+      "normalized_L21_movement": 0.00044229853233316235,
+      "point_id": "fe7900b20d76358cf64faff4b2f9eabe195eb3bb4a78e9e804d98340271557f0"
+    }
+  },
+  "protocol_sha256": "4ee56bcbe2ae32b86461022f54354d8b866caa66347f81b09e68c93efeb272f6",
+  "schema": "ssc-refinement-diagnostics-v1",
+  "source_fingerprint": "3ba74a179c5d95bb7585a1f88d5ec9fff7b89897b71679531429b16ac1fa1cc6"
+}

@@ -1,0 +1,21 @@
+{
+  "inventory_file": "results/subset_search/numerical_inventory.v2.json.gz",
+  "inventory_sha256": "0272b954223d77bddbf35faff5fca0eb86facfb5a37afa21ae19c6bda6dfd88d",
+  "inventory_uncompressed_sha256": "c6dcfaaaeab2e72c13005c8cceeaf26249670b510862c4f63e93ee63a98d615d",
+  "missing_objects": 0,
+  "numeric_bytes": 32386292271,
+  "numerical_object_count": 191750,
+  "records": [
+    {
+      "object": {
+        "bytes": 265909896,
+        "kind": "json",
+        "path": "objects/c6/c6dcfaaaeab2e72c13005c8cceeaf26249670b510862c4f63e93ee63a98d615d.json",
+        "sha256": "c6dcfaaaeab2e72c13005c8cceeaf26249670b510862c4f63e93ee63a98d615d"
+      },
+      "record": "retained/subset_numerical_inventory.json"
+    }
+  ],
+  "restriction": "Local durable content-addressed objects; full former mixed archive remains private historical backup",
+  "schema": "clean-subset-scientific-objects-v2"
+}

@@ -125,7 +125,7 @@ python -m experiments.extension_verification rebuild --release-manifest configs/
 ## Source quality and report
 
 ```bash
-python -m pytest tests/submission_refresh tests/next_round
+python -m pytest tests/submission_refresh tests/extension_verification tests/next_round
 make -C report
 ```
 
@@ -138,3 +138,26 @@ the implementation.
 The [report](../report/Group_23.pdf), [report build guide](../report/README.md),
 [results](results.md) and [benchmark tables](../results/submission_refresh/per_benchmark/)
 provide the interpretation of the rebuilt records.
+
+## Scientific state and archive recovery
+
+The current clean inventories cover retained baseline states, G1–G3, USPS,
+subset numerical objects and the independent refinements. Original numerical
+object identities are preserved; original mixed source-body packages and
+execution logs are outside the advertised closure. The full subset inventory is
+available as a durable local content-addressed store, separately from the scoped
+refinement/state archive. Provider-derived arrays remain outside Git.
+
+```bash
+python -m experiments.submission_refresh.export_artifacts export --artifact-root ARTIFACT_ROOT --archive ARCHIVE --manifest results/submission_refresh/artifact_manifest.json --manifest results/submission_refresh/state_artifact_manifest.v2.json --manifest results/extension_verification/artifact_manifest.json
+python -m experiments.submission_refresh.export_artifacts recover --archive ARCHIVE --output RECOVERED_ARTIFACT_ROOT
+python -m experiments.extension_verification run --config configs/extension_verification/protocol.yaml --artifact-root RECOVERED_ARTIFACT_ROOT --resume
+```
+
+Recovery verifies every archive member before publishing the destination. It
+restores input registration, predictions, duals, step sizes, best feasible points,
+continuation identities and typed scientific metadata. A recovered resource ledger
+preserves a conservative charge against the existing allowance. It is not a new
+compute allocation. The release's scalar rebuild requires neither the archive nor
+the provider arrays; a self-contained release manifest is also generated beside
+the compressed scalar packet.

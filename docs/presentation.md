@@ -50,3 +50,11 @@ any gain. Retain neutral and negative findings and incomplete qualified coverage
 Keep derivations, certificates, source versions, full controls and conditional
 intervals in the report appendix. Explain convexity/duality, graph spectra and
 unsupervised fitting without claiming unseen-data evaluation or global novelty.
+
+## Fixed-result speaking notes
+
+- E1: the full qualified angular comparison is −0.008 ACC / +0.008 NMI pp against SSC, and −0.040 / +0.013 against interpolation. Its global dispersion floor is mathematically valid but does not establish better class recovery.
+- The original panel has seven qualified paired inputs. Keep its eight-input macro unavailable; the native-16 MSRA proxy misses the prescribed gap threshold after the cumulative limit.
+- E2: inward energy is 0.0786% / 5.4648% and neutralization changes direction by only 0.000148° / 0.017962° on ORL / YaleB. The predefined gate does not support a full tangent campaign.
+- E3: 49 / 1,751 frozen comparisons pass coverage, but correct relations are only 22.45% / 44.83%. The semantic gate fails; a large comparison count is not evidence of correct relationships.
+- End with the complete scalar release, preserved negative results and deterministic numerical confirmation. Do not describe gated methods as completed benchmark experiments.

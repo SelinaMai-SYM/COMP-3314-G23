@@ -54,7 +54,7 @@ Original sample indices were unavailable. Final source/subset matches and locked
 
 \input{tables/refresh_repairs}
 
-\section{Graph diagnostics and conditional extension}
+\section{Graph diagnostics}
 G1 compares SC/SSC on the same fixed representation. Certified gamma-1 shrinkage changes mean ACC/NMI by $+0.155/+0.014$ points on ORL and $-0.270/-0.276$ on YaleB, despite active movement. $A$ and $W$ have different roles: cross-class edges carry 4.6\% of ORL $W$ mass but 70.2\% of YaleB $W$ mass. Class-induced components, including isolates, distinguish within-class fragmentation from whole-graph connectivity. YaleB's $W$ edge-length AUROC is 0.380, weakening the general premise that erroneous edges are longer; these associations alone do not establish their causal effect.
 
 G2 separates anchor normalization from the fusion graph at matched mass. Row-normalized $U$ alone raises SC ACC by 1.850/4.016 points on ORL/YaleB; angular-graph shrinkage at gamma~1 adds only 0.170/0.314 above $U$-SC. A stronger representation baseline therefore matters more than a comparison only with $F_0$-SC.
@@ -70,10 +70,10 @@ E3 adds unit-gradient affine hinges from two-view agreement and contradictory $W
 
 \input{tables/refinement_main}
 
-The two panels are evaluated separately: original geometry rounds $G$, while every angular arm rounds $\operatorname{rowunit}(G)$. The label-free operating point is $2\gamma_{\rm ref}$, defined from the anchor's maximum node fusion force. The same complete 50 rounding seeds produce ACC/NMI means and sample SD. Conditional paired intervals use 10,000 resamples. Development paths and available certified movement matches cannot replace the primary point. An eight-input macro is unavailable until all eight paired outputs qualify. Full objectives, duals, controls and every failed, gated or unrun endpoint are in the appendix and scalar release.
+The two panels are evaluated separately: original geometry rounds $G$, while every angular arm rounds $\operatorname{rowunit}(G)$. The label-free operating point is $2\gamma_{\rm ref}$, defined from the anchor's maximum node fusion force. The same complete 50 rounding seeds produce ACC/NMI means and sample SD. Conditional paired intervals use 10,000 resamples. Development paths and available certified movement matches cannot replace the primary point. An eight-input macro is unavailable until all eight paired outputs qualify. E1 also changes angular ACC/NMI by $-0.040/+0.013$ points against interpolation, so the dispersion guarantee has not yielded a practical advantage over that simple control. E2 and E3 are not promoted: the radial intervention is too small and triplet semantics are insufficient. Complete controls, failures and derivations are retained in the appendix and scalar release.
 
 \section{Conclusion}
-SSC gives a clear convex refinement target, while clustering quality depends on representation, graph, solver and rounding choices. Our contribution is reproducible source/subset sensitivity and explicit numerical and implementation audits, including negative or unresolved evidence. Exact historical LDA-SC and several dataset identities remain unresolved. Code, statistical records and reproducible commands are available in the \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/main}{public repository}.
+SSC gives a clear convex refinement target, while clustering quality depends on representation, graph, solver and rounding choices. Our contribution is reproducible source/subset sensitivity, numerical audits and independently gated refinements. E1 preserves dispersion without a practical mean clustering gain here; the development evidence does not support promoting E2 or E3. Exact historical LDA-SC and several dataset identities remain unresolved. Code, statistical records and reproducible commands are available in the \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/main}{public repository}.
 \label{main_end}
 \clearpage
 \label{references_start}
@@ -109,6 +109,8 @@ J_\eta(G)=\sum_i\|g_i-h_i\|+\sum_e c_e(\|(BG)_e\|-a_e)_+,\qquad
 D_\eta(q)=\langle H,B^Tq\rangle-\sum_e a_e\|q_e\|.
 \]
 The dual constraints are $\|q_e\|\le c_e$ and $\|(B^Tq)_i\|\le1$. With original-edge step $\sigma_e$, the dual prox soft-thresholds the norm by $\sigma_e a_e$ then projects to $c_e$. In weighted-incidence coordinates $K=\operatorname{diag}(\sqrt w)B$, the mapped original-edge step is $w_e\Sigma_e$. For a geometric median $z$ of $H$, the candidate $\eta H+(1-\eta)z$ has zero edge penalty and fidelity $(1-\eta)D(H)$. Hence $P^*\le(1-\eta)D(H)$. The triangle inequality gives $D(H)\le\sum_i\|g_i-h_i\|+D(G)$, proving $D(G)\ge\eta D(H)-\epsilon$ for an output with absolute certified gap $\epsilon=P(G)-D_\eta(q)$. Certified median lower/upper bounds determine the numerical margins. These statements concern $G$, not normalized $Q$.
+
+A supplementary objective comparison explains when E1 cannot change the ordinary optimum. Let $C=\sum_e c_e a_e$. Since $(r-a)_+\ge r-a$, $J_\eta(G)\ge J_0(G)-C$. If an exact ordinary minimizer has all edge distances at least $a_e$, equality holds there and that same representation minimizes E1. Saved-output tube and cross-objective diagnostics inspect this condition without another fit or parameter selection. Finite certificates remain attached to their own targets.
 
 For two tied groups of sizes 2 and 3 at distance 4, aggregate coefficient $\lambda=1.6$ gives objective optima $6.4,4.8,3.2$ at $\eta=0,.25,.5$; $\lambda=2.4$ gives $8,6,4$. At $\lambda=2$, a continuum of minimizing separations is possible; identical optimizer arrays are therefore not required. The cases $\eta=0$, $\eta=1$, $\gamma=0$, empty/disconnected graphs and duplicate anchors are checked independently.
 

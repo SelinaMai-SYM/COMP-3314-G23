@@ -447,6 +447,7 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
         joint = self.products / 'joint historical rebuild'
         current = self.products / 'current subset rebuild'
         evidence = self.products / 'baseline graph rebuild'
+        refinements = self.products / 'independent refinement rebuild'
         self.run('historical-no-data', [self.python, '-m', 'experiments.v3_reproduction', 'rebuild-results',
             '--release-manifest', 'configs/final/release_manifest.json', '--output', historical])
         self.run('joint-no-data', [self.python, '-m', 'experiments.submission_refresh', 'rebuild',
@@ -456,7 +457,9 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
         self.run('evidence-no-data', [self.python, '-m', 'experiments.submission_refresh', 'rebuild-evidence',
             '--config', 'configs/submission_refresh/campaign.yaml', '--release-manifest',
             'configs/submission_refresh/evidence_manifest.json', '--output', evidence])
-        for folder, marker in [(historical, 'validation.json'), (current, 'validation.json'), (evidence, 'evidence_validation.json')]:
+        self.run('refinements-no-data', [self.python, '-m', 'experiments.extension_verification', 'rebuild',
+            '--release-manifest', 'configs/extension_verification/release_manifest.json', '--output', refinements])
+        for folder, marker in [(historical, 'validation.json'), (current, 'validation.json'), (evidence, 'evidence_validation.json'), (refinements, 'validation.json')]:
             result = json.loads((folder / marker).read_text())
             self.check('rebuild-marker-' + folder.name, result.get('ok') is True, marker=result)
         comparisons = [
@@ -470,7 +473,9 @@ print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.
                 'fixed_protocol_distribution.csv', 'fixed_protocol_family_distributions.csv',
                 'reference_contrasts.csv', 'matched_sc_summary.csv', 'matched_sc_contrasts.csv']),
             (evidence, 'results/submission_refresh', ['expanded_baseline_selection.csv',
-                'expanded_baseline_native_selection.csv', 'baseline_source_native_diagnostics.csv'])]
+                'expanded_baseline_native_selection.csv', 'baseline_source_native_diagnostics.csv']),
+            (refinements, 'results/extension_verification', ['status.csv', 'metrics.csv',
+                'contrasts.csv', 'macro_summary.csv', 'design_coverage.csv'])]
         for rebuilt, committed, files in comparisons:
             for name in files:
                 details = compare_csv(self.checkout / committed / name, rebuilt / name,transport_root=self.checkout)

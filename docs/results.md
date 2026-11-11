@@ -117,3 +117,27 @@ The supported conclusion is conditional: solver precision, representation
 normalization, graph structure and rounding must be assessed separately.
 Neither numerical closeness to a paper nor an optimal refinement objective
 establishes a better clustering method. See [scientific limitations](limitations.md).
+
+## Independent convex refinement studies
+
+The [complete registered results](extension_verification_results.md) contain
+130 configurations and 6,500 rounding trials in the current scientific context.
+E1 has all eight inputs in both panels: 15 primary outputs are certified and the
+MSRA original-panel output is uncertified. The matched ordinary-SSC MSRA control
+is also uncertified. The original-panel macro therefore remains unavailable;
+the complete qualified angular macro is −0.008 ACC / +0.008 NMI percentage points
+against matched SSC, and −0.040 / +0.013 against interpolation.
+
+E2's inward-energy and directional-intervention conditions fail on both fixed
+development datasets. E3 has adequate comparison counts, but correct semantic
+relations reach only 22.45% on ORL and 44.83% on YaleB, below the locked 60% gate.
+Their benchmark matrices retain explicit gate-failure states with no fabricated
+scores. All sixteen origin-scaling checks preserve every rounded SC partition.
+
+A deterministic confirmation under a separate infrastructure identity reproduces
+all 130 G/Q matrices, center arrays and prediction arrays, with zero difference
+in per-trial ACC, NMI and SSE. The repeated seeds are not pooled as extra trials.
+See [context confirmation](../results/extension_verification/context_confirmation.json),
+[status](../results/extension_verification/status.csv),
+[paired contrasts](../results/extension_verification/contrasts.csv) and
+[protocol coverage](../results/extension_verification/design_coverage.csv).

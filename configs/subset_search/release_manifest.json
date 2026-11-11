@@ -279,9 +279,9 @@
   ],
   "inputs": {
     "artifact_manifest": {
-      "bytes": 648,
-      "path": "results/subset_search/artifact_manifest.public.v1.json",
-      "sha256": "63dfe946890bb647730e514cc06fe23dbc7272c202293d52eff53ea6f009db83"
+      "bytes": 512,
+      "path": "results/subset_search/artifact_lineage.public.v2.json",
+      "sha256": "ecf9ddbb534af409061eeff34ae9f351029a72e0d8847d1676f9cc304664d2d2"
     },
     "catalogue": {
       "bytes": 66850049,

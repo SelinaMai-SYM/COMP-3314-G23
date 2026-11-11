@@ -125,3 +125,21 @@ mean blind additions. Bootstrap uses 10,000 resamples and seed `424242` over
 paired rounding seeds. Same-class random additions and fully random edits are
 separate supplementary controls. The criterion is met if at least one development
 benchmark qualifies; this does not validate an unsupervised method by itself.
+
+## Independent refinement protocol
+
+The [registered design](extension_verification_plan.md) and
+[immutable protocol](../configs/extension_verification/protocol.yaml) define
+separate E1 original/angular panels and gated E2/E3 angular evaluations. Each fit
+is shared across fifty greedy K-means++/Lloyd seeds. The fixed candidate/source,
+actual gamma, output normalization, all attempts, exact G/Q identities and both
+statistical endpoints remain attached to one configuration. Conditional paired
+intervals use 10,000 resamples with seed 424242.
+
+Each artifact directory has its own immutable input registration. Code,
+environment and registration identities participate in cache and continuation
+keys; creating another destination does not reuse incompatible numerical states.
+The published lock records the measured context. A fresh freeze registers its
+actual environment and numerical objects under the same fixed scientific design,
+without rewriting that published reference. Controls and untriggered conditional
+points appear in the generated design-coverage table.

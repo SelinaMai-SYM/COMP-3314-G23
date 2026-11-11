@@ -1,1 +1,247 @@
-\noindent The registered primary endpoints cover eight fixed inputs, two E1 panels and the separately gated angular E2/E3 studies. Full numerical records will populate the registered scalar release.\par
+\subsection{Registered endpoint status}
+\begin{longtable}{llp{.28\linewidth}p{.30\linewidth}}\toprule Data & Study & Panel & Status\\\midrule\endhead
+ORL & E1 & original & certified\\
+ORL & E1 & angular & certified\\
+ORL & E2 & angular & not promoted\\
+ORL & E3 & angular & not promoted\\
+YaleB & E1 & original & certified\\
+YaleB & E1 & angular & certified\\
+YaleB & E2 & angular & not promoted\\
+YaleB & E3 & angular & not promoted\\
+AR & E1 & original & certified\\
+AR & E1 & angular & certified\\
+AR & E2 & angular & not promoted\\
+AR & E3 & angular & not promoted\\
+JAFFE & E1 & original & certified\\
+JAFFE & E1 & angular & certified\\
+JAFFE & E2 & angular & not promoted\\
+JAFFE & E3 & angular & not promoted\\
+UMIST & E1 & original & certified\\
+UMIST & E1 & angular & certified\\
+UMIST & E2 & angular & not promoted\\
+UMIST & E3 & angular & not promoted\\
+BinAlpha & E1 & original & certified\\
+BinAlpha & E1 & angular & certified\\
+BinAlpha & E2 & angular & not promoted\\
+BinAlpha & E3 & angular & not promoted\\
+MSRA50 & E1 & original & uncertified\\
+MSRA50 & E1 & angular & certified\\
+MSRA50 & E2 & angular & not promoted\\
+MSRA50 & E3 & angular & not promoted\\
+USPS & E1 & original & certified\\
+USPS & E1 & angular & certified\\
+USPS & E2 & angular & not promoted\\
+USPS & E3 & angular & not promoted\\
+\bottomrule\end{longtable}
+\subsection{Complete fixed-point means and numerical qualification}
+Bold study names denote primary operating points. Means and sample SD use the same complete fifty seeds. Native single-assignment endpoints and all seeds are retained in the CSV/gzip release. Gated or unrun points are absent from this measured table, rather than filled with zeros.
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{lllp{.14\linewidth}rrrrr}\toprule Data & Study & Panel & Parameters & ACC & NMI & Gap & Move & CPU (s)\\\midrule\endhead
+AR & \textbf{SC} & original & gamma=0 & 57.264$\pm$0.833 & 82.380$\pm$0.318 & -- & 0.0000 & --\\
+AR & \textbf{SSC} & original & gamma=0.2266 & 57.364$\pm$0.857 & 82.327$\pm$0.318 & 7.63e-06 C & 0.0185 & 3.6\\
+AR & \textbf{E1} & original & gamma=0.2266 eta=0.25 & 57.410$\pm$0.758 & 82.369$\pm$0.332 & 9.73e-06 C & 0.0142 & 7.2\\
+AR & mix & original & gamma=0.2266 eta=0.25 & 57.483$\pm$0.690 & 82.445$\pm$0.317 & -- & 0.0138 & --\\
+AR & scale & original & gamma=0 eta=0.25 & 57.264$\pm$0.833 & 82.380$\pm$0.318 & -- & 0.7500 & --\\
+AR & \textbf{SC} & angular & gamma=0 & 58.362$\pm$0.966 & 83.232$\pm$0.316 & -- & 0.0000 & --\\
+AR & \textbf{SSC} & angular & gamma=0.1952 & 58.369$\pm$0.769 & 83.232$\pm$0.253 & 7.04e-06 C & 0.0080 & 3.8\\
+AR & \textbf{E1} & angular & gamma=0.1952 eta=0.25 & 58.317$\pm$0.790 & 83.209$\pm$0.228 & 9.51e-06 C & 0.0063 & 3.9\\
+AR & mix & angular & gamma=0.1952 eta=0.25 & 58.498$\pm$0.776 & 83.281$\pm$0.243 & -- & 0.0060 & --\\
+AR & scale & angular & gamma=0 eta=0.25 & 58.362$\pm$0.966 & 83.232$\pm$0.316 & -- & 0.7500 & --\\
+JAFFE & \textbf{SC} & original & gamma=0 & 95.305$\pm$0.000 & 94.134$\pm$0.020 & -- & 0.0000 & --\\
+JAFFE & \textbf{SSC} & original & gamma=0.2518 & 95.305$\pm$0.000 & 94.134$\pm$0.020 & 9.85e-06 C & 0.0016 & 2.2\\
+JAFFE & \textbf{E1} & original & gamma=0.2518 eta=0.25 & 95.305$\pm$0.000 & 94.134$\pm$0.020 & 9.39e-06 C & 0.0013 & 2.6\\
+JAFFE & mix & original & gamma=0.2518 eta=0.25 & 95.305$\pm$0.000 & 94.134$\pm$0.020 & -- & 0.0012 & --\\
+JAFFE & scale & original & gamma=0 eta=0.25 & 95.305$\pm$0.000 & 94.134$\pm$0.020 & -- & 0.7500 & --\\
+JAFFE & \textbf{SC} & angular & gamma=0 & 96.714$\pm$0.000 & 96.392$\pm$0.000 & -- & 0.0000 & --\\
+JAFFE & \textbf{SSC} & angular & gamma=0.1874 & 96.714$\pm$0.000 & 96.392$\pm$0.000 & 9.97e-06 C & 0.0001 & 3.2\\
+JAFFE & \textbf{E1} & angular & gamma=0.1874 eta=0.25 & 96.714$\pm$0.000 & 96.392$\pm$0.000 & 9.97e-06 C & 0.0001 & 4.5\\
+JAFFE & mix & angular & gamma=0.1874 eta=0.25 & 96.714$\pm$0.000 & 96.392$\pm$0.000 & -- & 0.0001 & --\\
+JAFFE & scale & angular & gamma=0 eta=0.25 & 96.714$\pm$0.000 & 96.392$\pm$0.000 & -- & 0.7500 & --\\
+ORL & \textbf{SC} & original & gamma=0 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & -- & 0.0000 & --\\
+ORL & \textbf{SSC} & original & gamma=0.2701 & 78.405$\pm$1.181 & 89.592$\pm$0.677 & 9.51e-06 C & 0.0138 & 1.7\\
+ORL & \textbf{E1} & original & gamma=0.2701 eta=0.25 & 78.225$\pm$1.348 & 89.798$\pm$0.629 & 9.93e-06 C & 0.0105 & 5.3\\
+ORL & SSC & original & gamma=0 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 0 C & 0.0000 & 1.6\\
+ORL & SSC & original & gamma=0.06753 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 2e-12 C & 0.0000 & 1.3\\
+ORL & SSC & original & gamma=0.1351 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 2e-12 C & 0.0000 & 1.2\\
+ORL & SSC & original & gamma=1 & 78.480$\pm$1.408 & 89.888$\pm$0.805 & 9.89e-06 C & 0.0896 & 2.1\\
+ORL & SSC & original & gamma=1.08 & 78.780$\pm$1.425 & 90.140$\pm$0.824 & 9.41e-06 C & 0.0928 & 2.4\\
+ORL & E1 & original & gamma=0 eta=0.25 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 0 C & 0.0000 & 1.3\\
+ORL & E1 & original & gamma=0.06753 eta=0.25 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 2e-12 C & 0.0000 & 1.3\\
+ORL & E1 & original & gamma=0.1351 eta=0.25 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & 2e-12 C & 0.0000 & 1.3\\
+ORL & E1 & original & gamma=0.2701 eta=0.5 & 78.030$\pm$1.478 & 89.689$\pm$0.698 & 9.97e-06 C & 0.0070 & 9.7\\
+ORL & E1 & original & gamma=1 eta=0.25 & 78.420$\pm$1.358 & 89.823$\pm$0.823 & 4.86e-05 U & 0.0666 & 26.6\\
+ORL & E1 & original & gamma=1.08 eta=0.25 & 78.450$\pm$1.128 & 89.789$\pm$0.675 & 4.56e-05 U & 0.0691 & 26.3\\
+ORL & mix & original & gamma=0.2701 eta=0.25 & 78.155$\pm$1.257 & 89.618$\pm$0.675 & -- & 0.0104 & --\\
+ORL & mix & original & gamma=0.2701 eta=0.5 & 78.300$\pm$1.189 & 89.696$\pm$0.684 & -- & 0.0069 & --\\
+ORL & scale & original & gamma=0 eta=0.25 & 78.325$\pm$1.310 & 89.874$\pm$0.675 & -- & 0.7500 & --\\
+ORL & \textbf{SC} & angular & gamma=0 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & -- & 0.0000 & --\\
+ORL & \textbf{SSC} & angular & gamma=0.1537 & 80.180$\pm$1.392 & 90.896$\pm$0.610 & 9.74e-06 C & 0.0006 & 2.2\\
+ORL & \textbf{E1} & angular & gamma=0.1537 eta=0.25 & 80.190$\pm$1.361 & 90.904$\pm$0.611 & 9.64e-06 C & 0.0005 & 2.8\\
+ORL & SSC & angular & gamma=0 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 0 C & 0.0000 & 1.3\\
+ORL & SSC & angular & gamma=0.03842 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 2e-12 C & 0.0000 & 1.2\\
+ORL & SSC & angular & gamma=0.07683 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 2e-12 C & 0.0000 & 1.3\\
+ORL & SSC & angular & gamma=0.6147 & 80.495$\pm$1.394 & 90.962$\pm$0.587 & 9.9e-06 C & 0.0300 & 5.8\\
+ORL & SSC & angular & gamma=1 & 80.140$\pm$1.147 & 90.887$\pm$0.472 & 9.96e-06 C & 0.0452 & 7.2\\
+ORL & E1 & angular & gamma=0 eta=0.25 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 0 C & 0.0000 & 1.3\\
+ORL & E1 & angular & gamma=0.03842 eta=0.25 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 2e-12 C & 0.0000 & 1.2\\
+ORL & E1 & angular & gamma=0.07683 eta=0.25 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & 2e-12 C & 0.0000 & 1.3\\
+ORL & E1 & angular & gamma=0.1537 eta=0.5 & 80.185$\pm$1.364 & 90.888$\pm$0.597 & 9.86e-06 C & 0.0004 & 5.8\\
+ORL & E1 & angular & gamma=0.6147 eta=0.25 & 80.350$\pm$1.415 & 90.949$\pm$0.594 & 2.02e-05 U & 0.0225 & 31.0\\
+ORL & E1 & angular & gamma=1 eta=0.25 & 80.485$\pm$1.330 & 91.060$\pm$0.498 & 4.42e-05 U & 0.0335 & 31.1\\
+ORL & mix & angular & gamma=0.1537 eta=0.25 & 80.255$\pm$1.356 & 90.923$\pm$0.606 & -- & 0.0004 & --\\
+ORL & mix & angular & gamma=0.1537 eta=0.5 & 80.165$\pm$1.394 & 90.888$\pm$0.615 & -- & 0.0003 & --\\
+ORL & scale & angular & gamma=0 eta=0.25 & 80.175$\pm$1.551 & 90.890$\pm$0.641 & -- & 0.7500 & --\\
+ORL & radial R & angular & gamma=0.1537 & 80.180$\pm$1.392 & 90.896$\pm$0.610 & -- & 0.0006 & --\\
+UMIST & \textbf{SC} & original & gamma=0 & 61.901$\pm$2.505 & 79.376$\pm$1.121 & -- & 0.0000 & --\\
+UMIST & \textbf{SSC} & original & gamma=0.2927 & 61.890$\pm$2.251 & 79.122$\pm$1.201 & 5.81e-06 C & 0.0047 & 5.3\\
+UMIST & \textbf{E1} & original & gamma=0.2927 eta=0.25 & 62.528$\pm$2.087 & 79.235$\pm$1.028 & 9.81e-06 C & 0.0037 & 30.2\\
+UMIST & mix & original & gamma=0.2927 eta=0.25 & 62.103$\pm$2.120 & 79.157$\pm$1.088 & -- & 0.0035 & --\\
+UMIST & scale & original & gamma=0 eta=0.25 & 61.901$\pm$2.505 & 79.376$\pm$1.121 & -- & 0.7500 & --\\
+UMIST & \textbf{SC} & angular & gamma=0 & 66.638$\pm$2.495 & 83.897$\pm$0.756 & -- & 0.0000 & --\\
+UMIST & \textbf{SSC} & angular & gamma=0.1947 & 66.539$\pm$2.462 & 83.871$\pm$0.726 & 9.98e-06 C & 0.0014 & 4.3\\
+UMIST & \textbf{E1} & angular & gamma=0.1947 eta=0.25 & 66.543$\pm$2.499 & 83.868$\pm$0.760 & 9.99e-06 C & 0.0011 & 8.1\\
+UMIST & mix & angular & gamma=0.1947 eta=0.25 & 66.738$\pm$2.373 & 83.936$\pm$0.735 & -- & 0.0010 & --\\
+UMIST & scale & angular & gamma=0 eta=0.25 & 66.638$\pm$2.495 & 83.897$\pm$0.756 & -- & 0.7500 & --\\
+BinAlpha & \textbf{SC} & original & gamma=0 & 47.272$\pm$1.371 & 58.664$\pm$0.582 & -- & 0.0000 & --\\
+BinAlpha & \textbf{SSC} & original & gamma=0.2931 & 47.387$\pm$1.263 & 58.530$\pm$0.762 & 9.66e-06 C & 0.0269 & 4.3\\
+BinAlpha & \textbf{E1} & original & gamma=0.2931 eta=0.25 & 47.803$\pm$1.304 & 58.822$\pm$0.661 & 9.83e-06 C & 0.0222 & 7.4\\
+BinAlpha & mix & original & gamma=0.2931 eta=0.25 & 47.313$\pm$1.256 & 58.498$\pm$0.610 & -- & 0.0202 & --\\
+BinAlpha & scale & original & gamma=0 eta=0.25 & 47.272$\pm$1.371 & 58.664$\pm$0.582 & -- & 0.7500 & --\\
+BinAlpha & \textbf{SC} & angular & gamma=0 & 50.736$\pm$1.411 & 61.005$\pm$0.631 & -- & 0.0000 & --\\
+BinAlpha & \textbf{SSC} & angular & gamma=0.2379 & 50.879$\pm$1.305 & 61.104$\pm$0.621 & 8.76e-06 C & 0.0126 & 3.3\\
+BinAlpha & \textbf{E1} & angular & gamma=0.2379 eta=0.25 & 51.128$\pm$1.378 & 61.204$\pm$0.522 & 7.65e-06 C & 0.0113 & 2.5\\
+BinAlpha & mix & angular & gamma=0.2379 eta=0.25 & 51.064$\pm$1.456 & 61.014$\pm$0.652 & -- & 0.0094 & --\\
+BinAlpha & scale & angular & gamma=0 eta=0.25 & 50.736$\pm$1.411 & 61.005$\pm$0.631 & -- & 0.7500 & --\\
+MSRA50 & \textbf{SC} & original & gamma=0 & 47.117$\pm$2.479 & 60.281$\pm$2.456 & -- & 0.0000 & --\\
+MSRA50 & \textbf{SSC} & original & gamma=0.2133 & 46.976$\pm$2.295 & 60.193$\pm$2.273 & 1.01e-05 U & 0.0002 & 179.3\\
+MSRA50 & \textbf{E1} & original & gamma=0.2133 eta=0.25 & 46.966$\pm$2.283 & 60.259$\pm$2.327 & 1.09e-05 U & 0.0002 & 242.6\\
+MSRA50 & mix & original & gamma=0.2133 eta=0.25 & 46.966$\pm$2.283 & 60.259$\pm$2.327 & -- & 0.0002 & --\\
+MSRA50 & scale & original & gamma=0 eta=0.25 & 47.117$\pm$2.479 & 60.281$\pm$2.456 & -- & 0.7500 & --\\
+MSRA50 & \textbf{SC} & angular & gamma=0 & 57.434$\pm$2.584 & 72.643$\pm$1.027 & -- & 0.0000 & --\\
+MSRA50 & \textbf{SSC} & angular & gamma=0.1275 & 57.435$\pm$2.585 & 72.647$\pm$1.029 & 9.99e-06 C & 0.0000 & 73.2\\
+MSRA50 & \textbf{E1} & angular & gamma=0.1275 eta=0.25 & 57.364$\pm$2.589 & 72.632$\pm$1.029 & 9.99e-06 C & 0.0000 & 88.9\\
+MSRA50 & mix & angular & gamma=0.1275 eta=0.25 & 57.363$\pm$2.588 & 72.628$\pm$1.027 & -- & 0.0000 & --\\
+MSRA50 & scale & angular & gamma=0 eta=0.25 & 57.434$\pm$2.584 & 72.643$\pm$1.027 & -- & 0.7500 & --\\
+YaleB & \textbf{SC} & original & gamma=0 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & -- & 0.0000 & --\\
+YaleB & \textbf{SSC} & original & gamma=0.2485 & 21.789$\pm$0.470 & 27.681$\pm$0.683 & 9.86e-06 C & 0.0049 & 8.5\\
+YaleB & \textbf{E1} & original & gamma=0.2485 eta=0.25 & 21.819$\pm$0.465 & 27.683$\pm$0.552 & 1e-05 C & 0.0045 & 25.1\\
+YaleB & SSC & original & gamma=0 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 0 C & 0.0000 & 2.0\\
+YaleB & SSC & original & gamma=0.06212 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 2e-12 C & 0.0000 & 2.0\\
+YaleB & SSC & original & gamma=0.1242 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 2e-12 C & 0.0000 & 2.1\\
+YaleB & SSC & original & gamma=0.9939 & 21.586$\pm$0.497 & 27.539$\pm$0.575 & 9.98e-06 C & 0.0971 & 93.3\\
+YaleB & SSC & original & gamma=1 & 21.511$\pm$0.484 & 27.455$\pm$0.576 & 9.98e-06 C & 0.0976 & 77.8\\
+YaleB & E1 & original & gamma=0 eta=0.25 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 0 C & 0.0000 & 2.0\\
+YaleB & E1 & original & gamma=0.06212 eta=0.25 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 2e-12 C & 0.0000 & 2.3\\
+YaleB & E1 & original & gamma=0.1242 eta=0.25 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & 2e-12 C & 0.0000 & 2.1\\
+YaleB & E1 & original & gamma=0.2485 eta=0.5 & 21.811$\pm$0.492 & 27.736$\pm$0.575 & 9.9e-06 C & 0.0038 & 40.4\\
+YaleB & E1 & original & gamma=0.9939 eta=0.25 & 21.678$\pm$0.428 & 27.433$\pm$0.507 & 5.3e-05 U & 0.0746 & 157.2\\
+YaleB & E1 & original & gamma=1 eta=0.25 & 21.708$\pm$0.473 & 27.562$\pm$0.566 & 5.33e-05 U & 0.0749 & 155.3\\
+YaleB & mix & original & gamma=0.2485 eta=0.25 & 21.752$\pm$0.548 & 27.687$\pm$0.528 & -- & 0.0036 & --\\
+YaleB & mix & original & gamma=0.2485 eta=0.5 & 21.857$\pm$0.472 & 27.758$\pm$0.502 & -- & 0.0024 & --\\
+YaleB & scale & original & gamma=0 eta=0.25 & 21.781$\pm$0.454 & 27.731$\pm$0.585 & -- & 0.7500 & --\\
+YaleB & \textbf{SC} & angular & gamma=0 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & -- & 0.0000 & --\\
+YaleB & \textbf{SSC} & angular & gamma=0.2068 & 26.198$\pm$0.953 & 32.743$\pm$0.649 & 8.5e-06 C & 0.0043 & 3.0\\
+YaleB & \textbf{E1} & angular & gamma=0.2068 eta=0.25 & 25.984$\pm$0.885 & 32.635$\pm$0.576 & 8.71e-06 C & 0.0040 & 3.8\\
+YaleB & SSC & angular & gamma=0 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 0 C & 0.0000 & 1.4\\
+YaleB & SSC & angular & gamma=0.0517 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 2e-12 C & 0.0000 & 1.5\\
+YaleB & SSC & angular & gamma=0.1034 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 2e-12 C & 0.0000 & 1.5\\
+YaleB & SSC & angular & gamma=0.8273 & 25.570$\pm$0.798 & 32.232$\pm$0.472 & 9.63e-06 C & 0.1000 & 11.3\\
+YaleB & SSC & angular & gamma=1 & 25.356$\pm$0.780 & 31.931$\pm$0.512 & 9.75e-06 C & 0.1171 & 9.2\\
+YaleB & E1 & angular & gamma=0 eta=0.25 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 0 C & 0.0000 & 1.7\\
+YaleB & E1 & angular & gamma=0.0517 eta=0.25 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 2e-12 C & 0.0000 & 1.5\\
+YaleB & E1 & angular & gamma=0.1034 eta=0.25 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & 2e-12 C & 0.0000 & 1.7\\
+YaleB & E1 & angular & gamma=0.2068 eta=0.5 & 25.884$\pm$0.945 & 32.750$\pm$0.536 & 9.82e-06 C & 0.0034 & 4.2\\
+YaleB & E1 & angular & gamma=0.8273 eta=0.25 & 25.537$\pm$0.730 & 32.107$\pm$0.431 & 9.89e-06 C & 0.0779 & 35.9\\
+YaleB & E1 & angular & gamma=1 eta=0.25 & 25.366$\pm$0.812 & 32.029$\pm$0.543 & 9.97e-06 C & 0.0901 & 40.4\\
+YaleB & mix & angular & gamma=0.2068 eta=0.25 & 25.940$\pm$0.787 & 32.674$\pm$0.505 & -- & 0.0032 & --\\
+YaleB & mix & angular & gamma=0.2068 eta=0.5 & 25.780$\pm$0.774 & 32.638$\pm$0.495 & -- & 0.0021 & --\\
+YaleB & scale & angular & gamma=0 eta=0.25 & 25.797$\pm$0.709 & 32.595$\pm$0.435 & -- & 0.7500 & --\\
+YaleB & radial R & angular & gamma=0.2068 & 26.145$\pm$0.983 & 32.672$\pm$0.639 & -- & 0.0042 & --\\
+USPS & \textbf{SC} & original & gamma=0 & 65.597$\pm$1.867 & 80.315$\pm$2.128 & -- & 0.0000 & --\\
+USPS & \textbf{SSC} & original & gamma=0.2496 & 65.550$\pm$1.680 & 80.419$\pm$1.724 & 9.97e-06 C & 0.0008 & 150.0\\
+USPS & \textbf{E1} & original & gamma=0.2496 eta=0.25 & 65.604$\pm$1.633 & 80.572$\pm$1.396 & 9.99e-06 C & 0.0008 & 330.9\\
+USPS & mix & original & gamma=0.2496 eta=0.25 & 65.664$\pm$1.686 & 80.502$\pm$1.459 & -- & 0.0006 & --\\
+USPS & scale & original & gamma=0 eta=0.25 & 65.597$\pm$1.867 & 80.315$\pm$2.128 & -- & 0.7500 & --\\
+USPS & \textbf{SC} & angular & gamma=0 & 68.360$\pm$3.635 & 83.436$\pm$0.891 & -- & 0.0000 & --\\
+USPS & \textbf{SSC} & angular & gamma=0.189 & 68.124$\pm$3.866 & 83.322$\pm$1.130 & 9.32e-06 C & 0.0004 & 8.3\\
+USPS & \textbf{E1} & angular & gamma=0.189 eta=0.25 & 68.136$\pm$3.462 & 83.430$\pm$0.889 & 9.74e-06 C & 0.0003 & 12.3\\
+USPS & mix & angular & gamma=0.189 eta=0.25 & 68.124$\pm$3.867 & 83.322$\pm$1.130 & -- & 0.0003 & --\\
+USPS & scale & angular & gamma=0 eta=0.25 & 68.360$\pm$3.635 & 83.436$\pm$0.891 & -- & 0.7500 & --\\
+\bottomrule\end{longtable}\endgroup
+\subsection{All declared paired contrasts}
+Intervals use 10,000 paired resamples of rounding seeds, conditional on the fixed input and saved representation. Qualification requires both applicable convex certificates. Interpolation, radial neutralization and SC are deterministic references, not certified optimizers of another target.
+\begingroup\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{llp{.28\linewidth}rrl}\toprule Data & Panel & Contrast & $\Delta$ACC [interval] & $\Delta$NMI & Qualified\\\midrule\endhead
+ORL & original & E1\_minus\_SC & -0.100 [-0.575, 0.385] & -0.076 & True\\
+ORL & original & E1\_minus\_SSC & -0.180 [-0.660, 0.315] & 0.206 & True\\
+ORL & original & E1\_minus\_interpolation & 0.070 [-0.295, 0.405] & 0.180 & True\\
+ORL & original & E1\_minus\_uniform\_scaling & -0.100 [-0.575, 0.385] & -0.076 & True\\
+ORL & angular & E1\_minus\_SC & 0.015 [-0.150, 0.225] & 0.014 & True\\
+ORL & angular & E1\_minus\_SSC & 0.010 [-0.015, 0.045] & 0.008 & True\\
+ORL & angular & E1\_minus\_interpolation & -0.065 [-0.175, 0.000] & -0.019 & True\\
+ORL & angular & E1\_minus\_uniform\_scaling & 0.015 [-0.150, 0.225] & 0.014 & True\\
+YaleB & original & E1\_minus\_SC & 0.037 [-0.155, 0.234] & -0.048 & True\\
+YaleB & original & E1\_minus\_SSC & 0.030 [-0.103, 0.169] & 0.002 & True\\
+YaleB & original & E1\_minus\_interpolation & 0.066 [-0.067, 0.195] & -0.004 & True\\
+YaleB & original & E1\_minus\_uniform\_scaling & 0.037 [-0.155, 0.234] & -0.048 & True\\
+YaleB & angular & E1\_minus\_SC & 0.187 [-0.151, 0.516] & 0.041 & True\\
+YaleB & angular & E1\_minus\_SSC & -0.214 [-0.412, -0.034] & -0.108 & True\\
+YaleB & angular & E1\_minus\_interpolation & 0.045 [-0.152, 0.247] & -0.038 & True\\
+YaleB & angular & E1\_minus\_uniform\_scaling & 0.187 [-0.151, 0.516] & 0.041 & True\\
+AR & original & E1\_minus\_SC & 0.145 [-0.131, 0.438] & -0.011 & True\\
+AR & original & E1\_minus\_SSC & 0.045 [-0.233, 0.333] & 0.042 & True\\
+AR & original & E1\_minus\_interpolation & -0.074 [-0.317, 0.183] & -0.076 & True\\
+AR & original & E1\_minus\_uniform\_scaling & 0.145 [-0.131, 0.438] & -0.011 & True\\
+AR & angular & E1\_minus\_SC & -0.045 [-0.400, 0.310] & -0.023 & True\\
+AR & angular & E1\_minus\_SSC & -0.052 [-0.331, 0.233] & -0.022 & True\\
+AR & angular & E1\_minus\_interpolation & -0.181 [-0.429, 0.067] & -0.072 & True\\
+AR & angular & E1\_minus\_uniform\_scaling & -0.045 [-0.400, 0.310] & -0.023 & True\\
+JAFFE & original & E1\_minus\_SC & 0.000 [0.000, 0.000] & -0.000 & True\\
+JAFFE & original & E1\_minus\_SSC & 0.000 [0.000, 0.000] & 0.000 & True\\
+JAFFE & original & E1\_minus\_interpolation & 0.000 [0.000, 0.000] & 0.000 & True\\
+JAFFE & original & E1\_minus\_uniform\_scaling & 0.000 [0.000, 0.000] & -0.000 & True\\
+JAFFE & angular & E1\_minus\_SC & 0.000 [0.000, 0.000] & 0.000 & True\\
+JAFFE & angular & E1\_minus\_SSC & 0.000 [0.000, 0.000] & 0.000 & True\\
+JAFFE & angular & E1\_minus\_interpolation & 0.000 [0.000, 0.000] & 0.000 & True\\
+JAFFE & angular & E1\_minus\_uniform\_scaling & 0.000 [0.000, 0.000] & 0.000 & True\\
+UMIST & original & E1\_minus\_SC & 0.628 [-0.096, 1.344] & -0.141 & True\\
+UMIST & original & E1\_minus\_SSC & 0.638 [0.082, 1.245] & 0.113 & True\\
+UMIST & original & E1\_minus\_interpolation & 0.426 [0.067, 0.862] & 0.077 & True\\
+UMIST & original & E1\_minus\_uniform\_scaling & 0.628 [-0.096, 1.344] & -0.141 & True\\
+UMIST & angular & E1\_minus\_SC & -0.096 [-0.461, 0.206] & -0.028 & True\\
+UMIST & angular & E1\_minus\_SSC & 0.004 [-0.238, 0.241] & -0.003 & True\\
+UMIST & angular & E1\_minus\_interpolation & -0.195 [-0.504, 0.000] & -0.067 & True\\
+UMIST & angular & E1\_minus\_uniform\_scaling & -0.096 [-0.461, 0.206] & -0.028 & True\\
+BinAlpha & original & E1\_minus\_SC & 0.531 [0.021, 1.039] & 0.158 & True\\
+BinAlpha & original & E1\_minus\_SSC & 0.415 [-0.049, 0.885] & 0.292 & True\\
+BinAlpha & original & E1\_minus\_interpolation & 0.490 [0.069, 0.931] & 0.324 & True\\
+BinAlpha & original & E1\_minus\_uniform\_scaling & 0.531 [0.021, 1.039] & 0.158 & True\\
+BinAlpha & angular & E1\_minus\_SC & 0.392 [-0.200, 0.972] & 0.199 & True\\
+BinAlpha & angular & E1\_minus\_SSC & 0.249 [-0.087, 0.572] & 0.101 & True\\
+BinAlpha & angular & E1\_minus\_interpolation & 0.064 [-0.336, 0.451] & 0.190 & True\\
+BinAlpha & angular & E1\_minus\_uniform\_scaling & 0.392 [-0.200, 0.972] & 0.199 & True\\
+MSRA50 & original & E1\_minus\_SC & -0.151 [-0.434, 0.008] & -0.022 & False\\
+MSRA50 & original & E1\_minus\_SSC & -0.010 [-0.030, 0.000] & 0.066 & False\\
+MSRA50 & original & E1\_minus\_interpolation & 0.000 [0.000, 0.000] & 0.000 & False\\
+MSRA50 & original & E1\_minus\_uniform\_scaling & -0.151 [-0.434, 0.008] & -0.022 & False\\
+MSRA50 & angular & E1\_minus\_SC & -0.070 [-0.213, 0.003] & -0.012 & True\\
+MSRA50 & angular & E1\_minus\_SSC & -0.071 [-0.213, 0.000] & -0.016 & True\\
+MSRA50 & angular & E1\_minus\_interpolation & 0.001 [0.000, 0.003] & 0.004 & True\\
+MSRA50 & angular & E1\_minus\_uniform\_scaling & -0.070 [-0.213, 0.003] & -0.012 & True\\
+USPS & original & E1\_minus\_SC & 0.006 [-0.428, 0.405] & 0.258 & True\\
+USPS & original & E1\_minus\_SSC & 0.053 [-0.003, 0.163] & 0.153 & True\\
+USPS & original & E1\_minus\_interpolation & -0.060 [-0.184, 0.003] & 0.070 & True\\
+USPS & original & E1\_minus\_uniform\_scaling & 0.006 [-0.428, 0.405] & 0.258 & True\\
+USPS & angular & E1\_minus\_SC & -0.224 [-0.686, 0.159] & -0.006 & True\\
+USPS & angular & E1\_minus\_SSC & 0.012 [-0.490, 0.526] & 0.108 & True\\
+USPS & angular & E1\_minus\_interpolation & 0.011 [-0.491, 0.525] & 0.108 & True\\
+USPS & angular & E1\_minus\_uniform\_scaling & -0.224 [-0.686, 0.159] & -0.006 & True\\
+\bottomrule\end{longtable}\endgroup
+\subsection{Development mechanism decisions}
+\paragraph{E2: not promoted.} Both predefined development outcomes follow.
+ORL: FAILED. Inward energy share 0.001, RMS angle 0.000 degrees. ACC change 0.000 pp, adjusted lower 0.000 pp; NMI change 0.000 pp. \par
+YaleB: FAILED. Inward energy share 0.055, RMS angle 0.018 degrees. ACC change -0.053 pp, adjusted lower -0.183 pp; NMI change -0.072 pp. \par
+\paragraph{E3: not promoted.} Both predefined development outcomes follow.
+ORL: FAILED. Comparisons 49 / required 20; correct fraction 0.224, reversed fraction 0.082. \par
+YaleB: FAILED. Comparisons 1751 / required 121; correct fraction 0.448, reversed fraction 0.019. \par
+\paragraph{Interpretation.} Dispersion and hinge diagnostics concern the saved optimized G. Output normalization may alter hinge satisfaction and angular movement. Numerical activity, retained dispersion and passing a development gate do not by themselves establish ACC/NMI gains beyond the named controls. Full saved-array diagnostics, conditions, masks, failures and object identities accompany the scalar release.

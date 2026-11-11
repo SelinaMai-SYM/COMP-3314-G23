@@ -1,9 +1,10 @@
 .PHONY: all clean figures refresh-tables
 PYTHON ?= python3
-REPORT_DATE ?= 2026-11-10
+REPORT_DATE ?= 2026-11-11
 all: Group_23.pdf
 refresh-tables:
 	"$(PYTHON)" ../experiments/submission_refresh/reporting.py --root .. --date $(REPORT_DATE)
+	cd .. && "$(PYTHON)" -m experiments.extension_verification.reporting --release-manifest configs/extension_verification/release_manifest.json
 figures:
 	bash ../scripts/build_ssc_pipeline.sh
 figures/ssc_two_graph_pipeline.pdf: figures/ssc_two_graph_pipeline.tikz figures/ssc_two_graph_pipeline.tex ../scripts/build_ssc_pipeline.sh

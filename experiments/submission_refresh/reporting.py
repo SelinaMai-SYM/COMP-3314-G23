@@ -718,7 +718,7 @@ def generate(root: Path,date: str='2026-11-10'):
         if hours is None and resources.get('total_cpu_seconds') is not None:hours=float(resources['total_cpu_seconds'])/3600
         workers=resources.get('max_workers','--');rss=resources.get('rss_target_bytes')
         rss_text=number(float(rss)/(1024**3),1)+' GiB' if rss is not None else 'unavailable'
-        appendix.append(escape(f"The recorded scientific-campaign charge is {number(hours,4)} CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most {workers} single-thread workers and an aggregate RSS target of {rss_text}. Per-fit measured costs and numerical qualifications are reported separately from clustering performance."))
+        appendix.append(escape(f"The recorded charge for retained historical study phases and shared overhead is {number(hours,4)} CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most {workers} single-thread workers and an aggregate RSS target of {rss_text}. Per-fit measured costs and numerical qualifications are reported separately from clustering performance."))
         costs=resources.get('phase_cpu_seconds',{})
         if costs:appendix.append(table(['Experiment group','CPU seconds'],[[break_text(phase),number(seconds,1)] for phase,seconds in sorted(costs.items())],'lr',long=True))
     elif resources:

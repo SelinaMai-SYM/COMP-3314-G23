@@ -1,0 +1,31 @@
+{
+  "RSS_target_bytes": 8589934592,
+  "accounting": "Charged usage includes conservative bookkeeping allocations, interrupted-operation allowances, both source contexts, validation, filtering, packaging and finalization. Native command CPU is a subset, not an alternative total.",
+  "allowance_CPU_core_hours": 36,
+  "charged_CPU_core_hours_at_snapshot": 4.785250444976852,
+  "completed_charges_by_phase_seconds": {
+    "E1": 2911.5945386666667,
+    "SC": 48.15510679166666,
+    "SSC": 1493.9083191666668,
+    "aggregation": 12360.032939875002,
+    "interpolation": 59.89543999999997,
+    "radial_neutralization": 6.137573874999999,
+    "uniform_scaling": 47.17768354166665,
+    "validation": 300
+  },
+  "completed_native_metered_command_CPU_core_hours": 2.0352504449768527,
+  "final_full_accounting": "Complete final ledger and operational failure inventory retained in the external English handover.",
+  "finalization_reserve_CPU_core_hours": 2,
+  "maximum_sampled_single_command_RSS_bytes": 2139275264,
+  "maximum_single_thread_workers": 2,
+  "memory_qualification": "Discrete process-tree RSS samples; no claim of a continuously measured global peak.",
+  "remaining_active_reserved_seconds": 1800.0,
+  "schema": "independent-refinement-resource-summary-v1",
+  "scientific_coverage": {
+    "confirmation": "Identical contexts are not pooled as additional trials.",
+    "current_configurations": 130,
+    "current_rounding_trials": 6500,
+    "source_contexts": 2
+  },
+  "snapshot_UTC": "2026-11-11T15:34:31.245433+00:00"
+}

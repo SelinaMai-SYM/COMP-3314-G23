@@ -168,3 +168,8 @@ preserves a conservative charge against the existing allowance. It is not a new
 compute allocation. The release's scalar rebuild requires neither the archive nor
 the provider arrays; a self-contained release manifest is also generated beside
 the compressed scalar packet.
+
+The independent study's [resource summary](../results/extension_verification/resource_usage.json)
+separates native measured CPU from conservative charged allowances and records
+the scope of its accounting snapshot. Per-configuration costs and sampled memory
+remain attached to the numerical records.

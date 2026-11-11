@@ -25,7 +25,7 @@ BENCHMARK={'ORL_att92':'ORL','JAFFE':'JAFFE','YaleB_cropped2414':'YaleB','YaleB_
 OPTIONAL_LIGHT=['baseline_execution_coverage.csv','baseline_seed_coverage.csv','baseline_coverage_manifest.json',
     'execution_coverage.csv','graph_execution_coverage.csv','graph_coverage_manifest.json','resource_usage.json','error_cases.csv','casebook_summary.csv',
     'source_version_audit.json','usps_numerical_reference_input_identity.json']
-PUBLIC_SCHEMA='submission-scalar-evidence-public-v1'
+PUBLIC_SCHEMA='submission-scalar-evidence-public-v2'
 
 
 def _read_csv_rows(path):
@@ -133,25 +133,21 @@ def _inventory_inputs(root):
 
 
 def _collect_current(store):
-    from .ensc_campaign import collect_ensc_metadata
     from .scalar_views import collect_usps_metadata
     inputs=[]
     for path in sorted((store/'graph_inputs').glob('*/*/representation.json')):
         inputs.append({'record_path':str(path.relative_to(store)),'record_sha256':digest(path),'record':json.loads(path.read_text())})
-    return {'schema':'current-scalar-extension-v1','ensc':collect_ensc_metadata(store),
-        'usps':collect_usps_metadata(store),'graph_inputs':inputs}
+    return {'schema':'current-scalar-studies-v2','usps':collect_usps_metadata(store),'graph_inputs':inputs}
 
 
 def _current_counts(current):
-    return {'ensc_jobs':len(current['ensc']['jobs']),'ensc_configurations':len(current['ensc']['records']),
-        **{'usps_'+key:len(current['usps'].get(key,[])) for key in ['original_audit','original_evaluations','continuation_fits','continuation_evaluations','evaluation_jobs']}}
+    return {'usps_'+key:len(current['usps'].get(key,[])) for key in ['original_audit','original_evaluations','continuation_fits','continuation_evaluations','evaluation_jobs']}
 
 
 def _derive_current(current):
-    from .ensc_campaign import derive_ensc_metadata
     from .scalar_views import derive_usps_views
-    if current.get('schema')!='current-scalar-extension-v1':raise ValueError('unsupported current scalar extension schema')
-    return derive_ensc_metadata(current['ensc']),derive_usps_views(current['usps'])
+    if current.get('schema')!='current-scalar-studies-v2':raise ValueError('unsupported current scalar schema')
+    return derive_usps_views(current['usps'])
 
 
 def _graph_gates(graphs,inputs=None):
@@ -184,8 +180,6 @@ def _graph_gates(graphs,inputs=None):
     passed=any(value['passed'] for value in gates.values());evaluated=all(value['decision'] in ['PASSED','FAILED'] for value in gates.values())
     return {'version':1,'prior_campaign_gate':'0/4 unchanged','datasets':gates,'promotion_passed':passed,
         'decision':'PASSED' if passed else 'FAILED' if evaluated else 'INCOMPLETE_OR_NUMERICALLY_UNCERTIFIED',
-        'G4_G5_status':'TRIGGERED_NOT_RUN' if passed else 'NOT_RUN_GATE_NOT_PASSED',
-        'four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_pp':None,
         'scope':'Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs'}
 
 
@@ -286,7 +280,7 @@ def freeze(artifact_root,output):
             from .inventory import build_inventory
             build_inventory(stage/'inventory-validation',root=root)
         destinations=[];files={}
-        for name,payload,uncompressed in [('baseline_records.jsonl.gz',baseline_bytes,baseline_hash),('graph_records.jsonl.gz',graph_bytes,graph_hash),('current_scalar_records.jsonl.gz',current_bytes,current_hash)]:
+        for name,payload,uncompressed in [('baseline_records.public.v2.jsonl.gz',baseline_bytes,baseline_hash),('graph_records.public.v2.jsonl.gz',graph_bytes,graph_hash),('current_scalar_records.v2.jsonl.gz',current_bytes,current_hash)]:
             staged=stage/name;staged.write_bytes(payload);target=out/name
             files[str(target.relative_to(root))]={'sha256':digest(staged),'bytes':len(payload),'uncompressed_sha256':uncompressed}
             destinations.append((staged,target))
@@ -297,9 +291,9 @@ def freeze(artifact_root,output):
             files[str(path.relative_to(root))]=info
         supplementary=[str(path.relative_to(root)) for path in light]
         manifest={'schema':'submission-scalar-evidence-v1','checkout_root_relative':'../..','files':files,
-            'baseline_file':str((out/'baseline_records.jsonl.gz').relative_to(root)),
-            'graph_file':str((out/'graph_records.jsonl.gz').relative_to(root)),
-            'current_scalar_file':str((out/'current_scalar_records.jsonl.gz').relative_to(root)),
+            'baseline_file':str((out/'baseline_records.public.v2.jsonl.gz').relative_to(root)),
+            'graph_file':str((out/'graph_records.public.v2.jsonl.gz').relative_to(root)),
+            'current_scalar_file':str((out/'current_scalar_records.v2.jsonl.gz').relative_to(root)),
             'current_scalar_counts':_current_counts(current),'inventory_inputs':[str(path.relative_to(root)) for path in inventory_inputs],
             'full_campaign_coverage_required':(root/'configs/submission_refresh/campaign.yaml').is_file(),
             'baseline_records':len(baseline),'graph_records':len(graphs),'paper_file':'configs/v3/paper_reference.yaml',
@@ -363,13 +357,13 @@ def rebuild(manifest_path,output):
     if not baseline:raise ValueError('empty current baseline evidence')
     if len(baseline)!=manifest['baseline_records'] or len(graphs)!=manifest['graph_records']:raise ValueError('scalar evidence record count mismatch')
     _validate_records(baseline,'baseline');_validate_records(graphs,'graph')
-    current=None;ensc_derived=None;usps_derived=None
+    current=None;usps_derived=None
     if manifest.get('current_scalar_file'):
         records=read('current_scalar_file')
         if len(records)!=1:raise ValueError('current scalar extension requires one complete metadata record')
         current=records[0]
         if _current_counts(current)!=manifest.get('current_scalar_counts'):raise ValueError('current scalar extension count mismatch')
-        ensc_derived,usps_derived=_derive_current(current)
+        usps_derived=_derive_current(current)
     if manifest.get('schema')==PUBLIC_SCHEMA:
         _validate_public_projection(manifest,paths,baseline,graphs,current)
     for relative in manifest.get('inventory_inputs',[]):
@@ -430,20 +424,14 @@ def rebuild(manifest_path,output):
         row.update(solver_status=record.get('solver',{}).get('status'),certified=record.get('solver',{}).get('certified'),relative_gap=record.get('solver',{}).get('gap'),normalized_L21_movement=record.get('solver',{}).get('normalized_L21_movement'));graphrows.append(row)
         if 'graph_diagnostics'in record:diagnostics.append({'dataset':record['dataset'],'config_id':record['config_id'],**record['graph_diagnostics']})
     gate=_graph_gates(graphs,current['graph_inputs'] if current is not None else None)
-    if ensc_derived is not None:
-        from .ensc_campaign import apply_ensc_gate
-        gate=apply_ensc_gate(gate,ensc_derived)
-    if manifest.get('schema')==PUBLIC_SCHEMA:
-        gate.pop('G4_G5_implementation_status',None)
     out=Path(output).resolve()
     if any(path==out or out in path.parents for path in [manifest_path,*paths.values()]):raise ValueError('rebuild output would replace its own release inputs')
     if out.exists() and (not out.is_dir() or (any(out.iterdir()) and not (out/'evidence_validation.json').exists())):raise ValueError('refusing unknown nonempty evidence output')
     out.parent.mkdir(parents=True,exist_ok=True);tmp=Path(tempfile.mkdtemp(prefix='.evidence-rebuild-',dir=out.parent))
     try:
-        if ensc_derived is not None:
-            from .ensc_campaign import write_ensc_views
+        if usps_derived is not None:
             from .scalar_views import write_usps_views
-            write_ensc_views(ensc_derived,tmp);write_usps_views(usps_derived,tmp)
+            write_usps_views(usps_derived,tmp)
         if manifest.get('inventory_inputs'):
             from .inventory import build_inventory
             build_inventory(tmp,root=root)
@@ -483,8 +471,6 @@ def rebuild(manifest_path,output):
 def _public_packet_records(baseline,graphs,current):
     yield from baseline;yield from graphs
     if current is not None:
-        for key in ['jobs','records']:
-            for entry in current['ensc'].get(key,[]):yield entry['record']
         for entries in current['usps'].values():
             if isinstance(entries,list):
                 for entry in entries:yield entry['record']
@@ -507,12 +493,6 @@ def _validate_public_projection(manifest,paths,baseline,graphs,current):
     for row in _public_packet_records(baseline,graphs,current):
         if 'public_source_record_sha256'in row and payload_hash(row.get('source'))!=row['public_source_record_sha256']:
             raise ValueError('public source payload hash mismatch')
-    if current is not None:
-        seen={}
-        for entry in current['ensc'].get('records',[]):
-            record=entry['record'];key=record.get('config_id');source=record.get('original_source_record_sha256')
-            if key in seen and seen[key]!=source:raise ValueError('public projection cannot merge distinct original scientific source IDs')
-            seen[key]=source
 
 
 def project_existing_release(manifest_path,public_root,*,archive_receipt):
@@ -607,8 +587,8 @@ def project_existing_release(manifest_path,public_root,*,archive_receipt):
             supplementary.append(graph_meta)
             source_files += [{'original_path':raw_queue,'original_sha256':digest(paths[raw_queue]),'public_path':design_relative,'public_sha256':digest(design_path)},
                 {'original_path':graph_meta,'original_sha256':digest(paths[graph_meta]),'public_path':graph_meta,'public_sha256':digest(stage/graph_meta)}]
-        proof_relative=str(parent/'public_archive_receipt.v1.json');atomic_json(stage/proof_relative,receipt)
-        projection_relative=str(parent/'public_projection.v1.json')
+        proof_relative=str(parent/'public_source_lineage.v2.json');atomic_json(stage/proof_relative,receipt)
+        projection_relative=str(parent/'public_projection.v2.json')
         atomic_json(stage/projection_relative,{'schema':SCHEMA,'archive_id':receipt['archive_id'],
             'original_evidence_manifest_sha256':original_hash,'records':receipts,'files':source_files,
             'record_hash_semantics':'Original record and record_sha256 references identify raw archived evidence; public payloads have separate canonical public_record_sha256 hashes.'})

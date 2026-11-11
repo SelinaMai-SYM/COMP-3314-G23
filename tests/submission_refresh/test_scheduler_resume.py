@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from scipy import sparse
-from experiments.submission_refresh import scheduler,scheduler_resume,graph_repair,ensc_campaign,baselines
+from experiments.submission_refresh import scheduler,scheduler_resume,graph_repair,baselines
 from experiments.submission_refresh.core import ArtifactStore,atomic_json,digest
 
 
@@ -15,17 +15,13 @@ def fixed_resume(tmp_path,monkeypatch):
     monkeypatch.setenv('COMP3314_ARTIFACT_ROOT',str(root))
     X=np.arange(80.,dtype=float).reshape(40,2);y=np.arange(40);F=np.eye(40);W=sparse.eye(40,format='csr')
     shared={'implementation_hash':'current-graph-source','environment':{'python':'fixture'}}
-    construction={'implementation_hash':'current-ensc-construction','environment':shared['environment']}
     source_calls=[];data_calls=[]
     def graph_source(*args,**kwargs):source_calls.append(True);return copy.deepcopy(shared)
     def load(*args):data_calls.append(args);return X.copy(),y.copy(),{}
     monkeypatch.setattr(graph_repair,'scientific_source_record',graph_source)
-    monkeypatch.setattr(ensc_campaign,'scientific_source_record',graph_source)
-    monkeypatch.setattr(ensc_campaign,'_construction_source',lambda:copy.deepcopy(construction))
     monkeypatch.setattr(baselines,'load',load)
     def never(*args,**kwargs):raise AssertionError('resume must not invoke a scientific builder or fit')
-    for module,names in [(graph_repair,['spectral_embedding','knn_affinity','solve']),
-        (ensc_campaign,['_inputs','_coefficient_graph','_native_spectral','spectral_embedding','solve'])]:
+    for module,names in [(graph_repair,['spectral_embedding','knn_affinity','solve'])]:
         for name in names:monkeypatch.setattr(module,name,never)
     arrays={'X':X,'y':y,'F0':F,'U':F,'A':W,'W0':W,'Wa_raw':W}
     path=root/'graph_inputs/ORL_att92/frozen/representation.json'
@@ -35,25 +31,9 @@ def fixed_resume(tmp_path,monkeypatch):
     result={'task':copy.deepcopy(task),'status':'COMPLETED','source':copy.deepcopy(shared),'input_record':str(path)}
     result['scheduler_resume_identity']=scheduler_resume.capture_execution(task,result,root)
     return {'root':root,'store':store,'X':X,'y':y,'path':path,'task':task,'result':result,
-        'shared':shared,'construction':construction,'source_calls':source_calls,'data_calls':data_calls}
+        'shared':shared,'source_calls':source_calls,'data_calls':data_calls}
 
 
-def ensc_result(fixture,tmp_path,monkeypatch):
-    # Use the real authorization checker; neither it nor this fixture computes
-    # coefficients or accesses benchmark matrices before the gate is accepted.
-    gate=tmp_path/'immutable-promotion.json';backend=tmp_path/'backend-validation.json'
-    atomic_json(gate,{'decision':'PASSED','promotion_passed':True})
-    atomic_json(backend,{'passed':True,'source_revision':ensc_campaign.SOURCE_REVISION,
-        'backend_source_sha256':digest(ensc_campaign.ROOT/'method_extension/submission_refresh/ensc.py'),
-        'test_file_sha256':digest(ensc_campaign.ROOT/'tests/submission_refresh/test_ensc_backend.py')})
-    task={**fixture['task'],'run_id':'ensc-fixture','kind':'ensc','phase':'G4',
-        'gate_file':str(gate),'backend_validation_file':str(backend),'gate_sha256':digest(gate)}
-    task.pop('anchor');task.pop('graph');task.pop('gamma')
-    result={'task':copy.deepcopy(task),'status':'COMPLETED','source':fixture['construction'],
-        'input_record':str(fixture['path']),'authorization':ensc_campaign._authorization(task)}
-    monkeypatch.setattr(ensc_campaign,'_g3_input_compatibility',lambda *args:{'mode':'fixture-verified'})
-    result['scheduler_resume_identity']=scheduler_resume.capture_execution(task,result,fixture['root'])
-    return task,result,gate,backend
 
 
 def test_unchanged_graph_skip_checks_data_once_per_controller_and_never_fits(fixed_resume):
@@ -82,25 +62,8 @@ def test_resume_rejects_changed_scientific_identity_before_skip(fixed_resume,mon
     assert f['path'].read_bytes()==before
 
 
-def test_ensc_helper_change_is_rejected_and_unchanged_authorization_passes(fixed_resume,tmp_path,monkeypatch):
-    f=fixed_resume;task,saved,_,_=ensc_result(f,tmp_path,monkeypatch)
-    assert scheduler_resume.ResumeValidator('unused',f['root']).validate(task,saved)['validated']
-    f['construction']['implementation_hash']='changed-native-spectral-or-construction-helper'
-    with pytest.raises(ValueError,match='helper behavior.*use a new run ID'):
-        scheduler_resume.ResumeValidator('unused',f['root']).validate(task,saved)
 
 
-@pytest.mark.parametrize('change',['gate','backend'])
-def test_ensc_authorization_changes_fail_before_any_input_access(fixed_resume,tmp_path,monkeypatch,change):
-    f=fixed_resume;task,saved,gate,backend=ensc_result(f,tmp_path,monkeypatch)
-    if change=='gate':atomic_json(gate,{'decision':'FAILED','promotion_passed':False})
-    else:atomic_json(backend,{'passed':False})
-    def forbidden(*args):raise AssertionError('unauthorized execution must not read EnSC fixed inputs')
-    monkeypatch.setattr(scheduler_resume,'_input_path',forbidden)
-    monkeypatch.setattr(baselines,'load',forbidden)
-    with pytest.raises(ValueError,match='prohibited.*use a new run ID'):
-        scheduler_resume.ResumeValidator('unused',f['root']).validate(task,saved)
-    assert not f['data_calls']
 
 
 def test_scheduler_unchanged_skip_invokes_guard_without_launching_a_worker(fixed_resume,monkeypatch):
@@ -125,9 +88,9 @@ def test_scheduler_callback_records_exact_profile_and_formal_input_identities(fi
     assert saved['task']==task and saved['status']=='PROFILE_ONLY_INELIGIBLE'
 
 
-def test_failure_before_authorization_has_no_usable_input_resume_identity(fixed_resume,monkeypatch):
+def test_failure_before_inputs_has_no_usable_resume_identity(fixed_resume,monkeypatch):
     f=fixed_resume
-    def forbidden(*args):raise AssertionError('failed authorization must not read input metadata')
+    def forbidden(*args):raise ValueError('input metadata is unavailable')
     monkeypatch.setattr(scheduler_resume,'_input_path',forbidden)
-    result=scheduler_resume.capture_execution({**f['task'],'kind':'ensc'},{'status':'FAILED'},f['root'])
-    assert result['available'] is False and 'authorization' in result['unavailable_reason']
+    result=scheduler_resume.capture_execution(f['task'],{'status':'FAILED'},f['root'])
+    assert result['available'] is False and 'input metadata' in result['unavailable_reason']

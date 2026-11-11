@@ -28,14 +28,13 @@ def _gate_input_identity(store,dataset,records):
 
 
 def _register_scientific_tree(store,artifacts):
-    """Register graph/EnSC, continuation and confirmation recovery evidence.
+    """Register graph, continuation and confirmation recovery evidence.
 
     Confirmation JSON includes the frozen seed namespace and nested prediction
     object references; raw companion files retain their exact bytes and hashes.
     """
     extra=[]
     for name in ['graph_inputs','graph_solutions','graph_jobs','graph_records',
-                 'ensc_inputs','ensc_coefficients','ensc_jobs',
                  'usps_continuations','usps_continuation_evaluation','confirmation']:
         for path in sorted((store.root/name).rglob('*')):
             if not path.is_file() or path.name.startswith('.'):continue
@@ -52,11 +51,7 @@ def _register_scientific_tree(store,artifacts):
     return list(unique.values()),extra
 
 
-def _ensc_extension_metadata(gate,store,output):
-    from .ensc_campaign import collect_ensc_metadata,derive_ensc_metadata,write_ensc_views,apply_ensc_gate
-    derived=derive_ensc_metadata(collect_ensc_metadata(store.root))
-    if derived['formal_job_records']:write_ensc_views(derived,output)
-    return apply_ensc_gate(gate,derived)
+
 
 
 def _casebook_summary(record_path,casebook,task_result):
@@ -121,8 +116,7 @@ def aggregate(artifact_root,output):
                     'case_table_sha256':case_hash,**row})
         artifacts.append({'record':str(path.relative_to(store.root)),'object':store.put(r)})
     anypass=any(g['passed'] for g in gates.values());all_eval=all(g['decision'] in ['PASSED','FAILED'] for g in gates.values())
-    gate={'version':1,'prior_campaign_gate':'0/4 unchanged','datasets':gates,'promotion_passed':anypass,'decision':'PASSED' if anypass else 'FAILED' if all_eval else 'INCOMPLETE_OR_NUMERICALLY_UNCERTIFIED','G4_G5_status':'TRIGGERED_NOT_RUN' if anypass else 'NOT_RUN_GATE_NOT_PASSED','four_benchmark_ACC_gain_pp':None,'four_benchmark_NMI_gain_pp':None,'scope':'Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs'}
-    gate=_ensc_extension_metadata(gate,store,out)
+    gate={'version':1,'prior_campaign_gate':'0/4 unchanged','datasets':gates,'promotion_passed':anypass,'decision':'PASSED' if anypass else 'FAILED' if all_eval else 'INCOMPLETE_OR_NUMERICALLY_UNCERTIFIED','scope':'Conditional rounding evidence on fixed development datasets; subset matching winners do not define inputs'}
     write_csv(out/'baseline_diagnostics.csv',baseline or [{'status':'NO_COMPLETED_BASELINE_RECORDS'}]);write_csv(out/'execution_coverage.csv',coverage)
     write_csv(out/'extension_results.csv',graphrows or [{'status':'NOT_RUN','reason':'Priority follows mandatory repairs and primary subset coverage'}]);write_csv(out/'graph_diagnostics.csv',graphdiagnostics or [{'schema_version':2,'status':'NO_NEW_GRAPH_RECORDS'}]);write_csv(out/'error_cases.csv',cases or [{'status':'NOT_RUN'}]);write_csv(out/'casebook_summary.csv',case_summaries or [{'status':'NOT_RUN'}]);atomic_json(out/'extension_gate.json',gate)
     from .inventory import build_inventory

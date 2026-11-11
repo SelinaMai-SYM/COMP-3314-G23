@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "inputs": {
     "baseline": {
       "available": true,
@@ -54,24 +54,11 @@
       "path": "results/subset_search/coverage_summary.json",
       "sha256": "584ead8ae9025d31aa93454a77af60c41f9f53e999cc21f70064a52b069a436b"
     },
-    "ensc_capability": {
-      "available": true,
-      "logical_path": "results/submission_refresh/ensc_capability_and_operating_point.csv",
-      "path": "results/submission_refresh/ensc_capability_and_operating_point.csv",
-      "sha256": "aa65a3edd302be7a15ed2b337ff72c93779658e05029932854404da9cc4fa96c",
-      "transport": "plain"
-    },
-    "ensc_conclusion": {
-      "available": true,
-      "logical_path": "results/submission_refresh/ensc_four_benchmark_conclusion.json",
-      "path": "results/submission_refresh/ensc_four_benchmark_conclusion.json",
-      "sha256": "906bf9e9b2573f2ae9512ec07262ddcb1717a6303943bcd4b21325ed481f30dc"
-    },
     "evidence_manifest": {
       "available": true,
       "logical_path": "configs/submission_refresh/evidence_manifest.json",
       "path": "configs/submission_refresh/evidence_manifest.json",
-      "sha256": "87be0cacb1f0f8ec9c9cdbc57c8a6a9e7973bb4ab9ea70e9d0532f14bbc477b6"
+      "sha256": "c495b3adc09c29183e8f088f823ba1db96d6fe6c9d9350f4dda2178a3f9f25ea"
     },
     "execution": {
       "available": true,
@@ -98,7 +85,7 @@
       "available": true,
       "logical_path": "results/submission_refresh/extension_gate.json",
       "path": "results/submission_refresh/extension_gate.json",
-      "sha256": "cdffff6444aa102abb312c442d0124a1eb9516753170c4da96f24e40e252ef10"
+      "sha256": "a290164a5edcd96dc8145cc6715a0f537cd983667dc92cb66e43672c68f5f975"
     },
     "graph_coverage_manifest": {
       "available": true,
@@ -191,7 +178,7 @@
       "available": true,
       "logical_path": "results/submission_refresh/resource_usage.json",
       "path": "results/submission_refresh/resource_usage.json",
-      "sha256": "38b7cfd94add096703c8992afe68c0b1e3bc441c879e1ba91cf89b3dbb26b5c2"
+      "sha256": "a2042c5d9a7147da70b4b39e6cd5d35d985cbe93807b6d06116d47cd96cae93d"
     },
     "usps_continuation_audit": {
       "available": true,

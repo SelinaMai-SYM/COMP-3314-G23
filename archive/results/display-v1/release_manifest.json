@@ -15,8 +15,8 @@
   "coverage_file": "results/v3_reproduction/coverage_72_cells.csv",
   "files": {
     "configs/final/report_selection.yaml": {
-      "bytes": 1626,
-      "sha256": "424a08062f4a32bdc99e5a75dc88fc16f9a55c29ea85193ea28f42b051fc45af"
+      "bytes": 1797,
+      "sha256": "a936ce4935c17fcf013d8b4abf9a70cae66f8305df50b3c6d1bc6a9aa759b6bf"
     },
     "configs/v3/datasets.yaml": {
       "bytes": 2684,
@@ -32,7 +32,8 @@
     },
     "results/final/release/job_metadata.jsonl.gz": {
       "bytes": 624742,
-      "sha256": "99e8b08c9a5cf773aff0bbeda32203cf15ee1bbd7ca1413085fbbe59be5d6a31"
+      "sha256": "99e8b08c9a5cf773aff0bbeda32203cf15ee1bbd7ca1413085fbbe59be5d6a31",
+      "uncompressed_sha256": "678411d32abbf4bc5c0eee19e279706045bd7819797f7972d6db5aed4de097be"
     },
     "results/v3_reproduction/all_configurations.csv": {
       "bytes": 2292909,
@@ -40,7 +41,8 @@
     },
     "results/v3_reproduction/all_trials.csv.gz": {
       "bytes": 22295230,
-      "sha256": "a4462e23c07763861312ffb6cae88fc00b0562f9485b7deb096581b7aced38a3"
+      "sha256": "a4462e23c07763861312ffb6cae88fc00b0562f9485b7deb096581b7aced38a3",
+      "uncompressed_sha256": "543f10e6607739e0c77fd8191ebabc2ef260e814d46efa6115bc7fb91122925b"
     },
     "results/v3_reproduction/coverage_72_cells.csv": {
       "bytes": 17284,

@@ -1,7 +1,6 @@
 # Project report
 
-**Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset
-Uncertainty**
+**Spectral Shrunk Clustering: Reproduction and Independent Refinement Studies**
 
 Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying — Group 23,
 The University of Hong Kong, COMP3314 Machine Learning.

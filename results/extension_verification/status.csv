@@ -1,0 +1,33 @@
+benchmark,candidate_id,role,method,panel,status,reason,point_id,historical_identity,adaptation_flags,force_reference_status,actual_primary_gamma
+ORL,ORL_att92,development,E1,original,PENDING,,,UNVERIFIED,AT&T release resized by the declared loader; historical identity unverified,REGULAR,0.2701243767622571
+ORL,ORL_att92,development,E1,angular,PENDING,,,UNVERIFIED,AT&T release resized by the declared loader; historical identity unverified,REGULAR,0.1536661640675118
+ORL,ORL_att92,development,E2,angular,PENDING,,,UNVERIFIED,AT&T release resized by the declared loader; historical identity unverified,REGULAR,0.1536661640675118
+ORL,ORL_att92,development,E3,angular,PENDING,,,UNVERIFIED,AT&T release resized by the declared loader; historical identity unverified,REGULAR,0.1536661640675118
+YaleB,YaleB_cropped2414_Y0,development,E1,original,PENDING,,,UNVERIFIED,Cropped2414 fixed Y0 preparation; historical identity unverified,REGULAR,0.2484745964463717
+YaleB,YaleB_cropped2414_Y0,development,E1,angular,PENDING,,,UNVERIFIED,Cropped2414 fixed Y0 preparation; historical identity unverified,REGULAR,0.20681562455588215
+YaleB,YaleB_cropped2414_Y0,development,E2,angular,PENDING,,,UNVERIFIED,Cropped2414 fixed Y0 preparation; historical identity unverified,REGULAR,0.20681562455588215
+YaleB,YaleB_cropped2414_Y0,development,E3,angular,PENDING,,,UNVERIFIED,Cropped2414 fixed Y0 preparation; historical identity unverified,REGULAR,0.20681562455588215
+AR,AR_first7,confirmation,E1,original,PENDING,,,UNVERIFIED,Source-order seven-of-fourteen hypothesis; session identity and pixel geometry unverified,REGULAR,0.22659669980131805
+AR,AR_first7,confirmation,E1,angular,PENDING,,,UNVERIFIED,Source-order seven-of-fourteen hypothesis; session identity and pixel geometry unverified,REGULAR,0.19521497870885424
+AR,AR_first7,confirmation,E2,angular,PENDING,,,UNVERIFIED,Source-order seven-of-fourteen hypothesis; session identity and pixel geometry unverified,REGULAR,0.19521497870885424
+AR,AR_first7,confirmation,E3,angular,PENDING,,,UNVERIFIED,Source-order seven-of-fourteen hypothesis; session identity and pixel geometry unverified,REGULAR,0.19521497870885424
+JAFFE,JAFFE,confirmation,E1,original,PENDING,,,UNVERIFIED,Verified resized provider input; historical identity unverified,REGULAR,0.25176035403943053
+JAFFE,JAFFE,confirmation,E1,angular,PENDING,,,UNVERIFIED,Verified resized provider input; historical identity unverified,REGULAR,0.18743047934174523
+JAFFE,JAFFE,confirmation,E2,angular,PENDING,,,UNVERIFIED,Verified resized provider input; historical identity unverified,REGULAR,0.18743047934174523
+JAFFE,JAFFE,confirmation,E3,angular,PENDING,,,UNVERIFIED,Verified resized provider input; historical identity unverified,REGULAR,0.18743047934174523
+UMIST,UMIST_LZUFE574_exact_dedup564,confirmation,E1,original,PENDING,,,UNVERIFIED,First-occurrence exact deduplication of the named matrix; spatial layout and original membership unverified,REGULAR,0.29272893099030234
+UMIST,UMIST_LZUFE574_exact_dedup564,confirmation,E1,angular,PENDING,,,UNVERIFIED,First-occurrence exact deduplication of the named matrix; spatial layout and original membership unverified,REGULAR,0.19468704901093242
+UMIST,UMIST_LZUFE574_exact_dedup564,confirmation,E2,angular,PENDING,,,UNVERIFIED,First-occurrence exact deduplication of the named matrix; spatial layout and original membership unverified,REGULAR,0.19468704901093242
+UMIST,UMIST_LZUFE574_exact_dedup564,confirmation,E3,angular,PENDING,,,UNVERIFIED,First-occurrence exact deduplication of the named matrix; spatial layout and original membership unverified,REGULAR,0.19468704901093242
+BinAlpha,BinAlpha_random_seed000,confirmation,E1,original,PENDING,,,UNVERIFIED,Unchanged seed-0 reconstructed letter membership; historical identity unverified,REGULAR,0.29307461239998633
+BinAlpha,BinAlpha_random_seed000,confirmation,E1,angular,PENDING,,,UNVERIFIED,Unchanged seed-0 reconstructed letter membership; historical identity unverified,REGULAR,0.23788602442743667
+BinAlpha,BinAlpha_random_seed000,confirmation,E2,angular,PENDING,,,UNVERIFIED,Unchanged seed-0 reconstructed letter membership; historical identity unverified,REGULAR,0.23788602442743667
+BinAlpha,BinAlpha_random_seed000,confirmation,E3,angular,PENDING,,,UNVERIFIED,Unchanged seed-0 reconstructed letter membership; historical identity unverified,REGULAR,0.23788602442743667
+MSRA50,MSRA25_EBSA_16x16,confirmation,E1,original,PENDING,,,UNVERIFIED,Adapted native-16x16 MSRA25 proxy; no claim of recovered native-32x32 MSRA50,REGULAR,0.21327735810297604
+MSRA50,MSRA25_EBSA_16x16,confirmation,E1,angular,PENDING,,,UNVERIFIED,Adapted native-16x16 MSRA25 proxy; no claim of recovered native-32x32 MSRA50,REGULAR,0.12745032120665903
+MSRA50,MSRA25_EBSA_16x16,confirmation,E2,angular,PENDING,,,UNVERIFIED,Adapted native-16x16 MSRA25 proxy; no claim of recovered native-32x32 MSRA50,REGULAR,0.12745032120665903
+MSRA50,MSRA25_EBSA_16x16,confirmation,E3,angular,PENDING,,,UNVERIFIED,Adapted native-16x16 MSRA25 proxy; no claim of recovered native-32x32 MSRA50,REGULAR,0.12745032120665903
+USPS,USPS,confirmation,E1,original,PENDING,,,UNVERIFIED,Full train-then-test concatenation in the native signed domain; historical identity unverified,REGULAR,0.24961051029434486
+USPS,USPS,confirmation,E1,angular,PENDING,,,UNVERIFIED,Full train-then-test concatenation in the native signed domain; historical identity unverified,REGULAR,0.18902412526882664
+USPS,USPS,confirmation,E2,angular,PENDING,,,UNVERIFIED,Full train-then-test concatenation in the native signed domain; historical identity unverified,REGULAR,0.18902412526882664
+USPS,USPS,confirmation,E3,angular,PENDING,,,UNVERIFIED,Full train-then-test concatenation in the native signed domain; historical identity unverified,REGULAR,0.18902412526882664

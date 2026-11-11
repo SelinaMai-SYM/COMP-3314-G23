@@ -12,8 +12,8 @@ Group 23, The University of Hong Kong — COMP3314 Machine Learning.
 
 - An array-based SSC implementation with explicit E8/E13 parameter conventions.
 - Primal–dual solvers with objective gaps and capacity diagnostics.
-- Spectral, PCA, LDA, LLC and SLPS baselines, plus separately named graph and
-  fidelity adaptations, including an attributed EnSC affinity.
+- Spectral, PCA, LDA, LLC and SLPS baselines, plus graph diagnostics and
+  three independently evaluated convex refinements.
 - Source-aware benchmark loaders, published ACC/NMI records and scalar-result
   reconstruction tools.
 - A technical report, mathematical derivations and editable method figures.
@@ -22,9 +22,10 @@ Group 23, The University of Hong Kong — COMP3314 Machine Learning.
 
 ![The input graph A defines F; the shrinkage graph W refines F into G](docs/figures/ssc_two_graph_pipeline.svg)
 
-The input affinity **A** determines the spectral representation **F**. A second
-graph **W**, constructed from F, controls refinement into **G**. Matched spectral
-clustering clusters F; SSC clusters G. Convex refinement and improved clustering
+The input affinity **A₀** determines the spectral representation **F₀**. A second
+graph **W₀**, constructed from F₀, controls refinement into **G**. Each refinement
+uses frozen inputs. The original and angular panels declare their own rounding
+input **Q**; matched spectral clustering uses the same anchor and panel. Convex refinement and improved clustering
 are distinct claims. The [methods](docs/methods.md) explain the objective,
 parameter mapping and numerical qualifications.
 
@@ -64,6 +65,22 @@ Reconstruct the published historical tables without image archives:
 python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output local/rebuilt_historical
 ```
 
+## Independent refinement studies
+
+Three separately defined adaptations test relative edge tolerances, fixed tangent
+planes, and frozen relative-neighbor comparisons. Their mathematical guarantees,
+mechanism gates and ACC/NMI outcomes are distinct evidence. The
+[registered design](docs/extension_verification_plan.md) fixes the eight reference
+inputs, operating points and comparisons before new scores are evaluated.
+[Study results](docs/extension_verification_results.md) retain numerical failures,
+inactivity, failed gates and negative clustering outcomes.
+
+```bash
+python -m experiments.extension_verification freeze --config configs/extension_verification/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT
+python -m experiments.extension_verification verify --config configs/extension_verification/protocol.yaml --artifact-root ARTIFACT_ROOT
+python -m experiments.extension_verification run --config configs/extension_verification/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
+```
+
 ## Report and results
 
 Read the [technical report](report/Group_23.pdf), [results summary](docs/results.md)
@@ -77,7 +94,7 @@ in [limitations](docs/limitations.md).
 Final source/subset selections and additional-rounding outcomes are reported
 in [the results summary](docs/results.md), with separate statistical endpoints,
 eligibility pools and numerical qualifications. Scientific-archive availability is documented separately
-in the [reproducibility guide](docs/reproducibility.md#verified-archive-and-regeneration).
+in the [reproducibility guide](docs/reproducibility.md#numerical-objects-and-historical-lineage).
 
 See [theory](docs/theory.md) for derivations,
 [reproducibility](docs/reproducibility.md) for release interfaces and

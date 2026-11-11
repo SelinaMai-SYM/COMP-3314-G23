@@ -125,32 +125,3 @@ centered float64 input, SVD rank tolerance
 limit is 300, with partition-equivalence stopping. Downstream SC and raw/PCA
 controls use one RANDOM Lloyd start per matched external seed. This adaptation
 does not establish the identity of the paper's historical LDA-SC method.
-
-## EnSC graph adaptation and attribution
-
-The EnSC affinity follows
-[You et al., CVPR 2016](https://openaccess.thecvf.com/content_cvpr_2016/html/You_Oracle_Based_Active_CVPR_2016_paper.html)
-and [source revision `55e330e`](https://github.com/ChongYou/subspace-clustering/tree/55e330e38415951f140e74739c869306acdb7a98).
-The [MIT notice](../method_extension/submission_refresh/third_party/ensc/LICENSE)
-is retained. Input rows are normalized, self-coefficients are zero, and a true
-elastic-net backend solves
-
-\[
-\tfrac12\|y-cD\|^2+
-\alpha_i\left(\tau\|c\|_1+\tfrac{1-\tau}{2}\|c\|^2\right),\qquad
-\alpha_i=\frac{\max_j|d_j^Ty|}{50\tau}.
-\]
-
-The primary \(\tau\) is 0.95; \(\tau=1\) is a separate sparse-only control. At
-most 50 coefficients per row are retained by magnitude, coefficient rows are
-L2-normalized, and the affinity is \(\tfrac12(|C_n|+|C_n|^T)\). The fusion
-adaptation mass-matches that graph to \(W_0\) while retaining anchor \(F_0\).
-Native EnSC spectral clustering is a distinct control in its own eigenspace.
-
-Upstream coefficient KKT residuals and downstream SSC primal–dual gaps certify
-different problems. Neither a screening stop nor a fusion certificate implies
-that both problems are solved accurately. Combining an existing affinity with
-SSC is an adaptation, not an invention of elastic-net clustering or robust
-fusion penalties; related approaches include
-[PRclust](https://jmlr.csail.mit.edu/papers/volume14/pan13a/pan13a.pdf) and
-[Robust Continuous Clustering](https://doi.org/10.1073/pnas.1700770114).

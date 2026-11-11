@@ -1,7 +1,7 @@
-"""Validate graph/EnSC scheduler skips without invoking scientific builders.
+"""Validate graph scheduler skips without invoking scientific builders.
 
 The scheduler's saved controller record is terminal evidence, not permission to
-ignore changed inputs, source behavior, task allocations or G4 authorization.
+ignore changed inputs, source behavior, task allocations.
 """
 from __future__ import annotations
 import json
@@ -22,7 +22,7 @@ def _input_path(root,value,dataset,kind):
     path=candidate.resolve()
     if root not in path.parents:raise ValueError('saved fixed input record is outside its artifact root')
     parts=path.relative_to(root).parts
-    allowed={'graph_inputs'} if kind=='graph' else {'graph_inputs','ensc_inputs'}
+    allowed={'graph_inputs'}
     if len(parts)!=4 or parts[0] not in allowed or parts[1]!=dataset or parts[-1]!='representation.json':
         raise ValueError('saved fixed input path does not match its task dataset/kind')
     if not path.is_file():raise ValueError('saved fixed input record is missing')
@@ -35,11 +35,7 @@ def _source_identity(source):
     return {'implementation_hash':source['implementation_hash'],'environment':source['environment']}
 
 
-def _authorization_identity(value):
-    keys=['gate_sha256','backend_validation_sha256','source_revision']
-    if not isinstance(value,dict) or any(not value.get(key) for key in keys):
-        raise ValueError('saved EnSC authorization identity is unavailable')
-    return {key:value[key] for key in keys}
+
 
 
 def capture_execution(task,result,artifact_root):
@@ -51,11 +47,10 @@ def capture_execution(task,result,artifact_root):
     """
     base={'schema':SCHEMA,'task_sha256':identity(task),'available':False}
     try:
-        if task['kind'] not in ['graph','ensc']:raise ValueError('unsupported fixed-input task kind')
-        authorization=_authorization_identity(result.get('authorization')) if task['kind']=='ensc' else None
+        if task['kind'] not in ['graph']:raise ValueError('unsupported fixed-input task kind')
         root=Path(artifact_root).resolve();path=_input_path(root,result.get('input_record'),task['dataset'],task['kind'])
         source=_source_identity(result.get('source'))
-        return {**base,'available':True,'source':source,'authorization':authorization,
+        return {**base,'available':True,'source':source,
             'input_record':str(path.relative_to(root)),'input_record_sha256':digest(path),
             'profile':bool(task.get('profile',False))}
     except (KeyError,TypeError,ValueError,OSError) as exc:
@@ -76,14 +71,10 @@ class ResumeValidator:
         self.cpu_seconds=0.;self.child_cpu_seconds=0.;self.validated=0
 
     def _sources(self,kind):
+        if kind != 'graph':raise ValueError('unsupported fixed-input task kind')
         if kind not in self.sources:
-            if kind=='graph':
-                from .graph_repair import scientific_source_record
-                shared=scientific_source_record();source=shared
-            else:
-                from . import ensc_campaign as ensc
-                source=ensc._construction_source();shared=ensc.scientific_source_record()
-            self.sources[kind]=(source,shared)
+            from .graph_repair import scientific_source_record
+            source=scientific_source_record();self.sources[kind]=(source,source)
         return self.sources[kind]
 
     def _current_data(self,dataset):
@@ -117,7 +108,7 @@ class ResumeValidator:
 
     def _validate(self,task,saved):
         kind=task['kind'];dataset=task['dataset'];locked=saved.get('scheduler_resume_identity',{})
-        if kind not in ['graph','ensc']:raise ValueError('unsupported fixed-input task kind')
+        if kind not in ['graph']:raise ValueError('unsupported fixed-input task kind')
         if identity(saved.get('task'))!=identity(task) or locked.get('task_sha256')!=identity(task):
             raise ValueError('task parameters or CPU/fit allocations changed')
         if locked.get('schema')!=SCHEMA or locked.get('available') is not True:
@@ -127,12 +118,6 @@ class ResumeValidator:
             raise ValueError('saved controller record is not terminal')
         if locked.get('profile')!=profile or (status=='PROFILE_ONLY_INELIGIBLE' and not profile) or (status=='COMPLETED' and profile):
             raise ValueError('saved profile/formal execution status differs')
-        # Authorization precedes all EnSC input-file and object-store access.
-        if kind=='ensc':
-            from . import ensc_campaign as ensc
-            authorization=_authorization_identity(ensc._authorization(task))
-            if authorization!=locked.get('authorization') or authorization!=_authorization_identity(saved.get('authorization')):
-                raise ValueError('current G3 gate/backend authorization differs from the saved execution')
         current,shared=self._sources(kind);current_id=_source_identity(current)
         if current_id!=locked.get('source') or current_id!=_source_identity(saved.get('source')):
             raise ValueError('current scientific source/helper behavior or environment differs')
@@ -140,7 +125,7 @@ class ResumeValidator:
         if path!=_input_path(self.root,saved.get('input_record'),dataset,kind) or digest(path)!=locked.get('input_record_sha256'):
             raise ValueError('saved fixed input metadata changed')
         metadata=json.loads(path.read_text());objects=metadata.get('objects',{})
-        from .ensc_campaign import K_VALUES
+        K_VALUES={'ORL_att92':40,'YaleB_cropped2414':38}
         if metadata.get('dataset')!=dataset or metadata.get('input_preparation')!='Y0' or metadata.get('K')!=K_VALUES[dataset]:
             raise ValueError('fixed input membership/preparation/K differs')
         if _source_identity(metadata.get('source'))!=_source_identity(shared):
@@ -153,12 +138,6 @@ class ResumeValidator:
         if input_key not in self.inputs:
             self.inputs[input_key]=fingerprint_matrix(store.get(objects['X']),store.get(objects['y']))
         if self.inputs[input_key]!=self._current_data(dataset):raise ValueError('current source data/row order differs from saved X/y')
-        if kind=='ensc':
-            behavior=ensc._adapter_behavior('input')
-            if path.relative_to(self.root).parts[0]=='graph_inputs':
-                ensc._g3_input_compatibility(metadata,store,behavior)
-            elif metadata.get('ensc_input_adapter_fingerprint')!=behavior['fingerprint']:
-                raise ValueError('saved EnSC input-loader/helper fingerprint differs')
         self.validated+=1
         return {'validated':True,'kind':kind,'dataset':dataset,'input_record':locked['input_record'],
             'input_record_sha256':locked['input_record_sha256'],'source':current_id,

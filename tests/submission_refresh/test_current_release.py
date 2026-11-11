@@ -218,7 +218,7 @@ def test_public_projection_requires_matching_verified_archive_before_writes(scal
     proof=public_archive_receipt(output,manifest,tmp_path/'unverified receipt.json')
     value=json.loads(proof.read_text());value['verified']=False;proof.write_text(json.dumps(value))
     with pytest.raises(ValueError,match='verified scientific archive'):release.project_existing_release(output,manifest,archive_receipt=proof)
-    assert manifest.read_bytes()==before and not (output/'source_records.public.v1.json.gz').exists()
+    assert manifest.read_bytes()==before and not (output/'source_records.public.v2.json.gz').exists()
 
 
 def test_public_current_release_replays_archived_namespace_after_raw_history_removal(scalar_fixture,tmp_path,monkeypatch):

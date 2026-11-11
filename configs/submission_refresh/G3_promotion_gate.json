@@ -1,6 +1,4 @@
 {
-  "G4_G5_implementation_status": "PREPARED; execution requires the fixed G3 gate and current backend validation",
-  "G4_G5_status": "TRIGGERED_NOT_RUN",
   "datasets": {
     "ORL_att92": {
       "blind_control_certification": {
@@ -195,7 +193,6 @@
     }
   },
   "decision": "PASSED",
-  "ensc_formal_job_records": [],
   "four_benchmark_ACC_gain_pp": null,
   "four_benchmark_NMI_gain_pp": null,
   "four_benchmark_NMI_gain_vs_SC_pp": null,

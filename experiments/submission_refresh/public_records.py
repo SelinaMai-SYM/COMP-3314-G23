@@ -12,7 +12,7 @@ import math
 from pathlib import Path
 import re
 
-SCHEMA='public-scientific-record-projection-v1'
+SCHEMA='public-scientific-record-projection-v2'
 ARCHIVE_SCHEMA='public-scientific-archive-receipt-v1'
 _HASH=re.compile(r'[0-9a-f]{64}\Z')
 _OPERATIONS={'traceback','command','commands','argv','cwd','hostname','host_name','pid','ppid',
@@ -24,7 +24,7 @@ _OPERATIONS={'traceback','command','commands','argv','cwd','hostname','host_name
     'updated_unix','timestamp','timestamp_unix','timestamp_utc','launch_time','source_archive',
     'worker_id','session_id','thread_id','controller_index'}
 _SOURCE_FIELDS={'source_commit','source_files','implementation_hash','cache_identity',
-    'project_source_fingerprint','scientific_source_fingerprint','graph_backend_source_fingerprint',
+    'project_source_fingerprint','scientific_source_fingerprint',
     'scientific_behavior_files','effective_construction_constants','cache_fingerprint_scope'}
 _BASELINE={'dataset','method','config_id','status','trials','max_iter','parameters','initialization',
     'native_best_status','seed_failures','implementation','source','qualification','seed_protocol',
@@ -38,13 +38,9 @@ _GRAPH={'dataset','method','phase','anchor','graph','arm','gamma','addition_frac
     'resume_context','family','cpu_seconds','wall_seconds','cpu_seconds_this_call','rounding','eigensolver',
     'problem','checkpoint','surrogate_note'}
 _INPUT={'dataset','K','objects','source','input_metadata','input_preparation','input_membership',
-    'historical_F_identity','spectral_info','A_info','W0_info','angular_zero_rows',
-    'ensc_input_adapter_fingerprint','ensc_G3_input_reuse_provenance'}
-_JOB={'task','dataset','status','source','authorization','input_record','intended_configurations',
-    'coefficient_records','graph_objects','graph_metadata','matched_movement','cpu_seconds',
-    'wall_seconds','peak_rss_bytes','error','qualification'}
+    'historical_F_identity','spectral_info','A_info','W0_info','angular_zero_rows'}
 _TASK={'dataset','gamma','max_iter','initialization','seeds','seed','profile'}
-_USPS=_BASELINE|_GRAPH|_JOB|_INPUT|{'schema','name','n_trials','n_samples','n_classes','native_best','stage',
+_USPS=_BASELINE|_GRAPH|_INPUT|{'schema','name','n_trials','n_samples','n_classes','native_best','stage',
     'gamma_nominal','gamma_effective','solver_status','relative_gap','gap','certified','primal','dual',
     'edge_violation','node_violation','historical_300_protocol_complete','complete_historical_execution',
     'iterations','iterations_completed_linear_steps','normalized_L21_movement','normalized_Frobenius_movement',
@@ -63,6 +59,10 @@ def payload_hash(value):
 def read_archive_receipt(path):
     """Require an explicit verified archive/recovery proof, without opening it."""
     value=json.loads(Path(path).read_text())
+    if value.get('schema')=='public-source-lineage-receipt-v2':
+        if value.get('verified') is not True or value.get('scope')!='HISTORICAL_RECOVERY_LINEAGE_ONLY':raise ValueError('invalid lineage scope')
+        if not _HASH.fullmatch(value.get('archive_sha256','')) or not _HASH.fullmatch(value.get('recovery_proof_sha256','')):raise ValueError('invalid original lineage hash')
+        return copy.deepcopy(value)
     required={'schema','verified','archive_id','archive_sha256','bytes','recovered_objects',
         'recovered_extra_files','recovery_proof_sha256','raw_release_inputs'}
     if not isinstance(value,dict) or set(value)!=required or value['schema']!=ARCHIVE_SCHEMA or value['verified'] is not True:
@@ -85,8 +85,7 @@ def read_archive_receipt(path):
 
 
 def _relative(value):
-    for prefix in ['graph_inputs/','graph_records/','graph_jobs/','graph_solutions/','ensc_inputs/',
-        'ensc_jobs/','ensc_coefficients/','usps_audit/','usps_continuations/',
+    for prefix in ['graph_inputs/','graph_records/','graph_jobs/','graph_solutions/','usps_audit/','usps_continuations/',
         'usps_continuation_evaluation/','baseline/','confirmation/','subset/']:
         marker='/'+prefix
         if marker in value:return prefix+value.rsplit(marker,1)[1]
@@ -157,14 +156,12 @@ def public_source_payload(raw):
     if isinstance(libraries,list):
         fields={'user_api','internal_api','num_threads','prefix','version','threading_layer','architecture'}
         result['thread_libraries']=[_clean({key:value for key,value in row.items() if key in fields}) for row in libraries if isinstance(row,dict)]
-    behavior=raw.get('adapter_fitting_behavior')
-    if isinstance(behavior,dict):result['adapter_fitting_behavior']={key:behavior[key] for key in ['schema','scope','fingerprint'] if key in behavior}
     return result
 
 
 def project_record(raw,kind):
     """Return a public scientific record and a separate canonical-hash receipt."""
-    fields={'baseline':_BASELINE,'graph':_GRAPH,'input':_INPUT,'ensc_record':_GRAPH,'ensc_job':_JOB,'usps':_USPS}
+    fields={'baseline':_BASELINE,'graph':_GRAPH,'input':_INPUT,'usps':_USPS}
     if kind not in fields or not isinstance(raw,dict):raise ValueError('unknown public scientific record kind')
     allowed=fields[kind];selected={key:value for key,value in raw.items() if key in allowed or isinstance(value,(int,float,bool))}
     public=_clean(selected)
@@ -173,11 +170,6 @@ def project_record(raw,kind):
     if isinstance(raw.get('source'),dict) and 'source'in public:
         public['original_source_record_sha256']=payload_hash(raw['source'])
         public['public_source_record_sha256']=payload_hash(public['source'])
-    if kind=='ensc_job' and isinstance(raw.get('authorization'),dict):
-        authorization=raw['authorization'];public['authorization']={key:authorization[key] for key in
-            ['gate_sha256','backend_validation_sha256','source_revision'] if key in authorization}
-        public['authorization']['promotion_passed']=authorization.get('gate',{}).get('promotion_passed') is True
-        public['authorization']['backend_verified']=authorization.get('backend_validation',{}).get('passed') is True
     receipt={'schema':SCHEMA,'kind':kind,'original_record_sha256':payload_hash(raw),'public_record_sha256':payload_hash(public)}
     return public,receipt
 
@@ -191,20 +183,13 @@ def project_entry(entry,kind):
 
 
 def project_current(raw):
-    """Keep the existing pure-derivation envelope and scientific configuration IDs."""
-    public=copy.deepcopy(raw);receipts=[]
-    for key,kind in [('jobs','ensc_job'),('records','ensc_record')]:
-        values=[]
-        for entry in raw['ensc'].get(key,[]):
-            item,receipt=project_entry(entry,kind);values.append(item);receipts.append(receipt)
-        public['ensc'][key]=values
+    public={'schema':'current-scalar-studies-v2','usps':copy.deepcopy(raw['usps']),'graph_inputs':[]};receipts=[]
     for key,entries in raw['usps'].items():
         if not isinstance(entries,list):continue
         values=[]
         for entry in entries:
             item,receipt=project_entry(entry,'usps');values.append(item);receipts.append(receipt)
         public['usps'][key]=values
-    public['graph_inputs']=[]
     for entry in raw.get('graph_inputs',[]):
         item,receipt=project_entry(entry,'input');public['graph_inputs'].append(item);receipts.append(receipt)
     public['public_projection_schema']=SCHEMA

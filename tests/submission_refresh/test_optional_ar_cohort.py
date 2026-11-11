@@ -47,11 +47,11 @@ def metadata_case(tmp_path,monkeypatch,planner):
     with coverage.open('w',newline='') as stream:
         writer=csv.DictWriter(stream,fieldnames=['run_id','controller_status']);writer.writeheader()
         writer.writerows({'run_id':task['run_id'],'controller_status':'NOT_RUN'} for task in tasks)
-    gate=root/'results/gate.json';write_json(gate,{'promotion_passed':False,'G4_G5_status':'NOT_RUN_GATE_NOT_PASSED',
+    gate=root/'results/gate.json';write_json(gate,{'promotion_passed':False,
         'contrasts':'Opaque performance payload is never decoded by the planner.'})
     terminal=root/'terminal.json';write_json(terminal,{'schema':'optional-ar-terminal-decision-v1',
-        'graph_design_terminal':True,'G4_G5_terminal':True,'unrun_work_frozen':True,
-        'G4_G5_disposition':'NOT_PERMITTED','evidence':{
+        'graph_design_terminal':True,'unrun_work_frozen':True,
+        'evidence':{
             'graph_coverage':{'path':str(coverage.relative_to(root)),'sha256':planner._sha(coverage)},
             'gate':{'path':str(gate.relative_to(root)),'sha256':planner._sha(gate)}}})
     ledger={'version':1,'active':{},'entries':[{'run_id':'prior','charged_cpu_seconds':122300,'status':'COMPLETED'}],

@@ -1,93 +1,53 @@
-# Scientific limitations
+# Limitations
 
-The conclusions apply to the explicitly recorded sources, inputs, objectives,
-parameters and statistical endpoints. The [results](results.md) and
-[benchmark tables](../results/submission_refresh/per_benchmark/) retain the
-qualifications below alongside the measurements.
+## Data identity and adaptations
 
-## Historical identity and paper specification
+All eight reference inputs have reproducible source and preparation identities;
+none establishes author-identical historical data. AR_first7 is a source-order
+hypothesis, not verified session 1. UMIST preserves all 10,304 native matrix
+features, with exact first-occurrence deduplication. BinAlpha uses the unchanged
+seed-0 membership. Native 16×16 MSRA25 is an adapted proxy for the paper's MSRA50
+family, not a recovered 32×32 dataset. YaleB sources are sensitivities of one
+benchmark. Restricted provider data are not redistributed.
 
-The original paper does not fully specify sample indices, several source
-versions, graph bandwidth/symmetrization or the SD hierarchy after native
-objective selection. Reproducible AR, UMIST and BinAlpha candidates are
-membership hypotheses. A close ACC/NMI match does not establish the authors'
-historical inputs.
+## Statistical scope
 
-The available MSRA25 EBSA matrix is native 16×16, whereas the paper describes
-32×32 input. Its complete 1,799-row source remains a separately named adaptation.
-Upsampling cannot recover missing native pixels. Two YaleB sources are
-sensitivities of one benchmark, not two independent datasets. Source geometry
-marked unverified in the inventory is not inferred from feature count alone.
+Historical closest matches use labels and published targets retrospectively.
+They are separate from new fixed-reference evaluation. Mean/sample-SD over fifty
+rounding seeds differs from one native-objective-selected assignment; the latter
+has no across-run SD. Conditional bootstrap intervals concern fixed samples and
+representations, not new datasets. ORL and YaleB are previously studied
+development inputs. Their labelled gates are disclosed method development;
+fitting and comparison construction remain label-free.
 
-## Selection and statistical uncertainty
+## Numerical and mechanistic scope
 
-Joint paper matching and capability selection use true labels after fitting.
-They are retrospective oracles rather than unsupervised parameter-selection
-rules. ACC/NMI and SD remain attached to the same chosen configuration.
-Additional rounding checks a locked representation on the same samples;
-it does not supply an unseen-data test or remove selection bias.
+A primal–dual certificate qualifies one saved representation and its exact
+objective. It does not certify an altered rounding matrix or imply better ACC
+or NMI. Uncertified finite outputs remain exploratory. A geometric-median
+approximation without bounds cannot establish a dispersion guarantee. Global
+dispersion is not a guarantee of class separation or of every edge distance.
 
-Mean/sample-SD, a single native-best assignment and repeatability across batches
-are different statistical objects. A selected assignment has no across-run SD.
-Conditional paired intervals do not become unbiased confidence intervals for a
-selection process merely because they use common seeds. Missing datasets are
-not omitted from a formal four-benchmark average to obtain a favorable result.
+Fixed tangent planes limit a local displacement and do not solve arbitrary wrong
+short edges. Radial-neutralization evidence distinguishes association from an
+optimized tangent-specific benefit. Frozen-reference hinges compare against
+fixed coordinates, not against both other moving representations. Output row
+normalization may change their margins. Correlated feature views are not
+independent identity evidence. Triplet-only and random-force controls are needed
+for attribution of any apparent gain.
 
-## Numerical objectives and clustering
+A failed gate is a negative or unevaluable mechanism outcome at the declared
+points. It is not a theorem that every related method fails. A passed gate
+permits all-eight evaluation and supplies no generalization guarantee. Inactive
+certified rows can have valid metrics. Missing, failed and unrun endpoints never
+become zero scores or a complete macro-average.
 
-Convexity and primal–dual certification concern the fixed representation
-subproblem. They do not certify final clustering accuracy, uniqueness or stable
-rounding of all near-optimal representations. Finite IRLS stopping is not proof
-of optimality. The USPS gamma-1000 numerical comparison retains an unresolved
-gap; its poorly clustering fused saved point does not establish optimal collapse.
+## Retained implementation findings
 
-Certificates cannot be transferred between different outputs merely because
-their F/W inputs agree. Historical outputs whose exact arrays are unavailable
-cannot be certified by solving a newly generated problem. A failed componentwise
-flow provides no proof that all feasible-dual constructions would fail.
-
-## Baselines and learned graphs
-
-The pinned ClustPy implementation performs no successful LDA update on the
-recorded ORL/JAFFE experiments, producing explicit PCA/K-means degeneracies.
-That implementation observation is not a general theorem about LDA-Kmeans.
-The separately named ridge adaptation does not recover historical LDA-SC, is
-not uniformly beneficial across controls, and has capped YaleB fits. Native
-inertia across learned subspaces is not a defensible common selection objective.
-
-The EnSC coefficient solver's KKT diagnostic and SSC's fusion gap certify
-different targets. Screening/source stopping does not imply a small KKT
-residual. Uncertified required original-SSC/control configurations prevent a
-formally qualified four-benchmark comparison, even where a selected primary
-point is certified. Consequently, the formal capability and fixed-operation
-macro target decisions remain unavailable under the specified qualification
-rules; this is not an automatically failed performance target. The
-parameter-selection-gap conclusion is likewise undefined without both formal
-tracks.
-
-Native EnSC is a distinct method control. It has higher ACC/NMI means than the
-primary EnSC–SSC adaptation on ORL, JAFFE and YaleB. USPS differs: its primary
-capability point selects gamma 0.001 and is exactly G=F, while the locked gamma-1
-point is uncertified and substantially worse. The higher primary means than
-native EnSC on USPS therefore supply no evidence of beneficial shrinkage.
-
-ORL, JAFFE and YaleB have no certified original-SSC movement bracket. The USPS
-match has zero target and zero matched movement, so it does not establish a
-topology-specific benefit at equal nonzero shrinkage. Source stopping is also
-insufficient for coefficient accuracy: 969/9,298 USPS tau-0.95 rows fail the
-declared KKT diagnostic, with maximum residual 8.6962e-5. These are retained
-numerical limitations, independently of downstream ACC/NMI.
-
-## Mechanism and scope
-
-Cross-class edge mass, class fragmentation and error-stratified associations are
-diagnostics, not causal attribution by themselves. Wrong edges are not
-universally longer, and deleting edges can destroy force cancellation. Oracle
-deletion/completion uses labels and does not establish an unsupervised repair.
-Passing its criterion does not establish EnSC adaptation performance.
-
-The benchmark design and finite compute budget delimit evaluated configurations.
-Complete, unsuccessful and unevaluated points remain distinguishable; neither
-source ambiguity nor resource limits erase numerical or implementation failures.
-The project evaluates and adapts established components rather than claiming
-invention of convex fusion, PDHG, elastic-net clustering or truncated penalties.
+Historical selected F/G arrays were not retained, so a new solve cannot certify
+the original output. The current same-F/W USPS gamma-1000 audit remains
+uncertified. LDA failed updates and cap behavior are reported; the ridge
+adaptation does not recover the unspecified historical LDA-SC. The original
+sparse MSRA baseline failure and separately named dense repair remain visible.
+Earlier perturbation evidence did not rerun full SSC and used an incorrect USPS
+clipping range; those tables do not establish full-pipeline robustness.

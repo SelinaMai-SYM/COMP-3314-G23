@@ -112,9 +112,9 @@ def raw_release(tmp_path,monkeypatch,with_graph=False):
 
 def test_public_scalar_package_rebuilds_after_raw_checkout_and_store_are_removed(tmp_path,monkeypatch):
     root,art,out,manifest,proof=raw_release(tmp_path,monkeypatch)
-    original_manifest=manifest.read_bytes();original_packet=(out/'baseline_records.jsonl.gz').read_bytes()
+    original_manifest=manifest.read_bytes();original_packet=(out/'baseline_records.public.v2.jsonl.gz').read_bytes()
     public_root=tmp_path/'public package';result=evidence.project_existing_release(manifest,public_root,archive_receipt=proof)
-    assert manifest.read_bytes()==original_manifest and (out/'baseline_records.jsonl.gz').read_bytes()==original_packet
+    assert manifest.read_bytes()==original_manifest and (out/'baseline_records.public.v2.jsonl.gz').read_bytes()==original_packet
     public_manifest=Path(result['manifest_path']);definition=json.loads(public_manifest.read_text())
     assert definition['schema']==evidence.PUBLIC_SCHEMA
     with gzip.open(public_root/definition['baseline_file'],'rt') as stream:row=json.loads(next(stream))
@@ -159,11 +159,11 @@ def test_public_resource_summary_refuses_a_live_ledger():
     with pytest.raises(ValueError,match='finalized'):public.final_resource_summary({'active':{'unfinished':{'seconds':1}},'entries':[]})
 
 
-def test_public_full_current_packet_keeps_ensc_macro_and_USPS_metrics_without_originals(tmp_path,monkeypatch):
+def test_public_full_current_packet_keeps_graph_and_USPS_metrics_without_originals(tmp_path,monkeypatch):
     import runpy
     helpers=runpy.run_path(str(Path(__file__).with_name('test_full_scalar_evidence.py')))
     root,art,out,manifest,proof=raw_release(tmp_path,monkeypatch)
-    helpers['add_ensc_and_gate'](art);helpers['add_usps'](art)
+    helpers['add_graph_gate'](art);helpers['add_usps'](art)
     import experiments.next_round.evaluate as evaluate
     import experiments.submission_refresh.graph_repair as graph
     monkeypatch.setattr(evaluate,'paired',lambda *args,**kwargs:{'delta_pp':0.,'ci_lower_pp':0.,'ci_upper_pp':0.})
@@ -176,8 +176,7 @@ def test_public_full_current_packet_keeps_ensc_macro_and_USPS_metrics_without_or
     monkeypatch.setattr(ArtifactStore,'__init__',lambda *args:(_ for _ in ()).throw(AssertionError('public rebuild cannot open scientific arrays')))
     monkeypatch.setattr(__import__('subprocess'),'check_output',lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('public rebuild cannot read Git')))
     public_output=tmp_path/'public derived';public_gate=evidence.rebuild(result['manifest_path'],public_output)
-    assert raw_gate['G4_G5_status']==public_gate['G4_G5_status']=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS'
-    for key in ['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp','practical_target_met','parameter_selection_gap']:
+    for key in ['decision','promotion_passed','datasets']:
         assert public_gate[key]==raw_gate[key]
     for name in ['usps_solver_evaluation.csv','usps_continuation_evaluation.csv']:
         raw=list(csv.DictReader((raw_output/name).open()));projected=list(csv.DictReader((public_output/name).open()))

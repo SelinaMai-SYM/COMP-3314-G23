@@ -4,13 +4,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref,url,booktabs,amsmath,amssymb,amsfonts,microtype,longtable,array,graphicx}
-\hypersetup{hidelinks,pdftitle={Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset Uncertainty},pdfauthor={Han Jiale; Lu Sinan; Mahatharadol Vie; Mai Sheung Ying}}
-\title{Spectral Shrunk Clustering: Reproduction, Numerical Audits, and Subset Uncertainty}
+\hypersetup{hidelinks,pdftitle={Spectral Shrunk Clustering: Reproduction and Independent Refinement Studies},pdfauthor={Han Jiale; Lu Sinan; Mahatharadol Vie; Mai Sheung Ying}}
+\title{Spectral Shrunk Clustering: Reproduction and Independent Refinement Studies}
 \author{Han Jiale \quad Lu Sinan \quad Mahatharadol Vie \quad Mai Sheung Ying\\Group 23\\The University of Hong Kong\\COMP3314 Machine Learning}
 \begin{document}
 \maketitle
 \begin{abstract}
-Spectral Shrunk Clustering (SSC) refines a spectral representation through a convex fidelity--fusion objective. We separate paper reconstruction, numerical optimization and clustering quality. Joint ACC/NMI matching and declared source/subset sensitivities preserve distinct statistical and identity qualifications. Certified shrinkage has small, mixed net effects at gamma~1; normalization and graph interventions expose different limitations. An oracle completion gate passes on ORL, while label-free four-benchmark improvement remains unestablished. Source and implementation audits retain failures and adapted methods explicitly. Numerical agreement does not identify the authors' historical datasets.
+Spectral Shrunk Clustering (SSC) refines a spectral representation through a convex fidelity--fusion objective. We separate paper reconstruction, numerical optimization and clustering quality. Joint ACC/NMI matching and declared source/subset sensitivities preserve distinct statistical and identity qualifications. Certified shrinkage has small, mixed net effects at gamma~1; normalization and graph interventions expose different limitations. An oracle graph-completion diagnostic passes on ORL. Three separately registered convex refinements test dispersion protection, tangent-constrained motion and frozen relative-neighbor corrections; their numerical qualification and mechanism gates remain distinct from clustering performance. Source and implementation audits retain failures and adapted methods explicitly. Numerical agreement does not identify the authors' historical datasets.
 \end{abstract}
 
 \section{What SSC optimizes}
@@ -24,7 +24,7 @@ The factor~2 implements the paper's ordered-pair sum. Its stationary IRLS system
 
 \begin{figure}[ht]
 \centering\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
-\caption{The two graph roles are distinct. $A$ determines the initial spectral geometry $F$; $W$, built in that geometry, controls fusion while $F$ remains fixed. Matched SC clusters the same $F$, and SSC clusters $G$.}
+\caption{The input graph $A_0$ determines $F_0$; the fusion graph $W_0$ is built once from $F_0$. Each refinement uses frozen inputs and produces its own $G$. The original and common angular panels declare their respective rounding matrices $Q$. The three adaptations are alternatives.}
 \label{fig:two}
 \end{figure}
 
@@ -59,13 +59,18 @@ G1 compares SC/SSC on the same fixed representation. Certified gamma-1 shrinkage
 
 G2 separates anchor normalization from the fusion graph at matched mass. Row-normalized $U$ alone raises SC ACC by 1.850/4.016 points on ORL/YaleB; angular-graph shrinkage at gamma~1 adds only 0.170/0.314 above $U$-SC. A stronger representation baseline therefore matters more than a comparison only with $F_0$-SC.
 
-In the fixed G3 oracle intervention (15\% additions, gamma~1000), ORL passes the diagnostic criterion: completion gains 10.415 ACC points over deletion and 24.863 over fixed oracle deletion plus mean blind additions, with nondecreasing NMI and qualified conditional intervals. YaleB's large raw gains remain numerically unqualified. The EnSC graph adaptation~\citep{you2016oracle} is evaluated separately: oracle success does not establish an unsupervised-method gain. Native EnSC clustering and matched-movement controls distinguish affinity quality from the additional effect of SSC fusion.
+The fixed G3 labelled intervention diagnoses whether correcting graph relationships can help. ORL passes; YaleB remains numerically unqualified. This is a mechanism experiment, not a label-free method result.
 
-\input{tables/refresh_extension}
+\section{Three independent refinement studies}
+With $H=F_0$ or $U=\operatorname{rowunit}(F_0)$ and $W_0$ frozen, E1 replaces each edge norm by $(\|(BG)_e\|-\eta\|(BH)_e\|)_+$, with $\eta=.25$. Its optimum retains at least $\eta$ of global geometric-median dispersion. This does not protect individual classes, guarantee improved ACC/NMI or change the threshold for leaving the anchor. Interpolation and uniform origin scaling distinguish useful refinement from simple damage avoidance.
 
-The primary EnSC--SSC capability means are 78.98/96.41/27.66/65.60 ACC on ORL/JAFFE/YaleB/USPS. The first three select gamma~1, but USPS selects gamma~0.001 with $G=F$: this is damage avoidance, not useful shrinkage. USPS at the fixed gamma~1 falls to 52.27 ACC and remains uncertified. Native EnSC has higher ACC/NMI than the primary adaptation on the first three datasets; the USPS primary exceeds native EnSC without moving from $F_0$.
+E2 constrains each displacement at nonzero $u_i$ to its fixed tangent plane and radius $\tan15^\circ$; zero anchors stay fixed. It is promoted only if a predefined ordinary-SSC radial-neutralization contrast improves ACC with a positive adjusted lower bound, preserves mean NMI, has at least 10\% inward energy and changes direction by at least $1^\circ$ on either development dataset. An isotropic ball of radius $\sin15^\circ$ is a required control.
 
-The target is at least 2 points equal-weight ACC gain over the stronger fair SC/SSC baseline, with no mean NMI loss against either. Fair SC includes both $F_0$ and $U$. All four datasets have complete 50-start records, but required uncertified controls leave both capability and locked-operation macro targets unavailable. The parameter-selection-gap flag is therefore undefined. Additional seeds assess conditional rounding stability, not unseen-data generalization.
+E3 adds unit-gradient affine hinges from two-view agreement and contradictory $W_0$ neighbors, with $\mu=2$. All three sample roles come from the common valid pool. Triplets are frozen before labels are used for the development semantic audit; promotion requires sufficient coverage, at least 60\% correct relations and at most 10\% reversed relations. Triplet-only correction and three matched random-direction controls separate geometric information from generic extra force.
+
+\input{tables/refinement_main}
+
+The two panels are evaluated separately: original geometry rounds $G$, while every angular arm rounds $\operatorname{rowunit}(G)$. The label-free operating point is $2\gamma_{\rm ref}$, defined from the anchor's maximum node fusion force. The same complete 50 rounding seeds produce ACC/NMI means and sample SD. Conditional paired intervals use 10,000 resamples. Development paths and available certified movement matches cannot replace the primary point. An eight-input macro is unavailable until all eight paired outputs qualify. Full objectives, duals, controls and every failed, gated or unrun endpoint are in the appendix and scalar release.
 
 \section{Conclusion}
 SSC gives a clear convex refinement target, while clustering quality depends on representation, graph, solver and rounding choices. Our contribution is reproducible source/subset sensitivity and explicit numerical and implementation audits, including negative or unresolved evidence. Exact historical LDA-SC and several dataset identities remain unresolved. Code, statistical records and reproducible commands are available in the \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/main}{public repository}.
@@ -86,15 +91,48 @@ The instrumented ClustPy port pins commit \texttt{4ac9d00685efc7432800684f5bfac0
 
 The diagonal PDHG formulation uses $K=\mathrm{diag}(\sqrt w)B$ and maps its dual back to original capacities $2\gamma w$; independent small convex references validate the target. Agreement between numerical solvers alone is not a certificate. Orthogonal eigenspace rotations preserve Euclidean distances, while a changed cutoff eigenspace or row normalization can change clustering. Edge deletion need not preserve $G=F$: on an eight-node cycle at $\gamma=0.6$, removing one edge destroys force cancellation. The separately valid incident-mass sufficient bound is $2\gamma\max_i\sum_jw_{ij}\le1$.
 
-G3 holds the full development $F_0$ fixed and uses a label-blind top-20-neighbor addition pool for oracle evaluation. The fixed 15\%/gamma-1000 gate requires certified active deletion and deletion-plus-completion solves, at least one percentage point paired ACC gain, nondecreasing NMI, at least 20\% fewer excess class fragments, and positive conditional bootstrap intervals against deletion and fixed oracle deletion plus mean blind random additions. Fully randomized deletion/addition and same-class random additions remain separate controls. The labelled intervention diagnoses available graph information; it is not a label-free algorithm or an unseen-data test. Subsequent EnSC capability and locked-operation targets require their own complete four-benchmark qualification; neither can be inferred from the gate alone.
-
-The EnSC port targets the true elastic-net coefficient objective and is checked against independent small convex references. Its row-wise KKT diagnostics remain separate from SSC primal--dual certificates: a C/U fusion mark does not certify coefficient optimality. On USPS, 969 of 9,298 tau-0.95 coefficient rows fail the declared KKT diagnostic, despite source screening/objective stops. The fixed gamma-1 fusion gap is $2.8042\times10^{-5}$, above the certification threshold. Original-SSC gamma 30, its capability choice, is also uncertified. The USPS matched-movement comparison returns the degenerate zero-movement match $G=F$; ORL/JAFFE/YaleB have no certified movement bracket. These observations do not identify a topology-specific benefit at equal nonzero shrinkage.
-\section{Nonconvex fusion: scope and negative evidence}
+G3 holds the full development $F_0$ fixed and uses a label-blind top-20-neighbor addition pool for oracle evaluation. The fixed 15\%/gamma-1000 gate requires certified active deletion and deletion-plus-completion solves, at least one percentage point paired ACC gain, nondecreasing NMI, at least 20\% fewer excess class fragments, and positive conditional bootstrap intervals against deletion and fixed oracle deletion plus mean blind random additions. Fully randomized deletion/addition and same-class random additions remain separate controls. The labelled intervention diagnoses available graph information; it is not a label-free algorithm or an unseen-data test. \section{Nonconvex fusion: scope and negative evidence}
 Truncated fusion is established in PRclust~\citep{pan2013cluster,wu2016new}; distance-dependent robust pairwise fusion is central to Shah--Koltun RCC~\citep{shah2017robust}. These differ from Sun et al.'s resistant convex clustering~\citep{sun2025resistant}. The SSC adaptation does not claim invention of these penalties.
 
 For two concentrated groups of sizes $m<n$, separation $d$ and aggregate attraction $\lambda$, the unsquared-fidelity linear-fusion optimum is $d\min(m,\lambda)$. With capped penalty $\min(r,\tau)$ and $d>\tau$, it is $\min(md,\lambda\tau)$. Thus $m<\lambda<md/\tau$ gives fusion for the linear objective and separation for the capped objective. Equality can admit multiple minimizers. These two-representative statements are not arbitrary-graph clustering guarantees.
 
-A separately enumerated five-point graph has linear optimum 8 and capped optimum 3. The local capped algorithm obtains 3 from F but 8 from the original SSC output: accurate inner convex solves do not certify a global nonconvex solution. Synthetic imbalanced-bridge experiments also show the limitation of damage avoidance: SSC averages 99.156 ACC/96.725 NMI while capped fusion, static screening and squared fidelity recover 100/100, which SC already achieves. Capping is therefore neither necessary in that example nor evidence of additional clustering capacity over SC. Historical synthetic and secondary geometry results remain distinct from the present graph-adaptation comparison.
+A separately enumerated five-point graph has linear optimum 8 and capped optimum 3. The local capped algorithm obtains 3 from F but 8 from the original SSC output: accurate inner convex solves do not certify a global nonconvex solution. Synthetic imbalanced-bridge experiments also show the limitation of damage avoidance: SSC averages 99.156 ACC/96.725 NMI while capped fusion, static screening and squared fidelity recover 100/100, which SC already achieves. Capping is therefore neither necessary in that example nor evidence of additional clustering capacity over SC. Historical synthetic and secondary geometry results remain distinct from the independent refinement studies.
 
-The mathematical and empirical observations motivate a narrow conclusion: representation motion, robustness or objective improvement alone is insufficient. A useful extension must retain both ACC and NMI improvements over appropriate SC, SSC and affinity-only controls, with numerical qualifications attached to the exact saved outputs.
+The mathematical and empirical observations motivate a narrow conclusion: representation motion, robustness or objective improvement alone is insufficient. A useful extension must retain both ACC and NMI improvements over appropriate SC, SSC and mechanism controls, with numerical qualifications attached to the exact saved outputs.
+
+\section{Independent refinement objectives, bounds and certificates}
+Let $c_e=2\gamma w_e$, $a_e=\eta\|(BH)_e\|$ and $J_0(G)=\sum_i\|g_i-h_i\|+\sum_e c_e\|(BG)_e\|$. Every positive undirected edge is counted once. The registered input memberships, preparation, exact arrays, source identities and triplet order are fixed before new scoring. ORL and cropped YaleB are development datasets, not unseen validation samples.
+
+\paragraph{E1: relative stopping distance.}
+\[
+J_\eta(G)=\sum_i\|g_i-h_i\|+\sum_e c_e(\|(BG)_e\|-a_e)_+,\qquad
+D_\eta(q)=\langle H,B^Tq\rangle-\sum_e a_e\|q_e\|.
+\]
+The dual constraints are $\|q_e\|\le c_e$ and $\|(B^Tq)_i\|\le1$. With original-edge step $\sigma_e$, the dual prox soft-thresholds the norm by $\sigma_e a_e$ then projects to $c_e$. In weighted-incidence coordinates $K=\operatorname{diag}(\sqrt w)B$, the mapped original-edge step is $w_e\Sigma_e$. For a geometric median $z$ of $H$, the candidate $\eta H+(1-\eta)z$ has zero edge penalty and fidelity $(1-\eta)D(H)$. Hence $P^*\le(1-\eta)D(H)$. The triangle inequality gives $D(H)\le\sum_i\|g_i-h_i\|+D(G)$, proving $D(G)\ge\eta D(H)-\epsilon$ for an output with absolute certified gap $\epsilon=P(G)-D_\eta(q)$. Certified median lower/upper bounds determine the numerical margins. These statements concern $G$, not normalized $Q$.
+
+For two tied groups of sizes 2 and 3 at distance 4, aggregate coefficient $\lambda=1.6$ gives objective optima $6.4,4.8,3.2$ at $\eta=0,.25,.5$; $\lambda=2.4$ gives $8,6,4$. At $\lambda=2$, a continuum of minimizing separations is possible; identical optimizer arrays are therefore not required. The cases $\eta=0$, $\eta=1$, $\gamma=0$, empty/disconnected graphs and duplicate anchors are checked independently.
+
+\paragraph{E2: fixed tangent constraints.}
+Write $\delta_i=g_i-u_i$, $P_i=I-u_i u_i^T$ for nonzero unit anchors. The primal is $J_0(G;U,W_0)$ subject to $u_i^T\delta_i=0$, $\|\delta_i\|\le r=\tan\theta$ and $\delta_i=0$ on zero anchors. With $v=B^Tq$ its dual is
+\[
+D_T(q)=\langle U,v\rangle-r\sum_{i:u_i\ne0}(\|P_i v_i\|-1)_+,\qquad \|q_e\|\le c_e.
+\]
+The proximal displacement projects onto the fixed tangent plane, shrinks radially by the node step and clips to $r$. The isotropic control omits $P_i$, uses radius $\sin\theta$ and sums the support correction over all nodes. A consensus outside the constraints cannot bound the primal optimum. Zero rows remain in ACC/NMI; angle masks are diagnostic only.
+
+For the gate, ordinary SSC is selected without labels as the first certified active point in $\{2,8,32\}\gamma_{\rm ref}$. Radial neutralization uses $R_i=u_i+P_i\delta_i$ on nonzero anchors, $R_i=g_i$ otherwise. Energy denominators exclude zero anchors; angles require nonzero anchors and pre-normalization $G/R$ norms above $10^{-12}$. An empty or zero-energy diagnostic cannot pass. Two fixed development contrasts use lower quantile .025; both outcomes are retained.
+
+\paragraph{E3: frozen relative-neighbor correction.}
+Two separately centered/normalized feature views use verified checkerboard geometry or the fixed PCG64 feature split. All roles use their common valid pool and immutable original IDs. Set $q=\min(10,n_v-1)$ and $Q=\min(4q,n_v-1)$. Reference $j$ must be mutual-$q$ in both views; contradictory neighbor $k$ is a positive $W_0$ neighbor outside both first-$Q$ lists. Strict inversion, nonzero separation, bounded initial correction and the registered rank/ID order select at most one triplet per anchor.
+
+With $s=\|u_j-u_k\|$, $m=.1s^2$, $n=(u_k-u_j)/s$ and $\beta=(m+\|u_j\|^2-\|u_k\|^2)/(2s)$, the normalized hinge is $h(g_i)=[n^Tg_i+\beta]_+$. The objective is $J_R=J_0+\mu\sum h(g_i)$, with no coverage rescaling. For operator $T$ containing those unit rows, the dual is
+\[
+D_R(q,p)=\langle U,B^Tq+T^Tp\rangle+\beta^Tp,
+\quad \|q_e\|\le c_e,\quad 0\le p\le\mu,\quad
+\|(B^Tq+T^Tp)_i\|\le1.
+\]
+Steps use the combined $[B;T]$ operator. Feasibility repair scales $q,p$ together. For $\gamma=0$, $\mu>1$ gives $g_i=u_i-h(u_i)n_i$; $\mu<1$ gives $U$, and $\mu=1$ permits the intervening segment. With no triplets the target is ordinary SSC and the dataset is still evaluated. Satisfaction is reported separately for $G$ and $Q$.
+
+\paragraph{Qualification and recovery.}
+Each solver keeps independent feasible primal and dual candidates, including the initial bound. Certificates are recomputed from saved $G,q,p$, retain signed negative gaps and require relative gap $\le10^{-5}$ and feasibility/capacity violation $\le10^{-8}$. Small graph SOCP references use CLARABEL independently of PDHG. Primary continuations have cumulative ceilings 30k/1800, 60k/3600 and 120k/7200 iterations/CPU seconds. Full state and object hashes support continuation. Inactive, uncertified, failed, gated and budget-unrun states are distinct. Extra development sensitivities are $\eta=.5$, $\theta=30^\circ$ and $\mu=.5$ at the common primary gamma. Matching uses declared certified points only, a 5\% tolerance with absolute floors $10^{-6}$ (normalized L2,1) and $.1^\circ$ (RMS angle), and no added search.
+\input{tables/refinement_appendix}
 \end{document}

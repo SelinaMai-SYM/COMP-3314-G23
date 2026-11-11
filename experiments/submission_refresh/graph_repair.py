@@ -27,7 +27,7 @@ BUDGETS=(.15,.05)
 DEVELOPMENT=('ORL_att92','YaleB_cropped2414')
 
 
-def scientific_source_record(*, include_ensc=False):
+def scientific_source_record():
     """Separate fitting/evaluation behavior from unrelated editorial modules.
 
     Exact project bytes and commit remain recorded. Cache reuse additionally
@@ -41,7 +41,6 @@ def scientific_source_record(*, include_ensc=False):
     paths += [ROOT/'experiments/v2_kmeans_protocol/kmeans_trials.py',
               ROOT/'experiments/v2_kmeans_protocol/metrics.py',ROOT/'experiments/next_round/evaluate.py',
               ROOT/'experiments/submission_refresh/graph_repair.py']
-    if include_ensc:paths.append(ROOT/'method_extension/submission_refresh/ensc.py')
     class WithoutDocstrings(ast.NodeTransformer):
         def _strip(self,node):
             self.generic_visit(node)

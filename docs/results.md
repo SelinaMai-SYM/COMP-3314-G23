@@ -88,64 +88,6 @@ in the [graph results](../results/submission_refresh/extension_results.csv),
 [casebooks](../results/submission_refresh/casebook_summary.csv) and
 [fixed-criterion record](../results/submission_refresh/extension_gate.json).
 
-## EnSC graph adaptation: all four benchmarks
-
-The primary method uses the tau-0.95 EnSC affinity as SSC's fusion graph while
-retaining the original F0 anchor. Capability selects gamma by ACC, then NMI,
-within its declared five-point search. Locked operation fixes gamma 1 without
-label-based parameter choice. Source coefficient 50, affinity construction and
-rounding are shared. Native EnSC clusters the learned affinity in its own
-spectral space, making it an essential attribution control.
-
-The following tables use the same 50 greedy one-start Lloyd seeds 0–49. Values
-are rounded to three decimals; C/U denotes certified/uncertified **fusion**,
-not coefficient KKT accuracy. Full precision and all control families are in
-the [authoritative endpoint CSV](../results/submission_refresh/ensc_capability_and_operating_point.csv).
-
-| Benchmark / track | Gamma | ACC ± SD | NMI ± SD | Fusion |
-|---|---:|---:|---:|---|
-| ORL / capability oracle | 1 | 78.980 ± 1.261 | 91.396 ± 0.433 | C |
-| ORL / locked operation | 1 | 78.980 ± 1.261 | 91.396 ± 0.433 | C |
-| JAFFE / capability oracle | 1 | 96.413 ± 0.364 | 96.078 ± 0.542 | C |
-| JAFFE / locked operation | 1 | 96.413 ± 0.364 | 96.078 ± 0.542 | C |
-| YaleB cropped / capability oracle | 1 | 27.659 ± 0.741 | 36.989 ± 0.556 | C |
-| YaleB cropped / locked operation | 1 | 27.659 ± 0.741 | 36.989 ± 0.556 | C |
-| USPS / capability oracle | 0.001 | 65.597 ± 1.867 | 80.315 ± 2.128 | C; G=F |
-| USPS / locked operation | 1 | 52.274 ± 3.948 | 69.734 ± 1.547 | U |
-
-The first three benchmarks select the locked gamma-1 point as their primary
-capability choice. USPS selects gamma 0.001 and exactly G=F, with zero movement.
-Its fixed gamma-1 output is different: the gap 2.8042e-5 exceeds the threshold,
-and its lower ACC/NMI remains an uncertified observation. The certified USPS
-capability point demonstrates avoiding damage, not beneficial shrinkage.
-
-| Benchmark | Fair SC ACC / NMI ± SD | Original SSC ACC / NMI ± SD (gamma; fusion) | Native EnSC ACC / NMI ± SD |
-|---|---:|---:|---:|
-| ORL | 80.175 ± 1.551 / 90.890 ± 0.641 | 78.480 ± 1.408 / 89.888 ± 0.805 (1; C) | 81.675 ± 1.645 / 91.684 ± 0.649 |
-| JAFFE | 96.714 ± 0.000 / 96.392 ± 0.000 | 95.305 ± 0.000 / 94.140 ± 0.021 (10; C) | 99.061 ± 0.000 / 98.336 ± 0.000 |
-| YaleB cropped | 25.797 ± 0.709 / 32.595 ± 0.435 | 21.781 ± 0.454 / 27.731 ± 0.585 (0.001; C) | 61.089 ± 1.175 / 66.487 ± 0.911 |
-| USPS | 68.360 ± 3.635 / 83.436 ± 0.891 | 66.534 ± 2.394 / 81.331 ± 1.203 (30; U) | 49.507 ± 2.223 / 60.822 ± 1.186 |
-
-Native EnSC has higher ACC/NMI means than EnSC–SSC on ORL, JAFFE and YaleB.
-Those learned-affinity gains cannot be credited to SSC fusion. On USPS, the
-primary capability point exceeds native EnSC while remaining at F0; it still
-does not demonstrate a gain from shrinkage. Fair SC selects U on all four
-benchmarks. The original-SSC USPS capability row is itself uncertified.
-
-Each benchmark has all 44 declared saved configuration endpoints, but required
-numerical qualifications fail for 5/6/14/21 configurations on
-ORL/JAFFE/YaleB/USPS respectively. Both formal four-benchmark targets and the
-parameter-selection-gap flag consequently remain **NA**. Complete coverage is
-not a substitute for valid controls; partial or unqualified datasets are not
-averaged into a success claim. See the
-[two-track conclusion record](../results/submission_refresh/ensc_four_benchmark_conclusion.json).
-
-The coefficient solver also retains finite-accuracy limitations. On USPS,
-969/9,298 tau-0.95 rows fail the declared KKT diagnostic, with maximum residual
-8.6962e-5. Screening or source-objective stopping does not establish coefficient
-optimality. ORL, JAFFE and YaleB have no certified original-SSC movement bracket;
-the USPS match has zero target and zero matched movement. These results provide
-no comparison at equal **nonzero** shrinkage.
 
 ## Baseline and negative findings
 

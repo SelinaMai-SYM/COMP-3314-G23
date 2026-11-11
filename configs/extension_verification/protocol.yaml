@@ -1,0 +1,138 @@
+version: ssc-refinement-verification-20261111-v1
+scope: Three independent convex adaptations of Spectral Shrunk Clustering
+resources:
+  cpu_core_hours: 36
+  workers: 2
+  threads_per_worker: 1
+  aggregate_rss_gib_target: 8
+  finalization_reserve_cpu_seconds: 7200
+  fit_cumulative_iteration_ceilings: [30000, 60000, 120000]
+  fit_cumulative_cpu_second_ceilings: [1800, 3600, 7200]
+  continuation_eligible: primary_operating_points_and_required_primary_matched_controls
+  check_interval: 50
+  checkpoint_interval: 500
+inputs:
+  preprocessing: Y0
+  k: 5
+  symmetrization: union_maximum
+  bandwidth: median_positive_directed_neighbor_squared_distance
+  spectral_seed: 20261108
+  dtype: float64
+  historical_identity: unverified_for_all_eight_inputs
+  freeze_W0_from_F0: true
+  dataset_order: [ORL, YaleB, AR, JAFFE, UMIST, BinAlpha, MSRA50, USPS]
+  development: [ORL, YaleB]
+  references:
+    AR: {candidate_id: AR_first7, n: 840, features: 1024, K: 120, spatial_shape: null, qualification: Source-order seven-of-fourteen hypothesis; session identity and pixel geometry unverified}
+    JAFFE: {candidate_id: JAFFE, n: 213, features: 676, K: 10, spatial_shape: [26, 26], qualification: Verified resized provider input; historical identity unverified}
+    ORL: {candidate_id: ORL_att92, n: 400, features: 1024, K: 40, spatial_shape: [32, 32], qualification: AT&T release resized by the declared loader; historical identity unverified}
+    UMIST: {candidate_id: UMIST_LZUFE574_exact_dedup564, n: 564, features: 10304, K: 20, spatial_shape: null, qualification: First-occurrence exact deduplication of the named matrix; spatial layout and original membership unverified}
+    BinAlpha: {candidate_id: BinAlpha_random_seed000, n: 780, features: 320, K: 26, spatial_shape: [20, 16], qualification: Unchanged seed-0 reconstructed letter membership; historical identity unverified}
+    MSRA50: {candidate_id: MSRA25_EBSA_16x16, n: 1799, features: 256, K: 12, spatial_shape: [16, 16], qualification: Adapted native-16x16 MSRA25 proxy; no claim of recovered native-32x32 MSRA50}
+    YaleB: {candidate_id: YaleB_cropped2414_Y0, n: 2414, features: 1024, K: 38, spatial_shape: [32, 32], qualification: Cropped2414 fixed Y0 preparation; historical identity unverified}
+    USPS: {candidate_id: USPS, n: 9298, features: 256, K: 10, spatial_shape: [16, 16], qualification: Full train-then-test concatenation in the native signed domain; historical identity unverified}
+panels:
+  original: {anchor: F0, graph: W0, rounding_input: G, methods: [SC, SSC, E1]}
+  angular: {anchor: U, graph: W0, rounding_input: rowunit_G, methods: [SC, SSC, E1, E2, E3]}
+gamma:
+  convention: undirected_E8_capacity_2_gamma_w
+  reference: inverse_maximum_node_norm_of_2_B_transpose_diag_w_d
+  coincident_edge_subgradient: zero
+  primary_factor: 2
+  degenerate_force_fallback: 1
+  development_path_factors: [0, 0.5, 1, 2, 8]
+  development_absolute_historical_point: 1
+  activity_probe_factors: [8, 32]
+  activity_probe_condition: both_SSC_and_primary_E1_certified_inactive
+  tangent_gate_reference_order: [2, 8, 32]
+  projected_tangent_secondary_factors: [2, 8]
+  projected_tangent_second_probe_condition: first_secondary_certified_inactive
+numerics:
+  relative_gap_tolerance: 0.00001
+  feasibility_tolerance: 0.00000001
+  relative_gap_denominator: max_1_abs_primal_abs_dual
+  activity_threshold_normalized_L21: 0.000001
+  negative_gap_policy: preserve_signed_value_and_reject_inconsistent_certificate
+  zero_anchor_policy: exact_zero_rows_preserved_by_rowunit_and_frozen_in_tangent_method
+  initializer: frozen_anchor
+  best_candidates: separate_feasible_primal_and_feasible_dual
+E1:
+  edge_loss: max(norm_BG_minus_eta_norm_BH,0)
+  eta_primary: 0.25
+  eta_development_sensitivity: 0.5
+  sensitivity_gamma: common_primary_point_only
+  performance_gate: false
+  controls: [SC, SSC, interpolation, uniform_origin_scaling, available_certified_movement_match]
+E2:
+  angle_primary_degrees: 15
+  angle_development_degrees: 30
+  sensitivity_gamma: common_primary_point_only
+  tangent_radius: tan_angle
+  isotropic_radius: sin_angle
+  planes: fixed_at_nonzero_unit_U
+  frozen_zero_anchor_displacement: 0
+  gate:
+    selected_output: first_certified_active_ordinary_SSC_in_fixed_reference_order
+    inward_energy_share_min: 0.10
+    RMS_radial_neutralization_angle_degrees_min: 1
+    ACC_adjusted_one_sided_lower_quantile: 0.025
+    ACC_lower_bound_strictly_positive: true
+    NMI_mean_change_nonnegative: true
+    primary_development_contrasts: 2
+    promotion: either_development_dataset_passes_all_conditions
+  controls: [SC_U, ordinary_SSC, isotropic_ball, available_certified_angular_movement_match]
+E3:
+  feature_split_seed: 20261111
+  invalid_view_norm_threshold: 0.000000000001
+  all_triplet_roles_require_common_valid_pool: true
+  q_max: 10
+  Q_multiple: 4
+  reference_separation_min: 0.000000000001
+  inversion_strict_squared_distance_offset: 0.000000000001
+  margin_factor: 0.1
+  initial_hinge_max: sin_15_degrees
+  maximum_triplets_per_anchor: 1
+  neighbor_tie_break: immutable_original_row_ID
+  j_order: [maximum_rank_across_views, sum_of_ranks, original_row_ID]
+  k_order: [initial_hinge, original_row_ID]
+  mu_primary: 2
+  mu_development_sensitivity: 0.5
+  sensitivity_gamma: common_primary_point_only
+  rescale_mu_by_coverage: false
+  random_hinge_seeds: [400, 401, 402]
+  random_hinge_gamma: common_primary_actual_gamma
+  gate:
+    triplet_count_min: max_20_ceil_0.05_n
+    correct_relation_fraction_min: 0.6
+    reversed_relation_fraction_max: 0.1
+    promotion: either_development_dataset_passes_all_conditions
+  controls: [SC_U, ordinary_SSC, triplet_only_gamma_zero, matched_random_hinges]
+rounding:
+  initialization: SKLEARN_GREEDY_KMEANSPP
+  n_init: 1
+  algorithm: lloyd
+  max_iter: 300
+  tol: 0.0001
+  seeds: [0, 49]
+  primary_endpoint: mean_and_sample_SD_ddof_1
+  native_endpoint: minimum_SSE_then_smallest_seed_no_across_run_SD
+statistics:
+  metric_units: percent
+  differences: percentage_points
+  NMI_normalization: geometric
+  bootstrap_resamples: 10000
+  bootstrap_seed: 424242
+  bootstrap_scope: paired_rounding_seeds_conditional_on_frozen_data_and_representations
+matching:
+  candidates: declared_certified_points_only
+  relative_tolerance: 0.05
+  normalized_L21_absolute_floor: 0.000001
+  RMS_angle_absolute_floor_degrees: 0.1
+  tie_break: [absolute_movement_difference, actual_gamma, stable_configuration_ID]
+  added_search: false
+  zero_match_scope: degenerate_zero_movement_only
+execution:
+  order: [cleanup, freeze_and_small_verification, E1_ORL, E1_YaleB, E1_all_eight, E2_gate, E2_if_promoted, E3_gate, E3_if_promoted, controls_and_sensitivities, reporting_and_publication]
+  source_change_policy: preserve_prior_attempt_and_require_new_qualified_identity
+  partial_seed_filtering: false
+  macro_requires_all_eight_qualified_paired_rows: true

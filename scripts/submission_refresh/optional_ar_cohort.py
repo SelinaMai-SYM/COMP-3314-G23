@@ -164,10 +164,8 @@ def _ledger(path):
 def _terminal(root,path):
     raw=Path(path).read_bytes();decision=json.loads(raw)
     if decision.get('schema')!='optional-ar-terminal-decision-v1' or any(decision.get(key) is not True
-        for key in ['graph_design_terminal','G4_G5_terminal','unrun_work_frozen']):
-        raise ValueError('an explicit graph/G4 terminal-decision record is required')
-    if decision.get('G4_G5_disposition') not in {'COMPLETED','FAILED_OR_INCOMPLETE_WITHIN_ALLOWANCE','NOT_PERMITTED'}:
-        raise ValueError('the terminal record must state the G4/G5 disposition')
+        for key in ['graph_design_terminal','unrun_work_frozen']):
+        raise ValueError('an explicit graph terminal-decision record is required')
     evidence=decision.get('evidence',{});copies={'terminal_decision.json':raw};references={}
     for role,filename in [('graph_coverage','graph_execution_coverage.csv'),('gate','extension_gate.json')]:
         reference=evidence.get(role,{})
@@ -182,13 +180,8 @@ def _terminal(root,path):
         raise ValueError('terminal graph coverage must retain all 362 intended tasks')
     if any(row.get('controller_status') in {'RUNNING','PENDING'} for row in graph_rows):
         raise ValueError('graph coverage still contains live or pending controllers')
-    gate=_project(copies['extension_gate.json'],{'G4_G5_status','promotion_passed'})
-    if decision['G4_G5_disposition']=='NOT_PERMITTED' and gate.get('promotion_passed') is not False:
-        raise ValueError('G4/G5 cannot be marked not permitted after a passed gate; use an explicit allowance/incomplete disposition')
-    if decision['G4_G5_disposition']=='COMPLETED' and gate.get('G4_G5_status')!='COMPLETE_CERTIFIED_FOUR_BENCHMARKS':
-        raise ValueError('a completed G4/G5 disposition requires the recorded complete four-benchmark state')
-    return copies,{'decision_sha256':_hash(raw),'evidence':references,'graph_queue_sha256':_hash(intended_raw),
-        'G4_G5_disposition':decision['G4_G5_disposition'],'gate_status':gate.get('G4_G5_status')}
+    gate=_project(copies['extension_gate.json'],{'promotion_passed','decision'})
+    return copies,{'decision_sha256':_hash(raw),'evidence':references,'graph_queue_sha256':_hash(intended_raw),'gate_status':gate.get('decision')}
 
 
 def plan_counts(remaining_seconds,profile_cpu,rounding_cpu,max_object_bytes,free_bytes,store_bytes,family_count):

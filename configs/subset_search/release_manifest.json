@@ -299,10 +299,10 @@
       "sha256": "1a16728f8a965e8fb83d9f561229f75828ce8badfe70f184b549028e017086d4"
     },
     "completion_records": {
-      "bytes": 82194,
+      "bytes": 81856,
       "path": "results/subset_search/completion_records.public.v1.json.gz",
-      "sha256": "353b62d5216c1ef379a3642820cdd38c86b86f99f7a72c2d04d7dc7d598c4481",
-      "uncompressed_sha256": "bbd9d11860791a19535a380a0eae80e3f6d016008adf9328ff606c25c010f211"
+      "sha256": "f2358c6ec629ea865f1fe2643e9176ec723d4ca9b952fdd6a60ae608b8a630eb",
+      "uncompressed_sha256": "3e53ad4df6c5d5bff3a45dfab8083c37f1285e758dd9f346a68b9d455f6b54d9"
     },
     "configuration_inventory": {
       "bytes": 6979271,
@@ -321,9 +321,9 @@
       "sha256": "fc286ee7ce8e66f6d36ce6f144961e7c5124a37568a101bec970382b6f533dec"
     },
     "confirmation_seed_namespace": {
-      "bytes": 1472,
+      "bytes": 1491,
       "path": "results/subset_search/confirmation_seed_namespace.json",
-      "sha256": "bc3fea84fa6f4555f696b837fad426fb0b4cfe27fa8a8725913062092784a8eb"
+      "sha256": "92a6c216ea217b0a79c39c2a579919783ff377ded56e549a15829df2ee86d636"
     },
     "confirmation_seed_proof": {
       "bytes": 6529,
@@ -371,9 +371,9 @@
       "sha256": "339bc600672ff04c7fdbb74e49ee596178ffa55b3df518cb8621cc131ed3ea28"
     },
     "public_archive_receipt": {
-      "bytes": 1345,
-      "path": "results/subset_search/public_archive_receipt.v1.json",
-      "sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973"
+      "bytes": 1481,
+      "path": "results/subset_search/public_source_lineage.v2.json",
+      "sha256": "f4a6505e10a14311bd51c39b1f0d80dc76e11d14dcc21bec25de02f93b9fbec6"
     },
     "reference_contrasts": {
       "bytes": 71289,
@@ -381,9 +381,9 @@
       "sha256": "c81a93358d721dac07338858c623e68e3ea08a957402feca99ab39087df4a446"
     },
     "resource_usage": {
-      "bytes": 699,
-      "path": "results/subset_search/resource_usage.public.v1.json",
-      "sha256": "ee6cb35ea240f6293cdb485e198a6f5a0a98ad2c72bf16026330b2d7d7307eb4"
+      "bytes": 751,
+      "path": "results/subset_search/resource_usage.public.v2.json",
+      "sha256": "07920b7b3bfc8cef58c10b951c20ea3f70c6a5832cd115d7d8204dcd2ea499d9"
     },
     "selection": {
       "bytes": 592,
@@ -396,15 +396,15 @@
       "sha256": "323ae13d56de8125955a933bf03c1fcf1b78d9e3b889fb2e1ecc34ec03e9473a"
     },
     "source_records": {
-      "bytes": 1860854,
-      "path": "results/subset_search/source_records.public.v1.json.gz",
-      "sha256": "6fdd3dfd0d5ebfe0bf2fec4ec9613e7f56883c2c136716409d8e5e8c4ae96049",
-      "uncompressed_sha256": "940c6d0ba7eb9f46df01a919c76070ec47856673eccdee5e7208d7bf13004af2"
+      "bytes": 1751226,
+      "path": "results/subset_search/source_records.public.v2.json.gz",
+      "sha256": "4c8debfb8fcf5556263211c9b592ef946ecc2e53253711a6d8763d51aeac7611",
+      "uncompressed_sha256": "1defb204d3cc664c092554a8608480d2bf81833fe8b591fdaf3119ab618c0ae9"
     },
     "source_registry_transformation": {
       "bytes": 525220,
-      "path": "results/subset_search/source_registry_transformation.v1.json",
-      "sha256": "fa1b683cf875184023e56be610f96a443581dab4b0d7de7a0fe11c6d2d3e9f40"
+      "path": "results/subset_search/source_registry_transformation.v2.json",
+      "sha256": "d4031a347153cecc0c6df772684b8d71b1c6b2b3f4995a33c14dc52a14304cdc"
     },
     "trials": {
       "bytes": 83781993,

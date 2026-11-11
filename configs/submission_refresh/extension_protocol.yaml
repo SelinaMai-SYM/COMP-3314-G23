@@ -1,75 +1,130 @@
 version: graph-repair-diagnostics-v1
 status: preregistered_before_new_graph_scores
-question: Does fixed-F shrinkage have incorrect short edges and missing useful within-class paths?
-development_datasets: [ORL_att92, YaleB_cropped2414]
-final_confirmation_datasets_if_G3_passes: [ORL_att92, JAFFE, YaleB_cropped2414, USPS]
+question: Does fixed-F shrinkage have incorrect short edges and missing useful within-class
+  paths?
+development_datasets:
+- ORL_att92
+- YaleB_cropped2414
+final_confirmation_datasets_if_G3_passes:
+- ORL_att92
+- JAFFE
+- YaleB_cropped2414
+- USPS
 input_preparation: Y0
 input_membership: full_preregistered_development_benchmarks_not_subset_search_winners
-embedding: {k: 5, row_normalize: false, eigen_seed: 20261108}
-shrinkage_graph: {k: 5, weighting: repository_gaussian, symmetrization: union}
+embedding:
+  k: 5
+  row_normalize: false
+  eigen_seed: 20261108
+shrinkage_graph:
+  k: 5
+  weighting: repository_gaussian
+  symmetrization: union
 objective: E8_undirected_coefficient_2_gamma_w
-rounding: {initialization: SKLEARN_GREEDY_KMEANSPP, n_init: 1, algorithm: lloyd, max_iter: 300, tol: 0.0001, seeds_start: 0, seeds_stop_exclusive: 50}
-solver: {preconditioned: true, gap_tolerance: 0.00001, capacity_tolerance: 0.00000001, max_iterations: 30000, check_every: 50, max_attempt_cpu_seconds: 1800, warm_start_irls: false}
+rounding:
+  initialization: SKLEARN_GREEDY_KMEANSPP
+  n_init: 1
+  algorithm: lloyd
+  max_iter: 300
+  tol: 0.0001
+  seeds_start: 0
+  seeds_stop_exclusive: 50
+solver:
+  preconditioned: true
+  gap_tolerance: 1.0e-05
+  capacity_tolerance: 1.0e-08
+  max_iterations: 30000
+  check_every: 50
+  max_attempt_cpu_seconds: 1800
+  warm_start_irls: false
 G1:
   primary_gamma: 1
   correctness: optimal_assignment_separately_per_partition
   illustrations: first_original_row_in_each_seed0_correctness_category
   bins: row_norm_and_weighted_degree_quintiles_at_0_0.2_0.4_0.6_0.8_1
 G2:
-  anchors: [F0, U]
-  graphs: [W0, Wa]
-  gamma: [0, 0.001, 1, 10, 1000, 1000000]
+  anchors:
+  - F0
+  - U
+  graphs:
+  - W0
+  - Wa
+  gamma:
+  - 0
+  - 0.001
+  - 1
+  - 10
+  - 1000
+  - 1000000
   zero_rows: exact_zero_stays_zero_and_is_isolated_in_Wa
   mass_matching: sum_undirected_positive_weights_equal_to_W0
   zero_total_mass: DEGENERATE_AFFINITY_no_fallback
 G3:
   anchor: F0
-  pool_spaces: [raw_F0, row_L2_input_X, angular_U]
+  pool_spaces:
+  - raw_F0
+  - row_L2_input_X
+  - angular_U
   neighbors_per_space: 20
   pool: union_symmetrized_top_neighbors_excluding_self_and_existing_W0_edges
   tie_break: squared_distance_then_zero_based_original_row_ID
   pool_frozen_before_oracle_labels: true
-  budgets: [0.15, 0.05]
+  budgets:
+  - 0.15
+  - 0.05
   budget_rounding: floor_fraction_times_original_undirected_edge_count
   maximum_new_degree_per_node: 2
   added_edge_weight: median_positive_original_W0_undirected_weight
   oracle_order: angular_distance_then_original_row_ID_pair
   oracle_completion: same_class_edges_joining_distinct_components_after_cross_class_deletion
   reuse_exact_oracle_additions_in_add_only_arm: true
-  arms: [none, delete, add, both]
-  random_control_seeds: [400, 401, 402]
-  controls: [fixed_oracle_delete_plus_blind_random_additions, fixed_oracle_delete_plus_same_class_random_additions, fully_random_deletion_and_addition]
+  arms:
+  - none
+  - delete
+  - add
+  - both
+  random_control_seeds:
+  - 400
+  - 401
+  - 402
+  controls:
+  - fixed_oracle_delete_plus_blind_random_additions
+  - fixed_oracle_delete_plus_same_class_random_additions
+  - fully_random_deletion_and_addition
   random_generation_attempts: 100
   exact_count_matching_required: true
-  gamma: [0, 0.001, 1, 10, 1000, 1000000]
+  gamma:
+  - 0
+  - 0.001
+  - 1
+  - 10
+  - 1000
+  - 1000000
   mass_matching: sum_undirected_positive_weights_equal_to_W0
   gate:
     addition_fraction: 0.15
     gamma_effective: 1000
     datasets_required: 1
-    certified_contrast: [delete, both]
-    normalized_L21_active_threshold: 0.000001
+    certified_contrast:
+    - delete
+    - both
+    normalized_L21_active_threshold: 1.0e-06
     minimum_ACC_gain_pp: 1
     minimum_NMI_gain_pp: 0
-    minimum_excess_fragment_reduction_fraction: 0.20
-    CI_lower_positive_against: [delete, mean_fixed_oracle_delete_plus_blind_random_additions]
-    report_supplementary_contrasts: [mean_same_class_random, mean_fully_random_deletion_and_addition]
-    bootstrap: {resamples: 10000, seed: 424242, interval: 0.95, unit: paired_rounding_seed_conditional_on_fixed_data_and_representation}
-G4:
-  condition: G3_gate_passed_and_implementation_verified
-  source: https://github.com/ChongYou/subspace-clustering
-  commit: 55e330e38415951f140e74739c869306acdb7a98
-  license: MIT
-  tau: [0.95, 1]
-  gamma_source: 50
-  nonzero_limit: 50
-  SSC_gamma: [0.001, 1, 10, 1000, 1000000]
-  primary_method: tau_0.95_graph
-  original_SSC_gamma: [0.000001, 0.001, 0.01, 0.1, 0.3, 1, 3, 10, 30, 100, 300, 1000, 10000, 100000, 1000000]
-  fixed_label_free_SSC_gamma: 1
-  fair_SC_capability_envelope: F0_SC_and_U_SC_ACC_then_NMI_then_stable_ID
-  matched_movement_max_log_bisections: 6
-  matched_movement_relative_tolerance: 0.05
-  matched_movement_absolute_floor: 0.000001
-prohibited_new_grids: [Huber, capped_fusion, heat_geometry]
+    minimum_excess_fragment_reduction_fraction: 0.2
+    CI_lower_positive_against:
+    - delete
+    - mean_fixed_oracle_delete_plus_blind_random_additions
+    report_supplementary_contrasts:
+    - mean_same_class_random
+    - mean_fully_random_deletion_and_addition
+    bootstrap:
+      resamples: 10000
+      seed: 424242
+      interval: 0.95
+      unit: paired_rounding_seed_conditional_on_fixed_data_and_representation
+prohibited_new_grids:
+- Huber
+- capped_fusion
+- heat_geometry
 prior_gate: historical_0_of_4_unchanged

@@ -125,34 +125,3 @@ mean blind additions. Bootstrap uses 10,000 resamples and seed `424242` over
 paired rounding seeds. Same-class random additions and fully random edits are
 separate supplementary controls. The criterion is met if at least one development
 benchmark qualifies; this does not validate an unsupervised method by itself.
-
-## EnSC capability and fixed operation
-
-The primary graph uses source coefficient 50, tau 0.95 and at most 50 retained
-coefficients per row. Tau 1, angular, wider-kNN, matched-random and native-EnSC
-families are distinct controls. Primary fusion gamma is searched over
-`{0.001,1,10,1000,1000000}`. Original SSC receives the 15-point path
-`{0.000001,0.001,0.01,0.1,0.3,1,3,10,30,100,300,1000,10000,100000,1000000}`.
-Configuration count and computational cost are separate quantities.
-
-Capability selects one complete configuration by ACC, then NMI, then stable ID.
-The fixed operating point uses tau 0.95/source 50/SSC gamma 1 without label-based
-parameter choice. Fair SC includes F0-SC and U-SC, selecting one complete
-configuration by the same capability rule. Both tracks retain the same fair
-SC/SSC baseline IDs and report NMI from their ACC-selected configurations.
-
-The practical target is equal-weight mean ACC gain of at least 2 pp over the
-stronger fair SC/SSC baseline, without mean NMI loss against either baseline.
-Formal averages require all four qualified benchmarks: ORL, JAFFE, YaleB cropped
-and full USPS. DengCai32 is a YaleB sensitivity, not another independent dataset.
-The parameter-selection-gap flag is defined only when both formal tracks exist;
-it identifies capability success together with fixed-point failure. Matched
-movement requires a certified bracket, at most six log-scale bisections, 5%
-relative displacement tolerance and absolute floor `1e-6`.
-
-The [results](results.md) report both tracks for all four benchmarks. All 44
-declared configurations per benchmark have complete saved endpoints. Required
-uncertified controls prevent formal macro conclusions; the capability and
-locked-operation tracks are not substituted for one another. In particular,
-USPS capability selects a zero-movement gamma-0.001 point, whereas its fixed
-gamma-1 point is a different, uncertified output.

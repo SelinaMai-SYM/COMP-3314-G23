@@ -6,14 +6,6 @@ ACC/NMI improvement from shrinkage under matched input, representation and
 rounding. A graph change, a different fidelity and a different rounding rule
 are separate interventions.
 
-| Components | Purpose |
-|---|---|
-| [`ReliabilityAwareSSC`](rssc.py) and [mutual graph helper](mutual_knn.py) | Mutual-neighbor support on the fusion graph |
-| [E01–E09](#named-mechanism-controls) | Separately named graph, fidelity and rounding controls |
-| [Convex solver and secondary candidates](next_round/README.md) | Feasible-dual certification, capped fusion, radial Huber and heat geometry |
-| [EnSC graph adapter](submission_refresh/README.md) | Attributed elastic-net coefficients and affinity construction |
-| [Earlier theory controls](v3_theory/README.md) | Threshold, calibration, perturbation and weighted-fidelity mechanisms |
-
 ## Mutual-neighbor adaptation
 
 `ReliabilityAwareSSC` keeps the original union-neighbor input graph and

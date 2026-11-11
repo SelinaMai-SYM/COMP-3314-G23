@@ -1,5 +1,5 @@
 {
-  "archive_receipt": "results/submission_refresh/public_archive_receipt.v1.json",
+  "archive_receipt": "results/submission_refresh/public_source_lineage.v2.json",
   "archive_receipt_sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973",
   "files": [
     {

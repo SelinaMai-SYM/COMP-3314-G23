@@ -97,15 +97,30 @@ mean, native-best endpoint, oracle match or certified objective.
 
 ## Scientific artifacts
 
-<!-- BEGIN ARTIFACT AVAILABILITY -->
+### Numerical objects and historical lineage
 
-### Verified archive and regeneration
+Current result manifests identify saved numerical objects or an independently
+runnable regeneration procedure. Restricted source-derived arrays stay outside
+Git. The current public source-lineage receipts preserve opaque identities from
+an earlier verified private recovery; they do not advertise a downloadable
+archive or assert that an earlier package contains the current filtered project.
+Original and filtered public-payload hashes are distinct.
 
-The complete scientific archive is retained outside Git because it includes provider-restricted source-derived arrays. Its [verified public receipt](../results/submission_refresh/public_archive_receipt.v1.json) identifies the recovered bytes and object inventory. The committed public source/record projections retain separate original and public-payload hashes. Scalar rebuilding requires no private archive.
+Retained baseline, subset, numerical and oracle-diagnostic measurements rebuild
+from their versioned committed scalar inputs. Obtain exact provider files from
+[data setup](data.md) before regenerating arrays. The fixed graph diagnostic queue
+is `configs/submission_refresh/graph_queue.json`, consumed by the existing
+experiment command with `--queue`. New refinement fits use the independently
+registered campaign below. New artifacts include optimized G, actual rounding Q,
+duals, predictions, histories and continuation state. Resume checks the frozen
+input, graph, objective, parameter, code and environment identities.
 
-To regenerate arrays, obtain the exact provider files and prepared parent versions in [data setup](data.md), use the committed candidate manifests, and run the baseline and subset commands above with independent data/artifact roots. The additional fixed graph and EnSC designs are declared in `configs/submission_refresh/graph_queue.json` and `configs/submission_refresh/ensc_formal_queue.json`; pass each file to the same experiment command with `--queue`. Their oracle diagnostic and coefficient-validation qualifications are part of the protocol. Restricted data availability and source-identity limitations remain explicit rather than being replaced by inferred substitutes.
+```bash
+python -m experiments.extension_verification report --config configs/extension_verification/protocol.yaml --artifact-root ARTIFACT_ROOT --output results/extension_verification
+python -m experiments.extension_verification rebuild --release-manifest configs/extension_verification/release_manifest.json --output local/rebuilt_extensions
+```
 
-<!-- END ARTIFACT AVAILABILITY -->
+
 
 ## Source quality and report
 

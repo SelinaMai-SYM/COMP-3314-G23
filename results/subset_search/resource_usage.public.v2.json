@@ -1,0 +1,23 @@
+{
+  "cpu_limit_seconds": 129600,
+  "finalized": true,
+  "max_workers": 2,
+  "phase_cpu_seconds": {
+    "G1": 50.641002,
+    "G2": 1028.476481,
+    "G3": 3535.8676949999995,
+    "aggregation": 2507.146329291667,
+    "mandatory_baseline": 6852.2065310000025,
+    "mandatory_repair": 2269.872412,
+    "mandatory_usps": 3840.16357,
+    "mandatory_usps_evaluation": 11.326864,
+    "profile": 838.822045,
+    "subset": 81380.49627700001,
+    "validation": 902.910507
+  },
+  "rss_target_bytes": 8589934592,
+  "schema": "public-retained-resource-summary-v2",
+  "scope": "Retained historical studies only; full original charge remains in private historical accounting",
+  "total_cpu_core_hours": 28.671647142581023,
+  "total_cpu_seconds": 103217.92971329168
+}

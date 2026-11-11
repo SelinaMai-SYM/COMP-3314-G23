@@ -26,7 +26,7 @@ def test_new_evidence_rebuild_needs_no_objects_or_data(tmp_path,monkeypatch):
 
 def test_evidence_hash_failure_does_not_touch_unknown_output(tmp_path,monkeypatch):
     root,manifest=fixture_release(tmp_path,monkeypatch)
-    source=root/'results/submission_refresh/baseline_records.jsonl.gz';source.write_bytes(b'corrupt')
+    source=root/'results/submission_refresh/baseline_records.public.v2.jsonl.gz';source.write_bytes(b'corrupt')
     out=root/'user output';out.mkdir();(out/'keep').write_text('keep')
     with pytest.raises(ValueError,match='hash mismatch'):scalar_evidence.rebuild(manifest,out)
     assert list(out.iterdir())==[out/'keep']
@@ -34,7 +34,7 @@ def test_evidence_hash_failure_does_not_touch_unknown_output(tmp_path,monkeypatc
 
 def test_freeze_duplicate_failure_preserves_previous_release(tmp_path,monkeypatch):
     root,manifest=fixture_release(tmp_path,monkeypatch)
-    raw=root/'results/submission_refresh/baseline_records.jsonl.gz'
+    raw=root/'results/submission_refresh/baseline_records.public.v2.jsonl.gz'
     previous=(manifest.read_bytes(),raw.read_bytes())
     record=tmp_path/'artifacts/baseline/test-only/record.json'
     (record.parent/'duplicate.json').write_bytes(record.read_bytes())

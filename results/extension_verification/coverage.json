@@ -1,0 +1,10 @@
+{
+  "extension_benchmark_pairs": 24,
+  "primary_panel_rows": 32,
+  "run_status": "PENDING",
+  "stage_completion": {},
+  "status_counts": {
+    "PENDING": 32
+  },
+  "stop_reason": null
+}

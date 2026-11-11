@@ -1,10 +1,5 @@
 # Spectral Shrunk Clustering
 
-This package reconstructs Chang, Nie, Ma, Yang and Zhou,
-[*A Convex Formulation for Spectral Shrunk Clustering*](https://doi.org/10.1609/aaai.v29i1.9606),
-AAAI 2015. SSC means **Spectral Shrunk Clustering** here. It is distinct
-from sparse subspace clustering and from the EnSC graph adaptation.
-
 The API stores samples as rows, `X.shape == (n_samples, n_features)`.
 It operates on arrays; no local paper PDF or benchmark path is required.
 See [methods](../docs/methods.md), [theory](../docs/theory.md) and

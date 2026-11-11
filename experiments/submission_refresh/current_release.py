@@ -54,7 +54,7 @@ def _source_registry_records(registry):
     """Return scientific payloads while preserving the original source IDs."""
     records=registry.get('records')
     if not isinstance(records,dict):raise ValueError('invalid scientific source registry')
-    if registry.get('schema')=='public-scientific-source-records-v1':
+    if registry.get('schema')=='public-scientific-source-records-v2':
         from .public_records import public_source_payload
         result={}
         for original,entry in records.items():
@@ -562,7 +562,7 @@ def project_existing_release(output=Path('results/subset_search'),manifest_path=
     if digest(original_path)!=original_info['sha256'] or original_path.stat().st_size!=original_info['bytes']:
         raise ValueError('source registry changed before public projection')
     with gzip.open(original_path,'rt') as stream:registry=json.load(stream)
-    if registry.get('schema')=='public-scientific-source-records-v1':
+    if registry.get('schema')=='public-scientific-source-records-v2':
         _source_registry_records(registry)
         if manifest.get('public_projection',{}).get('original_manifest_sha256')!=expected['current_release_manifest']['sha256']:
             raise ValueError('public source release belongs to a different archived manifest')
@@ -584,12 +584,12 @@ def project_existing_release(output=Path('results/subset_search'),manifest_path=
         clean=public_source_payload(raw);public_hash=identity(clean)
         records[key]={'original_record_sha256':key,'public_record_sha256':public_hash,'record':clean}
         mapping.append({'original_record_sha256':key,'public_record_sha256':public_hash})
-    projected={'schema':'public-scientific-source-records-v1','status':'PUBLIC_PROJECTED_SOURCE_RECORDS',
+    projected={'schema':'public-scientific-source-records-v2','status':'PUBLIC_PROJECTED_SOURCE_RECORDS',
         'original_registry_uncompressed_sha256':raw_hash,'records':records,
         'qualification':'Registry keys identify archived original source records; projected payload hashes identify the public whitelist, never the original bytes. Actual source identity uses per-file and implementation hashes with archived source bytes; a commit identifier alone is not a byte-identity certificate.'}
     _source_registry_records(projected)
-    target=output/'source_records.public.v1.json.gz';receipt_target=output/'public_archive_receipt.v1.json'
-    transform_target=output/'source_registry_transformation.v1.json'
+    target=output/'source_records.public.v2.json.gz';receipt_target=output/'public_source_lineage.v2.json'
+    transform_target=output/'source_registry_transformation.v2.json'
     if any(path.exists() for path in [target,receipt_target,transform_target]):
         raise ValueError('public source projection outputs already exist; preserve and inspect them')
     # Namespace publication is a separate explicit projection with its original
@@ -625,7 +625,7 @@ def project_existing_release(output=Path('results/subset_search'),manifest_path=
         public_file=stage/target.name;public_file.write_bytes(gzip.compress(payload,mtime=0))
         public_receipt=stage/receipt_target.name;atomic_json(public_receipt,receipt)
         light_files,light_pins,light_receipts=_public_light_projections(manifest,output,stage,receipt)
-        transform={'schema':'public-source-registry-transformation-v1','original_manifest_sha256':original_manifest_hash,
+        transform={'schema':'public-source-registry-transformation-v2','original_manifest_sha256':original_manifest_hash,
             'original_registry_sha256':original_info['sha256'],'original_registry_uncompressed_sha256':raw_hash,
             'public_registry_sha256':digest(public_file),'public_registry_uncompressed_sha256':hashlib.sha256(payload).hexdigest(),
             'archive_id':receipt['archive_id'],'records':sorted(mapping,key=lambda row:row['original_record_sha256']),
@@ -685,13 +685,13 @@ def load(manifest_path):
         if not p.is_file() or digest(p)!=c['manifest_sha256']:raise ValueError('sample manifest missing/hash mismatch')
     with gzip.open(paths['source_records'],'rt') as handle:registry=json.load(handle)
     sources=_source_registry_records(registry)
-    if registry.get('schema')=='public-scientific-source-records-v1':
+    if registry.get('schema')=='public-scientific-source-records-v2':
         from .public_records import read_archive_receipt
         if not {'public_archive_receipt','source_registry_transformation'}<=paths.keys():
             raise ValueError('public source registry is missing its archival transformation receipt')
         archive=read_archive_receipt(paths['public_archive_receipt']);transform=json.loads(paths['source_registry_transformation'].read_text())
         mappings=sorted([{'original_record_sha256':key,'public_record_sha256':entry['public_record_sha256']} for key,entry in registry['records'].items()],key=lambda row:row['original_record_sha256'])
-        if (transform.get('schema')!='public-source-registry-transformation-v1'
+        if (transform.get('schema')!='public-source-registry-transformation-v2'
             or transform.get('public_registry_sha256')!=manifest['inputs']['source_records']['sha256']
             or transform.get('public_registry_uncompressed_sha256')!=manifest['inputs']['source_records'].get('uncompressed_sha256')
             or transform.get('original_registry_sha256')!=archive['raw_release_inputs']['source_records']['sha256']
@@ -786,8 +786,8 @@ def rebuild(manifest_path,output):
         for name,rows in tables.items():_write_csv(temporary/name,rows)
         atomic_json(temporary/'coverage_summary.json',coverage_summary(paths,tables))
         shutil.copy2(paths['source_records'],temporary/'source_records.json.gz')
-        for role,name in [('public_archive_receipt','public_archive_receipt.v1.json'),
-                          ('source_registry_transformation','source_registry_transformation.v1.json')]:
+        for role,name in [('public_archive_receipt','public_source_lineage.v2.json'),
+                          ('source_registry_transformation','source_registry_transformation.v2.json')]:
             if role in paths:shutil.copy2(paths[role],temporary/name)
         copy_plain_csv(paths['configuration_inventory'],temporary/'configuration_inventory.csv')
         for role,name in OPTIONAL_FILES.items():

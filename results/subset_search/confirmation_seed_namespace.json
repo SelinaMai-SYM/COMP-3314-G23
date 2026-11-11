@@ -7,6 +7,7 @@
   "original_namespace_sha256": "70db5fa46785e01f8c06b36107262acf140f7b2aff1f5b8786e5f4e84ccb2484",
   "overlap": false,
   "public_seed_proof": {
+    "bytes": 6529,
     "path": "results/subset_search/confirmation_seed_proof.public.v1.json",
     "sha256": "8c4444eac0596590b993002634e9ae3ee387f7bd74f4c562c7020a381a4d9c63"
   },

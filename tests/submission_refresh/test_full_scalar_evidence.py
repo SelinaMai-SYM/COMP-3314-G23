@@ -7,7 +7,6 @@ from pathlib import Path
 import shutil
 import pytest
 from experiments.submission_refresh import scalar_evidence as evidence
-from experiments.submission_refresh import ensc_campaign
 from experiments.submission_refresh.core import atomic_json
 from experiments.submission_refresh.inventory import AUDIT,INITIAL
 
@@ -30,24 +29,7 @@ def baseline(tmp_path,monkeypatch):
     return root,art,root/'results/submission_refresh'
 
 
-def add_ensc_and_gate(art,locked_failure=False):
-    for dataset in ensc_campaign.DATASETS:
-        inputs={name:ref(dataset+name) for name in ['X','y','F0','U']}
-        job=art/'ensc_jobs'/dataset
-        atomic_json(job/'status.json',{'task':{'dataset':dataset},'status':'COMPLETED','source':{'implementation_hash':'construction'}})
-        for i,definition in enumerate(ensc_campaign.intended_configurations(dataset)):
-            graph=definition['graph'];native=definition['anchor']=='native_spectral';uses_ensc=graph.startswith('S_tau')
-            context={'schema':'G4-resume-context-v1','definition':definition,'input_objects':inputs,
-                'anchor':None if native else inputs[definition['anchor']],'graph':ref(dataset+graph),'graph_shape':[10,10],'graph_nnz':20,
-                'graph_metadata_fingerprint':graph,'scientific_source_fingerprint':'science',
-                'construction_source_fingerprint':'construction' if uses_ensc else None,'backend_source_sha256':'backend' if uses_ensc else None,
-                'environment':{'python':'fixture'},'rounding':{'initialization':'GREEDY','n_init':1,'seeds':list(range(50))}}
-            acc,nmi=(.7,.8) if definition['family']=='S_tau0.95' else (.65,.75) if definition['family']=='original_ssc' else (.61,.71) if definition['family']=='fair_sc' else (.64,.74)
-            if locked_failure and definition['family']=='S_tau0.95' and definition['gamma']==1.:acc,nmi=.6,.7
-            atomic_json(job/'records'/f'{i:02}.json',{**definition,'resume_context':context,'status':'COMPLETED',
-                'trials':trials(acc,nmi),'summary':{'acc_mean':0.,'nmi_mean':0.},'solver':{'certified':True},
-                'mass_matching':{'count_qualified':True},'objects':{'G':inputs['F0']},
-                'source':{'implementation_hash':'construction' if native else 'science','source_commit':'fixture'}})
+def add_graph_gate(art):
     dataset='ORL_att92';objects={key:ref(dataset+key) for key in ['X','y','F0','U','A','W0']}
     atomic_json(art/f'graph_inputs/{dataset}/fixed/representation.json',{'dataset':dataset,'source':{'implementation_hash':'science'},'objects':objects})
     for arm,acc,fragments in [('delete',.5,10),('both',.52,7),('blind_400',.51,9),('blind_401',.51,9),('blind_402',.51,9)]:
@@ -69,7 +51,7 @@ def add_usps(art):
 
 
 def test_full_scalar_views_rebuild_without_arrays_objects_data_or_git(tmp_path,monkeypatch):
-    root,art,out=baseline(tmp_path,monkeypatch);add_ensc_and_gate(art);add_usps(art)
+    root,art,out=baseline(tmp_path,monkeypatch);add_graph_gate(art);add_usps(art)
     from experiments.submission_refresh.usps_continuation import numerical_reference_input_identity
     identity_view=numerical_reference_input_identity(art)
     atomic_json(out/'usps_numerical_reference_input_identity.json',identity_view)
@@ -82,16 +64,10 @@ def test_full_scalar_views_rebuild_without_arrays_objects_data_or_git(tmp_path,m
     monkeypatch.setattr(ArtifactStore,'__init__',lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('no object store in scalar rebuild')))
     monkeypatch.setattr(__import__('subprocess'),'check_output',lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('no Git in scalar rebuild')))
     destination=root/'independent rebuild';gate=evidence.rebuild(manifest,destination)
-    assert gate['G4_G5_status']=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS'
-    assert gate['four_benchmark_ACC_gain_pp']==pytest.approx(5.)
-    assert gate['four_benchmark_NMI_gain_vs_SC_pp']==pytest.approx(9.)
-    assert gate['four_benchmark_NMI_gain_vs_SSC_pp']==pytest.approx(5.)
-    assert gate['four_benchmark_NMI_gain_pp'] is None
     original=next(csv.DictReader((destination/'usps_solver_evaluation.csv').open()))
     extra=next(csv.DictReader((destination/'usps_continuation_evaluation.csv').open()))
     assert float(original['acc_mean'])==pytest.approx(40.) and float(extra['acc_mean'])==pytest.approx(45.)
     assert json.loads(original['native_best'])['acc_sd'] is None
-    assert len(list(csv.DictReader((destination/'ensc_execution_coverage.csv').open())))==176
     assert json.loads((destination/'evidence_validation.json').read_text())['external_artifact_read'] is False
     assert json.loads((destination/'usps_numerical_reference_input_identity.json').read_text())==identity_view
 
@@ -104,11 +80,6 @@ def test_incomplete_USPS_seeds_fail_before_freeze_replaces_existing_release(tmp_
     assert manifest.read_bytes()==before
 
 
-def test_empty_ensc_requires_explicit_NOT_RUN():
-    with pytest.raises(ValueError,match='NOT_RUN'):
-        ensc_campaign.derive_ensc_metadata({'schema':'ensc-scalar-metadata-v1','conditional_status':'COMPLETED','jobs':[],'records':[]})
-    derived=ensc_campaign.derive_ensc_metadata({'schema':'ensc-scalar-metadata-v1','conditional_status':'NOT_RUN','jobs':[],'records':[]})
-    assert derived['macro']['status']=='NOT_RUN' and derived['macro']['four_benchmark_ACC_gain_pp'] is None
 
 
 def test_inventory_inputs_are_hash_locked_and_rebuilt_from_committed_maps(tmp_path,monkeypatch):
@@ -142,36 +113,6 @@ def test_live_USPS_exports_and_pure_views_are_byte_identical(tmp_path):
         assert (pure/name).read_bytes()==(live/name).read_bytes()
 
 
-def test_oracle_pass_locked_fail_keeps_fixed_point_and_live_frozen_parity(tmp_path,monkeypatch):
-    root,art,out=baseline(tmp_path,monkeypatch);add_ensc_and_gate(art,locked_failure=True)
-    import experiments.next_round.evaluate as evaluate
-    monkeypatch.setattr(evaluate,'paired',lambda a,b,metric:{'delta_pp':100*(a[0][metric]-b[0][metric]),'ci_lower_pp':0.,'ci_upper_pp':1.})
-    live=tmp_path/'live';macro=ensc_campaign.aggregate_ensc(art,live)
-    locked=macro['locked_label_free_operating_point']
-    assert macro['practical_target_met'] is True and locked['practical_target_met'] is False
-    assert macro['parameter_selection_gap'] is True
-    assert locked['fixed_parameters']=={'tau':.95,'source_gamma':50,'SSC_gamma':1}
-    assert locked['four_benchmark_ACC_gain_pp']==pytest.approx(-5.)
-    assert locked['four_benchmark_NMI_gain_vs_SC_pp']==pytest.approx(-1.)
-    assert locked['four_benchmark_NMI_gain_vs_SSC_pp']==pytest.approx(-5.)
-    for oracle,point in zip(macro['dataset_status'],locked['dataset_status']):
-        assert point['qualified'] and point['ACC_loss_exceeds_1pp']
-        assert oracle['fair_SC_config_id']==point['fair_SC_config_id']
-        assert oracle['fair_SSC_config_id']==point['fair_SSC_config_id']
-        assert point['proposed_config_id'].endswith('|F0|1.0')
-        assert point['proposed_config_id']!=oracle['proposed_config_id']
-    incomplete=ensc_campaign.collect_ensc_metadata(art)
-    incomplete['records']=[entry for entry in incomplete['records'] if not (entry['record']['dataset']=='USPS' and entry['record']['family']=='fair_sc' and entry['record']['anchor']=='U')]
-    partial=ensc_campaign.derive_ensc_metadata(incomplete)['macro']
-    assert partial['parameter_selection_gap'] is None
-    partial_locked=partial['locked_label_free_operating_point']
-    assert partial_locked['practical_target_met'] is None and partial_locked['four_benchmark_ACC_gain_pp'] is None
-    assert all(row['ACC_gain_vs_stronger_fair_baseline_pp'] is None and row['NMI_gain_vs_SC_pp'] is None and row['NMI_gain_vs_SSC_pp'] is None and row['ACC_loss_exceeds_1pp'] is None for row in partial_locked['dataset_status'])
-    evidence.freeze(art,out);shutil.rmtree(art)
-    rebuilt=tmp_path/'frozen';gate=evidence.rebuild(root/'configs/submission_refresh/evidence_manifest.json',rebuilt)
-    assert (live/'ensc_four_benchmark_conclusion.json').read_bytes()==(rebuilt/'ensc_four_benchmark_conclusion.json').read_bytes()
-    assert gate['parameter_selection_gap'] is True
-    assert gate['locked_label_free_operating_point']==locked
 
 
 def test_full_graph_coverage_is_hash_locked_copied_and_semantically_validated(tmp_path,monkeypatch):

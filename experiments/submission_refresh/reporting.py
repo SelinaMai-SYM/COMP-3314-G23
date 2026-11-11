@@ -49,7 +49,7 @@ def public_presentation_inputs(root):
     """Choose publication style; this never qualifies a numerical result."""
     root=Path(root)
     evidence=root/'configs/submission_refresh/evidence_manifest.json'
-    if evidence.is_file() and json.loads(evidence.read_text()).get('schema')=='submission-scalar-evidence-public-v1':
+    if evidence.is_file() and json.loads(evidence.read_text()).get('schema') in ['submission-scalar-evidence-public-v1','submission-scalar-evidence-public-v2']:
         return {'evidence_manifest':evidence}
     stage=root/'configs/submission_refresh/publication_stage.json'
     if stage.is_file():
@@ -344,129 +344,13 @@ def certified_search_appendix(rows,*,public=False):
     return output
 
 
-def ensc_macro_qualified(conclusion,track='label_assisted_capability'):
-    expected={'ORL_att92','JAFFE','YaleB_cropped2414','USPS'}
-    macro=conclusion if track=='label_assisted_capability' else (conclusion or {}).get('locked_label_free_operating_point',{})
-    rows=macro.get('dataset_status',[]) if macro else []
-    metrics=['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']
-    locked_parameters=True
-    if track!='label_assisted_capability':
-        parameters=macro.get('fixed_parameters',{})
-        capability_rows=(conclusion or {}).get('dataset_status',[])
-        baseline_ids={row.get('dataset'):row for row in capability_rows}
-        same_baselines=(len(capability_rows)==4 and set(baseline_ids)==expected
-                        and all(all(isinstance(row.get(field),str) and bool(row[field])
-                                    and row[field]==baseline_ids.get(row.get('dataset'),{}).get(field)
-                                    for field in ['fair_SC_config_id','fair_SSC_config_id']) for row in rows))
-        locked_parameters=(macro.get('track')=='locked_label_free_gamma1'
-                           and parameters.get('tau')==.95 and parameters.get('source_gamma')==50
-                           and parameters.get('SSC_gamma')==1 and same_baselines)
-    return bool(macro and macro.get('status')=='COMPLETE_CERTIFIED_FOUR_BENCHMARKS'
-                and macro.get('primary_family',(conclusion or {}).get('primary_family'))=='S_tau0.95'
-                and macro.get('equal_dataset_weights',(conclusion or {}).get('equal_dataset_weights')) is True
-                and len(rows)==4 and {row.get('dataset') for row in rows}==expected
-                and all(row.get('qualified') is True for row in rows)
-                and all(number(macro.get(key))!='--' for key in metrics) and locked_parameters)
 
 
-def ensc_two_track_macro(conclusion):
-    """Display distinct formal targets; neither track substitutes for the other."""
-    output=[r'\paragraph{Separate capability and locked-operation targets.}',
-            r'Each formal row requires all four prescribed, qualified datasets with equal weights. ACC is compared with the stronger fair-SC/original-SSC baseline on each dataset; the two NMI contrasts retain those same baselines separately. Capability uses label-assisted parameter selection. Locked operation fixes source coefficient 50, $\tau=.95$ and SSC $\gamma=1$ without choosing those parameters from labels. Both tracks are evaluated against the same label-assisted baseline selections, on previously examined benchmarks. Neither success criterion substitutes for the other.']
-    rendered=[];qualified={}
-    for track,label,macro in [('label_assisted_capability','Oracle capability',conclusion),
-                              ('locked_label_free_gamma1',r'Locked $\gamma=1$',conclusion.get('locked_label_free_operating_point',{}))]:
-        formal=ensc_macro_qualified(conclusion,track);qualified[track]=formal
-        fields=['four_benchmark_ACC_gain_pp','four_benchmark_NMI_gain_vs_SC_pp','four_benchmark_NMI_gain_vs_SSC_pp']
-        contrasts=[number(macro.get(field)) if formal else 'NA' for field in fields]
-        target=('yes' if macro.get('practical_target_met') is True else 'no' if macro.get('practical_target_met') is False else 'NA') if formal else 'NA'
-        rendered.append([label,'Qualified' if formal else 'Unavailable',*contrasts,target])
-        if not formal:
-            output.append(escape(('Capability' if track=='label_assisted_capability' else 'Locked-operation')+' conclusion status: '+str(macro.get('status','NOT_RUN_OR_UNAVAILABLE'))+'. Its formal macro and practical-target decision remain NA; partial datasets or unresolved certification/control coverage are not averaged into a result.'))
-    output.append(table(['Track','Qualification',r'$\Delta$ACC strong',r'$\Delta$NMI SC',r'$\Delta$NMI SSC','Target met'],rendered,
-                        'p{2.7cm}lrrrr',
-                        r'Four-benchmark targets evaluated separately, in percentage points. Each target requires average ACC gain at least 2 pp and no average NMI loss against either fixed comparator. NA remains unavailable, not a zero or a negative result.','tab:ensc-two-track',long=True))
-    both=all(qualified.values());gap=conclusion.get('parameter_selection_gap')
-    if both and isinstance(gap,bool):
-        capability=conclusion.get('practical_target_met');operating=conclusion.get('locked_label_free_operating_point',{}).get('practical_target_met')
-        if not isinstance(capability,bool) or not isinstance(operating,bool) or gap!=(capability and not operating):
-            raise ValueError('inconsistent formal EnSC parameter-selection-gap flag')
-        output.append(escape('Predeclared parameter-selection-gap flag: '+('yes' if gap else 'no')+'. The flag is yes only when capability meets its target and the locked point fails its own target. A no flag does not assert equal metrics or validate an automatic parameter-selection rule.'))
-    else:output.append(r'The parameter-selection-gap flag is unavailable because both formal, qualified four-benchmark target decisions are required. No parameter-selection diagnosis is inferred from a partial track.')
-    return output
 
 
-def ensc_appendix(rows,conclusion,gate,*,public=False):
-    """Display source-selected capability/operating rows and qualified macros."""
-    datasets=['ORL_att92','JAFFE','YaleB_cropped2414','USPS']
-    families=[('S_tau0.95','label_assisted_capability'),('S_tau0.95','locked_label_free_gamma1'),
-              ('fair_sc','label_assisted_capability'),('original_ssc','label_assisted_capability'),
-              ('Wa','label_assisted_capability'),('S_tau1','label_assisted_capability'),
-              ('wider_knn','label_assisted_capability'),('random_count_mass_seed400','label_assisted_capability'),
-              ('native_ensc_S_tau0.95','label_assisted_capability'),('native_ensc_S_tau1','label_assisted_capability')]
-    labels={'S_tau0.95':r'EnSC $\tau=.95$ + SSC','fair_sc':'Fair SC (F0/U)',
-            'original_ssc':'Original SSC','Wa':'Angular SSC','S_tau1':r'Sparse $\tau=1$ + SSC',
-            'wider_knn':'Wider-kNN SSC','random_count_mass_seed400':'Matched random SSC',
-            'native_ensc_S_tau0.95':r'Native EnSC $\tau=.95$', 'native_ensc_S_tau1':r'Native EnSC $\tau=1$'}
-    index={}
-    for row in rows:
-        if not row.get('dataset') or not row.get('family') or not row.get('track'):continue
-        key=(row['dataset'],row['family'],row['track'])
-        if key in index:raise ValueError('duplicate committed G4 capability/operating endpoint')
-        index[key]=row
-    output=[r'\subsection{Conditional EnSC adaptation: capability and locked operation}',
-            r'The primary adaptation is the fixed $\tau=.95$ EnSC graph used only as the fusion graph for anchor F0. The source coefficient parameter is 50; graphs are matched to W0 total mass. Capability rows are label-assisted oracles: one complete configuration is selected by mean ACC, then NMI, then stable ID. The primary graph has five declared SSC gamma values; original SSC receives the frozen 15-value path. Controls remain separate named families. The locked operating row uses source 50/$\tau=.95$/SSC gamma 1 without choosing parameters from labels. Both kinds of row use previously examined benchmarks; neither is an unseen-data test.']
-    if not rows:
-        output.append(r'EnSC adaptation performance is unavailable. An oracle graph intervention does not establish an unsupervised-method gain.' if public else escape('No committed G4/G5 capability export is available. The current gate records dependent-stage status '+str(gate.get('G4_G5_status','UNAVAILABLE'))+'. No completed method performance or four-benchmark gain is inferred from an implementation or a passed pilot gate.'))
-    rendered=[]
-    for dataset in datasets:
-        display={'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset)
-        for family,track in families:
-            row=index.get((dataset,family,track),{})
-            method=labels[family]+(' (locked)' if track=='locked_label_free_gamma1' else ' (oracle)')
-            if family=='fair_sc' and row.get('config_id'):
-                parts=row['config_id'].split('|')
-                if len(parts)>=2:method='Fair SC: '+escape(parts[-2])+' (oracle)'
-            metrics_valid=str(row.get('n',''))=='50' and all(number(row.get(k))!='--' for k in ['acc_mean','acc_sd','nmi_mean','nmi_sd'])
-            measured=row if metrics_valid else {}
-            flag=_usps_bool(row.get('certified'))
-            mark='--' if family=='fair_sc' or family.startswith('native_') or flag is None else 'C' if flag else 'U'
-            solver=row.get('solver_status') or 'NOT_RUN_OR_UNAVAILABLE'
-            if row and not metrics_valid:solver='INCOMPLETE_SCALAR_ENDPOINT'
-            rendered.append([display,method,significant(row.get('gamma'),4),metric(measured,'acc',native=False),
-                             metric(measured,'nmi',native=False),break_text(mark+' / '+solver)])
-    output.append(table(['Data','Method / track',r'$\gamma$','ACC','NMI','Cert. / solver'],rendered,
-                        'p{1.2cm}p{3.6cm}rrrp{3.0cm}',
-                        'Conditional G4/G5 results, percent mean plus sample SD over 50 matched greedy one-start roundings. Missing rows stay unavailable. C/U describe certified/uncertified fusion solves; native spectral controls have no SSC gap certificate. Search completeness and comparison validity are separate from completion of an individual selected row.','tab:ensc-capability',long=True))
-    output += [r'The native EnSC controls cluster each learned affinity in its own spectral space, with an explicit seeded eigensolver and the same fifty greedy one-start rounds. This differs from the source constructor default of 20 K-means starts. Gains over original SC/SSC must not be credited to SSC shrinkage when the native affinity clustering already explains them. The following differences compare the selected primary $\tau=.95$ + SSC row against matched native $\tau=.95$ EnSC, when both complete rows exist. They are descriptive differences after capability selection, not unbiased intervals or matched-movement evidence.']
-    own=[]
-    for dataset in datasets:
-        proposed=index.get((dataset,'S_tau0.95','label_assisted_capability'),{})
-        native=index.get((dataset,'native_ensc_S_tau0.95','label_assisted_capability'),{})
-        complete_pair=all(str(row.get('n',''))=='50' and all(number(row.get(key))!='--' for key in ['acc_mean','acc_sd','nmi_mean','nmi_sd']) for row in [proposed,native])
-        differences=[]
-        for metric_name in ['acc','nmi']:
-            key=metric_name+'_mean'
-            differences.append(number(float(proposed[key])-float(native[key])) if complete_pair else 'NA')
-        own.append([{'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset),*differences])
-    output.append(table(['Data',r'$\Delta$ACC vs native EnSC (pp)',r'$\Delta$NMI vs native EnSC (pp)'],own,'lrr',long=True))
-    output += ensc_two_track_macro(conclusion)
-    details=[]
-    for dataset in datasets:
-        found=[r for r in conclusion.get('dataset_status',[]) if r.get('dataset')==dataset]
-        if len(found)>1:raise ValueError('duplicate G4 dataset qualification row')
-        row=found[0] if found else {}
-        coverage=str(row.get('complete_records','--'))+'/'+str(row.get('intended_records','--'))
-        qualification='qualified' if row.get('qualified') is True else 'unqualified' if row else 'unavailable'
-        details.append([{'ORL_att92':'ORL','YaleB_cropped2414':'YaleB'}.get(dataset,dataset),coverage,
-                        number(row.get('ACC_gain_vs_stronger_fair_baseline_pp')),number(row.get('NMI_gain_vs_SC_pp')),
-                        number(row.get('NMI_gain_vs_SSC_pp')),break_text(qualification+' / '+str(row.get('comparison_status','UNAVAILABLE')))])
-        if row.get('ACC_loss_exceeds_1pp') is True:
-            details.append(r'\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize '+escape(dataset+': observed ACC loss exceeds 1 percentage point against the stronger fair baseline; qualification above still applies.')+r'} \\')
-    output.append(table(['Data','Complete/intended',r'$\Delta$ACC strong',r'$\Delta$NMI SC',r'$\Delta$NMI SSC','Qualification'],details,
-                        'lp{2.0cm}rrrp{3.7cm}',
-                        'Per-dataset selected-capability contrasts, in percentage points. Unqualified rows are diagnostic observations only and do not enter a formal macro conclusion. Negative values and losses remain visible.','tab:ensc-four-way',long=True))
-    return output
+
+
+
 
 def graph_appendix(results,diagnostics,casebooks,coverage,coverage_manifest,gate,*,public=False):
     """Render the fixed G1--G3 evidence without selecting configurations."""
@@ -642,9 +526,7 @@ def generate(root: Path,date: str='2026-11-10'):
            'usps_continuation_audit':refresh/'usps_continuation_audit.csv',
            'usps_continuation_evaluation':refresh/'usps_continuation_evaluation.csv',
            'usps_numerical_reference_input_identity':refresh/'usps_numerical_reference_input_identity.json',
-           'certified_search_status':subset/'certified_search_status.csv',
-           'ensc_capability':refresh/'ensc_capability_and_operating_point.csv',
-           'ensc_conclusion':refresh/'ensc_four_benchmark_conclusion.json'}
+           'certified_search_status':subset/'certified_search_status.csv'}
     names.update(presentation_inputs)
     logical_names=dict(names)
     for key,path in names.items():
@@ -666,7 +548,6 @@ def generate(root: Path,date: str='2026-11-10'):
         # The explicit initial edition cannot publish an interim winner even
         # if an unrelated partial summary was left beside its completed studies.
         joint=[];closest=[];coverage={};confirmations=[]
-    ensc_rows=read_csv(names['ensc_capability']);ensc_conclusion=read_json(names['ensc_conclusion'],{})
     def write(name,text):
         (out/(name+'.tex')).write_text('% Generated from authoritative CSV/JSON records; do not edit.\n'+text)
     selected={r['benchmark']:r for r in historical if r.get('method')=='ssc' and r.get('endpoint')=='mean_sample_sd_50' and number(r.get('acc_mean'))!='--'}
@@ -720,26 +601,8 @@ def generate(root: Path,date: str='2026-11-10'):
         repairs_text=(f"The baseline comparison contains {slps} complete 50-seed SLPS configurations, {lda} LDA configurations/control endpoints and {other} other configurations. " if names['baseline'].exists() else 'Baseline measurements are unavailable. ')
         repairs_text+='The appendix retains numerical failures, iteration-limit outcomes and update diagnostics. Native 16-by-16 MSRA and ridge LDA-to-SC are explicitly named adaptations; exact historical LDA-SC remains unresolved.'
     write('refresh_repairs',r'\noindent '+escape(repairs_text)+'\n')
-    if gate:
-        decision=gate.get('decision','UNAVAILABLE');g4=gate.get('G4_G5_status','UNAVAILABLE')
-        count=sum(r.get('status')=='COMPLETED' for r in extension)
-        ext_text=f"New graph-repair coverage: {count} complete configuration records; promotion status {decision}; dependent G4/G5 status {g4}. "
-        capability=ensc_macro_qualified(ensc_conclusion);operating=ensc_macro_qualified(ensc_conclusion,'locked_label_free_gamma1')
-        if capability and operating:ext_text+='Both four-benchmark tracks are qualified and reported separately in the appendix. '
-        elif capability:ext_text+='Only four-benchmark capability is qualified; locked operation remains unavailable. '
-        elif operating:ext_text+='Only locked four-benchmark operation is qualified; capability remains unavailable. '
-        else:ext_text+='The four-benchmark capability and locked-operation conclusions remain unavailable. '
-    else:ext_text='G1--G3 are implemented and preregistered; no aggregated new graph-repair result is available. G4/G5 have not been promoted, and the four-benchmark target is unavailable. '
-    ext_text+='The earlier 0/4 wrong-edge gate is retained as a historical result; it is not replaced by this protocol.'
-    if public:
-        decision=gate.get('decision','UNAVAILABLE')
-        ext_text=f"The fixed oracle graph-intervention criterion is {decision.lower().replace('_',' ')}. "
-        capability=ensc_macro_qualified(ensc_conclusion);operating=ensc_macro_qualified(ensc_conclusion,'locked_label_free_gamma1')
-        if capability and operating:ext_text+='The four-benchmark capability and locked-operation targets are qualified and reported separately. '
-        elif capability:ext_text+='The capability target is qualified; locked operation lacks a qualified four-benchmark comparison. '
-        elif operating:ext_text+='Locked operation is qualified; capability lacks a qualified four-benchmark comparison. '
-        else:ext_text+='The capability and locked-operation macro targets are unavailable because all four required comparisons must be qualified. '
-        ext_text+='Oracle graph evidence, unsupervised affinity construction and net shrinkage gains are distinct conclusions.'
+    decision=gate.get('decision','UNAVAILABLE')
+    ext_text=f"The fixed oracle graph-intervention criterion is {decision.lower().replace('_',' ')}. Label-assisted graph diagnostics and unsupervised refinement gains are distinct conclusions. The earlier wrong-edge diagnostic remains a separate historical result."
     write('refresh_extension',r'\noindent '+escape(ext_text)+'\n')
 
     appendix=[r'\subsection{Jointly reselected historical mean endpoint}',
@@ -835,7 +698,6 @@ def generate(root: Path,date: str='2026-11-10'):
     appendix += usps_numerical_appendix(read_csv(names['usps_solver_evaluation']),read_csv(names['usps_continuation_audit']),read_csv(names['usps_continuation_evaluation']),read_json(names['usps_numerical_reference_input_identity'],{}),public=public)
     appendix += graph_appendix(extension,read_csv(names['graph_diagnostics']),read_csv(names['casebooks']),
         read_csv(names['graph_execution']),read_json(names['graph_coverage_manifest'],{}),gate,public=public)
-    appendix += ensc_appendix(ensc_rows,ensc_conclusion,gate,public=public)
     appendix.append(r'\subsection{Coverage, solver qualification and cost}')
     if not subset_reserved and names['coverage'].exists():
         appendix.append(escape(f"Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. {coverage.get('complete_unique_candidates','NA')} unique inputs yielded {coverage.get('complete_unique_configurations','NA')} complete SSC input/configuration pairs; {coverage.get('inputs_with_complete_30point_ssc_grid','NA')} inputs completed all 30 SSC points and {coverage.get('inputs_with_complete_30point_ssc_and_3matched_sc_grid','NA')} completed all 30 SSC plus three matched-SC points."))
@@ -864,7 +726,7 @@ def generate(root: Path,date: str='2026-11-10'):
         entries=ledger.get('entries',[]);charged=sum(float(r.get('charged_cpu_seconds',0)) for r in entries)/3600
         appendix.append(escape(f"Shared ledger charged {charged:.4f} CPU-core hours as of this aggregation. Limit 36, with 2 reserved for final checks; at most 2 single-thread workers and 8 GiB aggregate RSS target. Active reservations: {len(ledger.get('active',{}))}. This is a snapshot, not a prediction of final resource use."))
     else:appendix.append(r'Computational cost is unavailable.' if public else r'Resource aggregation is not yet available.')
-    if gate:appendix.append(r'\paragraph{Graph criterion.} '+escape(f"Oracle intervention criterion: {gate.get('decision','unavailable')}. A formal four-benchmark performance conclusion requires complete, qualified controls on all four datasets.") if public else r'\paragraph{Graph gate.} '+escape(f"Promotion status: {gate.get('decision','unavailable')}; dependent experiments: {gate.get('G4_G5_status','unavailable')}. Four-benchmark performance conclusion remains unavailable unless complete valid controls and all four datasets exist."))
+    if gate:appendix.append(r'\paragraph{Graph criterion.} '+escape(f"Oracle intervention criterion: {gate.get('decision','unavailable')}. This is a label-assisted diagnostic on fixed development inputs."))
     plotted=False if subset_reserved else figure(root,joint,papers,closest,cat)
     if plotted:appendix += [r'\begin{figure}[p]\centering\includegraphics[width=\linewidth,height=.86\textheight,keepaspectratio]{figures/subset_acc_nmi.pdf}',
         r'\caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}']

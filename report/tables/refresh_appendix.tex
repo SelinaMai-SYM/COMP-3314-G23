@@ -985,133 +985,6 @@ YaleB cropped & Both minus fully random edits mean & NMI & 70.20 & 69.96 & 70.44
 \endgroup
 
 
-\subsection{Conditional EnSC adaptation: capability and locked operation}
-
-The primary adaptation is the fixed $\tau=.95$ EnSC graph used only as the fusion graph for anchor F0. The source coefficient parameter is 50; graphs are matched to W0 total mass. Capability rows are label-assisted oracles: one complete configuration is selected by mean ACC, then NMI, then stable ID. The primary graph has five declared SSC gamma values; original SSC receives the frozen 15-value path. Controls remain separate named families. The locked operating row uses source 50/$\tau=.95$/SSC gamma 1 without choosing parameters from labels. Both kinds of row use previously examined benchmarks; neither is an unseen-data test.
-
-\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{longtable}{p{1.2cm}p{3.6cm}rrrp{3.0cm}}
-\caption{Conditional G4/G5 results, percent mean plus sample SD over 50 matched greedy one-start roundings. Missing rows stay unavailable. C/U describe certified/uncertified fusion solves; native spectral controls have no SSC gap certificate. Search completeness and comparison validity are separate from completion of an individual selected row.}\label{tab:ensc-capability}\\
-\toprule
-Data & Method / track & $\gamma$ & ACC & NMI & Cert. / solver \\
-\midrule
-\endfirsthead
-\toprule
-Data & Method / track & $\gamma$ & ACC & NMI & Cert. / solver \\
-\midrule\endhead
-ORL & EnSC $\tau=.95$ + SSC (oracle) & 1 & 78.98 $\pm$ 1.26 & 91.40 $\pm$ 0.43 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-ORL & EnSC $\tau=.95$ + SSC (locked) & 1 & 78.98 $\pm$ 1.26 & 91.40 $\pm$ 0.43 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-ORL & Fair SC: U (oracle) & 0 & 80.17 $\pm$ 1.55 & 90.89 $\pm$ 0.64 & -- / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-ORL & Original SSC (oracle) & 1 & 78.48 $\pm$ 1.41 & 89.89 $\pm$ 0.80 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-ORL & Angular SSC (oracle) & 0.001 & 78.33 $\pm$ 1.31 & 89.87 $\pm$ 0.67 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-ORL & Sparse $\tau=1$ + SSC (oracle) & 1 & 79.16 $\pm$ 1.17 & 91.32 $\pm$ 0.52 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-ORL & Wider-kNN SSC (oracle) & 0.001 & 78.33 $\pm$ 1.31 & 89.87 $\pm$ 0.67 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-ORL & Matched random SSC (oracle) & 0.001 & 78.33 $\pm$ 1.31 & 89.87 $\pm$ 0.67 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-ORL & Native EnSC $\tau=.95$ (oracle) & -- & 81.68 $\pm$ 1.65 & 91.68 $\pm$ 0.65 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-ORL & Native EnSC $\tau=1$ (oracle) & -- & 81.62 $\pm$ 2.08 & 91.55 $\pm$ 0.72 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-JAFFE & EnSC $\tau=.95$ + SSC (oracle) & 1 & 96.41 $\pm$ 0.36 & 96.08 $\pm$ 0.54 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-JAFFE & EnSC $\tau=.95$ + SSC (locked) & 1 & 96.41 $\pm$ 0.36 & 96.08 $\pm$ 0.54 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-JAFFE & Fair SC: U (oracle) & 0 & 96.71 $\pm$ 0.00 & 96.39 $\pm$ 0.00 & -- / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-JAFFE & Original SSC (oracle) & 10 & 95.31 $\pm$ 0.00 & 94.14 $\pm$ 0.02 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-JAFFE & Angular SSC (oracle) & 1e+06 & 96.24 $\pm$ 0.00 & 95.52 $\pm$ 0.00 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-JAFFE & Sparse $\tau=1$ + SSC (oracle) & 1 & 96.36 $\pm$ 0.31 & 95.99 $\pm$ 0.46 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-JAFFE & Wider-kNN SSC (oracle) & 1000 & 95.31 $\pm$ 0.00 & 94.16 $\pm$ 0.00 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-JAFFE & Matched random SSC (oracle) & 0.001 & 95.31 $\pm$ 0.00 & 94.13 $\pm$ 0.02 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-JAFFE & Native EnSC $\tau=.95$ (oracle) & -- & 99.06 $\pm$ 0.00 & 98.34 $\pm$ 0.00 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-JAFFE & Native EnSC $\tau=1$ (oracle) & -- & 98.59 $\pm$ 0.00 & 97.78 $\pm$ 0.00 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-YaleB & EnSC $\tau=.95$ + SSC (oracle) & 1 & 27.66 $\pm$ 0.74 & 36.99 $\pm$ 0.56 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-YaleB & EnSC $\tau=.95$ + SSC (locked) & 1 & 27.66 $\pm$ 0.74 & 36.99 $\pm$ 0.56 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-YaleB & Fair SC: U (oracle) & 0 & 25.80 $\pm$ 0.71 & 32.59 $\pm$ 0.43 & -- / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-YaleB & Original SSC (oracle) & 0.001 & 21.78 $\pm$ 0.45 & 27.73 $\pm$ 0.58 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-YaleB & Angular SSC (oracle) & 10 & 23.37 $\pm$ 0.45 & 28.93 $\pm$ 0.60 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-YaleB & Sparse $\tau=1$ + SSC (oracle) & 1 & 27.59 $\pm$ 0.80 & 37.01 $\pm$ 0.51 & C / PRIMAL\_\allowbreak DUAL\_\allowbreak GAP\_\allowbreak CERTIFIED \\
-YaleB & Wider-kNN SSC (oracle) & 0.001 & 21.78 $\pm$ 0.45 & 27.73 $\pm$ 0.58 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-YaleB & Matched random SSC (oracle) & 0.001 & 21.78 $\pm$ 0.45 & 27.73 $\pm$ 0.58 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-YaleB & Native EnSC $\tau=.95$ (oracle) & -- & 61.09 $\pm$ 1.17 & 66.49 $\pm$ 0.91 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-YaleB & Native EnSC $\tau=1$ (oracle) & -- & 60.48 $\pm$ 1.37 & 66.04 $\pm$ 0.95 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-USPS & EnSC $\tau=.95$ + SSC (oracle) & 0.001 & 65.60 $\pm$ 1.87 & 80.31 $\pm$ 2.13 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-USPS & EnSC $\tau=.95$ + SSC (locked) & 1 & 52.27 $\pm$ 3.95 & 69.73 $\pm$ 1.55 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-USPS & Fair SC: U (oracle) & 0 & 68.36 $\pm$ 3.64 & 83.44 $\pm$ 0.89 & -- / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-USPS & Original SSC (oracle) & 30 & 66.53 $\pm$ 2.39 & 81.33 $\pm$ 1.20 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-USPS & Angular SSC (oracle) & 10 & 66.97 $\pm$ 3.23 & 81.95 $\pm$ 0.85 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-USPS & Sparse $\tau=1$ + SSC (oracle) & 0.001 & 65.60 $\pm$ 1.87 & 80.31 $\pm$ 2.13 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-USPS & Wider-kNN SSC (oracle) & 10 & 67.11 $\pm$ 2.51 & 81.87 $\pm$ 0.83 & U / MAX\_\allowbreak ITER\_\allowbreak REACHED \\
-USPS & Matched random SSC (oracle) & 0.001 & 65.60 $\pm$ 1.87 & 80.31 $\pm$ 2.13 & C / ANALYTIC\_\allowbreak G\_\allowbreak EQUALS\_\allowbreak F \\
-USPS & Native EnSC $\tau=.95$ (oracle) & -- & 49.51 $\pm$ 2.22 & 60.82 $\pm$ 1.19 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-USPS & Native EnSC $\tau=1$ (oracle) & -- & 49.32 $\pm$ 2.00 & 60.73 $\pm$ 1.08 & -- / NATIVE\_\allowbreak SPECTRAL\_\allowbreak CONTROL \\
-\bottomrule
-\end{longtable}
-\endgroup
-
-
-The native EnSC controls cluster each learned affinity in its own spectral space, with an explicit seeded eigensolver and the same fifty greedy one-start rounds. This differs from the source constructor default of 20 K-means starts. Gains over original SC/SSC must not be credited to SSC shrinkage when the native affinity clustering already explains them. The following differences compare the selected primary $\tau=.95$ + SSC row against matched native $\tau=.95$ EnSC, when both complete rows exist. They are descriptive differences after capability selection, not unbiased intervals or matched-movement evidence.
-
-\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{longtable}{lrr}
-\toprule
-Data & $\Delta$ACC vs native EnSC (pp) & $\Delta$NMI vs native EnSC (pp) \\
-\midrule
-\endfirsthead
-\toprule
-Data & $\Delta$ACC vs native EnSC (pp) & $\Delta$NMI vs native EnSC (pp) \\
-\midrule\endhead
-ORL & -2.70 & -0.29 \\
-JAFFE & -2.65 & -2.26 \\
-YaleB & -33.43 & -29.50 \\
-USPS & 16.09 & 19.49 \\
-\bottomrule
-\end{longtable}
-\endgroup
-
-
-\paragraph{Separate capability and locked-operation targets.}
-
-Each formal row requires all four prescribed, qualified datasets with equal weights. ACC is compared with the stronger fair-SC/original-SSC baseline on each dataset; the two NMI contrasts retain those same baselines separately. Capability uses label-assisted parameter selection. Locked operation fixes source coefficient 50, $\tau=.95$ and SSC $\gamma=1$ without choosing those parameters from labels. Both tracks are evaluated against the same label-assisted baseline selections, on previously examined benchmarks. Neither success criterion substitutes for the other.
-
-Capability conclusion status: INCOMPLETE\_FOUR\_BENCHMARK\_COMPARISON. Its formal macro and practical-target decision remain NA; partial datasets or unresolved certification/control coverage are not averaged into a result.
-
-Locked-operation conclusion status: INCOMPLETE\_FOUR\_BENCHMARK\_COMPARISON. Its formal macro and practical-target decision remain NA; partial datasets or unresolved certification/control coverage are not averaged into a result.
-
-\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{longtable}{p{2.7cm}lrrrr}
-\caption{Four-benchmark targets evaluated separately, in percentage points. Each target requires average ACC gain at least 2 pp and no average NMI loss against either fixed comparator. NA remains unavailable, not a zero or a negative result.}\label{tab:ensc-two-track}\\
-\toprule
-Track & Qualification & $\Delta$ACC strong & $\Delta$NMI SC & $\Delta$NMI SSC & Target met \\
-\midrule
-\endfirsthead
-\toprule
-Track & Qualification & $\Delta$ACC strong & $\Delta$NMI SC & $\Delta$NMI SSC & Target met \\
-\midrule\endhead
-Oracle capability & Unavailable & NA & NA & NA & NA \\
-Locked $\gamma=1$ & Unavailable & NA & NA & NA & NA \\
-\bottomrule
-\end{longtable}
-\endgroup
-
-
-The parameter-selection-gap flag is unavailable because both formal, qualified four-benchmark target decisions are required. No parameter-selection diagnosis is inferred from a partial track.
-
-\begingroup\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{longtable}{lp{2.0cm}rrrp{3.7cm}}
-\caption{Per-dataset selected-capability contrasts, in percentage points. Unqualified rows are diagnostic observations only and do not enter a formal macro conclusion. Negative values and losses remain visible.}\label{tab:ensc-four-way}\\
-\toprule
-Data & Complete/intended & $\Delta$ACC strong & $\Delta$NMI SC & $\Delta$NMI SSC & Qualification \\
-\midrule
-\endfirsthead
-\toprule
-Data & Complete/intended & $\Delta$ACC strong & $\Delta$NMI SC & $\Delta$NMI SSC & Qualification \\
-\midrule\endhead
-ORL & 44/44 & -1.20 & 0.51 & 1.51 & unqualified / INCOMPLETE\_\allowbreak OR\_\allowbreak UNQUALIFIED\_\allowbreak REQUIRED\_\allowbreak DESIGN \\
-\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize ORL\_att92: observed ACC loss exceeds 1 percentage point against the stronger fair baseline; qualification above still applies.} \\
-JAFFE & 44/44 & -0.30 & -0.31 & 1.94 & unqualified / INCOMPLETE\_\allowbreak OR\_\allowbreak UNQUALIFIED\_\allowbreak REQUIRED\_\allowbreak DESIGN \\
-YaleB & 44/44 & 1.86 & 4.39 & 9.26 & unqualified / INCOMPLETE\_\allowbreak OR\_\allowbreak UNQUALIFIED\_\allowbreak REQUIRED\_\allowbreak DESIGN \\
-USPS & 44/44 & -2.76 & -3.12 & -1.02 & unqualified / INCOMPLETE\_\allowbreak OR\_\allowbreak UNQUALIFIED\_\allowbreak REQUIRED\_\allowbreak DESIGN \\
-\multicolumn{6}{p{\dimexpr\textwidth-6pt\relax}}{\scriptsize USPS: observed ACC loss exceeds 1 percentage point against the stronger fair baseline; qualification above still applies.} \\
-\bottomrule
-\end{longtable}
-\endgroup
-
-
 \subsection{Coverage, solver qualification and cost}
 
 Complete-config input coverage means at least one completed SSC configuration on an input, not a finished search design. 2482 unique inputs yielded 74436 complete SSC input/configuration pairs; 2480 inputs completed all 30 SSC points and 2480 completed all 30 SSC plus three matched-SC points.
@@ -1157,7 +1030,7 @@ NOT\_\allowbreak RUN & 64440 \\
 \endgroup
 
 
-The recorded scientific-campaign charge is 31.4130 CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most 2 single-thread workers and an aggregate RSS target of 8.0 GiB. Per-fit measured costs and numerical qualifications are reported separately from clustering performance.
+The recorded scientific-campaign charge is 29.0304 CPU-core hours, including conservative accounting caps for metadata operations. Experiments used at most 2 single-thread workers and an aggregate RSS target of 8.0 GiB. Per-fit measured costs and numerical qualifications are reported separately from clustering performance.
 
 \begingroup\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{longtable}{lr}
@@ -1171,8 +1044,6 @@ Experiment group & CPU seconds \\
 G1 & 50.6 \\
 G2 & 1028.5 \\
 G3 & 3535.9 \\
-G4\_\allowbreak G5 & 8427.0 \\
-G4\_\allowbreak profile & 150.4 \\
 aggregation & 3786.8 \\
 confirmation & 11.7 \\
 mandatory\_\allowbreak baseline & 6852.2 \\
@@ -1187,10 +1058,10 @@ validation & 902.9 \\
 \endgroup
 
 
-\paragraph{Graph criterion.} Oracle intervention criterion: PASSED. A formal four-benchmark performance conclusion requires complete, qualified controls on all four datasets.
+\paragraph{Graph criterion.} Oracle intervention criterion: PASSED. This is a label-assisted diagnostic on fixed development inputs.
 
 \begin{figure}[p]\centering\includegraphics[width=\linewidth,height=.86\textheight,keepaspectratio]{figures/subset_acc_nmi.pdf}
 
 \caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}
 
-\paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: 2026-11-10.
+\paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: 2026-11-11.

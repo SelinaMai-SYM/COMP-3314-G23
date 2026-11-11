@@ -1,0 +1,20 @@
+{
+  "checkout_root_relative": "../../results/extension_verification",
+  "counts": {
+    "points": 0,
+    "primary_panel_rows": 32,
+    "trials": 0
+  },
+  "files": {
+    "scalar_records.v1.json.gz": {
+      "bytes": 99947,
+      "sha256": "7a81c30ee63af171fd0fc85df8504200310ebe438dd406c9c08ab99c386c4fb3",
+      "uncompressed_sha256": "d609a29c20926e749a4e060a33a2703b33034075d2a970749574723ded9e12e6"
+    }
+  },
+  "packet_file": "scalar_records.v1.json.gz",
+  "protocol_sha256": "4ee56bcbe2ae32b86461022f54354d8b866caa66347f81b09e68c93efeb272f6",
+  "schema": "ssc-refinement-release-v1",
+  "scope": "Fixed reference inputs; no subset or performance-based parameter selection",
+  "source_fingerprint": "59483f6f0f0823f1b7e1ea73ea977544d6f01b74802b1b6f973dae8a2e372fd2"
+}

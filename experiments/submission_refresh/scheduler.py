@@ -35,9 +35,6 @@ def _execute(task,data_root,artifact_root):
         elif task['kind']=='graph':
             from .graph_repair import run_graph
             r=run_graph(task,data_root,artifact_root)
-        elif task['kind']=='ensc':
-            from .ensc_campaign import run_ensc
-            r=run_ensc(task,data_root,artifact_root)
         elif task['kind']=='validation':
             from .validation_jobs import run_validation
             r=run_validation(task,data_root,artifact_root)
@@ -45,7 +42,7 @@ def _execute(task,data_root,artifact_root):
             from .archive_jobs import run_archive
             r=run_archive(task,data_root,artifact_root)
         else:raise ValueError(task['kind'])
-        if task['kind'] in ['graph','ensc']:
+        if task['kind'] in ['graph']:
             from .scheduler_resume import capture_execution
             r['scheduler_resume_identity']=capture_execution(task,r,artifact_root)
     except BaseException as exc:
@@ -83,7 +80,7 @@ def run(tasks,data_root,artifact_root):
                     expected=scientific_cache_identity(t['candidate'],data_root,profile=t.get('profile',False))
                     if previous.get('cache_identity')!=expected:
                         raise ValueError('existing subset execution identity differs; preserve it and use a new run ID/artifact root')
-                elif t['kind'] in ['graph','ensc']:
+                elif t['kind'] in ['graph']:
                     from .scheduler_resume import ResumeValidator
                     if resume_validator is None:resume_validator=ResumeValidator(data_root,artifact_root)
                     resume_validator.validate(t,previous)

@@ -12,6 +12,11 @@ from experiments.submission_refresh import current_release
 from experiments.subset_search.markdown import benchmark_markdown
 
 
+def test_current_projected_release_uses_the_published_benchmark_view():
+    from experiments.subset_search.markdown import _public_mode
+    assert _public_mode()
+
+
 def test_family_distributions_keep_benchmarks_pools_and_alias_weights_separate():
     base={'family':'fixed_membership','pool':'specification_compatible','alias_of':None}
     rows=[{**base,'benchmark':'ORL','candidate_id':'A','acc_mean':10.,'nmi_mean':20.},

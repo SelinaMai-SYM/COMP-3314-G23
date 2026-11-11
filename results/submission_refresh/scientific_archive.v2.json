@@ -1,0 +1,38 @@
+{
+  "archive_name": "comp3314-refinement-verification-v2.tar.gz",
+  "availability": "Durable private local archive; provider-derived arrays are not redistributed through Git",
+  "bytes": 3715025601,
+  "excluded_scope": [
+    "Full subset numerical store, which has its own verified content-addressed inventory",
+    "Original mixed source-body archives",
+    "Execution command logs and private instructions"
+  ],
+  "export_manifest_object": {
+    "bytes": 32185493,
+    "kind": "json",
+    "path": "objects/73/73367f88844267533ac3c6ee0111f337b61c9363952bb3909c66180512d89b69.json",
+    "sha256": "73367f88844267533ac3c6ee0111f337b61c9363952bb3909c66180512d89b69"
+  },
+  "extra_files_verified": 13,
+  "objects_verified": 142313,
+  "schema": "scientific-archive-availability-v2",
+  "scope": [
+    "Retained baseline fit states",
+    "Independent G1-G3 and USPS numerical evidence",
+    "Independent refinement inputs, optimized arrays, predictions, duals and continuation state",
+    "Clean source snapshots and projected scientific metadata"
+  ],
+  "sha256": "b2e06a5a87e1ee12c88f3451e0374047e59147cd009d474b777560129e0525b6",
+  "verification": {
+    "CSV_and_trial_byte_parity": true,
+    "external_report_did_not_mutate_reference": true,
+    "fit_certificates_recomputed": 76,
+    "max_ACC_NMI_error": 0.0,
+    "max_inertia_roundoff": 7.503331289626658e-12,
+    "passed": true,
+    "points_verified": 130,
+    "portable_scalar_rebuild": true,
+    "resume_new_fit_or_round_files": 0,
+    "trials_recomputed": 6500
+  }
+}

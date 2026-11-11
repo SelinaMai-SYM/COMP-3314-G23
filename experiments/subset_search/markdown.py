@@ -33,7 +33,8 @@ def _metric(row, name, paper=False):
 
 def _public_mode():
     manifest=Path(__file__).resolve().parents[2]/'configs/submission_refresh/evidence_manifest.json'
-    return manifest.exists() and json.loads(manifest.read_text()).get('schema')=='submission-scalar-evidence-public-v1'
+    return manifest.exists() and json.loads(manifest.read_text()).get('schema') in {
+        'submission-scalar-evidence-public-v1','submission-scalar-evidence-public-v2'}
 
 
 def _public_benchmark(benchmark,winners,paper,certified_status):

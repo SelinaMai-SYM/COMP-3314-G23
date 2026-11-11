@@ -148,6 +148,13 @@ execution logs are outside the advertised closure. The full subset inventory is
 available as a durable local content-addressed store, separately from the scoped
 refinement/state archive. Provider-derived arrays remain outside Git.
 
+The [scoped archive receipt](../results/submission_refresh/scientific_archive.v2.json)
+records its exact content hash and recovery scope. Independent recovery verifies
+142,313 objects and 13 raw numerical files. Recomputed certificates and all 6,500
+rounding scores agree with the saved release; resuming the completed campaign
+creates no additional fits or rounding outputs. The full subset store remains a
+separate inventory and is not claimed as part of this scoped archive.
+
 ```bash
 python -m experiments.submission_refresh.export_artifacts export --artifact-root ARTIFACT_ROOT --archive ARCHIVE --manifest results/submission_refresh/artifact_manifest.json --manifest results/submission_refresh/state_artifact_manifest.v2.json --manifest results/extension_verification/artifact_manifest.json
 python -m experiments.submission_refresh.export_artifacts recover --archive ARCHIVE --output RECOVERED_ARTIFACT_ROOT

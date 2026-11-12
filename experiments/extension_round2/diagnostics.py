@@ -88,6 +88,10 @@ def mechanism(endpoint,result,entry,store,qssc=None,sc_evaluation=None,evaluatio
         out['direction_guard']={'weighted_triangle_slack_over_TV_H':float(problem.w@slack/tv) if tv else None,'raw_min_triangle_slack':float(slack.min(initial=0)),'reversal_weight_mass':float(problem.w[valid&(dotedge<0)].sum()/mass) if mass else None,'expansion_weight_mass':float(problem.w[length>initial].sum()/mass) if mass else None,'nonzero_edge_angle_quantiles_degrees':np.quantile(angles[valid],[0,.1,.5,.9,1]).tolist() if valid.any() else None,'zero_anchor_edges':int(sum(initial==0))}
         if qssc is not None:
             qedge=problem.B@qssc['G'];qslack=norms(qedge)+norms(qedge-anchor)-initial;out['direction_guard']['QSSC_weighted_triangle_slack_over_TV_H']=float(problem.w@qslack/tv) if tv else None
+            truth=store.get(entry['objects']['labels']);same=truth[problem.i]==truth[problem.j]
+            for name,mask in [('within_label',same),('between_label',~same)]:
+                anchor_tv=float(problem.w[mask]@initial[mask]);out['direction_guard'][name+'_edge_TV_over_anchor']=float(problem.w[mask]@length[mask]/anchor_tv) if anchor_tv else None;out['direction_guard']['QSSC_'+name+'_edge_TV_over_anchor']=float(problem.w[mask]@norms(qedge)[mask]/anchor_tv) if anchor_tv else None
+            out['direction_guard']['label_audit_scope']='Post-fit aggregate edge variation; a change alone does not establish useful or harmful class fusion'
     if endpoint['method']=='E6':
         Z=result['Zf'];T=problem.whitened(Z);eig=linalg.eigvalsh(T) if len(T) else np.array([1.]);gram=Z.T@Z
         scale_matrix=gram/problem.s[:,None]/problem.s[None,:] if len(problem.s) else np.eye(1);minimum=float(np.sqrt(max(0.,linalg.eigvalsh(sym(scale_matrix))[0])));eta=endpoint['parameters'].get('eta_dir',.5);rho=endpoint['rho'];sigmin=float(problem.s[-1]) if len(problem.s) else 0.

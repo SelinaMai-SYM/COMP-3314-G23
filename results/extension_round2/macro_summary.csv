@@ -1,0 +1,5 @@
+method,comparison,qualified_denominator,eight_dataset_macro_ACC_pp,eight_dataset_macro_NMI_pp,available_case_ACC_pp,available_case_NMI_pp,missing_datasets,ACC_wins,ACC_ties,ACC_losses,NMI_wins,NMI_ties,NMI_losses
+E1_v2,fresh movement-matched QSSC,7,,,0.17874156235764674,-0.05722886753292892,MSRA50,5,0,2,4,0,3
+E4,fresh movement-matched QSSC,6,,,-0.13420298533655453,-0.14752846983806608,UMIST;MSRA50,3,0,3,3,0,3
+E5,fresh movement-matched QSSC,7,,,0.11571991868785715,0.0702537217264884,MSRA50,3,0,4,5,0,2
+E6,fresh movement-matched QSSC,7,,,0.10083394137720096,0.043757683334019984,MSRA50,1,4,2,1,4,2

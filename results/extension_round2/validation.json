@@ -1,0 +1,82 @@
+{
+  "archive_recovery_receipt": "archive_receipt.json",
+  "original_fresh_environment": {
+    "TLS_CA_sha256": "9de631945c530a883a7a08dd459bd2fc9355ea3c6e537c79516981eba7d7d093",
+    "shallow": true,
+    "stages": [
+      {
+        "stage": "fresh single-branch shallow clone",
+        "status": "PASSED"
+      },
+      {
+        "stage": "new environment",
+        "status": "PASSED"
+      },
+      {
+        "stage": "refresh recorded extension checkout",
+        "status": "PASSED"
+      },
+      {
+        "stage": "select exact extension revision",
+        "status": "PASSED"
+      },
+      {
+        "stage": "pinned dependency installation",
+        "status": "PASSED"
+      },
+      {
+        "stage": "dependency consistency",
+        "status": "PASSED"
+      },
+      {
+        "stage": "mathematical and frozen-input verification",
+        "status": "PASSED"
+      },
+      {
+        "stage": "synthetic pipeline",
+        "status": "PASSED"
+      },
+      {
+        "stage": "independent MSRA data root",
+        "status": "PASSED"
+      },
+      {
+        "stage": "historical no-data reconstruction",
+        "status": "PASSED"
+      },
+      {
+        "stage": "current no-data scalar reconstruction",
+        "status": "PASSED"
+      }
+    ],
+    "status": "PASSED",
+    "tested_commit": "30aa9d6c8e12e2e6d54ba0c708694675f6bfd6ba"
+  },
+  "original_fresh_scalar_scope": "The original fresh-environment check used the provisional primary packet; final packet verification is recorded separately.",
+  "post_correction_code": {
+    "errors": 0,
+    "failures": 0,
+    "scope": "Post-study cache correction, exact frozen input membership, report-only source compatibility and numerical reference checks",
+    "skipped": 0,
+    "status": "PASSED",
+    "tested_commit": "80d5e14edeff477ffd1ba1ca72e87b6a82008e80",
+    "tests": 24
+  },
+  "publication_audit": {
+    "contributor_email": "261118585+SelinaMai-SYM@users.noreply.github.com",
+    "figure_review": "Seven PNG/SVG pairs reviewed; graph fallbacks and crowded labels explicitly annotated",
+    "history_and_report_scope": "Only README navigation and extension_round2 namespaces changed",
+    "language_and_local_path_scan": "Passed, including decompressed trial records",
+    "max_control_target_CPU_seconds": 392.4956947083333,
+    "max_main_path_CPU_seconds": 1790.5403953749997,
+    "max_recorded_fit_CPU_seconds": 570.128115,
+    "public_text_files_checked": 52,
+    "published_finite_endpoints": 228,
+    "published_rounding_trials": 11400,
+    "relative_links": "All resolved",
+    "status": "PASSED"
+  },
+  "schema": "ssc-round2-public-verification-v1",
+  "scientific_invariance_receipt": "scientific_invariance.json",
+  "status": "PASSED"
+}

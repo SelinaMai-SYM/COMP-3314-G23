@@ -52,7 +52,7 @@ def freeze_outputs(config,root):
             if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('evidence object changed')
             files[ref['path']]=ref['sha256']
     files['cohort_lock.json']=digest(store.root/'cohort_lock.json')
-    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True)
+    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
     atomic_json(marker,frozen);return frozen
 
 
@@ -61,9 +61,12 @@ def mechanisms(store,lock,record,G,y):
     out=dict(id=record['id'],benchmark=record['benchmark'],method=record['method'],rho=record['rho'],tau_multiplier=record['tau_multiplier'],movement=float(np.linalg.norm(G-H)/S) if S else 0.,activity='EXACT_IDENTITY_INACTIVE' if np.array_equal(G,H) else 'MOVED',dispersion=float(np.linalg.norm(Gc)/S) if S else 0.,affine_scale=scale,affine_residual=float(np.linalg.norm(Gc-scale*Hc)/S) if S else 0.,weighted_slack=float(w@(lg+lengths(edge-P.h)-a0)),reversed_edge_fraction=float(np.mean(np.sum(edge*P.h,axis=1)<-1e-12)) if len(w) else 0.,expanded_edge_fraction=float(np.mean(lg>a0+1e-10)) if len(w) else 0.,original_components=int(connected_components(W,directed=False,return_labels=False)),cross_class_edge_fraction=float(cross.mean()) if len(w) else 0.,cross_class_weight_fraction=float(w[cross].sum()/w.sum()) if len(w) else 0.)
     for key,mask in [('within',~cross),('between',cross)]:
         denom=float(w[mask]@a0[mask]);out[key+'_length_ratio']=float(w[mask]@lg[mask]/denom) if denom else None
-    params=get_arrays(store,record.get('parameters',{}));meta=get_arrays(store,record.get('intervention_metadata',{}))
+    params=get_arrays(store,record.get('parameters',{}))
+    if record['method']=='UNIFORM_GRAPH_ALIAS':params={'weights':.9*w}
+    meta=get_arrays(store,record.get('intervention_metadata',{}))
     if 'weights' in params:
-        new=params['weights'];fraction=np.divide(new,w);removed=w-new;degree=np.asarray(W.sum(axis=1)).ravel();new_degree=np.bincount(np.r_[P.i,P.j],weights=np.r_[new,new],minlength=len(H));out.update(removed_mass_fraction=float(removed.sum()/w.sum()),minimum_edge_fraction=float(fraction.min()),maximum_edge_fraction=float(fraction.max()),degree_ratio_min=float(np.min(new_degree[degree>0]/degree[degree>0])),degree_ratio_max=float(np.max(new_degree[degree>0]/degree[degree>0])),support_unchanged=bool(np.all(new>0)),cross_class_removed_mass=float(removed[cross].sum()),within_class_removed_mass=float(removed[~cross].sum()))
+        from scipy import sparse
+        new=params['weights'];new_graph=sparse.csr_matrix((np.r_[new,new],(np.r_[P.i,P.j],np.r_[P.j,P.i])),shape=W.shape);out['modified_components']=int(connected_components(new_graph,directed=False,return_labels=False));fraction=np.divide(new,w);removed=w-new;degree=np.asarray(W.sum(axis=1)).ravel();new_degree=np.bincount(np.r_[P.i,P.j],weights=np.r_[new,new],minlength=len(H));out.update(removed_mass_fraction=float(removed.sum()/w.sum()),minimum_edge_fraction=float(fraction.min()),maximum_edge_fraction=float(fraction.max()),degree_ratio_min=float(np.min(new_degree[degree>0]/degree[degree>0])),degree_ratio_max=float(np.max(new_degree[degree>0]/degree[degree>0])),support_unchanged=bool(np.all(new>0)),cross_class_removed_mass=float(removed[cross].sum()),within_class_removed_mass=float(removed[~cross].sum()))
     if 'tubes' in params:
         a=params['tubes'];uncertainty=2*np.sqrt(max(0.,gap));out.update(tube_budget=float(w@a),tube_reference_budget=float(.25*(w@a0)),active_tubes=int(np.sum(lg-a>uncertainty)),uncertain_tubes=int(np.sum(np.abs(lg-a)<=uncertainty)),dispersion_certified_lower=float(dispersion_lower_bound(S,gap)/S) if S else 0.,cross_class_tube_budget=float(w[cross]@a[cross]),within_class_tube_budget=float(w[~cross]@a[~cross]))
     if 'alpha' in params:

@@ -52,13 +52,16 @@ def freeze_outputs(config,root):
             if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('evidence object changed')
             files[ref['path']]=ref['sha256']
     files['cohort_lock.json']=digest(store.root/'cohort_lock.json')
-    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
+    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
     atomic_json(marker,frozen);return frozen
 
 
 def mechanisms(store,lock,record,G,y):
     c=lock['cohorts'][record['benchmark']];H=store.get(c['objects']['H']);W=store.get(c['objects']['W0']);P=FusionProblem(H,W,1.);w=P.w;a0=lengths(P.h);edge=P.B@G;lg=lengths(edge);cross=y[P.i]!=y[P.j];S=P.S;Hc=H-H.mean(axis=0);Gc=G-G.mean(axis=0);scale=float(np.sum(Hc*Gc)/S**2) if S else 1.;gap=record.get('certificate',{}).get('gap',0.)
     out=dict(id=record['id'],benchmark=record['benchmark'],method=record['method'],rho=record['rho'],tau_multiplier=record['tau_multiplier'],movement=float(np.linalg.norm(G-H)/S) if S else 0.,activity='EXACT_IDENTITY_INACTIVE' if np.array_equal(G,H) else 'MOVED',dispersion=float(np.linalg.norm(Gc)/S) if S else 0.,affine_scale=scale,affine_residual=float(np.linalg.norm(Gc-scale*Hc)/S) if S else 0.,weighted_slack=float(w@(lg+lengths(edge-P.h)-a0)),reversed_edge_fraction=float(np.mean(np.sum(edge*P.h,axis=1)<-1e-12)) if len(w) else 0.,expanded_edge_fraction=float(np.mean(lg>a0+1e-10)) if len(w) else 0.,original_components=int(connected_components(W,directed=False,return_labels=False)),cross_class_edge_fraction=float(cross.mean()) if len(w) else 0.,cross_class_weight_fraction=float(w[cross].sum()/w.sum()) if len(w) else 0.)
+    _,class_index=np.unique(y,return_inverse=True);counts=np.bincount(class_index);hmean=np.zeros((len(counts),H.shape[1]));gmean=np.zeros_like(hmean);np.add.at(hmean,class_index,H);np.add.at(gmean,class_index,G);hmean/=counts[:,None];gmean/=counts[:,None]
+    hwithin=float(np.sum((H-hmean[class_index])**2));gwithin=float(np.sum((G-gmean[class_index])**2));hbetween=float(np.sum(counts[:,None]*(hmean-H.mean(axis=0))**2));gbetween=float(np.sum(counts[:,None]*(gmean-G.mean(axis=0))**2))
+    out['within_label_variation_ratio']=gwithin/hwithin if hwithin else None;out['between_label_variation_ratio']=gbetween/hbetween if hbetween else None
     for key,mask in [('within',~cross),('between',cross)]:
         denom=float(w[mask]@a0[mask]);out[key+'_length_ratio']=float(w[mask]@lg[mask]/denom) if denom else None
     params=get_arrays(store,record.get('parameters',{}))
@@ -71,9 +74,16 @@ def mechanisms(store,lock,record,G,y):
         a=params['tubes'];uncertainty=2*np.sqrt(max(0.,gap));out.update(tube_budget=float(w@a),tube_reference_budget=float(.25*(w@a0)),active_tubes=int(np.sum(lg-a>uncertainty)),uncertain_tubes=int(np.sum(np.abs(lg-a)<=uncertainty)),dispersion_certified_lower=float(dispersion_lower_bound(S,gap)/S) if S else 0.,cross_class_tube_budget=float(w[cross]@a[cross]),within_class_tube_budget=float(w[~cross]@a[~cross]))
     if 'alpha' in params:
         alpha=params['alpha'];out.update(guard_coefficient_mass=float(w@alpha),cross_class_guard_mass=float(w[cross]@alpha[cross]),within_class_guard_mass=float(w[~cross]@alpha[~cross]))
+    for key,mask in [('within',~cross),('between',cross)]:
+        mass=float(w[mask].sum());anchor_mass=float(w[mask]@a0[mask])
+        if 'weights' in params:out[key+'_removed_mass_rate']=float((w[mask]-params['weights'][mask]).sum()/mass) if mass else None
+        if 'tubes' in params:out[key+'_weighted_eta']=float(w[mask]@params['tubes'][mask]/anchor_mass) if anchor_mass else None
+        if 'alpha' in params:out[key+'_weighted_alpha']=float(w[mask]@params['alpha'][mask]/mass) if mass else None
     ep=store.root/'evidence'/f"{record['benchmark']}__t{record['tau_multiplier']:g}.json"
     if ep.exists():
         E=get_arrays(store,read(ep)['result']);ell=E['raw_leverage'];out.update(leverage_min=float(ell.min(initial=0)),leverage_median=float(np.median(ell)) if len(ell) else 0.,leverage_max=float(ell.max(initial=0)),denominator_min=float(E['denominator'].min(initial=1)),denominator_bound_margin=float(np.min(E['denominator']-E['denominator_bound'],initial=0)),evidence_CPU_seconds=E['CPU_seconds'],evidence_max_residual=E['max_residual'],inverse_symmetry=E['inverse_symmetry'])
+        cavity=E['scores']['cavity'];pilot_score=E['scores']['pilot'];pilot_mass=float(w@pilot_score)
+        out.update(cavity_score_median=float(np.median(cavity)) if len(w) else 0.,pilot_score_median=float(np.median(pilot_score)) if len(w) else 0.,cavity_pilot_weighted_score_difference=float(w@np.abs(cavity-pilot_score)/w.sum()) if len(w) else 0.,cavity_pilot_relative_score_difference=float(w@(cavity-pilot_score)/pilot_mass) if pilot_mass else 0.)
         for score in ['cavity','pilot','anchor','leverage']:
             out[score+'_cross_class_auroc']=float(roc_auc_score(cross,E['scores'][score])) if len(np.unique(cross))==2 else None
         if 'ranks' in meta and record['method'] in registry():

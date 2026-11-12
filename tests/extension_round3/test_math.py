@@ -86,3 +86,31 @@ def test_control_parameters_and_degenerate_solutions():
     P=FusionProblem(H,W,.1,alpha=np.zeros(2));Q=FusionProblem(H,W,.1)
     a=solve(P,rho=.1,cpu_limit=10.);b=solve(Q,rho=.1,cpu_limit=10.);np.testing.assert_allclose(a['G'],b['G'],atol=1e-3)
     zero=np.zeros((3,1));out=solve(FusionProblem(zero,W,1.),rho=.1,cpu_limit=10.);assert out['certified'];np.testing.assert_array_equal(out['G'],zero)
+
+
+def test_fixed_lambda_continuation_preserves_prior_segment(tmp_path):
+    from experiments.extension_round3.calibration import calibrate
+    from experiments.extension_round3.common import ArtifactStore,put_arrays,scalar,atomic_json,read
+    H=np.array([[0.],[1.],[3.]]);W=graph(3,[(0,1,1.),(1,2,.7)])
+    store=ArtifactStore(tmp_path);folder=tmp_path/'paths'/'continuation';folder.mkdir(parents=True)
+    old=solve(FusionProblem(H,W,.2),rho=.1,max_iter=1,cpu_limit=10.)
+    point={'lambda':.2,'rho_requested':.1,'certificate':scalar(old),'result':put_arrays(store,old),'history_file':'prior.jsonl'}
+    atomic_json(folder/'path.json',{'points':[point],'CPU_seconds':old['CPU_seconds'],'targets':{}})
+    result,outcome=calibrate(H,W,{},.1,folder,cpu_limit=20.,max_iter=2000000)
+    path=read(folder/'path.json');assert path['points'][0]['segments'][0]['result']==point['result']
+    assert path['points'][0]['fit_CPU_seconds']>=old['CPU_seconds']
+    assert len({p['lambda'] for p in path['points']})==len(path['points'])
+
+
+def test_bad_bridge_and_genuine_sparse_bridge_have_the_same_algebra():
+    # Identical geometry can receive two class interpretations. Edge deletion
+    # is exact in each, and by itself cannot distinguish those interpretations.
+    edges=[(0,1,1.),(0,2,1.),(1,2,1.),(3,4,1.),(3,5,1.),(4,5,1.),(2,3,.2)]
+    W=graph(6,edges);H=np.array([[-1.],[-.9],[-1.1],[1.],[.9],[1.1]])
+    E=edge_deletion_evidence(H,W);P=FusionProblem(H,W,1.);k=int(np.flatnonzero((P.i==2)&(P.j==3))[0]);b=P.B[k].toarray().ravel();L=(P.B.T@sparse.diags(P.w)@P.B).toarray()
+    deleted=np.linalg.solve(np.eye(6)+E['tau']*(L-P.w[k]*np.outer(b,b)),H)
+    np.testing.assert_allclose(deleted[2]-deleted[3],(E['Z'][2]-E['Z'][3])/E['denominator'][k],atol=1e-11)
+    assert E['scores']['cavity'][k]>E['scores']['pilot'][k]
+    bad_bridge_classes=np.array([0,0,0,1,1,1]);genuine_bridge_classes=np.zeros(6,dtype=int)
+    assert bad_bridge_classes[2]!=bad_bridge_classes[3]
+    assert genuine_bridge_classes[2]==genuine_bridge_classes[3]

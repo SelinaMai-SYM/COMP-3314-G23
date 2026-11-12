@@ -18,7 +18,13 @@ def numerical_files():
 def locked(root,config=CONFIG):
     store=ArtifactStore(root);lock=read(store.root/'cohort_lock.json')
     if lock['protocol_sha256']!=digest(config) or lock['source_files']!=numerical_files() or lock['environment']!=environment():raise ValueError('frozen protocol, numerical source or environment differs')
-    return read(config),lock,store
+    spec=read(config)
+    for amendment in lock.get('amendments',[]):
+        for dotted,value in amendment.get('effective_overrides',{}).items():
+            target=spec;parts=dotted.split('.')
+            for key in parts[:-1]:target=target[key]
+            target[parts[-1]]=value
+    return spec,lock,store
 
 def assert_fitting_open(root):
     root=Path(root)

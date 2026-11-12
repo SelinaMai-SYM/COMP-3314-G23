@@ -78,7 +78,7 @@ def fit_task(root,config,profile,input_root):
         if prior:
             old=verified_prior(source,store,c,prior)
             if old.get('q') is not None:warm={'Z':old['G'],'q':old['q'],'p':old.get('p',np.zeros_like(old['q'])),'bar':old['G'],'same_lambda':False}
-    point,outcome=calibrate(H,W,kw,profile['rho'],folder,cpu_limit=1740.,warm=warm)
+    point,outcome=calibrate(H,W,kw,profile['rho'],folder,cpu_limit=1740.,warm=warm,max_iter=spec['calibration']['max_iterations'])
     record=dict(profile,**outcome,source_fingerprint=lock['source_fingerprint'],labels_loaded=False,evidence_sha256=digest(ep),parameters=put_arrays(store,kw),intervention_metadata=put_arrays(store,meta))
     if point:record.update(result=point['result'],certificate=point['certificate'],lambda_value=point['lambda'],**{'lambda':point['lambda']})
     atomic_json(output,record);print('PROFILE',profile['id'],record['status'],flush=True)

@@ -1,0 +1,39 @@
+{
+  "changed_numerical_files": {
+    "experiments/extension_round3/calibration.py": {
+      "after": "e0a58d77a546452b41d681ce0f2f6ec13576bc53f0cbbb5eb45fbad47bcc6ebf",
+      "before": "e30726b1cfed327d0fad2f3d560cc164b390fd7154b737ea19849867b4d27c7c"
+    },
+    "experiments/extension_round3/common.py": {
+      "after": "fb3dc0ffd8d53238d2bef810f5bddc2c3023050c62b7050c7be3f082032a1840",
+      "before": "9273d435ee7fdb810872c9963506a9cb8ab687967bde6e5944ac23a913db22bb"
+    },
+    "experiments/extension_round3/worker.py": {
+      "after": "ca74c9e5ef0701e3ee374331e7b2456ee3cc3421662594e500919cabcb30b67a",
+      "before": "b2ae418ca66177a2394a577ad15af7c10639f306c507bb53f89f3a6dc87fd278"
+    }
+  },
+  "continuation_rule": "Preserve old segments. Cumulative fixed-lambda solve CPU <=570 seconds, leaving overhead within the 600-second ceiling. Path CPU is never reset. Completed qualified endpoints are not rerun.",
+  "effective_overrides": {
+    "calibration.max_iterations": 200000000
+  },
+  "id": "002",
+  "labels_loaded": false,
+  "new_source_fingerprint": "d1da24dc565044c6b965f1c277448aa30e8b6d1d568a2896dafc136eebd7e248",
+  "old_source_fingerprint": "9edc179e909ea180a785ede0f1114e08c9ae5986c5b1b834080129eb8c97833c",
+  "reason": "An additional 200,000-iteration guard could stop a fit before the user-specified 600-second CPU cap. Let measured CPU be the binding limit and continue saved fixed-lambda states within their original cumulative allowance. Also recheck stronger requested-target certificates at cached lambdas rather than mislabeling a repeated proposal as the distinct-lambda cap.",
+  "timing": "After numerical-only ordinary and uniform references; before any new benchmark labels or ACC/NMI scores",
+  "unchanged": [
+    "objectives",
+    "input identities",
+    "parameters",
+    "32 distinct lambdas",
+    "600-second individual fit cap",
+    "1800-second path cap",
+    "relative gap 1e-6",
+    "capacity 1e-8",
+    "movement matching and uncertainty thresholds",
+    "rounding panels",
+    "global budget and original clock"
+  ]
+}

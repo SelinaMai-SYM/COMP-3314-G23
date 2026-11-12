@@ -15,3 +15,9 @@ Confidence intervals use 10,000 paired bootstrap draws with seed 424242, conditi
 Runtime source/environment hashes, exact initial indices, graph evidence, every finite output, dual, checkpoint and history are retained in the external content-addressed artifact store. The terminal manifest records the immutable numerical closure before label access. Committed scalar records support no-data table reconstruction.
 
 Joint win/tie/loss summaries use a 10⁻¹² percentage-point numerical tie tolerance. A joint win has neither metric decreasing and at least one increasing; a joint loss has either metric decreasing. No metric or dataset is dropped to obtain a joint win. These summaries do not replace paired intervals.
+
+Bootstrap intervals are pointwise and unadjusted across the many declared contrasts. They do not provide a familywise discovery guarantee. The verdict retains null and negative rows rather than selecting a favorable contrast.
+
+## Numerical execution amendment 002
+
+Before label access, the additional 200,000-iteration guard was replaced by a nonbinding 200,000,000 guard so the specified CPU caps control termination. Fixed-lambda continuation retains previous segments and their cumulative cost, with 570 solve seconds plus overhead within the original 600-second ceiling. Cached points are independently requalified for a stronger target. No objective, parameter, precision, movement or global resource gate changes. The initial protocol remains intact; [amendment 002](../../configs/extension_round3/amendments/002.json) records the effective override and source identities.

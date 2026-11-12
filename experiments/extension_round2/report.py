@@ -141,7 +141,7 @@ def build(config_path,artifact_root,output):
     figures(out,points,contrasts,diagnostics)
     from experiments.submission_refresh.export_artifacts import references
     record={'protocol':spec,'cohort_lock':lock,'endpoints':list(endpoints.values()),'evaluations':list(evaluations.values()),'diagnostics':diagnostics}
-    derivation={str(p.relative_to(ROOT)):digest(p) for p in (ROOT/'experiments/extension_round2').glob('*.py')};record['derivation_source_files']=derivation;record['derivation_source_snapshot']=store.put({n:(ROOT/n).read_text() for n in derivation})
+    shared=[ROOT/'benchmarks/metrics/accuracy.py',ROOT/'benchmarks/metrics/nmi.py',ROOT/'benchmarks/metrics/__init__.py',ROOT/'experiments/submission_refresh/selection.py'];derivation={str(p.relative_to(ROOT)):digest(p) for p in [*(ROOT/'experiments/extension_round2').glob('*.py'),*shared]};record['derivation_source_files']=derivation;record['derivation_source_snapshot']=store.put({n:(ROOT/n).read_text() for n in derivation})
     refs={ref['sha256']:ref for ref in references(record)};logical=[]
     for name in ['cohort_lock.json','clock.json','resource_ledger.json','verification.json','primary_attempts_complete.json']:
         path=store.root/name
@@ -198,7 +198,7 @@ def _markdown(out,points,macros,contrasts,diagnostics,lock):
             if method in ['SSC_reference','old_E1_reference'] and not row['certified']:text+=' U'
             values.append(text)
         lines.append('| '+b+' | '+' | '.join(values)+' |')
-    lines += ['','Scores are percent means; complete same-configuration sample SDs are in primary_metrics.csv. †: unqualified or unmatched intervention; U: uncertified unsquared reference. Missing entries remain NA. Native minimum-inertia assignments are diagnostic only and have no across-run SD.','','## Stored historical reference','', 'These frozen report measurements are not substituted for fresh outputs. Object identity checks are strict and include array storage representation; a mismatch alone does not quantify numerical value differences.','','| Cohort | Stored ACC ± sample SD | Stored NMI ± sample SD | Replay G object matches stored |','|---|---:|---:|---|']
+    lines += ['','Scores are percent means; complete same-configuration sample SDs are in primary_metrics.csv. ACC uses Hungarian matching and NMI uses geometric-mean entropy normalization. †: unqualified or unmatched intervention; U: uncertified unsquared reference. Missing entries remain NA. Native minimum-inertia assignments are diagnostic only and have no across-run SD.','','## Stored historical reference','', 'These frozen report measurements are not substituted for fresh outputs. Object identity checks are strict and include array storage representation; a mismatch alone does not quantify numerical value differences.','','| Cohort | Stored ACC ± sample SD | Stored NMI ± sample SD | Replay G object matches stored |','|---|---:|---:|---|']
     for b in ORDER:
         row=next(r for r in points if r['benchmark']==b and r['method']=='historical')
         lines.append(f"| {b} | {number(row['stored_historical_acc_mean'])} ± {number(row['stored_historical_acc_sd'])} | {number(row['stored_historical_nmi_mean'])} ± {number(row['stored_historical_nmi_sd'])} | {row.get('replay_G_object_matches_stored','NA')} |")

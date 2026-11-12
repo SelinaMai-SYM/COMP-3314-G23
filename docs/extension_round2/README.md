@@ -30,6 +30,8 @@ Source/version and historical-identity qualifications remain in the [cohort lock
 
 For each cohort, `A0 → U0 → H` and `H → W0` are frozen once. Every method receives the same H; E4 alone changes W through one frozen graph correction. Optimized G goes directly to k-means, with no additional row normalization or PCA. Each terminal output uses Lloyd, one start, and all seeds 0–49 with the cohort's locked initializer. ACC and NMI are means with sample SD (`ddof=1`) from the same configuration. The minimum-inertia assignment is diagnostic only.
 
+ACC uses Hungarian matching. NMI uses geometric-mean entropy normalization, `MI / sqrt(H(true) H(predicted))`, following the repository's implementation of SSC Equations (20)–(21).
+
 The primary target is `||G−H||F / ||H−mean(H)||F = .05`. The separately reported fixed path is .02, .10 and .20. Lambda is selected without labels using feasible dual bounds, movement-uncertainty intervals and bounded searches. A point qualifies only when both relative gaps are at most `1e−6`, relative capacities are at most `1e−8`, movement uncertainty is at most `.02 rho`, and `|movement−rho| + uncertainty ≤ .05 rho`. E6 additionally requires its repaired, centered primal to pass the whitened LMI and conditioning checks. These are numerical certificates, not interval-arithmetic proofs.
 
 Comparisons use 10,000 paired rounding-seed bootstrap draws with PCG64 seed 424242. These intervals describe conditional initialization variability on fixed data. An eight-cohort macro is reported only when all eight comparisons are qualified and movement-matched; otherwise the available-case denominator and missing cohorts are explicit.

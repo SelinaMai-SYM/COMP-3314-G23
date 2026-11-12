@@ -23,7 +23,11 @@ def test_label_free_interval_calibration_and_bounded_continuation(tmp_path):
 def test_locked_membership_Y3_and_per_benchmark_rounding():
     root=os.environ.get('COMP3314_ROUND2_ARTIFACT_ROOT')
     if not root:pytest.skip('Frozen input objects are checked by the round2 verify entry point')
-    lock=json.loads((Path(root)/'cohort_lock.json').read_text());spec=config();store=ArtifactStore(root)
+    from experiments.extension_round2.report import locked_for_derivation
+    from experiments.extension_round2.common import locked,source_files
+    spec,lock,store=locked_for_derivation(root)
+    if source_files()!=lock['source_files']:
+        with pytest.raises(ValueError,match='source/environment changed'):locked(root)
     assert len(lock['cohorts'])==8
     for b,row in lock['cohorts'].items():
         assert row['initialization']==spec['cohorts'][b]['initialization'];assert len(row['selected_indices'])==row['n']

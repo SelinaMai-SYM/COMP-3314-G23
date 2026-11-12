@@ -31,6 +31,23 @@ def paired(target,control):
 
 def qualified(row):return bool(row and row['certified'] and row['matched'] and row.get('graph_eligible',True) and row['trial_count']==50)
 
+def registered_derivation_difference(recorded,current,fingerprint):
+    """Permit the declared cache correction for audits of immutable fits only."""
+    changed={name for name in recorded.keys()|current.keys() if recorded.get(name)!=current.get(name)}
+    if not changed:return None
+    amendment=load_record(ROOT/'configs/extension_round2/amendments/003_cached_precision.json')
+    permitted='experiments/extension_round2/calibration.py'
+    if not amendment or changed!={permitted} or fingerprint!=amendment['original_fitting_source_fingerprint'] or recorded.get(permitted)!=amendment['source_change']['before_sha256'] or current.get(permitted)!=amendment['source_change']['after_sha256']:
+        raise ValueError('Unregistered source difference: frozen-fit derivation requires unchanged objectives and operators')
+    return '003_cached_precision.json: report-only compatibility; fitting remains source-locked'
+
+def locked_for_derivation(artifact_root,path=DEFAULT_CONFIG):
+    spec,lock,store=locked(artifact_root,path,check_source=False)
+    if identity({'files':lock['source_files'],'environment':lock['environment']})!=lock['source_fingerprint']:raise ValueError('Inconsistent recorded fitting source fingerprint')
+    if lock['environment']!=environment():raise ValueError('Frozen-fit derivation requires the recorded numerical environment')
+    registered_derivation_difference(lock['source_files'],source_files(),lock['source_fingerprint'])
+    return spec,lock,store
+
 def receipt_task(store,value):
     argv=value.get('command',[])
     if '--task' in argv:
@@ -39,7 +56,7 @@ def receipt_task(store,value):
     return load_record(store.root/'tasks'/(value['run_id'].rsplit('-',1)[0]+'.json'))
 
 def build(config_path,artifact_root,output):
-    spec,lock,store=locked(artifact_root,config_path);out=Path(output);out.mkdir(parents=True,exist_ok=True);endpoints={};evaluations={};results={};points=[];contrasts=[];diagnostics={};resources=[];audits={}
+    spec,lock,store=locked_for_derivation(artifact_root,config_path);out=Path(output);out.mkdir(parents=True,exist_ok=True);endpoints={};evaluations={};results={};points=[];contrasts=[];diagnostics={};resources=[];audits={}
     task_outcomes=[load_record(p) for p in sorted((store.root/'task_outcomes').glob('*.json'))]
     native=[]
     for file in sorted((store.root/'command_jobs').glob('*/status.json')):
@@ -142,7 +159,8 @@ def build(config_path,artifact_root,output):
     from .figures import figures
     figures(out,points,contrasts,diagnostics)
     from experiments.submission_refresh.export_artifacts import references
-    record={'protocol':spec,'cohort_lock':lock,'endpoints':list(endpoints.values()),'evaluations':list(evaluations.values()),'diagnostics':diagnostics}
+    current_files=source_files();lineage={'fitting_source_fingerprint':lock['source_fingerprint'],'current_fitting_source_fingerprint':identity({'files':current_files,'environment':environment()}),'report_only_registered_difference':registered_derivation_difference(lock['source_files'],current_files,lock['source_fingerprint'])}
+    record={'protocol':spec,'cohort_lock':lock,'endpoints':list(endpoints.values()),'evaluations':list(evaluations.values()),'diagnostics':diagnostics,'source_lineage':lineage}
     shared=[ROOT/'benchmarks/metrics/accuracy.py',ROOT/'benchmarks/metrics/nmi.py',ROOT/'benchmarks/metrics/__init__.py',ROOT/'experiments/submission_refresh/selection.py'];derivation={str(p.relative_to(ROOT)):digest(p) for p in [*(ROOT/'experiments/extension_round2').glob('*.py'),*shared]};record['derivation_source_files']=derivation;record['derivation_source_snapshot']=store.put({n:(ROOT/n).read_text() for n in derivation})
     refs={ref['sha256']:ref for ref in references(record)};logical=[]
     for name in ['cohort_lock.json','clock.json','resource_ledger.json','verification.json','primary_attempts_complete.json']:
@@ -184,9 +202,9 @@ def build(config_path,artifact_root,output):
         if ref['kind']=='json':
             for child in references(store.get(ref)):
                 refs[child['sha256']]=child;pending.append(child)
-    atomic_json(out/'artifact_manifest.json',{'schema':'ssc-round2-artifacts-v1','records':logical,'numerical_objects':list(refs.values()),'extra_files':extra,'derivation_source_snapshot':record['derivation_source_snapshot'],'scope':'Exact eight-cohort states, scientific records, models and per-seed predictions; arrays stay outside Git','restriction':'Provider data rights remain independent from project MIT code'})
+    atomic_json(out/'artifact_manifest.json',{'schema':'ssc-round2-artifacts-v1','records':logical,'numerical_objects':list(refs.values()),'extra_files':extra,'derivation_source_snapshot':record['derivation_source_snapshot'],'source_lineage':lineage,'scope':'Exact eight-cohort states, scientific records, models and per-seed predictions; arrays stay outside Git','restriction':'Provider data rights remain independent from project MIT code'})
     files={str(p.relative_to(out)):{'sha256':digest(p),'bytes':p.stat().st_size} for p in out.rglob('*') if p.is_file() and p.name!='release_manifest.json'}
-    atomic_json(out/'release_manifest.json',{'schema':'ssc-round2-scalar-release-v1','files':files,'source_fingerprint':lock['source_fingerprint'],'protocol_sha256':lock['protocol_sha256'],'derivation_source_files':derivation,'trials_uncompressed_sha256':__import__('hashlib').sha256(gzip.decompress((out/'trials.csv.gz').read_bytes())).hexdigest(),'counts':{'planned_endpoints':len(points),'frozen_endpoints':len(endpoints),'complete_50_seed_endpoints':len(evaluations),'certified_and_matched':sum(qualified(p) for p in points),'primary_qualified_and_matched':sum(qualified(p) for p in points if p['phase']=='primary'),'primary_planned':40,'certified_unsquared_references':sum(bool(p['certified']) for p in points if p['method'] in ['SSC_reference','old_E1_reference']),'quadratic_fit_attempts':sum(r['category']=='refinement_detail' for r in resources)}})
+    atomic_json(out/'release_manifest.json',{'schema':'ssc-round2-scalar-release-v1','files':files,'source_lineage':lineage,'source_fingerprint':lock['source_fingerprint'],'protocol_sha256':lock['protocol_sha256'],'derivation_source_files':derivation,'trials_uncompressed_sha256':__import__('hashlib').sha256(gzip.decompress((out/'trials.csv.gz').read_bytes())).hexdigest(),'counts':{'planned_endpoints':len(points),'frozen_endpoints':len(endpoints),'complete_50_seed_endpoints':len(evaluations),'certified_and_matched':sum(qualified(p) for p in points),'primary_qualified_and_matched':sum(qualified(p) for p in points if p['phase']=='primary'),'primary_planned':40,'certified_unsquared_references':sum(bool(p['certified']) for p in points if p['method'] in ['SSC_reference','old_E1_reference']),'quadratic_fit_attempts':sum(r['category']=='refinement_detail' for r in resources)}})
     return points
 
 def _markdown(out,points,macros,contrasts,diagnostics,lock):

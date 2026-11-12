@@ -36,6 +36,8 @@ The primary target is `||G−H||F / ||H−mean(H)||F = .05`. The separately repo
 
 Comparisons use 10,000 paired rounding-seed bootstrap draws with PCG64 seed 424242. These intervals describe conditional initialization variability on fixed data. An eight-cohort macro is reported only when all eight comparisons are qualified and movement-matched; otherwise the available-case denominator and missing cohorts are explicit.
 
+The published fitting trajectory uses [revision fd7b3cb](https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/fd7b3cb). A post-study [calibration correction](../../configs/extension_round2/amendments/003_cached_precision.json) recomputes cached certification for each requested movement target. The original USPS E1_v2 .02 point exceeds its movement-error threshold and is excluded by independent array qualification. Its original arrays, scores and source identity are preserved. Current report derivation accepts only this registered calibration-file difference; objectives, operators and environment must match. Fitting and resume continue to require an exact source match.
+
 ## Reproduction
 
 Use CPython 3.13.3 and the [pinned environment](../../configs/extension_round2/requirements.txt). The independent data root contains the registered source files; scientific arrays are stored outside Git in the project's content-addressed artifact store. Data-provider terms remain separate from the project's MIT license.
@@ -49,7 +51,7 @@ python3 -m venv .venv
 
 The focused mathematical checks are available with `python -m pytest -q tests/extension_round2`. Without an artifact root, the frozen-input membership check is skipped; the `verify` entry point below supplies that root and requires the complete input check before benchmark fitting.
 
-Set `DATA_ROOT` and `ARTIFACT_ROOT` to explicit directories. A recovered artifact store includes the original deadline and cumulative resource ledger; `--resume` does not allocate a new budget. To conduct a new independent study, create a new artifact root and record it separately from this release.
+Set `DATA_ROOT` and `ARTIFACT_ROOT` to explicit directories. The fitting commands below describe a new independent study with the corrected current implementation and a fresh artifact root. A recovered published store includes its original deadline, cumulative ledger and source identity. Inspecting or continuing that original bounded trajectory requires revision fd7b3cb; `--resume` does not allocate a new budget. The four unrun published targets have exhausted their path allowances. The current branch can reconstruct the scalar release and audit its archived arrays through the commands below.
 
 ```bash
 python -m experiments.extension_round2.run --phase freeze --config configs/extension_round2/protocol.yaml --data-root "$DATA_ROOT" --artifact-root "$ARTIFACT_ROOT" --resume

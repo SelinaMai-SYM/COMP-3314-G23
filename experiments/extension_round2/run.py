@@ -70,6 +70,7 @@ def execute(args):
         from .inputs import freeze
         freeze(args.config,args.data_root,root);return
     if args.phase=='verify':
+        locked(root,args.config)
         from experiments.extension_verification.resources import run_command
         ordinal=1
         while (root/'command_jobs'/f'verify-{ordinal}').exists():ordinal+=1

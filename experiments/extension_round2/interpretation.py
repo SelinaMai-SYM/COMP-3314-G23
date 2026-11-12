@@ -13,7 +13,7 @@ def write_evidence(output,points,macros,diagnostics,alignment):
         factor=100 if percent else 1
         return f'{min(values)*factor:.4g}–{max(values)*factor:.4g}'+('%' if percent else '')
     def paired(b,m):return bool(row(b,m)['qualified_matched_pair_candidate'] and row(b,'QSSC')['qualified_matched_pair_candidate'])
-    lines=['# Mechanism evidence on the locked cohorts','','These are primary-point observations. A certified embedding, changed partition or geometric guarantee is not by itself an ACC/NMI improvement. The cohorts were selected retrospectively; all means are conditional on that fixed selection.','']
+    lines=['# Mechanism evidence on the locked cohorts','','Primary observations and the separately labelled fixed path are reported below. A certified embedding, changed partition or geometric guarantee is not by itself an ACC/NMI improvement. The cohorts were selected retrospectively; all means are conditional on that fixed selection.','']
     lines+=['## E1_v2: movement and relative stopping','']
     d=[data(b,'E1_v2').get('relative_stopping',{}) for b in ORDER]
     old=[row(b,'old_E1_reference',None) for b in ORDER]
@@ -30,6 +30,7 @@ def write_evidence(output,points,macros,diagnostics,alignment):
     controls=[r for r in alignment if r['permutation_seeds']=='400;401;402' and r['qualified']]
     if controls:lines.append(f"The real-band versus mean-of-three-permutations comparison has {len(controls)}/8 qualified pairs, with available-case ΔACC/ΔNMI {np.mean([r['ACC_delta_pp'] for r in controls]):+.3f}/{np.mean([r['NMI_delta_pp'] for r in controls]):+.3f} percentage points. All three individual contrasts and exchange magnitudes are retained; no permutation is selected by its score.")
     else:lines.append('No complete qualified real-band/three-permutation comparison is available in this release. A correspondence advantage is not established.')
+    lines.append('Real-band and permuted graphs exchange different amounts of mass. These comparisons therefore do not isolate correspondence from intervention magnitude. Limited qualified coverage and the default E4 regressions prevent a general correspondence-benefit claim.')
     checks=[data(b,'E4').get('graph_independent_checks',{}) for b in eligible]
     lines.append(f"Post-fit b-distance cross-class edge AUROC ranges from {interval([v.get('b_cross_label_edge_AUROC') for v in checks])}; the added edge-mass fraction crossing labels ranges from {interval([v.get('added_between_label_mass_fraction') for v in checks],True)}. These are descriptive label audits, not inputs to graph construction or parameter selection.")
     lines+=['','## E5: directional slack versus shape change','']
@@ -50,6 +51,14 @@ def write_evidence(output,points,macros,diagnostics,alignment):
     for rho in [.02,.05,.1,.2]:
         bs=[b for b in ORDER if row(b,'E6',rho)['qualified_matched_pair_candidate']];gs=[data(b,'E6',rho).get('directional_floor',{}) for b in bs]
         lines.append(f"| {rho:.2f} | {len(bs)}/8 | {interval([g['whitened_min_eigenvalue']-.5 for g in gs if 'whitened_min_eigenvalue' in g])} | {interval([g.get('dual_PSD_norm') for g in gs])} |")
+    threatened=[b for b in ORDER if row(b,'E6',.2)['qualified_matched_pair_candidate'] and row(b,'QSSC',.2)['qualified_matched_pair_candidate'] and data(b,'E6',.2).get('directional_floor',{}).get('QSSC_optimal_retained_projection_guard_violated_from_gap')]
+    if threatened:
+        lines+=['','The following cases exhaust the qualified fixed-.20 pairs whose QSSC guard violation is supported by the gap-based upper bound. This mechanism subset uses geometry and certificates, rather than scores. It does not replace the .05 primary comparison.','','| Cohort at .20 | QSSC optimum minimum, upper bound | E6 minimum | PSD-dual norm | ΔACC / ΔNMI (pp) |','|---|---:|---:|---:|---:|']
+        for b in threatened:
+            g=data(b,'E6',.2)['directional_floor'];a=row(b,'E6',.2);q=row(b,'QSSC',.2)
+            lines.append(f"| {b} | {g['QSSC_optimum_whitened_min_upper_from_gap']:.4f} | {g['whitened_min_eigenvalue']:.4f} | {g['dual_PSD_norm']:.4f} | {a['acc_mean']-q['acc_mean']:+.3f} / {a['nmi_mean']-q['nmi_mean']:+.3f} |")
+        lines.append('\nThe guard protects a threatened direction in these secondary cases, while ACC/NMI effects remain mixed. Direction protection alone does not establish better class separation.')
+    lines+=['','## Calibration correction','', 'The archived USPS E1_v2 .02 point reused a certificate attached to a looser movement target. Its recorded movement-error bound is 0.0004271509577, above the required 0.0004. Independent saved-array qualification excludes this point. The original source and output are retained. [Amendment 003](../../configs/extension_round2/amendments/003_cached_precision.json) corrects target-specific cache qualification for future independent runs; no additional fit replaces the archived point. Exact calibration-only source compatibility is permitted for report derivation, while fitting and resume remain source-locked.']
     lines+=['','## Reachability and uncertainty','']
     bounded=[]
     for p in points:

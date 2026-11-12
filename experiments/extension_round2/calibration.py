@@ -19,7 +19,7 @@ class MovementPath:
     def result(self,ref):return get_arrays(self.store,self.store.get(ref))
     def fitted(self,lam,rho):
         token=float(lam).hex();old=self.state['fits'].get(token);previous=self.result(old) if old else None
-        if previous and previous['valid_bound'] and previous['relative_gap']<=1e-6 and previous['stable_relative_gap']<=1e-6 and previous['movement_error']<=.02*rho:return previous,old
+        if self.certified(previous,rho):return previous,old
         if token not in self.state['distinct']:
             if len(self.state['distinct'])>=32:return None,None
             self.state['distinct'].append(token)
@@ -38,14 +38,19 @@ class MovementPath:
             self.save()
             def checkpoint(value):
                 save_continuation(folder/'continuation',{'state':value,'context':self.context,'lambda':lam,'parameters':self.parameters})
-            result=solve(problem,rho=rho,cpu_limit=min(570.,self.remaining()-2),checkpoint=warm,callback=checkpoint);result.update(lam=lam,fit_id=fitid,attempt=attempt,method=self.method,parameters=self.parameters,context=self.context,fit_total_CPU_seconds=time.process_time()-started)
+            result=solve(problem,rho=rho,cpu_limit=min(570.,self.remaining()-2),checkpoint=warm,callback=checkpoint);result.update(lam=lam,fit_id=fitid,attempt=attempt,method=self.method,parameters=self.parameters,context=self.context,fit_certification_rho=rho,fit_total_CPU_seconds=time.process_time()-started)
             ref=self.store.put(put_arrays(self.store,result));atomic_json(folder/'result.json',{'object':ref});self.state['fits'][token]=ref;self.save();previous=result
             if (folder/'continuation').exists():shutil.rmtree(folder/'continuation')
-            if result['certified'] or result['stopping_reason'] in ['NUMERICAL_FAILURE','NUMERICAL_CONDITIONING'] or self.remaining()<5:return result,ref
+            if self.certified(result,rho) or result['stopping_reason'] in ['NUMERICAL_FAILURE','NUMERICAL_CONDITIONING'] or self.remaining()<5:return result,ref
         return (previous,self.state['fits'].get(token)) if previous else (None,None)
 
     @staticmethod
-    def matched(result,rho):return result['certified'] and abs(result['movement']-rho)+result['movement_error']<=.05*rho
+    def certified(result,rho):
+        """A cached fit's certification belongs to the requested target."""
+        return bool(result and result.get('valid_bound') and 0<=result['relative_gap']<=1e-6 and 0<=result['stable_relative_gap']<=1e-6 and result.get('movement_error') is not None and 0<=result['movement_error']<=.02*rho)
+
+    @staticmethod
+    def matched(result,rho):return MovementPath.certified(result,rho) and abs(result['movement']-rho)+result['movement_error']<=.05*rho
 
     def target(self,rho):
         key=str(rho)
@@ -79,8 +84,8 @@ class MovementPath:
                 if value is None:break
                 last,last_ref=value,ref
                 if self.matched(value,rho):reason='MATCHED';break
-                if not value['certified']:
+                if not self.certified(value,rho):
                     reason=value['stopping_reason'] if value['stopping_reason'] in ['NUMERICAL_FAILURE','NUMERICAL_CONDITIONING'] else 'UNCERTIFIED';break
             if self.remaining()<=4 and reason!='MATCHED':reason='TIMEOUT'
-        outcome={'status':reason,'rho':rho,'fit':last_ref,'fit_id':last.get('fit_id') if last else None,'lambda':last.get('lam') if last else None,'actual_movement':last.get('movement') if last else None,'movement_error':last.get('movement_error') if last else None,'matched':reason=='MATCHED','certified':last.get('certified',False) if last else False,'refinements':refinements,'bracketing_steps':bracket_steps,'distinct_lambda_count':len(self.state['distinct'])}
+        outcome={'status':reason,'rho':rho,'fit':last_ref,'fit_id':last.get('fit_id') if last else None,'lambda':last.get('lam') if last else None,'actual_movement':last.get('movement') if last else None,'movement_error':last.get('movement_error') if last else None,'matched':reason=='MATCHED','certified':self.certified(last,rho),'refinements':refinements,'bracketing_steps':bracket_steps,'distinct_lambda_count':len(self.state['distinct'])}
         self.state['targets'][key]=outcome;self.save();return outcome

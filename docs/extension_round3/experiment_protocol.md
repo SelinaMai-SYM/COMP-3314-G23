@@ -1,0 +1,15 @@
+# Frozen experiment protocol
+
+The authoritative machine-readable specification, input lock, registry and finite queue are in [configs/extension_round3](../../configs/extension_round3). They were committed before new benchmark fitting or scores, at `3a3a41c`. There are 378 declared profiles, including separate reference and exact-alias rows. The registry maps the three candidate aliases to their full round-qualified method names.
+
+The eight inputs are the unchanged round-two report cohorts, including the adapted native 16×16 MSRA proxy and the existing historical-identity qualifications. No membership, ordering, preprocessing, A0, H or W0 is selected anew. Labels are byte-verified opaque objects during freezing. They are loaded only after a terminal numeric freeze, including all eligibility decisions. No fit is allowed afterward.
+
+The primary movement is 0.10; fixed secondary movements are 0.05 and 0.20. Each method/cohort path shares 32 distinct lambdas and 1,800 CPU seconds across targets. Individual convex fits have a 600-second ceiling. A finite unresolved endpoint remains visible and cannot establish mathematical unattainability. Paths use geometry-only bracketing and fixed clipped log-secant refinement. Saved old arrays may warm-start a path after input checks; no old scalar score is substituted for a new panel.
+
+Both rounding panels use 50 seeds, 0–49, greedy k-means++, Lloyd, one start, 300 iterations and tolerance 10⁻⁴. The geometry panel generates initial row indices on H once; each G supplies the centers at those rows. The native panel generates fresh greedy starts on each G. G is fed directly to rounding. ACC uses Hungarian matching; NMI uses geometric entropy normalization. Both metrics and sample SD use the same complete seed set. Minimum-inertia starts are diagnostic, never score-selected winners.
+
+The 32 core-hour and 24 wall-hour limits share all stages, including failures. At most two single-thread workers run; BLAS/OpenMP controls are inherited from the native resource guard. The last wall hour and 3,600 CPU seconds are reserved for closure. Evidence is exact and capped at 3,600 CPU seconds per cohort cumulatively across tau sensitivities. Primary and all remaining primary controls precede movement sensitivities. Optional development sensitivities require every primary candidate/control and exact alias to be qualified and matched. No score determines coverage expansion.
+
+Confidence intervals use 10,000 paired bootstrap draws with seed 424242, conditional on the fixed cohort and embeddings. Fifty starts are not fifty independent datasets. Full macros require all eight qualified paired cohorts for the precise contrast, target and panel; otherwise available-case masks are explicit and identical for ACC/NMI. Different partial masks are not ranked.
+
+Runtime source/environment hashes, exact initial indices, graph evidence, every finite output, dual, checkpoint and history are retained in the external content-addressed artifact store. The terminal manifest records the immutable numerical closure before label access. Committed scalar records support no-data table reconstruction.

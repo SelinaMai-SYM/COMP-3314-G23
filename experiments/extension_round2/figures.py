@@ -42,9 +42,13 @@ def figures(output,points,contrasts,diagnostics):
     fig,ax=plt.subplots(figsize=(10,4));real=[];random=[]
     for b in ORDER:
         data=diag(lookup[(b,'E4','default',.05)]).get('graph',{});real.append(.25*data.get('exchange_mass',np.nan));values=[.25*diag(lookup[(b,'E4',f'perm{s}',.05)]).get('graph',{}).get('exchange_mass',np.nan) for s in [400,401,402]];random.append(float(np.mean(values)))
-    ax.bar(np.arange(8)-.18,real,.35,label='Real omitted band',color=COLORS['E4']);ax.bar(np.arange(8)+.18,random,.35,label='Mean of all three row permutations',color='#A9B5C4');ax.set_xticks(np.arange(8),ORDER);ax.set_ylabel('Applied positive exchange / old mass');ax.legend(frameon=False);ax.set_title('E4 intervention magnitude; read with QP eligibility and alignment contrasts');fig.tight_layout();save(fig,'mechanism_E4')
+    real_bars=ax.bar(np.arange(8)-.18,real,.35,label='Real omitted band',color=COLORS['E4']);control_bars=ax.bar(np.arange(8)+.18,random,.35,label='Mean of all three row permutations',color='#A9B5C4')
+    for i,b in enumerate(ORDER):
+        if not lookup[(b,'E4','default',.05)]['graph_eligible']:ax.annotate('W0 fallback',(i-.18,0),xytext=(0,3),textcoords='offset points',ha='center',rotation=90,fontsize=7,color=COLORS['E4'])
+        if not all(lookup[(b,'E4',f'perm{s}',.05)]['graph_eligible'] for s in [400,401,402]):control_bars[i].set_hatch('///');control_bars[i].set_edgecolor('#68788E')
+    ax.set_xticks(np.arange(8),ORDER);ax.set_ylabel('Applied positive exchange / old mass');ax.legend(frameon=False);ax.set_title('E4 applied exchange; default W0 fallbacks are labelled\nHatching: control group includes an ineligible QP');fig.tight_layout();save(fig,'mechanism_E4')
     fig,axes=plt.subplots(1,2,figsize=(11,4))
-    offsets={'AR':(-13,9),'MSRA50':(6,-7),'ORL':(-4,-14),'BinAlpha':(-18,11),'JAFFE':(7,-3),'UMIST':(5,0),'YaleB':(5,3),'USPS':(-4,7)}
+    offsets={'AR':(-13,9),'MSRA50':(6,-7),'ORL':(6,3),'BinAlpha':(-18,11),'JAFFE':(7,-3),'UMIST':(5,0),'YaleB':(5,3),'USPS':(-4,7)}
     for b in ORDER:
         data=diag(lookup[(b,'E5','default',.05)]);guard=data.get('direction_guard',{});x=guard.get('QSSC_weighted_triangle_slack_over_TV_H');y=guard.get('weighted_triangle_slack_over_TV_H')
         face=COLORS['E5'] if data.get('QSSC_comparison_qualified_and_matched') else 'white'

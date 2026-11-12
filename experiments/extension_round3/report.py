@@ -38,6 +38,7 @@ def export_records(config,root):
         p['panels']={panel:{k:v for k,v in value.items() if k!='scientific_objects'} for panel,value in e.get('panels',{}).items()};profiles.append(p)
     from sklearn.metrics import adjusted_rand_score
     planned_lookup={(q['benchmark'],q['method'],q['rho'],q['tau_multiplier']):q for q in queue()}
+    profile_lookup={p['id']:p for p in profiles}
     for p in profiles:
         if p['method'] not in CANDIDATES or not p['evaluation'].get('mechanism'):continue
         raw=read(store.root/'evaluations'/(p['id']+'.json'))
@@ -49,7 +50,13 @@ def export_records(config,root):
             if not q:continue
             cp=store.root/'evaluations'/(q['id']+'.json')
             if not cp.exists():continue
-            other=read(cp)
+            other=read(cp);control_profile=profile_lookup[q['id']]
+            if p['G_object'] and control_profile['G_object']:
+                H=store.get(lock['cohorts'][p['benchmark']]['objects']['H']);scale=float(np.linalg.norm(H-H.mean(axis=0)))
+                distance=float(np.linalg.norm(store.get(p['G_object'])-store.get(control_profile['G_object']))/scale) if scale else 0.
+                diagnostic=p['evaluation']['mechanism'];diagnostic['embedding_difference_vs_'+control]=distance
+                error=p['certificate'].get('movement_error');control_error=control_profile['certificate'].get('movement_error')
+                diagnostic['certified_embedding_difference_lower_vs_'+control]=max(0.,distance-error-control_error) if error is not None and control_error is not None and p['certificate'].get('valid_bound') and control_profile['certificate'].get('valid_bound') else None
             for panel,data in raw.get('panels',{}).items():
                 od=other.get('panels',{}).get(panel)
                 if not data['complete'] or not od or not od['complete']:continue
@@ -59,7 +66,7 @@ def export_records(config,root):
                 p['evaluation']['mechanism'][panel+'_changed_partition_fraction_vs_'+control]=float(np.mean(np.asarray(agreements)<1-1e-12))
                 p['evaluation']['mechanism'][panel+'_partition_ARI_vs_'+control]=float(np.mean(agreements))
     ledger,jobs=resource_rows(root)
-    return dict(schema='ssc-round3-scalar-release-v1',protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),input_lock_sha256=digest(ROOT/'configs/extension_round3/cohort_lock.json'),numerical_freeze_sha256=digest(store.root/'numerical_freeze.json'),source_fingerprint=lock['source_fingerprint'],analysis_source_files_at_freeze=frozen.get('analysis_source_files',{}),analysis_source_files_at_export={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']},environment=lock['environment'],cohorts={b:{k:c[k] for k in ['candidate_id','n','K','prep','historical_identity','adaptation_flags','gamma_nominal','gamma_effective','variant']} for b,c in lock['cohorts'].items()},profiles=profiles,resource_usage=jobs,budget={k:v for k,v in ledger.items() if k not in ['entries','active']},clock=read(store.root/'clock.json'),selection_qualification=lock['selection_qualification'])
+    return dict(schema='ssc-round3-scalar-release-v1',protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),input_lock_sha256=digest(ROOT/'configs/extension_round3/cohort_lock.json'),numerical_freeze_sha256=digest(store.root/'numerical_freeze.json'),source_fingerprint=lock['source_fingerprint'],protocol_amendments=[{k:a[k] for k in ['id','reason','timing','effective_overrides','continuation_rule'] if k in a} for a in lock.get('amendments',[])],analysis_source_files_at_freeze=frozen.get('analysis_source_files',{}),analysis_source_files_at_export={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']},environment=lock['environment'],cohorts={b:{k:c[k] for k in ['candidate_id','n','K','prep','historical_identity','adaptation_flags','gamma_nominal','gamma_effective','variant']} for b,c in lock['cohorts'].items()},profiles=profiles,resource_usage=jobs,budget={k:v for k,v in ledger.items() if k not in ['entries','active']},clock=read(store.root/'clock.json'),selection_qualification=lock['selection_qualification'])
 
 
 def contrast_controls(method):
@@ -138,6 +145,8 @@ def render(records,output,*,plots=True):
     (output/'summary.md').write_text(intro)
     log=output/'experiment_log.md'
     lines=['# Scientific experiment log\n','\nThe registered queue and numerical qualifications were frozen before terminal benchmark-label access. Each row records one fixed configuration and seed panel; no score triggers a new fit. Numerical failures are retained, with the next decision fixed to report rather than retune.\n\n']
+    for amendment in records.get('protocol_amendments',[]):
+        lines.append(f"- Numerical amendment {amendment['id']}: {amendment['reason']} Timing: {amendment['timing']}. Next decision: continue the unchanged scientific comparison under the original cumulative CPU limits. Earlier states remain archived; no terminal scores were available when this amendment was applied.\n")
     for r in coverage:
         matching=[m for m in metrics if m['id']==r['id']]
         if matching:

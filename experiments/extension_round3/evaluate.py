@@ -32,6 +32,12 @@ def freeze_outputs(config,root):
             result=get_arrays(store,record['result']);c=lock['cohorts'][planned['benchmark']];H=store.get(c['objects']['H']);W=store.get(c['objects']['W0'])
             if planned['method'] in registry() or planned['method']=='UNIFORM_GRAPH_ALIAS':
                 params=get_arrays(store,record.get('parameters',{}))
+                if planned['method'] in registry() and 'parameters' not in record:
+                    from .calibration import parameters
+                    ep=store.root/'evidence'/f"{planned['benchmark']}__t{planned['tau_multiplier']:g}.json"
+                    params,meta=parameters(H,W,get_arrays(store,read(ep)['result']),registry()[planned['method']])
+                    audit['recovered_parameters']=put_arrays(store,params);audit['recovered_intervention_metadata']=put_arrays(store,meta)
+                    audit['recovery_reason']='Restore model identity for a finite point retained after guarded interruption; no new optimization'
                 if planned['method']=='UNIFORM_GRAPH_ALIAS':params={'weights':.9*FusionProblem(H,W,1.).w}
                 P=FusionProblem(H,W,record.get('lambda',record.get('lambda_value')),**params);cert=P.certificate(result['G'],result['q'],result.get('p'))
                 audit.update(certificate=scalar(cert),certified=eligible(cert,planned['rho']),qualified=matched(cert,planned['rho']))
@@ -44,7 +50,7 @@ def freeze_outputs(config,root):
                 P=Problem(H,W,c['gamma_effective'],kind='ssc');dual=P.dual(result['q'],result.get('p'));primal=P.primal(result['G']);signed=primal-dual['dual'];relative=signed/max(1.,abs(primal),abs(dual['dual']));cap=max(v for k,v in dual.items() if k.endswith('violation'))
                 qualified=bool(signed>=0 and relative<=1e-5 and cap<=1e-8);audit.update(qualified=qualified,certified=qualified,certificate={'primal':primal,'dual':dual['dual'],'signed_gap':signed,'relative_gap':relative,'capacity_residual':cap})
             if not np.isfinite(result['G']).all():raise ValueError('nonfinite rounding output')
-            for ref in collect_refs(record):
+            for ref in collect_refs([record,audit]):
                 if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('numerical CAS identity mismatch')
                 files[ref['path']]=ref['sha256']
         audits[planned['id']]=audit;profiles.append(record);files[str(p.relative_to(store.root))]=digest(p)
@@ -71,11 +77,11 @@ def mechanisms(store,lock,record,G,y):
     meta=get_arrays(store,record.get('intervention_metadata',{}))
     if 'weights' in params:
         from scipy import sparse
-        new=params['weights'];new_graph=sparse.csr_matrix((np.r_[new,new],(np.r_[P.i,P.j],np.r_[P.j,P.i])),shape=W.shape);out['modified_components']=int(connected_components(new_graph,directed=False,return_labels=False));fraction=np.divide(new,w);removed=w-new;degree=np.asarray(W.sum(axis=1)).ravel();new_degree=np.bincount(np.r_[P.i,P.j],weights=np.r_[new,new],minlength=len(H));out.update(removed_mass_fraction=float(removed.sum()/w.sum()),minimum_edge_fraction=float(fraction.min()),maximum_edge_fraction=float(fraction.max()),degree_ratio_min=float(np.min(new_degree[degree>0]/degree[degree>0])),degree_ratio_max=float(np.max(new_degree[degree>0]/degree[degree>0])),support_unchanged=bool(np.all(new>0)),cross_class_removed_mass=float(removed[cross].sum()),within_class_removed_mass=float(removed[~cross].sum()))
+        new=params['weights'];new_graph=sparse.csr_matrix((np.r_[new,new],(np.r_[P.i,P.j],np.r_[P.j,P.i])),shape=W.shape);out['modified_components']=int(connected_components(new_graph,directed=False,return_labels=False));fraction=np.divide(new,w);removed=w-new;degree=np.asarray(W.sum(axis=1)).ravel();new_degree=np.bincount(np.r_[P.i,P.j],weights=np.r_[new,new],minlength=len(H));out.update(nonuniform_weight_deviation=float(w@np.abs(fraction-.9)/w.sum()) if len(w) else 0.,removed_mass_fraction=float(removed.sum()/w.sum()),minimum_edge_fraction=float(fraction.min()),maximum_edge_fraction=float(fraction.max()),degree_ratio_min=float(np.min(new_degree[degree>0]/degree[degree>0])),degree_ratio_max=float(np.max(new_degree[degree>0]/degree[degree>0])),support_unchanged=bool(np.all(new>0)),cross_class_removed_mass=float(removed[cross].sum()),within_class_removed_mass=float(removed[~cross].sum()))
     if 'tubes' in params:
-        a=params['tubes'];uncertainty=2*np.sqrt(max(0.,gap));out.update(tube_budget=float(w@a),tube_reference_budget=float(.25*(w@a0)),active_tubes=int(np.sum(lg-a>uncertainty)),uncertain_tubes=int(np.sum(np.abs(lg-a)<=uncertainty)),dispersion_certified_lower=float(dispersion_lower_bound(S,gap)/S) if S else 0.,cross_class_tube_budget=float(w[cross]@a[cross]),within_class_tube_budget=float(w[~cross]@a[~cross]))
+        a=params['tubes'];uncertainty=2*np.sqrt(max(0.,gap));out.update(tube_budget=float(w@a),tube_target_budget=meta.get('target_budget'),tube_deviation_from_uniform=float(w@np.abs(a-.25*a0)/(w@a0)) if w@a0 else 0.,tube_reference_budget=float(.25*(w@a0)),active_tubes=int(np.sum(lg-a>uncertainty)),uncertain_tubes=int(np.sum(np.abs(lg-a)<=uncertainty)),dispersion_certified_lower=float(dispersion_lower_bound(S,gap)/S) if S else 0.,cross_class_tube_budget=float(w[cross]@a[cross]),within_class_tube_budget=float(w[~cross]@a[~cross]))
     if 'alpha' in params:
-        alpha=params['alpha'];out.update(guard_coefficient_mass=float(w@alpha),cross_class_guard_mass=float(w[cross]@alpha[cross]),within_class_guard_mass=float(w[~cross]@alpha[~cross]))
+        alpha=params['alpha'];out.update(realized_guard_loss=float((w*alpha)@(lg+lengths(edge-P.h)-a0)),guard_alpha_deviation_from_uniform=float(w@np.abs(alpha-1)/w.sum()) if len(w) else 0.,guard_coefficient_mass=float(w@alpha),cross_class_guard_mass=float(w[cross]@alpha[cross]),within_class_guard_mass=float(w[~cross]@alpha[~cross]))
     for key,mask in [('within',~cross),('between',cross)]:
         mass=float(w[mask].sum());anchor_mass=float(w[mask]@a0[mask])
         if 'weights' in params:out[key+'_removed_mass_rate']=float((w[mask]-params['weights'][mask]).sum()/mass) if mass else None
@@ -105,6 +111,7 @@ def evaluate(config,root):
             record=read(profile_path(store,planned['id']));dest=store.root/'evaluations'/(record['id']+'.json')
             if dest.exists():continue
             audit=frozen['qualification'][record['id']]
+            if 'recovered_parameters' in audit:record=dict(record,parameters=audit['recovered_parameters'],intervention_metadata=audit['recovered_intervention_metadata'])
             if not record.get('result'):
                 atomic_json(dest,dict(id=record['id'],status=record['status'],complete=False));continue
             result=get_arrays(store,record['result']);G=result['G'];panels={}

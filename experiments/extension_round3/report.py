@@ -163,20 +163,23 @@ def make_plots(metrics,mechanisms,folder):
     import matplotlib.pyplot as plt
     folder.mkdir(parents=True,exist_ok=True);plt.rcParams['svg.fonttype']='none'
     for panel in ['anchor_generated','native']:
-        fig,axs=plt.subplots(2,4,figsize=(13,6),layout='constrained')
-        for ax,b in zip(axs.ravel(),ORDER):
-            for method in ['QSSC',*CANDIDATES]:
-                rows=sorted([r for r in metrics if r['benchmark']==b and r['method']==method and r['tau_multiplier']==1 and r['panel']==panel],key=lambda r:r['movement'] or 0.)
-                if rows:ax.plot([r['movement'] for r in rows],[r['acc_mean'] for r in rows],marker='o',label=method)
-            ax.set(title=b,xlabel='Actual movement',ylabel='ACC (%)')
-        handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (finite outputs; eligibility in tables)');fig.savefig(folder/f'movement_{panel}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
+        for metric in ['acc','nmi']:
+            fig,axs=plt.subplots(2,4,figsize=(13,6),layout='constrained')
+            for ax,b in zip(axs.ravel(),ORDER):
+                for method in ['QSSC',*CANDIDATES]:
+                    rows=sorted([r for r in metrics if r['benchmark']==b and r['method']==method and r['tau_multiplier']==1 and r['panel']==panel],key=lambda r:r['movement'] or 0.)
+                    if rows:ax.plot([r['movement'] for r in rows],[r[metric+'_mean'] for r in rows],marker='o',label=method)
+                ax.set(title=b,xlabel='Actual movement',ylabel=metric.upper()+' (%)')
+            handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (finite outputs; eligibility in tables)');fig.savefig(folder/f'movement_{panel}_{metric}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
     fig,axs=plt.subplots(1,2,figsize=(10,4),layout='constrained')
     for method in CANDIDATES:
         rows=[r for r in mechanisms if r['method']==method and r['rho']==.1 and r['tau_multiplier']==1.]
         axs[0].scatter([r.get('leverage_median',0) for r in rows],[r.get('weighted_rank_difference_from_pilot',0) for r in rows],label=method)
         for r in rows:axs[0].annotate(r['benchmark'],(r.get('leverage_median',0),r.get('weighted_rank_difference_from_pilot',0)),fontsize=6)
     first={r['benchmark']:r for r in mechanisms if r['method']=='R3_E7_CAVITY' and r['rho']==.1 and r['tau_multiplier']==1.}
-    for b,r in first.items():axs[1].scatter(r.get('pilot_cross_class_auroc',.5),r.get('cavity_cross_class_auroc',.5));axs[1].annotate(b,(r.get('pilot_cross_class_auroc',.5),r.get('cavity_cross_class_auroc',.5)),fontsize=7)
+    for b,r in first.items():
+        x=r.get('pilot_cross_class_auroc');y=r.get('cavity_cross_class_auroc')
+        if x is not None and y is not None:axs[1].scatter(x,y);axs[1].annotate(b,(x,y),fontsize=7)
     axs[0].set(xlabel='Median edge leverage',ylabel='Weighted |cavity rank − pilot rank|',title='Does deletion change the intervention?');axs[1].plot([0,1],[0,1],ls='--',color='grey');axs[1].set(xlabel='Pilot cross-class AUROC',ylabel='Cavity cross-class AUROC',title='Post-fit semantic audit');axs[0].legend(fontsize=6);fig.savefig(folder/'self_influence.svg',metadata={'Creator':'Group 23'});plt.close(fig)
 
 

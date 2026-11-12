@@ -17,6 +17,7 @@ def rebuild(manifest_path,output):
     records=json.loads(payload);ids=[r['id'] for r in records['profiles']]
     if not ids or len(ids)!=len(set(ids)):raise ValueError('empty or duplicate profile primary keys')
     for p in records['profiles']:
+        if p['evaluation'].get('complete') and set(p['panels'])!={'anchor_generated','native'}:raise ValueError('missing mandatory rounding panel')
         for v in p['panels'].values():
             if v['complete'] and [r['seed'] for r in v['trials']]!=list(range(50)):raise ValueError('missing/duplicate complete trials')
     output=Path(output).resolve()

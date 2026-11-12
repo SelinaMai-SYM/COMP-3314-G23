@@ -19,6 +19,8 @@ def recover_finite(root,config_path):
                 definition['W_sha256']=graph['W']['sha256']
             state=load_record(store.root/'paths'/f"{b}--{task['method']}--{definition['variant']}.json")
             if not state or not state['fits']:continue
+            unfinished=[rho for rho in task['targets'] if str(rho) not in state['targets']]
+            first_unfinished=unfinished[0] if unfinished else None
             candidates=[]
             for ref in state['fits'].values():
                 result=store.get(ref)
@@ -28,10 +30,15 @@ def recover_finite(root,config_path):
             for rho in task['targets']:
                 path=endpoint_path(store,definition,rho);old=load_record(path)
                 if old and old.get('result'):continue
+                if old and old['outcome']['status']=='UNRUN_PATH_BUDGET':continue
                 known=state['targets'].get(str(rho),{});selected=known.get('fit')
                 if selected:result=store.get(selected)
                 else:_,selected,result=max(candidates,key=lambda v:(v[0],v[2]['fit_id']))
                 outcome={'status':'TIMEOUT_RECOVERED_LAST_FINITE','rho':rho,'fit':selected,'fit_id':result['fit_id'],'lambda':result['lam'],'actual_movement':result['movement'],'movement_error':result['movement_error'],'certified':result['certified'],'matched':False,'recovery':'Saved finite fit only; no optimization, search or score-based choice','selection':'Last completed fit by original result-file modification time' if not known.get('fit') else 'Existing frozen target fit'}
+                outcome['search_outcome_saved_before_interruption']=bool(known)
+                if not known and first_unfinished is not None and task['targets'].index(rho)>task['targets'].index(first_unfinished):
+                    outcome.update(status='UNRUN_PATH_BUDGET',last_finite_fit=selected,fit=None,certified=False,actual_movement=None,movement_error=None)
+                    outcome['recovery']='A preceding target was interrupted; this later target was not reached. Last finite path state retained separately.'
                 if graph:outcome.update(graph_eligible=graph['diagnostics']['eligible'],graph_status=graph['diagnostics']['status'])
                 if old:
                     atomic_json(store.root/'recovery_records'/f'{path.stem}--original.json',old);path.unlink()

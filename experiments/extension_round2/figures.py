@@ -8,7 +8,7 @@ from .common import ORDER,METHODS
 COLORS={'QSSC':'#6B7280','E1_v2':'#2864A0','E4':'#D17B20','E5':'#318266','E6':'#8457A6'}
 
 def figures(output,points,contrasts,diagnostics):
-    folder=output/'figures';folder.mkdir(exist_ok=True);plt.rcParams.update({'font.size':9,'axes.spines.top':False,'axes.spines.right':False,'svg.fonttype':'none','savefig.bbox':'tight'})
+    folder=output/'figures';folder.mkdir(exist_ok=True);plt.rcParams.update({'font.size':9,'axes.spines.top':False,'axes.spines.right':False,'svg.fonttype':'none','svg.hashsalt':'comp3314-extension-round2-v1','savefig.bbox':'tight'})
     def save(fig,name):
         fig.savefig(folder/(name+'.svg'),metadata={'Date':None,'Creator':'COMP3314 Group 23'});fig.savefig(folder/(name+'.png'),dpi=180);plt.close(fig)
     lookup={(p['benchmark'],p['method'],p['variant'],p['rho']):p for p in points}
@@ -28,10 +28,10 @@ def figures(output,points,contrasts,diagnostics):
             for method in METHODS:
                 rows=[lookup[(b,method,'default',rho)] for rho in [.02,.05,.1,.2]];rows=[r for r in rows if r[metric] is not None and r['actual_movement'] is not None]
                 if not rows:continue
-                ax.plot([r['actual_movement'] for r in rows],[r[metric] for r in rows],color=COLORS[method],lw=.8,label=method)
+                qualified=[r for r in rows if r['qualified_matched_pair_candidate']];ax.plot([r['actual_movement'] for r in qualified],[r[metric] for r in qualified],color=COLORS[method],lw=.8,label=method)
                 for row in rows:ax.plot(row['actual_movement'],row[metric],marker='s' if row['rho']==.05 else 'o',ms=4,color=COLORS[method],markerfacecolor=COLORS[method] if row['qualified_matched_pair_candidate'] else 'white')
             ax.set_title(b);ax.set_xlabel('Actual ||G-H||F / SH');ax.set_ylabel(label+' (%)');ax.grid(alpha=.2)
-        axes[0,0].legend(ncol=3,fontsize=8,frameon=False);fig.suptitle(f'Fixed movement path: {label}; squares denote the .05 primary target\nHollow markers retain uncertified or unmatched finite outputs',fontsize=11);fig.tight_layout();save(fig,'movement_response_'+label.lower())
+        axes[0,0].legend(ncol=3,fontsize=8,frameon=False);fig.suptitle(f'Fixed movement path: {label}; squares denote the .05 primary target\nLines join qualified matched points; hollow markers retain other finite outputs',fontsize=11);fig.tight_layout();save(fig,'movement_response_'+label.lower())
     fig,ax=plt.subplots(figsize=(10,4));values=[];lo=[];hi=[]
     for b in ORDER:
         data=diag(lookup[(b,'E1_v2','default',.05)]).get('relative_stopping',{});values.append(data.get('observed_positive_anchor_fraction',np.nan));lo.append(data.get('certain_inside_positive_anchor_fraction',np.nan));hi.append(data.get('possible_inside_positive_anchor_fraction',np.nan))
@@ -41,11 +41,13 @@ def figures(output,points,contrasts,diagnostics):
         data=diag(lookup[(b,'E4','default',.05)]).get('graph',{});real.append(.25*data.get('exchange_mass',np.nan));values=[.25*diag(lookup[(b,'E4',f'perm{s}',.05)]).get('graph',{}).get('exchange_mass',np.nan) for s in [400,401,402]];random.append(float(np.mean(values)))
     ax.bar(np.arange(8)-.18,real,.35,label='Real omitted band',color=COLORS['E4']);ax.bar(np.arange(8)+.18,random,.35,label='Mean of all three row permutations',color='#A9B5C4');ax.set_xticks(np.arange(8),ORDER);ax.set_ylabel('Applied positive exchange / old mass');ax.legend(frameon=False);ax.set_title('E4 intervention magnitude; read with QP eligibility and alignment contrasts');fig.tight_layout();save(fig,'mechanism_E4')
     fig,axes=plt.subplots(1,2,figsize=(11,4))
+    offsets={'AR':(-13,9),'MSRA50':(6,-7),'ORL':(-4,-14),'BinAlpha':(-18,11),'JAFFE':(7,-3),'UMIST':(5,0),'YaleB':(5,3),'USPS':(-4,7)}
     for b in ORDER:
         data=diag(lookup[(b,'E5','default',.05)]);guard=data.get('direction_guard',{});x=guard.get('QSSC_weighted_triangle_slack_over_TV_H');y=guard.get('weighted_triangle_slack_over_TV_H')
-        if x is not None and y is not None:axes[0].scatter(x,y,color=COLORS['E5']);axes[0].annotate(b,(x,y),fontsize=8)
-        if data:axes[1].scatter(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan),color=COLORS['E5']);axes[1].annotate(b,(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan)),fontsize=8)
-    limits=axes[0].get_xlim();axes[0].plot(limits,limits,color='#999999',ls='--',lw=.7);axes[0].set(xlabel='QSSC weighted slack / TV(H)',ylabel='E5 weighted slack / TV(H)');axes[1].set(xlabel='Residual from global scale + translation / SH',ylabel='Distance from same-target QSSC / SH');fig.suptitle('E5: lower directional slack versus genuine shape change\nFinite primary outputs; consult coverage for certification and movement matching',fontsize=11);fig.tight_layout();save(fig,'mechanism_E5')
+        face=COLORS['E5'] if data.get('QSSC_comparison_qualified_and_matched') else 'white'
+        if x is not None and y is not None:axes[0].scatter(x,y,facecolors=face,edgecolors=COLORS['E5']);axes[0].annotate(b,(x,y),xytext=offsets[b],textcoords='offset points',fontsize=8)
+        if data:axes[1].scatter(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan),facecolors=face,edgecolors=COLORS['E5']);axes[1].annotate(b,(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan)),xytext=(4,3),textcoords='offset points',fontsize=8)
+    limits=axes[0].get_xlim();axes[0].plot(limits,limits,color='#999999',ls='--',lw=.7);axes[0].set(xlabel='QSSC weighted slack / TV(H)',ylabel='E5 weighted slack / TV(H)');axes[1].set(xlabel='Residual from global scale + translation / SH',ylabel='Distance from same-target QSSC / SH');axes[1].margins(x=.16,y=.12);fig.suptitle('E5: lower directional slack versus genuine shape change\nFinite primary outputs; hollow markers denote unqualified pairs',fontsize=11);fig.tight_layout();save(fig,'mechanism_E5')
     fig,ax=plt.subplots(figsize=(10,4));q=[];e=[]
     for b in ORDER:
         data=diag(lookup[(b,'E6','default',.05)]).get('directional_floor',{});q.append(data.get('same_target_QSSC_whitened_min_eigenvalue',np.nan));e.append(data.get('whitened_min_eigenvalue',np.nan))

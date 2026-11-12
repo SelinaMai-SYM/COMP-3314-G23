@@ -1,0 +1,60 @@
+{
+  "RSS_qualification": "Sum of the two largest sampled child-job peaks is a conservative bound, not a measurement of simultaneous system RSS.",
+  "RSS_target_bytes": 8589934592,
+  "artifact_manifest_sha256": "1d7528dde70f72adb9954bb2a68b17157cd143e6ae431f867bd9eeb71ce34257",
+  "charged_CPU_core_hours": 9.833659222141202,
+  "charged_CPU_seconds": 35401.173199708326,
+  "clock_qualification": "Conservatively includes thirty minutes of opening audit/setup",
+  "closed_jobs": 426,
+  "elapsed_study_wall_hours": 11.681595126721595,
+  "failed_jobs": 16,
+  "maximum_sampled_job_RSS_bytes": 897482752,
+  "maximum_workers": 2,
+  "phases": {
+    "aggregation": {
+      "CPU_seconds": 199.13865558333327,
+      "jobs": 7
+    },
+    "archiving": {
+      "CPU_seconds": 187.454309625,
+      "jobs": 2
+    },
+    "auxiliary": {
+      "CPU_seconds": 8.593827208333332,
+      "jobs": 8
+    },
+    "graph_QP": {
+      "CPU_seconds": 537.266675125,
+      "jobs": 8
+    },
+    "graph_QP_controls": {
+      "CPU_seconds": 648.60798875,
+      "jobs": 8
+    },
+    "path": {
+      "CPU_seconds": 29166.056348374997,
+      "jobs": 120
+    },
+    "recovery": {
+      "CPU_seconds": 11.48650958333204,
+      "jobs": 2
+    },
+    "reference": {
+      "CPU_seconds": 4167.842645375,
+      "jobs": 32
+    },
+    "rounding": {
+      "CPU_seconds": 349.5642332500001,
+      "jobs": 228
+    },
+    "validation": {
+      "CPU_seconds": 125.16200683333332,
+      "jobs": 11
+    }
+  },
+  "schema": "ssc-round2-resource-close-v1",
+  "scope": "Scientific execution, validation, aggregation and verified archive through final fresh scalar packet at f76913c. Subsequent metadata-only verification and Git publication are recorded in the external handover.",
+  "sum_of_two_largest_job_peaks_bytes": 1610088448,
+  "threads_per_worker": 1,
+  "wall_limit_hours": 24
+}

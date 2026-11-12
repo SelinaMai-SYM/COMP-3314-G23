@@ -1,58 +1,32 @@
 {
   "archive_recovery_receipt": "archive_receipt.json",
-  "original_fresh_environment": {
-    "TLS_CA_sha256": "9de631945c530a883a7a08dd459bd2fc9355ea3c6e537c79516981eba7d7d093",
-    "shallow": true,
-    "stages": [
-      {
-        "stage": "fresh single-branch shallow clone",
-        "status": "PASSED"
-      },
-      {
-        "stage": "new environment",
-        "status": "PASSED"
-      },
-      {
-        "stage": "refresh recorded extension checkout",
-        "status": "PASSED"
-      },
-      {
-        "stage": "select exact extension revision",
-        "status": "PASSED"
-      },
-      {
-        "stage": "pinned dependency installation",
-        "status": "PASSED"
-      },
-      {
-        "stage": "dependency consistency",
-        "status": "PASSED"
-      },
-      {
-        "stage": "mathematical and frozen-input verification",
-        "status": "PASSED"
-      },
-      {
-        "stage": "synthetic pipeline",
-        "status": "PASSED"
-      },
-      {
-        "stage": "independent MSRA data root",
-        "status": "PASSED"
-      },
-      {
-        "stage": "historical no-data reconstruction",
-        "status": "PASSED"
-      },
-      {
-        "stage": "current no-data scalar reconstruction",
-        "status": "PASSED"
-      }
-    ],
+  "final_fresh_scalar_packet": {
+    "contrast_qualification_checked": true,
+    "environment": "Previously created clean virtual environment in a shallow single-branch checkout with spaces",
+    "private_data_or_numerical_store_required": false,
+    "schema": "ssc-round2-final-scalar-validation-v1",
     "status": "PASSED",
+    "tested_commit": "f76913cc50610d8a0e5a23b74841339be71b8278",
+    "verification": {
+      "complete_seed_sets": 228,
+      "files_verified": 33,
+      "manifest_sha256": "3995afbf9588fc300fcdcfafc86eed076d3bbac69d57dfbfdd9a94d7a0b361e6",
+      "paired_contrasts_recomputed": 824,
+      "planned_endpoints": 232,
+      "scope": "Byte integrity, coverage, mean/sample SD and paired bootstrap; numerical certificates require archived arrays",
+      "trials": 11400
+    }
+  },
+  "original_fresh_environment": {
+    "historical_no_data_reconstruction": "PASSED",
+    "independent_native_MSRA_source": "PASSED",
+    "new_pinned_virtual_environment": true,
+    "original_focused_tests": 22,
+    "shallow_checkout_with_spaces": true,
+    "status": "PASSED",
+    "synthetic_pipeline": "PASSED",
     "tested_commit": "30aa9d6c8e12e2e6d54ba0c708694675f6bfd6ba"
   },
-  "original_fresh_scalar_scope": "The original fresh-environment check used the provisional primary packet; final packet verification is recorded separately.",
   "post_correction_code": {
     "errors": 0,
     "failures": 0,
@@ -76,6 +50,7 @@
     "relative_links": "All resolved",
     "status": "PASSED"
   },
+  "resource_close_receipt": "resource_summary.json",
   "schema": "ssc-round2-public-verification-v1",
   "scientific_invariance_receipt": "scientific_invariance.json",
   "status": "PASSED"

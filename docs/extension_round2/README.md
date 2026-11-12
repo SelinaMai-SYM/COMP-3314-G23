@@ -12,6 +12,7 @@ The eight cohorts are fixed to the mean-endpoint configurations of the existing 
 - [Observed mechanisms and attribution](../../results/extension_round2/mechanism_evidence.md)
 - [Method definitions and prior art](methods.md)
 - [Report and presentation integration](../../results/extension_round2/integration_note.md)
+- [Verification and reconstruction](../../results/extension_round2/validation.json), [archive receipt](../../results/extension_round2/archive_receipt.json), and [resource accounting](../../results/extension_round2/resource_summary.json)
 
 ## Common inputs and evaluation
 

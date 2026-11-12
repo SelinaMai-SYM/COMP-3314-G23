@@ -58,6 +58,8 @@ python -m experiments.extension_round2.report --config configs/extension_round2/
 
 The executable [protocol](../../configs/extension_round2/protocol.yaml) fixes two single-thread workers, a 24-hour wall deadline, 600 CPU seconds per fit/QP/auxiliary attempt, 1800 CPU seconds per complete main method/cohort path, and 600 CPU seconds per control target. All eight primary/reference attempts precede secondary paths and controls. Unmatched, inactive, uncertified, failed and unrun endpoints remain distinct. Resource and coverage tables report actual execution rather than equating a declared matrix with completed work.
 
+Interrupted paths retain the latest recorded finite checkpoint as a diagnostic output, with independent certificate checks and no additional fitting iterations. The registered failure policy does not promote it to a completed matched target. A later target that was never reached remains unrun, with its last finite path reference stored separately. An interrupted attempt may retain only its checkpoint summary; completed attempts retain full recorded scalar histories.
+
 The [artifact manifest](../../results/extension_round2/artifact_manifest.json) describes recoverable matrices, duals, continuation states, predictions, numerical histories and source snapshots. A verified archive is retained outside Git because source-derived arrays may be restricted. The existing export/recovery interface accepts only this study's manifest:
 
 ```bash

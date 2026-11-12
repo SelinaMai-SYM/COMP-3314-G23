@@ -19,6 +19,9 @@ def write_evidence(output,points,macros,diagnostics,alignment):
     old=[row(b,'old_E1_reference',None) for b in ORDER]
     lines.append(f"Among positive-anchor edges, the observed fraction of edge weight at/below the stopping distance ranges from {interval([v.get('observed_positive_anchor_weight_fraction') for v in d],True)}. Coincident edges and uncertainty bands are retained separately in diagnostics.json; this observed fraction is not an exact active-set certificate. The primary movement ranges from {interval([row(b,'E1_v2')['actual_movement'] for b in ORDER])}.")
     lines.append(f"Only {sum(bool(r['certified']) for r in old)}/8 original non-squared E1 reference attempts were certified. Their finite movements range from {interval([r['actual_movement'] for r in old])}; these outputs cannot establish stationary or optimal behavior of that older objective. Quadratic movement alone therefore does not validate the proposed failure explanation.")
+    comparable=[b for b in ORDER if row(b,'E1_v2')['actual_movement'] is not None and row(b,'old_E1_reference',None)['actual_movement'] is not None]
+    increased=[b for b in comparable if row(b,'E1_v2')['actual_movement']>row(b,'old_E1_reference',None)['actual_movement']]
+    lines.append(f"At these locked operating points, the new finite output moves farther than the old E1 attempt on {len(increased)}/{len(comparable)} cohorts ({', '.join(increased) or 'none'}). These references are not movement-matched; this comparison describes the operating points and does not isolate a fidelity effect.")
     lines+=['','## E4: graph intervention and correspondence control','']
     eligible=[b for b in ORDER if row(b,'E4')['graph_eligible'] and row(b,'E4')['point_id']]
     ambiguous=sum(bool(data(b,'E4').get('auxiliary_band',{}).get('cutoff_ambiguity')) for b in ORDER)

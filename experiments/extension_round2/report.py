@@ -119,7 +119,7 @@ def build(config_path,artifact_root,output):
     write_csv(out/'E4_alignment_controls.csv',alignment)
     for b,entry in lock['cohorts'].items():resources.append({'category':'preparation_detail','benchmark':b,'CPU_seconds':entry['preparation_CPU_seconds'],'additive_to_native_total':False})
     for file in sorted((store.root/'fits').glob('*/definition.json')):
-        definition=load_record(file);saved=load_record(file.with_name('result.json'));value=store.get(saved['object']) if saved else {}
+        definition=load_record(file);saved=load_record(file.with_name('result.json')) or load_record(file.with_name('recovered_result.json'));value=store.get(saved['object']) if saved else {}
         resources.append({'category':'refinement_detail','benchmark':definition['benchmark'],'method':definition['method'],'variant':definition['variant'],'fit_id':file.parent.name,'lambda':definition['lambda'],'attempt':definition['attempt'],'status':value.get('stopping_reason','INCOMPLETE_CHECKPOINT_ONLY'),'iterations':value.get('iterations'),'CPU_seconds':value.get('fit_total_CPU_seconds'),'additive_to_native_total':False})
     for file in sorted((store.root/'command_jobs').glob('*/status.json')):
         value=load_record(file);task=receipt_task(store,value)
@@ -155,7 +155,7 @@ def build(config_path,artifact_root,output):
             if directory=='task_outcomes' and isinstance(value.get('result'),dict):
                 value={**value,'result':{k:v for k,v in value['result'].items() if k in ['run_id','phase','status','charged_CPU_seconds','wall_seconds','max_sampled_RSS_bytes','exit_code','stop_reason','cpu_limit','wall_limit','terminal_accounting_complete']},'projection':'Scientific status and resource fields; local command text excluded'}
             logical.append({'record':str(path.relative_to(store.root)),'object':store.put(value)})
-    for pattern in ['fits/*/result.json','fits/*/definition.json','reference_checkpoints/*.json']:
+    for pattern in ['fits/*/result.json','fits/*/recovered_result.json','fits/*/definition.json','reference_checkpoints/*.json']:
         for file in sorted(store.root.glob(pattern)):logical.append({'record':str(file.relative_to(store.root)),'object':store.put(load_record(file))})
     # Restored receipts prevent a failed one-attempt reference from obtaining
     # another allowance. Native logs and machine-specific argv are excluded.

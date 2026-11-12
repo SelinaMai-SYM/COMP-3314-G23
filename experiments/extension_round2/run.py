@@ -21,6 +21,10 @@ def invoke(task,args,cpu_limit,phase):
     # A distinct controller process owns native accounting for each worker.
     argv=[sys.executable,'-m','experiments.extension_verification.resources','--artifact-root',str(root),'--run-id',f'{key}-{ordinal}','--cpu-limit',str(cpu_limit),'--wall-limit',str(min(2*cpu_limit+120,remaining_wall(root))),'--phase',phase,'--cwd',str(ROOT),'--',*command]
     while True:
+        if remaining_wall(root)<15:return {'status':'UNRUN_DEADLINE','task':task}
+        if len(ResourceLedger(root).state()['active'])>=2:
+            time.sleep(.5);continue
+        argv[argv.index('--wall-limit')+1]=str(min(2*cpu_limit+120,remaining_wall(root)))
         value=subprocess.run(argv,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True);receipt=root/'command_jobs'/f'{key}-{ordinal}'/'status.json'
         if receipt.exists():return load_record(receipt)
         if remaining_wall(root)<15:return {'status':'UNRUN_DEADLINE','task':task}

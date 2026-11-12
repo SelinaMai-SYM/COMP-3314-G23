@@ -6,8 +6,32 @@ from .common import *
 from .worker import freeze_endpoint,endpoint_path
 
 
-def recover_finite(root,config_path):
+def partial_fits(store,lock):
+    """Keep the last recorded best pair even if final serialization was cut off."""
+    output={}
+    for pointer in sorted(store.root.glob('fits/*/continuation/CURRENT.json')):
+        folder=pointer.parent.parent
+        if (folder/'result.json').exists():continue
+        definition=load_record(folder/'definition.json');context={k:v for k,v in definition.items() if k not in ['lambda','attempt']};b=definition['benchmark'];entry=lock['cohorts'][b]
+        if context['source_fingerprint']!=lock['source_fingerprint'] or context['protocol_sha256']!=lock['protocol_sha256'] or context['H_sha256']!=entry['objects']['H']['sha256']:raise ValueError('partial fit identity mismatch')
+        key=b+'--'+definition['method']+'--'+definition['variant'];path=load_record(store.root/'paths'/f'{key}.json');token=float(definition['lambda']).hex()
+        if not path or path['attempts'].get(token)!=definition['attempt']:continue
+        saved=load_record(folder/'recovered_result.json');pointer_sha=digest(pointer)
+        if not saved or saved['checkpoint_pointer_sha256']!=pointer_sha:
+            value=recover_continuation(pointer.parent)
+            if value['context']!=context or value['lambda']!=definition['lambda'] or value['parameters']!=definition['parameters']:raise ValueError('partial fit checkpoint context differs')
+            state=value['state'];best=dict(state['best'])
+            if best['G'].shape!=(entry['n'],entry['K']) or not np.isfinite(best['G']).all():continue
+            checkpoint={k:v for k,v in state.items() if k!='best'}
+            best.update(lam=definition['lambda'],fit_id=folder.name,attempt=definition['attempt'],method=definition['method'],parameters=definition['parameters'],context=context,certified=False,stopping_reason='INTERRUPTED_CHECKPOINT',iterations=state['iteration'],CPU_seconds=state['CPU_seconds'],fit_total_CPU_seconds=state['CPU_seconds'],checkpoint=checkpoint,history=[],history_status='Only the latest checkpoint best/current states survived this interrupted attempt; completed earlier attempts retain their histories',recovery_source_sha256=digest(Path(__file__)),CPU_scope='Checkpoint call CPU only; the native receipt includes later work and controller overhead')
+            saved={'object':store.put(put_arrays(store,best)),'checkpoint_pointer_sha256':pointer_sha,'recorded_mtime_ns':pointer.stat().st_mtime_ns,'additional_iterations':0};atomic_json(folder/'recovered_result.json',saved)
+        output.setdefault(key,[]).append((saved['recorded_mtime_ns'],saved['object'],store.get(saved['object'])))
+    return output
+
+
+def _recover_finite(root,config_path):
     _,lock,store=locked(root,config_path);recovered=[]
+    partial=partial_fits(store,lock)
     for file in sorted((store.root/'tasks').glob('*.json')):
         task=load_record(file);b=task['benchmark'];entry=lock['cohorts'][b];kind=task['kind']
         definition={'benchmark':b,'method':task.get('method',kind),'variant':task.get('variant','default'),'parameters':task.get('parameters',{}),'source_fingerprint':lock['source_fingerprint'],'protocol_sha256':lock['protocol_sha256'],'H_sha256':entry['objects']['H']['sha256'],'W_sha256':entry['objects']['W0']['sha256']}
@@ -17,11 +41,11 @@ def recover_finite(root,config_path):
                 graph=load_record(store.root/'graphs'/f"{b}--{definition['variant']}.json")
                 if not graph:continue
                 definition['W_sha256']=graph['W']['sha256']
-            state=load_record(store.root/'paths'/f"{b}--{task['method']}--{definition['variant']}.json")
-            if not state or not state['fits']:continue
+            key=b+'--'+task['method']+'--'+definition['variant'];state=load_record(store.root/'paths'/f'{key}.json')
+            if not state or not state['fits'] and not partial.get(key):continue
             unfinished=[rho for rho in task['targets'] if str(rho) not in state['targets']]
             first_unfinished=unfinished[0] if unfinished else None
-            candidates=[]
+            candidates=list(partial.get(key,[]))
             for ref in state['fits'].values():
                 result=store.get(ref)
                 if result['context']!=definition:raise ValueError('finite recovery input identity mismatch')
@@ -61,3 +85,18 @@ def recover_finite(root,config_path):
             new=freeze_endpoint(store,definition,{'status':'RECOVERED_FINITE_REFERENCE','certified':result['certified'],'matched':None},result);recovered.append(new['point_id'])
     if recovered:atomic_json(store.root/'recovery_records'/'finite_recovery.json',{'point_ids':recovered,'additional_fits':0,'policy':'No score-based selection or allowance reset'})
     return recovered
+
+
+def recover_finite(root,config_path):
+    """Account array recovery separately; no optimization is performed."""
+    import sys,time
+    from experiments.extension_verification.resources import run_command
+    root=Path(root);ordinal=1
+    while (root/'command_jobs'/f'recover-finite-{ordinal}').exists():ordinal+=1
+    while len(ResourceLedger(root).state()['active'])>=2:
+        if remaining_wall(root)<15:return []
+        time.sleep(.5)
+    command=[sys.executable,'-c','from experiments.extension_round2.recovery import _recover_finite;import sys;_recover_finite(*sys.argv[1:])',str(root),str(config_path)]
+    run_command(root,f'recover-finite-{ordinal}',command,cpu_limit=600,wall_limit=min(1320,remaining_wall(root)),phase='recovery',cwd=ROOT)
+    record=load_record(root/'recovery_records/finite_recovery.json')
+    return record['point_ids'] if record else []

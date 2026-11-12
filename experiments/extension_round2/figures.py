@@ -48,11 +48,11 @@ def figures(output,points,contrasts,diagnostics):
         if not all(lookup[(b,'E4',f'perm{s}',.05)]['graph_eligible'] for s in [400,401,402]):control_bars[i].set_hatch('///');control_bars[i].set_edgecolor('#68788E')
     ax.set_xticks(np.arange(8),ORDER);ax.set_ylabel('Applied positive exchange / old mass');ax.legend(frameon=False);ax.set_title('E4 applied exchange; default W0 fallbacks are labelled\nHatching: control group includes an ineligible QP');fig.tight_layout();save(fig,'mechanism_E4')
     fig,axes=plt.subplots(1,2,figsize=(11,4))
-    offsets={'AR':(-13,9),'MSRA50':(6,-7),'ORL':(6,3),'BinAlpha':(-18,11),'JAFFE':(7,-3),'UMIST':(5,0),'YaleB':(5,3),'USPS':(-4,7)}
+    offsets={'AR':(-13,9),'MSRA50':(6,-7),'ORL':(20,-10),'BinAlpha':(-18,11),'JAFFE':(7,-3),'UMIST':(5,0),'YaleB':(5,3),'USPS':(-4,7)}
     for b in ORDER:
         data=diag(lookup[(b,'E5','default',.05)]);guard=data.get('direction_guard',{});x=guard.get('QSSC_weighted_triangle_slack_over_TV_H');y=guard.get('weighted_triangle_slack_over_TV_H')
         face=COLORS['E5'] if data.get('QSSC_comparison_qualified_and_matched') else 'white'
-        if x is not None and y is not None:axes[0].scatter(x,y,facecolors=face,edgecolors=COLORS['E5']);axes[0].annotate(b,(x,y),xytext=offsets[b],textcoords='offset points',fontsize=8)
+        if x is not None and y is not None:axes[0].scatter(x,y,facecolors=face,edgecolors=COLORS['E5']);axes[0].annotate(b,(x,y),xytext=offsets[b],textcoords='offset points',fontsize=8,arrowprops={'arrowstyle':'-','lw':.5,'color':'#666666'} if b=='ORL' else None)
         if data:axes[1].scatter(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan),facecolors=face,edgecolors=COLORS['E5']);axes[1].annotate(b,(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan)),xytext=(4,3),textcoords='offset points',fontsize=8)
     limits=axes[0].get_xlim();axes[0].plot(limits,limits,color='#999999',ls='--',lw=.7);axes[0].set(xlabel='QSSC weighted slack / TV(H)',ylabel='E5 weighted slack / TV(H)');axes[1].set(xlabel='Residual from global scale + translation / SH',ylabel='Distance from same-target QSSC / SH');axes[1].margins(x=.16,y=.12);fig.suptitle('E5: directional slack and shape change relative to QSSC\nFinite primary outputs; hollow markers denote unqualified pairs',fontsize=11);fig.tight_layout();save(fig,'mechanism_E5')
     fig,ax=plt.subplots(figsize=(10,4));q=[];e=[]

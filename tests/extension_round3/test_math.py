@@ -65,3 +65,10 @@ def test_requested_target_and_rounding():
     for seed in [0,1,7]:
         own=fit(H,4,seed);old=fit_lloyd(H,4,seed,GREEDY);np.testing.assert_array_equal(own['labels'],old['labels']);np.testing.assert_array_equal(own['initial_indices'],indices[seed])
         fixed=fit(H+.1,4,seed,indices=indices[seed]);np.testing.assert_array_equal(fixed['initial_indices'],indices[seed])
+
+
+def test_quadratic_dispatch_is_score_free():
+    from experiments.extension_round3.calibration import parameters
+    H=np.array([[0.],[1.]]);W=graph(2,[(0,1,1.)])
+    kw,meta=parameters(H,W,{'scores':{}},{'family':'quadratic','score':'none'})
+    assert kw=={} and meta=={}

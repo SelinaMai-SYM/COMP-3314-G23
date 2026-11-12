@@ -10,7 +10,7 @@ from .common import *
 
 def parameters(H,W,evidence,method):
     from method_extension.next_round.certified_solver import graph_arrays
-    B,i,j,w=graph_arrays(W);kind=method['family'];score=np.ones(len(w)) if method['score']=='uniform' else evidence['scores'][method['score']]
+    B,i,j,w=graph_arrays(W);kind=method['family'];score=np.ones(len(w)) if method['score'] in ['uniform','none'] else evidence['scores'][method['score']]
     kw={};meta={}
     if kind=='graph':kw['weights'],meta=graph_weights(w,score)
     if kind=='tube':kw['tubes'],meta=tube_distances(w,lengths(B@H),score,uniform_eta=method.get('eta') if method['score']=='uniform' else None)

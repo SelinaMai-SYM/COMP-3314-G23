@@ -33,6 +33,9 @@ def test_interrupted_best_state_and_unreached_targets(tmp_path):
     before={p.name:digest(p) for p in (store.root/'endpoints').glob('*.json')}
     assert _recover_finite(store.root,config)==[]
     assert before=={p.name:digest(p) for p in (store.root/'endpoints').glob('*.json')}
+    atomic_json(folder/'definition.json',{**definition,'W_sha256':'0'*64})
+    with pytest.raises(ValueError,match='shrinkage graph identity'):_recover_finite(store.root,config)
+    atomic_json(folder/'definition.json',definition)
     pointer=folder/'continuation/CURRENT.json';value=load_record(pointer);value['state_sha256']='0'*64;atomic_json(pointer,value)
     with pytest.raises(ValueError,match='continuation metadata identity'):_recover_finite(store.root,config)
     assert before=={p.name:digest(p) for p in (store.root/'endpoints').glob('*.json')}

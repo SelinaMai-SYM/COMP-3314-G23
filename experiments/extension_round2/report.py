@@ -70,6 +70,8 @@ def build(config_path,artifact_root,output):
         attempts=[v['result'] for v in task_outcomes if v['task']['benchmark']==row['benchmark'] and v['task'].get('method',v['task']['kind'])==row['method'] and v['task'].get('variant','default')==row['variant'] and (row['rho'] in v['task'].get('targets',[]) if row['rho'] is not None else v['task']['kind'] in ['SC','historical','SSC_reference','old_E1_reference'])]
         row['native_attempt_statuses']=';'.join(v['status'] for v in attempts);row['native_failed_attempt_count']=sum(v['status']!='COMPLETED' for v in attempts);row['finite_output_retained_after_native_failure']=bool(result and row['native_failed_attempt_count'])
         if endpoint is None and attempts and row['native_failed_attempt_count']:row['status']='FAILED_NO_FINITE_OUTPUT'
+        rounding=[v['result']['status'] for v in native if v['task']['kind']=='evaluate' and Path(v['task']['endpoint']).stem==row['point_id']]
+        row['rounding_status']='COMPLETE_50' if evaluation else 'FAILED' if any(s!='COMPLETED' for s in rounding) else 'UNRUN';row['rounding_native_statuses']=';'.join(rounding)
         if row['method'] in ['historical','SSC_reference','old_E1_reference']:row['lambda']=2*entry['gamma_effective']
         if row['method']=='SC':row['lambda']=0.
         if evaluation:row.update({k:evaluation['summary'][k] for k in ['acc_mean','acc_sd','nmi_mean','nmi_sd']});row['native_best']=json.dumps(evaluation['summary'].get('native_best'))
@@ -98,7 +100,7 @@ def build(config_path,artifact_root,output):
             if controlkey==key or controlkey not in evaluations:continue
             control=lookup[controlkey];eligible=qualified(row) and qualified(control) if comparison=='QSSC' else row['trial_count']==50 and control['trial_count']==50 and bool(row['certified']) and (bool(control['certified']) if comparison=='SSC_reference' else True)
             contrast={**{k:row[k] for k in ['benchmark','method','variant','rho']},'comparison':comparison,'target_point_id':row['point_id'],'control_point_id':control['point_id'],'qualified':bool(eligible),**paired(evaluation,evaluations[controlkey])};contrasts.append(contrast)
-    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'secondary_metrics.csv',[r for r in points if r['phase']=='secondary']);write_csv(out/'control_metrics.csv',[r for r in points if r['phase'] in ['alignment_control','sensitivity']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r.get(k) for k in ['benchmark','candidate_id','method','variant','rho','phase','status','frozen_search_status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
+    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'secondary_metrics.csv',[r for r in points if r['phase']=='secondary']);write_csv(out/'control_metrics.csv',[r for r in points if r['phase'] in ['alignment_control','sensitivity']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r.get(k) for k in ['benchmark','candidate_id','method','variant','rho','phase','status','frozen_search_status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','rounding_status','rounding_native_statuses','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
     macros=[]
     for method in METHODS[1:]:
         values=[v for v in contrasts if v['method']==method and v['variant']=='default' and v['rho']==.05 and v['comparison']=='QSSC' and v['qualified']];seen={v['benchmark'] for v in values};complete=len(seen)==8
@@ -141,7 +143,7 @@ def build(config_path,artifact_root,output):
     record={'protocol':spec,'cohort_lock':lock,'endpoints':list(endpoints.values()),'evaluations':list(evaluations.values()),'diagnostics':diagnostics}
     derivation={str(p.relative_to(ROOT)):digest(p) for p in (ROOT/'experiments/extension_round2').glob('*.py')};record['derivation_source_files']=derivation;record['derivation_source_snapshot']=store.put({n:(ROOT/n).read_text() for n in derivation})
     refs={ref['sha256']:ref for ref in references(record)};logical=[]
-    for name in ['cohort_lock.json','clock.json','resource_ledger.json','verification.json']:
+    for name in ['cohort_lock.json','clock.json','resource_ledger.json','verification.json','primary_attempts_complete.json']:
         path=store.root/name
         if path.exists():
             value=load_record(path)

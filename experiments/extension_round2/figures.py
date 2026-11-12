@@ -35,7 +35,10 @@ def figures(output,points,contrasts,diagnostics):
     fig,ax=plt.subplots(figsize=(10,4));values=[];lo=[];hi=[]
     for b in ORDER:
         data=diag(lookup[(b,'E1_v2','default',.05)]).get('relative_stopping',{});values.append(data.get('observed_positive_anchor_fraction',np.nan));lo.append(data.get('certain_inside_positive_anchor_fraction',np.nan));hi.append(data.get('possible_inside_positive_anchor_fraction',np.nan))
-    values=np.array(values,dtype=float);lo=np.array(lo,dtype=float);hi=np.array(hi,dtype=float);ax.bar(ORDER,100*values,color=COLORS['E1_v2']);ax.errorbar(np.arange(8),100*values,yerr=100*np.maximum(0,np.vstack([values-lo,hi-values])),fmt='none',color='#333333',capsize=3);ax.set_ylabel('Positive-anchor edges at/below threshold (%)');ax.set_title('E1_v2 primary stopping tubes; coincident anchor edges excluded\nWhiskers show optimizer-error bands from the numerical gap');fig.tight_layout();save(fig,'mechanism_E1_v2')
+    values=np.array(values,dtype=float);lo=np.array(lo,dtype=float);hi=np.array(hi,dtype=float);bars=ax.bar(ORDER,100*values,color=COLORS['E1_v2'])
+    for bar,b in zip(bars,ORDER):
+        if not lookup[(b,'E1_v2','default',.05)]['qualified_matched_pair_candidate']:bar.set_facecolor('white');bar.set_edgecolor(COLORS['E1_v2']);bar.set_hatch('///')
+    ax.errorbar(np.arange(8),100*values,yerr=100*np.maximum(0,np.vstack([values-lo,hi-values])),fmt='none',color='#333333',capsize=3);ax.set_ylabel('Positive-anchor edges at/below threshold (%)');ax.set_title('E1_v2 primary stopping tubes; coincident anchor edges excluded\nWhiskers: gap-based bands; hatching: unqualified finite output');fig.tight_layout();save(fig,'mechanism_E1_v2')
     fig,ax=plt.subplots(figsize=(10,4));real=[];random=[]
     for b in ORDER:
         data=diag(lookup[(b,'E4','default',.05)]).get('graph',{});real.append(.25*data.get('exchange_mass',np.nan));values=[.25*diag(lookup[(b,'E4',f'perm{s}',.05)]).get('graph',{}).get('exchange_mass',np.nan) for s in [400,401,402]];random.append(float(np.mean(values)))
@@ -47,8 +50,12 @@ def figures(output,points,contrasts,diagnostics):
         face=COLORS['E5'] if data.get('QSSC_comparison_qualified_and_matched') else 'white'
         if x is not None and y is not None:axes[0].scatter(x,y,facecolors=face,edgecolors=COLORS['E5']);axes[0].annotate(b,(x,y),xytext=offsets[b],textcoords='offset points',fontsize=8)
         if data:axes[1].scatter(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan),facecolors=face,edgecolors=COLORS['E5']);axes[1].annotate(b,(data['global_affine_residual_relative'],data.get('distance_from_same_target_QSSC_relative',np.nan)),xytext=(4,3),textcoords='offset points',fontsize=8)
-    limits=axes[0].get_xlim();axes[0].plot(limits,limits,color='#999999',ls='--',lw=.7);axes[0].set(xlabel='QSSC weighted slack / TV(H)',ylabel='E5 weighted slack / TV(H)');axes[1].set(xlabel='Residual from global scale + translation / SH',ylabel='Distance from same-target QSSC / SH');axes[1].margins(x=.16,y=.12);fig.suptitle('E5: lower directional slack versus genuine shape change\nFinite primary outputs; hollow markers denote unqualified pairs',fontsize=11);fig.tight_layout();save(fig,'mechanism_E5')
+    limits=axes[0].get_xlim();axes[0].plot(limits,limits,color='#999999',ls='--',lw=.7);axes[0].set(xlabel='QSSC weighted slack / TV(H)',ylabel='E5 weighted slack / TV(H)');axes[1].set(xlabel='Residual from global scale + translation / SH',ylabel='Distance from same-target QSSC / SH');axes[1].margins(x=.16,y=.12);fig.suptitle('E5: directional slack and shape change relative to QSSC\nFinite primary outputs; hollow markers denote unqualified pairs',fontsize=11);fig.tight_layout();save(fig,'mechanism_E5')
     fig,ax=plt.subplots(figsize=(10,4));q=[];e=[]
     for b in ORDER:
         data=diag(lookup[(b,'E6','default',.05)]).get('directional_floor',{});q.append(data.get('same_target_QSSC_whitened_min_eigenvalue',np.nan));e.append(data.get('whitened_min_eigenvalue',np.nan))
-    ax.plot(ORDER,q,'o-',color=COLORS['QSSC'],label='QSSC, same target');ax.plot(ORDER,e,'s-',color=COLORS['E6'],label='E6');ax.axhline(.5,color='#444444',ls='--',label='Guard ηdir=.5');ax.set_ylabel('Minimum anchor-relative symmetric eigenvalue');ax.set_title('E6 primary constraint activation\nFinite outputs; see qualification, dual norms and inactivity diagnostics');ax.legend(frameon=False);fig.tight_layout();save(fig,'mechanism_E6')
+    ax.plot(ORDER,q,'o-',color=COLORS['QSSC'],label='QSSC, same target');ax.plot(ORDER,e,'s-',color=COLORS['E6'],label='E6')
+    for i,b in enumerate(ORDER):
+        if not lookup[(b,'QSSC','default',.05)]['qualified_matched_pair_candidate']:ax.plot(i,q[i],'o',markerfacecolor='white',markeredgecolor=COLORS['QSSC'])
+        if not lookup[(b,'E6','default',.05)]['qualified_matched_pair_candidate']:ax.plot(i,e[i],'s',markerfacecolor='white',markeredgecolor=COLORS['E6'])
+    ax.axhline(.5,color='#444444',ls='--',label='Guard ηdir=.5');ax.set_ylabel('Minimum anchor-relative symmetric eigenvalue');ax.set_title('E6 primary constraint activation\nFinite outputs; hollow markers are unqualified; see dual norms and inactivity bounds');ax.legend(frameon=False);fig.tight_layout();save(fig,'mechanism_E6')

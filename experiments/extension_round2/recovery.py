@@ -14,6 +14,13 @@ def partial_fits(store,lock):
         if (folder/'result.json').exists():continue
         definition=load_record(folder/'definition.json');context={k:v for k,v in definition.items() if k not in ['lambda','attempt']};b=definition['benchmark'];entry=lock['cohorts'][b]
         if context['source_fingerprint']!=lock['source_fingerprint'] or context['protocol_sha256']!=lock['protocol_sha256'] or context['H_sha256']!=entry['objects']['H']['sha256']:raise ValueError('partial fit identity mismatch')
+        expected_W=entry['objects']['W0']['sha256']
+        if definition['method']=='E4':
+            graph=load_record(store.root/'graphs'/f"{b}--{definition['variant']}.json")
+            if graph is None:raise ValueError('partial fit graph record unavailable')
+            expected_W=graph['W']['sha256']
+        if context['W_sha256']!=expected_W:raise ValueError('partial fit shrinkage graph identity mismatch')
+        if identity(definition)!=folder.name:raise ValueError('partial fit definition identity mismatch')
         key=b+'--'+definition['method']+'--'+definition['variant'];path=load_record(store.root/'paths'/f'{key}.json');token=float(definition['lambda']).hex()
         if not path or path['attempts'].get(token)!=definition['attempt']:continue
         saved=load_record(folder/'recovered_result.json');pointer_sha=digest(pointer)

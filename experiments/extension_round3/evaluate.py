@@ -12,6 +12,8 @@ from .rounding import fit
 
 def freeze_outputs(config,root):
     spec,lock,store=locked(root,config);marker=store.root/'numerical_freeze.json'
+    for key,name in [('input_lock_sha256','cohort_lock.json'),('registry_sha256','method_registry.json'),('queue_sha256','experiment_queue.json')]:
+        if lock[key]!=digest(ROOT/'configs/extension_round3'/name):raise ValueError('registered input, registry or queue changed')
     if marker.exists():
         frozen=read(marker)
         for rel,sha in frozen['files'].items():

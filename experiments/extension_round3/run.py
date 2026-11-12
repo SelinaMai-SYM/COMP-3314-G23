@@ -11,6 +11,8 @@ def remaining(root,phase='fitting'):
 
 def execute(root,config,input_root,*,phase='all',resume=False):
     spec,lock,store=locked(root,config);assert_fitting_open(root)
+    for key,name in [('input_lock_sha256','cohort_lock.json'),('registry_sha256','method_registry.json'),('queue_sha256','experiment_queue.json')]:
+        if lock[key]!=digest(ROOT/'configs/extension_round3'/name):raise ValueError('registered input, registry or queue changed')
     tasks=[]
     if phase in ['all','evidence']:
         tasks += [{'kind':'evidence','benchmark':b,'tau_multiplier':1.,'id':f'evidence-{b}-t1'} for b in ORDER if not (store.root/'evidence'/f'{b}__t1.json').exists()]

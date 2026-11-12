@@ -31,6 +31,7 @@ def test_deleted_edge_and_equivariance():
 
 def test_ranks_and_budgets():
     s=np.array([0.,2.,2.,5.]);w=np.array([1.,4.,2.,3.]);u,meta=weighted_midrank(s,w);assert abs(w@u-w.sum()/2)<1e-13;assert u[1]==u[2]
+    np.testing.assert_allclose(u,[.05,.4,.4,.85],atol=1e-15)
     permutation=np.array([2,0,3,1]);v,_=weighted_midrank(s[permutation],w[permutation]);np.testing.assert_allclose(v,u[permutation])
     new,m=graph_weights(w,s);assert np.all(new>=.8*w);assert abs(new.sum()-.9*w.sum())<1e-12
     a0=np.array([0.,2.,3.,1.]);a,m=tube_distances(w,a0,s);assert abs(w@a-.25*(w@a0))<1e-12
@@ -49,8 +50,12 @@ def test_convex_reference(kind):
     if kind=='guard':kw['alpha']=guard_coefficients(base.w,s)[0]
     if kind=='graph':kw['weights']=graph_weights(base.w,s)[0]
     P=FusionProblem(H,W,.17,**kw);G=cp.Variable(H.shape);e=P.B@G;obj=.5*cp.sum_squares(G-H)
-    if P.guard:obj+=cp.sum(cp.multiply(P.r1,cp.norm(e,axis=1)))+cp.sum(cp.multiply(P.r2,cp.norm(e-P.h,axis=1)))-P.constant
-    else:obj+=cp.sum(cp.multiply(P.r1,cp.pos(cp.norm(e,axis=1)-P.a)))
+    if kind=='guard':
+        alpha=kw['alpha'];anchor=np.linalg.norm(base.B@H,axis=1)
+        obj+=.17*cp.sum(cp.multiply(base.w,cp.norm(e,axis=1)+cp.multiply(alpha,cp.norm(e,axis=1)+cp.norm(e-base.B@H,axis=1)-anchor)))
+    else:
+        weights=kw.get('weights',base.w);tubes=kw.get('tubes',np.zeros(len(base.w)))
+        obj+=.17*cp.sum(cp.multiply(weights,cp.pos(cp.norm(e,axis=1)-tubes)))
     reference=cp.Problem(cp.Minimize(obj));reference.solve(solver='CLARABEL',tol_gap_abs=1e-10,tol_feas=1e-10,tol_gap_rel=1e-10)
     out=solve(P,rho=.05,cpu_limit=30.)
     assert eligible(out,.05);assert out['dual']<=reference.value+1e-8;assert abs(out['primal']-reference.value)<1e-6

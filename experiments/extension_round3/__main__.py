@@ -1,6 +1,6 @@
 import argparse,json,sys,time
 from pathlib import Path
-from .common import CONFIG
+from .common import CONFIG,ROOT
 
 
 def main():
@@ -20,6 +20,9 @@ def main():
     if a.command=='freeze':
         from .freeze import freeze
         lock=freeze(a.config,a.data_root,a.artifact_root,a.input_artifact_root)
+        from .common import digest
+        for key,name in [('input_lock_sha256','cohort_lock.json'),('registry_sha256','method_registry.json'),('queue_sha256','experiment_queue.json')]:
+            if lock[key]!=digest(ROOT/'configs/extension_round3'/name):raise ValueError('registered input, registry or queue changed')
         if not lock.get('amendments'):
             from .common import atomic_json,identity,read
             amendments=Path(a.config).resolve().parent/'amendments'

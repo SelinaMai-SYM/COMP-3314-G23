@@ -1,0 +1,148 @@
+[
+  {
+    "id": "QSSC",
+    "family": "quadratic",
+    "score": "none",
+    "stage": 3
+  },
+  {
+    "id": "TUBE_UNIFORM",
+    "family": "tube",
+    "score": "uniform",
+    "stage": 3,
+    "eta": 0.25
+  },
+  {
+    "id": "GUARD_UNIFORM",
+    "family": "guard",
+    "score": "uniform",
+    "stage": 3
+  },
+  {
+    "id": "R3_E7_CAVITY",
+    "family": "graph",
+    "score": "cavity",
+    "stage": 3,
+    "candidate": true
+  },
+  {
+    "id": "R3_E7_PILOT",
+    "family": "graph",
+    "score": "pilot",
+    "stage": 3,
+    "candidate": false
+  },
+  {
+    "id": "R3_E1_V3_CAVITY",
+    "family": "tube",
+    "score": "cavity",
+    "stage": 3,
+    "candidate": true
+  },
+  {
+    "id": "R3_E1_V3_PILOT",
+    "family": "tube",
+    "score": "pilot",
+    "stage": 3,
+    "candidate": false
+  },
+  {
+    "id": "R3_E5_V2_CAVITY",
+    "family": "guard",
+    "score": "cavity",
+    "stage": 3,
+    "candidate": true
+  },
+  {
+    "id": "R3_E5_V2_PILOT",
+    "family": "guard",
+    "score": "pilot",
+    "stage": 3,
+    "candidate": false
+  },
+  {
+    "id": "R3_E7_ANCHOR",
+    "family": "graph",
+    "score": "anchor",
+    "stage": 4
+  },
+  {
+    "id": "R3_E7_LEVERAGE",
+    "family": "graph",
+    "score": "leverage",
+    "stage": 4
+  },
+  {
+    "id": "R3_E7_SHUFFLE400",
+    "family": "graph",
+    "score": "shuffle400",
+    "stage": 4
+  },
+  {
+    "id": "R3_E7_SHUFFLE401",
+    "family": "graph",
+    "score": "shuffle401",
+    "stage": 4
+  },
+  {
+    "id": "R3_E7_SHUFFLE402",
+    "family": "graph",
+    "score": "shuffle402",
+    "stage": 4
+  },
+  {
+    "id": "R3_E1_V3_SHUFFLE400",
+    "family": "tube",
+    "score": "shuffle400",
+    "stage": 4
+  },
+  {
+    "id": "R3_E1_V3_SHUFFLE401",
+    "family": "tube",
+    "score": "shuffle401",
+    "stage": 4
+  },
+  {
+    "id": "R3_E1_V3_SHUFFLE402",
+    "family": "tube",
+    "score": "shuffle402",
+    "stage": 4
+  },
+  {
+    "id": "R3_E5_V2_SHUFFLE400",
+    "family": "guard",
+    "score": "shuffle400",
+    "stage": 4
+  },
+  {
+    "id": "R3_E5_V2_SHUFFLE401",
+    "family": "guard",
+    "score": "shuffle401",
+    "stage": 4
+  },
+  {
+    "id": "R3_E5_V2_SHUFFLE402",
+    "family": "guard",
+    "score": "shuffle402",
+    "stage": 4
+  },
+  {
+    "id": "R3_E1_V3_ANCHOR",
+    "family": "tube",
+    "score": "anchor",
+    "stage": 5
+  },
+  {
+    "id": "R3_E5_V2_ANCHOR",
+    "family": "guard",
+    "score": "anchor",
+    "stage": 5
+  },
+  {
+    "id": "TUBE_UNIFORM_0125",
+    "family": "tube",
+    "score": "uniform",
+    "stage": 6,
+    "eta": 0.125
+  }
+]

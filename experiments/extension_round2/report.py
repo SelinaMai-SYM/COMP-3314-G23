@@ -98,7 +98,9 @@ def build(config_path,artifact_root,output):
         if not evaluation:continue
         for comparison,controlkey in [('QSSC',qkey),('SSC_reference',(b,'SSC_reference','default',None)),('historical',(b,'historical','default',None)),('SC',(b,'SC','default',None))]:
             if controlkey==key or controlkey not in evaluations:continue
-            control=lookup[controlkey];eligible=qualified(row) and qualified(control) if comparison=='QSSC' else row['trial_count']==50 and control['trial_count']==50 and bool(row['certified']) and (bool(control['certified']) if comparison=='SSC_reference' else True)
+            control=lookup[controlkey]
+            target_eligible=qualified(row) if row['method'] in METHODS else row['trial_count']==50 and bool(row['certified'])
+            eligible=qualified(row) and qualified(control) if comparison=='QSSC' else target_eligible and control['trial_count']==50 and (bool(control['certified']) if comparison=='SSC_reference' else True)
             contrast={**{k:row[k] for k in ['benchmark','method','variant','rho']},'comparison':comparison,'target_point_id':row['point_id'],'control_point_id':control['point_id'],'qualified':bool(eligible),**paired(evaluation,evaluations[controlkey])};contrasts.append(contrast)
     write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'secondary_metrics.csv',[r for r in points if r['phase']=='secondary']);write_csv(out/'control_metrics.csv',[r for r in points if r['phase'] in ['alignment_control','sensitivity']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r.get(k) for k in ['benchmark','candidate_id','method','variant','rho','phase','status','frozen_search_status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','rounding_status','rounding_native_statuses','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
     macros=[]

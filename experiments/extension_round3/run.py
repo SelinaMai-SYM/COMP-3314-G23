@@ -17,6 +17,8 @@ def execute(root,config,input_root,*,phase='all',resume=False):
     def fitting(rows):
         return [dict(r,kind='fit') for r in rows if not profile_path(store,r['id']).exists()]
     q=queue()
+    prerequisites=[r for r in q if r['stage']==3 or (phase in ['secondary','optional'] and r['stage']==4)]
+    if phase in ['controls','secondary','optional'] and any(not profile_path(store,r['id']).exists() for r in prerequisites):raise RuntimeError('phase prerequisites have not all been attempted')
     stages=[]
     if tasks:stages.append(tasks)
     if phase in ['all','primary']:

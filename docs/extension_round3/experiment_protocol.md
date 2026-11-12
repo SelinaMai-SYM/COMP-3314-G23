@@ -13,3 +13,5 @@ The 32 core-hour and 24 wall-hour limits share all stages, including failures. A
 Confidence intervals use 10,000 paired bootstrap draws with seed 424242, conditional on the fixed cohort and embeddings. Fifty starts are not fifty independent datasets. Full macros require all eight qualified paired cohorts for the precise contrast, target and panel; otherwise available-case masks are explicit and identical for ACC/NMI. Different partial masks are not ranked.
 
 Runtime source/environment hashes, exact initial indices, graph evidence, every finite output, dual, checkpoint and history are retained in the external content-addressed artifact store. The terminal manifest records the immutable numerical closure before label access. Committed scalar records support no-data table reconstruction.
+
+Joint win/tie/loss summaries use a 10⁻¹² percentage-point numerical tie tolerance. A joint win has neither metric decreasing and at least one increasing; a joint loss has either metric decreasing. No metric or dataset is dropped to obtain a joint win. These summaries do not replace paired intervals.

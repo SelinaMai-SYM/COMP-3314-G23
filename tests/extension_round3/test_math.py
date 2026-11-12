@@ -31,6 +31,7 @@ def test_deleted_edge_and_equivariance():
 
 def test_ranks_and_budgets():
     s=np.array([0.,2.,2.,5.]);w=np.array([1.,4.,2.,3.]);u,meta=weighted_midrank(s,w);assert abs(w@u-w.sum()/2)<1e-13;assert u[1]==u[2]
+    permutation=np.array([2,0,3,1]);v,_=weighted_midrank(s[permutation],w[permutation]);np.testing.assert_allclose(v,u[permutation])
     new,m=graph_weights(w,s);assert np.all(new>=.8*w);assert abs(new.sum()-.9*w.sum())<1e-12
     a0=np.array([0.,2.,3.,1.]);a,m=tube_distances(w,a0,s);assert abs(w@a-.25*(w@a0))<1e-12
     alpha,m=guard_coefficients(w,s);assert abs(w@alpha-w.sum())<1e-12
@@ -72,3 +73,16 @@ def test_quadratic_dispatch_is_score_free():
     H=np.array([[0.],[1.]]);W=graph(2,[(0,1,1.)])
     kw,meta=parameters(H,W,{'scores':{}},{'family':'quadratic','score':'none'})
     assert kw=={} and meta=={}
+
+
+def test_control_parameters_and_degenerate_solutions():
+    from experiments.extension_round3.calibration import parameters
+    H=np.array([[0.],[1.],[2.]]);W=graph(3,[(0,1,1.),(1,2,2.)]);scores={'cavity':np.array([1.,2.]),'pilot':np.array([2.,1.])}
+    for family,key in [('graph','weights'),('tube','tubes'),('guard','alpha')]:
+        a,_=parameters(H,W,{'scores':scores},{'family':family,'score':'cavity'})
+        b,_=parameters(H,W,{'scores':scores},{'family':family,'score':'pilot'})
+        assert set(a)=={key} and set(b)=={key}
+        assert not np.array_equal(a[key],b[key])
+    P=FusionProblem(H,W,.1,alpha=np.zeros(2));Q=FusionProblem(H,W,.1)
+    a=solve(P,rho=.1,cpu_limit=10.);b=solve(Q,rho=.1,cpu_limit=10.);np.testing.assert_allclose(a['G'],b['G'],atol=1e-3)
+    zero=np.zeros((3,1));out=solve(FusionProblem(zero,W,1.),rho=.1,cpu_limit=10.);assert out['certified'];np.testing.assert_array_equal(out['G'],zero)

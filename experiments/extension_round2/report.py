@@ -95,7 +95,7 @@ def build(config_path,artifact_root,output):
             if controlkey==key or controlkey not in evaluations:continue
             control=lookup[controlkey];eligible=qualified(row) and qualified(control) if comparison=='QSSC' else row['trial_count']==50 and control['trial_count']==50 and bool(row['certified']) and (bool(control['certified']) if comparison=='SSC_reference' else True)
             contrast={**{k:row[k] for k in ['benchmark','method','variant','rho']},'comparison':comparison,'target_point_id':row['point_id'],'control_point_id':control['point_id'],'qualified':bool(eligible),**paired(evaluation,evaluations[controlkey])};contrasts.append(contrast)
-    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r[k] for k in ['benchmark','candidate_id','method','variant','rho','phase','status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
+    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'secondary_metrics.csv',[r for r in points if r['phase']=='secondary']);write_csv(out/'control_metrics.csv',[r for r in points if r['phase'] in ['alignment_control','sensitivity']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r[k] for k in ['benchmark','candidate_id','method','variant','rho','phase','status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
     macros=[]
     for method in METHODS[1:]:
         values=[v for v in contrasts if v['method']==method and v['variant']=='default' and v['rho']==.05 and v['comparison']=='QSSC' and v['qualified']];seen={v['benchmark'] for v in values};complete=len(seen)==8
@@ -130,6 +130,8 @@ def build(config_path,artifact_root,output):
             for t in ev['trials']:writer.writerow({**{k:endpoint[k] for k in ['point_id','benchmark','method','variant','rho']},**{k:t.get(k) for k in ['seed','acc','nmi','inertia','iterations','warning']}})
         (out/'trials.csv.gz').write_bytes(gzip.compress(f.getvalue().encode(),mtime=0))
     _markdown(out,points,macros,contrasts,diagnostics,lock)
+    from .interpretation import write_evidence
+    write_evidence(out,points,macros,diagnostics,alignment)
     from .figures import figures
     figures(out,points,contrasts,diagnostics)
     from experiments.submission_refresh.export_artifacts import references
@@ -182,7 +184,7 @@ def build(config_path,artifact_root,output):
 
 def _markdown(out,points,macros,contrasts,diagnostics,lock):
     def number(v):return 'NA' if v is None else f'{v:.3f}'
-    lines=['# Conditional SSC extension evaluation on locked report cohorts','','These cohorts were selected retrospectively against published targets. This is a conditional study, not unseen or unbiased test data. All methods use the same frozen H per cohort and feed optimized G directly to the locked rounding protocol.','','The primary mechanism comparison is against quadratic QSSC at the prescribed 5% movement target. A fidelity change, nonzero movement, a smaller objective, or a geometric guarantee alone does not establish improved clustering.','','| Cohort | SC ACC / NMI | Historical replay | Certified SSC reference | Original E1 reference | QSSC | E1_v2 | E4 | E5 | E6 |','|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|']
+    lines=['# Conditional SSC extension evaluation on locked report cohorts','','These cohorts were selected retrospectively against published targets. This is a conditional study, not unseen or unbiased test data. All methods use the same frozen H per cohort and feed optimized G directly to the locked rounding protocol. MSRA50 denotes the adapted native-16 EBSA source (1,799 samples, 12 classes); identity with the paper dataset is unverified.','','The primary mechanism comparison is against quadratic QSSC at the prescribed 5% movement target. A fidelity change, nonzero movement, a smaller objective, or a geometric guarantee alone does not establish improved clustering.','','| Cohort | SC ACC / NMI | Historical replay | Certified SSC reference | Original E1 reference | QSSC | E1_v2 | E4 | E5 | E6 |','|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|']
     for b in ORDER:
         values=[]
         for method in ['SC','historical','SSC_reference','old_E1_reference',*METHODS]:

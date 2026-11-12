@@ -8,6 +8,8 @@ The eight cohorts are fixed to the mean-endpoint configurations of the existing 
 - [Primary results, including sample SDs](../../results/extension_round2/primary_metrics.csv)
 - [Every declared endpoint and its qualification](../../results/extension_round2/coverage.csv)
 - [Paired differences and intervals](../../results/extension_round2/paired_differences.csv)
+- [Fixed secondary path](../../results/extension_round2/secondary_metrics.csv) and [controls](../../results/extension_round2/control_metrics.csv)
+- [Observed mechanisms and attribution](../../results/extension_round2/mechanism_evidence.md)
 - [Method definitions and prior art](methods.md)
 - [Report and presentation integration](../../results/extension_round2/integration_note.md)
 
@@ -37,6 +39,8 @@ Comparisons use 10,000 paired rounding-seed bootstrap draws with PCG64 seed 4242
 Use CPython 3.13.3 and the [pinned environment](../../configs/extension_round2/requirements.txt). The independent data root contains the registered source files; scientific arrays are stored outside Git in the project's content-addressed artifact store. Data-provider terms remain separate from the project's MIT license.
 
 ```bash
+git clone --single-branch --branch extension_v2 https://github.com/SelinaMai-SYM/COMP-3314-G23.git
+cd COMP-3314-G23
 python3 -m venv .venv
 .venv/bin/python -m pip install -r configs/extension_round2/requirements.txt
 ```

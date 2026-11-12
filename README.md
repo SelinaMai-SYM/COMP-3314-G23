@@ -8,6 +8,10 @@ the answer depends on graph construction, numerical solution and data identity.
 **Han Jiale · Lu Sinan · Mahatharadol Vie · Mai Sheung Ying**
 Group 23, The University of Hong Kong — COMP3314 Machine Learning.
 
+The `extension_v2` branch adds a [movement-controlled extension study](docs/extension_round2/README.md)
+comparing QSSC with E1_v2 and E4–E6. Its [results](results/extension_round2/summary.md)
+are conditional on retrospectively selected report cohorts and preserve the original report.
+
 ## What the project provides
 
 - An array-based SSC implementation with explicit E8/E13 parameter conventions.

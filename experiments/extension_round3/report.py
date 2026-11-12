@@ -18,6 +18,14 @@ def table(rows,columns):
     return '| '+' | '.join(columns)+' |\n|'+'|'.join('---' for _ in columns)+'|\n'+''.join('| '+' | '.join(fmt(r.get(k)) for k in columns)+' |\n' for r in rows)
 
 
+def resource_rows(root):
+    store=ArtifactStore(root);ledger=ResourceLedger(root).state();jobs=[]
+    for e in ledger['entries']:
+        job=store.root/'command_jobs'/e['run_id']/'status.json';status=read(job) if job.exists() else {}
+        jobs.append({**e,'peak_RSS_bytes':status.get('max_sampled_RSS_bytes'),'wall_seconds':status.get('wall_seconds'),'stop_reason':status.get('stop_reason'),'exit_code':status.get('exit_code'),'cpu_limit_seconds':status.get('cpu_limit'),'terminal_accounting_complete':status.get('terminal_accounting_complete')})
+    return ledger,jobs
+
+
 def export_records(config,root):
     spec,lock,store=locked(root,config)
     if read(store.root/'terminal_evaluation.json')['stage']!='TERMINAL_SCORING_COMPLETE':raise ValueError('terminal evaluation incomplete')
@@ -50,10 +58,7 @@ def export_records(config,root):
                     agreements.append(adjusted_rand_score(store.get(a['labels']),store.get(b['labels'])))
                 p['evaluation']['mechanism'][panel+'_changed_partition_fraction_vs_'+control]=float(np.mean(np.asarray(agreements)<1-1e-12))
                 p['evaluation']['mechanism'][panel+'_partition_ARI_vs_'+control]=float(np.mean(agreements))
-    ledger=ResourceLedger(root).state();jobs=[]
-    for e in ledger['entries']:
-        job=store.root/'command_jobs'/e['run_id']/'status.json';status=read(job) if job.exists() else {}
-        jobs.append({**e,'peak_RSS_bytes':status.get('peak_RSS_bytes',status.get('peak_rss_bytes',status.get('max_sampled_RSS_bytes')))})
+    ledger,jobs=resource_rows(root)
     return dict(schema='ssc-round3-scalar-release-v1',protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),input_lock_sha256=digest(ROOT/'configs/extension_round3/cohort_lock.json'),numerical_freeze_sha256=digest(store.root/'numerical_freeze.json'),source_fingerprint=lock['source_fingerprint'],analysis_source_files_at_freeze=frozen.get('analysis_source_files',{}),analysis_source_files_at_export={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']},environment=lock['environment'],cohorts={b:{k:c[k] for k in ['candidate_id','n','K','prep','historical_identity','adaptation_flags','gamma_nominal','gamma_effective','variant']} for b,c in lock['cohorts'].items()},profiles=profiles,resource_usage=jobs,budget={k:v for k,v in ledger.items() if k not in ['entries','active']},clock=read(store.root/'clock.json'),selection_qualification=lock['selection_qualification'])
 
 
@@ -175,11 +180,11 @@ def make_plots(metrics,mechanisms,folder):
                 ax.set(title=b,xlabel='Actual movement',ylabel=metric.upper()+' (%)')
             handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (finite outputs; eligibility in tables)');fig.savefig(folder/f'movement_{panel}_{metric}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
     fig,axs=plt.subplots(1,2,figsize=(10,4),layout='constrained')
-    for method in CANDIDATES:
+    for method,label in [('R3_E7_CAVITY','Graph / guard: mass w'),('R3_E1_V3_CAVITY','Tube: mass w × anchor length')]:
         rows=[r for r in mechanisms if r['method']==method and r['rho']==.1 and r['tau_multiplier']==1.]
-        axs[0].scatter([r.get('leverage_median',0) for r in rows],[r.get('weighted_rank_difference_from_pilot',0) for r in rows],label=method)
+        axs[0].scatter([r.get('leverage_median',0) for r in rows],[r.get('weighted_rank_difference_from_pilot',0) for r in rows],label=label)
         for r in rows:axs[0].annotate(r['benchmark'],(r.get('leverage_median',0),r.get('weighted_rank_difference_from_pilot',0)),fontsize=6)
-    first={r['benchmark']:r for r in mechanisms if r['method']=='R3_E7_CAVITY' and r['rho']==.1 and r['tau_multiplier']==1.}
+    first={r['benchmark']:r for r in mechanisms if r['method']=='SC' and r['tau_multiplier']==1.}
     for b,r in first.items():
         x=r.get('pilot_cross_class_auroc');y=r.get('cavity_cross_class_auroc')
         if x is not None and y is not None:axs[1].scatter(x,y);axs[1].annotate(b,(x,y),fontsize=7)

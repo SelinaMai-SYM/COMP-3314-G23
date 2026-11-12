@@ -77,6 +77,8 @@ def derive(records):
             row={k:p[k] for k in ['id','benchmark','method','rho','stage','tau_multiplier','status','qualified','certified','lambda']};row['panel']=panel;row['n']=50
             for name in ['acc','nmi']:row[name+'_mean'],row[name+'_sd']=stats([r[name] for r in data['trials']])
             for name in ['movement','movement_error','relative_gap','capacity_residual']:row[name]=cert.get(name)
+            if row['movement'] is None:row['movement']=p['evaluation'].get('mechanism',{}).get('movement')
+            if p['method']=='SC':row['movement_error']=0.
             best=min(data['trials'],key=lambda r:(r['inertia'],r['seed']));row.update(diagnostic_min_inertia_seed=best['seed'],diagnostic_min_inertia_acc=best['acc'],diagnostic_min_inertia_nmi=best['nmi'])
             metrics.append(row);lookup[(p['benchmark'],p['method'],p['rho'],p['tau_multiplier'],panel)]=(p,data,row)
     rng=np.random.Generator(np.random.PCG64(424242));bootstrap=rng.integers(0,50,size=(10000,50));contrasts=[]

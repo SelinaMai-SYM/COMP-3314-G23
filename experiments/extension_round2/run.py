@@ -12,6 +12,9 @@ def invoke(task,args,cpu_limit,phase):
     while (root/'command_jobs'/f'{key}-{ordinal}').exists():
         old=load_record(root/'command_jobs'/f'{key}-{ordinal}'/'status.json')
         if old and old['status']=='COMPLETED':return old
+        # The two unsquared references and each auxiliary/QP attempt have a
+        # fixed allowance. A failed receipt must not buy another fresh fit.
+        if old and task['kind'] in ['historical','SSC_reference','old_E1_reference','aux','graph']:return old
         ordinal+=1
     if remaining_wall(root)<15:return {'status':'UNRUN_DEADLINE','task':task}
     command=[sys.executable,'-m','experiments.extension_round2.worker','--task',str(taskfile),'--config',str(args.config),'--artifact-root',str(root)]
@@ -42,6 +45,8 @@ def path_budget(task,root,control=False):
     return max(0.,(600 if control else 1800)-used)
 
 def evaluate(args):
+    from .recovery import recover_finite
+    recover_finite(args.artifact_root,args.config)
     root=Path(args.artifact_root);tasks=[]
     for path in sorted((root/'endpoints').glob('*.json')):
         row=load_record(path)
@@ -51,6 +56,9 @@ def evaluate(args):
 def execute(args):
     root=Path(args.artifact_root);initialize_ledger(root)
     if args.phase=='freeze':
+        if (root/'cohort_lock.json').exists():
+            if not args.resume:raise ValueError('Inputs already frozen; use --resume to verify the existing registration')
+            locked(root,args.config);return
         from experiments.extension_verification.resources import run_command
         command=[sys.executable,'-m','experiments.extension_round2.run','--phase','freeze-execute','--config',str(args.config),'--data-root',str(args.data_root),'--artifact-root',str(root)]
         run_command(root,'freeze-inputs',command,cpu_limit=3600,wall_limit=min(7300,remaining_wall(root)),phase='aggregation',cwd=ROOT);return
@@ -97,7 +105,11 @@ def execute(args):
                 for value in values:tasks.append({'kind':'path','benchmark':b,'method':method,'variant':f'{name}{value}','parameters':{} if method=='E4' else {name:value},'targets':[.05]})
         batch([(t,path_budget(t,root,True),path_phase(t)) for t in tasks if path_budget(t,root,True)>=30],args);evaluate(args)
     elif args.phase=='evaluate':evaluate(args)
+    elif args.phase=='remaining':
+        for phase in ['secondary','controls']:
+            if remaining_wall(root)<30:break
+            args.phase=phase;execute(args)
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',required=True,choices=['freeze','freeze-execute','verify','primary','secondary','controls','evaluate']);p.add_argument('--config',type=Path,default=DEFAULT_CONFIG);p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--all-benchmarks',action='store_true');args=p.parse_args();execute(args)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',required=True,choices=['freeze','freeze-execute','verify','primary','secondary','controls','evaluate','remaining']);p.add_argument('--config',type=Path,default=DEFAULT_CONFIG);p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--all-benchmarks',action='store_true');args=p.parse_args();execute(args)
 if __name__=='__main__':main()

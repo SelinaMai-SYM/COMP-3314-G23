@@ -74,6 +74,8 @@ For every retained b, `⟨Yb,Zb⟩≥eta_dir||Yb||²`, hence `||Zb||≥eta_dir||
 
 The LMI and singular-value guarantee adapt [Kovalsky et al., SIGGRAPH 2014](https://shaharkov.github.io/ContSingVal.html); they are published prior art. No graphics optimization code is incorporated.
 
+For post-fit attribution, a QSSC embedding with strong-convexity error bound e can change its whitened symmetric matrix by at most `e/sigma_min(Y)` in operator norm. Subtracting that quantity from its observed minimum eigenvalue gives a lower bound for the retained projection of the QSSC optimum. When this lower bound exceeds eta_dir, a difference between separately calibrated E6 and QSSC scores cannot be attributed to protection of a violated direction at the QSSC lambda. Matching permits a finite movement tolerance, and k-means can change after small numerical or calibration differences.
+
 ## Scope of the contribution
 
 These are specific SSC extension candidates designed and tested in this project; E5 and E6 explicitly adapt tools from other fields. Our scoped search did not identify an equivalent published spectral-clustering construction, but it does not prove absolute novelty. The empirical contribution is the controlled comparison, activation/failure analysis and reproducible evidence. Smaller objectives, geometric guarantees or changed partitions alone do not demonstrate improved clustering.

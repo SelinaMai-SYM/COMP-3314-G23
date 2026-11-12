@@ -20,6 +20,7 @@ def validate(manifest_path):
     payload=gzip.decompress((root/'trials.csv.gz').read_bytes())
     if hashlib.sha256(payload).hexdigest()!=manifest['trials_uncompressed_sha256']:raise ValueError('uncompressed trial identity mismatch')
     points=list(csv.DictReader((root/'all_points.csv').open()));trials=list(csv.DictReader(io.StringIO(payload.decode())));grouped={};keys=set()
+    if not points or not trials:raise ValueError('empty scientific scalar release')
     for trial in trials:
         key=(trial['point_id'],int(trial['seed']))
         if key in keys:raise ValueError('duplicate point/seed')

@@ -31,8 +31,21 @@ def paired(target,control):
 
 def qualified(row):return bool(row and row['certified'] and row['matched'] and row.get('graph_eligible',True) and row['trial_count']==50)
 
+def receipt_task(store,value):
+    argv=value.get('command',[])
+    if '--task' in argv:
+        task=load_record(Path(argv[argv.index('--task')+1]))
+        if task:return task
+    return load_record(store.root/'tasks'/(value['run_id'].rsplit('-',1)[0]+'.json'))
+
 def build(config_path,artifact_root,output):
     spec,lock,store=locked(artifact_root,config_path);out=Path(output);out.mkdir(parents=True,exist_ok=True);endpoints={};evaluations={};results={};points=[];contrasts=[];diagnostics={};resources=[];audits={}
+    task_outcomes=[load_record(p) for p in sorted((store.root/'task_outcomes').glob('*.json'))]
+    native=[]
+    for file in sorted((store.root/'command_jobs').glob('*/status.json')):
+        value=load_record(file);task=receipt_task(store,value)
+        if task and value['status']!='RUNNING':native.append({'task':task,'result':value})
+    task_outcomes=native+[v for v in task_outcomes if not v['result'].get('run_id')]
     for path in sorted((store.root/'endpoints').glob('*.json')):
         endpoint=load_record(path)
         if endpoint['source_fingerprint']!=lock['source_fingerprint']:continue
@@ -47,6 +60,15 @@ def build(config_path,artifact_root,output):
         key=point_key(design);endpoint=endpoints.get(key);result=results.get(key);evaluation=evaluations.get(key);entry=lock['cohorts'][design['benchmark']];outcome=endpoint['outcome'] if endpoint else {}
         row={**design,'candidate_id':entry['candidate_id'],'prep':entry['prep'],'initializer':entry['initialization'],'n':entry['n'],'K':entry['K'],'status':outcome.get('status','UNRUN_DEADLINE' if remaining_wall(store.root)<=0 else 'UNRUN'),'certified':outcome.get('certified'),'matched':outcome.get('matched'),'graph_eligible':outcome.get('graph_eligible',True),'trial_count':len(evaluation['trials']) if evaluation else 0,'point_id':endpoint['point_id'] if endpoint else None,'lambda':result.get('lam') if result else None,'actual_movement':result.get('movement') if result else None,'movement_error':result.get('movement_error') if result else None,'relative_gap':result.get('relative_gap') if result else None,'stable_gap':result.get('stable_gap') if result else None,'primal':result.get('primal') if result else None,'dual':result.get('dual') if result else None,'historical_identity':entry['historical_identity'],'historical_H_identity_matches':entry['historical_H_identity_matches']}
         row['historical_variant']=entry['variant'];row['historical_gamma_nominal']=entry['gamma_nominal'];row['historical_gamma_effective']=entry['gamma_effective'];row['parameters']=json.dumps(endpoint['parameters'] if endpoint else {})
+        defaults={'E1_v2':{'eta':.25},'E5':{'alpha':1.},'E6':{'eta_dir':.5},'E4':{'beta':1.,'mix':.25,'a_budget':1.05}}
+        resolved={**defaults.get(row['method'],{}),**(endpoint['parameters'] if endpoint else {})}
+        if row['method']=='E4':
+            graph=load_record(store.root/'graphs'/f"{row['benchmark']}--{row['variant']}.json")
+            if graph and 'beta' in graph['diagnostics']:resolved['beta']=graph['diagnostics']['beta']
+        row['resolved_method_parameters']=json.dumps(resolved)
+        row.update({'stored_historical_'+k:float(entry['historical_selection'][k]) for k in ['acc_mean','acc_sd','nmi_mean','nmi_sd']});row['stored_historical_G_sha256']=entry['historical_selection']['G_sha256']
+        attempts=[v['result'] for v in task_outcomes if v['task']['benchmark']==row['benchmark'] and v['task'].get('method',v['task']['kind'])==row['method'] and v['task'].get('variant','default')==row['variant'] and (row['rho'] in v['task'].get('targets',[]) if row['rho'] is not None else v['task']['kind'] in ['SC','historical','SSC_reference','old_E1_reference'])]
+        row['native_attempt_statuses']=';'.join(v['status'] for v in attempts);row['native_failed_attempt_count']=sum(v['status']!='COMPLETED' for v in attempts);row['finite_output_retained_after_native_failure']=bool(result and row['native_failed_attempt_count'])
         if row['method'] in ['historical','SSC_reference','old_E1_reference']:row['lambda']=2*entry['gamma_effective']
         if row['method']=='SC':row['lambda']=0.
         if evaluation:row.update({k:evaluation['summary'][k] for k in ['acc_mean','acc_sd','nmi_mean','nmi_sd']});row['native_best']=json.dumps(evaluation['summary'].get('native_best'))
@@ -55,6 +77,7 @@ def build(config_path,artifact_root,output):
             for name in ['q','p','S','Zf','G']:
                 value=store.get(endpoint['result']).get(name)
                 if isinstance(value,dict) and 'sha256'in value:row[name+'_sha256']=value['sha256']
+            if row['method']=='historical':row['replay_G_object_matches_stored']=row.get('G_sha256')==row['stored_historical_G_sha256']
         if key in audits and row['method']!='SC':
             row['saved_certified']=row['certified'];row['certified']=audits[key]['qualified']
             if row['method'] in METHODS:row['matched']=bool(row['matched'] and audits[key]['matched']);row['certificate_audit']='PASSED' if audits[key]['qualified'] else 'NOT_QUALIFIED'
@@ -64,7 +87,7 @@ def build(config_path,artifact_root,output):
     for row in points:
         key=point_key(row);endpoint=endpoints.get(key);result=results.get(key);evaluation=evaluations.get(key);b=row['benchmark'];qkey=(b,'QSSC','default',row['rho']);qssc=results.get(qkey)
         if result:
-            diagnostics[row['point_id']]=mechanism(endpoint,result,lock['cohorts'][b],store,qssc=qssc,sc_evaluation=evaluations.get((b,'SC','default',None)),evaluation=evaluation)
+            diagnostics[row['point_id']]=mechanism(endpoint,result,lock['cohorts'][b],store,qssc=qssc,sc_evaluation=evaluations.get((b,'SC','default',None)),evaluation=evaluation,qssc_evaluation=evaluations.get(qkey))
             diagnostics[row['point_id']]['independent_saved_array_certificate']=audits[key]
             diagnostics[row['point_id']]['QSSC_comparison_qualified_and_matched']=qualified(row) and qualified(lookup.get(qkey))
         if not evaluation:continue
@@ -72,7 +95,7 @@ def build(config_path,artifact_root,output):
             if controlkey==key or controlkey not in evaluations:continue
             control=lookup[controlkey];eligible=qualified(row) and qualified(control) if comparison=='QSSC' else row['trial_count']==50 and control['trial_count']==50 and bool(row['certified']) and (bool(control['certified']) if comparison=='SSC_reference' else True)
             contrast={**{k:row[k] for k in ['benchmark','method','variant','rho']},'comparison':comparison,'target_point_id':row['point_id'],'control_point_id':control['point_id'],'qualified':bool(eligible),**paired(evaluation,evaluations[controlkey])};contrasts.append(contrast)
-    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r[k] for k in ['benchmark','candidate_id','method','variant','rho','phase','status','certified','matched','graph_eligible','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
+    write_csv(out/'all_points.csv',points);write_csv(out/'primary_metrics.csv',[r for r in points if r['phase'] in ['primary','reference']]);write_csv(out/'paired_differences.csv',contrasts);write_csv(out/'coverage.csv',[{k:r[k] for k in ['benchmark','candidate_id','method','variant','rho','phase','status','native_attempt_statuses','native_failed_attempt_count','finite_output_retained_after_native_failure','certified','matched','graph_eligible','trial_count','point_id']} for r in points]);atomic_json(out/'diagnostics.json',diagnostics)
     macros=[]
     for method in METHODS[1:]:
         values=[v for v in contrasts if v['method']==method and v['variant']=='default' and v['rho']==.05 and v['comparison']=='QSSC' and v['qualified']];seen={v['benchmark'] for v in values};complete=len(seen)==8
@@ -81,16 +104,23 @@ def build(config_path,artifact_root,output):
     alignment=[]
     for b in ORDER:
         real=evaluations.get((b,'E4','default',.05));controls=[evaluations.get((b,'E4',f'perm{s}',.05)) for s in [400,401,402]];rows=[lookup[(b,'E4',f'perm{s}',.05)] for s in [400,401,402]]
+        def exchange(row):
+            data=diagnostics.get(row['point_id'],{}).get('graph',{});value=data.get('exchange_mass');return .25*value if value is not None else None
+        actual=lookup[(b,'E4','default',.05)]
+        for seed,control,row in zip([400,401,402],controls,rows):
+            if real and control:alignment.append({'benchmark':b,'comparison':f'real omitted band minus row permutation {seed}','qualified':qualified(actual) and qualified(row),'permutation_seeds':str(seed),'real_applied_exchange_fraction':exchange(actual),'control_applied_exchange_fraction':exchange(row),**paired(real,control)})
         if real and all(controls):
             mean={**controls[0],'trials':[{**t,'acc':float(np.mean([c['trials'][i]['acc'] for c in controls])),'nmi':float(np.mean([c['trials'][i]['nmi'] for c in controls]))} for i,t in enumerate(controls[0]['trials'])]}
-            alignment.append({'benchmark':b,'comparison':'real omitted band minus mean of all three row-permuted controls','qualified':qualified(lookup[(b,'E4','default',.05)]) and all(qualified(r) for r in rows),'permutation_seeds':'400;401;402',**paired(real,mean)})
+            masses=[exchange(r) for r in rows]
+            alignment.append({'benchmark':b,'comparison':'real omitted band minus mean of all three row-permuted controls','qualified':qualified(actual) and all(qualified(r) for r in rows),'permutation_seeds':'400;401;402','real_applied_exchange_fraction':exchange(actual),'control_applied_exchange_fraction':float(np.mean(masses)) if all(m is not None for m in masses) else None,**paired(real,mean)})
     write_csv(out/'E4_alignment_controls.csv',alignment)
     for b,entry in lock['cohorts'].items():resources.append({'category':'preparation_detail','benchmark':b,'CPU_seconds':entry['preparation_CPU_seconds'],'additive_to_native_total':False})
+    for file in sorted((store.root/'fits').glob('*/definition.json')):
+        definition=load_record(file);saved=load_record(file.with_name('result.json'));value=store.get(saved['object']) if saved else {}
+        resources.append({'category':'refinement_detail','benchmark':definition['benchmark'],'method':definition['method'],'variant':definition['variant'],'fit_id':file.parent.name,'lambda':definition['lambda'],'attempt':definition['attempt'],'status':value.get('stopping_reason','INCOMPLETE_CHECKPOINT_ONLY'),'iterations':value.get('iterations'),'CPU_seconds':value.get('fit_total_CPU_seconds'),'additive_to_native_total':False})
     for file in sorted((store.root/'command_jobs').glob('*/status.json')):
-        value=load_record(file);task=None;argv=value.get('command',[])
+        value=load_record(file);task=receipt_task(store,value)
         if value['status']=='RUNNING':continue
-        if '--task'in argv:
-            path=Path(argv[argv.index('--task')+1]);task=load_record(path)
         resources.append({'category':value['phase'],'benchmark':task.get('benchmark') if task else None,'method':task.get('method',task.get('kind')) if task else None,'variant':task.get('variant','default') if task else None,'run_id':value['run_id'],'status':value['status'],'CPU_seconds':value.get('charged_CPU_seconds'),'wall_seconds':value.get('wall_seconds'),'peak_sampled_RSS_bytes':value.get('max_sampled_RSS_bytes'),'additive_to_native_total':True})
     write_csv(out/'resource_usage.csv',resources)
     with io.StringIO(newline='') as f:
@@ -147,7 +177,7 @@ def build(config_path,artifact_root,output):
                 refs[child['sha256']]=child;pending.append(child)
     atomic_json(out/'artifact_manifest.json',{'schema':'ssc-round2-artifacts-v1','records':logical,'numerical_objects':list(refs.values()),'extra_files':extra,'derivation_source_snapshot':record['derivation_source_snapshot'],'scope':'Exact eight-cohort states, scientific records, models and per-seed predictions; arrays stay outside Git','restriction':'Provider data rights remain independent from project MIT code'})
     files={str(p.relative_to(out)):{'sha256':digest(p),'bytes':p.stat().st_size} for p in out.rglob('*') if p.is_file() and p.name!='release_manifest.json'}
-    atomic_json(out/'release_manifest.json',{'schema':'ssc-round2-scalar-release-v1','files':files,'source_fingerprint':lock['source_fingerprint'],'protocol_sha256':lock['protocol_sha256'],'derivation_source_files':derivation,'trials_uncompressed_sha256':__import__('hashlib').sha256(gzip.decompress((out/'trials.csv.gz').read_bytes())).hexdigest(),'counts':{'planned_endpoints':len(points),'frozen_endpoints':len(endpoints),'complete_50_seed_endpoints':len(evaluations),'certified_and_matched':sum(qualified(p) for p in points),'primary_qualified_and_matched':sum(qualified(p) for p in points if p['phase']=='primary'),'primary_planned':40,'certified_unsquared_references':sum(bool(p['certified']) for p in points if p['method'] in ['SSC_reference','old_E1_reference'])}})
+    atomic_json(out/'release_manifest.json',{'schema':'ssc-round2-scalar-release-v1','files':files,'source_fingerprint':lock['source_fingerprint'],'protocol_sha256':lock['protocol_sha256'],'derivation_source_files':derivation,'trials_uncompressed_sha256':__import__('hashlib').sha256(gzip.decompress((out/'trials.csv.gz').read_bytes())).hexdigest(),'counts':{'planned_endpoints':len(points),'frozen_endpoints':len(endpoints),'complete_50_seed_endpoints':len(evaluations),'certified_and_matched':sum(qualified(p) for p in points),'primary_qualified_and_matched':sum(qualified(p) for p in points if p['phase']=='primary'),'primary_planned':40,'certified_unsquared_references':sum(bool(p['certified']) for p in points if p['method'] in ['SSC_reference','old_E1_reference']),'quadratic_fit_attempts':sum(r['category']=='refinement_detail' for r in resources)}})
     return points
 
 def _markdown(out,points,macros,contrasts,diagnostics,lock):
@@ -161,7 +191,11 @@ def _markdown(out,points,macros,contrasts,diagnostics,lock):
             if method in ['SSC_reference','old_E1_reference'] and not row['certified']:text+=' U'
             values.append(text)
         lines.append('| '+b+' | '+' | '.join(values)+' |')
-    lines += ['','Scores are percent means; complete same-configuration sample SDs are in primary_metrics.csv. †: unqualified or unmatched intervention; U: uncertified unsquared reference. Missing entries remain NA. Native minimum-inertia assignments are diagnostic only and have no across-run SD.','','## Primary changes relative to fresh QSSC','']
+    lines += ['','Scores are percent means; complete same-configuration sample SDs are in primary_metrics.csv. †: unqualified or unmatched intervention; U: uncertified unsquared reference. Missing entries remain NA. Native minimum-inertia assignments are diagnostic only and have no across-run SD.','','## Stored historical reference','', 'These frozen report measurements are not substituted for fresh outputs. Object identity checks are strict and include array storage representation; a mismatch alone does not quantify numerical value differences.','','| Cohort | Stored ACC ± sample SD | Stored NMI ± sample SD | Replay G object matches stored |','|---|---:|---:|---|']
+    for b in ORDER:
+        row=next(r for r in points if r['benchmark']==b and r['method']=='historical')
+        lines.append(f"| {b} | {number(row['stored_historical_acc_mean'])} ± {number(row['stored_historical_acc_sd'])} | {number(row['stored_historical_nmi_mean'])} ± {number(row['stored_historical_nmi_sd'])} | {row.get('replay_G_object_matches_stored','NA')} |")
+    lines += ['','## Primary changes relative to fresh QSSC','']
     for row in macros:
         complete=row['qualified_denominator']==8
         lines.append(f"- {row['method']}: {'eight-cohort macro' if complete else 'available-case mean'} ΔACC / ΔNMI = {number(row['available_case_ACC_pp'])} / {number(row['available_case_NMI_pp'])} percentage points; n={row['qualified_denominator']}/8. Missing: {row['missing_datasets'] or 'none'}. ACC wins/ties/losses {row['ACC_wins']}/{row['ACC_ties']}/{row['ACC_losses']}; NMI {row['NMI_wins']}/{row['NMI_ties']}/{row['NMI_losses']}.")

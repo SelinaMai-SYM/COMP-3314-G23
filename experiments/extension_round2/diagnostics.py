@@ -45,18 +45,23 @@ def certificate_audit(endpoint,result,entry,store):
     return {'qualified':bool(certified),'matched':bool(matched),'status':'RECOMPUTED','primal':primal,'dual':dual,'stable_gap':stable,'signed_subtracted_gap':primal-dual,'relative_gap':relative,'movement_error':float(error),'actual_movement':movement,'capacity_residual':capacity,'PSD_residual':psd_res,'gap_consistent':bool(consistent),'reconstruction_max_error':reconstruction,'stationarity_residual':float(linalg.norm(res+A)),'primal_difference_from_saved':primal-result['primal'],'dual_difference_from_saved':dual-result['dual'],'graph_certificate':graph_check}
 
 
-def mechanism(endpoint,result,entry,store,qssc=None,sc_evaluation=None,evaluation=None):
+def mechanism(endpoint,result,entry,store,qssc=None,sc_evaluation=None,evaluation=None,qssc_evaluation=None):
     H=store.get(entry['objects']['H']);W=store.get(entry['objects']['W0']);G=result['G'];dH=H.mean(axis=0);hc=center(H);gc=center(G);S=float(linalg.norm(hc));dot=float(np.sum(hc*hc));scale=max(0.,float(np.sum(hc*gc))/dot) if dot>0 else 1.;residual=float(linalg.norm(gc-scale*hc))/S if S>0 else 0.
     out={'movement_from_original_H':float(linalg.norm(G-H)/S) if S else 0.,'total_centered_Frobenius_dispersion':float(linalg.norm(gc)),'dispersion_ratio':float(linalg.norm(gc)/S) if S else None,'best_nonnegative_uniform_scale':scale,'translation':(G.mean(axis=0)-scale*dH).tolist(),'global_affine_residual_relative':residual}
-    if qssc is not None:out['distance_from_same_target_QSSC_relative']=float(linalg.norm(G-qssc['G'])/S) if S else 0.
+    if qssc is not None:
+        qc=center(qssc['G']);qnorm=float(np.sum(qc*qc));qs=max(0.,float(np.sum(qc*gc))/qnorm) if qnorm else 1.;out['distance_from_same_target_QSSC_relative']=float(linalg.norm(G-qssc['G'])/S) if S else 0.;out['residual_from_uniform_affine_transform_of_QSSC_relative']=float(linalg.norm(gc-qs*qc)/S) if S else 0.;out['QSSC_lambda']=qssc['lam'];out['QSSC_actual_movement']=qssc['movement'];out['movement_difference_from_QSSC']=out['movement_from_original_H']-qssc['movement']
     if evaluation and sc_evaluation:
         pred=store.get(evaluation['predictions']);base=store.get(sc_evaluation['predictions']);agreement=[float(adjusted_rand_score(x,y)) for x,y in zip(base,pred)];out.update(partition_ARI_with_SC=agreement,partition_changed_seeds=int(sum(x<1-1e-12 for x in agreement)))
+    if evaluation and qssc_evaluation:
+        pred=store.get(evaluation['predictions']);base=store.get(qssc_evaluation['predictions']);agreement=[float(adjusted_rand_score(x,y)) for x,y in zip(base,pred)];out.update(partition_ARI_with_same_target_QSSC=agreement,partition_changed_seeds_vs_QSSC=int(sum(x<1-1e-12 for x in agreement)))
     if endpoint['method'] not in ['QSSC','E1_v2','E4','E5','E6']:return out
     if endpoint['method']=='E4':
         graph=store.root/'graphs'/f"{endpoint['benchmark']}--{endpoint['variant']}.json"
         if graph.exists():
             import json
             row=json.loads(graph.read_text());W=store.get(row['W']);out['graph']=row['diagnostics']
+            auxiliary=store.root/'auxiliary'/f"{endpoint['benchmark']}.json"
+            if auxiliary.exists():out['auxiliary_band']=json.loads(auxiliary.read_text())['diagnostics']
             if row.get('state'):
                 state=get_arrays(store,store.get(row['state']))
                 if 'w0' not in state:return out
@@ -87,6 +92,8 @@ def mechanism(endpoint,result,entry,store,qssc=None,sc_evaluation=None,evaluatio
         out['directional_floor']={'whitened_min_eigenvalue':float(eig[0]),'generalized_min_directional_scale':minimum,'dual_PSD_norm':float(linalg.norm(result['S'])),'sufficient_inactivity_nominal_target':bool(rho*S<(1-eta)*sigmin),'sufficient_inactivity_actual_plus_error':bool((result['movement']+result['movement_error'])*S<(1-eta)*sigmin) if result['movement_error'] is not None else False,'repair':result['repair'],'rank_info':result['rank_info'],'basis_reconstruction_max_error':float(np.max(np.abs(problem.reconstruct(Z)-G),initial=0)),'basis':{k:store.put(v) for k,v in [('U',problem.U),('Sigma',problem.s),('V',problem.V),('Y',problem.Y)]},'basis_qualification':'Deterministically regenerated from exact frozen H under the locked numerical environment; reconstruction checked against saved G'}
         if qssc is not None:
             Q=qssc['G'];zq=(Q-problem.mean)@problem.V;Tq=problem.whitened(zq);out['directional_floor']['same_target_QSSC_whitened_min_eigenvalue']=float(linalg.eigvalsh(Tq)[0]) if len(Tq) else 1.;out['directional_floor']['distance_from_same_target_QSSC_relative']=float(linalg.norm(G-Q)/S) if S else 0.
+            if qssc.get('valid_bound') and qssc['movement_error'] is not None and sigmin>0:
+                lower=out['directional_floor']['same_target_QSSC_whitened_min_eigenvalue']-qssc['movement_error']*S/sigmin;out['directional_floor']['QSSC_optimum_whitened_min_lower_from_gap']=float(lower);out['directional_floor']['QSSC_optimal_retained_projection_guard_feasible_from_gap']=bool(lower>=eta)
         if len(problem.s):
-            truth=store.get(entry['objects']['labels']);weak=problem.Y[:,-1];overall=weak.mean();between=sum(np.sum(truth==c)*(weak[truth==c].mean()-overall)**2 for c in np.unique(truth));total=float(np.sum((weak-overall)**2));out['directional_floor']['posthoc_weakest_direction_between_label_fraction']=float(between/total) if total else None
+            truth=store.get(entry['objects']['labels']);weak=problem.Y[:,-1];overall=weak.mean();between=sum(np.sum(truth==c)*(weak[truth==c].mean()-overall)**2 for c in np.unique(truth));total=float(np.sum((weak-overall)**2));out['directional_floor']['posthoc_weakest_direction_between_label_fraction']=float(between/total) if total else None;out['directional_floor']['weakest_direction_singular_gap_relative']=float((problem.s[-2]-problem.s[-1])/problem.s[-1]) if len(problem.s)>1 else None;out['directional_floor']['weak_direction_qualification']='Post-fit descriptive label association; repeated singular values make an individual weakest basis vector nonunique. This does not by itself establish noise preservation.'
     return out

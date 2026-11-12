@@ -19,7 +19,19 @@ def main():
         run_command(a.artifact_root,'r3-'+a.command+'-'+str(time.time_ns()),[sys.executable,'-m','experiments.extension_round3',*sys.argv[1:],'--inside-budget'],cpu_limit=limit,wall_limit=wall,phase='preparation' if a.command=='freeze' else 'aggregation',cwd=Path.cwd());return
     if a.command=='freeze':
         from .freeze import freeze
-        freeze(a.config,a.data_root,a.artifact_root,a.input_artifact_root)
+        lock=freeze(a.config,a.data_root,a.artifact_root,a.input_artifact_root)
+        if not lock.get('amendments'):
+            from .common import atomic_json,identity,read
+            amendments=Path(a.config).resolve().parent/'amendments'
+            lock['amendments']=[read(p) for p in sorted(amendments.glob('*.json'))]
+            effective=read(a.config)
+            for amendment in lock['amendments']:
+                for dotted,value in amendment.get('effective_overrides',{}).items():
+                    target=effective;parts=dotted.split('.')
+                    for key in parts[:-1]:target=target[key]
+                    target[parts[-1]]=value
+            lock['effective_protocol_sha256']=identity(effective)
+            atomic_json(Path(a.artifact_root)/'cohort_lock.json',lock)
     elif a.command=='run':
         from .run import execute
         execute(a.artifact_root,a.config,a.input_artifact_root,phase=a.phase,resume=a.resume)

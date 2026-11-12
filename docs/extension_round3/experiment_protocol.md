@@ -21,3 +21,5 @@ Bootstrap intervals are pointwise and unadjusted across the many declared contra
 ## Numerical execution amendment 002
 
 Before label access, the additional 200,000-iteration guard was replaced by a nonbinding 200,000,000 guard so the specified CPU caps control termination. Fixed-lambda continuation retains previous segments and their cumulative cost, with 570 solve seconds plus overhead within the original 600-second ceiling. Cached points are independently requalified for a stronger target. No objective, parameter, precision, movement or global resource gate changes. The initial protocol remains intact; [amendment 002](../../configs/extension_round3/amendments/002.json) records the effective override and source identities.
+
+Resource totals measure additional execution in this round, including failed attempts. Reused round-two references and warm states have earlier generation costs recorded in that study; these totals are not a comparison of cold-start method runtimes.

@@ -13,6 +13,9 @@ def rebuild(manifest_path,output):
     if hashlib.sha256(compressed).hexdigest()!=manifest['compressed_sha256']:raise ValueError('compressed hash mismatch')
     payload=gzip.decompress(compressed)
     if hashlib.sha256(payload).hexdigest()!=manifest['uncompressed_sha256']:raise ValueError('uncompressed hash mismatch')
+    if manifest.get('trials'):
+        trials=(root/manifest['trials']['path']).read_bytes()
+        if hashlib.sha256(trials).hexdigest()!=manifest['trials']['compressed_sha256'] or hashlib.sha256(gzip.decompress(trials)).hexdigest()!=manifest['trials']['uncompressed_sha256']:raise ValueError('trial compressed/uncompressed identity mismatch')
     import json
     records=json.loads(payload);ids=[r['id'] for r in records['profiles']]
     if not ids or len(ids)!=len(set(ids)):raise ValueError('empty or duplicate profile primary keys')

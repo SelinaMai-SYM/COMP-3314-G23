@@ -45,6 +45,8 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -r configs/extension_round2/requirements.txt
 ```
 
+The focused mathematical checks are available with `python -m pytest -q tests/extension_round2`. Without an artifact root, the frozen-input membership check is skipped; the `verify` entry point below supplies that root and requires the complete input check before benchmark fitting.
+
 Set `DATA_ROOT` and `ARTIFACT_ROOT` to explicit directories. A recovered artifact store includes the original deadline and cumulative resource ledger; `--resume` does not allocate a new budget. To conduct a new independent study, create a new artifact root and record it separately from this release.
 
 ```bash

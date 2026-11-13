@@ -44,7 +44,7 @@ def archive(root,output,input_artifact_root=None):
     retain_reference_closure(ArtifactStore(root),input_artifact_root)
     # Mutable resource/command accounting has a separately saved final receipt.
     folders=['objects','endpoints','profiles','evaluations','evidence','paths','evidence_checkpoints','attempts']
-    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json','imported_reference_manifest.json','scheduler_log.jsonl','parameter_compatibility_amendment003.json']
+    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json','imported_reference_manifest.json','scheduler_log.jsonl','parameter_compatibility_amendment003.json','resource_protocol_deviations.json']
     files=sorted({p for folder in folders for p in (root/folder).rglob('*') if p.is_file()}|{root/n for n in names if (root/n).exists()})
     for entry in ResourceLedger(root).state()['entries']:
         completed=root/'command_jobs'/entry['run_id']

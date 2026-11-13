@@ -34,7 +34,7 @@ def export_records(config,root):
         r=read(profile_path(store,q['id']));e=read(store.root/'evaluations'/(q['id']+'.json'));a=frozen['qualification'][q['id']]
         # Scalar release contains no matrices, labels or machine paths. Numeric
         # object identities point to the independently recoverable external store.
-        p={**q,'status':a['status'] if a['status']=='QUALIFICATION_AUDIT_FAILURE' else r['status'],'qualified':a['qualified'],'certified':a['certified'],'certificate':a.get('certificate',r.get('certificate',{})),'lambda':r.get('lambda',r.get('lambda_value')),'source_fingerprint':r.get('source_fingerprint'),'finite':bool(r.get('result')),'result_identity':identity(r['result']) if r.get('result') else None,'G_object':r.get('result',{}).get('G'),'path_CPU_seconds':r.get('path_CPU_seconds'),'distinct_lambdas':r.get('distinct_lambdas'),'evaluation':{k:v for k,v in e.items() if k not in ['panels']}}
+        p={**q,'status':a['status'] if a['status'] in ['QUALIFICATION_AUDIT_FAILURE','PATH_CPU_PROTOCOL_DEVIATION'] else r['status'],'numerical_status':r['status'],'protocol_compliant':a.get('protocol_compliant',True),'protocol_deviation':a.get('protocol_deviation'),'qualified':a['qualified'],'certified':a['certified'],'certificate':a.get('certificate',r.get('certificate',{})),'lambda':r.get('lambda',r.get('lambda_value')),'source_fingerprint':r.get('source_fingerprint'),'finite':bool(r.get('result')),'result_identity':identity(r['result']) if r.get('result') else None,'G_object':r.get('result',{}).get('G'),'path_CPU_seconds':r.get('path_CPU_seconds'),'distinct_lambdas':r.get('distinct_lambdas'),'evaluation':{k:v for k,v in e.items() if k not in ['panels']}}
         attempts=sorted((store.root/'command_jobs').glob('r3-'+q['id']+'-*'),key=lambda path:int(path.name.rsplit('-',1)[-1]))
         job=read(attempts[-1]/'status.json') if attempts and (attempts[-1]/'status.json').exists() else {}
         p.update(execution_status=job.get('status'),execution_stop_reason=job.get('stop_reason'),execution_run_id=job.get('run_id'),execution_CPU_seconds=job.get('CPU_seconds'),failure_type=r.get('failure_type'))
@@ -82,7 +82,7 @@ def contrast_controls(method):
 def derive(records):
     metrics=[];coverage=[];mechanisms=[];trials=[];lookup={}
     for p in records['profiles']:
-        cert=p['certificate'];coverage.append({**{k:p[k] for k in ['id','benchmark','method','rho','stage','tau_multiplier','status','finite','qualified','certified','lambda','path_CPU_seconds','distinct_lambdas']},**{k:p.get(k) for k in ['execution_status','execution_stop_reason','execution_run_id','execution_CPU_seconds','failure_type']},'rounding_complete':p['evaluation'].get('complete',False)})
+        cert=p['certificate'];coverage.append({**{k:p[k] for k in ['id','benchmark','method','rho','stage','tau_multiplier','status','finite','qualified','certified','lambda','path_CPU_seconds','distinct_lambdas']},**{k:p.get(k) for k in ['numerical_status','protocol_compliant','protocol_deviation','execution_status','execution_stop_reason','execution_run_id','execution_CPU_seconds','failure_type']},'rounding_complete':p['evaluation'].get('complete',False)})
         if p['evaluation'].get('mechanism'):mechanisms.append(p['evaluation']['mechanism'])
         for panel,data in p['panels'].items():
             for t in data['trials']:trials.append(dict(id=p['id'],benchmark=p['benchmark'],method=p['method'],rho=p['rho'],tau_multiplier=p['tau_multiplier'],panel=panel,**t))

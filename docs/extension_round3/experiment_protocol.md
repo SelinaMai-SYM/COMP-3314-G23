@@ -31,3 +31,9 @@ Strictly positive products w×anchor length can underflow before weighted rankin
 ## Scheduling amendment 004
 
 Secondary targets share each method/cohort's lambda path and cumulative caps. A completion barrier separates their existing target blocks, preserving the registered queue order while preventing concurrent writes to one path. Each block has unique paths. This orchestration repair preceded all secondary fits and terminal scores; no numerical source, completed output, parameter or resource limit changed. See [amendment 004](../../configs/extension_round3/amendments/004.json).
+
+## Resource-accounting amendment 005 and deviations
+
+A killed worker can consume CPU after its last committed path counter. A pre-scoring audit found cumulative native costs of 1,879.646 seconds for YaleB plain-pilot tubes and 1,859.512 seconds for MSRA shuffled-401 tubes, exceeding the 1,800-second path limit by 79.646 and 59.512 seconds. These are protocol deviations, not increased allowances. All outputs on both affected paths are conservatively excluded from qualified paired comparisons; arrays, separate numerical certificates and descriptive scores remain available. The global 32-core-hour budget includes every failed attempt and both overruns.
+
+Remaining path allowances now use the complete native ledger across targets and attempts, rather than relying on a potentially stale internal path counter. Existing unaffected transition workers are stopped below the path cap if necessary. A regression check covers lost failed-work costs, target sharing and active reservations. No mathematical code, parameter, numerical gate, completed array or global deadline changes. [Amendment 005](../../configs/extension_round3/amendments/005.json) records the observed costs and exclusion policy before label access.

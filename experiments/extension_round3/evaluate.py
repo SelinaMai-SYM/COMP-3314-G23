@@ -21,12 +21,24 @@ def freeze_outputs(config,root):
         return frozen
     if any(v['phase']=='fitting' for v in ResourceLedger(root).state()['active'].values()):raise RuntimeError('cannot score while numerical workers are active')
     audits={};profiles=[];files={}
+    deviation_path=store.root/'resource_protocol_deviations.json'
+    deviations=read(deviation_path) if deviation_path.exists() else {'affected_profile_ids':[]}
+    scheduler={}
+    if (store.root/'scheduler_log.jsonl').exists():
+        for line in (store.root/'scheduler_log.jsonl').read_text().splitlines():
+            entry=json.loads(line);scheduler[entry['id']]=entry['status']
     for planned in queue():
         p=profile_path(store,planned['id'])
         if not p.exists():
             gate=read(store.root/'optional_gate.json') if (store.root/'optional_gate.json').exists() else {'passed':False}
-            status='UNRUN_PRIMARY_COVERAGE_GATE' if planned['stage']==6 and not gate.get('passed',False) else 'UNRUN_BUDGET_OR_PHASE'
-            atomic_json(p,dict(planned,status=status,qualified=False,certified=False))
+            status='UNRUN_PRIMARY_COVERAGE_GATE' if planned['stage']==6 and not gate.get('passed',False) else scheduler.get(planned['id'],'UNRUN_BUDGET_OR_PHASE')
+            retained=dict(planned,status=status,qualified=False,certified=False)
+            if status=='UNRUN_CUMULATIVE_CAP':
+                path=store.root/'paths'/f"{planned['benchmark']}__{planned['method']}__t{planned['tau_multiplier']:g}"/'path.json'
+                if path.exists() and read(path)['points']:
+                    point=min(read(path)['points'],key=lambda x:abs(x['certificate']['movement']-planned['rho']))
+                    retained.update(result=point['result'],certificate=point['certificate'],**{'lambda':point['lambda']},recovery_reason='Retain an earlier finite path point without optimization after the native cumulative cap')
+            atomic_json(p,retained)
         record=read(p);audit={'qualified':False,'certified':False,'status':record['status']}
         if record.get('result'):
             result=get_arrays(store,record['result']);c=lock['cohorts'][planned['benchmark']];H=store.get(c['objects']['H']);W=store.get(c['objects']['W0'])
@@ -60,6 +72,9 @@ def freeze_outputs(config,root):
             for ref in collect_refs([record,audit]):
                 if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('numerical CAS identity mismatch')
                 files[ref['path']]=ref['sha256']
+        if planned['id'] in deviations['affected_profile_ids']:
+            audit.update(qualified=False,status='PATH_CPU_PROTOCOL_DEVIATION',protocol_compliant=False,protocol_deviation='Native cumulative path cost exceeded 1800 CPU seconds; all outputs on this path are conservatively descriptive only. Numerical certification remains separately reported.')
+        else:audit['protocol_compliant']=True
         audits[planned['id']]=audit;profiles.append(record);files[str(p.relative_to(store.root))]=digest(p)
     for p in (store.root/'evidence').glob('*.json'):
         evidence_record=read(p);cohort=lock['cohorts'][evidence_record['benchmark']]
@@ -69,6 +84,7 @@ def freeze_outputs(config,root):
             if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('evidence object changed')
             files[ref['path']]=ref['sha256']
     files['cohort_lock.json']=digest(store.root/'cohort_lock.json')
+    if deviation_path.exists():files['resource_protocol_deviations.json']=digest(deviation_path)
     frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
     atomic_json(marker,frozen);return frozen
 

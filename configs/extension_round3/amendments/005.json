@@ -1,0 +1,80 @@
+{
+  "active_transition_policy": "Existing unaffected workers finish normally unless prior native cost plus sampled worker CPU reaches 1740 seconds; then stop conservatively below 1800 and retain the previous finite point. Subsequent scheduling uses native ledger totals.",
+  "changed_orchestration_and_analysis_files": {
+    "experiments/extension_round3/artifacts.py": {
+      "after": "fffab4e661393efabc9db1b731d299295bec1e1964c0313e9ef4dd968dfa3116",
+      "before": "68ac85459b004a768f6e50faccfef98c81698ec5ee6e785c1fa75ec2f834d674"
+    },
+    "experiments/extension_round3/evaluate.py": {
+      "after": "3114c4dfe49e870ad9b046634aff5dc6f7b9b7cfd4d7adfaa042211c520502f3",
+      "before": "c454c594b2ddf3561e36ee091139b182eb87bd6d49e06eb48a158405e3765612"
+    },
+    "experiments/extension_round3/report.py": {
+      "after": "1c83bb3fc0e6c115abab375b3a4d498dc55b2b851849497c4402b138bb729d4e",
+      "before": "0337a1cfef9cae3e3e7ec6db52d933938700a817e7ac2c3d48199af6f9ce0954"
+    },
+    "experiments/extension_round3/run.py": {
+      "after": "4cae8eb7c476e7a4d73884a19e956c5960874404f090d5f54a339b521dc54016",
+      "before": "ceeb61df9fdb9b7dbf0c3c4bb7b54e92054cca7b7abad9fd90edcd7bac4778b5"
+    }
+  },
+  "effective_overrides": {},
+  "eligibility_policy": "Preserve all numerical arrays, certificates and later descriptive scores. Conservatively exclude every profile on an affected path from qualified paired comparisons; numerical certification remains a separate flag. No target or global budget is increased.",
+  "id": "005",
+  "labels_loaded": false,
+  "observed_deviations": [
+    {
+      "affected_profile_ids": [
+        "YaleB__R3_E1_V3_PILOT__r0.10__t1",
+        "YaleB__R3_E1_V3_PILOT__r0.05__t1",
+        "YaleB__R3_E1_V3_PILOT__r0.20__t1"
+      ],
+      "benchmark": "YaleB",
+      "charged_CPU_seconds": 1879.6461238333331,
+      "entries": [
+        {
+          "charged_CPU_seconds": 1790.4400611666665,
+          "run_id": "r3-YaleB__R3_E1_V3_PILOT__r0.10__t1-0"
+        },
+        {
+          "charged_CPU_seconds": 89.20606266666665,
+          "run_id": "r3-YaleB__R3_E1_V3_PILOT__r0.05__t1-0"
+        }
+      ],
+      "limit_CPU_seconds": 1800.0,
+      "method": "R3_E1_V3_PILOT",
+      "overrun_CPU_seconds": 79.64612383333315,
+      "tau_multiplier": 1.0
+    },
+    {
+      "affected_profile_ids": [
+        "MSRA50__R3_E1_V3_SHUFFLE401__r0.10__t1"
+      ],
+      "benchmark": "MSRA50",
+      "charged_CPU_seconds": 1859.5117702916666,
+      "entries": [
+        {
+          "charged_CPU_seconds": 1790.1074282083332,
+          "run_id": "r3-MSRA50__R3_E1_V3_SHUFFLE401__r0.10__t1-0"
+        },
+        {
+          "charged_CPU_seconds": 69.40434208333333,
+          "run_id": "r3-MSRA50__R3_E1_V3_SHUFFLE401__r0.10__t1-1"
+        }
+      ],
+      "limit_CPU_seconds": 1800.0,
+      "method": "R3_E1_V3_SHUFFLE401",
+      "overrun_CPU_seconds": 59.51177029166661,
+      "tau_multiplier": 1.0
+    }
+  ],
+  "reason": "A worker terminated near its native CPU limit can leave path.json without its last consumed segment. Scheduling from that stale internal counter permitted later work beyond two path caps. Native ledger costs, including every failure and target, now determine the remaining 1800-second path allowance.",
+  "timing": "Before terminal label access; after a numerical-only resource audit during the rho=.20 block",
+  "unchanged": [
+    "all mathematical implementation files and numerical source fingerprint",
+    "objectives, parameters, input objects and existing numerical arrays",
+    "relative gap, capacity and movement gates",
+    "32-core-hour global budget and original wall clock",
+    "32 distinct-lambda and 600-second individual-fit ceilings"
+  ]
+}

@@ -9,6 +9,14 @@ def remaining(root,phase='fitting'):
     s=ResourceLedger(root).state();return s['limit_seconds']-sum(x['charged_cpu_seconds'] for x in s['entries'])-sum(x['seconds'] for x in s['active'].values())-(0 if phase in ['validation','aggregation'] else s['reserve_seconds'])
 
 
+def native_path_cpu(state,lookup,task):
+    def same(run_id):
+        profile_id=run_id[3:].rsplit('-',1)[0] if run_id.startswith('r3-') else None
+        prior=lookup.get(profile_id)
+        return bool(prior and all(prior[key]==task[key] for key in ['benchmark','method','tau_multiplier']))
+    return sum(e['charged_cpu_seconds'] for e in state['entries'] if same(e['run_id']))+sum(e['seconds'] for run_id,e in state.get('active',{}).items() if same(run_id))
+
+
 def execute(root,config,input_root,*,phase='all',resume=False):
     spec,lock,store=locked(root,config);assert_fitting_open(root)
     for key,name in [('input_lock_sha256','cohort_lock.json'),('registry_sha256','method_registry.json'),('queue_sha256','experiment_queue.json')]:
@@ -19,6 +27,7 @@ def execute(root,config,input_root,*,phase='all',resume=False):
     def fitting(rows):
         return [dict(r,kind='fit') for r in rows if not profile_path(store,r['id']).exists()]
     q=queue()
+    task_lookup={r['id']:r for r in q}
     prerequisites=[r for r in q if r['stage']==3 or (phase in ['secondary','optional'] and r['stage']==4)]
     if phase in ['controls','secondary','optional'] and any(not profile_path(store,r['id']).exists() for r in prerequisites):raise RuntimeError('phase prerequisites have not all been attempted')
     stages=[]
@@ -39,6 +48,10 @@ def execute(root,config,input_root,*,phase='all',resume=False):
         if not is_evidence and task['method'] in registry():
             p=store.root/'paths'/f"{task['benchmark']}__{task['method']}__t{task['tau_multiplier']:g}"/'path.json'
             if p.exists():limit=min(limit,max(20.,1800-read(p)['CPU_seconds']))
+            # A killed worker may not have committed its last path.json. The
+            # native ledger includes that lost segment, imports and failures.
+            used=native_path_cpu(ResourceLedger(root).state(),task_lookup,task)
+            limit=min(limit,max(0.,1800.-used))
         if is_evidence:
             used=sum(e['charged_cpu_seconds'] for e in ResourceLedger(root).state()['entries'] if e['run_id'].startswith('r3-evidence-'+task['benchmark']+'-t'))
             limit=min(limit,max(0.,3600.-used))

@@ -133,3 +133,17 @@ def test_reported_leverage_minimum_is_not_clamped_to_zero(tmp_path):
     assert diagnostic['leverage_min']==pytest.approx(10/11)
     assert diagnostic['leverage_max']==pytest.approx(10/11)
     assert diagnostic['pilot_cross_class_auroc'] is None
+
+
+def test_positive_tube_masses_do_not_disappear_on_product_underflow():
+    from method_extension.extension_round3.weighted_midrank import weighted_midrank_log
+    tiny=np.nextafter(0.,1.);w=np.array([1.,tiny]);a0=np.array([1.,.01]);scores=np.array([1.,2.])
+    assert (w*a0)[1]==0.
+    a,meta=tube_distances(w,a0,scores)
+    assert len(a)==2 and a[1]>0 and meta['eta'][1]==pytest.approx(.375)
+    assert w@a==pytest.approx(.25*(w@a0))
+    logs=np.array([-800.,-799.,-798.]);u,_=weighted_midrank_log(np.array([1.,2.,3.]),logs)
+    mass=np.exp(np.array([0.,1.,2.]));mass/=mass.sum();expected=np.cumsum(mass)-.5*mass
+    np.testing.assert_allclose(u,expected,atol=1e-13)
+    u,_=weighted_midrank_log(np.ones(3),logs);np.testing.assert_array_equal(u,np.full(3,.5))
+    u,_=weighted_midrank(np.ones(1),np.array([tiny]));np.testing.assert_array_equal(u,[.5])

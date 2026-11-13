@@ -1,8 +1,9 @@
 .PHONY: all clean figures refresh-tables
 PYTHON ?= python3
-REPORT_DATE ?= 2026-11-11
+REPORT_DATE ?= 2026-11-13
 all: Group_23.pdf
 refresh-tables:
+	cd .. && "$(PYTHON)" -m scripts.result_tables --report-output report/tables/edge_deletion_main.tex
 	"$(PYTHON)" ../experiments/submission_refresh/reporting.py --root .. --date $(REPORT_DATE)
 	cd .. && "$(PYTHON)" -m experiments.extension_verification.reporting --release-manifest configs/extension_verification/release_manifest.json
 figures:

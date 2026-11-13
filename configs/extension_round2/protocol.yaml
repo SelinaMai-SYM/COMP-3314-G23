@@ -292,6 +292,3 @@ qualification:
     and singular-value LMI are prior art
   selection: No labels in fitting, calibration or graph repair; labels only after
     terminal outputs freeze
-publication:
-  authorized_branch: extension_v2
-  main_and_existing_report_unchanged: true

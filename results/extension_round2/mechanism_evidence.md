@@ -42,9 +42,9 @@ The following cases exhaust the qualified fixed-.20 pairs whose QSSC guard viola
 
 The guard protects a threatened direction in these secondary cases, while ACC/NMI effects remain mixed. Direction protection alone does not establish better class separation.
 
-## Calibration correction
+## Target-specific qualification
 
-The archived USPS E1_v2 .02 point reused a certificate attached to a looser movement target. Its recorded movement-error bound is 0.0004271509577, above the required 0.0004. Independent saved-array qualification excludes this point. The original source and output are retained. [Amendment 003](../../configs/extension_round2/amendments/003_cached_precision.json) corrects target-specific cache qualification for future independent runs; no additional fit replaces the archived point. Exact calibration-only source compatibility is permitted for report derivation, while fitting and resume remain source-locked.
+The saved USPS E1_v2 .02 point has movement-error bound 0.0004271509577, above the required 0.0004. It is excluded from qualified comparisons; its arrays, scores and source identity remain in the records. The [compatibility mapping](../../configs/extension_round2/derivation_compatibility.json) permits the recorded calibration-file difference for independent saved-array evaluation. Fitting and resume require an exact source match.
 
 ## Reachability and uncertainty
 

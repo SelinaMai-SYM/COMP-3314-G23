@@ -4,7 +4,7 @@ from .common import CONFIG,ROOT
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','run','evaluate','report','rebuild']);p.add_argument('--config',default=str(CONFIG));p.add_argument('--data-root');p.add_argument('--artifact-root');p.add_argument('--input-artifact-root');p.add_argument('--phase',default='all');p.add_argument('--resume',action='store_true');p.add_argument('--output');p.add_argument('--release-manifest');p.add_argument('--inside-budget',action='store_true',help=argparse.SUPPRESS);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','run','evaluate','report','rebuild']);p.add_argument('--config',default=str(CONFIG));p.add_argument('--data-root');p.add_argument('--artifact-root');p.add_argument('--input-artifact-root');p.add_argument('--phase',default='all');p.add_argument('--resume',action='store_true');p.add_argument('--output');p.add_argument('--release-manifest');p.add_argument('--figures',action='store_true',help='Regenerate figures during scalar rebuilding');p.add_argument('--inside-budget',action='store_true',help=argparse.SUPPRESS);a=p.parse_args()
     if a.command=='freeze':
         from experiments.submission_refresh.core import atomic_json
         root=Path(a.artifact_root);root.mkdir(parents=True,exist_ok=True)
@@ -23,18 +23,6 @@ def main():
         from .common import digest
         for key,name in [('input_lock_sha256','cohort_lock.json'),('registry_sha256','method_registry.json'),('queue_sha256','experiment_queue.json')]:
             if lock[key]!=digest(ROOT/'configs/extension_round3'/name):raise ValueError('registered input, registry or queue changed')
-        if not lock.get('amendments'):
-            from .common import atomic_json,identity,read
-            amendments=Path(a.config).resolve().parent/'amendments'
-            lock['amendments']=[read(p) for p in sorted(amendments.glob('*.json'))]
-            effective=read(a.config)
-            for amendment in lock['amendments']:
-                for dotted,value in amendment.get('effective_overrides',{}).items():
-                    target=effective;parts=dotted.split('.')
-                    for key in parts[:-1]:target=target[key]
-                    target[parts[-1]]=value
-            lock['effective_protocol_sha256']=identity(effective)
-            atomic_json(Path(a.artifact_root)/'cohort_lock.json',lock)
     elif a.command=='run':
         from .run import execute
         execute(a.artifact_root,a.config,a.input_artifact_root,phase=a.phase,resume=a.resume)
@@ -46,5 +34,5 @@ def main():
         build(a.config,a.artifact_root,a.output)
     else:
         from .release import rebuild
-        rebuild(a.release_manifest,a.output)
+        rebuild(a.release_manifest,a.output,plots=a.figures)
 if __name__=='__main__':main()

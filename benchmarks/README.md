@@ -23,7 +23,7 @@ subdirectories such as `orl/data`, `jaffe/data` and `usps/data`. Command-line
 from pathlib import Path
 from benchmarks import load_dataset
 
-root = Path("/path/to/benchmarks")
+root = Path("local/data")
 X, y, metadata = load_dataset("ORL", root=root / "orl/data", version="att92")
 ```
 

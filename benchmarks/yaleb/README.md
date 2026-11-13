@@ -39,7 +39,7 @@ Use the [recorded UCSD archive](https://web.archive.org/web/20220127084451id_/ht
 for the cropped preparation, then run from the checkout root:
 
 ```bash
-python -m benchmarks.prepare --dataset YaleB_cropped2414 --data-root /path/to/benchmarks --archive /path/to/benchmarks/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip
+python -m benchmarks.prepare --dataset YaleB_cropped2414 --data-root local/data --archive local/data/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip
 ```
 
 This writes three uint8 interpolation arrays and integer labels under
@@ -54,7 +54,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "YaleB", root=Path("/path/to/benchmarks/yaleb/data"), version="cropped2414"
+    "YaleB", root=Path("local/data/yaleb/data"), version="cropped2414"
 )
 ```
 

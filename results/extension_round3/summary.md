@@ -1,10 +1,10 @@
-# Round-three results
+# Edge-deletion refinement results
 
 This is conditional development evidence on eight retrospectively selected report cohorts, not an unseen test. Full eight-cohort means are NA whenever an exact contrast lacks any qualified pair. Available-case comparisons with different masks must not be ranked.
 
 There are 352/378 finite declared profiles and 153/168 qualified primary/control profiles, including exact aliases. Charged CPU at this export: 18.333 core-hours. Missing, failed, timed-out and unmatched outputs remain in [coverage.csv](coverage.csv).
 
-A pre-scoring resource audit identified native path-cap overruns on 2 paths (MSRA50 / R3_E1_V3_SHUFFLE401; YaleB / R3_E1_V3_PILOT). All 4 declared profiles on those paths are conservatively descriptive only, even when their numerical certificate passes. Failed work and overruns remain charged globally. [Native path totals](native_path_costs.csv) · [Recorded deviations and repair](../../docs/extension_round3/experiment_protocol.md#resource-accounting-amendment-005-and-deviations).
+Native CPU costs exceed the declared path cap on 2 paths (MSRA50 / R3_E1_V3_SHUFFLE401; YaleB / R3_E1_V3_PILOT). All 4 declared profiles on those paths are conservatively descriptive only, even when their numerical certificate passes. Failed work and overruns remain charged globally. [Native path totals](native_path_costs.csv) · [Eligibility and resource limits](../../docs/extension_round3/experiment_protocol.md#eligibility-and-resource-limits).
 
 ## Primary comparisons
 
@@ -44,4 +44,4 @@ The decisive control is the same intervention using uncorrected pilot scores. A 
 | anchor_generated | R3_E7_CAVITY | R3_E7_PILOT | 8 | AR;BinAlpha;JAFFE;MSRA50;ORL;UMIST;USPS;YaleB | -0.001 | -0.001 | 1 | 2 |
 | native | R3_E7_CAVITY | R3_E7_PILOT | 8 | AR;BinAlpha;JAFFE;MSRA50;ORL;UMIST;USPS;YaleB | 0.004 | -0.001 | 1 | 4 |
 
-[Contribution verdict](contribution_verdict.md) · [All paired contrasts](paired_differences.csv) · [Mechanisms](mechanism_diagnostics.csv) · [Protocol](../../docs/extension_round3/experiment_protocol.md). Bootstrap intervals are conditional on rounding starts, use 10,000 draws with seed 424242, are pointwise and unadjusted across contrasts, and are not a generalization guarantee. All planned controls and secondary rows are listed, including failures.
+[All paired contrasts](paired_differences.csv) · [Mechanisms](mechanism_diagnostics.csv) · [Protocol](../../docs/extension_round3/experiment_protocol.md). Bootstrap intervals are conditional on rounding starts, use 10,000 draws with seed 424242, are pointwise and unadjusted across contrasts, and are not a generalization guarantee. All planned controls and secondary rows are listed, including failures.

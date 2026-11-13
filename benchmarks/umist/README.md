@@ -65,7 +65,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "UMIST", root=Path("/path/to/benchmarks/umist/data"), version="lzuf574"
+    "UMIST", root=Path("local/data/umist/data"), version="lzuf574"
 )
 ```
 

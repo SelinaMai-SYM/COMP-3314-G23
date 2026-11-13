@@ -62,3 +62,17 @@ results/**/external_link_checks.json
 results/**/link_audit.csv
 results/**/artifact_manifest.json
 results/**/source_records.json.gz
+
+# Local datasets, result reconstruction and report build intermediates
+data/
+.cache/
+.coverage
+htmlcov/
+*.prof
+*.trace
+*.tmp
+*.bak
+report/*.toc
+report/*.nav
+report/*.snm
+report/*.vrb

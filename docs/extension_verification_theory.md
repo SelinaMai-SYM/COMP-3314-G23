@@ -1,7 +1,7 @@
 # Independent convex refinement objectives
 
 Each study optimizes its own representation. They are alternatives; none uses
-another extension's fitted output. See the [registered protocol](extension_verification_plan.md)
+another extension's fitted output. See the [registered protocol](unsquared_refinements.md)
 for fixed operating points and gates, and the [results](extension_verification_results.md)
 for empirical qualification.
 

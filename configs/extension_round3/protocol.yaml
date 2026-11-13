@@ -1,6 +1,29 @@
 {
-  "schema": "ssc-round3-protocol-v1",
   "base_commit": "5aa1b4367d8db2c360b9accf63d42d072ff40f4f",
+  "calibration": {
+    "bracket_factor": 2.0,
+    "check_every": 50,
+    "checkpoint_every": 1000,
+    "failure_endpoint": "finite numerically best point nearest target; no proof of unattainability",
+    "fit_cpu_seconds": 600,
+    "initial": "rho*S/norm(B.T@(w*unit(BH))) with guard factor 2",
+    "max_distinct_lambdas": 32,
+    "max_iterations": 200000000,
+    "old_points": "Only fixed terminal round-2 control lambdas may initialize paths; independently recheck and refine. No old scores loaded.",
+    "path_cpu_seconds": 1800,
+    "refinement": "log secant clipped to [0.2,0.8] of observed certified bracket; geometric midpoint otherwise"
+  },
+  "candidates": [
+    "R3_E7_CAVITY",
+    "R3_E1_V3_CAVITY",
+    "R3_E5_V2_CAVITY"
+  ],
+  "canonical_method_ids": {
+    "R3_E1_V3_CAVITY": "R3_E1_V3_SELECTIVE_TUBE",
+    "R3_E5_V2_CAVITY": "R3_E5_V2_SELECTIVE_GUARD",
+    "R3_E7_CAVITY": "R3_E7_CAVITY_GRAPH"
+  },
+  "capacity_tolerance": 1e-08,
   "cohorts": [
     "AR",
     "JAFFE",
@@ -11,61 +34,53 @@
     "YaleB",
     "USPS"
   ],
-  "candidates": [
-    "R3_E7_CAVITY",
-    "R3_E1_V3_CAVITY",
-    "R3_E5_V2_CAVITY"
-  ],
-  "canonical_method_ids": {
-    "R3_E7_CAVITY": "R3_E7_CAVITY_GRAPH",
-    "R3_E1_V3_CAVITY": "R3_E1_V3_SELECTIVE_TUBE",
-    "R3_E5_V2_CAVITY": "R3_E5_V2_SELECTIVE_GUARD"
-  },
-  "selection_qualification": "Conditional development evidence on retrospectively selected familiar report cohorts; not an untouched test set",
-  "primary_movement": 0.1,
-  "secondary_movements": [
-    0.05,
-    0.2
-  ],
-  "movement_relative_tolerance": 0.01,
-  "movement_uncertainty_fraction": 0.005,
-  "relative_gap": 1e-06,
-  "capacity_tolerance": 1e-08,
   "evidence": {
-    "tau": "inverse median positive weighted degree; frozen for deletion",
     "batch_size": 32,
-    "residual_tolerance": 1e-09,
-    "symmetry_tolerance": 1e-09,
-    "roundoff_tolerance": 1e-12,
     "bound_tolerance": 1e-10,
+    "residual_tolerance": 1e-09,
+    "roundoff_tolerance": 1e-12,
     "score_tie_decimals": 10,
     "shuffle_seeds": [
       400,
       401,
       402
-    ]
+    ],
+    "symmetry_tolerance": 1e-09,
+    "tau": "inverse median positive weighted degree; frozen for deletion"
   },
+  "execution": {
+    "closure_cpu_reserve_seconds": 3600,
+    "cpu_core_hours": 32,
+    "evidence_cap_includes_tau_sensitivities": true,
+    "evidence_cpu_seconds_per_cohort": 3600,
+    "final_wall_reserve_hours": 1,
+    "fit_launch_deadline": "23 wall hours after original clock start",
+    "labels": "One terminal evaluation only after all fits and numerical eligibility are frozen; no numerical work after scoring begins",
+    "max_workers": 2,
+    "optional_stage6_gate": "All 160 primary fitted profiles and eight uniform aliases must be certified and movement matched, with all controls present. Original SSC certification does not block the gate.",
+    "threads": 1,
+    "wall_hours": 24
+  },
+  "frozen_queue": "configs/extension_round3/experiment_queue.json",
   "interventions": {
     "graph_strength": 0.2,
+    "guard_alpha_factor": 2.0,
     "tube_eta_min": 0.125,
     "tube_eta_width": 0.25,
-    "tube_uniform": 0.25,
-    "guard_alpha_factor": 2.0
+    "tube_uniform": 0.25
   },
-  "calibration": {
-    "max_distinct_lambdas": 32,
-    "initial": "rho*S/norm(B.T@(w*unit(BH))) with guard factor 2",
-    "bracket_factor": 2.0,
-    "refinement": "log secant clipped to [0.2,0.8] of observed certified bracket; geometric midpoint otherwise",
-    "failure_endpoint": "finite numerically best point nearest target; no proof of unattainability",
-    "fit_cpu_seconds": 600,
-    "path_cpu_seconds": 1800,
-    "max_iterations": 200000,
-    "check_every": 50,
-    "checkpoint_every": 1000,
-    "old_points": "Only fixed terminal round-2 control lambdas may initialize paths; independently recheck and refine. No old scores loaded."
-  },
+  "movement_relative_tolerance": 0.01,
+  "movement_uncertainty_fraction": 0.005,
+  "primary_movement": 0.1,
+  "registry": "configs/extension_round3/method_registry.json",
+  "relative_gap": 1e-06,
   "rounding": {
+    "algorithm": "lloyd",
+    "anchor_policy": "C-order copy of H, subtract column mean exactly as KMeans; saved row indices applied to each G",
+    "initialization": "greedy k-means++",
+    "max_iter": 300,
+    "n_init": 1,
+    "output": "G directly; no normalization",
     "panels": [
       "anchor_generated",
       "native"
@@ -122,35 +137,20 @@
       48,
       49
     ],
-    "initialization": "greedy k-means++",
-    "anchor_policy": "C-order copy of H, subtract column mean exactly as KMeans; saved row indices applied to each G",
-    "n_init": 1,
-    "algorithm": "lloyd",
-    "max_iter": 300,
-    "tol": 0.0001,
-    "output": "G directly; no normalization"
+    "tol": 0.0001
   },
+  "schema": "ssc-round3-protocol-v1",
+  "secondary_movements": [
+    0.05,
+    0.2
+  ],
+  "selection_qualification": "Conditional development evidence on retrospectively selected familiar report cohorts; not an untouched test set",
   "statistics": {
-    "nmi": "geometric",
-    "sd_ddof": 1,
     "bootstrap_draws": 10000,
     "bootstrap_seed": 424242,
-    "unit": "paired initialization seed conditional on cohort and fixed embedding",
-    "macro": "all eight qualified pairs only; available cases use identical ACC/NMI mask"
-  },
-  "execution": {
-    "max_workers": 2,
-    "threads": 1,
-    "cpu_core_hours": 32,
-    "wall_hours": 24,
-    "final_wall_reserve_hours": 1,
-    "closure_cpu_reserve_seconds": 3600,
-    "evidence_cpu_seconds_per_cohort": 3600,
-    "evidence_cap_includes_tau_sensitivities": true,
-    "fit_launch_deadline": "23 wall hours after original clock start",
-    "optional_stage6_gate": "All 160 primary fitted profiles and eight uniform aliases must be certified and movement matched, with all controls present. Original SSC certification does not block the gate.",
-    "labels": "One terminal evaluation only after all fits and numerical eligibility are frozen; no numerical work after scoring begins"
-  },
-  "frozen_queue": "configs/extension_round3/experiment_queue.json",
-  "registry": "configs/extension_round3/method_registry.json"
+    "macro": "all eight qualified pairs only; available cases use identical ACC/NMI mask",
+    "nmi": "geometric",
+    "sd_ddof": 1,
+    "unit": "paired initialization seed conditional on cohort and fixed embedding"
+  }
 }

@@ -1,128 +1,153 @@
 # Spectral Shrunk Clustering
 
-Research software and a technical report on **Spectral Shrunk Clustering**
-([Chang et al., AAAI 2015](https://doi.org/10.1609/aaai.v29i1.9606)). The project
-studies whether refining a spectral representation improves clustering, and how
-the answer depends on graph construction, numerical solution and data identity.
+A Python implementation and experimental study of **Spectral Shrunk Clustering (SSC)**: refining a spectral embedding before assigning clusters. The project reproduces the objective in [*A Convex Formulation for Spectral Shrunk Clustering*, Chang et al., AAAI 2015](https://doi.org/10.1609/aaai.v29i1.9606), compares clustering baselines, and evaluates graph and geometric refinements with numerical certificates.
 
-**Han Jiale · Lu Sinan · Mahatharadol Vie · Mai Sheung Ying**
-Group 23, The University of Hong Kong — COMP3314 Machine Learning.
+This is an independent implementation by **Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying**, Group 23, The University of Hong Kong, COMP3314 Machine Learning.
 
-The `extension_v2` branch adds a [movement-controlled extension study](docs/extension_round2/README.md)
-comparing QSSC with E1_v2 and E4–E6. Its [results](results/extension_round2/summary.md)
-are conditional on retrospectively selected report cohorts and preserve the original report.
+[Methods](docs/methods.md) · [Experiments](docs/experimental_protocol.md) · [Data](docs/data.md) · [Results](docs/results.md) · [Reproducibility](docs/reproducibility.md) · [Report](report/Group_23.pdf)
 
-The `extension_round3` branch adds an [edge-deletion evidence study](docs/extension_round3/README.md):
-three independent SSC refinements with matched-movement pilot, uniform and shuffled controls.
-Its results remain conditional on the same retrospectively selected cohorts.
+## Method
 
-## What the project provides
+An input-space graph **A** defines the spectral coordinates **F**. A second graph **W**, built from F, defines which representations shrink together. K-means then clusters the refined coordinates **G**. With each undirected edge stored once, the original Equation 8 objective is
 
-- An array-based SSC implementation with explicit E8/E13 parameter conventions.
-- Primal–dual solvers with objective gaps and capacity diagnostics.
-- Spectral, PCA, LDA, LLC and SLPS baselines, plus graph diagnostics and
-  three independently evaluated convex refinements.
-- Source-aware benchmark loaders, published ACC/NMI records and scalar-result
-  reconstruction tools.
-- A technical report, mathematical derivations and editable method figures.
+$$
+\min_G\;\sum_i\|g_i-f_i\|_2+2\gamma\sum_{(i,j)}w_{ij}\|g_i-g_j\|_2.
+$$
 
-## Two graphs, two roles
+The library exposes both the E8 stationary system and the printed E13 system; E13 at nominal γ corresponds to E8 at γ/2. Historical IRLS results and primal–dual certified results have separate records.
 
-![The input graph A defines F; the shrinkage graph W refines F into G](docs/figures/ssc_two_graph_pipeline.svg)
+The retained refinements examine relative stopping distances, tangent constraints, relative-neighbor corrections, and movement-controlled quadratic fusion. The edge-deletion study uses one frozen ridge-pilot signal at three alternative locations: **E7** changes graph weights, **E1_v3** allocates edge tolerances, and **E5_v2** allocates triangle-slack guards. These methods are evaluated independently. Their objectives and controls are described in the [method guide](docs/methods.md) and [edge-deletion formulation](docs/extension_round3/method_design.md).
 
-The input affinity **A₀** determines the spectral representation **F₀**. A second
-graph **W₀**, constructed from F₀, controls refinement into **G**. Each refinement
-uses frozen inputs. The original and angular panels declare their own rounding
-input **Q**; matched spectral clustering uses the same anchor and panel. Convex refinement and improved clustering
-are distinct claims. The [methods](docs/methods.md) explain the objective,
-parameter mapping and numerical qualifications.
+The diagram illustrates the two graphs and the unsquared-fidelity E1–E3 comparisons:
 
-## Install and use
+![Two-graph SSC pipeline and independent unsquared refinements](docs/figures/ssc_two_graph_pipeline.svg)
 
-Use Python 3.13 from the repository root:
+## Installation
+
+CPython **3.13.3** is the checked environment. Install the pinned scientific dependencies and the project in a virtual environment:
 
 ```bash
 git clone --single-branch --branch main https://github.com/SelinaMai-SYM/COMP-3314-G23.git
 cd COMP-3314-G23
-python3 -m venv .venv
+python3.13 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r environment/requirements.lock.txt
+python -m pip install --no-deps --no-build-isolation -e .
 ```
 
-For a numeric sample-by-feature matrix `X` and a chosen cluster count:
+The dependency file includes pytest and CVXPY for the independent convex reference checks. The core SSC estimator uses NumPy, SciPy and scikit-learn. [Report building](report/README.md) additionally requires TeX Live and Poppler.
+
+## Quick start
+
+This example uses only generated data:
 
 ```python
+import numpy as np
+from sklearn.datasets import make_blobs
 from SSC_method import SpectralShrunkClustering
 
+X, _ = make_blobs(n_samples=90, centers=3, n_features=4,
+                  cluster_std=0.6, random_state=7)
 model = SpectralShrunkClustering(
-    n_clusters=3, gamma=1.0, k=5, variant="E8", max_iter=300,
+    n_clusters=3, gamma=1.0, k=5, variant="E8", max_iter=100,
     kmeans_n_init=1, kmeans_random_state=0,
 )
 labels = model.fit_predict(X)
-F, G = model.embedding_, model.shrunk_
+print("labels:", labels.shape)
+print("F:", model.embedding_.shape, "G:", model.shrunk_.shape)
+print("clusters:", np.unique(labels))
 ```
 
-This is an illustrative configuration. The [library guide](SSC_method/README.md)
-documents its options; the [experimental protocol](docs/experimental_protocol.md)
-defines the benchmark settings and statistical endpoints. Provider files and
-independent data roots are described in [data setup](docs/data.md).
+`labels` contains one integer assignment per sample. `embedding_` and `shrunk_` each have shape `(90, 3)`. Run the corresponding file with `python examples/ssc_blobs.py`. See the [SSC API guide](SSC_method/README.md) for estimator options and stored diagnostics.
 
-Reconstruct the published historical tables without image archives:
+## Datasets
+
+The experiments use **AR, JAFFE, ORL, UMIST, BinAlpha, MSRA, Extended Yale B and USPS**. [Data setup](docs/data.md) provides source links, download commands, directory layout, preprocessing and dataset-specific terms. Restricted images are supplied separately. Runners accept `--data-root`; the same root can be selected with `COMP3314_DATA_ROOT`.
+
+Dataset versions are explicit. The available MSRA25 EBSA file has 1,799 rows at native 16×16 resolution and is an adapted proxy for the paper's unresolved MSRA50 input. YaleB cropped2414 and DengCai32 are separate sources. AR, UMIST and BinAlpha subset hypotheses retain their original row indices.
+
+## Reproducing experiments
+
+Run a small end-to-end numerical example without benchmark files:
 
 ```bash
-python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output local/rebuilt_historical
+python -m experiments.v3_reproduction smoke --dataset synthetic
 ```
 
-## Independent refinement studies
-
-Three separately defined adaptations test relative edge tolerances, fixed tangent
-planes, and frozen relative-neighbor comparisons. Their mathematical guarantees,
-mechanism gates and ACC/NMI outcomes are distinct evidence. The
-[registered design](docs/extension_verification_plan.md) fixes the eight reference
-inputs, operating points and comparisons before new scores are evaluated.
-[Study results](docs/extension_verification_results.md) retain numerical failures,
-inactivity, failed gates and negative clustering outcomes.
+For the main SSC grid, place provider files in `local/data` according to the data guide. Each run writes its own records under `local/ssc-runs`:
 
 ```bash
-python -m experiments.extension_verification freeze --config configs/extension_verification/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT
-python -m experiments.extension_verification verify --config configs/extension_verification/protocol.yaml --artifact-root ARTIFACT_ROOT
-python -m experiments.extension_verification run --config configs/extension_verification/protocol.yaml --data-root DATA_ROOT --artifact-root ARTIFACT_ROOT --resume
+python -m experiments.v3_reproduction run-experiments \
+  --config configs/v3/campaign.yaml --data-root "$PWD/local/data" \
+  --output "$PWD/local/ssc-runs" --resume
 ```
 
-## Main findings
+Baseline comparisons, subset sensitivity, extension fitting and exact-input replay have separate commands in [reproducibility](docs/reproducibility.md). The [experiment protocol](docs/experimental_protocol.md) defines grids, eligibility, seeds and selection.
 
-At the locked operating points, E1 changes eight-input angular-panel ACC/NMI by
-**−0.008 / +0.008 percentage points** relative to matched ordinary SSC. It does
-not outperform interpolation on mean ACC. The original-geometry eight-input
-macro remains unavailable because the native-16 MSRA proxy is uncertified.
-E2 and E3 fail their predefined development mechanism gates, so their formal
-eight-input optimizations are not promoted. These results support a dispersion
-bound and reproducible negative findings, without a new accuracy-improvement claim.
+Rebuild the historical tables and the edge-deletion comparisons from committed measurements, without raw data or fitting:
 
-## Report and results
+```bash
+python -m experiments.v3_reproduction rebuild-results \
+  --release-manifest configs/final/release_manifest.json --output local/tables/historical
+python -m experiments.extension_round3 rebuild \
+  --release-manifest results/extension_round3/release_manifest.json \
+  --output local/tables/edge-deletion --figures
+python -m scripts.result_tables --output local/tables/overview.md
+```
 
-Read the [technical report](report/Group_23.pdf), [results summary](docs/results.md)
-and [benchmark comparisons](results/submission_refresh/per_benchmark/).
-Both ACC and NMI remain attached to one configuration and statistical endpoint.
-Closest paper matches are retrospective selections using labels and published
-targets; they do not identify historical sample membership or provide label-free
-parameter selection. Scientific restrictions and negative findings are retained
-in [limitations](docs/limitations.md).
+The last command generates the compact result table below. The [reproducibility guide](docs/reproducibility.md) also covers the joint 72-cell comparison, source/subset selections and the other retained refinement tables.
 
-Final source/subset selections and additional-rounding outcomes are reported
-in [the results summary](docs/results.md), with separate statistical endpoints,
-eligibility pools and numerical qualifications. Scientific-archive availability is documented separately
-in the [reproducibility guide](docs/reproducibility.md#numerical-objects-and-historical-lineage).
+## Results
 
-See [theory](docs/theory.md) for derivations,
-[reproducibility](docs/reproducibility.md) for release interfaces and
-[report sources](report/README.md) for the preprint and figure build.
+The edge-deletion comparisons use **retrospectively selected report cohorts**, including the adapted MSRA source. Parameters use a fixed normalized movement target of 0.10. These results describe those fixed cohorts; cohort selection used labels and published targets. ACC and NMI are percentages, changes are percentage points, and each configuration contains the same **50** rounding seeds with sample SD recorded in the full tables.
 
-## License and attribution
+<!-- BEGIN GENERATED RESULTS -->
 
-Original project code is available under the [MIT License](LICENSE). See
-[NOTICE.md](NOTICE.md) for third-party attribution.
+| Method | Qualified cohorts | ΔACC / ΔNMI vs QSSC | ΔACC / ΔNMI vs plain pilot |
+|---|---:|---:|---:|
+| E7 graph | 8/8 | -0.022 / +0.013 | +0.004 / -0.001 |
+| E1_v3 tube | 6/8 | +0.157 / +0.358 | -0.123 / -0.068 |
+| E5_v2 guard | 7/8 | +0.235 / +0.204 | +0.061 / +0.045 |
 
-Dataset and provider-material terms are separate from the software license.
-Restricted image archives are not redistributed; source attribution and
-conditions are retained in the [data documentation](docs/data.md).
+<!-- END GENERATED RESULTS -->
+
+Available-case means use the same qualified cohort mask for both metrics. Only E7 has complete eight-cohort primary coverage; the other full macros remain unavailable. The native panel generates greedy K-means++ starts on each output. The companion panel reuses row indices generated on the anchor.
+
+The complete E7 comparison gives a small ACC decrease relative to quadratic SSC. Selective tubes improve on QSSC on their available cohorts but lose both mean metrics to plain-pilot tubes under native rounding. Guards show a small partial-cohort gain; shuffled controls and cohort regressions limit attribution to edge-deletion correction. [Full results](results/extension_round3/summary.md), [both panels and all controls](results/extension_round3/paired_differences.csv), and [interpretation](docs/extension_round3/interpretation.md) retain the negative and unqualified outcomes.
+
+The wider study includes the [paper/baseline comparisons](results/submission_refresh/per_benchmark/), [source/subset sensitivity](results/subset_search/closest_matches.csv), and [unsquared-fidelity refinements](docs/extension_verification_results.md). Fixed-reference, retrospective matches, mean endpoints and native-best endpoints remain separate.
+
+## Repository structure
+
+```text
+COMP-3314-G23/
+├── SSC_method/                # SSC estimator, graphs, embedding and IRLS
+├── method_extension/          # Certified solvers and independent refinements
+│   ├── next_round/            # Primal–dual SSC and fusion/geometry controls
+│   ├── extension_verification/# Relative, tangent and neighbor objectives
+│   ├── extension_round2/      # Movement-controlled quadratic refinements
+│   └── extension_round3/      # Edge-deletion evidence and selective objectives
+├── baselines/                 # K-means, SC, PCA, LDA, LLC and SLPS
+├── benchmarks/                # Source-aware loaders, preparation and metrics
+├── configs/                   # Experiment grids, cohort locks and manifests
+├── experiments/               # Fitting, evaluation and scalar reconstruction
+├── examples/                  # Small generated-data examples
+├── results/                   # Measurements and generated scientific tables
+├── docs/                      # Methods, data, protocols and interpretation
+├── report/                    # LaTeX source, figures and technical report
+├── scripts/                   # Dataset retrieval and result/figure generation
+├── tests/                     # Numerical, metric and reproducibility checks
+└── environment/               # Checked dependency versions
+```
+
+Internal module identifiers remain stable across the fitting and reconstruction interfaces. The [documentation index](docs/README.md) maps them to the scientific comparisons.
+
+## Citation and license
+
+The original method is:
+
+> Xiaojun Chang, Feiping Nie, Zhigang Ma, Yi Yang and Xiaofang Zhou. **A Convex Formulation for Spectral Shrunk Clustering.** AAAI, 2015, pp. 2532–2538. [DOI](https://doi.org/10.1609/aaai.v29i1.9606).
+
+The report and method documentation cite the external methods used, including Chambolle–Pock primal–dual optimization, Ding–Li LDA-Kmeans, SLPS and leverage-adjusted leave-one-out residuals. The instrumented ClustPy reference retains its original BSD-3-Clause notice. See [references](report/references.bib) and [third-party attribution](NOTICE.md).
+
+Project code is distributed under the [MIT License](LICENSE). Dataset and third-party material terms apply separately.

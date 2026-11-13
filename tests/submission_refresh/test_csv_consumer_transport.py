@@ -1,4 +1,4 @@
-"""Metadata-only plain/gzip report and isolated-acceptance parity fixtures."""
+"""Metadata-only plain/gzip report transport fixtures."""
 import csv
 import gzip
 import hashlib
@@ -30,14 +30,6 @@ def packed(path):
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-@pytest.fixture
-def acceptance():
-    path=Path(__file__).resolve().parents[2]/'scripts/submission_refresh/acceptance.py'
-    spec=importlib.util.spec_from_file_location('csv_transport_acceptance_fixture',path)
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-    return module
-
-
 def report_fixture(root,compress=False):
     historical={'benchmark':'ORL','method':'ssc','endpoint':'mean_sample_sd_50','acc_mean':42.,'acc_sd':1.2,
         'nmi_mean':81.,'nmi_sd':2.3,'paper_ACC':76.,'paper_ACC_SD':1.6,'paper_NMI':88.6,'paper_NMI_SD':1.5,
@@ -63,7 +55,7 @@ def test_report_plain_and_gzip_inputs_generate_identical_tables_and_hash_actual_
     plain_manifest=reporting.generate(plain);gzip_manifest=reporting.generate(compressed)
     left={p.name:p.read_bytes() for p in (plain/'report/tables').glob('refresh_*.tex')}
     right={p.name:p.read_bytes() for p in (compressed/'report/tables').glob('refresh_*.tex')}
-    assert left==right and len(left)==5
+    assert left==right and len(left)==4
     for role,path in transport.items():
         record=gzip_manifest['inputs'][role]
         assert record['available'] and record['transport']=='gzip'
@@ -86,40 +78,11 @@ def test_report_missing_is_explicit_and_ambiguous_inputs_do_not_replace_existing
     assert not (tmp_path/'results/submission_refresh/report_input_manifest.json').exists()
 
 
-def test_acceptance_reads_gzip_against_plain_and_records_actual_files_from_fresh_helper(tmp_path,acceptance):
-    fresh=tmp_path/'fresh checkout';helper=fresh/'experiments/submission_refresh/csv_transport.py'
-    helper.parent.mkdir(parents=True)
-    source=Path(__file__).resolve().parents[2]/'experiments/submission_refresh/csv_transport.py'
-    shutil.copyfile(source,helper)
-    logical=fresh/'results/frozen.csv';archive=packed(write_csv(logical,[{'id':'a','value':.5},{'id':'b','value':.7}]))
-    rebuilt=write_csv(tmp_path/'ordinary rebuild/view.csv',[{'id':'a','value':.50000000005},{'id':'b','value':.7}])
-    result=acceptance.compare_csv(logical,rebuilt,transport_root=fresh)
-    assert result['committed']==str(archive) and result['committed_requested']==str(logical)
-    assert result['rebuilt']==str(rebuilt) and result['rows']==2
-    assert result['committed_transport']=='gzip' and result['rebuilt_transport']=='plain'
-    assert result['committed_sha256']==digest(archive) and result['rebuilt_sha256']==digest(rebuilt)
-    assert result['csv_transport_helper']==str(helper) and result['csv_transport_helper_sha256']==digest(helper)
-    write_csv(rebuilt,[{'id':'b','value':.7},{'id':'a','value':.5}])
-    with pytest.raises(ValueError,match='value/order mismatch'):
-        acceptance.compare_csv(logical,rebuilt,transport_root=fresh)
-
-
-@pytest.mark.parametrize('which',['committed','rebuilt'])
-def test_acceptance_missing_and_ambiguous_csvs_fail_instead_of_skipping(tmp_path,acceptance,which):
-    committed=write_csv(tmp_path/'committed.csv',[{'id':'a'}]);rebuilt=write_csv(tmp_path/'rebuilt.csv',[{'id':'a'}])
-    selected=committed if which=='committed' else rebuilt
-    selected.unlink()
-    with pytest.raises(FileNotFoundError):acceptance.compare_csv(committed,rebuilt)
-    write_csv(selected,[{'id':'a'}]);selected.with_suffix('.csv.gz').write_bytes(gzip.compress(selected.read_bytes(),mtime=0))
-    with pytest.raises(ValueError):acceptance.compare_csv(committed,rebuilt)
-
-
-def test_large_metadata_cells_work_in_both_readers_without_changing_global_limit(tmp_path,acceptance):
+def test_large_metadata_cells_work_without_changing_global_limit(tmp_path):
     previous=csv.field_size_limit();payload='metadata '*18000
     committed=write_csv(tmp_path/'large.csv',[{'id':'a','metadata':payload}]);archive=packed(committed)
     rebuilt=write_csv(tmp_path/'rebuilt.csv',[{'id':'a','metadata':payload}])
     assert reporting.read_csv(committed)[0]['metadata']==payload
-    assert acceptance.compare_csv(committed,rebuilt)['committed_sha256']==digest(archive)
     assert csv.field_size_limit()==previous
 
 

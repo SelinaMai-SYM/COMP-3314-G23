@@ -1,12 +1,12 @@
 # Edge-deletion evidence for spectral shrinkage
 
-The preceding study found small conditional changes against movement-matched quadratic SSC: E1_v2 changed ACC/NMI by +0.179/−0.057 percentage points on seven qualified pairs; E5 changed them by +0.116/+0.070. E5 reduced triangle slack while retaining more within-label variation on six of seven comparable cohorts. The primary E6 constraint was inactive. Earlier E2/E3 mechanism gates failed. These observations motivate a discriminator for individual edges, rather than additional global constraints. They do not establish erroneous edges as the cause of every failure.
+The movement-controlled quadratic comparison found small conditional changes against movement-matched quadratic SSC: E1_v2 changed ACC/NMI by +0.179/−0.057 percentage points on seven qualified pairs; E5 changed them by +0.116/+0.070. E5 reduced triangle slack while retaining more within-label variation on six of seven comparable cohorts. The primary E6 constraint was inactive. Earlier E2/E3 mechanism gates failed. These observations motivate a discriminator for individual edges, rather than additional global constraints. They do not establish erroneous edges as the cause of every failure.
 
-## Donor and contribution scope
+## Relationship to prior work
 
-The donor is statistical influence correction: [Wang et al., ICML 2018](https://proceedings.mlr.press/v80/wang18m.html) use leverage-adjusted residuals in approximate leave-one-out regression. The inspected donor implementation contains residual/(1−leverage) calculations; no donor code is copied or required at runtime. The [source audit](novelty_audit.md) identifies the exact commit and files.
+[Wang et al., ICML 2018](https://proceedings.mlr.press/v80/wang18m.html) study leverage-adjusted approximate leave-one-out residuals in regression. Here rank-one inversion gives an exact single-edge deletion residual for a quadratic graph pilot at fixed diffusion strength. Graph total variation, relative tubes and triangle-slack penalties supply the three refinement objectives.
 
-Rank-one inversion, quadratic smoothing, graph total variation, relative tubes and triangle-slack guards are inherited tools. This project specifies an exact deleted-edge pilot score, a fixed weighted-rank allocation and three alternative SSC insertion points, then tests them against the corresponding plain-pilot interventions. The algebra alone provides no clustering guarantee or absolute novelty claim.
+Related graph adaptation includes [Karasuyama and Mamitsuka, NeurIPS 2013](https://proceedings.neurips.cc/paper/5001-manifold-based-similarity-adaptation-for-label-propagation.pdf). The regression reference implementation was inspected at [alocv-package commit a17ec17](https://github.com/wendazhou/alocv-package/tree/a17ec1774cd0cceb4e748e9db076ee7cb2472504), specifically `C/src/alo_lasso.cpp` and `python-package/tests/test_lasso.py`; it was not built or copied. The SSC pilot and refinements use independently implemented NumPy/SciPy operators.
 
 ## Fixed geometry and evidence
 

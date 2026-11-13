@@ -622,11 +622,11 @@ Tables~\ref{tab:usps-numerical-audit} and~\ref{tab:usps-numerical-rounding} refe
 \begin{longtable}{p{1.65cm}rrrrcrp{2.4cm}}
 \caption{Same-target numerical evidence. Original rows show fit CPU only where recorded; extra-restart CPU includes the full numerical attempt. A dash means unavailable metadata, not zero cost.}\label{tab:usps-numerical-audit}\\
 \toprule
-Stage & $\gamma$ & Primal & Dual & Rel. gap & Cert. & CPU (s) & Solver status \\
+Stage & $\gamma$ & Primal & Dual & Rel. gap & C/U & CPU (s) & Solver status \\
 \midrule
 \endfirsthead
 \toprule
-Stage & $\gamma$ & Primal & Dual & Rel. gap & Cert. & CPU (s) & Solver status \\
+Stage & $\gamma$ & Primal & Dual & Rel. gap & C/U & CPU (s) & Solver status \\
 \midrule\endhead
 SC on F & -- & -- & -- & -- & -- & -- & NOT\_\allowbreak APPLICABLE \\
 IRLS300 & 1 & 13.577 & -- & -- & U & 1800.0 & CPU\_\allowbreak LIMIT \\
@@ -761,11 +761,11 @@ YaleB cropped & W0: spectral geometry & 7957 & 63.24 & 70.23 & 1109 \\
 \begin{longtable}{p{1cm}p{1.4cm}p{.8cm}p{.7cm}p{1.2cm}p{1.2cm}p{2cm}p{2cm}}
 \caption{Predefined row-norm and weighted-degree quintiles, with original cut points and tie handling. Fractions pool the recorded sample-by-round outcomes within each fixed stratum.}\label{tab:graph-g1-strata}\\
 \toprule
-Data & Variable & Quintile & n & Wrong degree & Wrong mass & SC right/SSC wrong (\%) & SC wrong/SSC right (\%) \\
+Data & Variable & Bin & n & Wrong degree & Wrong mass & SC right/SSC wrong (\%) & SC wrong/SSC right (\%) \\
 \midrule
 \endfirsthead
 \toprule
-Data & Variable & Quintile & n & Wrong degree & Wrong mass & SC right/SSC wrong (\%) & SC wrong/SSC right (\%) \\
+Data & Variable & Bin & n & Wrong degree & Wrong mass & SC right/SSC wrong (\%) & SC wrong/SSC right (\%) \\
 \midrule\endhead
 ORL & row\_\allowbreak norm & 0 & 80 & 2.60 & 0.073 & 8.70 & 10.53 \\
 ORL & row\_\allowbreak norm & 1 & 80 & 1.06 & 0.118 & 5.78 & 6.17 \\
@@ -821,11 +821,11 @@ YaleB cropped & both\_\allowbreak wrong & 2 & 0 \\
 \begin{longtable}{p{1.4cm}p{.6cm}p{.6cm}p{1.1cm}p{1.7cm}p{1.7cm}p{.55cm}p{.9cm}p{2.6cm}}
 \caption{Complete fixed G2 path, including unavailable/failed cells. Movement is sum of row displacements divided by sum of anchor row norms; it is not Frobenius movement.}\label{tab:graph-g2-all-cells}\\
 \toprule
-Data & Anchor & Graph & $\gamma$ & ACC & NMI & Cert. & L21 move & Scientific outcome \\
+Data & $H$ & $W$ & $\gamma$ & ACC & NMI & C/U & L21 move & Scientific outcome \\
 \midrule
 \endfirsthead
 \toprule
-Data & Anchor & Graph & $\gamma$ & ACC & NMI & Cert. & L21 move & Scientific outcome \\
+Data & $H$ & $W$ & $\gamma$ & ACC & NMI & C/U & L21 move & Scientific outcome \\
 \midrule\endhead
 ORL & F0 & W0 & 0 & 78.33 $\pm$ 1.31 & 89.87 $\pm$ 0.67 & C & 0 & POINT\_\allowbreak COMPLETE \\
 ORL & F0 & W0 & 0.001 & 78.33 $\pm$ 1.31 & 89.87 $\pm$ 0.67 & C & 0 & POINT\_\allowbreak COMPLETE \\
@@ -886,11 +886,11 @@ YaleB cropped & U & Wa & 1e+06 & 3.40 $\pm$ 0.00 & 8.67 $\pm$ 0.00 & U & 0.957 &
 \begin{longtable}{p{1.1cm}p{2.8cm}p{1.6cm}p{1.6cm}p{.5cm}p{.85cm}p{1.3cm}p{2.3cm}}
 \caption{Fixed primary G3 arms. Blind controls retain exactly the Oracle deletion mask and randomize only additions. Same-class random additions do not prefer separate components. Fully randomized deletion/addition is a separate supplementary control. Infeasible or unrun controls retain their status.}\label{tab:graph-g3-primary}\\
 \toprule
-Data & Arm / control & ACC & NMI & Cert. & L21 move & Excess fragments & Outcome \\
+Data & Arm / control & ACC & NMI & C/U & L21 move & Excess fragments & Outcome \\
 \midrule
 \endfirsthead
 \toprule
-Data & Arm / control & ACC & NMI & Cert. & L21 move & Excess fragments & Outcome \\
+Data & Arm / control & ACC & NMI & C/U & L21 move & Excess fragments & Outcome \\
 \midrule\endhead
 ORL & No edits & 74.52 $\pm$ 0.25 & 89.66 $\pm$ 0.18 & U & 0.302 & 16 & POINT\_\allowbreak COMPLETE \\
 ORL & Oracle delete & 82.92 $\pm$ 1.22 & 92.95 $\pm$ 0.37 & C & 0.183 & 16 & POINT\_\allowbreak COMPLETE \\
@@ -1064,4 +1064,4 @@ validation & 902.9 \\
 
 \caption{SSC search distribution for the mean/sample-SD endpoint. Points are complete candidate/configuration records; colors distinguish source/subset families (YaleB colors separate source/resize versions), triangles are adapted rows, crosses are diagnostic rows, stars are published SSC targets and outlines mark the already locked selections within each eligible pool. Eligibility pools and actual locked selections are reported in the tables. More candidates can improve a retrospective match without identifying historical data.}\label{fig:subset-distribution}\end{figure}
 
-\paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: 2026-11-11.
+\paragraph{Generated-input provenance.} Tables and figures are generated from the authoritative committed CSV/JSON records only. The input hash manifest is \texttt{results/submission\_refresh/report\_input\_manifest.json}. Generated snapshot date: 2026-11-13.

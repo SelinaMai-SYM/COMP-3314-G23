@@ -20,9 +20,9 @@ def test_cache_certification_is_recomputed_for_the_requested_target():
 
 
 def test_report_compatibility_rejects_objective_or_operator_changes():
-    amendment=json.loads((ROOT/'configs/extension_round2/amendments/003_cached_precision.json').read_text())
+    amendment=json.loads((ROOT/'configs/extension_round2/derivation_compatibility.json').read_text())
     current=source_files();original=dict(current);name=amendment['source_change']['path'];original[name]=amendment['source_change']['before_sha256']
-    assert registered_derivation_difference(original,current,amendment['original_fitting_source_fingerprint']).startswith('003_cached_precision.json')
+    assert registered_derivation_difference(original,current,amendment['original_fitting_source_fingerprint']).startswith('derivation_compatibility.json')
     changed=dict(current);changed['method_extension/extension_round2/models.py']='0'*64
     with pytest.raises(ValueError,match='Unregistered source difference'):
         registered_derivation_difference(original,changed,amendment['original_fitting_source_fingerprint'])

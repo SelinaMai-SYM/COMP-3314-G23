@@ -29,7 +29,7 @@ missing sparse feature entries remain zero.
 from pathlib import Path
 from benchmarks import load_dataset
 
-X, y, metadata = load_dataset("USPS", root=Path("/path/to/benchmarks/usps/data"))
+X, y, metadata = load_dataset("USPS", root=Path("local/data/usps/data"))
 ```
 
 Perturbations use the full native `[-1,1]` domain and preserve zero-change input

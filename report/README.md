@@ -7,7 +7,7 @@ The University of Hong Kong, COMP3314 Machine Learning.
 
 The [report PDF](Group_23.pdf) presents the SSC formulation, historical paper
 reconstruction, numerical certificates, baseline comparisons and graph mechanism
-experiments. Final source/subset matches and locked-selection rounding retain
+experiments, movement-controlled quadratic refinements and the edge-deletion comparison. Final source/subset matches and locked-selection rounding retain
 their separate endpoints, eligibility pools and coverage qualifications. The NeurIPS 2026 preprint format has at most four main-text
 pages; references and the detailed scientific appendix are separate. The appendix
 contains full endpoint/coverage qualifications rather than treating unavailable
@@ -19,7 +19,7 @@ From the checkout root, after installing the
 [pinned Python dependencies](../environment/requirements.lock.txt):
 
 ```bash
-make -C report
+make -C report PYTHON=python
 ```
 
 The build requires `make`, Bash, TeX Live with `pdflatex`, BibTeX, `standalone`,

@@ -10,7 +10,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Spectral Shrunk Clustering (SSC) refines a spectral representation through a convex fidelity--fusion objective. We separate paper reconstruction, numerical optimization and clustering quality. Joint ACC/NMI matching and declared source/subset sensitivities preserve distinct statistical and identity qualifications. Certified shrinkage has small, mixed net effects at gamma~1; normalization and graph interventions expose different limitations. An oracle graph-completion diagnostic passes on ORL. Three separately registered convex refinements test dispersion protection, tangent-constrained motion and frozen relative-neighbor corrections; their numerical qualification and mechanism gates remain distinct from clustering performance. Source and implementation audits retain failures and adapted methods explicitly. Numerical agreement does not identify the authors' historical datasets.
+Spectral Shrunk Clustering refines spectral coordinates using a convex fidelity--fusion objective. We study paper reconstruction, source/subset sensitivity, numerical certification and final clustering separately. Complete seed records preserve joint ACC/NMI selections and dataset-identity qualifications. Certified gamma-1 shrinkage has small mixed effects, while normalization and oracle graph interventions reveal distinct representation and connectivity limitations. A controlled study inserts exact deleted-edge pilot evidence into graph weights, relative tubes or triangle-slack guards. Small partial-cohort gains do not establish a consistent benefit over plain-pilot and shuffled controls. The implementation, scalar measurements and report sources support reconstruction without restricted image archives.
 \end{abstract}
 
 \section{What SSC optimizes}
@@ -24,7 +24,7 @@ The factor~2 implements the paper's ordered-pair sum. Its stationary IRLS system
 
 \begin{figure}[ht]
 \centering\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
-\caption{The input graph $A_0$ determines $F_0$; the fusion graph $W_0$ is built once from $F_0$. Each refinement uses frozen inputs and produces its own $G$. The original and common angular panels declare their respective rounding matrices $Q$. The three adaptations are alternatives.}
+\caption{The input graph $A_0$ determines $F_0$; the fusion graph $W_0$ is built once from $F_0$. Each refinement uses frozen inputs and produces its own $G$. The pictured unsquared E1--E3 comparison uses original and angular rounding matrices $Q$. The movement-controlled quadratic comparisons use $G$ directly.}
 \label{fig:two}
 \end{figure}
 
@@ -61,19 +61,21 @@ G2 separates anchor normalization from the fusion graph at matched mass. Row-nor
 
 The fixed G3 labelled intervention diagnoses whether correcting graph relationships can help. ORL passes; YaleB remains numerically unqualified. This is a mechanism experiment, not a label-free method result.
 
-\section{Three independent refinement studies}
-With $H=F_0$ or $U=\operatorname{rowunit}(F_0)$ and $W_0$ frozen, E1 replaces each edge norm by $(\|(BG)_e\|-\eta\|(BH)_e\|)_+$, with $\eta=.25$. Its optimum retains at least $\eta$ of global geometric-median dispersion. This does not protect individual classes, guarantee improved ACC/NMI or change the threshold for leaving the anchor. Interpolation and uniform origin scaling distinguish useful refinement from simple damage avoidance.
+\section{Controlled selective shrinkage}
+We compare independent quadratic refinements against
+$J_Q(G)=\tfrac12\|G-H\|_F^2+\lambda\sum_e w_e\|(BG)_e\|$.
+The eight inputs are fixed to retrospectively selected report cohorts; MSRA is the native-16 EBSA proxy. All methods share H/W0. A geometry-only search matches normalized movement $\|G-H\|_F/\|H-\overline H\|_F$ to 0.10. Labels enter only after numerical outputs and eligibility are frozen.
 
-E2 constrains each displacement at nonzero $u_i$ to its fixed tangent plane and radius $\tan15^\circ$; zero anchors stay fixed. It is promoted only if a predefined ordinary-SSC radial-neutralization contrast improves ACC with a positive adjusted lower bound, preserves mean NMI, has at least 10\% inward energy and changes direction by at least $1^\circ$ on either development dataset. An isotropic ball of radius $\sin15^\circ$ is a required control.
+For $L=B^T\operatorname{diag}(w)B$, set $M=I+\tau L$, $Z=M^{-1}H$, and $\ell_e=\tau w_e b_e^TM^{-1}b_e$, with $\tau$ fixed to the inverse median positive weighted degree. Rank-one inversion gives the exact deleted-edge pilot score $s_e=\|b_e^TZ\|^2/(1-\ell_e)^2$. This adapts leverage-adjusted residual ideas~\citep{wang2018alo} to three alternative SSC insertion points: E7 reduces weights using weighted score ranks; E1\_v3 allocates stopping tubes; E5\_v2 allocates triangle-slack guards. Uniform, plain-pilot, anchor and shuffled controls separate the intervention from the correction.
 
-E3 adds unit-gradient affine hinges from two-view agreement and contradictory $W_0$ neighbors, with $\mu=2$. All three sample roles come from the common valid pool. Triplets are frozen before labels are used for the development semantic audit; promotion requires sufficient coverage, at least 60\% correct relations and at most 10\% reversed relations. Triplet-only correction and three matched random-direction controls separate geometric information from generic extra force.
+\input{tables/edge_deletion_main}
 
-\input{tables/refinement_main}
+Each finite profile has two complete 50-seed panels: native greedy K-means++ on G and initial row indices generated on H. Both use one Lloyd start per seed. Means and sample SD preserve both metrics from one configuration; paired bootstrap intervals use 10,000 draws. There are 352 finite profiles from 378 declared, with 153/168 qualified primary/control profiles. Optional sensitivities are gated out. Tube and guard eight-cohort macros remain unavailable; Table~\ref{tab:edge-deletion} reports their explicit partial masks.
 
-The two panels are evaluated separately: original geometry rounds $G$, while every angular arm rounds $\operatorname{rowunit}(G)$. The label-free operating point is $2\gamma_{\rm ref}$, defined from the anchor's maximum node fusion force. The same complete 50 rounding seeds produce ACC/NMI means and sample SD. Conditional paired intervals use 10,000 resamples. Development paths and available certified movement matches cannot replace the primary point. An eight-input macro is unavailable until all eight paired outputs qualify. E1 also changes angular ACC/NMI by $-0.040/+0.013$ points against interpolation, so the dispersion guarantee has not yielded a practical advantage over that simple control. E2 and E3 are not promoted: the radial intervention is too small and triplet semantics are insufficient. Complete controls, failures and derivations are retained in the appendix and scalar release.
+The complete E7 comparison gives a small native ACC loss against QSSC. Selective tubes improve on QSSC but lose both native mean metrics to plain-pilot tubes. Guards show a partial-cohort positive signal, while shuffled controls and individual regressions limit attribution. Deleted-edge AUROC improves over plain pilot on only two of eight inputs. Thus exact influence correction does not provide a consistent class discriminator here. Appendix results retain both panels, qualification exclusions, uniform-tube/graph-band/singular-floor controls and the unsquared E1--E3 negative gates.
 
 \section{Conclusion}
-SSC gives a clear convex refinement target, while clustering quality depends on representation, graph, solver and rounding choices. Our contribution is reproducible source/subset sensitivity, numerical audits and independently gated refinements. E1 preserves dispersion without a practical mean clustering gain here; the development evidence does not support promoting E2 or E3. Exact historical LDA-SC and several dataset identities remain unresolved. Code, statistical records and reproducible commands are available in the \href{https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/main}{public repository}.
+SSC supplies a convex refinement target whose clustering effect depends on representation, graph, numerical solution and rounding. Source/subset matching is retrospective and preserves unresolved historical identities. Exact edge-deletion evidence is numerically valid, but the controlled comparisons show no reliable complete two-panel benefit from its self-influence correction. The \href{https://github.com/SelinaMai-SYM/COMP-3314-G23}{repository} provides code, statistical records and regeneration commands.
 \label{main_end}
 \clearpage
 \label{references_start}
@@ -99,6 +101,18 @@ For two concentrated groups of sizes $m<n$, separation $d$ and aggregate attract
 A separately enumerated five-point graph has linear optimum 8 and capped optimum 3. The local capped algorithm obtains 3 from F but 8 from the original SSC output: accurate inner convex solves do not certify a global nonconvex solution. Synthetic imbalanced-bridge experiments also show the limitation of damage avoidance: SSC averages 99.156 ACC/96.725 NMI while capped fusion, static screening and squared fidelity recover 100/100, which SC already achieves. Capping is therefore neither necessary in that example nor evidence of additional clustering capacity over SC. Historical synthetic and secondary geometry results remain distinct from the independent refinement studies.
 
 The mathematical and empirical observations motivate a narrow conclusion: representation motion, robustness or objective improvement alone is insufficient. A useful extension must retain both ACC and NMI improvements over appropriate SC, SSC and mechanism controls, with numerical qualifications attached to the exact saved outputs.
+
+\section{Unsquared-fidelity refinement comparisons}
+With $H=F_0$ or $U=\operatorname{rowunit}(F_0)$ and $W_0$ frozen, E1 replaces each edge norm by $(\|(BG)_e\|-\eta\|(BH)_e\|)_+$, with $\eta=.25$. Its optimum retains at least $\eta$ of global geometric-median dispersion. This does not protect individual classes, guarantee improved ACC/NMI or change the threshold for leaving the anchor. Interpolation and uniform origin scaling distinguish useful refinement from simple damage avoidance.
+
+E2 constrains each displacement at nonzero $u_i$ to its fixed tangent plane and radius $\tan15^\circ$; zero anchors stay fixed. It is promoted only if a predefined ordinary-SSC radial-neutralization contrast improves ACC with a positive adjusted lower bound, preserves mean NMI, has at least 10\% inward energy and changes direction by at least $1^\circ$ on either development dataset. An isotropic ball of radius $\sin15^\circ$ is a required control.
+
+E3 adds unit-gradient affine hinges from two-view agreement and contradictory $W_0$ neighbors, with $\mu=2$. All three sample roles come from the common valid pool. Triplets are frozen before labels are used for the development semantic audit; promotion requires sufficient coverage, at least 60\% correct relations and at most 10\% reversed relations. Triplet-only correction and three matched random-direction controls separate geometric information from generic extra force.
+
+\input{tables/refinement_main}
+
+The two panels are evaluated separately: original geometry rounds $G$, while every angular arm rounds $\operatorname{rowunit}(G)$. The label-free operating point is $2\gamma_{\rm ref}$, defined from the anchor's maximum node fusion force. The same complete 50 rounding seeds produce ACC/NMI means and sample SD. Conditional paired intervals use 10,000 resamples. Development paths and available certified movement matches cannot replace the primary point. An eight-input macro is unavailable until all eight paired outputs qualify. E1 also changes angular ACC/NMI by $-0.040/+0.013$ points against interpolation, so the dispersion guarantee has not yielded a practical advantage over that simple control. E2 and E3 are not promoted: the radial intervention is too small and triplet semantics are insufficient. Complete controls, failures and derivations are retained in the appendix and scalar release.
+
 
 \section{Independent refinement objectives, bounds and certificates}
 Let $c_e=2\gamma w_e$, $a_e=\eta\|(BH)_e\|$ and $J_0(G)=\sum_i\|g_i-h_i\|+\sum_e c_e\|(BG)_e\|$. Every positive undirected edge is counted once. The registered input memberships, preparation, exact arrays, source identities and triplet order are fixed before new scoring. ORL and cropped YaleB are development datasets, not unseen validation samples.
@@ -137,4 +151,20 @@ Steps use the combined $[B;T]$ operator. Feasibility repair scales $q,p$ togethe
 \paragraph{Qualification and recovery.}
 Each solver keeps independent feasible primal and dual candidates, including the initial bound. Certificates are recomputed from saved $G,q,p$, retain signed negative gaps and require relative gap $\le10^{-5}$ and feasibility/capacity violation $\le10^{-8}$. Small graph SOCP references use CLARABEL independently of PDHG. Primary continuations have cumulative ceilings 30k/1800, 60k/3600 and 120k/7200 iterations/CPU seconds. Full state and object hashes support continuation. Inactive, uncertified, failed, gated and budget-unrun states are distinct. Extra development sensitivities are $\eta=.5$, $\theta=30^\circ$ and $\mu=.5$ at the common primary gamma. Matching uses declared certified points only, a 5\% tolerance with absolute floors $10^{-6}$ (normalized L2,1) and $.1^\circ$ (RMS angle), and no added search.
 \input{tables/refinement_appendix}
+
+\section{Movement-controlled quadratic comparisons}
+The uniform-tube E1\_v2, graph-band E4, triangle-slack E5 and singular-floor E6 comparisons use the same report cohorts at primary movement 0.05. E1\_v2 changes available-case ACC/NMI by $+0.179/-0.057$ percentage points against QSSC on seven qualified pairs; E5 gives $+0.116/+0.070$ on seven pairs. The E6 primary constraint is inactive. Complete trial records, graph-alignment permutations and the fixed 0.02/0.10/0.20 path are retained in \texttt{results/extension\_round2}. These endpoints remain distinct from the 0.10 selective comparison.
+
+\section{Deleted-edge evidence and selective objectives}
+For $a=\tau w_e$ and $A=M-ab_eb_e^T\succeq I$, write $t=b_e^TA^{-1}b_e\le2$. Then $\ell_e=at/(1+at)<1$ and $1-\ell_e\ge(1+2a)^{-1}$. Sherman--Morrison gives $b_e^TZ^{(-e)}=b_e^TZ/(1-\ell_e)$. Sparse coordinate solves retain only the inverse entries required for edge leverage; residual and symmetry tolerances are $10^{-9}$. The largest measured residual is below $1.6\times10^{-15}$. This exact pilot identity uses fixed $\tau$.
+
+Scores are divided by their positive median and rounded to ten decimals for ties. Weighted midranks satisfy $\sum_e v_eu_e=\frac12\sum_e v_e$. E7 uses $v=w$ and $w'_e=w_e(1-.2u_e)$, retaining 90\% of mass, every edge and the bound $.8L\preceq L'\preceq L$. Uniform weighting is an exact lambda-rescaling alias of QSSC.
+
+For E1\_v3, let $a_e^0=\|(BH)_e\|$, $v_e=w_ea_e^0$, $\eta_e=1/8+u_e/4$, and $a_e=\eta_ea_e^0$. Its objective is $\frac12\|G-H\|^2+\lambda\sum_e w_e(\|(BG)_e\|-a_e)_+$. The weighted tolerance budget is $\sum wa=\frac14\sum wa^0$; the exact global dispersion floor is $\|G-\overline G\|_F\ge S/8$ with $S=\|H-\overline H\|_F$. The dual is $\langle BH,q\rangle-\frac12\|B^Tq\|^2-\sum_ea_e\|q_e\|$, subject to $\|q_e\|\le\lambda w_e$.
+
+For E5\_v2, ranks use $v=w$, $\alpha_e=2u_e$ and $\kappa_e=\|(BG)_e\|+\|B(G-H)_e\|-\|(BH)_e\|$. The penalty is $\lambda\sum_e w_e(\|(BG)_e\|+\alpha_e\kappa_e)$, with $\sum w\alpha=\sum w$. With capacities $\|q_e\|\le\lambda w_e(1+\alpha_e)$, $\|p_e\|\le\lambda w_e\alpha_e$ and constant $C=\lambda\sum w_e\alpha_e\|(BH)_e\|$, its dual is $\langle BH,q\rangle-\frac12\|B^T(q+p)\|^2-C$. Equal ranks recover the uniform guard.
+
+Each fixed subproblem is strongly convex. Diagonal PDHG retains independent feasible primal and dual bounds. Relative gap $\le10^{-6}$, capacity residual $\le10^{-8}$, normalized movement uncertainty $\le.005\rho$, and $|\mathrm{movement}-\rho|+\mathrm{uncertainty}\le.01\rho$ determine qualification. The primary target is $\rho=.10$; .05/.20 are separate sensitivities. Both rounding panels use seeds 0--49, greedy K-means++, Lloyd, one start, 300 iterations and tolerance $10^{-4}$. G is rounded directly. Macro means require eight qualified pairs; partial means retain one common mask for ACC and NMI. Bootstrap intervals are conditional on fixed embeddings and pointwise, unadjusted across contrasts.
+
+Each method/cohort path has 32 distinct lambdas and 1,800 CPU seconds across targets, with 600 CPU seconds per fit. YaleB plain-pilot tubes used 1,879.646 seconds and MSRA shuffled-401 tubes 1,859.512 seconds; all four profiles on these paths are descriptive only. Their numerical certificates and trial measurements remain available. Of 160 sensitivity profiles, 101 qualify; the 26 optional profiles are unrun because primary qualification is incomplete. All 352 finite profiles have both complete panels, totaling 35,200 trials. Full per-cohort means/SD, controls and intervals are in \texttt{results/extension\_round3}.
 \end{document}

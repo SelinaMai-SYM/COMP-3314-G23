@@ -27,7 +27,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "AR", root=Path("/path/to/benchmarks/ar/data"), version="lzuf_superset1680"
+    "AR", root=Path("local/data/ar/data"), version="lzuf_superset1680"
 )
 ```
 

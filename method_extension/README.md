@@ -1,51 +1,15 @@
-# SSC adaptations and numerical mechanisms
+# SSC refinements and numerical solvers
 
-This library contains explicitly named adaptations of
-[original SSC](../SSC_method/README.md). The scientific question is net
-ACC/NMI improvement from shrinkage under matched input, representation and
-rounding. A graph change, a different fidelity and a different rounding rule
-are separate interventions.
+The modules implement fixed-graph objectives and explicitly named adaptations of [Spectral Shrunk Clustering](../SSC_method/README.md). Fitting functions operate on feature or anchor arrays and do not use class labels.
 
-## Mutual-neighbor adaptation
-
-`ReliabilityAwareSSC` keeps the original union-neighbor input graph and
-spectral anchor \(F\), but retains a fusion edge only when its endpoints
-are mutual neighbors in \(F\). The bandwidth is computed from positive
-directed-neighbor squared distances **before** mutual filtering. Thus the
-support change does not silently change the bandwidth estimate.
-
-The graph is frozen before the original IRLS solve, initialized at \(G=F\).
-This class retains the E13 linear-system convention. Its control must use
-that same convention; E01–E09 instead declare E8 controls explicitly.
-Mutual support can remove useful within-class connections, so increased
-sparsity is not itself evidence of better clustering.
-
-Mutual nearest-neighbor graphs are established constructions. This package
-does not claim a new graph family, a new convexity theorem or guaranteed
-accuracy improvement. Fixed nonnegative graph weights preserve convexity
-of the stated SSC target.
-
-## Named mechanism controls
-
-| Identifier | Modification |
+| Package | Purpose |
 |---|---|
-| [E01](e01/README.md) | Perturbation recurrence reweights \(W\) |
-| [E02](e02/README.md) | Positive fidelity weights from neighbor reciprocity |
-| [E03](e03/README.md) | Local-scale affinity placed in \(A\), \(W\), or both |
-| [E04](e04/README.md) | Degree normalization and a separate global-scale control |
-| [E05](e05/README.md) | Combine input-space and embedding-space relations |
-| [E06](e06/README.md) | Alternate graph construction and fixed-anchor shrinkage |
-| [E07](e07/README.md) | Compare rounding rules on the same representation |
-| [E08](e08/README.md) | Combine E01 recurrence with E02 fidelity weights |
-| [E09](e09/README.md) | Combine recurrence with the E03-W local-scale graph |
+| `next_round/certified_solver` | Sparse primal–dual SSC, feasible lower bounds and capacity checks |
+| `next_round/capped_fusion`, `radial_huber`, `heat_geometry` | Fidelity/fusion and representation controls for the corresponding retained experiments |
+| `extension_verification` | Unsquared E1 relative stopping, E2 tangent constraints and E3 relative-neighbor hinges |
+| `extension_round2` | Quadratic QSSC, uniform relative tubes, graph-band adaptation, triangle-slack guards and a singular-direction floor |
+| `extension_round3` | Exact deleted-edge pilot evidence, weighted midranks and three selective quadratic refinements |
+| `mutual_knn`, `rssc` | Mutual-neighbor adaptation with a fixed spectral anchor |
+| `v3_theory` | Operators and perturbation mechanisms used by the recorded geometry/robustness controls |
 
-Parameters and seed conventions are part of each named construction.
-Different targets cannot be ranked by comparing their raw objective
-values. Compatibility `y` arguments in the E01–E09 fitting adapter are
-discarded; labels do not determine its graph or solver updates.
-
-The main conclusions, including negative and numerically unresolved
-comparisons, are in [results](../docs/results.md).
-See [methods](../docs/methods.md), [theory](../docs/theory.md),
-[limitations](../docs/limitations.md) and
-[reproducibility](../docs/reproducibility.md).
+[Methods](../docs/methods.md) defines the objectives and coefficients. [Experiments](../docs/experimental_protocol.md) defines comparisons, operating points and metric aggregation. Numerical certification concerns the specified convex objective; clustering effects are measured separately.

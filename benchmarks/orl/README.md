@@ -34,7 +34,7 @@ Obtain the [AT&T archive](https://www.cl.cam.ac.uk/research/dtg/attarchive/pub/d
 and prepare its three interpolation versions from the checkout root:
 
 ```bash
-python -m benchmarks.prepare --dataset ORL_att92 --data-root /path/to/benchmarks --archive /path/to/benchmarks/orl/data/att92/att_faces.zip
+python -m benchmarks.prepare --dataset ORL_att92 --data-root local/data --archive local/data/orl/data/att92/att_faces.zip
 ```
 
 This writes the three uint8 arrays and integer labels under
@@ -49,7 +49,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "ORL", root=Path("/path/to/benchmarks/orl/data"), version="att92"
+    "ORL", root=Path("local/data/orl/data"), version="att92"
 )
 ```
 

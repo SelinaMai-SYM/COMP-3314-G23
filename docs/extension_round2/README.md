@@ -11,8 +11,6 @@ The eight cohorts are fixed to the mean-endpoint configurations of the existing 
 - [Fixed secondary path](../../results/extension_round2/secondary_metrics.csv) and [controls](../../results/extension_round2/control_metrics.csv)
 - [Observed mechanisms and attribution](../../results/extension_round2/mechanism_evidence.md)
 - [Method definitions and prior art](methods.md)
-- [Report and presentation integration](../../results/extension_round2/integration_note.md)
-- [Verification and reconstruction](../../results/extension_round2/validation.json), [archive receipt](../../results/extension_round2/archive_receipt.json), and [resource accounting](../../results/extension_round2/resource_summary.json)
 
 ## Common inputs and evaluation
 
@@ -27,7 +25,7 @@ The eight cohorts are fixed to the mean-endpoint configurations of the existing 
 | YaleB | `YaleB_cropped2414_nearest_Y3` | Y3 | 2414 × 1024 | 38 | greedy k-means++ |
 | USPS | `USPS` | Y0 | 9298 × 256 | 10 | greedy k-means++ |
 
-Source/version and historical-identity qualifications remain in the [cohort lock](../../configs/extension_round2/cohort_lock.json). MSRA uses the native 16×16 EBSA source, which is an adapted member of the MSRA50 family; equivalence to the original paper's source is not established. Seven Y0 raw bases are verified historical objects. YaleB's raw basis was regenerated before its declared Y3 transformation. All eight final anchor-object identities match their report counterparts. Two [pre-evaluation amendments](../../configs/extension_round2/amendments/) document storage-layout corrections and preserve the initial registrations.
+Source/version and historical-identity qualifications remain in the [cohort lock](../../configs/extension_round2/cohort_lock.json). MSRA uses the native 16×16 EBSA source, which is an adapted member of the MSRA50 family; equivalence to the original paper's source is not established. Seven Y0 raw bases are verified historical objects. YaleB's raw basis was regenerated before its declared Y3 transformation. All eight final anchor-object identities match their report counterparts.
 
 For each cohort, `A0 → U0 → H` and `H → W0` are frozen once. Every method receives the same H; E4 alone changes W through one frozen graph correction. Optimized G goes directly to k-means, with no additional row normalization or PCA. Each terminal output uses Lloyd, one start, and all seeds 0–49 with the cohort's locked initializer. ACC and NMI are means with sample SD (`ddof=1`) from the same configuration. The minimum-inertia assignment is diagnostic only.
 
@@ -37,30 +35,28 @@ The primary target is `||G−H||F / ||H−mean(H)||F = .05`. The separately repo
 
 Comparisons use 10,000 paired rounding-seed bootstrap draws with PCG64 seed 424242. These intervals describe conditional initialization variability on fixed data. An eight-cohort macro is reported only when all eight comparisons are qualified and movement-matched; otherwise the available-case denominator and missing cohorts are explicit.
 
-The published fitting trajectory uses [revision fd7b3cb](https://github.com/SelinaMai-SYM/COMP-3314-G23/tree/fd7b3cb). A post-study [calibration correction](../../configs/extension_round2/amendments/003_cached_precision.json) recomputes cached certification for each requested movement target. The original USPS E1_v2 .02 point exceeds its movement-error threshold and is excluded by independent array qualification. Its original arrays, scores and source identity are preserved. Current report derivation accepts only this registered calibration-file difference; objectives, operators and environment must match. Fitting and resume continue to require an exact source match.
+The [saved-fit compatibility mapping](../../configs/extension_round2/derivation_compatibility.json) recomputes cached certification for each requested movement target. The original USPS E1_v2 .02 point exceeds its movement-error threshold and is excluded by independent array qualification. Its original arrays, scores and source identity are preserved. Current report derivation accepts only this registered calibration-file difference; objectives, operators and environment must match. Fitting and resume continue to require an exact source match.
 
 ## Reproduction
 
-Use CPython 3.13.3 and the [pinned environment](../../configs/extension_round2/requirements.txt). The independent data root contains the registered source files; scientific arrays are stored outside Git in the project's content-addressed artifact store. Data-provider terms remain separate from the project's MIT license.
+Use CPython 3.13.3 and the [pinned environment](../../environment/requirements.lock.txt). The independent data root contains the registered source files; scientific arrays are stored outside Git in the project's content-addressed artifact store. Data-provider terms remain separate from the project's MIT license.
 
-```bash
-git clone --single-branch --branch extension_v2 https://github.com/SelinaMai-SYM/COMP-3314-G23.git
-cd COMP-3314-G23
-python3 -m venv .venv
-.venv/bin/python -m pip install -r configs/extension_round2/requirements.txt
-```
+Use the [common installation commands](../../README.md#installation) from the repository root.
+
 
 The focused mathematical checks are available with `python -m pytest -q tests/extension_round2`. Without an artifact root, the frozen-input membership check is skipped; the `verify` entry point below supplies that root and requires the complete input check before benchmark fitting.
 
-Set `DATA_ROOT` and `ARTIFACT_ROOT` to explicit directories. The fitting commands below describe a new independent study with the corrected current implementation and a fresh artifact root. A recovered published store includes its original deadline, cumulative ledger and source identity. Inspecting or continuing that original bounded trajectory requires revision fd7b3cb; `--resume` does not allocate a new budget. The four unrun published targets have exhausted their path allowances. The current branch can reconstruct the scalar release and audit its archived arrays through the commands below.
+Set the data and output roots in the shell commands below. Fresh fitting records the current implementation and environment. Published finite trajectories retain their original source identities and cumulative limits; the scalar release reconstructs their measured endpoints independently.
 
 ```bash
+DATA_ROOT="$PWD/local/data"
+ARTIFACT_ROOT="$PWD/local/artifacts/quadratic"
 python -m experiments.extension_round2.run --phase freeze --config configs/extension_round2/protocol.yaml --data-root "$DATA_ROOT" --artifact-root "$ARTIFACT_ROOT" --resume
 python -m experiments.extension_round2.run --phase verify --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
 python -m experiments.extension_round2.run --phase primary --all-benchmarks --resume --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
 python -m experiments.extension_round2.run --phase secondary --all-benchmarks --resume --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
 python -m experiments.extension_round2.run --phase controls --resume --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
-python -m experiments.extension_round2.report --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT" --output results/extension_round2
+python -m experiments.extension_round2.report --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT" --output local/quadratic-results
 ```
 
 The executable [protocol](../../configs/extension_round2/protocol.yaml) fixes two single-thread workers, a 24-hour wall deadline, 600 CPU seconds per fit/QP/auxiliary attempt, 1800 CPU seconds per complete main method/cohort path, and 600 CPU seconds per control target. All eight primary/reference attempts precede secondary paths and controls. Unmatched, inactive, uncertified, failed and unrun endpoints remain distinct. Resource and coverage tables report actual execution rather than equating a declared matrix with completed work.
@@ -70,6 +66,8 @@ Interrupted paths retain the latest recorded finite checkpoint as a diagnostic o
 The [artifact manifest](../../results/extension_round2/artifact_manifest.json) describes recoverable matrices, duals, continuation states, predictions, numerical histories and source snapshots. A verified archive is retained outside Git because source-derived arrays may be restricted. The existing export/recovery interface accepts only this study's manifest:
 
 ```bash
+ARCHIVE="$PWD/local/quadratic.scientific.tar.gz"
+RECOVERED_ROOT="$PWD/local/recovered-quadratic"
 python -m experiments.submission_refresh.export_artifacts export --artifact-root "$ARTIFACT_ROOT" --manifest results/extension_round2/artifact_manifest.json --archive "$ARCHIVE"
 python -m experiments.submission_refresh.export_artifacts recover --archive "$ARCHIVE" --output "$RECOVERED_ROOT"
 ```
@@ -77,9 +75,7 @@ python -m experiments.submission_refresh.export_artifacts recover --archive "$AR
 Scalar tables and figures can also be checked and rebuilt without any dataset or numerical archive. This independently recomputes mean/sample SD and paired bootstrap contrasts, verifies compressed and decompressed trial hashes, and replaces the destination only after validation:
 
 ```bash
-python -m experiments.extension_round2.release --release-manifest results/extension_round2/release_manifest.json --output /path/to/rebuilt-results
+python -m experiments.extension_round2.release --release-manifest results/extension_round2/release_manifest.json --output local/tables/quadratic
 ```
 
 Rechecking primal/dual certificates additionally requires the saved numerical arrays and the `report` command. Scalar reconstruction alone does not certify optimization.
-
-This branch adds an independent research namespace. The original report, presentation, historical measurements and existing rebuild interfaces are preserved.

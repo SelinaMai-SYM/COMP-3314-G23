@@ -1,8 +1,0 @@
-{
-  "archive_receipt_sha256": "0c51aab10a9bfdca32004f53c5454f830713220fda3aff409da4469a283d1973",
-  "evidence_manifest_sha256": "87be0cacb1f0f8ec9c9cdbc57c8a6a9e7973bb4ab9ea70e9d0532f14bbc477b6",
-  "presentation": "public-scientific",
-  "schema": "public-publication-stage-v1",
-  "stage": "complete-scientific-release",
-  "subset_manifest_sha256": "ffd00d26f306e7fe2759dcb4eb74034bd5e22b65412305e4d32c038584252413"
-}

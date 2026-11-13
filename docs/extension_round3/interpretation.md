@@ -1,4 +1,4 @@
-# Interpretation of the frozen study
+# Edge-deletion results and interpretation
 
 The experiment does not establish a reliable, complete two-panel clustering benefit from removing pilot-edge self-influence. The identity and convex implementations are supported; a useful class discriminator and a broadly better SSC refinement are separate, unsupported conclusions. These are conditional results on eight retrospectively selected report cohorts, including the adapted native-16 MSRA proxy.
 
@@ -20,7 +20,7 @@ Post-freeze cross-class-edge AUROC improves over plain pilot on only ORL and USP
 
 The returned refinements are non-affine, but cavity–pilot differences are often small relative to certificate uncertainty. A positive lower bound on their normalized embedding difference is obtained for only 2/8 graph profiles and 1/7 qualified guard profiles; five of six qualified tube pairs have such a bound. These bounds concern the retained, approximately movement-matched lambda points, not an isolated causal effect of the score. Some native partitions change despite small embedding differences.
 
-Unlike the preceding round at its different operating point, the new guard reduces within-label variation relative to QSSC on all seven qualified cohorts. Its weighted triangle slack is approximately 20–41% of QSSC's. The guard is doing something measurable, yet that does not establish the benefit of cavity over pilot allocation. The stronger native gains are concentrated in UMIST, BinAlpha and USPS, while AR, JAFFE, ORL and YaleB each regress on at least one metric.
+At the 0.10 movement target, the new guard reduces within-label variation relative to QSSC on all seven qualified cohorts. Its weighted triangle slack is approximately 20–41% of QSSC's. The guard is doing something measurable, yet that does not establish the benefit of cavity over pilot allocation. The stronger native gains are concentrated in UMIST, BinAlpha and USPS, while AR, JAFFE, ORL and YaleB each regress on at least one metric.
 
 ## Coverage, interpretation and scope
 
@@ -30,9 +30,9 @@ Finite endpoints from CPU limits, finite search limits, repeated bracket proposa
 
 The 0.05/0.20 movement paths and anchor-score diagnostics are separate fixed sensitivities; no favorable secondary row replaces the primary 0.10 target. Bootstrap intervals describe variation over paired rounding starts, conditional on fixed embeddings. They are pointwise, unadjusted for multiple comparisons, and do not integrate dataset selection, solver uncertainty or unseen-data generalization.
 
-The contribution is a reproducible controlled study of one frozen edge-deletion signal at three alternative SSC insertion points, including its limitations and negative outcomes. Rank-one inversion and leverage correction are inherited. This study supplies no new class-recovery theorem, no proof of absolute novelty, and no general-purpose clustering improvement claim. Genuine sparse bridges and mutually supporting wrong neighborhoods remain explicit failure cases.
+The contribution is a reproducible controlled study of one frozen edge-deletion signal at three alternative SSC insertion points, including its limitations and negative outcomes. The formulas use established rank-one inversion and leverage correction. Genuine sparse bridges and mutually supporting wrong neighborhoods remain explicit failure cases.
 
-The tables below are generated from the authoritative paired records. Full means, sample SDs, intervals, both panels and control rows are retained in the [result tables](../../results/extension_round3/summary.md) and [per-cohort pages](../../results/extension_round3/benchmarks/). This interpretation was written after terminal scoring; no fitting, parameters, eligibility decisions or seed selection changed.
+The tables below are generated from the authoritative paired records. Full means, sample SDs, intervals, both panels and control rows are retained in the [result tables](../../results/extension_round3/summary.md) and [per-cohort pages](../../results/extension_round3/benchmarks/). The primary target and eligibility masks are fixed throughout these comparisons.
 
 ## Native primary effects by cohort
 

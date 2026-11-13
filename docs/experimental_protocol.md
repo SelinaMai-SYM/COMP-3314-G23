@@ -128,7 +128,7 @@ benchmark qualifies; this does not validate an unsupervised method by itself.
 
 ## Independent refinement protocol
 
-The [registered design](extension_verification_plan.md) and
+The [registered design](unsquared_refinements.md) and
 [immutable protocol](../configs/extension_verification/protocol.yaml) define
 separate E1 original/angular panels and gated E2/E3 angular evaluations. Each fit
 is shared across fifty greedy K-means++/Lloyd seeds. The fixed candidate/source,

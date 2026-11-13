@@ -27,6 +27,9 @@ reference = ["cvxpy"]
 [tool.setuptools.packages.find]
 include = ["SSC_method*", "benchmarks*", "baselines*", "method_extension*", "experiments*", "scripts*"]
 
+[tool.setuptools.package-data]
+"baselines.lda_kmeans.vendor.clustpy" = ["LICENSE", "PROVENANCE.json"]
+
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 testpaths = ["tests", "baselines", "benchmarks"]

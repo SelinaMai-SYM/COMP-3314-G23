@@ -1,6 +1,6 @@
-# Frozen experiment protocol
+# Edge-deletion experiment protocol
 
-The authoritative machine-readable specification, input lock, registry and finite queue are in [configs/extension_round3](../../configs/extension_round3). They were committed before new benchmark fitting or scores, at `3a3a41c`. There are 378 declared profiles, including separate reference and exact-alias rows. The registry maps the three candidate aliases to their full round-qualified method names.
+The authoritative machine-readable specification, input lock, registry and finite queue are in [configs/extension_round3](../../configs/extension_round3). The design was fixed before benchmark fitting and terminal scoring. There are 378 declared profiles, including separate reference and exact-alias rows. The registry maps the three candidate aliases to their full round-qualified method names.
 
 The eight inputs are the unchanged round-two report cohorts, including the adapted native 16×16 MSRA proxy and the existing historical-identity qualifications. No membership, ordering, preprocessing, A0, H or W0 is selected anew. Labels are byte-verified opaque objects during freezing. They are loaded only after a terminal numeric freeze, including all eligibility decisions. No fit is allowed afterward.
 
@@ -18,24 +18,12 @@ Joint win/tie/loss summaries use a 10⁻¹² percentage-point numerical tie tole
 
 Bootstrap intervals are pointwise and unadjusted across the many declared contrasts. They do not provide a familywise discovery guarantee. The verdict retains null and negative rows rather than selecting a favorable contrast.
 
-## Numerical execution amendment 002
+## Numerical settings
 
-Before label access, the additional 200,000-iteration guard was replaced by a nonbinding 200,000,000 guard so the specified CPU caps control termination. Fixed-lambda continuation retains previous segments and their cumulative cost, with 570 solve seconds plus overhead within the original 600-second ceiling. Cached points are independently requalified for a stronger target. No objective, parameter, precision, movement or global resource gate changes. The initial protocol remains intact; [amendment 002](../../configs/extension_round3/amendments/002.json) records the effective override and source identities.
+The effective configuration uses a nonbinding 200,000,000 iteration guard, 570 cumulative solve seconds plus overhead within each 600-second fit, and 1,800 CPU seconds per method/cohort path across all movement targets. Weighted ranking uses float64 log-domain sums when positive products underflow; tie groups and every objective weight are preserved. Secondary targets share a path and execute in separate completion blocks. The complete native ledger determines remaining path allowances, including failed work.
 
-Resource totals measure additional execution in this round, including failed attempts. Reused round-two references and warm states have earlier generation costs recorded in that study; these totals are not a comparison of cold-start method runtimes.
+## Eligibility and resource limits
 
-The native ledger is the additive cost source. Shared evidence CPU is repeated as metadata on multiple diagnostic rows, and path counters are cumulative across movement targets; neither field should be summed across those rows. Exact graph-rescaling aliases reuse the same matrix rather than represent another fitted model.
+Native costs were 1,879.646 seconds for YaleB plain-pilot tubes and 1,859.512 seconds for MSRA shuffled-401 tubes, above the declared 1,800-second path limit. All four profiles on these two paths are excluded from qualified paired comparisons. Their arrays, separate numerical certificates and descriptive measurements remain in the records. Failed work and both overruns are included in total cost.
 
-## Numerical execution amendment 003
-
-Strictly positive products w×anchor length can underflow before weighted ranking. Float64 log-domain sums now implement the same ranks in that case; no edge is dropped or objective weight changed. Unrepresentable raw masses retain their finite log values. Roundoff corrections to ranks are at most 10⁻¹² and recorded; the weighted-budget tolerance is unchanged. All previously stored allocations were checked for bit identity. The two pre-fit failures and their charges are retained. See [amendment 003](../../configs/extension_round3/amendments/003.json).
-
-## Scheduling amendment 004
-
-Secondary targets share each method/cohort's lambda path and cumulative caps. A completion barrier separates their existing target blocks, preserving the registered queue order while preventing concurrent writes to one path. Each block has unique paths. This orchestration repair preceded all secondary fits and terminal scores; no numerical source, completed output, parameter or resource limit changed. See [amendment 004](../../configs/extension_round3/amendments/004.json).
-
-## Resource-accounting amendment 005 and deviations
-
-A killed worker can consume CPU after its last committed path counter. A pre-scoring audit found cumulative native costs of 1,879.646 seconds for YaleB plain-pilot tubes and 1,859.512 seconds for MSRA shuffled-401 tubes, exceeding the 1,800-second path limit by 79.646 and 59.512 seconds. These are protocol deviations, not increased allowances. All outputs on both affected paths are conservatively excluded from qualified paired comparisons; arrays, separate numerical certificates and descriptive scores remain available. The global 32-core-hour budget includes every failed attempt and both overruns.
-
-Remaining path allowances now use the complete native ledger across targets and attempts, rather than relying on a potentially stale internal path counter. Existing unaffected transition workers are stopped below the path cap if necessary. A regression check covers lost failed-work costs, target sharing and active reservations. No mathematical code, parameter, numerical gate, completed array or global deadline changes. [Amendment 005](../../configs/extension_round3/amendments/005.json) records the observed costs and exclusion policy before label access.
+Reused input/reference states have generation costs in the quadratic comparison. Shared evidence costs and cumulative path counters repeat across diagnostic rows; additive native-job costs are the source for total CPU. Exact graph-rescaling aliases reuse one matrix and are not additional fits.

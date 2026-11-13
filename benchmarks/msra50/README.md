@@ -26,7 +26,7 @@ exact duplicate rows with consistent labels. There is no resize, upsampling or
 deduplication. Labels are shifted from 1–12 to 0–11.
 
 ```bash
-python -m benchmarks.msra50.retrieve --data-root /path/to/benchmarks
+python -m benchmarks.msra50.retrieve --data-root local/data
 ```
 
 The retrieval command checks length/hash before publishing a download and
@@ -37,7 +37,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "MSRA25_EBSA_16x16", root=Path("/path/to/benchmarks/msra50/data")
+    "MSRA25_EBSA_16x16", root=Path("local/data/msra50/data")
 )
 ```
 
@@ -49,8 +49,7 @@ version. See [the EBSA manifest](manifest_ebsa16.yaml).
 The paper specifies 1,799 images, twelve classes and 32×32 input without an
 identifying file URL. The [Fast-CD source](https://github.com/moetayuko/Fast-CD/tree/f13a4f6e08fc5677062dfbbb2b208e324109edd7)
 expects `MSRA50_uni.mat` and describes 1,024 features, but that matrix was not
-recovered. Public archive requests returned HTTP 429; that observation is not
-proof of permanent deletion. Matching counts or upsampling EBSA16 cannot
+recovered. Matching counts or upsampling EBSA16 cannot
 establish historical source/pixel identity. Other unrelated MSRA-named datasets
 are not substitutes.
 

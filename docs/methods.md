@@ -128,7 +128,7 @@ does not establish the identity of the paper's historical LDA-SC method.
 
 ## Independent convex refinements
 
-The [three registered refinements](extension_verification_plan.md) preserve the
+The [three registered refinements](unsquared_refinements.md) preserve the
 unsquared fidelity and frozen W0. E1 replaces edge fusion with a relative stopping
 tube. E2 restricts motion to fixed tangent planes around unit anchors. E3 adds
 frozen unit-gradient relative-neighbor hinges. Their modules are independent and
@@ -149,3 +149,11 @@ then applies the common rounding protocol. E1 has no performance promotion gate;
 E2 and E3 require their separate development mechanisms to pass before formal
 eight-input optimization. Inactive, uncertified, failed, gated and unrun endpoints
 remain distinct in the [results](extension_verification_results.md).
+
+## Movement-controlled quadratic refinements
+
+The common QSSC control minimizes ½‖G−H‖² + λΣw‖BG‖ with fixed H/W. Uniform relative tubes (E1_v2), graph-band adaptation (E4), triangle-slack guards (E5) and a singular-direction floor (E6) are defined in the [quadratic method specification](extension_round2/methods.md). Their primary normalized movement target is 0.05; certified movement uncertainty and graph feasibility determine eligibility. Inactive E6 and unmatched targets remain in the measurements.
+
+## Exact edge-deletion evidence
+
+For L=Bᵀdiag(w)B and a fixed τ, the ridge pilot is Z=(I+τL)⁻¹H. The leverage of edge b is ℓ=τw bᵀ(I+τL)⁻¹b. Its deleted-edge score is ‖bᵀZ‖²/(1−ℓ)². Weighted midranks allocate graph weights (E7), relative tubes (E1_v3), or triangle-slack guards (E5_v2), independently. The primary movement target is 0.10. Plain-pilot and shuffled controls isolate whether leverage correction supplies useful extra information. [Full equations and bounds](extension_round3/method_design.md), [protocol](extension_round3/experiment_protocol.md) and [results](extension_round3/interpretation.md) describe the corresponding fixed-input comparison.

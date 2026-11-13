@@ -35,7 +35,7 @@ and exclusions explicitly. Source aliases do not multiply independent datasets.
 The root contains benchmark subdirectories such as `orl/data`, `jaffe/data`,
 `yaleb/data`, `usps/data` and `msra50/data`. Resolution order is explicit
 `--data-root`, `COMP3314_DATA_ROOT`, an ignored local pointer, then checkout-local
-`benchmarks/`. An alternative worktree or cached embedding is not a data source.
+`benchmarks/`. Provider files and their source hashes identify the input.
 
 | Source | Path beneath the data root | Provider |
 |---|---|---|
@@ -51,14 +51,27 @@ benchmark manifests and the source inventory. Strict original-dataset loaders
 reject inferred substitutes. Use an explicitly named candidate/source endpoint
 for those experiments.
 
-## Deterministic preparation
+## Downloading public files
 
-Replace `DATA_ROOT` with the directory containing the benchmark folders:
+USPS files can be fetched directly from LIBSVM; the loader verifies the identities listed in its [manifest](../benchmarks/usps/manifest.yaml):
 
 ```bash
-python -m benchmarks.prepare --dataset ORL_att92 --data-root DATA_ROOT --archive DATA_ROOT/orl/data/att92/att_faces.zip
-python -m benchmarks.prepare --dataset YaleB_cropped2414 --data-root DATA_ROOT --archive DATA_ROOT/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip
-python -m benchmarks.msra50.retrieve --data-root DATA_ROOT
+mkdir -p local/data/usps/data
+curl --fail --location --retry 2 https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.bz2 --output local/data/usps/data/usps.bz2
+curl --fail --location --retry 2 https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/usps.t.bz2 --output local/data/usps/data/usps.t.bz2
+python -m benchmarks.msra50.retrieve --data-root "$PWD/local/data"
+```
+
+Other sources are obtained through the provider links above and placed at their declared paths. JAFFE requires compliance with its research-use and redistribution terms. Source-specific parent matrices and sample manifests are described in the individual [benchmark guides](../benchmarks/README.md).
+
+## Deterministic preparation
+
+From the repository root, prepare archives stored in `local/data`:
+
+```bash
+python -m benchmarks.prepare --dataset ORL_att92 --data-root "$PWD/local/data" --archive local/data/orl/data/att92/att_faces.zip
+python -m benchmarks.prepare --dataset YaleB_cropped2414 --data-root "$PWD/local/data" --archive local/data/yaleb/data/cropped_wayback/CroppedYale_wayback_20220127.zip
+python -m benchmarks.msra50.retrieve --data-root "$PWD/local/data"
 ```
 
 ORL rows follow numeric subject/image order. Cropped YaleB excludes ambient

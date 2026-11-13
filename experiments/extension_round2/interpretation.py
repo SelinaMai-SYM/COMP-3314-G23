@@ -58,7 +58,7 @@ def write_evidence(output,points,macros,diagnostics,alignment):
             g=data(b,'E6',.2)['directional_floor'];a=row(b,'E6',.2);q=row(b,'QSSC',.2)
             lines.append(f"| {b} | {g['QSSC_optimum_whitened_min_upper_from_gap']:.4f} | {g['whitened_min_eigenvalue']:.4f} | {g['dual_PSD_norm']:.4f} | {a['acc_mean']-q['acc_mean']:+.3f} / {a['nmi_mean']-q['nmi_mean']:+.3f} |")
         lines.append('\nThe guard protects a threatened direction in these secondary cases, while ACC/NMI effects remain mixed. Direction protection alone does not establish better class separation.')
-    lines+=['','## Calibration correction','', 'The archived USPS E1_v2 .02 point reused a certificate attached to a looser movement target. Its recorded movement-error bound is 0.0004271509577, above the required 0.0004. Independent saved-array qualification excludes this point. The original source and output are retained. [Amendment 003](../../configs/extension_round2/amendments/003_cached_precision.json) corrects target-specific cache qualification for future independent runs; no additional fit replaces the archived point. Exact calibration-only source compatibility is permitted for report derivation, while fitting and resume remain source-locked.']
+    lines+=['','## Target-specific qualification','', 'The archived USPS E1_v2 .02 point reused a certificate attached to a looser movement target. Its recorded movement-error bound is 0.0004271509577, above the required 0.0004. Independent saved-array qualification excludes this point. The original source and output are retained. [Compatibility mapping](../../configs/extension_round2/derivation_compatibility.json) corrects target-specific cache qualification for future independent runs; no additional fit replaces the archived point. Exact calibration-only source compatibility is permitted for report derivation, while fitting and resume remain source-locked.']
     lines+=['','## Reachability and uncertainty','']
     bounded=[]
     for p in points:
@@ -68,10 +68,3 @@ def write_evidence(output,points,macros,diagnostics,alignment):
     (output/'mechanism_evidence.md').write_text('\n'.join(lines)+'\n')
     summary=output/'summary.md';text=summary.read_text();text=text.replace('## Mechanism evidence and limits','## Mechanism evidence and limits\n\n[Observed activation, correspondence controls and attribution](mechanism_evidence.md) give the data-dependent interpretation.')
     summary.write_text(text)
-    note=output/'integration_note.md';content=note.read_text();e5=next(r for r in macros if r['method']=='E5')
-    if e5['qualified_denominator'] and e5['available_case_ACC_pp']>0 and e5['available_case_NMI_pp']>=0 and sum(slack)>0:
-        content+='\nUse E5 as one compact exploratory mechanism example: report its available-case denominator, small/mixed primary effects and dataset regressions beside the slack result. This is not a completed eight-benchmark performance claim. E1_v2 belongs with the stopping-bound/tradeoff evidence; E4 needs its permutation and failed-QP qualifications; E6 belongs with the inactive-guard/null attribution unless its separately labelled path demonstrates activation. Keep the complete primary comparison visible.\n'
-    else:content+='\nA short negative/null-results account is preferable to promoting a new accuracy-improving method. Keep all primary methods visible, and use the mechanism figures to distinguish inactivity, numerical limits and actual adverse effects.\n'
-    if threatened:
-        content=content.replace('E6 belongs with the inactive-guard/null attribution unless its separately labelled path demonstrates activation.',f"E6 supplies an optional second mechanism contrast: its primary guard is inactive, while the fixed .20 cases on {', '.join(threatened)} protect threatened directions with mixed clustering effects. Keep their secondary status and null/negative attribution explicit.")
-    note.write_text(content)

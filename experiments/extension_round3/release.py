@@ -4,7 +4,7 @@ from .common import read,digest,Path
 from .report import render
 
 
-def rebuild(manifest_path,output):
+def rebuild(manifest_path,output,*,plots=False):
     manifest_path=Path(manifest_path);manifest=read(manifest_path);root=manifest_path.parent
     for name,sha in manifest['files'].items():
         p=(root/name).resolve()
@@ -27,7 +27,7 @@ def rebuild(manifest_path,output):
     if output.exists():raise FileExistsError('reconstruction destination must be fresh')
     output.parent.mkdir(parents=True,exist_ok=True);temp=Path(tempfile.mkdtemp(prefix='.round3-rebuild-',dir=output.parent))
     try:
-        counts=render(records,temp,plots=False)
+        counts=render(records,temp,plots=plots)
         for p in temp.rglob('*'):
             if not p.is_file() or (p.suffix not in ['.csv','.md'] and p.name!='trials.csv.gz'):continue
             name=str(p.relative_to(temp))

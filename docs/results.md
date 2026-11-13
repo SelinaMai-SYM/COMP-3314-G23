@@ -37,7 +37,7 @@ contain historical and newly measured endpoints for
 
 ### Final source/subset results
 
-The frozen release contains 74,436 complete physical SSC configurations and 3,721,800 scalar rounding trials. The catalogue also retains aliases and unevaluated hypotheses; a complete configuration requires all 50 declared seeds. Source/subset coverage is recorded in the [configuration coverage](../results/subset_search/execution_coverage.csv) and [fixed-protocol distributions](../results/subset_search/fixed_protocol_family_distributions.csv).
+The frozen release contains 74,436 complete physical SSC configurations and 3,721,800 scalar rounding trials. The catalogue also retains aliases and unevaluated hypotheses; a complete configuration requires all 50 declared seeds. Source/subset coverage is recorded in the [configuration coverage](../results/subset_search/execution_coverage.public.v1.csv) and [fixed-protocol distributions](../results/subset_search/fixed_protocol_family_distributions.csv).
 
 The [locked matches](../results/subset_search/closest_matches.csv) keep compatible and adapted pools, mean endpoints and native-best endpoints separate. Additional rounding completed for 18 of 18 locked winners, using the first unused 50-seed block at or above 1,000,000 without reselection. See [confirmation](../results/subset_search/rounding_confirmation.csv). These comparisons measure conditional rounding stability on the same fixed samples and representations; they do not identify historical membership or estimate unseen-data generalization.
 
@@ -141,3 +141,11 @@ See [context confirmation](../results/extension_verification/context_confirmatio
 [status](../results/extension_verification/status.csv),
 [paired contrasts](../results/extension_verification/contrasts.csv) and
 [protocol coverage](../results/extension_verification/design_coverage.csv).
+
+## Movement-controlled and selective refinements
+
+The quadratic comparison uses movement 0.05. E1_v2 changes available-case ACC/NMI by +0.179/−0.057 pp and E5 by +0.116/+0.070 pp over QSSC, both on seven qualified pairs. The singular-floor E6 primary constraint is inactive. [Complete results](../results/extension_round2/summary.md) retain graph-band controls, sensitivities and missing endpoints.
+
+The edge-deletion comparison uses movement 0.10 on the same retrospectively selected cohorts. There are 352 finite profiles with both 50-seed panels (35,200 trials), from 378 declared profiles. Primary/control qualification is 153/168 including eight exact aliases; 101/160 sensitivities qualify. The 26 optional sensitivities were gated out because primary qualification was incomplete.
+
+The README's [generated native-primary table](../README.md#results) compares each candidate with QSSC and its plain-pilot counterpart on one common qualified mask. E7 has eight pairs, E1_v3 six and E5_v2 seven. E7's complete native comparison changes ACC/NMI by −0.022/+0.013 pp against QSSC and +0.004/−0.001 pp against plain-pilot weighting. The partial tube comparison loses −0.123/−0.068 pp to plain-pilot tubes; the guard gives a partial +0.061/+0.045 pp. Shuffled controls and per-cohort regressions prevent a consistent attribution to self-influence correction. Both complete panels and all contrasts are in the [tables](../results/extension_round3/summary.md) and [interpretation](extension_round3/interpretation.md).

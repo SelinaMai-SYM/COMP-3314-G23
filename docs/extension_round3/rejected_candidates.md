@@ -1,3 +1,0 @@
-# Candidates outside this round
-
-A second global singular-value floor was not promoted: the preceding primary floor was inactive, so another name would not supply a class-relevant discriminator. Gradient surgery among attractive edge losses does not identify which relationships should resist contraction. Generic Bregman refitting changes geometry without establishing the source of clustering errors. Ordinary diffusion is retained only as an evidence pilot. Capped fusion already has direct prior art and is not this round's intervention. Bounded anti-diffusion can amplify both useful and harmful directions. None of these is added as an extra candidate or searched after observing scores.

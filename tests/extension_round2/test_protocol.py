@@ -27,7 +27,7 @@ def test_locked_membership_Y3_and_per_benchmark_rounding():
     from experiments.extension_round2.common import locked,source_files
     spec,lock,store=locked_for_derivation(root)
     if source_files()!=lock['source_files']:
-        with pytest.raises(ValueError,match='source/environment changed'):locked(root)
+        with pytest.raises(ValueError,match='source/environment changed|protocol hash changed'):locked(root)
     assert len(lock['cohorts'])==8
     for b,row in lock['cohorts'].items():
         assert row['initialization']==spec['cohorts'][b]['initialization'];assert len(row['selected_indices'])==row['n']

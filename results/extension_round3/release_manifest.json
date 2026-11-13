@@ -1,5 +1,5 @@
 {
-  "compressed_sha256": "466bd0b90c3879ec99c754e5298a1d9cf8870192af86ca616dd758fdd85576fb",
+  "compressed_sha256": "a1b58d22b8c65e0083db4b8416faffe088c95e4d1a8aa1b6bbb658f358ae0b68",
   "counts": {
     "finite": 352,
     "metrics": 704,
@@ -8,7 +8,6 @@
     "trials": 35200
   },
   "files": {
-    "acceptance.json": "9ae915c8356f6cbc7767ef08f17ed3a11037837f37e8bbf431ce48fb40798475",
     "artifact_inventory.json.gz": "65f93d7ae25825103bf17322e6f47cd8158a8e074269a96b4fddd7bef72fe84a",
     "artifact_receipt.json": "165206943195f5811bedf89c1e455e142f47787b6cad6c58462fb2d2df6f274f",
     "benchmarks/AR.md": "131d161abbef0a3cae5bbf574618fab1d219a7ebd5450d19b952cf4cc99dac6a",
@@ -19,9 +18,7 @@
     "benchmarks/UMIST.md": "5c703f07046d53a14005b08a8f276a2ca1e1694357fd7b35d99c90c772e0747a",
     "benchmarks/USPS.md": "27db6d72577618a86efbe1dc6378055ed56939c90e918ef512f44fb63bd3ed87",
     "benchmarks/YaleB.md": "a8e923cb3bc19f3c05ba5edbacc9c0a515d0ed0133118a81c70a50700a4930ee",
-    "contribution_verdict.md": "9ab8e660e00c5d2064f125479be6f310126b2c787dc2bd737f3e1e8e8bd43c35",
     "coverage.csv": "967032996662d73fe7ea240a9c30c22670c719c0f921d97451f329c8d32c46f7",
-    "experiment_log.md": "46df3bda3cc04fccbb907922a4507d370fe002f819452249c7fb842798ee143b",
     "figures/movement_anchor_generated_acc.svg": "cbc3fcfce4630e1b9e64ad1be2c2e60dacb4a6732226c64f1f0c35398d3dc860",
     "figures/movement_anchor_generated_nmi.svg": "8b4f3d0bbd82bf9e48a2467dfc1f48be5b5af45cd48f8e3695409b41905c2427",
     "figures/movement_native_acc.svg": "edbfd7d86090c46f800e8a7ae5fd832a9778306807e20c1482d71c8417f2582f",
@@ -33,12 +30,15 @@
     "paired_differences.csv": "225caa23b8eab95622de7267ea8fa360dddc17e1b94c5ae445dd3610caa11add",
     "primary_metrics.csv": "f10e624fa5447436573ce7b5e0cfe7ae939102c4e11bbe506a0d6ee5e74cc15b",
     "resource_usage.csv": "4c07273fbbc323b4310cf930685be3964b85ec378abb540ed1d0ed9f6822ff84",
-    "scalar_records.json.gz": "466bd0b90c3879ec99c754e5298a1d9cf8870192af86ca616dd758fdd85576fb",
+    "scalar_records.json.gz": "a1b58d22b8c65e0083db4b8416faffe088c95e4d1a8aa1b6bbb658f358ae0b68",
     "secondary_metrics.csv": "4c1cd3e00ff67213b0a7b07b7625d7010446daf33b98f15f68a4cefec73e05f7",
-    "summary.md": "0d71871c0ce38271a5a92b47c25096744b637776636c1e12b5cbc01a30243e6c",
+    "summary.md": "c329710de265e1a2fb99f0c11a651427ef77a4bb73b25f37203eb1715eef4f05",
     "trials.csv.gz": "5e134e4ceddba1cf687a80741c17576889b3476f2253a53999b917d045aef24a"
   },
   "numerical_freeze_sha256": "d565c831d9cc37bf3b9842cdedce06aa6404aafbcb49de10bbfb29f8f9156366",
+  "original_protocol_sha256": "25252dc0fe17b71445c34ece1cb10036859598e7ace823b22b32393c3c4716f0",
+  "original_records_compressed_sha256": "466bd0b90c3879ec99c754e5298a1d9cf8870192af86ca616dd758fdd85576fb",
+  "original_release_manifest_sha256": "c19b3967cfdf3ac3898a6c11c17feffde2382a4a7e0d7f41166afb1c5ae76c71",
   "records": "scalar_records.json.gz",
   "schema": "ssc-round3-release-v1",
   "source_fingerprint": "921b65fa7eede217d3e070cd984f160c27d2096cfb09dace07e44494be6b56a6",
@@ -47,5 +47,5 @@
     "path": "trials.csv.gz",
     "uncompressed_sha256": "112f3a2966ce3d18db50a09f188f41338cb739399620b8709b7ef9a7642e1bc1"
   },
-  "uncompressed_sha256": "fcf3440ad14d61a0795b83373845100e31d514dceab2c03c5cd1c507ddb1bc6f"
+  "uncompressed_sha256": "22ae1336a2e56250da28732447527ac3350a2047a4c8664ff4ec10469acb5556"
 }

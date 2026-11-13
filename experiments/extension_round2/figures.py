@@ -10,7 +10,7 @@ COLORS={'QSSC':'#6B7280','E1_v2':'#2864A0','E4':'#D17B20','E5':'#318266','E6':'#
 def figures(output,points,contrasts,diagnostics):
     folder=output/'figures';folder.mkdir(exist_ok=True);plt.rcParams.update({'font.size':9,'axes.spines.top':False,'axes.spines.right':False,'svg.fonttype':'none','svg.hashsalt':'comp3314-extension-round2-v1','savefig.bbox':'tight'})
     def save(fig,name):
-        fig.savefig(folder/(name+'.svg'),metadata={'Date':None,'Creator':'COMP3314 Group 23'});fig.savefig(folder/(name+'.png'),dpi=180);plt.close(fig)
+        fig.savefig(folder/(name+'.svg'),metadata={'Date':None,'Creator':'COMP3314 Group 23'});plt.close(fig)
     lookup={(p['benchmark'],p['method'],p['variant'],p['rho']):p for p in points}
     def diag(row):return diagnostics.get(row['point_id'],{}) if row else {}
     fig,axes=plt.subplots(2,1,figsize=(12,7),sharex=True)

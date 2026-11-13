@@ -29,7 +29,7 @@ to L mode before resizing. Labels use alphabetical two-letter model codes:
 from pathlib import Path
 from benchmarks import load_dataset
 
-X, y, metadata = load_dataset("JAFFE", root=Path("/path/to/benchmarks/jaffe/data"))
+X, y, metadata = load_dataset("JAFFE", root=Path("local/data/jaffe/data"))
 ```
 
 The output shape is `(213,676)`. The loader requires all ten labels. Archive

@@ -43,7 +43,7 @@ from pathlib import Path
 from benchmarks import load_dataset
 
 X, y, metadata = load_dataset(
-    "BinAlpha", root=Path("/path/to/benchmarks/binalpha/data"),
+    "BinAlpha", root=Path("local/data/binalpha/data"),
     version="letters26x30_seed0"
 )
 ```

@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-11",
+  "date": "2026-11-13",
   "inputs": {
     "baseline": {
       "available": true,
@@ -62,8 +62,8 @@
     },
     "execution": {
       "available": true,
-      "logical_path": "results/subset_search/execution_coverage.csv",
-      "path": "results/subset_search/execution_coverage.csv",
+      "logical_path": "results/subset_search/execution_coverage.public.v1.csv",
+      "path": "results/subset_search/execution_coverage.public.v1.csv",
       "sha256": "6066795a265aafe73abcda09cb54ad9e471d61338046a31c33950b7fca4d2fa6",
       "transport": "plain"
     },
@@ -213,7 +213,6 @@
   "outputs": [
     "report/tables/refresh_appendix.tex",
     "report/tables/refresh_coverage.tex",
-    "report/tables/refresh_extension.tex",
     "report/tables/refresh_main.tex",
     "report/tables/refresh_repairs.tex"
   ],

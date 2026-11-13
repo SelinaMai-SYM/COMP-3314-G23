@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build all formats from the shared TikZ source. Optional output root is isolated.
+# Build the PDF and SVG from the shared TikZ source. Optional output root is isolated.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:-$root}"
@@ -12,4 +12,3 @@ cp "$root/report/figures/ssc_two_graph_pipeline."{tex,tikz} "$build/"
 pdf="$out/report/figures/ssc_two_graph_pipeline.pdf"
 cp "$build/ssc_two_graph_pipeline.pdf" "$pdf"
 pdftocairo -svg "$pdf" "$out/docs/figures/ssc_two_graph_pipeline.svg"
-pdftocairo -png -singlefile -r 220 "$pdf" "$out/docs/figures/ssc_two_graph_pipeline"

@@ -92,6 +92,8 @@ def freeze_outputs(config,root):
 def mechanisms(store,lock,record,G,y):
     c=lock['cohorts'][record['benchmark']];H=store.get(c['objects']['H']);W=store.get(c['objects']['W0']);P=FusionProblem(H,W,1.);w=P.w;a0=lengths(P.h);edge=P.B@G;lg=lengths(edge);cross=y[P.i]!=y[P.j];S=P.S;Hc=H-H.mean(axis=0);Gc=G-G.mean(axis=0);scale=float(np.sum(Hc*Gc)/S**2) if S else 1.;gap=record.get('certificate',{}).get('gap',0.)
     out=dict(id=record['id'],benchmark=record['benchmark'],method=record['method'],rho=record['rho'],tau_multiplier=record['tau_multiplier'],numerically_certified=record.get('certified',False),movement_matched=record.get('qualified',False),movement=float(np.linalg.norm(G-H)/S) if S else 0.,activity='EXACT_IDENTITY_INACTIVE' if np.array_equal(G,H) else 'MOVED',dispersion=float(np.linalg.norm(Gc)/S) if S else 0.,affine_scale=scale,affine_residual=float(np.linalg.norm(Gc-scale*Hc)/S) if S else 0.,weighted_slack=float(w@(lg+lengths(edge-P.h)-a0)),reversed_edge_fraction=float(np.mean(np.sum(edge*P.h,axis=1)<-1e-12)) if len(w) else 0.,expanded_edge_fraction=float(np.mean(lg>a0+1e-10)) if len(w) else 0.,original_components=int(connected_components(W,directed=False,return_labels=False)),cross_class_edge_fraction=float(cross.mean()) if len(w) else None,cross_class_weight_fraction=float(w[cross].sum()/w.sum()) if len(w) else None)
+    out.update(protocol_compliant=record.get('protocol_compliant',True),qualified_for_comparison=record.get('qualified',False))
+    if record['method'] in registry() or record['method']=='UNIFORM_GRAPH_ALIAS':out['movement_matched']=matched(record['certificate'],record['rho'])
     _,class_index=np.unique(y,return_inverse=True);counts=np.bincount(class_index);hmean=np.zeros((len(counts),H.shape[1]));gmean=np.zeros_like(hmean);np.add.at(hmean,class_index,H);np.add.at(gmean,class_index,G);hmean/=counts[:,None];gmean/=counts[:,None]
     hwithin=float(np.sum((H-hmean[class_index])**2));gwithin=float(np.sum((G-gmean[class_index])**2));hbetween=float(np.sum(counts[:,None]*(hmean-H.mean(axis=0))**2));gbetween=float(np.sum(counts[:,None]*(gmean-G.mean(axis=0))**2))
     out['within_label_variation_ratio']=gwithin/hwithin if hwithin else None;out['between_label_variation_ratio']=gbetween/hbetween if hbetween else None
@@ -136,7 +138,7 @@ def evaluate(config,root):
             record=read(profile_path(store,planned['id']));dest=store.root/'evaluations'/(record['id']+'.json')
             if dest.exists():continue
             audit=frozen['qualification'][record['id']]
-            record=dict(record,certificate=audit.get('certificate',record.get('certificate',{})),qualified=audit['qualified'],certified=audit['certified'])
+            record=dict(record,certificate=audit.get('certificate',record.get('certificate',{})),qualified=audit['qualified'],certified=audit['certified'],protocol_compliant=audit.get('protocol_compliant',True))
             if 'recovered_parameters' in audit:record=dict(record,parameters=audit['recovered_parameters'],intervention_metadata=audit['recovered_intervention_metadata'])
             if not record.get('result'):
                 atomic_json(dest,dict(id=record['id'],status=record['status'],complete=False));continue

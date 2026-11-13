@@ -4,6 +4,12 @@ This independent study tests whether correcting an edge's own smoothing influenc
 
 The inputs are the eight unchanged, retrospectively selected round-two report cohorts. This is conditional development evidence. The MSRA input is the native 16×16 EBSA proxy and retains its source-identity qualification. Earlier result tables, the submission report and presentation are unchanged.
 
+| Registered candidate | Table/configuration alias |
+|---|---|
+| `R3_E7_CAVITY_GRAPH` | `R3_E7_CAVITY` |
+| `R3_E1_V3_SELECTIVE_TUBE` | `R3_E1_V3_CAVITY` |
+| `R3_E5_V2_SELECTIVE_GUARD` | `R3_E5_V2_CAVITY` |
+
 [Method and proofs](method_design.md) · [Protocol](experiment_protocol.md) · [Novelty audit](novelty_audit.md) · [Excluded candidates](rejected_candidates.md) · [Results](../../results/extension_round3/summary.md)
 
 ## Installation and inputs

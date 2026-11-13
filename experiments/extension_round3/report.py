@@ -168,6 +168,7 @@ def render(records,output,*,plots=True):
         old=log.read_text();addition='\n## Additional registered export\n\n'+''.join(x for x in lines[3:] if x not in old)
         if addition.strip()!='## Additional registered export':log.write_text(old+addition)
     verdict=['# Contribution verdict\n\n','The numerical identity is inherited from rank-one inversion. The scoped project contribution is its frozen graph evidence and controlled insertion into three SSC objectives. This study does not establish the first graph cross-validation or leave-one-out algorithm.\n\n']
+    verdict.append('The [scientific interpretation](../../docs/extension_round3/interpretation.md) discusses the fixed outcomes, control failures, metric regressions and limits of attribution. No new fit or parameter selection follows terminal scoring.\n\n')
     for candidate in CANDIDATES:
         rows=[r for r in macros if r['candidate']==candidate and r['rho']==.1 and r['tau_multiplier']==1. and r['control']==candidate.removesuffix('_CAVITY')+'_PILOT']
         supported=bool(len(rows)==2 and all(r['paired_n']==8 and r['acc_eight_cohort_delta']>0 and r['nmi_eight_cohort_delta']>=0 for r in rows))
@@ -201,16 +202,20 @@ def make_plots(metrics,mechanisms,folder):
                             ax.scatter([r['movement'] for r in points],[r[metric+'_mean'] for r in points],marker=marker,color=line.get_color(),s=20)
                 ax.set(title=b,xlabel='Actual movement',ylabel=metric.upper()+' (%)')
             handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (dots: qualified; ×: descriptive only)');fig.savefig(folder/f'movement_{panel}_{metric}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
-    fig,axs=plt.subplots(1,2,figsize=(10,4),layout='constrained')
-    for method,label in [('R3_E7_CAVITY','Graph / guard: mass w'),('R3_E1_V3_CAVITY','Tube: mass w × anchor length')]:
+    fig,axs=plt.subplots(1,3,figsize=(15,4),layout='constrained')
+    for ax,method,label,color in [(axs[0],'R3_E7_CAVITY','Graph / guard (mass w)','tab:blue'),(axs[1],'R3_E1_V3_CAVITY','Tube (mass w × anchor length)','tab:orange')]:
         rows=[r for r in mechanisms if r['method']==method and r['rho']==.1 and r['tau_multiplier']==1.]
-        axs[0].scatter([r.get('leverage_median',0) for r in rows],[r.get('weighted_rank_difference_from_pilot',0) for r in rows],label=label)
-        for r in rows:axs[0].annotate(r['benchmark'],(r.get('leverage_median',0),r.get('weighted_rank_difference_from_pilot',0)),fontsize=6)
+        ax.scatter([r.get('leverage_median',0) for r in rows],[r.get('weighted_rank_difference_from_pilot',0) for r in rows],color=color)
+        for r in rows:
+            b=r['benchmark'];right=b in ['UMIST','USPS','BinAlpha'];offset=(-3,-10 if b=='BinAlpha' else 5) if right else (4,-9 if b=='JAFFE' else 4)
+            ax.annotate(b,(r.get('leverage_median',0),r.get('weighted_rank_difference_from_pilot',0)),xytext=offset,textcoords='offset points',ha='right' if right else 'left',fontsize=7)
+        ax.set(xlabel='Median edge leverage',ylabel='Weighted |cavity rank − pilot rank|',title=label)
     first={r['benchmark']:r for r in mechanisms if r['method']=='SC' and r['tau_multiplier']==1.}
+    offsets={'UMIST':(4,-13),'MSRA50':(-42,8),'BinAlpha':(4,10),'YaleB':(4,-13),'AR':(4,-12),'ORL':(4,8),'USPS':(-31,-11),'JAFFE':(4,-13)}
     for b,r in first.items():
         x=r.get('pilot_cross_class_auroc');y=r.get('cavity_cross_class_auroc')
-        if x is not None and y is not None:axs[1].scatter(x,y);axs[1].annotate(b,(x,y),fontsize=7)
-    axs[0].set(xlabel='Median edge leverage',ylabel='Weighted |cavity rank − pilot rank|',title='Does deletion change the intervention?');axs[1].plot([0,1],[0,1],ls='--',color='grey');axs[1].set(xlabel='Pilot cross-class AUROC',ylabel='Cavity cross-class AUROC',title='Post-fit semantic audit');axs[0].legend(fontsize=6);fig.savefig(folder/'self_influence.svg',metadata={'Creator':'Group 23'});plt.close(fig)
+        if x is not None and y is not None:axs[2].scatter(x,y);axs[2].annotate(b,(x,y),xytext=offsets.get(b,(4,4)),textcoords='offset points',fontsize=7,arrowprops={'arrowstyle':'-','lw':.4,'color':'0.4'})
+    axs[2].plot([0,1],[0,1],ls='--',color='grey');axs[2].set(xlabel='Pilot cross-class AUROC',ylabel='Cavity cross-class AUROC',title='Post-fit semantic audit');fig.savefig(folder/'self_influence.svg',metadata={'Creator':'Group 23'});plt.close(fig)
 
 
 def build(config,root,output):

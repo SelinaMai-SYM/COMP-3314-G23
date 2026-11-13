@@ -10,7 +10,7 @@ The inputs are the eight unchanged, retrospectively selected round-two report co
 | `R3_E1_V3_SELECTIVE_TUBE` | `R3_E1_V3_CAVITY` |
 | `R3_E5_V2_SELECTIVE_GUARD` | `R3_E5_V2_CAVITY` |
 
-[Method and proofs](method_design.md) · [Protocol](experiment_protocol.md) · [Novelty audit](novelty_audit.md) · [Excluded candidates](rejected_candidates.md) · [Results](../../results/extension_round3/summary.md)
+[Method and proofs](method_design.md) · [Protocol](experiment_protocol.md) · [Novelty audit](novelty_audit.md) · [Excluded candidates](rejected_candidates.md) · [Results](../../results/extension_round3/summary.md) · [Scientific interpretation](interpretation.md)
 
 ## Installation and inputs
 

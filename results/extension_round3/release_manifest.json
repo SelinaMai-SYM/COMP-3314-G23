@@ -1,0 +1,48 @@
+{
+  "compressed_sha256": "392980c5626e0a74bc36df12f06d3dd2b73684dbb8f7a7ee4254e66e3378a765",
+  "counts": {
+    "finite": 352,
+    "metrics": 704,
+    "primary_total": 168,
+    "qualified_primary": 153,
+    "trials": 35200
+  },
+  "files": {
+    "benchmarks/AR.md": "131d161abbef0a3cae5bbf574618fab1d219a7ebd5450d19b952cf4cc99dac6a",
+    "benchmarks/BinAlpha.md": "7034d8bfa7fb1fd5e6381a15963587068f79208721c660f6f171bca9d342878a",
+    "benchmarks/JAFFE.md": "bd2f80d5164a179d51561df5b0a97c716f00d0e7fc72d127ffd579208d90aa49",
+    "benchmarks/MSRA50.md": "c98a29f98611b38a0c90c29b590345a2f8ae524bcdbccace0bdd27d9993b0add",
+    "benchmarks/ORL.md": "b5838932228ec0a66310bc74e754c147cda2fba513aad60232b694d91a4a7379",
+    "benchmarks/UMIST.md": "5c703f07046d53a14005b08a8f276a2ca1e1694357fd7b35d99c90c772e0747a",
+    "benchmarks/USPS.md": "27db6d72577618a86efbe1dc6378055ed56939c90e918ef512f44fb63bd3ed87",
+    "benchmarks/YaleB.md": "a8e923cb3bc19f3c05ba5edbacc9c0a515d0ed0133118a81c70a50700a4930ee",
+    "contribution_verdict.md": "9ab8e660e00c5d2064f125479be6f310126b2c787dc2bd737f3e1e8e8bd43c35",
+    "coverage.csv": "967032996662d73fe7ea240a9c30c22670c719c0f921d97451f329c8d32c46f7",
+    "experiment_log.md": "46df3bda3cc04fccbb907922a4507d370fe002f819452249c7fb842798ee143b",
+    "figures/movement_anchor_generated_acc.svg": "cbc3fcfce4630e1b9e64ad1be2c2e60dacb4a6732226c64f1f0c35398d3dc860",
+    "figures/movement_anchor_generated_nmi.svg": "8b4f3d0bbd82bf9e48a2467dfc1f48be5b5af45cd48f8e3695409b41905c2427",
+    "figures/movement_native_acc.svg": "edbfd7d86090c46f800e8a7ae5fd832a9778306807e20c1482d71c8417f2582f",
+    "figures/movement_native_nmi.svg": "35791de7c149922a3d013ad076a72a40fb1a627e9b76149cde366c45a8ea7107",
+    "figures/self_influence.svg": "02503d2ebda622705f8f5d0fc2033ecca265b60ddbe2202a2d4b2985c5465c5a",
+    "macro_differences.csv": "352e3e29598b777ae3da780e8264ffd2c886e7058282fc14418b3409a0c4420d",
+    "mechanism_diagnostics.csv": "4a538b3637b4fb3cf136e053a522361cec5b311f1bd8ec513e1fdbfa2632652d",
+    "native_path_costs.csv": "754ef6b2724bff46653d7869eb91c164d828b98f23f4e582abf048a984e36f26",
+    "paired_differences.csv": "225caa23b8eab95622de7267ea8fa360dddc17e1b94c5ae445dd3610caa11add",
+    "primary_metrics.csv": "f10e624fa5447436573ce7b5e0cfe7ae939102c4e11bbe506a0d6ee5e74cc15b",
+    "resource_usage.csv": "1e3b2aa3da96b8899307c31b6fcd18c32de8884b144a57d036955897860b7445",
+    "scalar_records.json.gz": "392980c5626e0a74bc36df12f06d3dd2b73684dbb8f7a7ee4254e66e3378a765",
+    "secondary_metrics.csv": "4c1cd3e00ff67213b0a7b07b7625d7010446daf33b98f15f68a4cefec73e05f7",
+    "summary.md": "b5ce77b6d9bbac5cb123942619681936b7d6082530ab9fcee438a5d163510f09",
+    "trials.csv.gz": "5e134e4ceddba1cf687a80741c17576889b3476f2253a53999b917d045aef24a"
+  },
+  "numerical_freeze_sha256": "d565c831d9cc37bf3b9842cdedce06aa6404aafbcb49de10bbfb29f8f9156366",
+  "records": "scalar_records.json.gz",
+  "schema": "ssc-round3-release-v1",
+  "source_fingerprint": "921b65fa7eede217d3e070cd984f160c27d2096cfb09dace07e44494be6b56a6",
+  "trials": {
+    "compressed_sha256": "5e134e4ceddba1cf687a80741c17576889b3476f2253a53999b917d045aef24a",
+    "path": "trials.csv.gz",
+    "uncompressed_sha256": "112f3a2966ce3d18db50a09f188f41338cb739399620b8709b7ef9a7642e1bc1"
+  },
+  "uncompressed_sha256": "dd3157f661f3f65814b2da503abd5f5293cc2ae1bbd06a006f476b7755f86a50"
+}

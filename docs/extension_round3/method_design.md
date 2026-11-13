@@ -2,9 +2,17 @@
 
 The preceding study found small conditional changes against movement-matched quadratic SSC: E1_v2 changed ACC/NMI by +0.179/−0.057 percentage points on seven qualified pairs; E5 changed them by +0.116/+0.070. E5 reduced triangle slack while retaining more within-label variation on six of seven comparable cohorts. The primary E6 constraint was inactive. Earlier E2/E3 mechanism gates failed. These observations motivate a discriminator for individual edges, rather than additional global constraints. They do not establish erroneous edges as the cause of every failure.
 
+## Donor and contribution scope
+
+The donor is statistical influence correction: [Wang et al., ICML 2018](https://proceedings.mlr.press/v80/wang18m.html) use leverage-adjusted residuals in approximate leave-one-out regression. The inspected donor implementation contains residual/(1−leverage) calculations; no donor code is copied or required at runtime. The [source audit](novelty_audit.md) identifies the exact commit and files.
+
+Rank-one inversion, quadratic smoothing, graph total variation, relative tubes and triangle-slack guards are inherited tools. This project specifies an exact deleted-edge pilot score, a fixed weighted-rank allocation and three alternative SSC insertion points, then tests them against the corresponding plain-pilot interventions. The algebra alone provides no clustering guarantee or absolute novelty claim.
+
 ## Fixed geometry and evidence
 
 H is the frozen n×K anchor; each positive undirected W0 edge appears once, lexicographically. B has entries +1 and −1; weights remain outside B. Let L=Bᵀdiag(w)B, S=‖H−mean(H)‖F, τ=1/median of positive weighted degrees, M=I+τL, and Z=M⁻¹H. The pilot Z is never a substitute for the fitted rounding matrix G.
+
+H is finite float64 and W0 is the fixed symmetric nonnegative graph. Normalized movement uses S>0; constant anchors or an empty positive-edge support are identity cases, retained as inactive or unmatched rather than assigned artificial movement. Labels enter only the terminal evaluator.
 
 For edge b and a=τw, set r=bᵀM⁻¹b and ℓ=ar. With A=M−abbᵀ≽I, t=bᵀA⁻¹b≤‖b‖²=2. Sherman–Morrison gives ℓ=at/(1+at), 0≤ℓ<1, and 1−ℓ=1/(1+at)≥1/(1+2a). Applying the same identity to H gives bᵀZ^(−e)=bᵀZ/(1−ℓ). Thus the evidence is s=‖bᵀZ‖²/(1−ℓ)². This is exact deletion of one pilot edge with τ fixed. It is not an unbiased risk estimate, statistical independence, or a probability that an edge is wrong.
 
@@ -17,6 +25,8 @@ Controls use uncorrected pilot squared length, anchor squared length, leverage a
 All objectives have fidelity ½‖G−H‖². No candidate combines interventions. λ multiplies a single undirected edge sum; it is distinct from historical gamma.
 
 **Graph:** w′=w(1−0.2u), ranks weighted by w. Total mass is 0.9Σw, each ratio is at least 0.8, support/components are unchanged and 0.8L≼L′≼L. A uniform rank gives 0.9W0: the exact control uses λ′=λQ/0.9 and the same QSSC solution. An exact rescaling is not an additional optimization result.
+
+The mass identity follows from Σwu=½Σw. For any x, xᵀL′x=Σw′(bᵀx)² lies between 0.8Σw(bᵀx)² and Σw(bᵀx)², proving the Loewner bounds. Strictly positive edge factors preserve support and connected components.
 
 **Tube:** a0=‖BH‖, ranks weighted by wa0 on positive a0, η=⅛+¼u, a=ηa0. Zero-length edges receive η=¼. The penalty is λΣw max(‖BG‖−a,0), with Σwa=¼Σwa0. For ‖q_e‖≤λw_e,
 

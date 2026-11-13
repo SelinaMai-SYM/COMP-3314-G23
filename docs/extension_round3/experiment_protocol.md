@@ -24,6 +24,8 @@ Before label access, the additional 200,000-iteration guard was replaced by a no
 
 Resource totals measure additional execution in this round, including failed attempts. Reused round-two references and warm states have earlier generation costs recorded in that study; these totals are not a comparison of cold-start method runtimes.
 
+The native ledger is the additive cost source. Shared evidence CPU is repeated as metadata on multiple diagnostic rows, and path counters are cumulative across movement targets; neither field should be summed across those rows. Exact graph-rescaling aliases reuse the same matrix rather than represent another fitted model.
+
 ## Numerical execution amendment 003
 
 Strictly positive products w×anchor length can underflow before weighted ranking. Float64 log-domain sums now implement the same ranks in that case; no edge is dropped or objective weight changed. Unrepresentable raw masses retain their finite log values. Roundoff corrections to ranks are at most 10⁻¹² and recorded; the weighted-budget tolerance is unchanged. All previously stored allocations were checked for bit identity. The two pre-fit failures and their charges are retained. See [amendment 003](../../configs/extension_round3/amendments/003.json).

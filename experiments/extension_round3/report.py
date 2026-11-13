@@ -192,9 +192,13 @@ def make_plots(metrics,mechanisms,folder):
             for ax,b in zip(axs.ravel(),ORDER):
                 for method in ['QSSC',*CANDIDATES]:
                     rows=sorted([r for r in metrics if r['benchmark']==b and r['method']==method and r['tau_multiplier']==1 and r['panel']==panel],key=lambda r:r['movement'] or 0.)
-                    if rows:ax.plot([r['movement'] for r in rows],[r[metric+'_mean'] for r in rows],marker='o',label=method)
+                    if rows:
+                        line,=ax.plot([r['movement'] for r in rows],[r[metric+'_mean'] for r in rows],linewidth=.8,alpha=.7,label=method)
+                        for qualified,marker in [(True,'o'),(False,'x')]:
+                            points=[r for r in rows if r['qualified']==qualified]
+                            ax.scatter([r['movement'] for r in points],[r[metric+'_mean'] for r in points],marker=marker,color=line.get_color(),s=20)
                 ax.set(title=b,xlabel='Actual movement',ylabel=metric.upper()+' (%)')
-            handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (finite outputs; eligibility in tables)');fig.savefig(folder/f'movement_{panel}_{metric}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
+            handles,labels=axs.ravel()[0].get_legend_handles_labels();fig.legend(handles,labels,loc='outside lower center',ncol=4,fontsize=7);fig.suptitle('Fixed movement response: '+panel+' (dots: qualified; ×: descriptive only)');fig.savefig(folder/f'movement_{panel}_{metric}.svg',metadata={'Creator':'Group 23'});plt.close(fig)
     fig,axs=plt.subplots(1,2,figsize=(10,4),layout='constrained')
     for method,label in [('R3_E7_CAVITY','Graph / guard: mass w'),('R3_E1_V3_CAVITY','Tube: mass w × anchor length')]:
         rows=[r for r in mechanisms if r['method']==method and r['rho']==.1 and r['tau_multiplier']==1.]

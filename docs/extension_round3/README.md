@@ -80,6 +80,10 @@ python -m experiments.extension_verification.resources \
 
 The archive includes an inventory with content hashes. Mutable resource accounting is supplied in a final separate receipt so an active reservation is never represented as completed accounting. Restore that receipt when replaying resource totals. The data and numerical archive remain outside Git; the public scalar release reconstructs the tables independently.
 
+The [archive receipt](../../results/extension_round3/artifact_receipt.json) identifies the verified external archive and compressed public inventory. Full recovery verified 78,056 files, followed by an independent saved-ORL certificate replay. The [acceptance record](../../results/extension_round3/acceptance.json) identifies the exact tested commit: a new checkout in a path containing spaces, an isolated environment, 14 mathematical/resource checks, all three scalar rebuilds, panel/alias consistency and corrupt-input rejection. Later publication metadata does not change the numerical source or scientific tables.
+
+The public resource snapshot includes completed native job costs and conservative administrative charges. A separately identified 300-second upper envelope covers final publication, remote-checkout validation and temporary-environment cleanup; it is not a measured method runtime. The final actual publication receipt is retained externally with the closed ledger.
+
 Verify and recover into a fresh directory, keeping the original fitting clock:
 
 ```bash

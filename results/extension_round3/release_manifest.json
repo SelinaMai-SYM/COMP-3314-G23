@@ -1,5 +1,5 @@
 {
-  "compressed_sha256": "392980c5626e0a74bc36df12f06d3dd2b73684dbb8f7a7ee4254e66e3378a765",
+  "compressed_sha256": "466bd0b90c3879ec99c754e5298a1d9cf8870192af86ca616dd758fdd85576fb",
   "counts": {
     "finite": 352,
     "metrics": 704,
@@ -8,6 +8,9 @@
     "trials": 35200
   },
   "files": {
+    "acceptance.json": "9ae915c8356f6cbc7767ef08f17ed3a11037837f37e8bbf431ce48fb40798475",
+    "artifact_inventory.json.gz": "65f93d7ae25825103bf17322e6f47cd8158a8e074269a96b4fddd7bef72fe84a",
+    "artifact_receipt.json": "165206943195f5811bedf89c1e455e142f47787b6cad6c58462fb2d2df6f274f",
     "benchmarks/AR.md": "131d161abbef0a3cae5bbf574618fab1d219a7ebd5450d19b952cf4cc99dac6a",
     "benchmarks/BinAlpha.md": "7034d8bfa7fb1fd5e6381a15963587068f79208721c660f6f171bca9d342878a",
     "benchmarks/JAFFE.md": "bd2f80d5164a179d51561df5b0a97c716f00d0e7fc72d127ffd579208d90aa49",
@@ -29,10 +32,10 @@
     "native_path_costs.csv": "754ef6b2724bff46653d7869eb91c164d828b98f23f4e582abf048a984e36f26",
     "paired_differences.csv": "225caa23b8eab95622de7267ea8fa360dddc17e1b94c5ae445dd3610caa11add",
     "primary_metrics.csv": "f10e624fa5447436573ce7b5e0cfe7ae939102c4e11bbe506a0d6ee5e74cc15b",
-    "resource_usage.csv": "1e3b2aa3da96b8899307c31b6fcd18c32de8884b144a57d036955897860b7445",
-    "scalar_records.json.gz": "392980c5626e0a74bc36df12f06d3dd2b73684dbb8f7a7ee4254e66e3378a765",
+    "resource_usage.csv": "4c07273fbbc323b4310cf930685be3964b85ec378abb540ed1d0ed9f6822ff84",
+    "scalar_records.json.gz": "466bd0b90c3879ec99c754e5298a1d9cf8870192af86ca616dd758fdd85576fb",
     "secondary_metrics.csv": "4c1cd3e00ff67213b0a7b07b7625d7010446daf33b98f15f68a4cefec73e05f7",
-    "summary.md": "b5ce77b6d9bbac5cb123942619681936b7d6082530ab9fcee438a5d163510f09",
+    "summary.md": "0d71871c0ce38271a5a92b47c25096744b637776636c1e12b5cbc01a30243e6c",
     "trials.csv.gz": "5e134e4ceddba1cf687a80741c17576889b3476f2253a53999b917d045aef24a"
   },
   "numerical_freeze_sha256": "d565c831d9cc37bf3b9842cdedce06aa6404aafbcb49de10bbfb29f8f9156366",
@@ -44,5 +47,5 @@
     "path": "trials.csv.gz",
     "uncompressed_sha256": "112f3a2966ce3d18db50a09f188f41338cb739399620b8709b7ef9a7642e1bc1"
   },
-  "uncompressed_sha256": "dd3157f661f3f65814b2da503abd5f5293cc2ae1bbd06a006f476b7755f86a50"
+  "uncompressed_sha256": "fcf3440ad14d61a0795b83373845100e31d514dceab2c03c5cd1c507ddb1bc6f"
 }

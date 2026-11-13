@@ -1,0 +1,37 @@
+{
+  "accounting": "The archive excludes its active command and mutable ledger. Later validation, cleanup and publication accounting is retained in the final external closing receipt and public resource snapshot.",
+  "archive": {
+    "archive_name": "extension-round3-20261113.scientific.tar.gz",
+    "bytes": 9531900679,
+    "inventory_sha256": "cd04524b93ab5fe0fae455d1c2164441b25235a74dcce579b473b452531f2b91",
+    "objects_and_records": 78056,
+    "payload_bytes": 10335152789,
+    "scope": "All retained numerical objects, source snapshots, fixed inputs, predictions, duals, checkpoints and scalar histories plus completed command records; final accounting and later acceptance records supplied separately",
+    "sha256": "fc85ca1a6122d311aa866bc7b3edda8d9dbda742353b47182232a417c9db2758"
+  },
+  "availability": "The restricted numerical archive and final closing receipt are retained externally alongside the independent data root. Raw arrays and provider data are not distributed in Git.",
+  "full_recovery": {
+    "passed": true,
+    "resource_receipt_restored": true,
+    "verified_files": 78056
+  },
+  "independent_recovered_real_certificate": {
+    "G_sha256": "9b1ac97458cce0a430881bf29b57e842be817476cd7079d4f74ec88c55b3b97e",
+    "benchmark": "ORL",
+    "benchmark_refitting": false,
+    "fitting_closed": true,
+    "movement": 0.10039547711657258,
+    "movement_error": 0.0001485214275183374,
+    "no_old_store_required": true,
+    "raw_dual_capacity_violation": 0.0,
+    "recovered_object_replay": true,
+    "relative_gap": 4.304365933465241e-07
+  },
+  "inventory": {
+    "compressed_sha256": "65f93d7ae25825103bf17322e6f47cd8158a8e074269a96b4fddd7bef72fe84a",
+    "path": "artifact_inventory.json.gz",
+    "uncompressed_sha256": "cd04524b93ab5fe0fae455d1c2164441b25235a74dcce579b473b452531f2b91"
+  },
+  "reference_endpoints": 40,
+  "schema": "ssc-round3-artifact-receipt-v1"
+}

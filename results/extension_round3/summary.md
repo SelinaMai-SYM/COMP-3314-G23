@@ -2,7 +2,7 @@
 
 This is conditional development evidence on eight retrospectively selected report cohorts, not an unseen test. Full eight-cohort means are NA whenever an exact contrast lacks any qualified pair. Available-case comparisons with different masks must not be ranked.
 
-There are 352/378 finite declared profiles and 153/168 qualified primary/control profiles, including exact aliases. Charged CPU at this export: 18.214 core-hours. Missing, failed, timed-out and unmatched outputs remain in [coverage.csv](coverage.csv).
+There are 352/378 finite declared profiles and 153/168 qualified primary/control profiles, including exact aliases. Charged CPU at this export: 18.333 core-hours. Missing, failed, timed-out and unmatched outputs remain in [coverage.csv](coverage.csv).
 
 A pre-scoring resource audit identified native path-cap overruns on 2 paths (MSRA50 / R3_E1_V3_SHUFFLE401; YaleB / R3_E1_V3_PILOT). All 4 declared profiles on those paths are conservatively descriptive only, even when their numerical certificate passes. Failed work and overruns remain charged globally. [Native path totals](native_path_costs.csv) · [Recorded deviations and repair](../../docs/extension_round3/experiment_protocol.md#resource-accounting-amendment-005-and-deviations).
 

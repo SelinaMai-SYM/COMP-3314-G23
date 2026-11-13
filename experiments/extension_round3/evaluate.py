@@ -23,6 +23,15 @@ def freeze_outputs(config,root):
     audits={};profiles=[];files={}
     deviation_path=store.root/'resource_protocol_deviations.json'
     deviations=read(deviation_path) if deviation_path.exists() else {'affected_profile_ids':[]}
+    from .run import native_path_cpu
+    planned_rows=queue();lookup={row['id']:row for row in planned_rows};seen_paths=set();native_costs=[]
+    for row in planned_rows:
+        key=(row['benchmark'],row['method'],row['tau_multiplier'])
+        if row['method'] not in registry() or key in seen_paths:continue
+        seen_paths.add(key);used=native_path_cpu(ResourceLedger(root).state(),lookup,row)
+        affected=[q['id'] for q in planned_rows if (q['benchmark'],q['method'],q['tau_multiplier'])==key]
+        if used>1800. and not set(affected)<=set(deviations['affected_profile_ids']):raise ValueError('unrecorded native path-cap overrun; stop before label access')
+        native_costs.append({'benchmark':key[0],'method':key[1],'tau_multiplier':key[2],'native_CPU_seconds':used,'within_path_cap':used<=1800.})
     scheduler={}
     if (store.root/'scheduler_log.jsonl').exists():
         for line in (store.root/'scheduler_log.jsonl').read_text().splitlines():
@@ -85,7 +94,7 @@ def freeze_outputs(config,root):
             files[ref['path']]=ref['sha256']
     files['cohort_lock.json']=digest(store.root/'cohort_lock.json')
     if deviation_path.exists():files['resource_protocol_deviations.json']=digest(deviation_path)
-    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),files=files,qualification=audits,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
+    frozen=dict(schema='ssc-round3-terminal-numeric-freeze-v1',source_fingerprint=lock['source_fingerprint'],protocol_sha256=digest(config),effective_protocol_sha256=identity(spec),files=files,qualification=audits,native_path_cost_audit=native_costs,labels_loaded=False,numerical_work_closed=True,analysis_source_files={str((ROOT/'experiments/extension_round3'/n).relative_to(ROOT)):digest(ROOT/'experiments/extension_round3'/n) for n in ['evaluate.py','report.py','release.py']})
     atomic_json(marker,frozen);return frozen
 
 

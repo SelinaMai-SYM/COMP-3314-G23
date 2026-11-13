@@ -12,6 +12,10 @@ The `extension_v2` branch adds a [movement-controlled extension study](docs/exte
 comparing QSSC with E1_v2 and E4–E6. Its [results](results/extension_round2/summary.md)
 are conditional on retrospectively selected report cohorts and preserve the original report.
 
+The `extension_round3` branch adds an [edge-deletion evidence study](docs/extension_round3/README.md):
+three independent SSC refinements with matched-movement pilot, uniform and shuffled controls.
+Its results remain conditional on the same retrospectively selected cohorts.
+
 ## What the project provides
 
 - An array-based SSC implementation with explicit E8/E13 parameter conventions.

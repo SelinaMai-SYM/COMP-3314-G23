@@ -30,6 +30,7 @@ def freeze_outputs(config,root):
         record=read(p);audit={'qualified':False,'certified':False,'status':record['status']}
         if record.get('result'):
             result=get_arrays(store,record['result']);c=lock['cohorts'][planned['benchmark']];H=store.get(c['objects']['H']);W=store.get(c['objects']['W0'])
+            if result['G'].shape!=H.shape or result['G'].dtype!=np.dtype('float64') or not np.isfinite(result['G']).all():raise ValueError('rounding matrix shape, dtype or finiteness is invalid')
             if planned['method'] in registry() or planned['method']=='UNIFORM_GRAPH_ALIAS':
                 params=get_arrays(store,record.get('parameters',{}))
                 if planned['method'] in registry() and 'parameters' not in record:
@@ -39,7 +40,10 @@ def freeze_outputs(config,root):
                     audit['recovered_parameters']=put_arrays(store,params);audit['recovered_intervention_metadata']=put_arrays(store,meta)
                     audit['recovery_reason']='Restore model identity for a finite point retained after guarded interruption; no new optimization'
                 if planned['method']=='UNIFORM_GRAPH_ALIAS':params={'weights':.9*FusionProblem(H,W,1.).w}
-                P=FusionProblem(H,W,record.get('lambda',record.get('lambda_value')),**params);cert=P.certificate(result['G'],result['q'],result.get('p'))
+                P=FusionProblem(H,W,record.get('lambda',record.get('lambda_value')),**params)
+                for key in ['q','p']:
+                    if result.get(key) is not None and (result[key].shape!=P.h.shape or result[key].dtype!=np.dtype('float64') or not np.isfinite(result[key]).all()):raise ValueError('invalid quadratic dual domain')
+                cert=P.certificate(result['G'],result['q'],result.get('p'))
                 audit.update(certificate=scalar(cert),certified=eligible(cert,planned['rho']),qualified=matched(cert,planned['rho']))
                 if record.get('qualified') and not audit['qualified']:audit['status']='QUALIFICATION_AUDIT_FAILURE'
             elif planned['method']=='SC':
@@ -47,7 +51,10 @@ def freeze_outputs(config,root):
                 audit.update(qualified=True,certified=True)
             elif planned['method']=='SSC_REFERENCE':
                 from method_extension.extension_verification.convex import Problem
-                P=Problem(H,W,c['gamma_effective'],kind='ssc');dual=P.dual(result['q'],result.get('p'));primal=P.primal(result['G']);signed=primal-dual['dual'];relative=signed/max(1.,abs(primal),abs(dual['dual']));cap=max(v for k,v in dual.items() if k.endswith('violation'))
+                P=Problem(H,W,c['gamma_effective'],kind='ssc')
+                if result['q'].shape!=P.anchor_edges.shape or result['q'].dtype!=np.dtype('float64') or not np.isfinite(result['q']).all():raise ValueError('invalid original-SSC edge dual domain')
+                if result.get('p') is not None and result['p'].shape!=(len(P.hinges.anchors),):raise ValueError('invalid original-SSC hinge dual domain')
+                dual=P.dual(result['q'],result.get('p'));primal=P.primal(result['G']);signed=primal-dual['dual'];relative=signed/max(1.,abs(primal),abs(dual['dual']));cap=max(v for k,v in dual.items() if k.endswith('violation'))
                 qualified=bool(signed>=0 and relative<=1e-5 and cap<=1e-8);audit.update(qualified=qualified,certified=qualified,certificate={'primal':primal,'dual':dual['dual'],'signed_gap':signed,'relative_gap':relative,'capacity_residual':cap})
             if not np.isfinite(result['G']).all():raise ValueError('nonfinite rounding output')
             for ref in collect_refs([record,audit]):
@@ -55,6 +62,8 @@ def freeze_outputs(config,root):
                 files[ref['path']]=ref['sha256']
         audits[planned['id']]=audit;profiles.append(record);files[str(p.relative_to(store.root))]=digest(p)
     for p in (store.root/'evidence').glob('*.json'):
+        evidence_record=read(p);cohort=lock['cohorts'][evidence_record['benchmark']]
+        if evidence_record['H_sha256']!=cohort['objects']['H']['sha256'] or evidence_record['W_sha256']!=cohort['objects']['W0']['sha256']:raise ValueError('evidence and frozen geometry identities differ')
         files[str(p.relative_to(store.root))]=digest(p)
         for ref in collect_refs(read(p)):
             if digest(store.root/ref['path'])!=ref['sha256']:raise ValueError('evidence object changed')

@@ -119,3 +119,17 @@ def test_bad_bridge_and_genuine_sparse_bridge_have_the_same_algebra():
     bad_bridge_classes=np.array([0,0,0,1,1,1]);genuine_bridge_classes=np.zeros(6,dtype=int)
     assert bad_bridge_classes[2]!=bad_bridge_classes[3]
     assert genuine_bridge_classes[2]==genuine_bridge_classes[3]
+
+
+def test_reported_leverage_minimum_is_not_clamped_to_zero(tmp_path):
+    from experiments.extension_round3.common import ArtifactStore,put_arrays,atomic_json
+    from experiments.extension_round3.evaluate import mechanisms
+    H=np.array([[0.],[2.]]);W=graph(2,[(0,1,1.)]);store=ArtifactStore(tmp_path)
+    lock={'cohorts':{'toy':{'objects':{'H':store.put(H),'W0':store.put(W)}}}}
+    E=edge_deletion_evidence(H,W,tau_multiplier=5.)
+    atomic_json(tmp_path/'evidence/toy__t5.json',{'result':put_arrays(store,E)})
+    record={'id':'toy','benchmark':'toy','method':'SC','rho':0.,'tau_multiplier':5.}
+    diagnostic=mechanisms(store,lock,record,H,np.array([0,1]))
+    assert diagnostic['leverage_min']==pytest.approx(10/11)
+    assert diagnostic['leverage_max']==pytest.approx(10/11)
+    assert diagnostic['pilot_cross_class_auroc'] is None

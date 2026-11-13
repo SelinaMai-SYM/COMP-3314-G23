@@ -8,7 +8,18 @@ The inputs are the eight unchanged, retrospectively selected round-two report co
 
 ## Installation and inputs
 
-Use Python 3.13 and the recorded dependencies in [requirements.lock.txt](../../configs/extension_round3/requirements.lock.txt): `python -m pip install -r configs/extension_round3/requirements.lock.txt`. The delivered environment and exact package versions are recorded in the scalar release. Keep the independent data root and durable numerical artifact store outside the checkout. Exact round-two input objects are required for the frozen-input replay; they are verified against the committed lock, rather than regenerated with a potentially different spectral basis.
+Use Python 3.13 and the recorded dependencies in [requirements.lock.txt](../../configs/extension_round3/requirements.lock.txt):
+
+```bash
+git clone --single-branch --branch extension_round3 https://github.com/SelinaMai-SYM/COMP-3314-G23.git ssc-round3
+cd ssc-round3
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r configs/extension_round3/requirements.lock.txt
+python -m pip install --no-deps -e .
+```
+
+The delivered environment and exact package versions are recorded in the scalar release. Keep the independent data root and durable numerical artifact store outside the checkout. Exact round-two input objects are required for the frozen-input replay; they are verified against the committed lock, rather than regenerated with a potentially different spectral basis.
 
 Set `DATA_ROOT` to the independent benchmark directory, `ROUND2_STORE` to the recovered round-two numerical store, and `ROUND3_STORE` to a fresh durable directory for this study. Paths containing spaces must be quoted. The following commands preserve the round's 32 core-hour/24 wall-hour clock and shared ledger; resume never resets either limit.
 

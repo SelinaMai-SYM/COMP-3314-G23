@@ -35,6 +35,9 @@ def export_records(config,root):
         # Scalar release contains no matrices, labels or machine paths. Numeric
         # object identities point to the independently recoverable external store.
         p={**q,'status':a['status'] if a['status']=='QUALIFICATION_AUDIT_FAILURE' else r['status'],'qualified':a['qualified'],'certified':a['certified'],'certificate':a.get('certificate',r.get('certificate',{})),'lambda':r.get('lambda',r.get('lambda_value')),'source_fingerprint':r.get('source_fingerprint'),'finite':bool(r.get('result')),'result_identity':identity(r['result']) if r.get('result') else None,'G_object':r.get('result',{}).get('G'),'path_CPU_seconds':r.get('path_CPU_seconds'),'distinct_lambdas':r.get('distinct_lambdas'),'evaluation':{k:v for k,v in e.items() if k not in ['panels']}}
+        attempts=sorted((store.root/'command_jobs').glob('r3-'+q['id']+'-*'),key=lambda path:int(path.name.rsplit('-',1)[-1]))
+        job=read(attempts[-1]/'status.json') if attempts and (attempts[-1]/'status.json').exists() else {}
+        p.update(execution_status=job.get('status'),execution_stop_reason=job.get('stop_reason'),execution_run_id=job.get('run_id'),execution_CPU_seconds=job.get('CPU_seconds'),failure_type=r.get('failure_type'))
         p['panels']={panel:{k:v for k,v in value.items() if k!='scientific_objects'} for panel,value in e.get('panels',{}).items()};profiles.append(p)
     from sklearn.metrics import adjusted_rand_score
     planned_lookup={(q['benchmark'],q['method'],q['rho'],q['tau_multiplier']):q for q in queue()}
@@ -79,7 +82,7 @@ def contrast_controls(method):
 def derive(records):
     metrics=[];coverage=[];mechanisms=[];trials=[];lookup={}
     for p in records['profiles']:
-        cert=p['certificate'];coverage.append({**{k:p[k] for k in ['id','benchmark','method','rho','stage','tau_multiplier','status','finite','qualified','certified','lambda','path_CPU_seconds','distinct_lambdas']},'rounding_complete':p['evaluation'].get('complete',False)})
+        cert=p['certificate'];coverage.append({**{k:p[k] for k in ['id','benchmark','method','rho','stage','tau_multiplier','status','finite','qualified','certified','lambda','path_CPU_seconds','distinct_lambdas']},**{k:p.get(k) for k in ['execution_status','execution_stop_reason','execution_run_id','execution_CPU_seconds','failure_type']},'rounding_complete':p['evaluation'].get('complete',False)})
         if p['evaluation'].get('mechanism'):mechanisms.append(p['evaluation']['mechanism'])
         for panel,data in p['panels'].items():
             for t in data['trials']:trials.append(dict(id=p['id'],benchmark=p['benchmark'],method=p['method'],rho=p['rho'],tau_multiplier=p['tau_multiplier'],panel=panel,**t))
@@ -150,8 +153,8 @@ def render(records,output,*,plots=True):
     for r in coverage:
         matching=[m for m in metrics if m['id']==r['id']]
         if matching:
-            for m in matching:lines.append(f"- `{r['id']}` / {m['panel']} / seeds 0–49: ACC {m['acc_mean']:.6f} ± {m['acc_sd']:.6f}, NMI {m['nmi_mean']:.6f} ± {m['nmi_sd']:.6f}; {r['status']}; qualified={r['qualified']}. Interpretation: {'eligible conditional comparison' if r['qualified'] else 'descriptive only; finite reference or numerical/movement limit'}. Next decision: retain in the registered contrast, without reselection.\n")
-        else:lines.append(f"- `{r['id']}`: {r['status']}. No complete paired panel. Next decision: report unavailable; no score substituted.\n")
+            for m in matching:lines.append(f"- `{r['id']}` / {m['panel']} / seeds 0–49: ACC {m['acc_mean']:.6f} ± {m['acc_sd']:.6f}, NMI {m['nmi_mean']:.6f} ± {m['nmi_sd']:.6f}; {r['status']}; qualified={r['qualified']}; guarded stop={r.get('execution_stop_reason')}. Interpretation: {'eligible conditional comparison' if r['qualified'] else 'descriptive only; finite reference or numerical/movement limit'}. Next decision: retain in the registered contrast, without reselection.\n")
+        else:lines.append(f"- `{r['id']}`: {r['status']}; guarded stop={r.get('execution_stop_reason')}. No complete paired panel. Next decision: report unavailable; no score substituted.\n")
     # Existing log entries are immutable; a new export may only append.
     new=''.join(lines)
     if not log.exists():log.write_text(new)

@@ -4,13 +4,47 @@ import argparse,hashlib,tarfile
 from .common import *
 
 
-def archive(root,output):
+def retain_reference_closure(store,input_artifact_root=None):
+    """Keep exact legacy warm/reference states as available objects, not hashes."""
+    imported=[];fallback=ArtifactStore(input_artifact_root) if input_artifact_root else None
+    if fallback is not None:
+        expected=read(ROOT/'configs/extension_round2/cohort_lock.json')
+        for p in sorted((fallback.root/'endpoints').glob('*.json')):
+            r=read(p)
+            if r['method'] not in ['historical','SSC_reference','QSSC','E1_v2','E5']:continue
+            if r['method'] in ['QSSC','E1_v2','E5'] and r['rho']!=.1:continue
+            c=expected['cohorts'][r['benchmark']]
+            if r['H_sha256']!=c['objects']['H']['sha256'] or r['W_sha256']!=c['objects']['W0']['sha256'] or r['source_fingerprint']!=expected['source_fingerprint'] or r['protocol_sha256']!=expected['protocol_sha256']:raise ValueError('legacy input/source/protocol identity differs')
+            target=store.root/'endpoints'/p.name
+            if target.exists() and digest(target)!=digest(p):raise ValueError('legacy endpoint collision')
+            if not target.exists():atomic_json(target,r)
+            imported.append({'path':str(target.relative_to(store.root)),'sha256':digest(target),'benchmark':r['benchmark'],'method':r['method'],'rho':r['rho']})
+    pending=list((store.root/'objects').glob('*/*.json'))+list((store.root/'endpoints').glob('*.json'));seen=set();linked=0
+    while pending:
+        p=pending.pop();key=str(p.relative_to(store.root))
+        if key in seen:continue
+        seen.add(key)
+        for ref in collect_refs(read(p)):
+            rel=Path(ref['path'])
+            if rel.is_absolute() or '..' in rel.parts or not rel.parts or rel.parts[0]!='objects':raise ValueError('invalid provenance reference path')
+            target=store.root/rel
+            if not target.exists():
+                if fallback is None or not (fallback.root/rel).exists():raise FileNotFoundError('unavailable provenance object: '+str(rel))
+                link_ref(fallback,store,ref);linked+=1
+            if digest(target)!=ref['sha256']:raise ValueError('provenance object hash mismatch')
+            if ref['kind']=='json':pending.append(target)
+    receipt={'schema':'ssc-round3-reference-closure-v1','legacy_endpoints':imported,'linked_objects':linked,'qualification':'Exact prior numerical reference/warm states; their old qualification flags are not adopted for new fits. Current results remain in profiles/.'}
+    atomic_json(store.root/'imported_reference_manifest.json',receipt);return receipt
+
+
+def archive(root,output,input_artifact_root=None):
     root=Path(root).resolve();output=Path(output).resolve()
     if not (root/'numerical_freeze.json').exists() or read(root/'terminal_evaluation.json')['stage']!='TERMINAL_SCORING_COMPLETE':raise RuntimeError('scientific closure is not complete')
     if output.exists():raise FileExistsError('archive destination must be fresh')
+    retain_reference_closure(ArtifactStore(root),input_artifact_root)
     # Mutable resource/command accounting has a separately saved final receipt.
-    folders=['objects','profiles','evaluations','evidence','paths','evidence_checkpoints','attempts']
-    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json']
+    folders=['objects','endpoints','profiles','evaluations','evidence','paths','evidence_checkpoints','attempts']
+    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json','imported_reference_manifest.json']
     files=sorted({p for folder in folders for p in (root/folder).rglob('*') if p.is_file()}|{root/n for n in names if (root/n).exists()})
     inventory=[]
     for p in files:
@@ -44,5 +78,5 @@ def validate(path):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--artifact-root',required=True);p.add_argument('--output',required=True);a=p.parse_args();print(json.dumps(archive(a.artifact_root,a.output)))
+    p=argparse.ArgumentParser();p.add_argument('--artifact-root',required=True);p.add_argument('--output',required=True);p.add_argument('--input-artifact-root');a=p.parse_args();print(json.dumps(archive(a.artifact_root,a.output,a.input_artifact_root)))
 if __name__=='__main__':main()

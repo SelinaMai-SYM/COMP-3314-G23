@@ -45,3 +45,20 @@ python -m experiments.extension_round3 rebuild \
 The destination must be fresh. Compressed and uncompressed record hashes, unique profile keys and complete seed sets are checked before writing. Tables are reconstructed in a temporary directory and compared with the release hashes before replacement. Restricted data and matrices are not needed for this command.
 
 Numerical arrays, feasible duals, incremental histories, initial row indices, predictions and checkpoints live in a content-addressed external store. Input objects are retained by verified hardlinks where possible, so independent replay does not depend on another checkout. See the final artifact inventory for recovery identities and the scope of retained objects.
+
+## Durable numerical archive
+
+The final archive retains the exact input objects and imported original reference/warm states, including every referenced numerical object. Its `endpoints/` directory is a provider view of those earlier states; new results remain separately in `profiles/`. Thus a recovered round-three archive can itself serve as `ROUND2_STORE` for a separately authorized fresh replay. It does not require an old checkout. Reference qualification flags are independently recomputed, not inherited.
+
+Archive creation and streaming verification run under the existing resource ledger:
+
+```bash
+python -m experiments.extension_verification.resources \
+  --artifact-root "$ROUND3_STORE" --run-id numerical-archive \
+  --cpu-limit 1200 --wall-limit 2400 --phase aggregation --cwd . -- \
+  python -m experiments.extension_round3.artifacts \
+    --artifact-root "$ROUND3_STORE" --input-artifact-root "$ROUND2_STORE" \
+    --output "$ROUND3_ARCHIVE"
+```
+
+The archive includes an inventory with content hashes. Mutable resource accounting is supplied in a final separate receipt so an active reservation is never represented as completed accounting. Restore that receipt when replaying resource totals. The data and numerical archive remain outside Git; the public scalar release reconstructs the tables independently.

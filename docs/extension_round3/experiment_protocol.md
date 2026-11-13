@@ -27,3 +27,7 @@ Resource totals measure additional execution in this round, including failed att
 ## Numerical execution amendment 003
 
 Strictly positive products w×anchor length can underflow before weighted ranking. Float64 log-domain sums now implement the same ranks in that case; no edge is dropped or objective weight changed. Unrepresentable raw masses retain their finite log values. Roundoff corrections to ranks are at most 10⁻¹² and recorded; the weighted-budget tolerance is unchanged. All previously stored allocations were checked for bit identity. The two pre-fit failures and their charges are retained. See [amendment 003](../../configs/extension_round3/amendments/003.json).
+
+## Scheduling amendment 004
+
+Secondary targets share each method/cohort's lambda path and cumulative caps. A completion barrier separates their existing target blocks, preserving the registered queue order while preventing concurrent writes to one path. Each block has unique paths. This orchestration repair preceded all secondary fits and terminal scores; no numerical source, completed output, parameter or resource limit changed. See [amendment 004](../../configs/extension_round3/amendments/004.json).

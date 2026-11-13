@@ -1,0 +1,29 @@
+{
+  "changed_orchestration_files": {
+    "experiments/extension_round3/run.py": {
+      "after": "ceeb61df9fdb9b7dbf0c3c4bb7b54e92054cca7b7abad9fd90edcd7bac4778b5",
+      "before": "756b469a45884c7af453167c9d35a1bb91378f1ba85a714a31080d6dc5fbce91"
+    }
+  },
+  "effective_overrides": {},
+  "id": "004",
+  "labels_loaded": false,
+  "reason": "Secondary movement targets share a calibration path, continuation state and cumulative caps. Add a target-block completion barrier so different targets cannot update that path concurrently. The frozen queue order is unchanged.",
+  "timing": "Before any secondary fit and before terminal label access; active primary-control workers allowed to finish unchanged.",
+  "unchanged": [
+    "all numerical source files and source fingerprint",
+    "inputs, objectives and parameter grid",
+    "certificates and movement gates",
+    "all completed outputs",
+    "original cumulative CPU limits and clock"
+  ],
+  "validation": {
+    "ordered_secondary_blocks": [
+      72,
+      72,
+      16
+    ],
+    "queue_order_unchanged": true,
+    "unique_paths_within_each_block": true
+  }
+}

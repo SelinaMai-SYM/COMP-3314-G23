@@ -27,7 +27,12 @@ def execute(root,config,input_root,*,phase='all',resume=False):
         stages.append(fitting([r for r in q if r['stage']==2]));stages.append(fitting([r for r in q if r['stage']==3]))
     if phase in ['all','controls']:
         stages.append(fitting([r for r in q if r['stage']==4 and r['method']!='UNIFORM_GRAPH_ALIAS']));stages.append(fitting([r for r in q if r['method']=='UNIFORM_GRAPH_ALIAS']))
-    if phase in ['all','secondary']:stages.append(fitting([r for r in q if r['stage']==5]))
+    if phase in ['all','secondary']:
+        # Targets of one method/cohort share the same lambda path and caps.
+        # Finish each target block before another can read/write that path.
+        secondary=[r for r in q if r['stage']==5]
+        for rho in dict.fromkeys(r['rho'] for r in secondary):
+            stages.append(fitting([r for r in secondary if r['rho']==rho]))
     def launch(task):
         assert_fitting_open(root);is_evidence=task['kind']=='evidence';limit=3600. if is_evidence else 1800.
         if not is_evidence and task['method'] in ['SC','HISTORICAL_IRLS','SSC_REFERENCE','UNIFORM_GRAPH_ALIAS']:limit=180.

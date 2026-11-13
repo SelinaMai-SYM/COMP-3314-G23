@@ -44,8 +44,12 @@ def archive(root,output,input_artifact_root=None):
     retain_reference_closure(ArtifactStore(root),input_artifact_root)
     # Mutable resource/command accounting has a separately saved final receipt.
     folders=['objects','endpoints','profiles','evaluations','evidence','paths','evidence_checkpoints','attempts']
-    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json','imported_reference_manifest.json']
+    names=['cohort_lock.json','numerical_freeze.json','terminal_evaluation.json','clock.json','optional_gate.json','reference_identity_audit.json','imported_reference_manifest.json','scheduler_log.jsonl']
     files=sorted({p for folder in folders for p in (root/folder).rglob('*') if p.is_file()}|{root/n for n in names if (root/n).exists()})
+    for entry in ResourceLedger(root).state()['entries']:
+        completed=root/'command_jobs'/entry['run_id']
+        if completed.exists():files.extend(p for p in completed.rglob('*') if p.is_file())
+    files=sorted(set(files))
     inventory=[]
     for p in files:
         sha=digest(p)
@@ -56,7 +60,7 @@ def archive(root,output,input_artifact_root=None):
     with tarfile.open(output,'w:gz',compresslevel=1) as tar:
         tar.add(root/'artifact_inventory.json',arcname='artifact_inventory.json')
         for p in files:tar.add(p,arcname=str(p.relative_to(root)),recursive=False)
-    receipt={'archive_name':output.name,'sha256':digest(output),'bytes':output.stat().st_size,'objects_and_records':len(inventory),'inventory_sha256':digest(root/'artifact_inventory.json'),'payload_bytes':sum(r['bytes'] for r in inventory),'scope':'All retained numerical objects, source snapshots, fixed inputs, predictions, duals, checkpoints and scalar histories; final resource ledger supplied separately'}
+    receipt={'archive_name':output.name,'sha256':digest(output),'bytes':output.stat().st_size,'objects_and_records':len(inventory),'inventory_sha256':digest(root/'artifact_inventory.json'),'payload_bytes':sum(r['bytes'] for r in inventory),'scope':'All retained numerical objects, source snapshots, fixed inputs, predictions, duals, checkpoints and scalar histories plus completed command records; final accounting and later acceptance records supplied separately'}
     validate(output);atomic_json(root/'archive_receipt.json',receipt);return receipt
 
 
@@ -77,6 +81,43 @@ def validate(path):
     return {'verified_files':len(seen)}
 
 
+def recover(archive_path,output,ledger_path=None):
+    """Validate before extraction; commit only a complete, verified fresh tree."""
+    import os,shutil,tempfile
+    output=Path(output).resolve()
+    if output.exists():raise FileExistsError('recovery destination must be fresh')
+    output.parent.mkdir(parents=True,exist_ok=True)
+    with tarfile.open(archive_path,'r:gz') as tar:
+        first=tar.next()
+        if first is None or first.name!='artifact_inventory.json':raise ValueError('missing inventory')
+        inventory=json.loads(tar.extractfile(first).read())
+    if shutil.disk_usage(output.parent).free<inventory['bytes']+5*2**30:raise OSError('insufficient space for verified recovery plus 5 GiB headroom')
+    validate(archive_path);temp=Path(tempfile.mkdtemp(prefix='.round3-recovery-',dir=output.parent))
+    try:
+        with tarfile.open(archive_path,'r:gz') as tar:tar.extractall(temp,filter='data')
+        for entry in inventory['files']:
+            p=temp/entry['path']
+            if digest(p)!=entry['sha256'] or p.stat().st_size!=entry['bytes']:raise ValueError('recovered object differs')
+        if ledger_path:
+            state=read(ledger_path)
+            if state.get('active'):raise ValueError('resource receipt must contain closed reservations')
+            shutil.copyfile(ledger_path,temp/'resource_ledger.json')
+        os.replace(temp,output)
+    except BaseException:
+        shutil.rmtree(temp,ignore_errors=True);raise
+    return {'verified_files':len(inventory['files']),'resource_receipt_restored':bool(ledger_path)}
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--artifact-root',required=True);p.add_argument('--output',required=True);p.add_argument('--input-artifact-root');a=p.parse_args();print(json.dumps(archive(a.artifact_root,a.output,a.input_artifact_root)))
+    p=argparse.ArgumentParser();p.add_argument('command',nargs='?',choices=['archive','recover','validate'],default='archive');p.add_argument('--artifact-root');p.add_argument('--output');p.add_argument('--input-artifact-root');p.add_argument('--archive');p.add_argument('--ledger');a=p.parse_args()
+    if a.command=='archive':
+        if not a.artifact_root or not a.output:p.error('archive requires --artifact-root and --output')
+        result=archive(a.artifact_root,a.output,a.input_artifact_root)
+    elif a.command=='recover':
+        if not a.archive or not a.output:p.error('recover requires --archive and --output')
+        result=recover(a.archive,a.output,a.ledger)
+    else:
+        if not a.archive:p.error('validate requires --archive')
+        result=validate(a.archive)
+    print(json.dumps(result))
 if __name__=='__main__':main()

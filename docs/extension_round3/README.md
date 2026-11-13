@@ -62,3 +62,13 @@ python -m experiments.extension_verification.resources \
 ```
 
 The archive includes an inventory with content hashes. Mutable resource accounting is supplied in a final separate receipt so an active reservation is never represented as completed accounting. Restore that receipt when replaying resource totals. The data and numerical archive remain outside Git; the public scalar release reconstructs the tables independently.
+
+Verify and recover into a fresh directory, keeping the original fitting clock:
+
+```bash
+python -m experiments.extension_round3.artifacts recover \
+  --archive "$ROUND3_ARCHIVE" --output "$ROUND3_RECOVERED" \
+  --ledger "$ROUND3_FINAL_LEDGER"
+```
+
+Recovery validates every member before extraction and every extracted payload before replacement. It requires five GiB of additional disk headroom. Completed command records are archived; final archive/accounting and later acceptance records are included in the closing receipt. The preserved numeric-freeze marker continues to prohibit benchmark fitting after terminal evaluation.

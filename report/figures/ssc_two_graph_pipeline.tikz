@@ -1,4 +1,4 @@
-% Editable scientific diagram: frozen inputs and alternative refinements.
+% Frozen edge-deletion evidence and three independent quadratic refinements.
 \definecolor{embeddingblue}{RGB}{38,88,137}
 \definecolor{fusionorange}{RGB}{167,83,17}
 \definecolor{outputgreen}{RGB}{56,104,82}
@@ -9,31 +9,39 @@
  green/.style={box,draw=outputgreen,fill=outputgreen!5},
  arrow/.style={-{Latex[length=1.9mm]},line width=.7pt},
  tag/.style={fill=white,inner sep=2pt,font=\fontsize{8}{9}\selectfont,align=center}]
-\node[box,text width=1.1cm] (x) at (.8,0) {$X$\\Features};
-\node[blue,text width=2.05cm] (a) at (3.2,0) {$A_0$\\Input-space graph};
-\node[blue,text width=2.55cm] (f) at (7,0) {$F_0$\\Spectral\\coordinates};
-\node[orange,text width=2.35cm] (w) at (11.8,0) {$W_0$\\Fusion graph from $F_0$};
+\node[box,text width=1.35cm] (x) at (.65,0) {$X$\\Features};
+\node[blue,text width=1.65cm] (a) at (2.9,0) {$A_0$\\Input graph};
+\node[blue,text width=1.75cm] (f) at (5.45,0) {$F_0$\\Spectral\\coordinates};
+\node[blue,text width=1.9cm] (h) at (8.45,0) {$H$\\Fixed anchor};
+\node[orange,text width=2.3cm] (w) at (11.8,0) {$W_0$\\Fusion graph from $H$};
 \draw[arrow] (x)--(a);
-\draw[arrow,draw=embeddingblue] (a)--node[tag,above=2pt] {$L_{A_0}$}(f);
-\draw[arrow,draw=fusionorange] (f)--node[tag,above] {Build once}(w);
-\node[blue,text width=4.5cm] (h) at (7,-1.6) {Frozen anchor\\$H=F_0$ or $U=\operatorname{rowunit}(F_0)$};
-\draw[arrow,draw=embeddingblue] (f.south)--(h.north);
-\draw[draw=embeddingblue,line width=.7pt] (h.south)--(7,-2.5)--(1.38,-2.5)--(12.38,-2.5);
-\draw[draw=fusionorange,line width=.7pt] (w.east)--(13.8,0)--(13.8,-2.7)--(1.62,-2.7);
-\node[box,text width=2.55cm,minimum height=1.15cm] (ssc) at (1.5,-3.8) {Ordinary SSC\\Linear fusion};
-\node[box,text width=2.55cm,minimum height=1.15cm] (e1) at (5,-3.8) {E1\\Relative edge\\tolerance};
-\node[box,text width=2.55cm,minimum height=1.15cm] (e2) at (8.5,-3.8) {E2\\Fixed tangent\\constraints};
-\node[box,text width=2.55cm,minimum height=1.15cm] (e3) at (12.5,-3.8) {E3\\Frozen neighbor\\hinges};
-\foreach \v/\xx in {ssc/1.5,e1/5,e2/8.5,e3/12.5}{
- \draw[arrow,draw=embeddingblue] (\xx-.12,-2.5)--([xshift=-3.4pt]\v.north);
- \draw[arrow,draw=fusionorange] (\xx+.12,-2.7)--([xshift=3.4pt]\v.north);
- \draw[draw=outputgreen,line width=.7pt] (\v.south)--(\xx,-4.8);
+\draw[arrow,draw=embeddingblue] (a)--(f);
+\draw[arrow,draw=embeddingblue] (f)--node[tag,above] {Prep.}(h);
+\draw[arrow,draw=fusionorange] (h)--node[tag,above] {Build}(w);
+\node[orange,text width=6cm,minimum height=.85cm] (pilot) at (7,-1.7)
+ {Frozen ridge pilot on $H,W_0$\\Exact edge-deletion scores $s_e$};
+\draw[arrow,draw=embeddingblue] (h.south)--(8.45,-.8)--(5,-.8)--([xshift=-2cm]pilot.north);
+\draw[arrow,draw=fusionorange] (w.south)--(11.8,-.8)--(9,-.8)--([xshift=2cm]pilot.north);
+\draw[line width=.7pt] (pilot.south)--(7,-2.65);
+\draw[line width=.7pt] (2.4,-2.65)--(11.6,-2.65);
+\node[tag] at (9,-2.4) {Shared $H,W_0,s$};
+\node[orange,text width=3.15cm,minimum height=1.05cm] (e7) at (2.4,-3.55)
+ {\textbf{E7}\\Graph weights\\$W_0\to W'$};
+\node[orange,text width=3.15cm,minimum height=1.05cm] (e1) at (7,-3.55)
+ {\textbf{E1\_v3}\\Edge tolerances\\$a_e$};
+\node[orange,text width=3.15cm,minimum height=1.05cm] (e5) at (11.6,-3.55)
+ {\textbf{E5\_v2}\\Triangle-slack guards\\$\alpha_e$};
+\foreach \v/\xx in {e7/2.4,e1/7,e5/11.6}{
+ \draw[arrow] (\xx,-2.65)--(\v.north);
+ \draw[draw=outputgreen,line width=.7pt] (\v.south)--(\xx,-4.65);
 }
-\draw[draw=outputgreen,line width=.7pt] (1.5,-4.8)--(12.5,-4.8);
-\node[tag] at (6.8,-4.55) {One objective per run};
-\node[green,text width=4.9cm] (g) at (7,-5.65) {$G$ and declared rounding input $Q$\\Original: $Q=G$\\Angular: $Q=\operatorname{rowunit}(G)$};
-\draw[arrow,draw=outputgreen] (7,-4.8)--(g.north);
-\node[green,text width=2.3cm] (km) at (12,-5.65) {K-means\\Cluster assignments};
+\draw[draw=outputgreen,line width=.7pt] (2.4,-4.65)--(11.6,-4.65);
+\node[tag] at (4.7,-4.45) {One objective per run};
+\node[green,text width=4.3cm,minimum height=.8cm] (g) at (7,-5.5)
+ {$G$ ($Q=G$)\\Refined coordinates};
+\draw[arrow,draw=outputgreen] (7,-4.65)--(g.north);
+\node[green,text width=3.45cm,minimum height=.8cm] (km) at (11.6,-5.5)
+ {K-means $\to$ labels\\Native / anchor starts};
 \draw[arrow,draw=outputgreen] (g)--(km);
-\node[tag,text width=3.9cm,anchor=east] at (4.15,-5.65) {Matched SC clusters $H$\\under the same panel};
+\node[tag,text width=3.8cm] at (2.4,-5.5) {Controls: SC($H$), QSSC};
 \end{tikzpicture}

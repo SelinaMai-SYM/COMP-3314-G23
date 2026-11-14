@@ -24,7 +24,9 @@ spectral representation \(F\), where \(K\) is the benchmark class count. A
 second graph \(W\), constructed from \(F\), controls shrinkage. Matched spectral
 clustering (SC) clusters \(F\); SSC clusters the refined representation \(G\).
 The [editable method diagram](../report/figures/ssc_two_graph_pipeline.tikz)
-illustrates these roles.
+places these two graph roles in the edge-deletion comparison: cohort preprocessing
+maps the raw spectral coordinates to a frozen anchor H, then W0 is built from H.
+E7, E1_v3 and E5_v2 use shared pilot evidence in three independent refinements.
 
 The standard graph uses five nearest neighbors, zero diagonal and union
 symmetrization. Gaussian weights are

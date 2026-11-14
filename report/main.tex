@@ -24,7 +24,7 @@ The factor~2 implements the paper's ordered-pair sum. Its stationary IRLS system
 
 \begin{figure}[ht]
 \centering\includegraphics[width=\linewidth]{figures/ssc_two_graph_pipeline.pdf}
-\caption{The input graph $A_0$ determines $F_0$; the fusion graph $W_0$ is built once from $F_0$. Each refinement uses frozen inputs and produces its own $G$. The pictured unsquared E1--E3 comparison uses original and angular rounding matrices $Q$. The movement-controlled quadratic comparisons use $G$ directly.}
+\caption{Cohort preprocessing maps spectral coordinates $F_0$ to anchor $H$, from which $W_0$ is built. A frozen ridge pilot supplies shared edge-deletion scores to three independent quadratic refinements: E7 changes graph weights, E1\_v3 allocates edge tolerances, and E5\_v2 allocates triangle-slack guards. Each $G$ is rounded directly with native or anchor-generated starts.}
 \label{fig:two}
 \end{figure}
 

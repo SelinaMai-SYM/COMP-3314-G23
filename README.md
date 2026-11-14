@@ -16,11 +16,11 @@ $$
 
 The library exposes both the E8 stationary system and the printed E13 system; E13 at nominal γ corresponds to E8 at γ/2. Historical IRLS results and primal–dual certified results have separate records.
 
-The retained refinements examine relative stopping distances, tangent constraints, relative-neighbor corrections, and movement-controlled quadratic fusion. The edge-deletion study uses one frozen ridge-pilot signal at three alternative locations: **E7** changes graph weights, **E1_v3** allocates edge tolerances, and **E5_v2** allocates triangle-slack guards. These methods are evaluated independently. Their objectives and controls are described in the [method guide](docs/methods.md) and [edge-deletion formulation](docs/extension_round3/method_design.md).
+The three selected quadratic refinements use one frozen ridge-pilot signal at alternative locations: **E7** changes graph weights, **E1_v3** allocates edge tolerances, and **E5_v2** allocates triangle-slack guards. These methods are evaluated independently. Their objectives and controls are described in the [method guide](docs/methods.md) and [edge-deletion formulation](docs/extension_round3/method_design.md).
 
-The diagram illustrates the two graphs and the unsquared-fidelity E1–E3 comparisons:
+The diagram shows the two graphs, the shared frozen edge-deletion evidence, and the three independent E7, E1_v3 and E5_v2 refinements. Each method produces its own G, which is clustered directly using native or anchor-generated starts:
 
-![Two-graph SSC pipeline and independent unsquared refinements](docs/figures/ssc_two_graph_pipeline.svg)
+![Two-graph SSC pipeline with shared edge-deletion evidence and independent E7, E1_v3 and E5_v2 refinements](docs/figures/ssc_two_graph_pipeline.svg)
 
 ## Installation
 

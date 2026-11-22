@@ -5,10 +5,9 @@
 - [Data setup](data.md): providers, local paths, source identities and sampling.
 - [Results](results.md): reconstruction, critical findings and controlled comparisons.
 - [Reproducibility](reproducibility.md): examples, no-data rebuilding and declared fitting commands.
-- [Report evidence](report_evidence.md): presentation/report claims mapped to exact records and filters.
+- [Evidence map](report_evidence.md): displayed findings mapped to exact records and filters.
 - [Development summary](development_summary.md): the earlier E1–E7 evidence displayed in the presentation.
 - [Mathematical foundations](theory.md): fixed-graph objectives, certificates and numerical limits.
-- [Report sources and section preview](../report/README.md): final supplied Sections 3–7 and appendix.
 
 ## Selected methods
 

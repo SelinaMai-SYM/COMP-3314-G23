@@ -73,5 +73,4 @@ support no-data table rebuilding. Historical selected arrays were not retained;
 a newly generated representation cannot certify one of those historical fits.
 Current provider-derived numerical stores have integrity inventories but no
 public download endpoint. Their availability is separate from scalar
-reconstruction. See [data](data.md), [reproducibility](reproducibility.md) and
-[report sources](../report/README.md).
+reconstruction. See [data](data.md) and [reproducibility](reproducibility.md).

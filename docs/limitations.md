@@ -22,8 +22,6 @@ reliable general improvement from edge-deletion correction.
 Restricted provider archives and separately held numerical arrays are not
 public downloads. Committed scalar records suffice to regenerate displayed
 tables; exact numerical replay additionally requires the specified input objects.
-The final Overleaf abstract and Sections 1–2 are not included in the report
-section preview. A complete-report page count requires their integration.
 
 Detailed filters and qualifications are given in the
 [evidence map](report_evidence.md), [protocol](experimental_protocol.md) and

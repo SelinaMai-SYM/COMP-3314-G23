@@ -51,6 +51,7 @@ Set the data and output roots in the shell commands below. Fresh fitting records
 ```bash
 DATA_ROOT="$PWD/local/data"
 ARTIFACT_ROOT="$PWD/local/artifacts/quadratic"
+python experiments/submission_refresh/reporting.py --root .
 python -m experiments.extension_round2.run --phase freeze --config configs/extension_round2/protocol.yaml --data-root "$DATA_ROOT" --artifact-root "$ARTIFACT_ROOT" --resume
 python -m experiments.extension_round2.run --phase verify --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
 python -m experiments.extension_round2.run --phase primary --all-benchmarks --resume --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
@@ -58,6 +59,10 @@ python -m experiments.extension_round2.run --phase secondary --all-benchmarks --
 python -m experiments.extension_round2.run --phase controls --resume --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
 python -m experiments.extension_round2.report --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT" --output local/quadratic-results
 ```
+
+The table export creates local-only LaTeX projections used for ancillary audit
+hashes during new input registration. These generated files are excluded from
+Git. Existing frozen-input replay uses its saved lock and numerical objects.
 
 The executable [protocol](../../configs/extension_round2/protocol.yaml) fixes two single-thread workers, a 24-hour wall deadline, 600 CPU seconds per fit/QP/auxiliary attempt, 1800 CPU seconds per complete main method/cohort path, and 600 CPU seconds per control target. All eight primary/reference attempts precede secondary paths and controls. Unmatched, inactive, uncertified, failed and unrun endpoints remain distinct. Resource and coverage tables report actual execution rather than equating a declared matrix with completed work.
 

@@ -61,8 +61,7 @@ python -m pip install --no-deps -e .
 ```
 
 The lock file pins the scientific dependencies used for the saved results.
-CVXPY is needed only for independent small convex reference checks; TeX Live
-and BibTeX are needed for [report compilation](report/README.md).
+CVXPY is needed only for independent small convex reference checks.
 
 ## Quick start
 
@@ -230,16 +229,11 @@ below the separately fitted SSC reference. See the [objectives](docs/extension_r
 ├── results/                 # Compact measurements, trials and derived tables
 ├── examples/ssc_blobs.py     # Standalone generated-data example
 ├── docs/                    # Methods, data, protocols and evidence mapping
-├── report/                  # Sections 3–7, appendix and integration instructions
 ├── tests/                   # Algorithm, metric and reproducibility checks
 └── environment/             # Dependency versions
 ```
 
-[Documentation index](docs/README.md) · [Report sections and preview](report/README.md)
-
-The report sources contain the supplied final Sections 3–7 and appendix. The
-complete PDF is exported from Overleaf after integration with its final abstract
-and Sections 1–2; the repository preview contains only the supplied sections.
+[Documentation index](docs/README.md)
 
 ## Citation and license
 
@@ -250,7 +244,7 @@ Chang, X., Nie, F., Ma, Z., Yang, Y. and Zhou, X. (2015).
 The edge-deletion formulation uses a rank-one inverse identity and a
 leverage-adjustment idea discussed by [Wang et al., *Approximate Leave-One-Out
 for Fast Parameter Tuning in High Dimensions*, ICML 2018](https://proceedings.mlr.press/v80/wang18m.html).
-The [bibliography](report/references.bib), [CITATION.cff](CITATION.cff) and
-[third-party notices](NOTICE.md) record attribution for the implementation and
+[CITATION.cff](CITATION.cff) and the [third-party notices](NOTICE.md) record
+attribution for the implementation and
 baselines. Project code is [MIT licensed](LICENSE). Third-party code and datasets
 retain their own terms, including the retained ClustPy BSD-3-Clause notice.

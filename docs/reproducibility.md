@@ -96,24 +96,19 @@ python -m experiments.extension_round3.artifacts recover \
 
 The archive includes the earlier input-provider endpoints and their recursive numerical objects. It can supply the `--input-artifact-root` required for a fresh edge-deletion replay. Recovery verifies each member before replacing the destination. Scalar table reproduction remains independent of archive availability. Cumulative fitting ledgers and numerical-freeze markers remain attached to recovered studies.
 
-## Figures, report and numerical checks
+## Generated displays and numerical checks
 
 ```bash
 python -m scripts.result_tables --update-readme \
   --historical-output docs/reconstruction_tables.md \
   --development-output docs/development_summary.md
-make -C report preview
 python -m pytest -q tests/test_ssc.py tests/test_shared_spectral_embedding.py \
   tests/test_metrics.py tests/extension_round3 tests/extension_round2 \
   tests/extension_verification tests/next_round
 ```
 
 The exact slide 6.2 PNG is retained in `docs/figures/`; no redraw is required.
-The [report guide](../report/README.md) describes the supplied Sections 3–7,
-deferred appendix and final Overleaf front-matter integration. The distributed
-section preview corresponds to these sources. It is not the complete report.
-
-The selected table and reconstruction displays use the same committed records
-as the report's scientific tables. The historical seed inventory also retains
+The selected table and reconstruction displays are generated from committed
+scientific measurements. The historical seed inventory also retains
 `results/v3_theory/all_trials.csv` to verify that confirmation seeds are unused;
 this historical record is not selected-extension evidence.

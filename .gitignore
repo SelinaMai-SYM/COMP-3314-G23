@@ -18,14 +18,6 @@ data/raw/
 # and AT&T/ORL restrict republication of the images.
 benchmarks/*/data/**
 !benchmarks/*/data/.gitignore
-report/*.aux
-report/*.log
-report/*.out
-report/*.fls
-report/*.fdb_latexmk
-report/*.synctex.gz
-report/*.blg
-report/*.bbl
 *.zip
 # Strict-repro embedding arrays are large; keep configs/metrics/status only.
 runs/strict_repro/**/*.npy
@@ -56,7 +48,6 @@ tmp/
 # Local model artifacts and publication checks
 runs/
 artifacts/
-report/main.pdf
 results/**/language_inventory.json
 results/**/external_link_checks.json
 results/**/link_audit.csv
@@ -72,14 +63,6 @@ htmlcov/
 *.trace
 *.tmp
 *.bak
-report/*.toc
-report/*.nav
-report/*.snm
-report/*.vrb
 
-# Full report front matter is supplied by the final Overleaf project.
-report/frontmatter.tex
-
-# Optional regenerated historical report projections remain local.
-/report/tables/*
-!/report/tables/refresh_main.tex
+# Local report sources and PDFs are not distributed with the code.
+/report/

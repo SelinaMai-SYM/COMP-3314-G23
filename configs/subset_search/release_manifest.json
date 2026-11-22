@@ -346,9 +346,10 @@
       "sha256": "c59bcc80bd5d457b96b631812e1316f3ba1aad6b86d5dc6aea383fe8fbe36856"
     },
     "matched_sc": {
-      "bytes": 77373333,
-      "path": "results/subset_search/matched_sc_summary.csv",
-      "sha256": "d2a5ed3dafdfba09844ab1905466ff25d3b0be99ad8eca559e1acaa5915bccde"
+      "bytes": 11303249,
+      "path": "results/subset_search/matched_sc_summary.csv.gz",
+      "sha256": "e6ae07943b3b506138320e610a52f60b99545dc48da329f28c7e28ce2ee63476",
+      "uncompressed_sha256": "d2a5ed3dafdfba09844ab1905466ff25d3b0be99ad8eca559e1acaa5915bccde"
     },
     "matched_sc_contrasts": {
       "bytes": 8996,

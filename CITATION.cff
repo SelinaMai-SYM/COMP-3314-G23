@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Please cite the original SSC paper when using this implementation; see README.md."
+type: software
+title: "Spectral Shrunk Clustering: Implementation and Experimental Study"
+authors:
+  - family-names: Han
+    given-names: Jiale
+  - family-names: Lu
+    given-names: Sinan
+  - family-names: Mahatharadol
+    given-names: Vie
+  - family-names: Mai
+    given-names: Sheung Ying
+repository-code: https://github.com/SelinaMai-SYM/COMP-3314-G23
+url: https://github.com/SelinaMai-SYM/COMP-3314-G23
+license: MIT

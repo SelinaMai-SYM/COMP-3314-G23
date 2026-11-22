@@ -1,151 +1,77 @@
-# Results and interpretation
+# Results
 
-The central question is whether SSC shrinkage improves the final partition
-beyond an appropriately matched spectral-clustering baseline. The results
-separate historical paper reconstruction, source/subset sensitivity, numerical
-optimization and graph interventions. The [methods](methods.md) and
-[experimental protocol](experimental_protocol.md) define each comparison.
+ACC and geometric NMI are reported in percent. Differences are percentage
+points. Each mean and sample SD uses one complete configuration and its 50
+rounding seeds. A native-objective-selected assignment is a separate endpoint
+with no across-start SD.
 
-ACC and NMI are percentages. Mean ± sample SD describes the same complete
-50-seed configuration; differences are percentage points. A native-best
-assignment is a different endpoint and has no across-run SD. Retrospective
-paper matching and capability selection use labels after fitting; they are
-neither unsupervised selection rules nor unseen-data estimates.
+## Reconstruction and critical findings
 
-## Paper reconstruction and source sensitivity
+The [generated reconstruction tables](reconstruction_tables.md) contain the
+fixed best-SSE SC/SSC diagnostic, eight joint mean matches and initialization
+contrasts. The [evidence map](report_evidence.md) specifies their exact filters.
+The original paper's reported SSC−SC macro difference is +9.99/+3.61 pp;
+against SPLS it is +2.09/+2.14 pp. YaleB has +15.0 ACC but −8.8 NMI pp.
 
-All 72 method/benchmark targets in the paper's two tables have verified ACC/NMI
-means and SDs. Historical scalar measurements retain their source and method
-restrictions. New baseline or subset measurements do not silently replace an
-unavailable historical method. Joint matching minimizes maximum ACC/NMI
-discrepancy, then their mean discrepancy, using one complete configuration.
+The search completed 74,436 configuration pairs on 2,482 inputs: 2,480 complete
+30-setting grids and two partial grids. AR, ORL, UMIST and BinAlpha match both
+published means within 1.37 pp. Matching is retrospective, based on labels and
+paper targets within declared eligibility pools. It does not resolve historical
+membership. Five selected historical IRLS fits reached the cap; none has a gap
+certificate. The [matched-SC contrasts](../results/subset_search/matched_sc_contrasts.csv)
+show positive changes in both means on six selected reconstructions, with
+regressions on AR and YaleB.
 
-The [historical selection comparison](../results/submission_refresh/historical_selection_changes.csv) preserves the former ACC-only choices and both metrics from each configuration. Joint mean-endpoint matching changes 16 historical method/benchmark choices, including three SSC choices; it changes display selection rather than the underlying trials.
+Fixed-setting discrepancies also occur in the eight baselines before SSC
+refinement. The [historical records](../results/v3_reproduction/all_configurations.csv)
+and [baseline tables](../results/submission_refresh/per_benchmark/) preserve
+PCA/SPLS configurations, LDA failures and the separately named ridge LDA→SC
+adaptation. The presentation uses native best-of-50 for comparable fixed
+objectives and mean/sample-SD for the stated LDA endpoints.
 
-The [combined benchmark tables](../results/submission_refresh/per_benchmark/)
-contain historical and newly measured endpoints for
-[AR](../results/submission_refresh/per_benchmark/AR.md),
-[JAFFE](../results/submission_refresh/per_benchmark/JAFFE.md),
-[ORL](../results/submission_refresh/per_benchmark/ORL.md),
-[UMIST](../results/submission_refresh/per_benchmark/UMIST.md),
-[BinAlpha](../results/submission_refresh/per_benchmark/BinAlpha.md),
-[MSRA50](../results/submission_refresh/per_benchmark/MSRA50.md),
-[YaleB](../results/submission_refresh/per_benchmark/YaleB.md) and
-[USPS](../results/submission_refresh/per_benchmark/USPS.md).
+On the original ORL records, RANDOM→greedy++ changes mean SSC ACC from
+57.135 to 78.335; SC changes from 56.180 to 78.325. This is distinct from later
+subset-search outputs. Refinement W has cross-class weight fractions 4.6% on
+ORL and 70.2% on YaleB, according to the original Y0 W diagnostics. These are
+post-fit label associations, separate from upstream graph A.
 
-<!-- BEGIN SUBSET RESULTS -->
+## Selected extensions
 
-### Final source/subset results
+The [complete selected comparison](../results/extension_round3/summary.md)
+retains both panels, controls, measured exclusions and sample SD. The README
+primary table is generated from `macro_differences.csv` at rho=0.10 and
+`tau_multiplier=1`, native panel. Both controls use identical paired masks.
 
-The frozen release contains 74,436 complete physical SSC configurations and 3,721,800 scalar rounding trials. The catalogue also retains aliases and unevaluated hypotheses; a complete configuration requires all 50 declared seeds. Source/subset coverage is recorded in the [configuration coverage](../results/subset_search/execution_coverage.public.v1.csv) and [fixed-protocol distributions](../results/subset_search/fixed_protocol_family_distributions.csv).
+| Method | Qualified mask | Native vs QSSC (ACC/NMI pp) | Native vs plain pilot | Common indices vs plain pilot |
+|---|---|---:|---:|---:|
+| E7 | All eight | −0.022/+0.013 | +0.004/−0.001 | −0.001/−0.001 |
+| E1_v3 | Excludes MSRA50, YaleB | +0.157/+0.358 | −0.123/−0.068 | +0.014/+0.009 |
+| E5_v2 | Excludes MSRA50 | +0.235/+0.204 | +0.061/+0.045 | +0.004/+0.003 |
 
-The [locked matches](../results/subset_search/closest_matches.csv) keep compatible and adapted pools, mean endpoints and native-best endpoints separate. Additional rounding completed for 18 of 18 locked winners, using the first unused 50-seed block at or above 1,000,000 without reselection. See [confirmation](../results/subset_search/rounding_confirmation.csv). These comparisons measure conditional rounding stability on the same fixed samples and representations; they do not identify historical membership or estimate unseen-data generalization.
+E1_v3 MSRA50/YaleB and E5_v2 MSRA50 are finite and certified, but their
+movements are 0.027871/0.070613 and 0.075561, outside the primary match.
+Their evaluations remain in the eight-cohort table. The MSRA50 unsquared SSC
+reference is finite but uncertified. Full eight-cohort matched macros for E1_v3
+and E5_v2 remain unavailable.
 
-<!-- END SUBSET RESULTS -->
+The correction improves cross-class-edge AUROC only on ORL
+(0.838901→0.839508) and USPS (0.752293→0.752378). E5_v2 lowers weighted triangle
+slack to 20.4–40.9% of QSSC on its seven qualified cohorts, while shrinking
+both within-class and between-class variation. UMIST improves +1.287/+1.432 pp
+over QSSC, but is −4.475/−2.729 pp below the independently fitted SSC reference.
+The controlled results support limited local gains rather than a reliable
+general improvement attributable to edge-deletion correction.
 
-Exact AR/UMIST/BinAlpha historical membership remains unresolved. The available
-1,799-row MSRA matrix is native 16×16, whereas the paper describes 32×32 input.
-YaleB cropped2414 and DengCai32 are distinct source sensitivities of one
-benchmark. A closer table match does not resolve these identities.
+The [development summary](development_summary.md) retains the earlier E1–E7
+values displayed in slide 6.1, including the E2/E3 failed gates. It is distinct
+from the selected extension comparison.
 
-## Numerical accuracy does not imply clustering gains
+## Source availability
 
-On one fixed current USPS F/W pair, the additional gamma-1 solve reaches a
-relative primal–dual gap of 9.9996e-6 and satisfies the capacity tolerance. Its
-ACC/NMI are 65.564 ± 2.520 / 80.228 ± 2.343, versus same-F SC's
-65.597 ± 1.867 / 80.315 ± 2.128: changes of −0.033/−0.086 pp. Accurate solution
-of this convex target therefore supplies no useful clustering improvement in
-this setting.
-
-The gamma-1000 numerical attempt remains uncertified at gap 0.342. Its fused
-saved point has poor clustering, but this does not prove that the mathematical
-optimum collapses. Historical-style IRLS completion, iterate stopping,
-primal–dual certification and output identity remain separate. See the
-[USPS numerical evaluations](../results/submission_refresh/usps_solver_evaluation.csv),
-[additional-solve audit](../results/submission_refresh/usps_continuation_audit.csv)
-and [additional-solve evaluations](../results/submission_refresh/usps_continuation_evaluation.csv).
-
-## Representation and graph mechanisms
-
-For fixed F, certified gamma-1 SSC changes ACC/NMI by +0.155/+0.014 pp on ORL
-and −0.270/−0.276 pp on YaleB. The shrinkage is active in both cases. Cross-class
-edges carry 4.6% of ORL W mass but 70.2% of YaleB W mass. YaleB's edge-length
-AUROC is 0.380, so erroneous edges are not generally identified by being longer.
-Upstream A contamination and shrinkage W contamination are different quantities.
-
-Row normalization alone increases SC ACC by 1.850/4.016 pp on ORL/YaleB.
-Angular-graph shrinkage at gamma 1 adds only 0.170/0.314 pp above that stronger
-U-SC baseline. This distinguishes representation changes from extra shrinkage
-benefits.
-
-At the fixed 15%-addition/gamma-1000 oracle comparison, ORL completion improves
-ACC by 10.415 pp over deletion and 24.863 pp over fixed oracle deletion plus
-mean blind additions, while satisfying the NMI, fragmentation and conditional
-interval criteria. YaleB's large raw gains remain unqualified because the
-required solves are uncertified. The oracle uses labels and diagnoses graph
-information; it is not an unsupervised algorithm result. Full evidence appears
-in the [graph results](../results/submission_refresh/extension_results.csv),
-[casebooks](../results/submission_refresh/casebook_summary.csv) and
-[fixed-criterion record](../results/submission_refresh/extension_gate.json).
-
-
-## Baseline and negative findings
-
-The pinned ClustPy implementation makes no successful LDA update in any of the
-50 ORL/JAFFE fits, producing explicit PCA–K-means degeneracies. This is an
-implementation observation, not a theorem about LDA-Kmeans. Existing-project
-limits 100 and 300 return identical per-seed ACC/NMI on all five tested sources.
-The separately named ridge LDA-to-SC adaptation improves both means over raw
-and PCA-p0 SC only on YaleB, and has capped YaleB fits. It does not recover the
-paper's exact historical LDA-SC method.
-
-Paired SLPS k=5/k=7 effects depend on source and alpha; k=7 lowers both means
-for every primary ORL setting. Native-resolution MSRA PCA/LLC comparisons retain
-all rows. The dense LLC eigensolver is identified separately from the
-unsuccessful sparse ARPACK attempt. See the
-[baseline comparison](../results/submission_refresh/baseline_diagnostics.csv).
-
-Historical capped-fusion examples show damage avoidance and initialization
-dependence, rather than a new penalty or general clustering improvement.
-The five-point global objectives are 8 for linear fusion and 3 for capped
-fusion; the local capped algorithm can retain objective 8 from the SSC start.
-In an easy imbalanced-bridge synthetic setting, several controls avoid damage
-while SC is already perfect. The [report appendix](../report/Group_23.pdf)
-gives the mathematical scope and prior-art citations.
-
-The supported conclusion is conditional: solver precision, representation
-normalization, graph structure and rounding must be assessed separately.
-Neither numerical closeness to a paper nor an optimal refinement objective
-establishes a better clustering method. See [scientific limitations](limitations.md).
-
-## Independent convex refinement studies
-
-The [complete registered results](extension_verification_results.md) contain
-130 configurations and 6,500 rounding trials in the current scientific context.
-E1 has all eight inputs in both panels: 15 primary outputs are certified and the
-MSRA original-panel output is uncertified. The matched ordinary-SSC MSRA control
-is also uncertified. The original-panel macro therefore remains unavailable;
-the complete qualified angular macro is −0.008 ACC / +0.008 NMI percentage points
-against matched SSC, and −0.040 / +0.013 against interpolation.
-
-E2's inward-energy and directional-intervention conditions fail on both fixed
-development datasets. E3 has adequate comparison counts, but correct semantic
-relations reach only 22.45% on ORL and 44.83% on YaleB, below the locked 60% gate.
-Their benchmark matrices retain explicit gate-failure states with no fabricated
-scores. All sixteen origin-scaling checks preserve every rounded SC partition.
-
-A deterministic confirmation under a separate infrastructure identity reproduces
-all 130 G/Q matrices, center arrays and prediction arrays, with zero difference
-in per-trial ACC, NMI and SSE. The repeated seeds are not pooled as extra trials.
-See [context confirmation](../results/extension_verification/context_confirmation.json),
-[status](../results/extension_verification/status.csv),
-[paired contrasts](../results/extension_verification/contrasts.csv) and
-[protocol coverage](../results/extension_verification/design_coverage.csv).
-
-## Movement-controlled and selective refinements
-
-The quadratic comparison uses movement 0.05. E1_v2 changes available-case ACC/NMI by +0.179/−0.057 pp and E5 by +0.116/+0.070 pp over QSSC, both on seven qualified pairs. The singular-floor E6 primary constraint is inactive. [Complete results](../results/extension_round2/summary.md) retain graph-band controls, sensitivities and missing endpoints.
-
-The edge-deletion comparison uses movement 0.10 on the same retrospectively selected cohorts. There are 352 finite profiles with both 50-seed panels (35,200 trials), from 378 declared profiles. Primary/control qualification is 153/168 including eight exact aliases; 101/160 sensitivities qualify. The 26 optional sensitivities were gated out because primary qualification was incomplete.
-
-The README's [generated native-primary table](../README.md#results) compares each candidate with QSSC and its plain-pilot counterpart on one common qualified mask. E7 has eight pairs, E1_v3 six and E5_v2 seven. E7's complete native comparison changes ACC/NMI by −0.022/+0.013 pp against QSSC and +0.004/−0.001 pp against plain-pilot weighting. The partial tube comparison loses −0.123/−0.068 pp to plain-pilot tubes; the guard gives a partial +0.061/+0.045 pp. Shuffled controls and per-cohort regressions prevent a consistent attribution to self-influence correction. Both complete panels and all contrasts are in the [tables](../results/extension_round3/summary.md) and [interpretation](extension_round3/interpretation.md).
+Committed scalar records, complete seed measurements and sample manifests
+support no-data table rebuilding. Historical selected arrays were not retained;
+a newly generated representation cannot certify one of those historical fits.
+Current provider-derived numerical stores have integrity inventories but no
+public download endpoint. Their availability is separate from scalar
+reconstruction. See [data](data.md), [reproducibility](reproducibility.md) and
+[report sources](../report/README.md).

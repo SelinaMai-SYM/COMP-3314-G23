@@ -1,21 +1,19 @@
-.PHONY: all clean figures refresh-tables
-PYTHON ?= python3
-REPORT_DATE ?= 2026-11-13
+.PHONY: all preview clean
 all: Group_23.pdf
-refresh-tables:
-	cd .. && "$(PYTHON)" -m scripts.result_tables --report-output report/tables/edge_deletion_main.tex
-	"$(PYTHON)" ../experiments/submission_refresh/reporting.py --root .. --date $(REPORT_DATE)
-	cd .. && "$(PYTHON)" -m experiments.extension_verification.reporting --release-manifest configs/extension_verification/release_manifest.json
-figures:
-	bash ../scripts/build_ssc_pipeline.sh
-figures/ssc_two_graph_pipeline.pdf: figures/ssc_two_graph_pipeline.tikz figures/ssc_two_graph_pipeline.tex ../scripts/build_ssc_pipeline.sh
-	bash ../scripts/build_ssc_pipeline.sh
-main.pdf: refresh-tables figures/ssc_two_graph_pipeline.pdf main.tex references.bib neurips_2026.sty $(wildcard tables/*.tex)
+preview: sections_preview.pdf
+
+sections_preview.pdf: sections_preview.tex preamble.tex sec3_experimental_evidence.tex sec4-7.tex references.bib neurips_2026.sty ../docs/figures/extension_pipeline_ppt_6_2.png
+	pdflatex -interaction=nonstopmode -halt-on-error sections_preview.tex
+	bibtex sections_preview
+	pdflatex -interaction=nonstopmode -halt-on-error sections_preview.tex
+	pdflatex -interaction=nonstopmode -halt-on-error sections_preview.tex
+
+Group_23.pdf: main.tex preamble.tex frontmatter.tex sec3_experimental_evidence.tex sec4-7.tex references.bib neurips_2026.sty ../docs/figures/extension_pipeline_ppt_6_2.png
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex
 	bibtex main
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex
 	pdflatex -interaction=nonstopmode -halt-on-error main.tex
-Group_23.pdf: main.pdf
 	cp main.pdf Group_23.pdf
+
 clean:
-	rm -f main.aux main.log main.out main.bbl main.blg main.fdb_latexmk main.fls
+	rm -f main.aux main.log main.out main.bbl main.blg main.fdb_latexmk main.fls main.pdf sections_preview.aux sections_preview.log sections_preview.out sections_preview.bbl sections_preview.blg sections_preview.fdb_latexmk sections_preview.fls

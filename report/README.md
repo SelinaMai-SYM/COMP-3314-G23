@@ -1,53 +1,50 @@
-# Project report
-
-**Spectral Shrunk Clustering: Reproduction and Independent Refinement Studies**
+# Report sources
 
 Han Jiale, Lu Sinan, Mahatharadol Vie and Mai Sheung Ying — Group 23,
 The University of Hong Kong, COMP3314 Machine Learning.
 
-The [report PDF](Group_23.pdf) presents the SSC formulation, historical paper
-reconstruction, numerical certificates, baseline comparisons and graph mechanism
-experiments, movement-controlled quadratic refinements and the edge-deletion comparison. Final source/subset matches and locked-selection rounding retain
-their separate endpoints, eligibility pools and coverage qualifications. The NeurIPS 2026 preprint format has at most four main-text
-pages; references and the detailed scientific appendix are separate. The appendix
-contains full endpoint/coverage qualifications rather than treating unavailable
-results as zeros.
+The maintained report consists of [Section 3](sec3_experimental_evidence.tex),
+[Sections 4–7 and the deferred appendix](sec4-7.tex), and the shared
+[bibliography](references.bib). The [section preview](sections_preview.pdf)
+compiles these sources in NeurIPS preprint format, with numbering starting at 3.
+It is a partial report; it does not include the final Overleaf abstract or
+Sections 1–2. The complete report PDF is exported from the final Overleaf project.
 
-## Build
+## Compile the supplied sections
 
-From the checkout root, after installing the
-[pinned Python dependencies](../environment/requirements.lock.txt):
-
-```bash
-make -C report PYTHON=python
-```
-
-The build requires `make`, Bash, TeX Live with `pdflatex`, BibTeX, `standalone`,
-TikZ and AMS math, plus Poppler's `pdftocairo` for figure conversion. It regenerates
-tables from the historical and final scalar-release records and writes
-`report/Group_23.pdf`. Raw image
-archives and model fitting are not required.
-
-`PYTHON` selects the interpreter; `REPORT_DATE` controls the generated metadata
-date. The table generator supports direct script invocation and loads its CSV
-transport helper from the same checkout. A logical CSV can be supplied as its
-sole gzip representation; ambiguous plain/gzip duplicates are rejected.
-
-## Editable diagram and result sources
-
-The diagram source is [ssc_two_graph_pipeline.tikz](figures/ssc_two_graph_pipeline.tikz),
-with a standalone wrapper beside it. Rebuild its PDF/SVG/PNG exports with:
+TeX Live with `pdflatex`, BibTeX, AMS math, `booktabs`, `graphicx`, `natbib`,
+`hyperref` and `microtype` is required. From the repository root:
 
 ```bash
-bash scripts/build_ssc_pipeline.sh
+make -C report preview
 ```
 
-The input graph A and shrinkage graph W retain their distinct roles in both the
-diagram and code. Generated report tables share the authoritative records used
-by the [combined benchmark tables](../results/submission_refresh/per_benchmark/).
-Final subset and scientific-evidence rebuilds use the published manifests;
-see [scalar-release rebuilding](../docs/reproducibility.md#rebuild-final-scalar-releases)
-and the artifact-availability statement in that guide.
-See [methods](../docs/methods.md), [experimental protocol](../docs/experimental_protocol.md),
-[data](../docs/data.md), [reproducibility](../docs/reproducibility.md),
-[results](../docs/results.md) and [limitations](../docs/limitations.md).
+The build reads the exact [presentation slide 6.2 image](../docs/figures/extension_pipeline_ppt_6_2.png)
+from its canonical location. No benchmark data, fitting or Python table generation
+is required to compile the supplied text.
+
+## Integrate with Overleaf
+
+Use the final Overleaf abstract and Sections 1–2 as `report/frontmatter.tex`,
+without another document preamble or bibliography. Then run:
+
+```bash
+make -C report
+```
+
+[main.tex](main.tex) includes each supplied chapter once. Section 3 owns its
+heading; Sections 4–7 follow it. A single shared bibliography precedes the
+single `\PrintSSCAppendix` call. The appendix definition in `sec4-7.tex` is
+deferred until that call. The complete build deliberately requires the final
+front matter instead of substituting a superseded introduction.
+
+The four-page limit applies to the complete main text. Its page count can be
+checked only after integrating the final front matter; the preview's page count
+is not a complete-report page count. The old full-report PDF is superseded.
+
+See the [evidence map](../docs/report_evidence.md) for the precise records,
+endpoints, cohort identities and generators behind the retained tables.
+
+`tables/refresh_main.tex` is retained byte-for-byte as an input identity in the
+earlier cohort lock. The current report driver does not include that historical
+table; its role is provenance for the frozen selected inputs.

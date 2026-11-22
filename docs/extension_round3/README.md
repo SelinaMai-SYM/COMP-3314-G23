@@ -4,6 +4,8 @@ Three independent quadratic refinements use one frozen signal: the exact residua
 
 [Formulation and bounds](method_design.md) · [Protocol](experiment_protocol.md) · [Results](../../results/extension_round3/summary.md) · [Interpretation](interpretation.md)
 
+The [presentation diagram](../figures/extension_pipeline_ppt_6_2.png) shows the three alternatives.
+
 ## Methods and inputs
 
 | Configuration alias | Registered identifier |

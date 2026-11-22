@@ -91,3 +91,29 @@ def drop_affinity_edges(affinity: sparse.spmatrix, fraction: float, seed: int) -
     kept.setdiag(0.0)
     kept.eliminate_zeros()
     return kept
+
+
+def _full_scale(features: np.ndarray) -> float:
+    peak = float(np.nanmax(features))
+    return 1.0 if peak <= 1.5 else 255.0
+
+
+def perturb_images(features: np.ndarray, brightness_steps: float, contrast: float, *, domain: tuple[float,float] | None = None) -> np.ndarray:
+    """Domain-aware perturbation. Historical pre-fix tables are not rerun in place.
+
+    brightness_steps is in 1/255 units of the full declared dynamic range.
+    Current runners pass domain explicitly; inference preserves older callers.
+    """
+    matrix = np.asarray(features, dtype=np.float64)
+    if brightness_steps == 0 and contrast == 1:
+        return matrix.copy()
+    if domain is None:
+        domain = (-1.,1.) if matrix.min() < 0 and matrix.max() <= 1.5 else (0.,_full_scale(matrix))
+    lo,hi = map(float,domain)
+    if hi <= lo or not np.isfinite([lo,hi]).all():
+        raise ValueError("invalid pixel domain")
+    updated = matrix + float(brightness_steps)/255*(hi-lo)
+    if contrast != 1.:
+        center=updated.mean(axis=1,keepdims=True)
+        updated=center+float(contrast)*(updated-center)
+    return np.clip(updated,lo,hi)

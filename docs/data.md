@@ -100,3 +100,17 @@ unresolved. EBSA16 availability does not identify that MSRA50 source. Recorded
 hashes and explicit sample manifests support reproducible current inputs;
 numerical agreement with a paper table cannot establish missing historical
 identity. See [limitations](limitations.md) and [results](results.md).
+
+## Displayed reconstruction cohorts
+
+The eight joint mean matches and selected-extension inputs use AR common
+mask0092 (840); JAFFE (213); ORL att92 (400); UMIST LZUFE574 stratified seed079
+(564); BinAlpha per-letter seed057 (780); MSRA25 EBSA16 (1,799); YaleB
+cropped2414 nearest-resize Y3 (2,414); and USPS (9,298). All except YaleB use Y0.
+Their exact membership and fingerprints are in
+[cohort_lock.json](../configs/extension_round3/cohort_lock.json). This lock supports
+replay of these inputs, without resolving the original paper's missing row IDs.
+
+The fixed-setting reproduction and the earlier development comparisons use
+their own declared source/preparation records; they must not be substituted for
+these retrospectively selected cohorts. See the [evidence map](report_evidence.md).

@@ -1,5 +1,5 @@
 import numpy as np
-from method_extension.v3_theory.x2_stability_graph.weights import perturb_images
+from experiments.perturbations import perturb_images
 
 def test_usps_domain_and_zero_identity():
     X=np.array([[-1.,-.5,0,.5,1.]])

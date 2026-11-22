@@ -1,53 +1,30 @@
-# Limitations
+# Scope and limitations
 
-## Data identity and adaptations
+The exact historical AR, UMIST and BinAlpha memberships remain unresolved.
+The displayed current cohorts have explicit original indices and hashes;
+matching their dimensions or scores does not establish original-paper identity.
+Native 16×16 EBSA MSRA is a resolution adaptation. YaleB source, interpolation
+and Y0–Y3 preparation remain separate factors.
 
-All eight reference inputs have reproducible source and preparation identities;
-none establishes author-identical historical data. AR_first7 is a source-order
-hypothesis, not verified session 1. UMIST preserves all 10,304 native matrix
-features, with exact first-occurrence deduplication. BinAlpha uses the unchanged
-seed-0 membership. Native 16×16 MSRA25 is an adapted proxy for the paper's MSRA50
-family, not a recovered 32×32 dataset. YaleB sources are sensitivities of one
-benchmark. Restricted provider data are not redistributed.
+Joint source/configuration matching uses labels and paper targets retrospectively.
+Rounding-seed intervals condition on fixed samples and representations; they
+do not measure new-dataset generalization. Both ACC/NMI and their SD belong to
+one complete configuration. Native best-objective assignments have no
+across-start SD.
 
-## Statistical scope
+Historical IRLS outputs are not gap certified. Later certified reference
+outputs and quadratic QSSC fits are separate measurements. For selected
+extensions, finite movement-unmatched outputs are distinct from finite
+uncertified ones and from unrun points. Different qualified masks do not
+support direct method ranking. The controlled comparisons do not establish a
+reliable general improvement from edge-deletion correction.
 
-Historical closest matches use labels and published targets retrospectively.
-They are separate from new fixed-reference evaluation. Mean/sample-SD over fifty
-rounding seeds differs from one native-objective-selected assignment; the latter
-has no across-run SD. Conditional bootstrap intervals concern fixed samples and
-representations, not new datasets. ORL and YaleB are previously studied
-development inputs. Their labelled gates are disclosed method development;
-fitting and comparison construction remain label-free.
+Restricted provider archives and separately held numerical arrays are not
+public downloads. Committed scalar records suffice to regenerate displayed
+tables; exact numerical replay additionally requires the specified input objects.
+The final Overleaf abstract and Sections 1–2 are not included in the report
+section preview. A complete-report page count requires their integration.
 
-## Numerical and mechanistic scope
-
-A primal–dual certificate qualifies one saved representation and its exact
-objective. It does not certify an altered rounding matrix or imply better ACC
-or NMI. Uncertified finite outputs remain exploratory. A geometric-median
-approximation without bounds cannot establish a dispersion guarantee. Global
-dispersion is not a guarantee of class separation or of every edge distance.
-
-Fixed tangent planes limit a local displacement and do not solve arbitrary wrong
-short edges. Radial-neutralization evidence distinguishes association from an
-optimized tangent-specific benefit. Frozen-reference hinges compare against
-fixed coordinates, not against both other moving representations. Output row
-normalization may change their margins. Correlated feature views are not
-independent identity evidence. Triplet-only and random-force controls are needed
-for attribution of any apparent gain.
-
-A failed gate is a negative or unevaluable mechanism outcome at the declared
-points. It is not a theorem that every related method fails. A passed gate
-permits all-eight evaluation and supplies no generalization guarantee. Inactive
-certified rows can have valid metrics. Missing, failed and unrun endpoints never
-become zero scores or a complete macro-average.
-
-## Retained implementation findings
-
-Historical selected F/G arrays were not retained, so a new solve cannot certify
-the original output. The current same-F/W USPS gamma-1000 audit remains
-uncertified. LDA failed updates and cap behavior are reported; the ridge
-adaptation does not recover the unspecified historical LDA-SC. The original
-sparse MSRA baseline failure and separately named dense repair remain visible.
-Earlier perturbation evidence did not rerun full SSC and used an incorrect USPS
-clipping range; those tables do not establish full-pipeline robustness.
+Detailed filters and qualifications are given in the
+[evidence map](report_evidence.md), [protocol](experimental_protocol.md) and
+[data guide](data.md).

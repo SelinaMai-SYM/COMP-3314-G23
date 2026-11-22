@@ -10,6 +10,5 @@ The modules implement fixed-graph objectives and explicitly named adaptations of
 | `extension_round2` | Quadratic QSSC, uniform relative tubes, graph-band adaptation, triangle-slack guards and a singular-direction floor |
 | `extension_round3` | Exact deleted-edge pilot evidence, weighted midranks and three selective quadratic refinements |
 | `mutual_knn`, `rssc` | Mutual-neighbor adaptation with a fixed spectral anchor |
-| `v3_theory` | Operators and perturbation mechanisms used by the recorded geometry/robustness controls |
 
 [Methods](../docs/methods.md) defines the objectives and coefficients. [Experiments](../docs/experimental_protocol.md) defines comparisons, operating points and metric aggregation. Numerical certification concerns the specified convex objective; clustering effects are measured separately.

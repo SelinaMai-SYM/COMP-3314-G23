@@ -76,3 +76,10 @@ report/*.toc
 report/*.nav
 report/*.snm
 report/*.vrb
+
+# Full report front matter is supplied by the final Overleaf project.
+report/frontmatter.tex
+
+# Optional regenerated historical report projections remain local.
+/report/tables/*
+!/report/tables/refresh_main.tex

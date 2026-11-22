@@ -1,5 +1,10 @@
-# Historical secondary geometry measurements
+# Historical seed records
 
-The earlier perturbation ARI/Jaccard values do not establish full-pipeline SSC robustness: the procedure did not refit perturbed SSC, and USPS values were incorrectly clipped from their native [-1,1] domain into [0,1]. These records are retained as historical observations with that limitation.
+`all_trials.csv` is retained for the historical rounding-seed inventory used by
+subset confirmation. Its measurements are not selected-extension results.
 
-The [corrected descriptive robustness summary](../next_round/corrected_robustness_summary.csv) uses complete method reruns and the correct data domains under four fixed conditions. These conditions are not independent perturbation replicates and support no general robustness claim. See [limitations](../../docs/limitations.md), [methods](../../docs/methods.md) and the [report](../../report/Group_23.pdf).
+The earlier perturbation ARI/Jaccard values did not refit perturbed SSC and
+incorrectly clipped USPS to [0,1]. They do not establish full-pipeline robustness.
+The [corrected descriptive records](../next_round/corrected_robustness_summary.csv)
+use complete reruns and the declared pixel domains. They remain separate from
+the [displayed evidence](../../docs/report_evidence.md).

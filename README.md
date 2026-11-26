@@ -133,29 +133,44 @@ The [reproducibility guide](docs/reproducibility.md) gives baseline, subset and
 extension commands, including the exact external numerical inputs needed for
 extension replay. Rebuilding tables does not require those external arrays.
 
-## Reproduction and critical findings
+## Results
 
-A fixed diagnostic uses E8, gamma 1, Y0 and the **minimum-SSE assignment from
-50 RANDOM starts**. Each cell below gives ACC/NMI in percent. This single selected
-assignment has no across-start SD.
+### Reproduction
 
-<!-- BEGIN GENERATED HISTORICAL -->
+**Closest joint SSC reconstructions.** Paper-reported scores are compared with
+our means over **50 K-means starts on one fixed representation**. ACC and NMI
+are percentages. D_max is the larger absolute discrepancy from the two published
+means, in percentage points (pp), calculated before rounding.
 
-| Dataset | Fixed SC ACC / NMI (%) | Fixed SSC ACC / NMI (%) |
-|---|---:|---:|
-| ORL | 62.25 / 83.46 | 65.25 / 84.57 |
-| JAFFE | 95.31 / 94.16 | 95.31 / 94.16 |
-| YaleB cropped2414 | 19.97 / 26.89 | 19.68 / 26.86 |
-| USPS | 65.50 / 81.00 | 65.63 / 81.24 |
+<!-- BEGIN GENERATED REPRODUCTION -->
 
-<!-- END GENERATED HISTORICAL -->
+| Dataset | Paper ACC (%) | Paper NMI (%) | Reproduced ACC (%) | Reproduced NMI (%) | D_max (pp) |
+|---|---:|---:|---:|---:|---:|
+| AR | 51.30 | 73.20 | 51.21 | 72.94 | 0.26 |
+| JAFFE | 81.20 | 84.30 | 74.75 | 85.60 | 6.45 |
+| ORL | 76.00 | 88.60 | 74.63 | 89.71 | 1.37 |
+| UMIST | 71.10 | 84.10 | 69.97 | 85.17 | 1.13 |
+| BinAlpha | 49.40 | 64.10 | 49.54 | 63.46 | 0.64 |
+| MSRA50\* | 63.20 | 72.20 | 49.25 | 61.50 | 13.95 |
+| YaleB | 49.80 | 46.80 | 44.24 | 52.61 | 5.81 |
+| USPS | 75.50 | 79.80 | 66.26 | 80.86 | 9.24 |
 
-A separate joint matching analysis completed 74,436 input/configuration pairs
-on 2,482 inputs: 2,480 complete 30-setting grids and two partial grids. It ranks
-complete 50-start mean configurations by joint ACC/NMI discrepancy within the
-stated candidate pools. AR, ORL, UMIST and BinAlpha approach both published means
-within 1.37 pp. The eight selected historical IRLS outputs have no optimality-gap
-certificate; five reached the iteration limit.
+<!-- END GENERATED REPRODUCTION -->
+
+One configuration per dataset is selected retrospectively by minimizing D_max,
+then the mean absolute ACC/NMI discrepancy, within its declared candidate pool.
+Both metrics come from the same configuration. This matching does not establish
+historical data identity or a label-free tuning rule.
+
+\* MSRA50 uses the adapted native **16×16** EBSA input instead of the paper's
+stated 32×32 resolution. The eight selected historical IRLS outputs have no
+optimality-gap certificate; five reached the iteration limit.
+
+The reconstruction search completed 74,436 input/configuration pairs on 2,482
+inputs: 2,480 complete 30-setting grids and two partial grids. AR, ORL, UMIST and
+BinAlpha approach both published means within 1.37 pp. Exact cohorts, settings,
+sample SDs, solver status and the separate four-dataset fixed-setting diagnostic
+are retained in the [detailed reconstruction tables](docs/reconstruction_tables.md).
 
 Initialization can matter more than incremental shrinkage: on the original ORL
 records, RANDOM→greedy++ changes mean SSC ACC from **57.135% to 78.335%**.
@@ -167,7 +182,7 @@ these are post-fit label diagnostics of the refinement graph.
 retrospective matches and extension references. The [evidence map](docs/report_evidence.md)
 identifies their records, filters and generators.
 
-## Selected extensions
+### Selected extensions
 
 ![Three independent refinements sharing fixed spectral coordinates and edge-deletion evidence](docs/figures/extension_pipeline_ppt_6_2.png)
 

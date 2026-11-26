@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+from math import isclose
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -88,6 +89,34 @@ def fixed_table(root=ROOT):
     return "\n".join(lines) + "\n"
 
 
+def _reconstruction_rows(root=ROOT):
+    rows = _records(root, "results/subset_search/closest_matches.csv")
+    selected = []
+    for dataset in ["AR", "JAFFE", "ORL", "UMIST", "BinAlpha", "MSRA50", "YaleB", "USPS"]:
+        row = _one(rows, benchmark=dataset,
+                   pool="adapted" if dataset == "MSRA50" else "specification_compatible",
+                   endpoint="mean_sample_sd_50")
+        if int(row["n"]) != 50:
+            raise ValueError("Incomplete reconstruction endpoint: " + dataset)
+        gap = max(abs(float(row[m + "_mean"]) - float(row["paper_" + m]))
+                  for m in ["acc", "nmi"])
+        if not isclose(gap, float(row["D_max"]), rel_tol=0, abs_tol=1e-12):
+            raise ValueError("Reconstruction discrepancy mismatch: " + dataset)
+        selected.append(row)
+    return selected
+
+
+def reproduction_table(root=ROOT):
+    lines = ["| Dataset | Paper ACC (%) | Paper NMI (%) | Reproduced ACC (%) | Reproduced NMI (%) | D_max (pp) |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for row in _reconstruction_rows(root):
+        label = "MSRA50\\*" if row["benchmark"] == "MSRA50" else row["benchmark"]
+        values = [float(row[k]) for k in ["paper_acc", "paper_nmi", "acc_mean", "nmi_mean"]]
+        gap = max(abs(values[2] - values[0]), abs(values[3] - values[1]))
+        lines.append("| " + label + " | " + " | ".join(f"{v:.2f}" for v in [*values, gap]) + " |")
+    return "\n".join(lines) + "\n"
+
+
 def historical_markdown(root=ROOT):
     lines = ["# Reconstruction tables", "",
              "Generated from retained records by `python -m scripts.result_tables`. "
@@ -101,12 +130,8 @@ def historical_markdown(root=ROOT):
              "MSRA uses the adapted native-16 source. Historical membership remains unverified.", "",
              "| Dataset | Candidate | ACC ± SD (%) | NMI ± SD (%) | Equation / gamma / initializer | Solver |",
              "|---|---|---:|---:|---|---|"]
-    rows = _records(root, "results/subset_search/closest_matches.csv")
-    for dataset in ["AR", "JAFFE", "ORL", "UMIST", "BinAlpha", "MSRA50", "YaleB", "USPS"]:
-        row = _one(rows, benchmark=dataset, pool="adapted" if dataset == "MSRA50" else "specification_compatible",
-                   endpoint="mean_sample_sd_50")
-        if int(row['n']) != 50:
-            raise ValueError("Incomplete reconstruction endpoint")
+    for row in _reconstruction_rows(root):
+        dataset = row["benchmark"]
         means = [f"{float(row[m+'_mean']):.2f} ± {float(row[m+'_sd']):.2f}" for m in ['acc','nmi']]
         lines.append(f"| {dataset} | {row['candidate_id']} | {means[0]} | {means[1]} | "
                      f"{row['variant']} / {float(row['gamma_nominal']):g} / {row['initialization']} | {row['solver_status']} |")
@@ -223,10 +248,10 @@ def main():
         before, remainder = original.split(start, 1)
         _, after = remainder.split(end, 1)
         updated = before + start + "\n\n" + text + "\n" + end + after
-        start, end = "<!-- BEGIN GENERATED HISTORICAL -->", "<!-- END GENERATED HISTORICAL -->"
+        start, end = "<!-- BEGIN GENERATED REPRODUCTION -->", "<!-- END GENERATED REPRODUCTION -->"
         before, remainder = updated.split(start, 1)
         _, after = remainder.split(end, 1)
-        path.write_text(before + start + "\n\n" + fixed_table() + "\n" + end + after)
+        path.write_text(before + start + "\n\n" + reproduction_table() + "\n" + end + after)
     if not args.output and not args.update_readme:
         print(text, end="")
 

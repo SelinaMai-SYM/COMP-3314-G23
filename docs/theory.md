@@ -83,3 +83,12 @@ The [development evidence](development_summary.md) links the earlier objectives
 and gates used in presentation slide6.1. The selected methods are three
 independent convex refinements, with their complete numerical definitions in
 that formulation guide.
+
+## Printed-inequality qualification
+
+The final report also checks the original paper's printed Lemma 1 (Eq. 14):
+with row-norm magnitudes 1/2 and 1, its two sides are 0 and −1/2, so it is
+invalid as written. The reweighting argument uses the standard touching
+majorizer with both quadratic terms divided by the same nonzero reference
+norm. This typographical issue is separate from the E8/E13 coefficient mapping
+and from numerical certification of saved benchmark outputs.

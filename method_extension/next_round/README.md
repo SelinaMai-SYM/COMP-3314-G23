@@ -1,4 +1,4 @@
-# Certified SSC and secondary mechanism candidates
+# Certified SSC and reference controls
 
 These modules operate on a fixed anchor \(F\) and graph \(W\). Their
 mathematical properties are developed in [theory](../../docs/theory.md);

@@ -297,11 +297,14 @@ def _own_confirmation_path(relative):
 
 
 def _historical_seed_paths(root,paths=None):
-    """Current tracked records only; never archive code, tests or old Git objects."""
+    """Current scalar records, including losslessly archived original paths."""
     root=Path(root).resolve()
     if paths is None:
         import subprocess
         names=subprocess.check_output(['git','ls-files','-z','--','results','runs'],cwd=root).decode().split('\0')
+        from experiments.evidence import prepare,archived_paths
+        prepare(root)
+        names.extend(archived_paths(root))
     else:names=[str(Path(path).relative_to(root)) if Path(path).is_absolute() else str(path) for path in paths]
     result=[]
     for name in sorted(set(filter(None,names))):

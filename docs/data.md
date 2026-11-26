@@ -114,3 +114,27 @@ replay of these inputs, without resolving the original paper's missing row IDs.
 The fixed-setting reproduction and the earlier development comparisons use
 their own declared source/preparation records; they must not be substituted for
 these retrospectively selected cohorts. See the [evidence map](report_evidence.md).
+
+## Provider terms and derived artifacts
+
+| Source | Use and attribution retained for this release | Distribution in this repository |
+|---|---|---|
+| JAFFE | Official noncommercial research terms; Lyons, Kamachi and Gyoba (2020) and Lyons (2021) are mandatory citations | No images or feature arrays; the provider prohibits dataset redistribution and web posting |
+| AT&T/ORL | Original page requests credit to AT&T Laboratories Cambridge; it does not provide a blanket redistribution license | No raw or resized images |
+| YaleB | Retained source conditions require Georghiades et al. and Lee et al. citations and restrict incorporation into public image databases | No original/cropped images or feature matrices |
+| AR | Original academic-research/access conditions remain separate from the LZUFE mirror | No face images or parent matrices |
+| UMIST | Original Graham/Allinson conditions and mirror licenses remain distinct | No subject images or parent matrices |
+| BinAlpha | No redistribution license established by the retained Roweis source | No parent matrix |
+| USPS | LIBSVM provides the train/test files; source availability does not establish their redistribution license | No source feature files |
+| MSRA25 EBSA16 | Pinned public source, with unresolved redistribution rights and historical identity | No matrix or derived image arrays |
+
+The [JAFFE record](https://zenodo.org/records/14974867) and
+[AT&T source page](https://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html)
+state their current terms. Several original legacy provider pages are not
+currently accessible; their retained source conditions and unresolved rights
+are recorded in the benchmark manifests rather than inferred from mirrors.
+Provider-derived embeddings, predictions and continuation states remain in
+separately held stores; inventory hashes do not imply public download rights.
+Published figures contain diagrams and aggregate numerical plots, not face
+images. The [reference guide](references.md#jaffe-attribution) includes the two
+required JAFFE articles and the dataset's 1997/v2 and 2025 deposit metadata.

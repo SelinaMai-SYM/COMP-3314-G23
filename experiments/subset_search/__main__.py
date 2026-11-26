@@ -7,6 +7,9 @@ from experiments.submission_refresh.config_contract import require_frozen_config
 def main():
     p=argparse.ArgumentParser();p.add_argument('phase',choices=['catalogue','profile','freeze','run','aggregate','confirm','complete-failed']);p.add_argument('--config',default='configs/subset_search/protocol.yaml');p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--output',default='results/subset_search');p.add_argument('--candidates',nargs='*');p.add_argument('--cohort',default='configs/subset_search/executable_cohort.json');args=p.parse_args()
     require_frozen_config(args.config,'subset')
+    if args.phase != 'catalogue':
+        from experiments.evidence import prepare
+        prepare()
     if args.phase=='catalogue':
         from .catalogue import build_catalogue
         build_catalogue(Path(args.data_root),Path(args.output));return

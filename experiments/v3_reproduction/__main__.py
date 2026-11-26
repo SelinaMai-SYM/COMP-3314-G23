@@ -155,22 +155,12 @@ def main(argv: list[str] | None = None) -> None:
     run.add_argument("--datasets", nargs="+")
     run.add_argument("--output")
     run.add_argument("--resume", action="store_true")
-    run.add_argument("--smoke", action="store_true")
-    smoke = sub.add_parser("smoke")
-    smoke.add_argument("--dataset", default="synthetic", choices=["synthetic"])
     args = parser.parse_args(argv)
     if args.command == "rebuild-results":
         from experiments.v3_reproduction.release import rebuild as rebuild_release
         print(json.dumps(rebuild_release(args.release_manifest,args.output),indent=2)); return
-    if args.command == "smoke":
-        from experiments.next_round.smoke import synthetic_smoke
-        print(json.dumps(synthetic_smoke(),indent=2)); return
     if args.command == "run-experiments":
-        if args.smoke:
-            from experiments.next_round.smoke import data_smoke
-            print(json.dumps(data_smoke(args.config,args.data_root,args.datasets,args.output),indent=2))
-        else:
-            _campaign(args.config,args.resume,args.data_root,args.datasets,args.output)
+        _campaign(args.config,args.resume,args.data_root,args.datasets,args.output)
         return
     if args.command == "resources":
         recovery = recover(args.config)

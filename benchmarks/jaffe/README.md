@@ -46,3 +46,9 @@ resolve every graph/rounding choice in the SSC paper.
 See [the source manifest](manifest.yaml), [data setup](../../docs/data.md),
 [experimental protocol](../../docs/experimental_protocol.md) and
 [results](../../docs/results.md).
+
+The official v2 record has DOI [10.5281/zenodo.14974867](https://doi.org/10.5281/zenodo.14974867),
+is dated 1997 and was deposited in 2025. Required citations are Lyons, Kamachi
+and Gyoba (2020), [Coding Facial Expressions with Gabor Wavelets](https://arxiv.org/abs/2009.05938),
+and Lyons (2021), [“Excavating AI” Re-excavated](https://arxiv.org/abs/2107.13998).
+No JAFFE images or feature arrays are distributed here.

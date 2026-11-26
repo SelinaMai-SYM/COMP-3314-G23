@@ -823,6 +823,8 @@ def main():
     parser.add_argument('--output',required=True)
     parser.add_argument('--artifact-root')
     args=parser.parse_args()
+    from experiments.evidence import prepare
+    prepare()
     result=freeze(args.output,args.release_manifest,args.artifact_root) if args.phase=='freeze' else rebuild(args.release_manifest,args.output)
     print(json.dumps(result.get('counts',result),indent=2))
 

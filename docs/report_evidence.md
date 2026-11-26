@@ -1,6 +1,6 @@
 # Experimental evidence
 
-Presentation slides 4.1–4.4, 5.1–5.4 and 6.1–6.3 define the displayed comparisons.
+The [final report](../report/Group_23.pdf) and presentation comparisons define the displayed findings.
 Table values below are traced to retained measurements; paper values are
 quotations of reported results. Paths are relative to the repository root.
 
@@ -44,7 +44,7 @@ show the displayed fixed, closest and initialization endpoints.
 | Display | Retained source | Filter / endpoint | Generator | Required interpretation |
 |---|---|---|---|---|
 | Slide 6.1 development | `results/extension_verification/macro_summary.csv`, `diagnostics/gates.json`; `results/extension_round2/macro_summary.csv` | E1 angular vs matched SSC; E2 radial-neutralization gate; E3 semantic gate; E4/E5/E6 vs fresh QSSC | `scripts.result_tables --development-output` and the corresponding scalar releases | Distinct cohorts and controls; failed gates do not represent completed formal E2/E3 campaigns |
-| Slide 6.2 | `docs/figures/extension_pipeline_ppt_6_2.png` | Exact 2655×750 embedded image from PDF page35 / slide6.2 | Lossless image extraction from the supplied presentation | Three independent quadratic refinements, not a sequence; rank mass w for E7/E5 and wd for E1 |
+| Slide 6.2 | `docs/figures/extension_pipeline_ppt_6_2.png` | Exact 1976×566 embedded image from final report page12 | Lossless image extraction from the supplied final PDF | Three independent quadratic refinements, not a sequence; rank mass w for E7/E5 and wd for E1 |
 | Slide 6.3 eight-cohort table | `results/extension_round3/primary_metrics.csv`; `configs/extension_round3/cohort_lock.json` | `rho=0.10`, `tau_multiplier=1`, `panel=native`; SC, SSC_REFERENCE, QSSC and three CAVITY methods | `experiments.extension_round3 rebuild` | Retrospectively selected cohort inputs; MSRA native16 adaptation; both metrics use the same 50 seeds |
 | README primary differences | `macro_differences.csv`; `paired_differences.csv` in the same directory | Same primary point; candidate vs QSSC and corresponding `_PILOT`; explicit `cohort_mask` | `scripts.result_tables`; round3 rebuild | E7 8/8; E1_v3 6/8; E5_v2 7/8; different masks do not rank methods |
 | Common-index controls | Same macro and paired records | `panel=anchor_generated`, same rho/tau, same-method plain pilot | Round3 rebuild | Centers use indices generated on the anchor; this panel differs from native |
@@ -58,3 +58,8 @@ panels. Scalar rebuilding validates compressed/decompressed hashes and complete
 seed sets. The public scalar packet is sufficient to regenerate reported tables;
 provider-derived arrays are separately held, as described in
 [reproducibility](reproducibility.md#numerical-artifacts).
+
+The [verified evidence archive](../results/evidence/README.md) stores the complete
+catalogue, all sample manifests and selected large scalar projections at their
+original logical paths. `python -m experiments.evidence prepare` restores the
+exact bytes used by the unchanged hash-locked release manifests.

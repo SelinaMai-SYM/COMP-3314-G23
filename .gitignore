@@ -64,5 +64,20 @@ htmlcov/
 *.tmp
 *.bak
 
-# Local report sources and PDFs are not distributed with the code.
-/report/
+# Report sources and build files remain local; publish only the final PDF.
+/report/*
+!/report/Group_23.pdf
+
+# Exact scalar/metadata files restored from the verified evidence archive.
+.evidence-*/
+/results/final/generated/configuration_table.csv
+/results/submission_refresh/all_joint_configurations.csv
+/results/submission_refresh/all_native_endpoints.csv
+/results/submission_refresh/baseline_seed_coverage.csv
+/results/submission_refresh/state_artifact_manifest.v2.json
+/results/subset_search/candidate_catalogue.json
+/results/subset_search/execution_coverage.public.v1.csv
+/results/subset_search/fixed_protocol_summary.csv
+/results/subset_search/sample_manifests/
+/results/v2_kmeans_protocol/all_trial_results.csv
+/results/v3_theory/all_trials.csv

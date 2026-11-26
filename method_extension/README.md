@@ -5,7 +5,7 @@ The modules implement fixed-graph objectives and explicitly named adaptations of
 | Package | Purpose |
 |---|---|
 | `next_round/certified_solver` | Sparse primal–dual SSC, feasible lower bounds and capacity checks |
-| `next_round/capped_fusion`, `radial_huber`, `heat_geometry` | Fidelity/fusion and representation controls for the corresponding retained experiments |
+| `next_round/capped_fusion`, `radial_huber`, `heat_geometry` | Auxiliary convex-reference, nonconvex and geometry regression controls |
 | `extension_verification` | Unsquared E1 relative stopping, E2 tangent constraints and E3 relative-neighbor hinges |
 | `extension_round2` | Quadratic QSSC, uniform relative tubes, graph-band adaptation, triangle-slack guards and a singular-direction floor |
 | `extension_round3` | Exact deleted-edge pilot evidence, weighted midranks and three selective quadratic refinements |

@@ -54,7 +54,7 @@ $$J_Q(G)=\tfrac12\|G-F\|_F^2+\lambda\sum_e w_e\|(CG)_e\|_2.$$
 At fixed pilot strength, a rank-one inverse identity computes the exact
 endpoint residual after deleting one pilot edge. Weighted score midranks
 allocate edge weights (E7), stopping tubes (E1_v3) or triangle-slack guards
-(E5_v2). The [exact presentation figure](figures/extension_pipeline_ppt_6_2.png)
+(E5_v2). The [final report figure](figures/extension_pipeline_ppt_6_2.png)
 shows these alternatives. A stopping tube is a hinge penalty with zero cost
 below its threshold, rather than a hard lower bound on distance.
 

@@ -13,8 +13,9 @@ contrasts. The [evidence map](report_evidence.md) specifies their exact filters.
 The original paper's reported SSC−SC macro difference is +9.99/+3.61 pp;
 against SPLS it is +2.09/+2.14 pp. YaleB has +15.0 ACC but −8.8 NMI pp.
 
-The search completed 74,436 configuration pairs on 2,482 inputs: 2,480 complete
-30-setting grids and two partial grids. AR, ORL, UMIST and BinAlpha match both
+The search completed 74,436 configuration pairs on 2,482 of 4,630 unique
+catalogue inputs: 2,480 complete 30-setting grids and two partial grids. A
+configuration is not necessarily a distinct optimization fit. AR, ORL, UMIST and BinAlpha match both
 published means within 1.37 pp. Matching is retrospective, based on labels and
 paper targets within declared eligibility pools. It does not resolve historical
 membership. Five selected historical IRLS fits reached the cap; none has a gap
@@ -35,6 +36,12 @@ subset-search outputs. Refinement W has cross-class weight fractions 4.6% on
 ORL and 70.2% on YaleB, according to the original Y0 W diagnostics. These are
 post-fit label associations, separate from upstream graph A.
 
+The [longer-budget USPS record](../results/submission_refresh/per_benchmark/USPS.md)
+uses E8, gamma1000, RANDOM and a 1,000-update limit: 73.866/82.841% ACC/NMI.
+The frozen 300-update-grid match uses E13, gamma1 and greedy++:
+66.263/80.855%. Their source settings, budgets and unavailable historical G
+remain distinct.
+
 ## Selected extensions
 
 The [complete selected comparison](../results/extension_round3/summary.md)
@@ -42,11 +49,9 @@ retains both panels, controls, measured exclusions and sample SD. The README
 primary table is generated from `macro_differences.csv` at rho=0.10 and
 `tau_multiplier=1`, native panel. Both controls use identical paired masks.
 
-| Method | Qualified mask | Native vs QSSC (ACC/NMI pp) | Native vs plain pilot | Common indices vs plain pilot |
-|---|---|---:|---:|---:|
-| E7 | All eight | −0.022/+0.013 | +0.004/−0.001 | −0.001/−0.001 |
-| E1_v3 | Excludes MSRA50, YaleB | +0.157/+0.358 | −0.123/−0.068 | +0.014/+0.009 |
-| E5_v2 | Excludes MSRA50 | +0.235/+0.204 | +0.061/+0.045 | +0.004/+0.003 |
+The [README primary table](../README.md#selected-extensions) reports the
+qualified native contrasts. Its eight-, six- and seven-cohort masks remain
+separate; common-index controls are retained in the complete result records.
 
 E1_v3 MSRA50/YaleB and E5_v2 MSRA50 are finite and certified, but their
 movements are 0.027871/0.070613 and 0.075561, outside the primary match.

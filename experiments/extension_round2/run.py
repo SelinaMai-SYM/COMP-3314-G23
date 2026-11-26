@@ -116,5 +116,8 @@ def execute(args):
             args.phase=phase;execute(args)
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',required=True,choices=['freeze','freeze-execute','verify','primary','secondary','controls','evaluate','remaining']);p.add_argument('--config',type=Path,default=DEFAULT_CONFIG);p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--all-benchmarks',action='store_true');args=p.parse_args();execute(args)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--phase',required=True,choices=['freeze','freeze-execute','verify','primary','secondary','controls','evaluate','remaining']);p.add_argument('--config',type=Path,default=DEFAULT_CONFIG);p.add_argument('--data-root');p.add_argument('--artifact-root',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--all-benchmarks',action='store_true');args=p.parse_args()
+    from experiments.evidence import prepare
+    prepare()
+    execute(args)
 if __name__=='__main__':main()

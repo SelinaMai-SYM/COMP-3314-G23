@@ -1,7 +1,7 @@
 # Spectral Shrunk Clustering
 
 An independent implementation and experimental study of **Spectral Shrunk
-Clustering (SSC)** by Chang et al., [AAAI 2015](https://doi.org/10.1609/aaai.v29i1.9606).
+Clustering (SSC)** of [*A Convex Formulation for Spectral Shrunk Clustering*, Chang et al., AAAI 2015](https://doi.org/10.1609/aaai.v29i1.9606).
 This HKU COMP3314 Group 23 project is by Han Jiale, Lu Sinan, Mahatharadol Vie
 and Mai Sheung Ying. It includes the original two-graph pipeline, baseline
 reconstructions and three independently evaluated selective-contraction methods.
@@ -11,6 +11,8 @@ and protocol choices remain partly unresolved. The controlled extension
 comparisons show small local gains without a reliable general improvement.
 The source/subset matches below were selected retrospectively against published
 ACC/NMI targets; they are descriptive reconstructions.
+
+[Report (PDF)](report/Group_23.pdf) · [Methods](docs/methods.md) · [Data](docs/data.md) · [Reproducibility](docs/reproducibility.md)
 
 ## Original SSC: paper to code
 
@@ -106,7 +108,6 @@ input. USPS uses the complete 9,298-row train/test concatenation in `[-1,1]`.
 
 ```bash
 python examples/ssc_blobs.py
-python -m experiments.v3_reproduction smoke --dataset synthetic
 ```
 
 **Table reconstruction**, using only committed scalar measurements:
@@ -167,10 +168,16 @@ stated 32×32 resolution. The eight selected historical IRLS outputs have no
 optimality-gap certificate; five reached the iteration limit.
 
 The reconstruction search completed 74,436 input/configuration pairs on 2,482
-inputs: 2,480 complete 30-setting grids and two partial grids. AR, ORL, UMIST and
-BinAlpha approach both published means within 1.37 pp. Exact cohorts, settings,
+of 4,630 unique catalogue inputs: 2,480 complete 30-setting grids and two partial
+grids. Configurations share fixed representations where specified, so their
+count differs from the number of optimization fits. AR, ORL, UMIST and BinAlpha approach both published means within 1.37 pp. Exact cohorts, settings,
 sample SDs, solver status and the separate four-dataset fixed-setting diagnostic
 are retained in the [detailed reconstruction tables](docs/reconstruction_tables.md).
+
+The longer-budget historical USPS result (E8, gamma 1000, RANDOM, 1,000-update
+limit) is **73.866/82.841% ACC/NMI**. It remains separate from the frozen
+300-update-grid match above (E13, gamma 1, greedy++). Its historical G is
+unavailable; see the [USPS evidence](results/submission_refresh/per_benchmark/USPS.md).
 
 Initialization can matter more than incremental shrinkage: on the original ORL
 records, RANDOM→greedy++ changes mean SSC ACC from **57.135% to 78.335%**.
@@ -186,8 +193,7 @@ identifies their records, filters and generators.
 
 ![Three independent refinements sharing fixed spectral coordinates and edge-deletion evidence](docs/figures/extension_pipeline_ppt_6_2.png)
 
-*Original image from presentation slide 6.2. The branches are fitted and evaluated
-independently.* A frozen ridge pilot supplies an exact edge-deletion score.
+*Pipeline from the final report. The branches are fitted and evaluated independently.* A frozen ridge pilot supplies an exact edge-deletion score.
 Its weighted midrank $u_e$ allocates three alternative interventions:
 
 | Method | Intervention |
@@ -241,9 +247,10 @@ below the separately fitted SSC reference. See the [objectives](docs/extension_r
 ├── method_extension/        # Selected refinements and numerical dependencies
 ├── experiments/             # Fitting, evaluation and scalar reconstruction
 ├── configs/                 # Frozen protocols, cohort locks and release manifests
-├── results/                 # Compact measurements, trials and derived tables
+├── results/                 # Scalar records, verified evidence archive and final tables
 ├── examples/ssc_blobs.py     # Standalone generated-data example
 ├── docs/                    # Methods, data, protocols and evidence mapping
+├── report/                  # Final submitted PDF
 ├── tests/                   # Algorithm, metric and reproducibility checks
 └── environment/             # Dependency versions
 ```
@@ -259,7 +266,8 @@ Chang, X., Nie, F., Ma, Z., Yang, Y. and Zhou, X. (2015).
 The edge-deletion formulation uses a rank-one inverse identity and a
 leverage-adjustment idea discussed by [Wang et al., *Approximate Leave-One-Out
 for Fast Parameter Tuning in High Dimensions*, ICML 2018](https://proceedings.mlr.press/v80/wang18m.html).
-[CITATION.cff](CITATION.cff) and the [third-party notices](NOTICE.md) record
+The [reference guide](docs/references.md), [CITATION.cff](CITATION.cff) and
+[third-party notices](NOTICE.md) record
 attribution for the implementation and
 baselines. Project code is [MIT licensed](LICENSE). Third-party code and datasets
 retain their own terms, including the retained ClustPy BSD-3-Clause notice.

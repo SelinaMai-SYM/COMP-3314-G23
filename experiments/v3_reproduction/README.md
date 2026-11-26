@@ -1,11 +1,11 @@
 # Reproduction interface
 
-The stable `experiments.v3_reproduction` module supports synthetic examples, manifest-verified historical table reconstruction and new experiments with an explicit data root. It does not depend on a Git branch named v3.
+The stable `experiments.v3_reproduction` module supports manifest-verified historical table reconstruction and new experiments with an explicit data root. It does not depend on a Git branch named v3.
 
 From the checkout root:
 
 ```bash
-python -m experiments.v3_reproduction smoke --dataset synthetic
+python examples/ssc_blobs.py
 python -m experiments.v3_reproduction rebuild-results --release-manifest configs/final/release_manifest.json --output local/rebuilt_historical
 python -m experiments.v3_reproduction run-experiments --config configs/v3/campaign.yaml --data-root "$PWD/local/data"
 ```

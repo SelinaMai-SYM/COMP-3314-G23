@@ -7,6 +7,9 @@
 - [Reproducibility](reproducibility.md): examples, no-data rebuilding and declared fitting commands.
 - [Evidence map](report_evidence.md): displayed findings mapped to exact records and filters.
 - [Development summary](development_summary.md): the earlier E1–E7 evidence displayed in the presentation.
+- [References and attribution](references.md): the original method, baselines, solvers and data citations.
+- [Final report](../report/Group_23.pdf): four-page main text, references and appendix.
+- [Archived scalar evidence](../results/evidence/README.md): verified original paths and metadata restoration.
 - [Mathematical foundations](theory.md): fixed-graph objectives, certificates and numerical limits.
 
 ## Selected methods

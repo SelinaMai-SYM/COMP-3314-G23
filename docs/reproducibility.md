@@ -5,6 +5,18 @@ Install the project using the [README commands](../README.md#installation). All 
 ## Rebuild statistical tables
 
 Use fresh output directories. Each manifest verifies its inputs before publishing reconstructed output.
+The full source/subset and baseline rebuild interfaces restore archived scalar
+metadata automatically, byte-for-byte at its original paths. The restored files
+are ignored by Git; no old branch or external numerical store is needed.
+
+```bash
+python -m experiments.evidence verify
+python -m experiments.evidence prepare
+```
+
+The explicit preparation command is useful before direct Python access to the
+complete candidate catalogue, sample manifests or historical trial inventories.
+The [archive guide](../results/evidence/README.md) describes its scope and checks.
 
 ```bash
 python -m experiments.v3_reproduction rebuild-results \
@@ -38,10 +50,9 @@ Compressed records carry stored-file and decompressed hashes where declared. CSV
 
 ```bash
 python examples/ssc_blobs.py
-python -m experiments.v3_reproduction smoke --dataset synthetic
 ```
 
-The first calls the public SSC estimator. The second checks a two-node primal–dual problem through the maintained experiment entry point.
+This calls the public SSC estimator on a generated dataset.
 
 ## Main SSC and baseline experiments
 

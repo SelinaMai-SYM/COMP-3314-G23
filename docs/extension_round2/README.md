@@ -51,6 +51,7 @@ Set the data and output roots in the shell commands below. Fresh fitting records
 ```bash
 DATA_ROOT="$PWD/local/data"
 ARTIFACT_ROOT="$PWD/local/artifacts/quadratic"
+python -m experiments.evidence prepare
 python experiments/submission_refresh/reporting.py --root .
 python -m experiments.extension_round2.run --phase freeze --config configs/extension_round2/protocol.yaml --data-root "$DATA_ROOT" --artifact-root "$ARTIFACT_ROOT" --resume
 python -m experiments.extension_round2.run --phase verify --config configs/extension_round2/protocol.yaml --artifact-root "$ARTIFACT_ROOT"
